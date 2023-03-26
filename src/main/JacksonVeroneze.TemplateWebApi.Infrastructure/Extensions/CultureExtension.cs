@@ -15,8 +15,8 @@ public static class CultureExtension
     {
         CultureInfo[] supportedCultures =
         {
-            new (DefaultCulture),
-            new ("br")
+            new(DefaultCulture),
+            new("br")
         };
 
         services.Configure<RequestLocalizationOptions>(options =>

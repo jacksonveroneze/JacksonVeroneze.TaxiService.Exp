@@ -9,4 +9,3 @@ public class AppInfoConfiguration
 
     public string? Version { get; set; }
 }
-

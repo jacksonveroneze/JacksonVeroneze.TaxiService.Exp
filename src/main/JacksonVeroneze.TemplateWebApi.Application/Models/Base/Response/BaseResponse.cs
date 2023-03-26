@@ -11,7 +11,9 @@ public class BaseResponse
     public ICollection<Notification>? Messages { get; }
 
     public BaseResponse(ResponseStatus status)
-        => Status = status;
+    {
+        Status = status;
+    }
 
     public BaseResponse(ResponseStatus status,
         ICollection<Notification> messages)
@@ -33,5 +35,7 @@ public class BaseResponse
 
     protected static Notification FactoryNotification(string key,
         string message)
-        => new(key, message);
+    {
+        return new(key, message);
+    }
 }
