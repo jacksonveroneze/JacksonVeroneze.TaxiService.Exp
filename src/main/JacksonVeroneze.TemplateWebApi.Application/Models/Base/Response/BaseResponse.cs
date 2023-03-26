@@ -36,6 +36,6 @@ public class BaseResponse
     protected static Notification FactoryNotification(string key,
         string message)
     {
-        return new(key, message);
+        return new Notification(key, message);
     }
 }
