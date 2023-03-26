@@ -1,0 +1,68 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TemplateWebApi.Api", "main\JacksonVeroneze.TemplateWebApi.Api\JacksonVeroneze.TemplateWebApi.Api.csproj", "{7E75DDC3-1A7D-4806-9DA6-B6BC687D9A51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TemplateWebApi.Application", "main\JacksonVeroneze.TemplateWebApi.Application\JacksonVeroneze.TemplateWebApi.Application.csproj", "{B33871D2-0A58-41DE-A7FB-E7E58E0C6107}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TemplateWebApi.Domain", "main\JacksonVeroneze.TemplateWebApi.Domain\JacksonVeroneze.TemplateWebApi.Domain.csproj", "{2AB98847-BB76-44EF-9184-2C6E38138E7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TemplateWebApi.Infrastructure", "main\JacksonVeroneze.TemplateWebApi.Infrastructure\JacksonVeroneze.TemplateWebApi.Infrastructure.csproj", "{5DD8DA6C-CFC9-4AF0-8AAD-FFB3C4E6B951}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{2FB36637-D019-47A7-8E00-B11FB572D0D8}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		.editorconfig = .editorconfig
+		docker-entrypoint.sh = docker-entrypoint.sh
+		Dockerfile = Dockerfile
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{781F0984-F5A6-4051-9B5F-525135392A5A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{911C6EDB-84B3-4A91-B837-74EB587665CF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infra", "infra", "{2E06D1F1-951E-43B4-9706-4A931EB38244}"
+	ProjectSection(SolutionItems) = preProject
+		..\infra\Docker\docker-compose.yml = ..\infra\Docker\docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{D169AF26-FB04-418D-A804-6BFBF6B99227}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E75DDC3-1A7D-4806-9DA6-B6BC687D9A51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E75DDC3-1A7D-4806-9DA6-B6BC687D9A51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E75DDC3-1A7D-4806-9DA6-B6BC687D9A51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E75DDC3-1A7D-4806-9DA6-B6BC687D9A51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B33871D2-0A58-41DE-A7FB-E7E58E0C6107}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B33871D2-0A58-41DE-A7FB-E7E58E0C6107}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B33871D2-0A58-41DE-A7FB-E7E58E0C6107}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B33871D2-0A58-41DE-A7FB-E7E58E0C6107}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AB98847-BB76-44EF-9184-2C6E38138E7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AB98847-BB76-44EF-9184-2C6E38138E7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AB98847-BB76-44EF-9184-2C6E38138E7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AB98847-BB76-44EF-9184-2C6E38138E7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DD8DA6C-CFC9-4AF0-8AAD-FFB3C4E6B951}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DD8DA6C-CFC9-4AF0-8AAD-FFB3C4E6B951}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DD8DA6C-CFC9-4AF0-8AAD-FFB3C4E6B951}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DD8DA6C-CFC9-4AF0-8AAD-FFB3C4E6B951}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7E75DDC3-1A7D-4806-9DA6-B6BC687D9A51} = {781F0984-F5A6-4051-9B5F-525135392A5A}
+		{B33871D2-0A58-41DE-A7FB-E7E58E0C6107} = {781F0984-F5A6-4051-9B5F-525135392A5A}
+		{2AB98847-BB76-44EF-9184-2C6E38138E7B} = {781F0984-F5A6-4051-9B5F-525135392A5A}
+		{5DD8DA6C-CFC9-4AF0-8AAD-FFB3C4E6B951} = {781F0984-F5A6-4051-9B5F-525135392A5A}
+		{2E06D1F1-951E-43B4-9706-4A931EB38244} = {2FB36637-D019-47A7-8E00-B11FB572D0D8}
+		{D169AF26-FB04-418D-A804-6BFBF6B99227} = {2E06D1F1-951E-43B4-9706-4A931EB38244}
+	EndGlobalSection
+EndGlobal
