@@ -25,11 +25,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{911C6EDB-84B3-4A91-B837-74EB587665CF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infra", "infra", "{2E06D1F1-951E-43B4-9706-4A931EB38244}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{D169AF26-FB04-418D-A804-6BFBF6B99227}"
 	ProjectSection(SolutionItems) = preProject
 		..\infra\Docker\docker-compose.yml = ..\infra\Docker\docker-compose.yml
 	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{D169AF26-FB04-418D-A804-6BFBF6B99227}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -10,21 +10,26 @@ services:
       dockerfile: ./Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - APP_CONFIG_DistributedTracing__IsEnabled=true
+      - APP_CONFIG_DistributedTracing__Jaeger__Host=172.17.0.1
+      - APP_CONFIG_DistributedTracing__Jaeger__Port=6831
     healthcheck:
-      test: curl --silent --fail http://api/health || exit 1
-      interval: 15s
+      test: curl --silent --fail http://api/health?source=docker || exit 1
+      interval: 10s
       timeout: 3s
       retries: 3
       start_period: 3s
     ports:
-      - "8020-8025:80"
-    networks:
-      - public
-      - internal
-    links:
-      - splunk
+      - "5010:5000"
     logging:
       driver: "json-file"
       options:
         max-file: "2"
         max-size: "1m"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 256M
+        reservations:
+          memory: 256M
