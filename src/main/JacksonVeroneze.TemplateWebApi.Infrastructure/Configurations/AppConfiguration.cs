@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
 
 [ExcludeFromCodeCoverage]
@@ -6,16 +8,20 @@ public class AppConfiguration
     private const string EnviromentDevelopment = "Development";
     private const string EnviromentProduction = "Production";
 
+    [Required]
     public string? Environment { get; set; }
+
+    [Required]
+    public AppInfoConfiguration? Application { get; set; }
+
+    [Required]
+    public SwaggerConfiguration? Swagger { get; set; }
+
+    [Required]
+    public DistributedTracingConfiguration? DistributedTracing { get; set; }
 
     public string? AuthAuthority { get; set; }
     public string? AuthAudience { get; set; }
-
-    public AppInfoConfiguration? Application { get; set; }
-
-    public SwaggerConfiguration? Swagger { get; set; }
-
-    public DistributedTracingConfiguration? DistributedTracing { get; set; }
 
     public bool IsDevelopment =>
         Environment!.Equals(EnviromentDevelopment,

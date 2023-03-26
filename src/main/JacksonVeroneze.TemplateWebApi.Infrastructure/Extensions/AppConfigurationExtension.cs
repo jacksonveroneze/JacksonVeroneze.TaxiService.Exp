@@ -31,11 +31,13 @@ public static class AplicationConfigurationExtension
                 ? configuration
                 : configuration.GetSection(sectionName);
 
-        // services.AddOptions<TParameterType>()
-        //     .Bind(section)
-        //     .ValidateDataAnnotations();
+        services
+            .AddOptions<TParameterType>(sectionName)
+            .Bind(section)
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
 
-        services.Configure<TParameterType>(section);
+        //services.Configure<TParameterType>(section);
 
         services.AddScoped(conf =>
             conf.GetService<IOptionsMonitor<TParameterType>>()?.CurrentValue!);

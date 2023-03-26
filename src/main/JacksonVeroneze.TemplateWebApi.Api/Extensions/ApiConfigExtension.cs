@@ -1,5 +1,6 @@
 using Ben.Diagnostics;
 using CorrelationId;
+using JacksonVeroneze.TemplateWebApi.Api.Middlewares;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
 using Prometheus;
@@ -26,7 +27,12 @@ public static class ApiConfigExtension
             .AddOpenTelemetry(appConfiguration)
             .AddCorrelation()
             .AddCultureConfiguration()
-            .AddJsonOptionsSerialize();
+            .AddJsonOptionsSerialize()
+            .AddRouting(options =>
+            {
+                options.LowercaseUrls = true;
+                options.LowercaseQueryStrings = true;
+            });
 
         return services;
     }
@@ -43,25 +49,12 @@ public static class ApiConfigExtension
         app.UseCorrelationId()
             .UseRouting()
             .UseHttpMetrics()
-            //.UseMiddleware<ErrorHandlingMiddleware>()
+            .UseMiddleware<ErrorHandlingMiddleware>()
             .UseHealthChecks("/health")
             .UseAuthentication()
             .UseAuthorization()
-            .UseEndpoints(endpoints => { endpoints.MapMetrics(); });
+            .UseEndpoints(endpoints => endpoints.MapMetrics());
 
         return app;
     }
 }
-
-
-// if (app.Environment.IsDevelopment())
-// {
-//     app.UseSwagger();
-//     app.UseSwaggerUI();
-// }
-//
-// app.UseHttpsRedirection();
-//
-// app.UseAuthorization();
-//
-// app.MapControllers();
