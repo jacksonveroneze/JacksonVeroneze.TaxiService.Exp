@@ -14,13 +14,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.2" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.2"/>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JacksonVeroneze.TemplateWebApi.Application\JacksonVeroneze.TemplateWebApi.Application.csproj" />
-    <ProjectReference Include="..\JacksonVeroneze.TemplateWebApi.Infrastructure\JacksonVeroneze.TemplateWebApi.Infrastructure.csproj" />
+    <ProjectReference Include="..\JacksonVeroneze.TemplateWebApi.Application\JacksonVeroneze.TemplateWebApi.Application.csproj"/>
+    <ProjectReference Include="..\JacksonVeroneze.TemplateWebApi.Infrastructure\JacksonVeroneze.TemplateWebApi.Infrastructure.csproj"/>
   </ItemGroup>
 
 </Project>
