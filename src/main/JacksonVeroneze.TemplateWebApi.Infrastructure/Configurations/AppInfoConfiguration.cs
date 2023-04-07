@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
 
 [ExcludeFromCodeCoverage]

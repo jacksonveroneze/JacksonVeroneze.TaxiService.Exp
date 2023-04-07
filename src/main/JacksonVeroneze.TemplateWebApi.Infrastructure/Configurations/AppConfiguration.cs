@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+using JacksonVeroneze.NET.HttpClient.Configuration;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
 
@@ -20,6 +20,11 @@ public class AppConfiguration
     [Required]
     public DistributedTracingConfiguration? DistributedTracing { get; set; }
 
+    public ICollection<HttpClientConfiguration>? HttpClients { get; set; }
+
+    public CacheType CacheType { get; set; }
+    public string? CacheEndpoint { get; set; }
+    
     public string? AuthAuthority { get; set; }
     public string? AuthAudience { get; set; }
 

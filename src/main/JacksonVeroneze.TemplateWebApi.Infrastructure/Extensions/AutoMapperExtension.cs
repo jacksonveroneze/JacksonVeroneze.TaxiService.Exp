@@ -1,4 +1,5 @@
 using AutoMapper;
+using JacksonVeroneze.TemplateWebApi.Application.Mappers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
@@ -11,6 +12,7 @@ public static class AutoMapperExtension
     {
         MapperConfiguration configuration = new(cfg =>
         {
+            cfg.AddProfile<StateMapper>();
             cfg.AllowNullCollections = true;
         });
 

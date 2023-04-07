@@ -18,8 +18,8 @@ public static class CorrelationIdExtension
             options.IncludeInResponse = true;
             options.RequestHeader = HeaderName;
             options.ResponseHeader = HeaderName;
-            options.CorrelationIdGenerator = ()
-                => Guid.NewGuid().ToString();
+            options.CorrelationIdGenerator =
+                () => Guid.NewGuid().ToString();
         });
 
         return services;

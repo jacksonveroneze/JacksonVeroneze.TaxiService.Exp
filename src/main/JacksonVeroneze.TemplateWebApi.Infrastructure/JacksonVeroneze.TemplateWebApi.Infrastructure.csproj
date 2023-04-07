@@ -8,37 +8,47 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Using Include="System.Diagnostics.CodeAnalysis"/>
+    <Using Include="System.ComponentModel.DataAnnotations" />
+    <Using Include="System.Diagnostics.CodeAnalysis" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CorrelationId" Version="3.0.1"/>
-    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2"/>
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0"/>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0"/>
-    <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.1"/>
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0"/>
+    <PackageReference Include="CorrelationId" Version="3.0.1" />
+<!--    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />-->
+<!--    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />-->
+<!--    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />-->
+<!--    <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.1" />-->
+<!--    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />-->
 
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0"/>
-    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.1"/>
-    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0"/>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.1" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.4" />
 
-    <PackageReference Include="prometheus-net.AspNetCore" Version="8.0.0"/>
-    <PackageReference Include="Ben.BlockingDetector" Version="0.0.4"/>
+    <PackageReference Include="prometheus-net.AspNetCore" Version="8.0.0" />
+    
+    <PackageReference Include="Ben.BlockingDetector" Version="0.0.4" />
 
+    <PackageReference Include="OpenTelemetry.Exporter.Jaeger" Version="1.4.0" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.4.0" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc9.14" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc9.14" />
 
-    <PackageReference Include="OpenTelemetry.Exporter.Jaeger" Version="1.4.0"/>
-    <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.4.0"/>
-    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc9.14"/>
-    <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc9.14"/>
+    <PackageReference Include="JacksonVeroneze.NET.Logging" Version="1.0.1" />
+    <PackageReference Include="JacksonVeroneze.NET.Swagger" Version="1.0.0" />
+    <PackageReference Include="JacksonVeroneze.NET.Cache" Version="1.0.7" />
+    <PackageReference Include="JacksonVeroneze.NET.HttpClient" Version="0.0.2" />
 
-    <PackageReference Include="JacksonVeroneze.NET.Logging" Version="1.0.1"/>
-    <PackageReference Include="JacksonVeroneze.NET.Swagger" Version="1.0.0"/>
+    <PackageReference Include="Serilog.Sinks.Seq" Version="5.2.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JacksonVeroneze.TemplateWebApi.Application\JacksonVeroneze.TemplateWebApi.Application.csproj"/>
-    <ProjectReference Include="..\JacksonVeroneze.TemplateWebApi.Domain\JacksonVeroneze.TemplateWebApi.Domain.csproj"/>
+<!--    <ProjectReference Include="..\..\..\..\JacksonVeroneze.NET.HttpClient\src\JacksonVeroneze.NET.HttpClient\JacksonVeroneze.NET.HttpClient.csproj" />-->
+    <ProjectReference Include="..\JacksonVeroneze.TemplateWebApi.Application\JacksonVeroneze.TemplateWebApi.Application.csproj" />
+    <ProjectReference Include="..\JacksonVeroneze.TemplateWebApi.Domain\JacksonVeroneze.TemplateWebApi.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Repositories" />
   </ItemGroup>
 
 </Project>

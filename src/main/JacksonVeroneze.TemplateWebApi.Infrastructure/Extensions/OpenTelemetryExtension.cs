@@ -12,10 +12,10 @@ public static class OpenTelemetryExtension
         this IServiceCollection services,
         AppConfiguration appConfiguration)
     {
-        bool isEnable = appConfiguration
+        bool isEnabled = appConfiguration
             .DistributedTracing?.IsEnabled ?? false;
 
-        if (!isEnable)
+        if (!isEnabled)
         {
             return services;
         }
@@ -34,13 +34,14 @@ public static class OpenTelemetryExtension
                     .AddService(appConfiguration.Application!.Name!);
 
                 builder
-                    //.AddSource(Instrumentation.ActivitySourceName)
                     .SetSampler(new AlwaysOnSampler())
                     .SetResourceBuilder(resourceBuilder)
                     .AddAspNetCoreInstrumentation(options =>
                     {
                         options.RecordException = true;
                         options.EnableGrpcAspNetCoreSupport = false;
+                        options.Filter = ctx =>
+                            ctx.Request.Path != "/metrics" && ctx.Request.Path != "/health";
                     })
                     .AddHttpClientInstrumentation()
                     .AddJaegerExporter(options =>

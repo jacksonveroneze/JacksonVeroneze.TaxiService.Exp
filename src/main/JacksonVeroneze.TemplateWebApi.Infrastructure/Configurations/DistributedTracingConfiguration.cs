@@ -3,6 +3,7 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
 [ExcludeFromCodeCoverage]
 public class DistributedTracingConfiguration
 {
+    [Required]
     public bool IsEnabled { get; set; }
 
     public JaegerConfiguration? Jaeger { get; set; }

@@ -1,8 +1,13 @@
 namespace JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
 
-public abstract class OkResponse : BaseResponse
+public record NotFoundResponse : BaseResponse
 {
-    public OkResponse() : base(ResponseStatus.Ok)
+    protected NotFoundResponse()
+    {
+    }
+
+    public NotFoundResponse(string key, string message) :
+        base(ResponseStatus.NotFound, FactoryNotification(key, message))
     {
     }
 }

@@ -15,7 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 	ProjectSection(SolutionItems) = preProject
 		.dockerignore = .dockerignore
 		.editorconfig = .editorconfig
-		docker-entrypoint.sh = docker-entrypoint.sh
 		Dockerfile = Dockerfile
 		global.json = global.json
 	EndProjectSection
@@ -30,6 +29,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{D169AF
 	ProjectSection(SolutionItems) = preProject
 		..\infra\Docker\docker-compose.yml = ..\infra\Docker\docker-compose.yml
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.NET.HttpClient", "..\..\JacksonVeroneze.NET.HttpClient\src\JacksonVeroneze.NET.HttpClient\JacksonVeroneze.NET.HttpClient.csproj", "{AC5E1633-3AA8-4AA7-B41C-0FFC85AEF338}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,6 +57,10 @@ Global
 		{5DD8DA6C-CFC9-4AF0-8AAD-FFB3C4E6B951}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DD8DA6C-CFC9-4AF0-8AAD-FFB3C4E6B951}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DD8DA6C-CFC9-4AF0-8AAD-FFB3C4E6B951}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC5E1633-3AA8-4AA7-B41C-0FFC85AEF338}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC5E1633-3AA8-4AA7-B41C-0FFC85AEF338}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC5E1633-3AA8-4AA7-B41C-0FFC85AEF338}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC5E1633-3AA8-4AA7-B41C-0FFC85AEF338}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7E75DDC3-1A7D-4806-9DA6-B6BC687D9A51} = {781F0984-F5A6-4051-9B5F-525135392A5A}

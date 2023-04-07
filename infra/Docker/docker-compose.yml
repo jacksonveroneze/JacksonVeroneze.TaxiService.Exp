@@ -13,6 +13,9 @@ services:
       - APP_CONFIG_DistributedTracing__IsEnabled=true
       - APP_CONFIG_DistributedTracing__Jaeger__Host=172.17.0.1
       - APP_CONFIG_DistributedTracing__Jaeger__Port=6831
+      - Serilog__MinimumLevel__Default=Debug
+      - Serilog__WriteTo__0__Args__configure__1__Name=Seq
+      - Serilog__WriteTo__0__Args__configure__1__Args__serverUrl=http://172.17.0.1:5341
     healthcheck:
       test: curl --silent --fail http://api/health?source=docker || exit 1
       interval: 10s
@@ -20,16 +23,17 @@ services:
       retries: 3
       start_period: 3s
     ports:
-      - "5010:5000"
+      - "8085:8080"
     logging:
       driver: "json-file"
       options:
-        max-file: "2"
-        max-size: "1m"
+        max-file: 2
+        max-size: 1m
     deploy:
       resources:
         limits:
-          cpus: "0.50"
-          memory: 256M
+          cpus: '0.50'
+          memory: '256M'
         reservations:
-          memory: 256M
+          cpus: '0.50'
+          memory: '256M'

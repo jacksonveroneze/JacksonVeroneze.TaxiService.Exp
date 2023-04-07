@@ -1,3 +1,4 @@
+using JacksonVeroneze.TemplateWebApi.Domain.Parameters;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +13,9 @@ public static class AplicationConfigurationExtension
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddConfiguration<AppConfiguration>(configuration);
+        services.AddConfiguration<AppConfiguration>(configuration)
+            .AddConfiguration<CityParameters>(configuration, CityParameters.Name)
+            .AddConfiguration<StateParameters>(configuration, StateParameters.Name);
 
         using ServiceProvider provider =
             services.BuildServiceProvider();
@@ -31,14 +34,13 @@ public static class AplicationConfigurationExtension
                 ? configuration
                 : configuration.GetSection(sectionName);
 
-        services
-            .AddOptions<TParameterType>(sectionName)
-            .Bind(section)
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
+        // services.AddOptions<TParameterType>(sectionName)
+        //     .Bind(section)
+        //     .ValidateDataAnnotations()
+        //     .ValidateOnStart();
 
-        //services.Configure<TParameterType>(section);
-
+        services.Configure<TParameterType>(section);
+        
         services.AddScoped(conf =>
             conf.GetService<IOptionsMonitor<TParameterType>>()?.CurrentValue!);
 

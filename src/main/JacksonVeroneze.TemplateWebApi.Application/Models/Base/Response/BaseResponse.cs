@@ -2,7 +2,7 @@ using System.Collections.ObjectModel;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
 
-public class BaseResponse
+public record BaseResponse
 {
     [JsonIgnore]
     public ResponseStatus Status { get; }

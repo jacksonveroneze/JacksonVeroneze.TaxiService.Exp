@@ -15,7 +15,7 @@ public static class SwaggerExtension
         services.AddSwaggerGenerator(conf =>
         {
             conf.Title = appConfiguration.Application!.Name;
-            conf.Description = appConfiguration.Application.Description;
+            conf.Description = appConfiguration.Application!.Description;
             conf.ContactName = appConfiguration.Swagger!.ContactName;
             conf.ContactEmail = appConfiguration.Swagger.ContactEmail;
             conf.UseAuthentication = true;

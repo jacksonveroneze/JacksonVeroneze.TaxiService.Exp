@@ -25,6 +25,8 @@ public static class ApiConfigExtension
             .AddAuthentication(appConfiguration)
             .AddAuthorization(appConfiguration)
             .AddOpenTelemetry(appConfiguration)
+            .AddCached(appConfiguration)
+            .AddHttpClients(appConfiguration)
             .AddCorrelation()
             .AddCultureConfiguration()
             .AddJsonOptionsSerialize()
@@ -32,7 +34,10 @@ public static class ApiConfigExtension
             {
                 options.LowercaseUrls = true;
                 options.LowercaseQueryStrings = true;
-            });
+            })
+            .AddControllers()
+            .ConfigureApiBehaviorOptions(options =>
+                options.SuppressInferBindingSourcesForParameters = true);
 
         return services;
     }
@@ -52,8 +57,10 @@ public static class ApiConfigExtension
             .UseMiddleware<ErrorHandlingMiddleware>()
             .UseHealthChecks("/health")
             .UseAuthentication()
-            .UseAuthorization()
-            .UseEndpoints(endpoints => endpoints.MapMetrics());
+            .UseAuthorization();
+        app.UseEndpoints(endpoints => endpoints.MapMetrics());
+
+        app.MapControllers();
 
         return app;
     }

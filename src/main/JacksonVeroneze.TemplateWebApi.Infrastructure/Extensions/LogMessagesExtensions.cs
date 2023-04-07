@@ -1,0 +1,58 @@
+using Microsoft.Extensions.Logging;
+using Refit;
+
+namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
+
+public static partial class LogMessagesExtensions
+{
+    #region Common
+
+    [LoggerMessage(
+        EventId = 1000,
+        Level = LogLevel.Error,
+        Message = "{className} - {methodName} - Error")]
+    public static partial void LogGenericError(this ILogger logger,
+        string className, string methodName, Exception ex);
+    
+    [LoggerMessage(
+        EventId = 1001,
+        Level = LogLevel.Warning,
+        Message = "{className} - {methodName} - Warning - '{id}' NotFound")]
+    public static partial void LogNotFound(this ILogger logger,
+        string className, string methodName, string id, 
+        ApiException ex);
+
+    #endregion
+    
+    #region City
+
+    [LoggerMessage(
+        EventId = 2000,
+        Level = LogLevel.Information,
+        Message = "{className} - {methodName} - Info - StateId: '{stateId}' - Count: '{count}'")]
+    public static partial void LogGetCitiesByStateId(this ILogger logger,
+        string className, string methodName, string stateId, int count);
+
+    #endregion
+    
+    #region State
+
+    [LoggerMessage(
+        EventId = 3000,
+        Level = LogLevel.Information,
+        Message = "{className} - {methodName} - Info - Count: '{count}'")]
+    public static partial void LogGetAllStates(this ILogger logger,
+        string className, string methodName, int count);
+
+    [LoggerMessage(
+        EventId = 3001,
+        Level = LogLevel.Information,
+        Message = "{className} - {methodName} - Info - Id: '{id}'")]
+    public static partial void LogGetStateById(this ILogger logger,
+        string className, string methodName, string id);
+
+    #endregion
+
+
+
+}
