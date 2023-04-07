@@ -40,7 +40,7 @@ public static class AplicationConfigurationExtension
         //     .ValidateOnStart();
 
         services.Configure<TParameterType>(section);
-        
+
         services.AddScoped(conf =>
             conf.GetService<IOptionsMonitor<TParameterType>>()?.CurrentValue!);
 

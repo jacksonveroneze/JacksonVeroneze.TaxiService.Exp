@@ -13,17 +13,17 @@ public static partial class LogMessagesExtensions
         Message = "{className} - {methodName} - Error")]
     public static partial void LogGenericError(this ILogger logger,
         string className, string methodName, Exception ex);
-    
+
     [LoggerMessage(
         EventId = 1001,
         Level = LogLevel.Warning,
         Message = "{className} - {methodName} - Warning - '{id}' NotFound")]
     public static partial void LogNotFound(this ILogger logger,
-        string className, string methodName, string id, 
+        string className, string methodName, string id,
         ApiException ex);
 
     #endregion
-    
+
     #region City
 
     [LoggerMessage(
@@ -34,7 +34,7 @@ public static partial class LogMessagesExtensions
         string className, string methodName, string stateId, int count);
 
     #endregion
-    
+
     #region State
 
     [LoggerMessage(
@@ -52,7 +52,4 @@ public static partial class LogMessagesExtensions
         string className, string methodName, string id);
 
     #endregion
-
-
-
 }

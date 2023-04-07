@@ -10,11 +10,11 @@ public static partial class LogMessagesExtensions
         Message = "{className} - {methodName} - NotFound")]
     public static partial void LogNotFound(this ILogger logger,
         string className, string methodName);
-    
+
     #endregion
-    
+
     #region City
-    
+
     #endregion
 
     #region State
@@ -34,7 +34,4 @@ public static partial class LogMessagesExtensions
         string className, string methodName, string id);
 
     #endregion
-
-
-
 }

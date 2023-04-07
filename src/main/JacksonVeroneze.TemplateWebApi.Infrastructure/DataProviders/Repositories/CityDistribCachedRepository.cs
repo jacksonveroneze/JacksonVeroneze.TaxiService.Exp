@@ -9,7 +9,7 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositori
 public class CityDistribCachedRepository : ICityDistribCachedRepository
 {
     private const string PrefixKey = "_distrib_cache_city_";
-    
+
     private readonly ICacheService _cacheService;
     private readonly ICityRepository _repository;
 

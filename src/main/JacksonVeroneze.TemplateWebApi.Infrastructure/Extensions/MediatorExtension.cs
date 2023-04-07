@@ -12,7 +12,7 @@ public static class MediatorExtension
     public static IServiceCollection AddMediatr(
         this IServiceCollection services)
     {
-        services.AddMediatR(conf => 
+        services.AddMediatR(conf =>
                 conf.RegisterServicesFromAssemblyContaining<Metadata>())
             .AddValidatorsFromAssemblyContaining(typeof(Metadata))
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>))

@@ -6,7 +6,7 @@ public record StateResult
 {
     [JsonPropertyName("sigla")]
     public string? Id { get; set; }
-    
+
     [JsonPropertyName("nome")]
     public string? Name { get; set; }
 }

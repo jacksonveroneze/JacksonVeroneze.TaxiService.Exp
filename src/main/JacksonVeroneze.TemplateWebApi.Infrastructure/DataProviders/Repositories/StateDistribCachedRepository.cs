@@ -50,10 +50,10 @@ public class StateDistribCachedRepository : IStateDistribCachedRepository
         StateFilter filter,
         CancellationToken cancellationToken = default)
     {
-        ICollection<StateResult>? result = 
+        ICollection<StateResult>? result =
             await GetAllAsync(cancellationToken);
 
-        return result?.FirstOrDefault(item => 
+        return result?.FirstOrDefault(item =>
             item.Id!.Equals(filter.Id, StringComparison.OrdinalIgnoreCase));
     }
 }

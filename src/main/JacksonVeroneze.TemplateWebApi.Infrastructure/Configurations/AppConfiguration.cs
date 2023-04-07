@@ -24,7 +24,7 @@ public class AppConfiguration
 
     public CacheType CacheType { get; set; }
     public string? CacheEndpoint { get; set; }
-    
+
     public string? AuthAuthority { get; set; }
     public string? AuthAudience { get; set; }
 

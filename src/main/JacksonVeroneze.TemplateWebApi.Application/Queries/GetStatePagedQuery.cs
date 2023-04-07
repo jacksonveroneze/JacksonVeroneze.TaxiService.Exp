@@ -4,5 +4,4 @@ namespace JacksonVeroneze.TemplateWebApi.Application.Queries;
 
 public record GetStatePagedQuery : IRequest<BaseResponse>
 {
-    
 }

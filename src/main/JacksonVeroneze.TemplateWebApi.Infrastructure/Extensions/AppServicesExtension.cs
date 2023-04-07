@@ -14,7 +14,7 @@ public static class AppServicesExtension
         services.AddScoped<ICityRepository, CityRepository>();
         services.AddScoped<ICityDistribCachedRepository, CityDistribCachedRepository>();
         services.AddScoped<ICityPaginatedRepository, CityPaginatedRepository>();
-        
+
         services.AddScoped<IStateRepository, StateRepository>();
         services.AddScoped<IStateDistribCachedRepository, StateDistribCachedRepository>();
 

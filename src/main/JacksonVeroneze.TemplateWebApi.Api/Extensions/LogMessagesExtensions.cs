@@ -5,9 +5,9 @@ public static partial class LogMessagesExtensions
     #region Common
 
     #endregion
-    
+
     #region City
-    
+
     #endregion
 
     #region State
@@ -27,5 +27,4 @@ public static partial class LogMessagesExtensions
         string className, string methodName);
 
     #endregion
-
 }
