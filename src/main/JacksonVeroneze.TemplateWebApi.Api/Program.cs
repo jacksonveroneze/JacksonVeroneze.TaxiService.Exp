@@ -33,13 +33,9 @@ try
     // ConfigureServices
     builder.Services.ConfigureServices(appConfiguration);
 
-    builder.Services.AddControllers();
-
     WebApplication app = builder.Build();
 
     app.Configure();
-
-    app.MapControllers();
 
     app.Run();
 }

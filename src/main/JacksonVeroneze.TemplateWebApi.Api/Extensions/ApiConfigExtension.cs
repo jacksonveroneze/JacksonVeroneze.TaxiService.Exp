@@ -14,30 +14,29 @@ public static class ApiConfigExtension
         AppConfiguration appConfiguration)
     {
         services
-            .AddMediatr()
-            .AddAutoMapper()
-            .AddAppServices()
-            .AddHealthChecks();
+            .AddControllers()
+            .ConfigureApiBehaviorOptions(options =>
+                options.SuppressInferBindingSourcesForParameters = true);
 
         services
             .AddEndpointsApiExplorer()
             .AddSwagger(appConfiguration)
+            .AddAppServices()
+            .AddAutoMapper()
+            .AddCorrelation()
+            .AddMediatr()
             .AddAuthentication(appConfiguration)
             .AddAuthorization(appConfiguration)
             .AddOpenTelemetry(appConfiguration)
             .AddCached(appConfiguration)
             .AddHttpClients(appConfiguration)
-            .AddCorrelation()
             .AddCultureConfiguration()
-            .AddJsonOptionsSerialize()
             .AddRouting(options =>
             {
                 options.LowercaseUrls = true;
                 options.LowercaseQueryStrings = true;
             })
-            .AddControllers()
-            .ConfigureApiBehaviorOptions(options =>
-                options.SuppressInferBindingSourcesForParameters = true);
+            .AddHealthChecks();
 
         return services;
     }
@@ -51,14 +50,14 @@ public static class ApiConfigExtension
                 .AddSwagger();
         }
 
-        app.UseCorrelationId()
-            .UseRouting()
-            .UseHttpMetrics()
-            .UseMiddleware<ErrorHandlingMiddleware>()
-            .UseHealthChecks("/health")
+        app.UseHttpMetrics()
+            .UseCorrelationId()
+            .UseCustomGlobalErrorHandler()
             .UseAuthentication()
             .UseAuthorization();
-        app.UseEndpoints(endpoints => endpoints.MapMetrics());
+
+        app.MapMetrics();
+        app.UseHealthChecks("/health");
 
         app.MapControllers();
 
