@@ -21,6 +21,8 @@
         <!--    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />-->
 
         <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+
+        <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
         <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.1" />
         <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.4" />
 
@@ -42,7 +44,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <!--    <ProjectReference Include="..\..\..\..\JacksonVeroneze.NET.HttpClient\src\JacksonVeroneze.NET.HttpClient\JacksonVeroneze.NET.HttpClient.csproj" />-->
         <ProjectReference Include="..\JacksonVeroneze.TemplateWebApi.Application\JacksonVeroneze.TemplateWebApi.Application.csproj" />
         <ProjectReference Include="..\JacksonVeroneze.TemplateWebApi.Domain\JacksonVeroneze.TemplateWebApi.Domain.csproj" />
     </ItemGroup>

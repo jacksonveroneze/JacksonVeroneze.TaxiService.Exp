@@ -15,6 +15,7 @@ public static class ApiConfigExtension
     {
         services
             .AddControllers()
+            .AddJsonOptionsSerialize()
             .ConfigureApiBehaviorOptions(options =>
                 options.SuppressInferBindingSourcesForParameters = true);
 
@@ -25,12 +26,14 @@ public static class ApiConfigExtension
             .AddAutoMapper()
             .AddCorrelation()
             .AddMediatr()
+            .AddFluentValidation()
             .AddAuthentication(appConfiguration)
             .AddAuthorization(appConfiguration)
             .AddOpenTelemetry(appConfiguration)
             .AddCached(appConfiguration)
             .AddHttpClients(appConfiguration)
             .AddCultureConfiguration()
+            .AddJsonOptionsSerialize()
             .AddRouting(options =>
             {
                 options.LowercaseUrls = true;

@@ -22,4 +22,20 @@ public static class JsonOptionsSerializeExtension
 
         return services;
     }
+    
+    public static IMvcBuilder AddJsonOptionsSerialize(
+        this IMvcBuilder builder)
+    {
+        builder.AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.DefaultIgnoreCondition =
+                JsonIgnoreCondition.WhenWritingNull;
+            options.JsonSerializerOptions.WriteIndented = false;
+            options.JsonSerializerOptions.PropertyNameCaseInsensitive = false;
+            options.JsonSerializerOptions.Converters
+                .Add(new JsonStringEnumConverter());
+        });
+
+        return builder;
+    }
 }

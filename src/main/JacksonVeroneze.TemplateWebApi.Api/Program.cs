@@ -17,8 +17,8 @@ try
     WebApplicationBuilder builder =
         WebApplication.CreateBuilder(args);
 
-    builder.Host.ConfigureHostOptions(o =>
-        o.ShutdownTimeout = TimeSpan.FromSeconds(30));
+    builder.Host.ConfigureHostOptions(options =>
+        options.ShutdownTimeout = TimeSpan.FromSeconds(5));
 
     builder.Configuration
         .AddEnvironmentVariables("APP_CONFIG_");
@@ -35,6 +35,15 @@ try
 
     WebApplication app = builder.Build();
 
+    app.Lifetime.ApplicationStarted.Register(() => 
+        Log.Information("ApplicationStarted"));
+    
+    app.Lifetime.ApplicationStopping.Register(() => 
+        Log.Information("ApplicationStopping"));
+    
+    app.Lifetime.ApplicationStopped.Register(() => 
+        Log.Information("ApplicationStopped"));
+    
     app.Configure();
 
     app.Run();
