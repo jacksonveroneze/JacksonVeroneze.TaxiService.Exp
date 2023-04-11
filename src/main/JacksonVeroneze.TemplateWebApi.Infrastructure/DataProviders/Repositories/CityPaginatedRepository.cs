@@ -8,14 +8,14 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositori
 
 public class CityPaginatedRepository : ICityPaginatedRepository
 {
-    private readonly ICityRepository _repository;
+    private readonly ICityDistribCachedRepository _repository;
 
     private readonly ICollection<CityResult> _empty = Enumerable
         .Empty<CityResult>()
         .ToArray();
 
     public CityPaginatedRepository(
-        ICityRepository repository)
+        ICityDistribCachedRepository repository)
     {
         _repository = repository;
     }
@@ -29,6 +29,6 @@ public class CityPaginatedRepository : ICityPaginatedRepository
 
         result ??= _empty;
 
-        return result.ToPage(filter.Pagination!);
+        return new Page<CityResult>(result, new PageInfo(1, 1, 1));
     }
 }

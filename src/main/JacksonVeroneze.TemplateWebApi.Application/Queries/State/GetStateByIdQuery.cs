@@ -1,7 +1,7 @@
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
 using Microsoft.AspNetCore.Mvc;
 
-namespace JacksonVeroneze.TemplateWebApi.Application.Queries;
+namespace JacksonVeroneze.TemplateWebApi.Application.Queries.State;
 
 public record GetStateByIdQuery : IRequest<BaseResponse>
 {

@@ -35,15 +35,15 @@ try
 
     WebApplication app = builder.Build();
 
-    app.Lifetime.ApplicationStarted.Register(() => 
+    app.Lifetime.ApplicationStarted.Register(() =>
         Log.Information("ApplicationStarted"));
-    
-    app.Lifetime.ApplicationStopping.Register(() => 
+
+    app.Lifetime.ApplicationStopping.Register(() =>
         Log.Information("ApplicationStopping"));
-    
-    app.Lifetime.ApplicationStopped.Register(() => 
+
+    app.Lifetime.ApplicationStopped.Register(() =>
         Log.Information("ApplicationStopped"));
-    
+
     app.Configure();
 
     app.Run();

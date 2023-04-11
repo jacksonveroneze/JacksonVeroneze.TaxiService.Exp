@@ -1,5 +1,5 @@
 using JacksonVeroneze.TemplateWebApi.Application.Models.State;
-using JacksonVeroneze.TemplateWebApi.Application.Queries;
+using JacksonVeroneze.TemplateWebApi.Application.Queries.State;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 using JacksonVeroneze.TemplateWebApi.Domain.Results.State;
 

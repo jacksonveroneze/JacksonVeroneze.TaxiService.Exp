@@ -12,6 +12,8 @@ public static class AutoMapperExtension
     {
         MapperConfiguration configuration = new(cfg =>
         {
+            cfg.AddProfile<CommonMapper>();
+            cfg.AddProfile<CityMapper>();
             cfg.AddProfile<StateMapper>();
             cfg.AllowNullCollections = true;
         });

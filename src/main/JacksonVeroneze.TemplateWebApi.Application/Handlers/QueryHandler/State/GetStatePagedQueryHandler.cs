@@ -2,12 +2,13 @@ using JacksonVeroneze.TemplateWebApi.Application.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
 using JacksonVeroneze.TemplateWebApi.Application.Models.State;
-using JacksonVeroneze.TemplateWebApi.Application.Queries;
+using JacksonVeroneze.TemplateWebApi.Application.Queries.State;
 using JacksonVeroneze.TemplateWebApi.Domain.Results.State;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.State;
 
-public class GetStatePagedQueryHandler : IRequestHandler<GetStatePagedQuery, BaseResponse>
+public class GetStatePagedQueryHandler : 
+    IRequestHandler<GetStatePagedQuery, BaseResponse>
 {
     private readonly ILogger<GetStatePagedQueryHandler> _logger;
     private readonly IMapper _mapper;

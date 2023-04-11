@@ -16,7 +16,7 @@ public static class MediatorExtension
                 conf.RegisterServicesFromAssemblyContaining<Metadata>())
             .AddValidatorsFromAssemblyContaining(typeof(Metadata))
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
-            //.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+        //.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
         return services;
     }

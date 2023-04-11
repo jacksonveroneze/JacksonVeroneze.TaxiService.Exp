@@ -2,6 +2,8 @@ using System.Net.Mime;
 using JacksonVeroneze.TemplateWebApi.Api.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
 using JacksonVeroneze.TemplateWebApi.Application.Queries;
+using JacksonVeroneze.TemplateWebApi.Application.Queries.City;
+using JacksonVeroneze.TemplateWebApi.Application.Queries.State;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -45,6 +47,20 @@ public class StatesController : ControllerBase
     {
         _logger.LogGetAllStates(nameof(StatesController),
             nameof(GetPagedAsync));
+
+        BaseResponse response = await _mediator.Send(query);
+
+        return StatusCode((int)response.Status, response);
+    }
+
+    [HttpGet("{id}/cities", Name = "GetCitiesById")]
+    [ApiConventionMethod(typeof(DefaultApiConventions),
+        nameof(DefaultApiConventions.Get))]
+    public async Task<IActionResult> GetCitiesByIdAsync(
+        [FromRoute] GetCityByStatePagedQuery query)
+    {
+        _logger.LogGetAllStates(nameof(StatesController),
+            nameof(GetCitiesByIdAsync));
 
         BaseResponse response = await _mediator.Send(query);
 

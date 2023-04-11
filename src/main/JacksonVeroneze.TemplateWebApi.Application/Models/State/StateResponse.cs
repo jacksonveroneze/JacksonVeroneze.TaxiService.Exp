@@ -1,6 +1,6 @@
 namespace JacksonVeroneze.TemplateWebApi.Application.Models.State;
 
-public record StateResponse
+public struct StateResponse
 {
     [JsonPropertyName("id")]
     public string? Id { get; set; }

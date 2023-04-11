@@ -22,7 +22,7 @@ public static class JsonOptionsSerializeExtension
 
         return services;
     }
-    
+
     public static IMvcBuilder AddJsonOptionsSerialize(
         this IMvcBuilder builder)
     {

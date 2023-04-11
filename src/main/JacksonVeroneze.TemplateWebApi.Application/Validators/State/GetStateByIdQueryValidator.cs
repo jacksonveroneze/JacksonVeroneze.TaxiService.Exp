@@ -1,4 +1,4 @@
-﻿using JacksonVeroneze.TemplateWebApi.Application.Queries;
+﻿using JacksonVeroneze.TemplateWebApi.Application.Queries.State;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Validators.State;
 
@@ -11,9 +11,6 @@ public class GetStateByIdQueryValidator : AbstractValidator<GetStateByIdQuery>
 
         RuleFor(request => request.Id)
             .Cascade(CascadeMode.Stop)
-            .NotNull()
-            .NotEmpty()
-            .Length(2, 2)
-            .Matches(@"[a-zA-Z]{2,2}");
+            .SetValidator(new StateQueryValidator()!);
     }
 }

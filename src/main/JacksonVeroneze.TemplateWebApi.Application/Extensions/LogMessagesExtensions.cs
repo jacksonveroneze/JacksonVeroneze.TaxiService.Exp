@@ -15,6 +15,13 @@ public static partial class LogMessagesExtensions
 
     #region City
 
+    [LoggerMessage(
+        EventId = 2000,
+        Level = LogLevel.Information,
+        Message = "{className} - {methodName} - Info - StateId: '{id}'")]
+    public static partial void LogGetCityByState(this ILogger logger,
+        string className, string methodName, string id);
+
     #endregion
 
     #region State
