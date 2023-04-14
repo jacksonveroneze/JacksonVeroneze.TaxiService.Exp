@@ -47,7 +47,7 @@ public class StateDistribCachedRepository : IStateDistribCachedRepository
     }
 
     public async Task<StateResult?> GetByIdAsync(
-        StateFilter filter,
+        StateByIdFilter filter,
         CancellationToken cancellationToken = default)
     {
         ICollection<StateResult>? result =

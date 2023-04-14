@@ -13,17 +13,24 @@ public static partial class LogMessagesExtensions
     #region State
 
     [LoggerMessage(
-        EventId = 3000,
+        EventId = 2000,
         Level = LogLevel.Information,
         Message = "{className} - {methodName} - Info")]
     public static partial void LogGetAllStates(this ILogger logger,
         string className, string methodName);
 
     [LoggerMessage(
-        EventId = 3001,
+        EventId = 2001,
         Level = LogLevel.Information,
         Message = "{className} - {methodName} - Info")]
     public static partial void LogGetStateById(this ILogger logger,
+        string className, string methodName);
+
+    [LoggerMessage(
+        EventId = 2002,
+        Level = LogLevel.Information,
+        Message = "{className} - {methodName} - Info")]
+    public static partial void GetCitiesById(this ILogger logger,
         string className, string methodName);
 
     #endregion

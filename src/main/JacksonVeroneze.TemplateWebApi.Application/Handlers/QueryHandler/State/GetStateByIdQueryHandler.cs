@@ -8,7 +8,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Results.State;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.State;
 
-public class GetStateByIdQueryHandler : 
+public class GetStateByIdQueryHandler :
     IRequestHandler<GetStateByIdQuery, BaseResponse>
 {
     private readonly ILogger<GetStatePagedQueryHandler> _logger;
@@ -29,7 +29,7 @@ public class GetStateByIdQueryHandler :
         GetStateByIdQuery request,
         CancellationToken cancellationToken)
     {
-        StateFilter filter = _mapper.Map<StateFilter>(request);
+        StateByIdFilter filter = _mapper.Map<StateByIdFilter>(request);
 
         StateResult? result = await _repository.GetByIdAsync(
             filter, cancellationToken);

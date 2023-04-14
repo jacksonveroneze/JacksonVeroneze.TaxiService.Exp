@@ -1,7 +1,6 @@
 using System.Net.Mime;
 using JacksonVeroneze.TemplateWebApi.Api.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
-using JacksonVeroneze.TemplateWebApi.Application.Queries;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.City;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.State;
 using MediatR;
@@ -59,7 +58,7 @@ public class StatesController : ControllerBase
     public async Task<IActionResult> GetCitiesByIdAsync(
         [FromRoute] GetCityByStatePagedQuery query)
     {
-        _logger.LogGetAllStates(nameof(StatesController),
+        _logger.GetCitiesById(nameof(StatesController),
             nameof(GetCitiesByIdAsync));
 
         BaseResponse response = await _mediator.Send(query);

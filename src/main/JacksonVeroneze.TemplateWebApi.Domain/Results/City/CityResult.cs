@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace JacksonVeroneze.TemplateWebApi.Domain.Results.City;
 
-public struct CityResult
+public record CityResult
 {
     [JsonPropertyName("id")]
     public int Id { get; set; }

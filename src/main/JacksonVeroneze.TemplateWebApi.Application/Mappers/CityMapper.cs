@@ -19,10 +19,10 @@ public class CityMapper : Profile
             .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src.Pagination))
             .ForMember(dest => dest.Messages, opts => opts.Ignore());
 
-        CreateMap<GetCityByStatePagedQuery, StateFilter>()
+        CreateMap<GetCityByStatePagedQuery, StateByIdFilter>()
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.StateId));
 
-        CreateMap<GetCityByStatePagedQuery, CityFilter>()
+        CreateMap<GetCityByStatePagedQuery, CityByStateFilter>()
             .ForMember(dest => dest.StateId, opts => opts.MapFrom(src => src.StateId))
             .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src));
     }

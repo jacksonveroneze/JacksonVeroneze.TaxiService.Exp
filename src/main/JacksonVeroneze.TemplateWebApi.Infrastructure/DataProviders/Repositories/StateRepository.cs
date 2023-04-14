@@ -42,7 +42,7 @@ public class StateRepository : IStateRepository
     }
 
     public Task<StateResult?> GetByIdAsync(
-        StateFilter filter,
+        StateByIdFilter filter,
         CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();

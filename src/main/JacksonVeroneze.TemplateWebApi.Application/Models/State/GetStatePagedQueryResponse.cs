@@ -1,9 +1,7 @@
-using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
+using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response.Pagination;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Models.State;
 
-public record GetStatePagedQueryResponse : OkResponse
+public record GetStatePagedQueryResponse : PagedResponse<StateResponse>
 {
-    [JsonPropertyName("data")]
-    public ICollection<StateResponse>? Data { get; set; }
 }

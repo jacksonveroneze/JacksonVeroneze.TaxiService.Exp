@@ -11,7 +11,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Results.State;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.City;
 
-public class GetCityPagedQueryHandler : 
+public class GetCityPagedQueryHandler :
     IRequestHandler<GetCityByStatePagedQuery, BaseResponse>
 {
     private readonly ILogger<GetCityPagedQueryHandler> _logger;
@@ -35,10 +35,10 @@ public class GetCityPagedQueryHandler :
         GetCityByStatePagedQuery request,
         CancellationToken cancellationToken)
     {
-        StateFilter stateFilter = _mapper.Map<StateFilter>(request);
+        StateByIdFilter filter = _mapper.Map<StateByIdFilter>(request);
 
         StateResult? result = await _stateRepository.GetByIdAsync(
-            stateFilter, cancellationToken);
+            filter, cancellationToken);
 
         if (result is null)
         {
@@ -48,7 +48,7 @@ public class GetCityPagedQueryHandler :
             return new StateNotFoundResponse(request.StateId!);
         }
 
-        CityFilter cityFilter = _mapper.Map<CityFilter>(request);
+        CityByStateFilter cityFilter = _mapper.Map<CityByStateFilter>(request);
 
         Page<CityResult> page = await _cityRepository
             .GetByStateIdPageAsync(cityFilter, cancellationToken);

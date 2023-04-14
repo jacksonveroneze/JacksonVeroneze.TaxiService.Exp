@@ -17,6 +17,7 @@ public static class AppServicesExtension
 
         services.AddScoped<IStateRepository, StateRepository>();
         services.AddScoped<IStateDistribCachedRepository, StateDistribCachedRepository>();
+        services.AddScoped<IStatePaginatedRepository, StatePaginatedRepository>();
 
         return services;
     }

@@ -21,7 +21,7 @@ public class CityPaginatedRepository : ICityPaginatedRepository
     }
 
     public async Task<Page<CityResult>> GetByStateIdPageAsync(
-        CityFilter filter,
+        CityByStateFilter filter,
         CancellationToken cancellationToken = default)
     {
         ICollection<CityResult>? result = await _repository
@@ -29,6 +29,6 @@ public class CityPaginatedRepository : ICityPaginatedRepository
 
         result ??= _empty;
 
-        return new Page<CityResult>(result, new PageInfo(1, 1, 1));
+        return result.ToPageInMemory(filter.Pagination!);
     }
 }

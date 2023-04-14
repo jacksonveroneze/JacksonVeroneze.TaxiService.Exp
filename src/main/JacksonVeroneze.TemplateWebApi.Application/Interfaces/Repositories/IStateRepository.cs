@@ -9,6 +9,6 @@ public interface IStateRepository
         CancellationToken cancellationToken = default);
 
     Task<StateResult?> GetByIdAsync(
-        StateFilter filter,
+        StateByIdFilter filter,
         CancellationToken cancellationToken = default);
 }

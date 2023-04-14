@@ -30,7 +30,7 @@ public class CityDistribCachedRepository : ICityDistribCachedRepository
     }
 
     public Task<ICollection<CityResult>?> GetByStateIdAsync(
-        CityFilter filter,
+        CityByStateFilter filter,
         CancellationToken cancellationToken = default)
     {
         return _cacheService

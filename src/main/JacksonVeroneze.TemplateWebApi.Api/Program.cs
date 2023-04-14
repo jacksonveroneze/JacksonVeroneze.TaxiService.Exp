@@ -12,7 +12,7 @@ Log.Logger = new LoggerConfiguration()
 
 try
 {
-    Log.Information("Starting web application");
+    Log.Information("Starting application");
 
     WebApplicationBuilder builder =
         WebApplication.CreateBuilder(args);
@@ -20,6 +20,7 @@ try
     builder.Host.ConfigureHostOptions(options =>
         options.ShutdownTimeout = TimeSpan.FromSeconds(5));
 
+    // Add custom envs
     builder.Configuration
         .AddEnvironmentVariables("APP_CONFIG_");
 

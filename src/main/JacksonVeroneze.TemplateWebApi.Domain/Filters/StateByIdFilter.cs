@@ -1,6 +1,6 @@
 namespace JacksonVeroneze.TemplateWebApi.Domain.Filters;
 
-public record StateFilter
+public record StateByIdFilter
 {
     public string? Id { get; set; }
 }

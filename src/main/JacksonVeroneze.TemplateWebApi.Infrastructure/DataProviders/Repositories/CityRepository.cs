@@ -22,7 +22,7 @@ public class CityRepository : ICityRepository
     }
 
     public async Task<ICollection<CityResult>?> GetByStateIdAsync(
-        CityFilter filter,
+        CityByStateFilter filter,
         CancellationToken cancellationToken = default)
     {
         try
