@@ -8,11 +8,11 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositori
 
 public class CityPaginatedRepository : ICityPaginatedRepository
 {
-    private readonly ICityDistribCachedRepository _repository;
-
     private readonly ICollection<CityResult> _empty = Enumerable
         .Empty<CityResult>()
         .ToArray();
+    
+    private readonly ICityDistribCachedRepository _repository;
 
     public CityPaginatedRepository(
         ICityDistribCachedRepository repository)

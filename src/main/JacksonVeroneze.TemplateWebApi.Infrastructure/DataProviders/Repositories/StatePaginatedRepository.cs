@@ -8,11 +8,11 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositori
 
 public class StatePaginatedRepository : IStatePaginatedRepository
 {
-    private readonly IStateDistribCachedRepository _repository;
-
     private readonly ICollection<StateResult> _empty = Enumerable
         .Empty<StateResult>()
         .ToArray();
+    
+    private readonly IStateDistribCachedRepository _repository;
 
     public StatePaginatedRepository(
         IStateDistribCachedRepository repository)

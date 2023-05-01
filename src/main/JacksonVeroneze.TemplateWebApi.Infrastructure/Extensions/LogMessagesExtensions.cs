@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.Extensions.Logging;
 using Refit;
 
@@ -16,6 +17,13 @@ public static partial class LogMessagesExtensions
 
     [LoggerMessage(
         EventId = 1001,
+        Level = LogLevel.Error,
+        Message = "{className} - {methodName} - Error - StatusCode: '{code}' ")]
+    public static partial void LogGenericHttpError(this ILogger logger,
+        string className, string methodName, HttpStatusCode code, Exception ex);
+    
+    [LoggerMessage(
+        EventId = 1010,
         Level = LogLevel.Warning,
         Message = "{className} - {methodName} - Warning - '{id}' NotFound")]
     public static partial void LogNotFound(this ILogger logger,

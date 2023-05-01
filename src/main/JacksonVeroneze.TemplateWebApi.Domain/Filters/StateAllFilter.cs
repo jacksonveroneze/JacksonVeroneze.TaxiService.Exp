@@ -4,5 +4,5 @@ namespace JacksonVeroneze.TemplateWebApi.Domain.Filters;
 
 public record StateAllFilter
 {
-    public PaginationParameters? Pagination { get; set; }
+    public PaginationParameters? Pagination { get; init; }
 }

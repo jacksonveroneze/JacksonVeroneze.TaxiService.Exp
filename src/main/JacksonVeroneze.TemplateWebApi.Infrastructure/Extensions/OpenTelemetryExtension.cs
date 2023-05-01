@@ -21,8 +21,8 @@ public static class OpenTelemetryExtension
         }
 
         Action<ResourceBuilder> configureResource = r => r.AddService(
-            appConfiguration.Application!.Name!,
-            serviceVersion: appConfiguration.Application!.Version!,
+            appConfiguration.AppName,
+            serviceVersion: appConfiguration.AppVersion,
             serviceInstanceId: Environment.MachineName);
 
         services.AddOpenTelemetry()

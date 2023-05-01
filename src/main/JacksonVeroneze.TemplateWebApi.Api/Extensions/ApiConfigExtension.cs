@@ -33,7 +33,6 @@ public static class ApiConfigExtension
             .AddCached(appConfiguration)
             .AddHttpClients(appConfiguration)
             .AddCultureConfiguration()
-            .AddJsonOptionsSerialize()
             .AddRouting(options =>
             {
                 options.LowercaseUrls = true;

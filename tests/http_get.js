@@ -6,7 +6,7 @@ export const options = {
 };
 
 export default function () {
-   let res1 = http.get('http://0.0.0.0:7000/api/v1/states/SC');
+   let res1 = http.get('http://127.0.0.1:8085/api/v1/states/SC');
    // let res2 = http.get('http://0.0.0.0:7000/api/v1/states/RS');
     //let res3 = http.get('http://127.0.0.1:7000/api/v1/states/SC/cities');
     //let res4 = http.get('http://127.0.0.1:7000/api/v1/states/RS/cities');

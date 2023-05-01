@@ -4,5 +4,5 @@ public class CityParameters
 {
     public const string Name = "City";
 
-    public int CacheExpMilisegundos { get; set; }
+    public int CacheExpMilisegundos { get; init; }
 }

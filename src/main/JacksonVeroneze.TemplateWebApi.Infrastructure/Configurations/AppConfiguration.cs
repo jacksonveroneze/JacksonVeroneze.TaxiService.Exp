@@ -8,16 +8,12 @@ public class AppConfiguration
     private const string EnviromentDevelopment = "Development";
     private const string EnviromentProduction = "Production";
 
-    [Required]
     public string? Environment { get; set; }
 
-    [Required]
     public AppInfoConfiguration? Application { get; set; }
 
-    [Required]
     public SwaggerConfiguration? Swagger { get; set; }
 
-    [Required]
     public DistributedTracingConfiguration? DistributedTracing { get; set; }
 
     public ICollection<HttpClientConfiguration>? HttpClients { get; set; }
@@ -28,6 +24,12 @@ public class AppConfiguration
     public string? AuthAuthority { get; set; }
     public string? AuthAudience { get; set; }
 
+    public string AppName =>
+        Application?.Name ?? String.Empty;
+    
+    public string AppVersion =>
+        Application?.Version ?? String.Empty;
+    
     public bool IsDevelopment =>
         Environment!.Equals(EnviromentDevelopment,
             StringComparison.OrdinalIgnoreCase);

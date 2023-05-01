@@ -4,7 +4,7 @@ namespace JacksonVeroneze.TemplateWebApi.Domain.Filters;
 
 public record CityByStateFilter
 {
-    public string? StateId { get; set; }
+    public string? StateId { get; init; }
 
-    public PaginationParameters? Pagination { get; set; }
+    public PaginationParameters? Pagination { get; init; }
 }

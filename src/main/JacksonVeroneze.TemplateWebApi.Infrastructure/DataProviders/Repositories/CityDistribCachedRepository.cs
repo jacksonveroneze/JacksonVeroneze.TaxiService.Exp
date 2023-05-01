@@ -33,13 +33,15 @@ public class CityDistribCachedRepository : ICityDistribCachedRepository
         CityByStateFilter filter,
         CancellationToken cancellationToken = default)
     {
+        string key = filter.StateId!;
+        
         return _cacheService
-            .GetOrCreateAsync(filter.StateId!, async entry =>
+            .GetOrCreateAsync(key, async entry =>
             {
+                entry.AbsoluteExpirationRelativeToNow = _cacheExpiration;
+
                 ICollection<CityResult>? result = await _repository
                     .GetByStateIdAsync(filter, cancellationToken);
-
-                entry.AbsoluteExpirationRelativeToNow = _cacheExpiration;
 
                 return result;
             }, cancellationToken);

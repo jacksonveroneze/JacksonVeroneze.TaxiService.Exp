@@ -12,8 +12,7 @@ public static class CacheServicesExtension
         this IServiceCollection services,
         AppConfiguration appConfiguration)
     {
-        services.AddDistribCache();
-        services.AddMemoryCache();
+        services.AddCacheService();
 
         if (appConfiguration.CacheType == CacheType.Memory)
         {
@@ -24,15 +23,14 @@ public static class CacheServicesExtension
             services.AddStackExchangeRedisCache(options =>
             {
                 options.InstanceName =
-                    $"{appConfiguration.Application!.Name!}-" +
-                    $"{appConfiguration.Application!.Version!}";
+                    $"{appConfiguration.AppName}-{appConfiguration.AppVersion}";
 
                 options.ConfigurationOptions = new ConfigurationOptions
                 {
                     Ssl = false,
                     AbortOnConnectFail = false,
                     EndPoints = { appConfiguration.CacheEndpoint },
-                    ClientName = $"{appConfiguration.Application.Name}-{Guid.NewGuid()}"
+                    ClientName = $"{appConfiguration.AppName}-{Guid.NewGuid()}"
                 };
             });
         }

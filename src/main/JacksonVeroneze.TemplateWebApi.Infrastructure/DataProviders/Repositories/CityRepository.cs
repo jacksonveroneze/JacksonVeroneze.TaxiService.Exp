@@ -42,6 +42,13 @@ public class CityRepository : ICityRepository
 
             return null;
         }
+        catch (ApiException ex)
+        {
+            _logger.LogGenericHttpError(nameof(CityRepository),
+                nameof(GetByStateIdAsync), ex.StatusCode, ex);
+
+            throw;
+        }
         catch (Exception ex)
         {
             _logger.LogGenericError(nameof(CityRepository),

@@ -1,8 +1,10 @@
+using CorrelationId.HttpClient;
 using JacksonVeroneze.NET.HttpClient.Configuration;
 using JacksonVeroneze.NET.HttpClient.Extensions;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.HttpClients;
 using Microsoft.Extensions.DependencyInjection;
+using Prometheus;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
 
@@ -23,11 +25,14 @@ public static class HttpClientExtension
         AppConfiguration appConfiguration,
         string name) where TClient : class
     {
-        HttpClientConfiguration config = appConfiguration.HttpClients!
-            .Single(client => client.Name!.Equals(name,
-                StringComparison.OrdinalIgnoreCase));
+        HttpClientConfiguration config =
+            appConfiguration.HttpClients!.Single(
+                client => client.Name!.Equals(name,
+                    StringComparison.OrdinalIgnoreCase));
 
-        services.ClientBuilder<TClient>(config);
+        services.RefitClientBuilder<TClient>(config)
+            .AddCorrelationIdForwarding()
+            .UseHttpClientMetrics();
 
         return services;
     }

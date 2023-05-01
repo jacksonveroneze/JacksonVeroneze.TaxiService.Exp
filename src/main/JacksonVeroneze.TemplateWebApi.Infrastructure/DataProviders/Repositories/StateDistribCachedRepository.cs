@@ -37,10 +37,10 @@ public class StateDistribCachedRepository : IStateDistribCachedRepository
         return _cacheService
             .GetOrCreateAsync(key, async entry =>
             {
+                entry.AbsoluteExpirationRelativeToNow = _cacheExpiration;
+
                 ICollection<StateResult>? result = await _repository
                     .GetAllAsync(cancellationToken);
-
-                entry.AbsoluteExpirationRelativeToNow = _cacheExpiration;
 
                 return result;
             }, cancellationToken);
@@ -54,6 +54,7 @@ public class StateDistribCachedRepository : IStateDistribCachedRepository
             await GetAllAsync(cancellationToken);
 
         return result?.FirstOrDefault(item =>
-            item.Id!.Equals(filter.Id, StringComparison.OrdinalIgnoreCase));
+            item.Id!.Equals(filter.Id,
+                StringComparison.OrdinalIgnoreCase));
     }
 }

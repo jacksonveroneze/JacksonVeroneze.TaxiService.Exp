@@ -1,9 +1,11 @@
+using System.Net;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 using JacksonVeroneze.TemplateWebApi.Domain.Results.State;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.HttpClients;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
 using Microsoft.Extensions.Logging;
+using Refit;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories;
 
@@ -31,6 +33,20 @@ public class StateRepository : IStateRepository
                 nameof(GetAllAsync), result.Count);
 
             return result;
+        }
+        catch (ApiException ex) when (ex.StatusCode is HttpStatusCode.NotFound)
+        {
+            _logger.LogNotFound(nameof(CityRepository),
+                nameof(GetAllAsync), string.Empty, ex);
+
+            return null;
+        }
+        catch (ApiException ex)
+        {
+            _logger.LogGenericHttpError(nameof(StateRepository),
+                nameof(GetAllAsync), ex.StatusCode, ex);
+
+            throw;
         }
         catch (Exception ex)
         {

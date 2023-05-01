@@ -4,5 +4,5 @@ public class StateParameters
 {
     public const string Name = "State";
 
-    public int CacheExpMilisegundos { get; set; }
+    public int CacheExpMilisegundos { get; init; }
 }

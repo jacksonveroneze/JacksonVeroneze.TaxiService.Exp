@@ -34,11 +34,6 @@ public static class AplicationConfigurationExtension
                 ? configuration
                 : configuration.GetSection(sectionName);
 
-        // services.AddOptions<TParameterType>(sectionName)
-        //     .Bind(section)
-        //     .ValidateDataAnnotations()
-        //     .ValidateOnStart();
-
         services.Configure<TParameterType>(section);
 
         services.AddScoped(conf =>

@@ -25,4 +25,3 @@ LICENSE
 README.md
 node_modules
 infra
-**/appsettings.Development.json
