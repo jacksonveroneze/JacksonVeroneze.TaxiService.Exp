@@ -6,10 +6,11 @@ using JacksonVeroneze.TemplateWebApi.Application.Queries.State;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace JacksonVeroneze.TemplateWebApi.Api.Controllers;
+namespace JacksonVeroneze.TemplateWebApi.Api.Controllers.v1;
 
 [ApiController]
-[Route("/api/v1/states")]
+[ApiVersion("1.0")]
+[Route("/api/v{version:apiVersion}/states")]
 [Produces(MediaTypeNames.Application.Json)]
 public class StatesController : ControllerBase
 {

@@ -27,6 +27,7 @@ public static class ApiConfigExtension
             .AddCorrelation()
             .AddMediatr()
             .AddFluentValidation()
+            .AddAppVersioning()
             .AddAuthentication(appConfiguration)
             .AddAuthorization(appConfiguration)
             .AddOpenTelemetry(appConfiguration)
@@ -48,8 +49,8 @@ public static class ApiConfigExtension
     {
         if (app.Environment.IsDevelopment())
         {
-            app.UseBlockingDetection()
-                .AddSwagger();
+            app.UseBlockingDetection();
+            app.AddSwagger();
         }
 
         app.UseHttpMetrics()

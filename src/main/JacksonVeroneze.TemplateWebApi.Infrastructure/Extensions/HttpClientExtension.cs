@@ -20,7 +20,7 @@ public static class HttpClientExtension
         return services;
     }
 
-    private static IServiceCollection AddClientApi<TClient>(
+    private static void AddClientApi<TClient>(
         this IServiceCollection services,
         AppConfiguration appConfiguration,
         string name) where TClient : class
@@ -33,7 +33,5 @@ public static class HttpClientExtension
         services.RefitClientBuilder<TClient>(config)
             .AddCorrelationIdForwarding()
             .UseHttpClientMetrics();
-
-        return services;
     }
 }

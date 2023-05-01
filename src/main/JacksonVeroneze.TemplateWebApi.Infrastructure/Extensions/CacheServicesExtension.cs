@@ -1,4 +1,4 @@
-using JacksonVeroneze.NET.Cache.Extensions;
+using JacksonVeroneze.NET.Cache.DistributedCache.Extensions;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
@@ -12,7 +12,7 @@ public static class CacheServicesExtension
         this IServiceCollection services,
         AppConfiguration appConfiguration)
     {
-        services.AddCacheService();
+        services.AddDistributedCacheService();
 
         if (appConfiguration.CacheType == CacheType.Memory)
         {
@@ -24,7 +24,7 @@ public static class CacheServicesExtension
             {
                 options.InstanceName =
                     $"{appConfiguration.AppName}-{appConfiguration.AppVersion}";
-
+        
                 options.ConfigurationOptions = new ConfigurationOptions
                 {
                     Ssl = false,

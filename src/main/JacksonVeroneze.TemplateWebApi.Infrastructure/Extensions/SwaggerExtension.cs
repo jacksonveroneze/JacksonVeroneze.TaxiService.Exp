@@ -21,12 +21,12 @@ public static class SwaggerExtension
             conf.UseAuthentication = true;
             conf.Version = "v1";
         });
-
+        
         return services;
     }
 
     public static IApplicationBuilder AddSwagger(
-        this IApplicationBuilder app)
+        this WebApplication app)
     {
         app.UseSwaggerApp();
 

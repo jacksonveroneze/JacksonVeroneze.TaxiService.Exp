@@ -31,6 +31,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{D169AF
 		..\infra\Docker\docker-compose.yml = ..\infra\Docker\docker-compose.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.NET.Swagger", "..\..\JacksonVeroneze.NET.Swagger\src\JacksonVeroneze.NET.Swagger\JacksonVeroneze.NET.Swagger.csproj", "{C11FC2FF-149E-41FC-9EC2-7C84F5338A05}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +58,10 @@ Global
 		{5DD8DA6C-CFC9-4AF0-8AAD-FFB3C4E6B951}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DD8DA6C-CFC9-4AF0-8AAD-FFB3C4E6B951}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DD8DA6C-CFC9-4AF0-8AAD-FFB3C4E6B951}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C11FC2FF-149E-41FC-9EC2-7C84F5338A05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C11FC2FF-149E-41FC-9EC2-7C84F5338A05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C11FC2FF-149E-41FC-9EC2-7C84F5338A05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C11FC2FF-149E-41FC-9EC2-7C84F5338A05}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7E75DDC3-1A7D-4806-9DA6-B6BC687D9A51} = {781F0984-F5A6-4051-9B5F-525135392A5A}
