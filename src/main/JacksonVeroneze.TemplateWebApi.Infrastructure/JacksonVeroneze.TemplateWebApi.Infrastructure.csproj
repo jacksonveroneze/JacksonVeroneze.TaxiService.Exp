@@ -19,8 +19,8 @@
         <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc9.14" />
         <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc9.14" />
 
-        <PackageReference Include="JacksonVeroneze.NET.DistributedCache" Version="1.0.12" />
-        <PackageReference Include="JacksonVeroneze.NET.HttpClient" Version="0.0.8" />
+        <PackageReference Include="JacksonVeroneze.NET.DistributedCache" Version="1.0.13" />
+        <PackageReference Include="JacksonVeroneze.NET.HttpClient" Version="0.0.9" />
         <PackageReference Include="JacksonVeroneze.NET.Logging" Version="1.0.2" />
         <PackageReference Include="JacksonVeroneze.NET.Swagger" Version="1.0.0" />
 

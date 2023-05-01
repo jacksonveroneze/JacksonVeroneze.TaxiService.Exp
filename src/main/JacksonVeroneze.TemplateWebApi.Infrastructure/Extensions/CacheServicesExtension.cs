@@ -1,4 +1,4 @@
-using JacksonVeroneze.NET.Cache.DistributedCache.Extensions;
+using JacksonVeroneze.NET.DistributedCache.Extensions;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
