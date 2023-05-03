@@ -30,27 +30,27 @@ public class PagedRequest
     public int? Page
     {
         get => _page;
-        set => _page = value ?? DefaultPage;
+        init => _page = value ?? DefaultPage;
     }
 
     [FromQuery(Name = "page_size")]
     public int? PageSize
     {
         get => _pageSize;
-        set => _pageSize = value ?? DefaulPageSize;
+        init => _pageSize = value ?? DefaulPageSize;
     }
 
     [FromQuery(Name = "order")]
     public SortDirection? Order
     {
         get => _order;
-        set => _order = value ?? _order;
+        init => _order = value ?? _order;
     }
 
     [FromQuery(Name = "order_by")]
     public string? OrderBy
     {
         get => _orderBy;
-        set => _orderBy = value ?? _orderBy;
+        init => _orderBy = value ?? _orderBy;
     }
 }

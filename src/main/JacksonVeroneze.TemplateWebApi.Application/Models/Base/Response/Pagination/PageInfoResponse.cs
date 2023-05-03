@@ -3,14 +3,14 @@
 public class PageInfoResponse
 {
     [JsonPropertyName("page")]
-    public int Page { get; set; }
+    public int Page { get; init; }
 
     [JsonPropertyName("page_size")]
-    public int PageSize { get; set; }
+    public int PageSize { get; init; }
 
     [JsonPropertyName("total_pages")]
-    public int TotalPages { get; set; }
+    public int TotalPages { get; init; }
 
     [JsonPropertyName("total_elements")]
-    public int TotalElements { get; set; }
+    public int TotalElements { get; init; }
 }

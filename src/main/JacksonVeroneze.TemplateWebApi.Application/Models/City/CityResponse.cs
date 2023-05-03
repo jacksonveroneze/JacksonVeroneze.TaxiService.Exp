@@ -3,8 +3,8 @@
 public struct CityResponse
 {
     [JsonPropertyName("id")]
-    public int Id { get; set; }
+    public int Id { get; init; }
 
     [JsonPropertyName("name")]
-    public string? Name { get; set; }
+    public string? Name { get; init; }
 }

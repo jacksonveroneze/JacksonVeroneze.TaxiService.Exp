@@ -21,7 +21,7 @@ public static class SwaggerExtension
             conf.UseAuthentication = true;
             conf.Version = "v1";
         });
-        
+
         return services;
     }
 

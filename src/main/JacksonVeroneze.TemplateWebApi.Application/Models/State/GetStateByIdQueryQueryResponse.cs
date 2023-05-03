@@ -5,5 +5,5 @@ namespace JacksonVeroneze.TemplateWebApi.Application.Models.State;
 public record GetStateByIdQueryQueryResponse : OkResponse
 {
     [JsonPropertyName("data")]
-    public StateResponse? Data { get; set; }
+    public StateResponse? Data { get; init; }
 }

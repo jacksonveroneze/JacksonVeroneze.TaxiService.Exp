@@ -1,4 +1,3 @@
-using CorrelationId.HttpClient;
 using JacksonVeroneze.NET.HttpClient.Configuration;
 using JacksonVeroneze.NET.HttpClient.Extensions;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
@@ -15,12 +14,12 @@ public static class HttpClientExtension
         this IServiceCollection services,
         AppConfiguration appConfiguration)
     {
-        services.AddClientApi<IIbgeApi>(appConfiguration, "ibge");
+        services.AddClient<IIbgeApi>(appConfiguration, "ibge");
 
         return services;
     }
 
-    private static void AddClientApi<TClient>(
+    private static IServiceCollection AddClient<TClient>(
         this IServiceCollection services,
         AppConfiguration appConfiguration,
         string name) where TClient : class
@@ -31,7 +30,8 @@ public static class HttpClientExtension
                     StringComparison.OrdinalIgnoreCase));
 
         services.RefitClientBuilder<TClient>(config)
-            .AddCorrelationIdForwarding()
             .UseHttpClientMetrics();
+
+        return services;
     }
 }

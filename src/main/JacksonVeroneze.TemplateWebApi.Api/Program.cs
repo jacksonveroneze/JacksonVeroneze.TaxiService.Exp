@@ -1,14 +1,10 @@
+using JacksonVeroneze.NET.Logging.Util;
 using JacksonVeroneze.TemplateWebApi.Api.Extensions;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
 using Serilog;
-using Serilog.Events;
 
-Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-    .Enrich.FromLogContext()
-    .WriteTo.Console()
-    .CreateBootstrapLogger();
+Log.Logger = BootstrapLogger.CreateLogger();
 
 try
 {

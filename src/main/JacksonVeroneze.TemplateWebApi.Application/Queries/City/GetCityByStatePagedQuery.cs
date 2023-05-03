@@ -17,5 +17,5 @@ public class GetCityByStatePagedQuery : PagedRequest, IRequest<BaseResponse>
     }
 
     [FromRoute(Name = "id")]
-    public string? StateId { get; set; }
+    public string? StateId { get; init; }
 }

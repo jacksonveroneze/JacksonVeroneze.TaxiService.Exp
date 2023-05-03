@@ -24,7 +24,7 @@ public static class CacheServicesExtension
             {
                 options.InstanceName =
                     $"{appConfiguration.AppName}-{appConfiguration.AppVersion}";
-        
+
                 options.ConfigurationOptions = new ConfigurationOptions
                 {
                     Ssl = false,

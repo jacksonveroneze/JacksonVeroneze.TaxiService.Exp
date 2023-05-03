@@ -11,7 +11,7 @@ public class StatePaginatedRepository : IStatePaginatedRepository
     private readonly ICollection<StateResult> _empty = Enumerable
         .Empty<StateResult>()
         .ToArray();
-    
+
     private readonly IStateDistribCachedRepository _repository;
 
     public StatePaginatedRepository(

@@ -3,7 +3,7 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
 [ExcludeFromCodeCoverage]
 public class SwaggerConfiguration
 {
-    public string? ContactName { get; set; }
+    public string? ContactName { get; init; }
 
-    public string? ContactEmail { get; set; }
+    public string? ContactEmail { get; init; }
 }

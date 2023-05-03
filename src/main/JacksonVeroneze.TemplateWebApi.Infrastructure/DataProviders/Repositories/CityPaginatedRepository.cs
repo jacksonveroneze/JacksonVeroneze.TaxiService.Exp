@@ -11,7 +11,7 @@ public class CityPaginatedRepository : ICityPaginatedRepository
     private readonly ICollection<CityResult> _empty = Enumerable
         .Empty<CityResult>()
         .ToArray();
-    
+
     private readonly ICityDistribCachedRepository _repository;
 
     public CityPaginatedRepository(

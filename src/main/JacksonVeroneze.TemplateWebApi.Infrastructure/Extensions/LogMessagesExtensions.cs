@@ -21,7 +21,7 @@ public static partial class LogMessagesExtensions
         Message = "{className} - {methodName} - Error - StatusCode: '{code}' ")]
     public static partial void LogGenericHttpError(this ILogger logger,
         string className, string methodName, HttpStatusCode code, Exception ex);
-    
+
     [LoggerMessage(
         EventId = 1010,
         Level = LogLevel.Warning,

@@ -34,7 +34,7 @@ public class CityDistribCachedRepository : ICityDistribCachedRepository
         CancellationToken cancellationToken = default)
     {
         string key = filter.StateId!;
-        
+
         return _cacheService
             .GetOrCreateAsync(key, async entry =>
             {

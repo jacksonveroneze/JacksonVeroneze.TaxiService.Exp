@@ -6,5 +6,5 @@ namespace JacksonVeroneze.TemplateWebApi.Application.Queries.State;
 public record GetStateByIdQuery : IRequest<BaseResponse>
 {
     [FromRoute(Name = "id")]
-    public string? Id { get; set; }
+    public string? Id { get; init; }
 }
