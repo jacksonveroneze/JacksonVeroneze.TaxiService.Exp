@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="JacksonVeroneze.NET.Pagination" Version="1.1.0"/>
+        <PackageReference Include="JacksonVeroneze.NET.Pagination" Version="1.1.2" />
     </ItemGroup>
 
 </Project>
