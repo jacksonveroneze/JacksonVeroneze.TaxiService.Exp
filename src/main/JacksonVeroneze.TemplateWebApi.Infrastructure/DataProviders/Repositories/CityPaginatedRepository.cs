@@ -1,15 +1,15 @@
 using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.NET.Pagination.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
+using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
-using JacksonVeroneze.TemplateWebApi.Domain.Results.City;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories;
 
 public class CityPaginatedRepository : ICityPaginatedRepository
 {
-    private readonly ICollection<CityResult> _empty = Enumerable
-        .Empty<CityResult>()
+    private readonly ICollection<City> _empty = Enumerable
+        .Empty<City>()
         .ToArray();
 
     private readonly ICityDistribCachedRepository _repository;
@@ -20,11 +20,11 @@ public class CityPaginatedRepository : ICityPaginatedRepository
         _repository = repository;
     }
 
-    public async Task<Page<CityResult>> GetByStateIdPageAsync(
+    public async Task<Page<City>> GetByStateIdPageAsync(
         CityByStateFilter filter,
         CancellationToken cancellationToken = default)
     {
-        ICollection<CityResult>? result = await _repository
+        ICollection<City>? result = await _repository
             .GetByStateIdAsync(filter, cancellationToken);
 
         result ??= _empty;

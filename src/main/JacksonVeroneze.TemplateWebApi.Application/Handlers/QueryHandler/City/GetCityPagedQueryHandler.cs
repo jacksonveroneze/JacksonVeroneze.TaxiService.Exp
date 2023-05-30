@@ -37,7 +37,7 @@ public class GetCityPagedQueryHandler :
     {
         StateByIdFilter filter = _mapper.Map<StateByIdFilter>(request);
 
-        StateResult? result = await _stateRepository.GetByIdAsync(
+        Domain.Entities.State? result = await _stateRepository.GetByIdAsync(
             filter, cancellationToken);
 
         if (result is null)
@@ -50,7 +50,7 @@ public class GetCityPagedQueryHandler :
 
         CityByStateFilter cityFilter = _mapper.Map<CityByStateFilter>(request);
 
-        Page<CityResult> page = await _cityRepository
+        Page<Domain.Entities.City> page = await _cityRepository
             .GetByStateIdPageAsync(cityFilter, cancellationToken);
 
         GetCityByStatePagedQueryResponse response =

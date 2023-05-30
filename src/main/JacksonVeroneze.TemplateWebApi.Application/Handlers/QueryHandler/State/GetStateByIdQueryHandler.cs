@@ -4,19 +4,18 @@ using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
 using JacksonVeroneze.TemplateWebApi.Application.Models.State;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.State;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
-using JacksonVeroneze.TemplateWebApi.Domain.Results.State;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.State;
 
 public class GetStateByIdQueryHandler :
     IRequestHandler<GetStateByIdQuery, BaseResponse>
 {
-    private readonly ILogger<GetStatePagedQueryHandler> _logger;
+    private readonly ILogger<GetStateByIdQueryHandler> _logger;
     private readonly IMapper _mapper;
     private readonly IStateDistribCachedRepository _repository;
 
     public GetStateByIdQueryHandler(
-        ILogger<GetStatePagedQueryHandler> logger,
+        ILogger<GetStateByIdQueryHandler> logger,
         IMapper mapper,
         IStateDistribCachedRepository repository)
     {
@@ -31,7 +30,7 @@ public class GetStateByIdQueryHandler :
     {
         StateByIdFilter filter = _mapper.Map<StateByIdFilter>(request);
 
-        StateResult? result = await _repository.GetByIdAsync(
+        Domain.Entities.State? result = await _repository.GetByIdAsync(
             filter, cancellationToken);
 
         if (result is null)

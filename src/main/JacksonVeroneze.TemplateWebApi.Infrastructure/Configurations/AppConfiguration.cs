@@ -21,9 +21,6 @@ public class AppConfiguration
     public CacheType CacheType { get; init; }
     public string? CacheEndpoint { get; init; }
 
-    public string? AuthAuthority { get; init; }
-    public string? AuthAudience { get; init; }
-
     public string AppName =>
         Application?.Name ?? String.Empty;
 

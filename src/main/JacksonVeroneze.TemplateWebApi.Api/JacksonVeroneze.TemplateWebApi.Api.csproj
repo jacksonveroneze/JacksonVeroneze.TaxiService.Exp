@@ -14,10 +14,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="NewRelic.Agent" Version="10.10.0"/>
-    </ItemGroup>
-
-    <ItemGroup>
         <ProjectReference Include="..\JacksonVeroneze.TemplateWebApi.Application\JacksonVeroneze.TemplateWebApi.Application.csproj"/>
         <ProjectReference Include="..\JacksonVeroneze.TemplateWebApi.Infrastructure\JacksonVeroneze.TemplateWebApi.Infrastructure.csproj"/>
     </ItemGroup>

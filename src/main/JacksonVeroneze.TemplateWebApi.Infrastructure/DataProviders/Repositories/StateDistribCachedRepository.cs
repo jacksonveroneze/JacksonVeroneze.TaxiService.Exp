@@ -1,8 +1,8 @@
 using JacksonVeroneze.NET.Cache.Interfaces;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
+using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 using JacksonVeroneze.TemplateWebApi.Domain.Parameters;
-using JacksonVeroneze.TemplateWebApi.Domain.Results.State;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories;
 
@@ -29,7 +29,7 @@ public class StateDistribCachedRepository : IStateDistribCachedRepository
             parameters.CacheExpMilisegundos);
     }
 
-    public Task<ICollection<StateResult>?> GetAllAsync(
+    public Task<ICollection<State>> GetAllAsync(
         CancellationToken cancellationToken = default)
     {
         const string key = "all";
@@ -39,21 +39,21 @@ public class StateDistribCachedRepository : IStateDistribCachedRepository
             {
                 entry.AbsoluteExpirationRelativeToNow = _cacheExpiration;
 
-                ICollection<StateResult>? result = await _repository
+                ICollection<State> result = await _repository
                     .GetAllAsync(cancellationToken);
 
                 return result;
-            }, cancellationToken);
+            }, cancellationToken)!;
     }
 
-    public async Task<StateResult?> GetByIdAsync(
+    public async Task<State?> GetByIdAsync(
         StateByIdFilter filter,
         CancellationToken cancellationToken = default)
     {
-        ICollection<StateResult>? result =
+        ICollection<State> result =
             await GetAllAsync(cancellationToken);
 
-        return result?.FirstOrDefault(item =>
+        return result.FirstOrDefault(item =>
             item.Id!.Equals(filter.Id,
                 StringComparison.OrdinalIgnoreCase));
     }

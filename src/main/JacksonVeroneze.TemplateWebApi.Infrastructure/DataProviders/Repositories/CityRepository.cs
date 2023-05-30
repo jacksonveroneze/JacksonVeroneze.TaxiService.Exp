@@ -1,5 +1,6 @@
-using System.Net;
+using AutoMapper;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
+using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 using JacksonVeroneze.TemplateWebApi.Domain.Results.City;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.HttpClients;
@@ -12,16 +13,19 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositori
 public class CityRepository : ICityRepository
 {
     private readonly ILogger<CityRepository> _logger;
+    private readonly IMapper _mapper;
     private readonly IIbgeApi _ibgeApi;
 
     public CityRepository(ILogger<CityRepository> logger,
+        IMapper mapper,
         IIbgeApi ibgeApi)
     {
         _logger = logger;
+        _mapper = mapper;
         _ibgeApi = ibgeApi;
     }
 
-    public async Task<ICollection<CityResult>?> GetByStateIdAsync(
+    public async Task<ICollection<City>> GetByStateIdAsync(
         CityByStateFilter filter,
         CancellationToken cancellationToken = default)
     {
@@ -33,14 +37,7 @@ public class CityRepository : ICityRepository
             _logger.LogGetCitiesByStateId(nameof(CityRepository),
                 nameof(GetByStateIdAsync), filter.StateId!, result.Count);
 
-            return result;
-        }
-        catch (ApiException ex) when (ex.StatusCode is HttpStatusCode.NotFound)
-        {
-            _logger.LogNotFound(nameof(CityRepository),
-                nameof(GetByStateIdAsync), filter.StateId!, ex);
-
-            return null;
+            return _mapper.Map<ICollection<City>>(result);
         }
         catch (ApiException ex)
         {

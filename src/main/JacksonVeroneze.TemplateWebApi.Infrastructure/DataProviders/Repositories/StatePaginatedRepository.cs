@@ -1,15 +1,15 @@
 using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.NET.Pagination.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
+using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
-using JacksonVeroneze.TemplateWebApi.Domain.Results.State;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories;
 
 public class StatePaginatedRepository : IStatePaginatedRepository
 {
-    private readonly ICollection<StateResult> _empty = Enumerable
-        .Empty<StateResult>()
+    private readonly ICollection<State> _empty = Enumerable
+        .Empty<State>()
         .ToArray();
 
     private readonly IStateDistribCachedRepository _repository;
@@ -20,11 +20,11 @@ public class StatePaginatedRepository : IStatePaginatedRepository
         _repository = repository;
     }
 
-    public async Task<Page<StateResult>> GetAllAsync(
+    public async Task<Page<State>> GetAllAsync(
         StateAllFilter filter,
         CancellationToken cancellationToken = default)
     {
-        ICollection<StateResult>? result = await _repository
+        ICollection<State>? result = await _repository
             .GetAllAsync(cancellationToken);
 
         result ??= _empty;

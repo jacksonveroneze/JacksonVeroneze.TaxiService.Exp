@@ -23,7 +23,8 @@ public static class CacheServicesExtension
             services.AddStackExchangeRedisCache(options =>
             {
                 options.InstanceName =
-                    $"{appConfiguration.AppName}-{appConfiguration.AppVersion}";
+                    $"{appConfiguration.AppName}-" +
+                    $"{appConfiguration.AppVersion}";
 
                 options.ConfigurationOptions = new ConfigurationOptions
                 {

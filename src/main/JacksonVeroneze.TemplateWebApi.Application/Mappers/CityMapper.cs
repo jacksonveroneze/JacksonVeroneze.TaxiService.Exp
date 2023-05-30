@@ -1,6 +1,7 @@
 using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.TemplateWebApi.Application.Models.City;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.City;
+using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 using JacksonVeroneze.TemplateWebApi.Domain.Results.City;
 
@@ -10,11 +11,15 @@ public class CityMapper : Profile
 {
     public CityMapper()
     {
-        CreateMap<CityResult, CityResponse>()
+        CreateMap<CityResult, City>()
+            .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name));
+        
+        CreateMap<City, CityResponse>()
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
             .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name));
 
-        CreateMap<Page<CityResult>, GetCityByStatePagedQueryResponse>()
+        CreateMap<Page<City>, GetCityByStatePagedQueryResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src.Data))
             .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src.Pagination))
             .ForMember(dest => dest.Messages, opts => opts.Ignore());
