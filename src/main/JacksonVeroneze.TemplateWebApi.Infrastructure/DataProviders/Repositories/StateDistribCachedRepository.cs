@@ -29,7 +29,7 @@ public class StateDistribCachedRepository : IStateDistribCachedRepository
             parameters.CacheExpMilisegundos);
     }
 
-    public Task<ICollection<State>> GetAllAsync(
+    public Task<ICollection<StateEntity>> GetAllAsync(
         CancellationToken cancellationToken = default)
     {
         const string key = "all";
@@ -39,18 +39,18 @@ public class StateDistribCachedRepository : IStateDistribCachedRepository
             {
                 entry.AbsoluteExpirationRelativeToNow = _cacheExpiration;
 
-                ICollection<State> result = await _repository
+                ICollection<StateEntity> result = await _repository
                     .GetAllAsync(cancellationToken);
 
                 return result;
             }, cancellationToken)!;
     }
 
-    public async Task<State?> GetByIdAsync(
+    public async Task<StateEntity?> GetByIdAsync(
         StateByIdFilter filter,
         CancellationToken cancellationToken = default)
     {
-        ICollection<State> result =
+        ICollection<StateEntity> result =
             await GetAllAsync(cancellationToken);
 
         return result.FirstOrDefault(item =>

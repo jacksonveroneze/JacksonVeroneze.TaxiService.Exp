@@ -11,15 +11,15 @@ public class CityMapper : Profile
 {
     public CityMapper()
     {
-        CreateMap<CityResult, City>()
-            .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
-            .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name));
-        
-        CreateMap<City, CityResponse>()
+        CreateMap<CityResult, CityEntity>()
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
             .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name));
 
-        CreateMap<Page<City>, GetCityByStatePagedQueryResponse>()
+        CreateMap<CityEntity, CityResponse>()
+            .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name));
+
+        CreateMap<Page<CityEntity>, GetCityByStatePagedQueryResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src.Data))
             .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src.Pagination))
             .ForMember(dest => dest.Messages, opts => opts.Ignore());

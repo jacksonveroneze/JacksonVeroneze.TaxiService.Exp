@@ -32,7 +32,7 @@ public class GetStatePagedQueryHandler :
     {
         StateAllFilter filter = _mapper.Map<StateAllFilter>(request);
 
-        Page<Domain.Entities.State> result =
+        Page<Domain.Entities.StateEntity> result =
             await _repository.GetAllAsync(filter, cancellationToken);
 
         GetStatePagedQueryResponse response =

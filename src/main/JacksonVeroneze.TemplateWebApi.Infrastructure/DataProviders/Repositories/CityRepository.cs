@@ -25,7 +25,7 @@ public class CityRepository : ICityRepository
         _ibgeApi = ibgeApi;
     }
 
-    public async Task<ICollection<City>> GetByStateIdAsync(
+    public async Task<ICollection<CityEntity>> GetByStateIdAsync(
         CityByStateFilter filter,
         CancellationToken cancellationToken = default)
     {
@@ -37,7 +37,7 @@ public class CityRepository : ICityRepository
             _logger.LogGetCitiesByStateId(nameof(CityRepository),
                 nameof(GetByStateIdAsync), filter.StateId!, result.Count);
 
-            return _mapper.Map<ICollection<City>>(result);
+            return _mapper.Map<ICollection<CityEntity>>(result);
         }
         catch (ApiException ex)
         {

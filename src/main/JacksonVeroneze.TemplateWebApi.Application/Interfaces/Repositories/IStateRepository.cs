@@ -5,10 +5,10 @@ namespace JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 
 public interface IStateRepository
 {
-    Task<ICollection<State>> GetAllAsync(
+    Task<ICollection<StateEntity>> GetAllAsync(
         CancellationToken cancellationToken = default);
 
-    Task<State?> GetByIdAsync(
+    Task<StateEntity?> GetByIdAsync(
         StateByIdFilter filter,
         CancellationToken cancellationToken = default);
 }

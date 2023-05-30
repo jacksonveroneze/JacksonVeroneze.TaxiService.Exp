@@ -7,7 +7,7 @@ namespace JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 
 public interface IStatePaginatedRepository
 {
-    Task<Page<State>> GetAllAsync(
+    Task<Page<StateEntity>> GetAllAsync(
         StateAllFilter filter,
         CancellationToken cancellationToken = default);
 }

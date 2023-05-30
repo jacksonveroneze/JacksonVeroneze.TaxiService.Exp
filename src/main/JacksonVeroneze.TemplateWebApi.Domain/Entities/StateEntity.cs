@@ -1,6 +1,6 @@
 namespace JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
-public record State
+public record StateEntity
 {
     public string? Id { get; init; }
 

@@ -7,7 +7,7 @@ namespace JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 
 public interface ICityPaginatedRepository
 {
-    Task<Page<City>> GetByStateIdPageAsync(
+    Task<Page<CityEntity>> GetByStateIdPageAsync(
         CityByStateFilter filter,
         CancellationToken cancellationToken = default);
 }

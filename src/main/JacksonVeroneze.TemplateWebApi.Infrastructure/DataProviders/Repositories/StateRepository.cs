@@ -25,7 +25,7 @@ public class StateRepository : IStateRepository
         _ibgeApi = ibgeApi;
     }
 
-    public async Task<ICollection<State>> GetAllAsync(
+    public async Task<ICollection<StateEntity>> GetAllAsync(
         CancellationToken cancellationToken = default)
     {
         try
@@ -36,7 +36,7 @@ public class StateRepository : IStateRepository
             _logger.LogGetAllStates(nameof(StateRepository),
                 nameof(GetAllAsync), result.Count);
 
-            return _mapper.Map<ICollection<State>>(result);
+            return _mapper.Map<ICollection<StateEntity>>(result);
         }
         catch (ApiException ex)
         {
@@ -54,7 +54,7 @@ public class StateRepository : IStateRepository
         }
     }
 
-    public Task<State?> GetByIdAsync(
+    public Task<StateEntity?> GetByIdAsync(
         StateByIdFilter filter,
         CancellationToken cancellationToken = default)
     {
