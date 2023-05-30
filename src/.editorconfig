@@ -148,9 +148,9 @@ dotnet_style_parentheses_in_relational_binary_operators = always_for_clarity:war
 
 
 # var preferences
-csharp_style_var_elsewhere = true:warning
-csharp_style_var_for_built_in_types = true:warning
-csharp_style_var_when_type_is_apparent = true:warning
+csharp_style_var_for_built_in_types = false:suggestion
+csharp_style_var_when_type_is_apparent = false:suggestion
+csharp_style_var_elsewhere = false:suggestion
 
 # Newline settings
 csharp_new_line_before_open_brace = all
@@ -415,6 +415,18 @@ dotnet_diagnostic.CA1820.severity = error
 # Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2251
 dotnet_diagnostic.CA2251.severity = error
 
+# CA1815: Override equals and operator equals on value types
+# Help link: https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/ca1815
+dotnet_diagnostic.CA1815.severity = none
+
+# CA2007: CA2007: Do not directly await a Task
+# Help link: https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/ca2007
+dotnet_diagnostic.CA2007.severity = none
+
+# CA2007: CA2007: Do not directly await a Task
+# Help link: https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/ca2007
+dotnet_diagnostic.MA0004.severity=none
+
 [*.cs]
 
 # force file scoped namespaces
@@ -496,7 +508,7 @@ dotnet_diagnostic.AsyncifyInvocation.severity = error
 dotnet_diagnostic.AsyncifyVariable.severity = error
 
 # VSTHRD111: Use ConfigureAwait(bool)
-dotnet_diagnostic.VSTHRD111.severity = warning
+dotnet_diagnostic.VSTHRD111.severity = suggestion
 
 # VSTHRD114: Avoid returning a null Task
 dotnet_diagnostic.VSTHRD114.severity = error

@@ -58,6 +58,6 @@ public class StateRepository : IStateRepository
         StateByIdFilter filter,
         CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException();
     }
 }

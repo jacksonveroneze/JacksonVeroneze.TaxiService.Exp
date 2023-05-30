@@ -1,5 +1,5 @@
 namespace JacksonVeroneze.TemplateWebApi.Application;
 
-public class Metadata
+public class ApplicationMetadata
 {
 }

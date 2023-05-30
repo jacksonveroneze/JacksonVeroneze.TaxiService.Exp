@@ -11,7 +11,7 @@ public static class FluentValidationExtensions
     public static IServiceCollection AddFluentValidation(
         this IServiceCollection services)
     {
-        services.AddValidatorsFromAssemblyContaining<Metadata>();
+        services.AddValidatorsFromAssemblyContaining<ApplicationMetadata>();
         services.AddFluentValidationAutoValidation();
 
         return services;

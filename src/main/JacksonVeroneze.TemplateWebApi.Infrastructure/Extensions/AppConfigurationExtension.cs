@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class AplicationConfigurationExtension
+public static class AppConfigurationExtension
 {
     public static AppConfiguration AddAppConfigs(
         this IServiceCollection services,

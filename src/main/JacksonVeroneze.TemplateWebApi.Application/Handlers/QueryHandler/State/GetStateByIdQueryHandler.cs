@@ -28,6 +28,8 @@ public class GetStateByIdQueryHandler :
         GetStateByIdQuery request,
         CancellationToken cancellationToken)
     {
+        ArgumentNullException.ThrowIfNull(request);
+
         StateByIdFilter filter = _mapper.Map<StateByIdFilter>(request);
 
         Domain.Entities.StateEntity? result = await _repository.GetByIdAsync(
