@@ -10,7 +10,7 @@ RUN dotnet publish main/JacksonVeroneze.TemplateWebApi.Api/JacksonVeroneze.Templ
     -c Release -r linux-x64 -p:PublishReadyToRun=true --self-contained -o out
 
 # Run
-FROM jacksonveroneze/aspnet:7.0-ubuntu-1.0.8
+FROM jacksonveroneze/aspnet:7.0-debian-1.0.8
 
 COPY --from=build-env /build/out $APP_DIR
 
