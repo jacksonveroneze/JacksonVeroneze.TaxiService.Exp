@@ -1,7 +1,5 @@
 using FluentValidation;
 using JacksonVeroneze.TemplateWebApi.Application;
-using JacksonVeroneze.TemplateWebApi.Application.Behaviors;
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
@@ -13,9 +11,8 @@ public static class MediatorExtension
         this IServiceCollection services)
     {
         services.AddMediatR(conf =>
-                conf.RegisterServicesFromAssemblyContaining<Metadata>())
-            .AddValidatorsFromAssemblyContaining(typeof(Metadata))
-            .AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+                conf.RegisterServicesFromAssemblyContaining<ApplicationMetadata>())
+            .AddValidatorsFromAssemblyContaining(typeof(ApplicationMetadata));
 
         return services;
     }

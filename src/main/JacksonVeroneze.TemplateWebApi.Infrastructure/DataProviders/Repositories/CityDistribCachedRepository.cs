@@ -3,7 +3,6 @@ using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 using JacksonVeroneze.TemplateWebApi.Domain.Parameters;
-using JacksonVeroneze.TemplateWebApi.Domain.Results.City;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories;
 
@@ -30,7 +29,7 @@ public class CityDistribCachedRepository : ICityDistribCachedRepository
             parameters.CacheExpMilisegundos);
     }
 
-    public Task<ICollection<City>> GetByStateIdAsync(
+    public Task<ICollection<CityEntity>> GetByStateIdAsync(
         CityByStateFilter filter,
         CancellationToken cancellationToken = default)
     {
@@ -41,7 +40,7 @@ public class CityDistribCachedRepository : ICityDistribCachedRepository
             {
                 entry.AbsoluteExpirationRelativeToNow = _cacheExpiration;
 
-                ICollection<City> result = await _repository
+                ICollection<CityEntity> result = await _repository
                     .GetByStateIdAsync(filter, cancellationToken);
 
                 return result;

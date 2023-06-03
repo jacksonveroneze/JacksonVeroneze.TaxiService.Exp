@@ -38,10 +38,11 @@ public static class OpenTelemetryExtension
                     .SetResourceBuilder(resourceBuilder)
                     .AddAspNetCoreInstrumentation(options =>
                     {
+                        string[] ignoreRoutes = { "/metrics", "/health" };
+
                         options.RecordException = true;
                         options.EnableGrpcAspNetCoreSupport = false;
-                        options.Filter = ctx =>
-                            ctx.Request.Path != "/metrics" && ctx.Request.Path != "/health";
+                        options.Filter = ctx => Array.IndexOf(ignoreRoutes, ctx.Request.Path) != -1;
                     })
                     .AddHttpClientInstrumentation()
                     .AddJaegerExporter(options =>

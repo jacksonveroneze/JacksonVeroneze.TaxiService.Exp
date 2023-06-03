@@ -1,4 +1,5 @@
 using FluentValidation.Results;
+using JacksonVeroneze.TemplateWebApi.Application.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Behaviors;
@@ -22,10 +23,11 @@ public class ValidationBehavior<TRequest, TResponse> :
         RequestHandlerDelegate<BaseResponse> next,
         CancellationToken cancellationToken)
     {
+        ArgumentNullException.ThrowIfNull(next);
+
         if (!_validators.Any())
         {
-            _logger.LogInformation("{class} - {request} " +
-                                   "- Not contain validators",
+            _logger.LogNoContainValidators(
                 nameof(ValidationBehavior<TRequest, TResponse>),
                 typeof(TRequest).Name);
 
@@ -44,11 +46,9 @@ public class ValidationBehavior<TRequest, TResponse> :
             .Where(item => item != null)
             .ToArray();
 
-        _logger.LogInformation("{class} - {request} - {response} " +
-                               "- Handled - Total Violations: {violations}",
+        _logger.LogTotalViolations(
             nameof(ValidationBehavior<TRequest, TResponse>),
             typeof(TRequest).Name,
-            typeof(TResponse).Name,
             failures.Count);
 
         if (!failures.Any())

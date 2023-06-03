@@ -1,3 +1,4 @@
+using System.Globalization;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Models.State;
@@ -12,7 +13,7 @@ public record StateNotFoundResponse : NotFoundResponse
     }
 
     public StateNotFoundResponse(string attemptKeyValue) :
-        base(Key, string.Format(Message, attemptKeyValue))
+        base(Key, string.Format(CultureInfo.CurrentCulture, Message, attemptKeyValue))
     {
     }
 }

@@ -2,7 +2,6 @@ using AutoMapper;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
-using JacksonVeroneze.TemplateWebApi.Domain.Results.City;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.HttpClients;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
 using Microsoft.Extensions.Logging;
@@ -25,19 +24,21 @@ public class CityRepository : ICityRepository
         _ibgeApi = ibgeApi;
     }
 
-    public async Task<ICollection<City>> GetByStateIdAsync(
+    public async Task<ICollection<CityEntity>> GetByStateIdAsync(
         CityByStateFilter filter,
         CancellationToken cancellationToken = default)
     {
+        ArgumentNullException.ThrowIfNull(filter);
+
         try
         {
-            ICollection<CityResult> result = await _ibgeApi
+            var result = await _ibgeApi
                 .GetCitiesByStateAsync(filter.StateId!, cancellationToken);
 
             _logger.LogGetCitiesByStateId(nameof(CityRepository),
                 nameof(GetByStateIdAsync), filter.StateId!, result.Count);
 
-            return _mapper.Map<ICollection<City>>(result);
+            return _mapper.Map<ICollection<CityEntity>>(result);
         }
         catch (ApiException ex)
         {

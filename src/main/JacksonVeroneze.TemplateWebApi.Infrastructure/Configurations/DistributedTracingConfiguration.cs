@@ -7,11 +7,3 @@ public class DistributedTracingConfiguration
 
     public JaegerConfiguration? Jaeger { get; init; }
 }
-
-[ExcludeFromCodeCoverage]
-public class JaegerConfiguration
-{
-    public string? Host { get; init; }
-
-    public int? Port { get; init; }
-}

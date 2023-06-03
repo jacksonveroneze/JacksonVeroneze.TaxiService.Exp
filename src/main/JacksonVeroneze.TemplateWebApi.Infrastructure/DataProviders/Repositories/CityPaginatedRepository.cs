@@ -8,8 +8,8 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositori
 
 public class CityPaginatedRepository : ICityPaginatedRepository
 {
-    private readonly ICollection<City> _empty = Enumerable
-        .Empty<City>()
+    private readonly ICollection<CityEntity> _empty = Enumerable
+        .Empty<CityEntity>()
         .ToArray();
 
     private readonly ICityDistribCachedRepository _repository;
@@ -20,11 +20,11 @@ public class CityPaginatedRepository : ICityPaginatedRepository
         _repository = repository;
     }
 
-    public async Task<Page<City>> GetByStateIdPageAsync(
+    public async Task<Page<CityEntity>> GetByStateIdPageAsync(
         CityByStateFilter filter,
         CancellationToken cancellationToken = default)
     {
-        ICollection<City>? result = await _repository
+        ICollection<CityEntity>? result = await _repository
             .GetByStateIdAsync(filter, cancellationToken);
 
         result ??= _empty;

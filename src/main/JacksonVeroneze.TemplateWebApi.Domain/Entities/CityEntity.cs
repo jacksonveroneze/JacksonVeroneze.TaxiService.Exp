@@ -1,6 +1,6 @@
 namespace JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
-public record City
+public record CityEntity
 {
     public int Id { get; init; }
 

@@ -32,7 +32,7 @@ public class ErrorHandlingMiddleware
         }
     }
 
-    private Task FactoryResponse(
+    private async Task FactoryResponse(
         HttpContext context,
         Exception exception,
         HttpStatusCode statusCode)
@@ -62,8 +62,7 @@ public class ErrorHandlingMiddleware
 
         _logger.LogError(result);
 
-        context.Response.WriteAsync(result);
-
-        return Task.CompletedTask;
+        await context.Response.WriteAsync(result,
+            cancellationToken: context.RequestAborted);
     }
 }
