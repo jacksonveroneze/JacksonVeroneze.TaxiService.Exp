@@ -24,6 +24,8 @@ public class CityPaginatedRepository : ICityPaginatedRepository
         CityByStateFilter filter,
         CancellationToken cancellationToken = default)
     {
+        ArgumentNullException.ThrowIfNull(filter);
+
         ICollection<CityEntity>? result = await _repository
             .GetByStateIdAsync(filter, cancellationToken);
 

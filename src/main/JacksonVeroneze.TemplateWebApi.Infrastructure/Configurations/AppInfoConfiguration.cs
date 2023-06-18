@@ -7,5 +7,5 @@ public class AppInfoConfiguration
 
     public string? Description { get; init; }
 
-    public string? Version { get; init; }
+    public Version? Version { get; init; }
 }

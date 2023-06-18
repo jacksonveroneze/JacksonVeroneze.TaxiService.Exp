@@ -28,7 +28,7 @@ try
     builder.Host.AddLogger(appConfiguration);
 
     // ConfigureServices
-    builder.Services.ConfigureServices(appConfiguration);
+    builder.ConfigureServices(appConfiguration);
 
     WebApplication app = builder.Build();
 

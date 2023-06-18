@@ -20,6 +20,8 @@ public class StateDistribCachedRepository : IStateDistribCachedRepository
         IStateRepository repository,
         StateParameters parameters)
     {
+        ArgumentNullException.ThrowIfNull(parameters);
+
         _cacheService = cacheService;
         _repository = repository;
 

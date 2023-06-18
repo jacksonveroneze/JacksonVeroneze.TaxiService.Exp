@@ -14,18 +14,17 @@ public class AppConfiguration
 
     public SwaggerConfiguration? Swagger { get; init; }
 
+    public CacheConfiguration? Cache { get; init; }
+
     public DistributedTracingConfiguration? DistributedTracing { get; init; }
 
     public ICollection<HttpClientConfiguration>? HttpClients { get; init; }
 
-    public CacheType CacheType { get; init; }
-    public string? CacheEndpoint { get; init; }
-
     public string AppName =>
-        Application?.Name ?? String.Empty;
+        Application?.Name ?? string.Empty;
 
-    public string AppVersion =>
-        Application?.Version ?? String.Empty;
+    public Version AppVersion =>
+        Application?.Version!;
 
     public bool IsDevelopment =>
         Environment!.Equals(EnviromentDevelopment,

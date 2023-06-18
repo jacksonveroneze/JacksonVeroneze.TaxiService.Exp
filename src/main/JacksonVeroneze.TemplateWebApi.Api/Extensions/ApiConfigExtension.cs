@@ -9,19 +9,24 @@ namespace JacksonVeroneze.TemplateWebApi.Api.Extensions;
 
 public static class ApiConfigExtension
 {
-    public static IServiceCollection ConfigureServices(
-        this IServiceCollection services,
+    public static WebApplicationBuilder ConfigureServices(
+        this WebApplicationBuilder builder,
         AppConfiguration appConfiguration)
     {
-        services
+        builder.Services
             .AddControllers()
             .AddJsonOptionsSerialize()
             .ConfigureApiBehaviorOptions(options =>
                 options.SuppressInferBindingSourcesForParameters = true);
 
-        services
-            .AddEndpointsApiExplorer()
-            .AddSwagger(appConfiguration)
+        if (!builder.Environment.IsProduction())
+        {
+            builder.Services
+                .AddEndpointsApiExplorer()
+                .AddSwagger(appConfiguration);
+        }
+
+        builder.Services
             .AddAppServices()
             .AddAutoMapper()
             .AddCorrelation()
@@ -41,7 +46,7 @@ public static class ApiConfigExtension
             })
             .AddHealthChecks();
 
-        return services;
+        return builder;
     }
 
     public static WebApplication Configure(

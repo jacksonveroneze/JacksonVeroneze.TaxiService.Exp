@@ -12,6 +12,8 @@ public static class OpenTelemetryExtension
         this IServiceCollection services,
         AppConfiguration appConfiguration)
     {
+        ArgumentNullException.ThrowIfNull(appConfiguration);
+
         bool isEnabled = appConfiguration
             .DistributedTracing?.IsEnabled ?? false;
 
@@ -22,7 +24,7 @@ public static class OpenTelemetryExtension
 
         Action<ResourceBuilder> configureResource = r => r.AddService(
             appConfiguration.AppName,
-            serviceVersion: appConfiguration.AppVersion,
+            serviceVersion: appConfiguration.AppVersion.ToString(),
             serviceInstanceId: Environment.MachineName);
 
         services.AddOpenTelemetry()

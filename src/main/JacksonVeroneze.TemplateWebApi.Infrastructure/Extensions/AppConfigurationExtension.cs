@@ -13,6 +13,8 @@ public static class AppConfigurationExtension
         this IServiceCollection services,
         IConfiguration configuration)
     {
+        ArgumentNullException.ThrowIfNull(configuration);
+
         services.AddConfiguration<AppConfiguration>(configuration)
             .AddConfiguration<CityParameters>(configuration, CityParameters.Name)
             .AddConfiguration<StateParameters>(configuration, StateParameters.Name);
