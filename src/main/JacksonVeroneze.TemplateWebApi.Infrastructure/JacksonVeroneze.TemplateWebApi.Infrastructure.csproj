@@ -12,6 +12,8 @@
         <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
         <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
         <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.5" />
+        <PackageReference Include="MiniProfiler.AspNetCore" />
+        <PackageReference Include="MiniProfiler.AspNetCore.Mvc" />
         <PackageReference Include="prometheus-net.AspNetCore" Version="8.0.0" />
 
         <PackageReference Include="OpenTelemetry.Exporter.Jaeger" Version="1.4.0" />
@@ -21,12 +23,10 @@
 
         <PackageReference Include="JacksonVeroneze.NET.DistributedCache" Version="1.0.14" />
         <PackageReference Include="JacksonVeroneze.NET.HttpClient" Version="1.0.2" />
-        <PackageReference Include="JacksonVeroneze.NET.Logging" Version="1.0.4" />
+        <PackageReference Include="JacksonVeroneze.NET.Logging" Version="1.0.5" />
         <PackageReference Include="JacksonVeroneze.NET.Swagger" Version="1.0.1" />
 
         <PackageReference Include="Serilog.Sinks.Seq" Version="5.2.2" />
-        <PackageReference Include="Serilog.Sinks.NewRelic.Logs" Version="1.2.0" />
-        <PackageReference Include="NewRelic.LogEnrichers.Serilog" Version="1.1.0" />
 
         <PackageReference Include="Ben.BlockingDetector" Version="0.0.4" />
     </ItemGroup>

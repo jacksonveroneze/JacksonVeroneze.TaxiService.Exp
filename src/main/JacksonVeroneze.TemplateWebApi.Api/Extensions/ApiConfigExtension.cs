@@ -23,7 +23,8 @@ public static class ApiConfigExtension
         {
             builder.Services
                 .AddEndpointsApiExplorer()
-                .AddSwagger(appConfiguration);
+                .AddSwagger(appConfiguration)
+                .AddMiniProfiler();
         }
 
         builder.Services
@@ -55,6 +56,7 @@ public static class ApiConfigExtension
         if (app.Environment.IsDevelopment())
         {
             app.UseBlockingDetection();
+            app.UseMiniProfiler();
             app.AddSwagger();
         }
 
