@@ -12,6 +12,8 @@ public class AppConfiguration
 
     public AppInfoConfiguration? Application { get; init; }
 
+    public AppMetricsConfiguration? Metrics { get; init; }
+
     public SwaggerConfiguration? Swagger { get; init; }
 
     public CacheConfiguration? Cache { get; init; }
