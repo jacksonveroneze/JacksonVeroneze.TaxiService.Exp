@@ -6,6 +6,8 @@ using Serilog;
 
 Log.Logger = BootstrapLogger.CreateLogger();
 
+IDisposable? dotNetRuntimeStats = null;
+
 try
 {
     Log.Information("Starting application");
@@ -24,11 +26,15 @@ try
     AppConfiguration appConfiguration =
         builder.Services.AddAppConfigs(builder.Configuration);
 
+    // Metrics
+    dotNetRuntimeStats = MetricsExtension
+        .AddMetrics(appConfiguration);
+
     // ConfigureLogger
     builder.Host.AddLogger(appConfiguration);
 
     // ConfigureServices
-    builder.Services.ConfigureServices(appConfiguration);
+    builder.ConfigureServices(appConfiguration);
 
     WebApplication app = builder.Build();
 
@@ -55,4 +61,6 @@ finally
 {
     Log.Information("Server Shutting down");
     Log.CloseAndFlush();
+
+    dotNetRuntimeStats?.Dispose();
 }

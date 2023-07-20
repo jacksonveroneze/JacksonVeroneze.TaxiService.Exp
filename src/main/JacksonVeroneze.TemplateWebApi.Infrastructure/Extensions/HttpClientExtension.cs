@@ -14,6 +14,8 @@ public static class HttpClientExtension
         this IServiceCollection services,
         AppConfiguration appConfiguration)
     {
+        ArgumentNullException.ThrowIfNull(appConfiguration);
+
         services.AddClient<IIbgeApi>(appConfiguration, "ibge");
 
         return services;

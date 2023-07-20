@@ -1,16 +1,27 @@
 import http from 'k6/http';
+import { sleep } from 'k6';
 
 export const options = {
-    duration: '60s',
-    vus: 50,
+    duration: '30000s',
+    //iterations: 5000,
+    vus: 250,
 };
 
 export default function () {
-    http.get('http://127.0.0.1:8085/api/v1/states');
-    http.get('http://127.0.0.1:8085/api/v1/states/SC');
-    http.get('http://127.0.0.1:8085/api/v1/states/RS');
-    http.get('http://127.0.0.1:8085/api/v1/states/RX');
-    http.get('http://127.0.0.1:8085/api/v1/states/SC/cities');
-    http.get('http://127.0.0.1:8085/api/v1/states/RS/cities');
-    http.get('http://127.0.0.1:8085/api/v1/states/RX/cities');
+    http.get('http://127.0.0.1:7000/health');
+    sleep(Math.random() * 5);
+    http.get('http://127.0.0.1:7000/api/v1/states');
+    sleep(Math.random() * 10)
+    http.get('http://127.0.0.1:7000/api/v1/states/SC');
+    http.get('http://127.0.0.1:7000/api/v1/states/RS');
+    http.get('http://127.0.0.1:7000/api/v1/states/RX');
+    sleep(Math.random() * 5)
+    http.get('http://127.0.0.1:7000/api/v1/states/SC/cities');
+    http.get('http://127.0.0.1:7000/api/v1/states/RS/cities');
+    http.get('http://127.0.0.1:7000/api/v1/states/RX/cities');
+    sleep(Math.random() * 10)
 }
+
+
+
+//ps -T -p 1043090 -o 'pid tid args comm'

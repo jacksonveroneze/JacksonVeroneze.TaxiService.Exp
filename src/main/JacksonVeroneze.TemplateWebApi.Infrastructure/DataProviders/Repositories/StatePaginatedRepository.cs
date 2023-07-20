@@ -24,6 +24,8 @@ public class StatePaginatedRepository : IStatePaginatedRepository
         StateAllFilter filter,
         CancellationToken cancellationToken = default)
     {
+        ArgumentNullException.ThrowIfNull(filter);
+
         ICollection<StateEntity>? result = await _repository
             .GetAllAsync(cancellationToken);
 

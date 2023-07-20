@@ -25,3 +25,5 @@ LICENSE
 README.md
 node_modules
 infra
+Directory.Packages.props
+Directory.Build.props

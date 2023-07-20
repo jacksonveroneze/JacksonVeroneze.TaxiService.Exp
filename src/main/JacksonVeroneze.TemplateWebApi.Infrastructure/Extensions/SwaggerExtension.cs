@@ -12,6 +12,8 @@ public static class SwaggerExtension
         this IServiceCollection services,
         AppConfiguration appConfiguration)
     {
+        ArgumentNullException.ThrowIfNull(appConfiguration);
+
         services.AddSwaggerGenerator(conf =>
         {
             conf.Title = appConfiguration.AppName;
@@ -19,7 +21,7 @@ public static class SwaggerExtension
             conf.ContactName = appConfiguration.Swagger!.ContactName;
             conf.ContactEmail = appConfiguration.Swagger.ContactEmail;
             conf.UseAuthentication = true;
-            conf.Version = "v1";
+            conf.ApiVersion = appConfiguration.AppVersion;
         });
 
         return services;

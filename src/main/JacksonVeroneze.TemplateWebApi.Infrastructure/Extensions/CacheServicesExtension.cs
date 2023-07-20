@@ -12,9 +12,11 @@ public static class CacheServicesExtension
         this IServiceCollection services,
         AppConfiguration appConfiguration)
     {
+        ArgumentNullException.ThrowIfNull(appConfiguration);
+
         services.AddDistributedCacheService();
 
-        if (appConfiguration.CacheType == CacheType.Memory)
+        if (appConfiguration.Cache?.Type == CacheType.Memory)
         {
             services.AddDistributedMemoryCache();
         }
@@ -30,7 +32,7 @@ public static class CacheServicesExtension
                 {
                     Ssl = false,
                     AbortOnConnectFail = false,
-                    EndPoints = { appConfiguration.CacheEndpoint },
+                    EndPoints = { appConfiguration.Cache?.Endpoint },
                     ClientName = $"{appConfiguration.AppName}-{Guid.NewGuid()}"
                 };
             });

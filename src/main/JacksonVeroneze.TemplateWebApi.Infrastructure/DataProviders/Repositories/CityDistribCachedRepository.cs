@@ -20,6 +20,8 @@ public class CityDistribCachedRepository : ICityDistribCachedRepository
         ICityRepository repository,
         CityParameters parameters)
     {
+        ArgumentNullException.ThrowIfNull(parameters);
+
         _cacheService = cacheService;
         _repository = repository;
 
@@ -33,6 +35,8 @@ public class CityDistribCachedRepository : ICityDistribCachedRepository
         CityByStateFilter filter,
         CancellationToken cancellationToken = default)
     {
+        ArgumentNullException.ThrowIfNull(filter);
+
         string key = filter.StateId!;
 
         return _cacheService

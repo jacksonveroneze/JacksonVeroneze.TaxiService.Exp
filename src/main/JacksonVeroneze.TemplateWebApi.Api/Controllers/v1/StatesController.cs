@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace JacksonVeroneze.TemplateWebApi.Api.Controllers.v1;
 
 [ApiController]
-[ApiVersion("1.0")]
+[ApiVersion("1.0", Deprecated = true)]
 [Route("/api/v{version:apiVersion}/states")]
 [Produces(MediaTypeNames.Application.Json)]
 public class StatesController : ControllerBase
@@ -41,7 +41,7 @@ public class StatesController : ControllerBase
 
     [HttpGet("{id}", Name = "GetById")]
     [ApiConventionMethod(typeof(DefaultApiConventions),
-        nameof(DefaultApiConventions.Get))]
+        nameof(DefaultApiConventions.Find))]
     public async Task<IActionResult> GetByIdAsync(
         [FromRoute] GetStateByIdQuery query)
     {
