@@ -2,7 +2,6 @@ using JacksonVeroneze.NET.Logging.Util;
 using JacksonVeroneze.TemplateWebApi.Api.Extensions;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
-using Prometheus.DotNetRuntime;
 using Serilog;
 
 Log.Logger = BootstrapLogger.CreateLogger();
@@ -28,17 +27,8 @@ try
         builder.Services.AddAppConfigs(builder.Configuration);
 
     // Metrics
-    if (appConfiguration.Metrics?.Detailed ?? false)
-    {
-        dotNetRuntimeStats = DotNetRuntimeStatsBuilder
-            .Customize()
-            .WithContentionStats(CaptureLevel.Informational)
-            .WithJitStats(CaptureLevel.Informational)
-            .WithThreadPoolStats(CaptureLevel.Informational)
-            .WithGcStats(CaptureLevel.Informational)
-            .WithExceptionStats()
-            .StartCollecting();
-    }
+    dotNetRuntimeStats = MetricsExtension
+        .AddMetrics(appConfiguration);
 
     // ConfigureLogger
     builder.Host.AddLogger(appConfiguration);
@@ -71,5 +61,6 @@ finally
 {
     Log.Information("Server Shutting down");
     Log.CloseAndFlush();
+
     dotNetRuntimeStats?.Dispose();
 }
