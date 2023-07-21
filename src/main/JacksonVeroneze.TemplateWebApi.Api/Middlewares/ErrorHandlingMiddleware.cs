@@ -60,7 +60,7 @@ public class ErrorHandlingMiddleware
         string result = JsonSerializer
             .Serialize(problemDetails, serializeOptions);
 
-        _logger.LogError(result);
+        _logger.LogError(exception, result);
 
         await context.Response.WriteAsync(result,
             cancellationToken: context.RequestAborted);

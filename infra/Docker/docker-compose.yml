@@ -13,7 +13,7 @@ services:
       - APP_CONFIG_State__CacheExpMilisegundos=60000
       - APP_CONFIG_CacheType=Redis
       - APP_CONFIG_CacheEndpoint=10.0.0.199:6379
-      - APP_CONFIG_DistributedTracing__IsEnabled=true
+      - APP_CONFIG_DistributedTracing__IsEnabled=false
       - APP_CONFIG_DistributedTracing__Jaeger__Host=10.0.0.199
       - APP_CONFIG_DistributedTracing__Jaeger__Port=6831
       - Serilog__MinimumLevel__Default=Information
