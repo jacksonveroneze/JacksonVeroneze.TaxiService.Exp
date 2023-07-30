@@ -5,6 +5,7 @@ using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
 using JacksonVeroneze.TemplateWebApi.Application.Models.City;
 using JacksonVeroneze.TemplateWebApi.Application.Models.State;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.City;
+using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.City;
@@ -37,7 +38,7 @@ public class GetCityPagedQueryHandler :
 
         StateByIdFilter filter = _mapper.Map<StateByIdFilter>(request);
 
-        Domain.Entities.StateEntity? result = await _stateRepository.GetByIdAsync(
+        StateEntity? result = await _stateRepository.GetByIdAsync(
             filter, cancellationToken);
 
         if (result is null)
@@ -50,7 +51,7 @@ public class GetCityPagedQueryHandler :
 
         CityByStateFilter cityFilter = _mapper.Map<CityByStateFilter>(request);
 
-        Page<Domain.Entities.CityEntity> page = await _cityRepository
+        Page<CityEntity> page = await _cityRepository
             .GetByStateIdPageAsync(cityFilter, cancellationToken);
 
         GetCityByStatePagedQueryResponse response =

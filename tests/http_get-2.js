@@ -8,6 +8,6 @@ export const options = {
 };
 
 export default function () {
-    http.get('http://127.0.0.1:7000/api/v1/states');
+    http.get('http://localhost/templatewebapi/api/v1/states');
     sleep(Math.random() * 75)
 }

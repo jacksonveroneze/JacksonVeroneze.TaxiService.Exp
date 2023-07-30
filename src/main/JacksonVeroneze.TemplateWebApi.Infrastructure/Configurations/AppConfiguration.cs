@@ -12,8 +12,6 @@ public class AppConfiguration
 
     public AppInfoConfiguration? Application { get; init; }
 
-    public AppMetricsConfiguration? Metrics { get; init; }
-
     public SwaggerConfiguration? Swagger { get; init; }
 
     public CacheConfiguration? Cache { get; init; }
@@ -22,11 +20,17 @@ public class AppConfiguration
 
     public ICollection<HttpClientConfiguration>? HttpClients { get; init; }
 
+    public AppMetricsConfiguration? Metrics { get; init; }
+
+    public PushGatewayConfiguration? PushGateway { get; init; }
+
     public string AppName =>
-        Application?.Name ?? string.Empty;
+        Application?.Name ??
+        throw new ArgumentNullException(nameof(AppName));
 
     public Version AppVersion =>
-        Application?.Version!;
+        Application?.Version ??
+        throw new ArgumentNullException(nameof(AppVersion));
 
     public bool IsDevelopment =>
         Environment!.Equals(EnviromentDevelopment,

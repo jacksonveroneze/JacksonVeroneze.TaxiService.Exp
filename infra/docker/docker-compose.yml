@@ -1,0 +1,134 @@
+version: "3.9"
+
+services:
+  traefik:
+    container_name: templatewebapi-traefik
+    image: traefik:v3.0
+    restart: always
+    tty: true
+    command:
+      - --log.level=ERROR
+
+      - --accesslog=false
+
+      - --api=true
+      - --api.insecure=true
+      - --api.dashboard=true
+
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+
+      - --entrypoints.http.address=:80
+      - --entrypoints.ping.address=:8081
+      - --entrypoints.metrics.address=:8082
+
+      - --metrics.prometheus=true
+      - --metrics.prometheus.entryPoint=metrics
+      - --metrics.prometheus.addServicesLabels=true
+
+      - --ping.entryPoint=ping
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.stock-app-network-public-http.rule=Host(`localhost`)
+      - traefik.http.routers.stock-app-network-public-http.entrypoints=http
+      - traefik.http.routers.stock-app-network-public-http.service=api@internal
+      - traefik.http.routers.traefik_ping.rule=Path(`/ping`)
+      - traefik.http.routers.traefik_ping.entrypoints=ping
+      - traefik.http.routers.traefik_ping.service=ping@internal
+    healthcheck:
+      test: traefik healthcheck --ping
+      interval: 15s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    depends_on:
+      - api
+    links:
+      - api
+    ports:
+      - "80:80"
+      - "8080:8080"
+      - "8081:8081"
+      - "8082:8082"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "2"
+        max-size: "1m"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: '512M'
+        reservations:
+          cpus: '0.50'
+          memory: '512M'
+
+  api:
+    image: jacksonveroneze/templatewebapi-service:latest
+    restart: always
+    tty: true
+    build:
+      context: ../../src
+      dockerfile: ./Dockerfile
+    environment:
+      - APP_CONFIG_Metrics__Detailed=true
+      - APP_CONFIG_City__CacheExpMilisegundos=600000
+      - APP_CONFIG_State__CacheExpMilisegundos=600000
+      - APP_CONFIG_Cache__Type=Redis
+      - APP_CONFIG_Cache__Endpoint=10.0.0.199:6379
+      - APP_CONFIG_DistributedTracing__IsEnabled=false
+      - APP_CONFIG_DistributedTracing__Jaeger__Host=10.0.0.199
+      - APP_CONFIG_DistributedTracing__Jaeger__Port=6831
+      - Serilog__MinimumLevel__Default=Information
+      - Serilog__WriteTo__0__Args__configure__1__Name=Seq
+      - Serilog__WriteTo__0__Args__configure__1__Args__serverUrl=http://10.0.0.199:5341
+    healthcheck:
+      test: curl --silent --fail http://api:8080/health?source=docker || exit 1
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 3s
+    labels:
+      - traefik.enable=true
+
+      - traefik.http.routers.apitemplatewebapi-http.entrypoints=http
+      - traefik.http.routers.apitemplatewebapi-http.rule=Host(`localhost`) && PathPrefix(`/templatewebapi`)
+
+      - traefik.http.services.apitemplatewebapi.loadbalancer.server.port=8080
+      - traefik.http.services.apitemplatewebapi.loadbalancer.passhostheader=true
+      - traefik.http.services.apitemplatewebapi.loadbalancer.healthcheck.path=/health
+      - traefik.http.services.apitemplatewebapi.loadbalancer.healthcheck.interval=15s
+      - traefik.http.services.apitemplatewebapi.loadbalancer.healthcheck.timeout=3s
+      - traefik.http.services.apitemplatewebapi.loadbalancer.healthcheck.scheme=http
+
+      - traefik.http.middlewares.middleware-stripprefix0.stripprefix.prefixes=/templatewebapi
+      - traefik.http.middlewares.middleware-compress.compress=true
+      - traefik.http.middlewares.middleware-ratelimit.ratelimit.average=10000
+      - traefik.http.middlewares.middleware-ratelimit.ratelimit.burst=100
+      - traefik.http.middlewares.middleware-ratelimit.ratelimit.period=10
+      - traefik.http.middlewares.middleware-request-body.buffering.maxRequestBodyBytes=2000000
+      - traefik.http.middlewares.middleware-retry.retry.attempts=4
+      - traefik.http.middlewares.middleware-retry.retry.initialinterval=50ms
+      - traefik.http.middlewares.latency-check.circuitbreaker.expression=LatencyAtQuantileMS(50.0) > 500
+
+      - traefik.http.routers.apitemplatewebapi-http.middlewares=middleware-stripprefix0,middleware-compress,middleware-request-body,middleware-retry
+
+      - --metrics=true
+    ports:
+      - "8085-8086:8080"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: 2
+        max-size: 1m
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: '256M'
+        reservations:
+          cpus: '0.50'
+          memory: '256M'

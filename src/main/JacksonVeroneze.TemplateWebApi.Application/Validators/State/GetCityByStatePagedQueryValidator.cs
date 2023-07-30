@@ -2,7 +2,8 @@
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Validators.State;
 
-public class GetCityByStatePagedQueryValidator : AbstractValidator<GetCityByStatePagedQuery>
+public class GetCityByStatePagedQueryValidator :
+    AbstractValidator<GetCityByStatePagedQuery>
 {
     public GetCityByStatePagedQueryValidator()
     {

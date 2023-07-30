@@ -10,11 +10,6 @@ public interface IIbgeApi
     Task<ICollection<StateResult>> GetStatesAsync(
         CancellationToken cancellationToken = default);
 
-    [Get("/api/v1/localidades/estados/{uf}")]
-    Task<StateResult> GetStateByIdAsync(
-        [AliasAs("uf")] string stateId,
-        CancellationToken cancellationToken = default);
-
     [Get("/api/v1/localidades/estados/{uf}/municipios?orderBy=nome")]
     Task<ICollection<CityResult>> GetCitiesByStateAsync(
         [AliasAs("uf")] string stateId,

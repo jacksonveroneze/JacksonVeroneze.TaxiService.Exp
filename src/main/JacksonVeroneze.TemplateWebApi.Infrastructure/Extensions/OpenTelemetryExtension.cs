@@ -49,7 +49,7 @@ public static class OpenTelemetryExtension
                     .AddHttpClientInstrumentation()
                     .AddJaegerExporter(options =>
                     {
-                        JaegerConfiguration configuration =
+                        DistributedTracingToolConfiguration configuration =
                             appConfiguration.DistributedTracing!.Jaeger!;
 
                         options.AgentHost = configuration.Host;

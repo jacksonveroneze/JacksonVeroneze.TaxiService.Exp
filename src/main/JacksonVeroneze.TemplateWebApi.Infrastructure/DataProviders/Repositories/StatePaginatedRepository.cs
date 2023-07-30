@@ -8,10 +8,6 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositori
 
 public class StatePaginatedRepository : IStatePaginatedRepository
 {
-    private readonly ICollection<StateEntity> _empty = Enumerable
-        .Empty<StateEntity>()
-        .ToArray();
-
     private readonly IStateDistribCachedRepository _repository;
 
     public StatePaginatedRepository(
@@ -26,10 +22,8 @@ public class StatePaginatedRepository : IStatePaginatedRepository
     {
         ArgumentNullException.ThrowIfNull(filter);
 
-        ICollection<StateEntity>? result = await _repository
+        ICollection<StateEntity> result = await _repository
             .GetAllAsync(cancellationToken);
-
-        result ??= _empty;
 
         return result.ToPageInMemory(filter.Pagination!);
     }

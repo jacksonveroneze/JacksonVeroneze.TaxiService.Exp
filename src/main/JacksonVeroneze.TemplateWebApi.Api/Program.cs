@@ -2,6 +2,7 @@ using JacksonVeroneze.NET.Logging.Util;
 using JacksonVeroneze.TemplateWebApi.Api.Extensions;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
+using Prometheus;
 using Serilog;
 
 Log.Logger = BootstrapLogger.CreateLogger();
@@ -48,6 +49,19 @@ try
         Log.Information("ApplicationStopped"));
 
     app.Configure();
+
+    if (appConfiguration?.PushGateway?.Enable ?? false)
+    {
+        MetricPusher pusher = new(new MetricPusherOptions
+        {
+            Endpoint = appConfiguration?.PushGateway?.Address,
+            Job = appConfiguration?.AppName,
+            Instance = Environment.MachineName,
+            AdditionalLabels = new List<Tuple<string, string>> { new("service", appConfiguration!.AppName) }
+        });
+
+        pusher.Start();
+    }
 
     app.Run();
 }

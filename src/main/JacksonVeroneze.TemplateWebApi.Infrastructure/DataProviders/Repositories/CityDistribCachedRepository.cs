@@ -8,6 +8,10 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositori
 
 public class CityDistribCachedRepository : ICityDistribCachedRepository
 {
+    private readonly ICollection<CityEntity> _empty = Enumerable
+        .Empty<CityEntity>()
+        .ToArray();
+
     private const string PrefixKey = "_distrib_cache_city_";
 
     private readonly ICacheService _cacheService;
@@ -31,7 +35,7 @@ public class CityDistribCachedRepository : ICityDistribCachedRepository
             parameters.CacheExpMilisegundos);
     }
 
-    public Task<ICollection<CityEntity>> GetByStateIdAsync(
+    public async Task<ICollection<CityEntity>> GetByStateIdAsync(
         CityByStateFilter filter,
         CancellationToken cancellationToken = default)
     {
@@ -39,7 +43,7 @@ public class CityDistribCachedRepository : ICityDistribCachedRepository
 
         string key = filter.StateId!;
 
-        return _cacheService
+        ICollection<CityEntity>? result = await _cacheService
             .GetOrCreateAsync(key, async entry =>
             {
                 entry.AbsoluteExpirationRelativeToNow = _cacheExpiration;
@@ -48,6 +52,8 @@ public class CityDistribCachedRepository : ICityDistribCachedRepository
                     .GetByStateIdAsync(filter, cancellationToken);
 
                 return result;
-            }, cancellationToken)!;
+            }, cancellationToken);
+
+        return result ?? _empty;
     }
 }

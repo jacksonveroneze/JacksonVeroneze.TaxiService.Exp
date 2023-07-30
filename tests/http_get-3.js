@@ -8,8 +8,8 @@ export const options = {
 };
 
 export default function () {
-    http.get('http://127.0.0.1:7000/api/v1/states/SC/cities');
+    http.get('http://localhost/templatewebapi/api/v1/states/SC/cities');
     sleep(Math.random() * 60)
-    http.get('http://127.0.0.1:7000/api/v1/states/RS/cities');
+    http.get('http://localhost/templatewebapi/api/v1/states/RS/cities');
     sleep(Math.random() * 45)
 }

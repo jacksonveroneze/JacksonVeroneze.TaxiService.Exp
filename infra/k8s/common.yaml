@@ -10,10 +10,11 @@ metadata:
   name: templatewebapi-configmap
   namespace: templatewebapi-application
 data:
+  ASPNETCORE_ENVIRONMENT: "Production"
   APP_CONFIG_City__CacheExpMilisegundos: "60000"
   APP_CONFIG_State__CacheExpMilisegundos: "60000"
-  APP_CONFIG_CacheType: "Memory"
-  APP_CONFIG_CacheEndpoint: "10.0.0.199:6379"
+  APP_CONFIG_Cache__Type: "Redis"
+  APP_CONFIG_Cache__Endpoint: "10.0.0.199:6379"
   APP_CONFIG_DistributedTracing__IsEnabled: "false"
   APP_CONFIG_DistributedTracing__Jaeger__Host: "10.0.0.199"
   APP_CONFIG_DistributedTracing__Jaeger__Port: "6831"

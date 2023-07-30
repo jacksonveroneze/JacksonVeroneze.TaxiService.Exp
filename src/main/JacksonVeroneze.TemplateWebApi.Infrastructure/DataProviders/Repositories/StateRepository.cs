@@ -1,7 +1,6 @@
 using AutoMapper;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
-using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 using JacksonVeroneze.TemplateWebApi.Domain.Results.State;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.HttpClients;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
@@ -52,12 +51,5 @@ public class StateRepository : IStateRepository
 
             throw;
         }
-    }
-
-    public Task<StateEntity?> GetByIdAsync(
-        StateByIdFilter filter,
-        CancellationToken cancellationToken = default)
-    {
-        throw new NotSupportedException();
     }
 }

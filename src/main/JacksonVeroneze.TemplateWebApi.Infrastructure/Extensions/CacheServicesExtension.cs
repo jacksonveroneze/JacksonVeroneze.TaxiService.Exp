@@ -16,7 +16,7 @@ public static class CacheServicesExtension
 
         services.AddDistributedCacheService();
 
-        if (appConfiguration.Cache?.Type == CacheType.Memory)
+        if (appConfiguration.Cache?.Type is CacheType.Memory)
         {
             services.AddDistributedMemoryCache();
         }

@@ -18,6 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		Dockerfile = Dockerfile
 		global.json = global.json
 		..\tests\http_get.js = ..\tests\http_get.js
+		..\.gitignore = ..\.gitignore
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{781F0984-F5A6-4051-9B5F-525135392A5A}"
@@ -28,7 +29,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infra", "infra", "{2E06D1F1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{D169AF26-FB04-418D-A804-6BFBF6B99227}"
 	ProjectSection(SolutionItems) = preProject
-		..\infra\Docker\docker-compose.yml = ..\infra\Docker\docker-compose.yml
+		..\infra\docker\docker-compose.yml = ..\infra\docker\docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{E2913F2F-E551-454D-9E83-C3D541D3BFDE}"
+	ProjectSection(SolutionItems) = preProject
+		..\infra\k8s\api.yaml = ..\infra\k8s\api.yaml
+		..\infra\k8s\common.yaml = ..\infra\k8s\common.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "aws", "aws", "{81E56863-860E-4C7C-8B75-442A791EE3CB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "terraform", "terraform", "{F25A0A19-490B-4F5D-8273-E06BF4E80806}"
+	ProjectSection(SolutionItems) = preProject
+		..\infra\aws\terraform\main.tf = ..\infra\aws\terraform\main.tf
+		..\infra\aws\terraform\provider.tf = ..\infra\aws\terraform\provider.tf
+		..\infra\aws\terraform\variables.tf = ..\infra\aws\terraform\variables.tf
 	EndProjectSection
 EndProject
 Global
@@ -64,5 +80,8 @@ Global
 		{5DD8DA6C-CFC9-4AF0-8AAD-FFB3C4E6B951} = {781F0984-F5A6-4051-9B5F-525135392A5A}
 		{2E06D1F1-951E-43B4-9706-4A931EB38244} = {2FB36637-D019-47A7-8E00-B11FB572D0D8}
 		{D169AF26-FB04-418D-A804-6BFBF6B99227} = {2E06D1F1-951E-43B4-9706-4A931EB38244}
+		{E2913F2F-E551-454D-9E83-C3D541D3BFDE} = {2E06D1F1-951E-43B4-9706-4A931EB38244}
+		{81E56863-860E-4C7C-8B75-442A791EE3CB} = {2E06D1F1-951E-43B4-9706-4A931EB38244}
+		{F25A0A19-490B-4F5D-8273-E06BF4E80806} = {81E56863-860E-4C7C-8B75-442A791EE3CB}
 	EndGlobalSection
 EndGlobal

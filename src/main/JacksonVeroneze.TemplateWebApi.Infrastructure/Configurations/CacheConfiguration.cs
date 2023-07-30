@@ -7,3 +7,9 @@ public class CacheConfiguration
 
     public string? Endpoint { get; init; }
 }
+
+public enum CacheType
+{
+    Memory,
+    Redis
+}

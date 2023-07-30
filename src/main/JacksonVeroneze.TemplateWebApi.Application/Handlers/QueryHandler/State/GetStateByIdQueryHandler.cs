@@ -3,6 +3,7 @@ using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
 using JacksonVeroneze.TemplateWebApi.Application.Models.State;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.State;
+using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.State;
@@ -32,7 +33,7 @@ public class GetStateByIdQueryHandler :
 
         StateByIdFilter filter = _mapper.Map<StateByIdFilter>(request);
 
-        Domain.Entities.StateEntity? result = await _repository.GetByIdAsync(
+        StateEntity? result = await _repository.GetByIdAsync(
             filter, cancellationToken);
 
         if (result is null)

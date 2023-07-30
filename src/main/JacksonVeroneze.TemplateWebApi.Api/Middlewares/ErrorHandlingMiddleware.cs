@@ -49,8 +49,7 @@ public class ErrorHandlingMiddleware
 
         JsonSerializerOptions serializeOptions = new()
         {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            WriteIndented = true
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true
         };
 
         context.Response.ContentType = "application/problem+json";

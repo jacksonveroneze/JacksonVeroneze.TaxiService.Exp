@@ -4,6 +4,7 @@ using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
 using JacksonVeroneze.TemplateWebApi.Application.Models.State;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.State;
+using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.State;
@@ -31,7 +32,7 @@ public class GetStatePagedQueryHandler :
     {
         StateAllFilter filter = _mapper.Map<StateAllFilter>(request);
 
-        Page<Domain.Entities.StateEntity> result =
+        Page<StateEntity> result =
             await _repository.GetAllAsync(filter, cancellationToken);
 
         GetStatePagedQueryResponse response =

@@ -8,6 +8,10 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositori
 
 public class StateDistribCachedRepository : IStateDistribCachedRepository
 {
+    private readonly ICollection<StateEntity> _empty = Enumerable
+        .Empty<StateEntity>()
+        .ToArray();
+
     private const string PrefixKey = "_distrib_cache_state_";
 
     private readonly ICacheService _cacheService;
@@ -31,12 +35,12 @@ public class StateDistribCachedRepository : IStateDistribCachedRepository
             parameters.CacheExpMilisegundos);
     }
 
-    public Task<ICollection<StateEntity>> GetAllAsync(
+    public async Task<ICollection<StateEntity>> GetAllAsync(
         CancellationToken cancellationToken = default)
     {
         const string key = "all";
 
-        return _cacheService
+        ICollection<StateEntity>? result = await _cacheService
             .GetOrCreateAsync(key, async entry =>
             {
                 entry.AbsoluteExpirationRelativeToNow = _cacheExpiration;
@@ -45,7 +49,9 @@ public class StateDistribCachedRepository : IStateDistribCachedRepository
                     .GetAllAsync(cancellationToken);
 
                 return result;
-            }, cancellationToken)!;
+            }, cancellationToken);
+
+        return result ?? _empty;
     }
 
     public async Task<StateEntity?> GetByIdAsync(
