@@ -30,7 +30,7 @@ public class StatesController : ControllerBase
     public async Task<IActionResult> GetPagedAsync(
         GetStatePagedQuery query)
     {
-        _logger.LogGetAllStates(nameof(StatesController),
+        _logger.LogGetPagedStates(nameof(StatesController),
             nameof(GetPagedAsync));
 
         BaseResponse response = await _mediator.Send(query);

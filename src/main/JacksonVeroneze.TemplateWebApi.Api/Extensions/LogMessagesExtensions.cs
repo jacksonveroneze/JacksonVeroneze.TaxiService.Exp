@@ -16,22 +16,22 @@ public static partial class LogMessagesExtensions
         EventId = 2000,
         Level = LogLevel.Information,
         Message = "{className} - {methodName} - Info")]
-    public static partial void LogGetAllStates(this ILogger logger,
+    public static partial void LogGetPagedStates(this ILogger logger,
         string className, string methodName);
 
     [LoggerMessage(
         EventId = 2001,
         Level = LogLevel.Information,
-        Message = "{className} - {methodName} - Info")]
+        Message = "{className} - {methodName} - Id: {id} - Info")]
     public static partial void LogGetStateById(this ILogger logger,
-        string className, string methodName);
+        string className, string methodName, string id);
 
     [LoggerMessage(
         EventId = 2002,
         Level = LogLevel.Information,
-        Message = "{className} - {methodName} - Info")]
-    public static partial void GetCitiesById(this ILogger logger,
-        string className, string methodName);
+        Message = "{className} - {methodName} - StateId: {stateId} - Info")]
+    public static partial void GetPagedCitiesByStateId(this ILogger logger,
+        string className, string methodName, string stateId);
 
     #endregion
 }

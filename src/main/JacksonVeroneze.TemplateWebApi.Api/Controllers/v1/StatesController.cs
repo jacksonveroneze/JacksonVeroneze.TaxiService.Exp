@@ -31,7 +31,7 @@ public class StatesController : ControllerBase
     public async Task<IActionResult> GetPagedAsync(
         GetStatePagedQuery query)
     {
-        _logger.LogGetAllStates(nameof(StatesController),
+        _logger.LogGetPagedStates(nameof(StatesController),
             nameof(GetPagedAsync));
 
         BaseResponse response = await _mediator.Send(query);
@@ -45,22 +45,22 @@ public class StatesController : ControllerBase
     public async Task<IActionResult> GetByIdAsync(
         [FromRoute] GetStateByIdQuery query)
     {
-        _logger.LogGetAllStates(nameof(StatesController),
-            nameof(GetPagedAsync));
+        _logger.LogGetStateById(nameof(StatesController),
+            nameof(GetByIdAsync), query.Id!);
 
         BaseResponse response = await _mediator.Send(query);
 
         return StatusCode((int)response.Status, response);
     }
 
-    [HttpGet("{id}/cities", Name = "GetCitiesById")]
+    [HttpGet("{id}/cities", Name = "GetPagedCitiesByStateId")]
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Get))]
-    public async Task<IActionResult> GetCitiesByIdAsync(
+    public async Task<IActionResult> GetPagedCitiesByStateIdAsync(
         [FromRoute] GetCityByStatePagedQuery query)
     {
-        _logger.GetCitiesById(nameof(StatesController),
-            nameof(GetCitiesByIdAsync));
+        _logger.GetPagedCitiesByStateId(nameof(StatesController),
+            nameof(GetPagedCitiesByStateIdAsync), query.StateId!);
 
         BaseResponse response = await _mediator.Send(query);
 
