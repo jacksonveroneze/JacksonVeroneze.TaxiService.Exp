@@ -1,8 +1,8 @@
 using System.Net.Mime;
 using JacksonVeroneze.TemplateWebApi.Api.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
-using JacksonVeroneze.TemplateWebApi.Application.Queries.City;
-using JacksonVeroneze.TemplateWebApi.Application.Queries.State;
+using JacksonVeroneze.TemplateWebApi.Application.Queries.Old.City;
+using JacksonVeroneze.TemplateWebApi.Application.Queries.Old.State;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,0 +1,60 @@
+using JacksonVeroneze.NET.Cache.Interfaces;
+using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
+using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Old;
+using JacksonVeroneze.TemplateWebApi.Domain.Entities.Old;
+using JacksonVeroneze.TemplateWebApi.Domain.Filters.Old;
+using JacksonVeroneze.TemplateWebApi.Domain.Parameters.Old;
+
+namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Old;
+
+public class CityDistribCachedRepository : ICityDistribCachedRepository
+{
+    private readonly ICollection<CityEntity> _empty = Enumerable
+        .Empty<CityEntity>()
+        .ToArray();
+
+    private const string PrefixKey = "_distrib_cache_city_";
+
+    private readonly ICacheService _cacheService;
+    private readonly ICityRepository _repository;
+
+    private readonly TimeSpan _cacheExpiration;
+
+    public CityDistribCachedRepository(
+        ICacheService cacheService,
+        ICityRepository repository,
+        CityParameters parameters)
+    {
+        ArgumentNullException.ThrowIfNull(parameters);
+
+        _cacheService = cacheService;
+        _repository = repository;
+
+        _cacheService.WithPrefixKey(PrefixKey);
+
+        _cacheExpiration = TimeSpan.FromMilliseconds(
+            parameters.CacheExpMilisegundos);
+    }
+
+    public async Task<ICollection<CityEntity>> GetByStateIdAsync(
+        CityByStateFilter filter,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(filter);
+
+        string key = filter.StateId!;
+
+        ICollection<CityEntity>? result = await _cacheService
+            .GetOrCreateAsync(key, async entry =>
+            {
+                entry.AbsoluteExpirationRelativeToNow = _cacheExpiration;
+
+                ICollection<CityEntity> result = await _repository
+                    .GetByStateIdAsync(filter, cancellationToken);
+
+                return result;
+            }, cancellationToken);
+
+        return result ?? _empty;
+    }
+}

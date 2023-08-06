@@ -2,6 +2,7 @@ using JacksonVeroneze.NET.HttpClient.Configuration;
 using JacksonVeroneze.NET.HttpClient.Extensions;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.HttpClients;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.HttpClients.Old;
 using Microsoft.Extensions.DependencyInjection;
 using Prometheus;
 

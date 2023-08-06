@@ -118,7 +118,7 @@ services:
 
       - --metrics=true
     ports:
-      - "8085-8086:8080"
+      - "8085-8085:8080"
     logging:
       driver: "json-file"
       options:
@@ -128,7 +128,7 @@ services:
       resources:
         limits:
           cpus: '0.50'
-          memory: '256M'
+          memory: '512M'
         reservations:
           cpus: '0.50'
-          memory: '256M'
+          memory: '512M'

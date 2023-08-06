@@ -1,12 +1,15 @@
 using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.TemplateWebApi.Application.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
+using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Old;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
-using JacksonVeroneze.TemplateWebApi.Application.Models.City;
-using JacksonVeroneze.TemplateWebApi.Application.Models.State;
-using JacksonVeroneze.TemplateWebApi.Application.Queries.City;
+using JacksonVeroneze.TemplateWebApi.Application.Models.Old.City;
+using JacksonVeroneze.TemplateWebApi.Application.Models.Old.State;
+using JacksonVeroneze.TemplateWebApi.Application.Queries.Old.City;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
+using JacksonVeroneze.TemplateWebApi.Domain.Entities.Old;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
+using JacksonVeroneze.TemplateWebApi.Domain.Filters.Old;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.City;
 

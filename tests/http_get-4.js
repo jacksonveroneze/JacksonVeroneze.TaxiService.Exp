@@ -4,9 +4,9 @@ import { check } from 'k6';
 
 
 export const options = {
-    duration: '3600s',
+    duration: '30s',
     //iterations: 5000,
-    vus: 500,
+    vus: 200,
 };
 
 export default function () {

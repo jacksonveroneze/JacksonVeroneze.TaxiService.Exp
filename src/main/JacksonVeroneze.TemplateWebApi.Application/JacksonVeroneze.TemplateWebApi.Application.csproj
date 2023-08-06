@@ -25,6 +25,18 @@
 
   <ItemGroup>
     <ProjectReference Include="..\JacksonVeroneze.TemplateWebApi.Domain\JacksonVeroneze.TemplateWebApi.Domain.csproj"/>
+
+
+
+  <ItemGroup>
+    <Folder Include="Models\Old\" />
+    <Folder Include="Queries\Old\" />
+    <Folder Include="Validators\Old\" />
   </ItemGroup>
+
+  </ItemGroup>
+
+
+
 
 </Project>

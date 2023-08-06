@@ -1,5 +1,6 @@
 using AutoMapper;
 using JacksonVeroneze.TemplateWebApi.Application.Mappers;
+using JacksonVeroneze.TemplateWebApi.Application.Mappers.Old;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
