@@ -3,10 +3,8 @@ using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Identity;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Mail;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Messaging;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Old;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Common;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories;
-using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Old;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Identity;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Mail;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Messaging;
@@ -29,19 +27,15 @@ public static class AppServicesExtension
 
         #endregion
 
-        #region City
+        #region Bank
 
-        services.AddScoped<ICityRepository, CityRepository>();
-        services.AddScoped<ICityDistribCachedRepository, CityDistribCachedRepository>();
-        services.AddScoped<ICityPaginatedRepository, CityPaginatedRepository>();
+        services.AddScoped<IBankRepository, BankRepository>();
 
         #endregion
 
-        #region State
+        #region Client
 
-        services.AddScoped<IStateRepository, StateRepository>();
-        services.AddScoped<IStateDistribCachedRepository, StateDistribCachedRepository>();
-        services.AddScoped<IStatePaginatedRepository, StatePaginatedRepository>();
+        services.AddScoped<IClientRepository, ClientRepository>();
 
         #endregion
 

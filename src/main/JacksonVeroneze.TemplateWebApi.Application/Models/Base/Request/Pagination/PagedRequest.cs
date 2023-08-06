@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Models.Base.Request.Pagination;
 
-public class PagedRequest
+public record PagedRequest
 {
     private const int DefaultPage = 1;
 

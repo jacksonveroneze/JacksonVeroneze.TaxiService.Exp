@@ -1,6 +1,6 @@
 using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Old.State;
-using JacksonVeroneze.TemplateWebApi.Application.Queries.Old.State;
+using JacksonVeroneze.TemplateWebApi.Application.Queries.Bank;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities.Old;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters.Old;
 using JacksonVeroneze.TemplateWebApi.Domain.Results.Old.State;
@@ -28,10 +28,10 @@ public class StateMapper : Profile
             .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src.Pagination))
             .ForMember(dest => dest.Messages, opts => opts.Ignore());
 
-        CreateMap<GetStatePagedQuery, StateAllFilter>()
+        CreateMap<GetBankPagedQuery, StateAllFilter>()
             .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src));
 
-        CreateMap<GetStateByIdQuery, StateByIdFilter>()
+        CreateMap<GetBankByIdQuery, StateByIdFilter>()
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id));
     }
 }
