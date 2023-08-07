@@ -28,12 +28,14 @@ public class BanksController : ControllerBase
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Get))]
     public async Task<IActionResult> GetPagedAsync(
-        GetBankPagedQuery query)
+        GetBankPagedQuery query,
+        CancellationToken cancellationToken)
     {
         _logger.LogGetPaged(nameof(BanksController),
             nameof(GetPagedAsync));
 
-        BaseResponse response = await _mediator.Send(query);
+        BaseResponse response = await _mediator
+            .Send(query, cancellationToken);
 
         return StatusCode((int)response.Status, response);
     }
@@ -42,12 +44,14 @@ public class BanksController : ControllerBase
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Find))]
     public async Task<IActionResult> GetByIdAsync(
-        [FromRoute] GetBankByIdQuery query)
+        [FromRoute] GetBankByIdQuery query,
+        CancellationToken cancellationToken)
     {
         _logger.LogGetById(nameof(BanksController),
             nameof(GetByIdAsync), query.Id);
 
-        BaseResponse response = await _mediator.Send(query);
+        BaseResponse response = await _mediator
+            .Send(query, cancellationToken);
 
         return StatusCode((int)response.Status, response);
     }

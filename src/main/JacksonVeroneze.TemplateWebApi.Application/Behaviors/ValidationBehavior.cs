@@ -19,31 +19,23 @@ public class ValidationBehavior<TRequest, TResponse> :
         _validators = validators;
     }
 
-    public async Task<BaseResponse> Handle(TRequest request,
+    public async Task<BaseResponse> Handle(
+        TRequest request,
         RequestHandlerDelegate<BaseResponse> next,
         CancellationToken cancellationToken)
     {
+        ArgumentNullException.ThrowIfNull(request);
         ArgumentNullException.ThrowIfNull(next);
 
-        if (!_validators.Any())
-        {
-            _logger.LogNoContainValidators(
-                nameof(ValidationBehavior<TRequest, TResponse>),
-                typeof(TRequest).Name);
+        ValidationResult[] validationfailures = await Task.WhenAll(
+            _validators.Select(validator => validator
+                .ValidateAsync(request, cancellationToken)));
 
-            return await next();
-        }
-
-        IEnumerable<Task<ValidationResult>> failuresResult =
-            _validators.Select(item =>
-                item.ValidateAsync(request, cancellationToken));
-
-        ValidationResult[] result =
-            await Task.WhenAll(failuresResult);
-
-        ICollection<ValidationFailure> failures = result
+        ICollection<Notification> failures = validationfailures
+            .Where(result => !result.IsValid)
             .SelectMany(item => item.Errors)
-            .Where(item => item != null)
+            .Select(item => new Notification(
+                item.PropertyName, item.ErrorMessage))
             .ToArray();
 
         _logger.LogTotalViolations(
@@ -51,16 +43,11 @@ public class ValidationBehavior<TRequest, TResponse> :
             typeof(TRequest).Name,
             failures.Count);
 
-        if (!failures.Any())
+        if (failures.Any())
         {
-            return await next();
+            return new BadRequestResponse(failures);
         }
 
-        ICollection<Notification> fails = failures.Select(item =>
-            new Notification(
-                item.PropertyName,
-                item.ErrorMessage)).ToList();
-
-        return new BadRequestResponse(fails);
+        return await next();
     }
 }

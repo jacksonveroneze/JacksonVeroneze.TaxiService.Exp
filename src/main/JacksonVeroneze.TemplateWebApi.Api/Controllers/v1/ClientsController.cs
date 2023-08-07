@@ -28,12 +28,14 @@ public class ClientsController : ControllerBase
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Get))]
     public async Task<IActionResult> GetPagedAsync(
-        GetClientPagedQuery query)
+        GetClientPagedQuery query,
+        CancellationToken cancellationToken)
     {
         _logger.LogGetPaged(nameof(ClientsController),
             nameof(GetPagedAsync));
 
-        BaseResponse response = await _mediator.Send(query);
+        BaseResponse response = await _mediator
+            .Send(query, cancellationToken);
 
         return StatusCode((int)response.Status, response);
     }
@@ -42,12 +44,14 @@ public class ClientsController : ControllerBase
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Find))]
     public async Task<IActionResult> GetByIdAsync(
-        [FromRoute] GetClientByIdQuery query)
+        [FromRoute] GetClientByIdQuery query,
+        CancellationToken cancellationToken)
     {
         _logger.LogGetById(nameof(ClientsController),
             nameof(GetByIdAsync), query.Id);
 
-        BaseResponse response = await _mediator.Send(query);
+        BaseResponse response = await _mediator
+            .Send(query, cancellationToken);
 
         return StatusCode((int)response.Status, response);
     }
