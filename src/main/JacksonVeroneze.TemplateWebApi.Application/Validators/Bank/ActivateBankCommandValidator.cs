@@ -2,9 +2,9 @@ using JacksonVeroneze.TemplateWebApi.Application.Commands.Bank;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Validators.Bank;
 
-public class DeleteBankCommandValidator : AbstractValidator<DeleteBankCommand>
+public class ActivateBankCommandValidator : AbstractValidator<ActivateBankCommand>
 {
-    public DeleteBankCommandValidator()
+    public ActivateBankCommandValidator()
     {
         RuleFor(request => request)
             .NotNull();

@@ -1,5 +1,4 @@
 using FluentValidation;
-using JacksonVeroneze.TemplateWebApi.Application;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
@@ -10,7 +9,7 @@ public static class FluentValidationExtensions
     public static IServiceCollection AddFluentValidation(
         this IServiceCollection services)
     {
-        services.AddValidatorsFromAssemblyContaining<AssemblyReference>();
+        services.AddValidatorsFromAssemblyContaining<Application.AssemblyReference>();
 
         return services;
     }

@@ -65,8 +65,8 @@ public class BanksController : ControllerBase
         [FromBody] CreateBankCommand command,
         CancellationToken cancellationToken)
     {
-        _logger.LogCreate(nameof(BanksController),
-            nameof(GetByIdAsync));
+        // _logger.LogCreate(nameof(BanksController),
+        //     nameof(GetByIdAsync));
 
         CreateBankCommandResponse response =
             (CreateBankCommandResponse)await _mediator
@@ -85,8 +85,26 @@ public class BanksController : ControllerBase
         [FromRoute] DeleteBankCommand query,
         CancellationToken cancellationToken)
     {
-        _logger.LogGetById(nameof(BanksController),
-            nameof(GetByIdAsync), query.Id);
+        // _logger.LogGetById(nameof(BanksController),
+        //     nameof(GetByIdAsync), query.Id);
+
+        BaseResponse response = await _mediator
+            .Send(query, cancellationToken);
+
+        return response.Status is ResponseStatus.NoContent
+            ? NoContent()
+            : StatusCode((int)response.Status, response);
+    }
+
+    [HttpPut("{id}/activate", Name = "ActivateBank")]
+    [ApiConventionMethod(typeof(DefaultApiConventions),
+        nameof(DefaultApiConventions.Delete))]
+    public async Task<IActionResult> ActivateAsync(
+        [FromRoute] ActivateBankCommand query,
+        CancellationToken cancellationToken)
+    {
+        // _logger.LogGetById(nameof(BanksController),
+        //     nameof(GetByIdAsync), query.Id);
 
         BaseResponse response = await _mediator
             .Send(query, cancellationToken);

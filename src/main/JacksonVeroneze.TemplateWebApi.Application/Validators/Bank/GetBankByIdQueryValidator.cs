@@ -10,8 +10,6 @@ public class GetBankByIdQueryValidator : AbstractValidator<GetBankByIdQuery>
             .NotNull();
 
         RuleFor(request => request.Id)
-            .Cascade(CascadeMode.Stop)
-            .NotNull()
-            .NotEmpty();
+            .SetValidator(new BankIdValidator());
     }
 }

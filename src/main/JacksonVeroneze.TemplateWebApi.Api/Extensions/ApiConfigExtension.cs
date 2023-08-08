@@ -1,9 +1,12 @@
+using System.Text.Json;
 using Ben.Diagnostics;
 using CorrelationId;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
 using Prometheus;
 using Hellang.Middleware.ProblemDetails;
+using JacksonVeroneze.TemplateWebApi.Application.Exceptions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace JacksonVeroneze.TemplateWebApi.Api.Extensions;
 
@@ -28,9 +31,17 @@ public static class ApiConfigExtension
         }
 
         builder.Services
-            .AddProblemDetails(conf =>
+            .AddProblemDetails(options =>
             {
-                conf.SourceCodeLineCount = 1;
+                options.IncludeExceptionDetails = (_, _)
+                    => false;
+
+                options.Map<ValidationException>(ex =>
+                    new ValidationProblemDetails(ex.ErrorsDictionary)
+                {
+                    Title = ex.Message,
+                    Status = StatusCodes.Status404NotFound
+                });
             })
             .AddAppServices()
             .AddAutoMapper()

@@ -35,6 +35,8 @@ public static partial class LogMessagesExtensions
     public static partial void LogCreated(this ILogger logger,
         string className, string methodName);
 
+
+
     [LoggerMessage(
         EventId = 6001,
         Level = LogLevel.Information,
@@ -43,6 +45,14 @@ public static partial class LogMessagesExtensions
         string className, string methodName, string id);
 
     #endregion
+
+    [LoggerMessage(
+        EventId = 6001,
+        Level = LogLevel.Information,
+        Message = "{className} - {methodName} - Activated - Id: '{id}'")]
+    public static partial void LogActivated(this ILogger logger,
+        string className, string methodName, Guid id);
+
 
     # region ValidationBehavior
 

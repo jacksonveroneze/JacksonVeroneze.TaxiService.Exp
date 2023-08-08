@@ -33,7 +33,7 @@ public class CreateBankCommandHandler :
         BankEntity data = _mapper
             .Map<BankEntity>(request);
 
-        // exits
+        // validate exits
 
         await _repository.CreateAsync(data, cancellationToken);
 
