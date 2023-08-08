@@ -1,5 +1,4 @@
 using JacksonVeroneze.TemplateWebApi.Domain.Parameters;
-using JacksonVeroneze.TemplateWebApi.Domain.Parameters.Old;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,9 +16,7 @@ public static class AppConfigurationExtension
         ArgumentNullException.ThrowIfNull(configuration);
 
         services.AddConfiguration<AppConfiguration>(configuration)
-            .AddConfiguration<MailParameters>(configuration, MailParameters.Name)
-            .AddConfiguration<CityParameters>(configuration, CityParameters.Name)
-            .AddConfiguration<StateParameters>(configuration, StateParameters.Name);
+            .AddConfiguration<MailParameters>(configuration, MailParameters.Name);
 
         using ServiceProvider provider =
             services.BuildServiceProvider();

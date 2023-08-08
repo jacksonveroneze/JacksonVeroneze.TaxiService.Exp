@@ -32,17 +32,6 @@ public static partial class LogMessagesExtensions
 
     #endregion
 
-    #region City
-
-    [LoggerMessage(
-        EventId = 2000,
-        Level = LogLevel.Information,
-        Message = "{className} - {methodName} - Info - StateId: '{stateId}' - Count: '{count}'")]
-    public static partial void LogGetCitiesByStateId(this ILogger logger,
-        string className, string methodName, string stateId, int count);
-
-    #endregion
-
     #region State
 
     [LoggerMessage(

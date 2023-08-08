@@ -75,8 +75,6 @@ services:
       dockerfile: ./Dockerfile
     environment:
       - APP_CONFIG_Metrics__Detailed=true
-      - APP_CONFIG_City__CacheExpMilisegundos=600000
-      - APP_CONFIG_State__CacheExpMilisegundos=600000
       - APP_CONFIG_Cache__Type=Redis
       - APP_CONFIG_Cache__Endpoint=10.0.0.199:6379
       - APP_CONFIG_DistributedTracing__IsEnabled=false
