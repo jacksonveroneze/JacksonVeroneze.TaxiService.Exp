@@ -1,6 +1,6 @@
 ﻿using JacksonVeroneze.NET.Pagination;
-using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Request.Pagination;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response.Pagination;
+using JacksonVeroneze.TemplateWebApi.Application.Queries.Base;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Mappers;
 
@@ -8,7 +8,7 @@ public class CommonMapper : Profile
 {
     public CommonMapper()
     {
-        CreateMap<PagedRequest, PaginationParameters>()
+        CreateMap<PagedQuery, PaginationParameters>()
             .ConstructUsing(src =>
                 new PaginationParameters(src.Page!.Value,
                     src.PageSize!.Value, src.OrderBy, src.Order));

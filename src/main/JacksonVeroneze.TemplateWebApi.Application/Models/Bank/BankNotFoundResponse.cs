@@ -1,18 +1,18 @@
 using System.Globalization;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
 
-namespace JacksonVeroneze.TemplateWebApi.Application.Models.Old.State;
+namespace JacksonVeroneze.TemplateWebApi.Application.Models.Bank;
 
-public record StateNotFoundResponse : NotFoundResponse
+public record BankNotFoundResponse : NotFoundResponse
 {
     private const string Message = "{0} not found";
-    private const string Key = "IdState";
+    private const string Key = "IdBank";
 
-    protected StateNotFoundResponse()
+    protected BankNotFoundResponse()
     {
     }
 
-    public StateNotFoundResponse(string attemptKeyValue) :
+    public BankNotFoundResponse(string attemptKeyValue) :
         base(Key, string.Format(CultureInfo.CurrentCulture, Message, attemptKeyValue))
     {
     }

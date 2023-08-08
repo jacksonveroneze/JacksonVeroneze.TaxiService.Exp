@@ -1,15 +1,15 @@
 ﻿using JacksonVeroneze.NET.Pagination;
 using Microsoft.AspNetCore.Mvc;
 
-namespace JacksonVeroneze.TemplateWebApi.Application.Models.Base.Request.Pagination;
+namespace JacksonVeroneze.TemplateWebApi.Application.Queries.Base;
 
-public record PagedRequest
+public record PagedQuery
 {
     private const int DefaultPage = 1;
 
     private const int DefaulPageSize = 20;
 
-    public PagedRequest(string defaultOrderBy, SortDirection defaultOrder)
+    public PagedQuery(string defaultOrderBy, SortDirection defaultOrder)
     {
         ArgumentException.ThrowIfNullOrEmpty(nameof(defaultOrderBy));
         ArgumentException.ThrowIfNullOrEmpty(nameof(defaultOrder));

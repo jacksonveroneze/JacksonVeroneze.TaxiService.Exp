@@ -14,17 +14,17 @@ namespace JacksonVeroneze.TemplateWebApi.Api.Controllers.v1;
 public class ClientsController : ControllerBase
 {
     private readonly ILogger<ClientsController> _logger;
-    private readonly IMediator _mediator;
+    private readonly ISender _mediator;
 
     public ClientsController(
         ILogger<ClientsController> logger,
-        IMediator mediator)
+        ISender mediator)
     {
         _logger = logger;
         _mediator = mediator;
     }
 
-    [HttpGet(Name = "GetPaged")]
+    [HttpGet(Name = "GetPagedClients")]
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Get))]
     public async Task<IActionResult> GetPagedAsync(
@@ -40,7 +40,7 @@ public class ClientsController : ControllerBase
         return StatusCode((int)response.Status, response);
     }
 
-    [HttpGet("{id}", Name = "GetById")]
+    [HttpGet("{id}", Name = "GetByIdClient")]
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Find))]
     public async Task<IActionResult> GetByIdAsync(

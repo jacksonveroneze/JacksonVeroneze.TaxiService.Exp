@@ -4,7 +4,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 
-public interface IBankRepository
+public interface IBankReadRepository
 {
     Task<Bank?> GetByIdAsync(
         Guid id,
@@ -12,17 +12,5 @@ public interface IBankRepository
 
     Task<Page<Bank>> GetPagedAsync(
         BankPagedFilter filter,
-        CancellationToken cancellationToken = default);
-
-    Task CreateAsync(
-        Bank bank,
-        CancellationToken cancellationToken = default);
-
-    Task DeleteAsync(
-        Bank bank,
-        CancellationToken cancellationToken = default);
-
-    Task UpdateAsync(
-        Bank bank,
         CancellationToken cancellationToken = default);
 }

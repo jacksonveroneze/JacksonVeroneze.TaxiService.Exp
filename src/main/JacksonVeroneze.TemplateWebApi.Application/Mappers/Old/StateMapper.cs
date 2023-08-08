@@ -1,5 +1,5 @@
 using JacksonVeroneze.NET.Pagination;
-using JacksonVeroneze.TemplateWebApi.Application.Models.Old.State;
+using JacksonVeroneze.TemplateWebApi.Application.Models.Bank;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.Bank;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities.Old;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters.Old;
@@ -15,15 +15,15 @@ public class StateMapper : Profile
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
             .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name));
 
-        CreateMap<StateEntity, StateResponse>()
+        CreateMap<StateEntity, BankResponse>()
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
             .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name));
 
-        CreateMap<StateEntity, GetStateByIdQueryQueryResponse>()
+        CreateMap<StateEntity, GetBankByIdQueryResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src))
             .ForMember(dest => dest.Messages, opts => opts.Ignore());
 
-        CreateMap<Page<StateEntity>, GetStatePagedQueryResponse>()
+        CreateMap<Page<StateEntity>, GetBankPagedQueryResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src.Data))
             .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src.Pagination))
             .ForMember(dest => dest.Messages, opts => opts.Ignore());

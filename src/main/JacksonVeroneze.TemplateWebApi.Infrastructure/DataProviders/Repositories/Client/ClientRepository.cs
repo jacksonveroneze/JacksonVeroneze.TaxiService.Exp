@@ -1,11 +1,10 @@
 using AutoMapper;
 using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
-using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 using Microsoft.Extensions.Logging;
 
-namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories;
+namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Client;
 
 public class ClientRepository : IClientRepository
 {
@@ -19,31 +18,31 @@ public class ClientRepository : IClientRepository
         _mapper = mapper;
     }
 
-    public Task<Client?> GetByIdAsync(Guid id,
+    public Task<Domain.Entities.Client?> GetByIdAsync(Guid id,
         CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Page<Client>> GetPagedAsync(ClientPagedFilter filter,
+    public Task<Page<Domain.Entities.Client>> GetPagedAsync(ClientPagedFilter filter,
         CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task CreateAsync(Client client,
+    public Task CreateAsync(Domain.Entities.Client client,
         CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task DeleteAsync(Client client,
+    public Task DeleteAsync(Domain.Entities.Client client,
         CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task UpdateAsync(Client client,
+    public Task UpdateAsync(Domain.Entities.Client client,
         CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();

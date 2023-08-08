@@ -1,8 +1,8 @@
-using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Request.Pagination;
+using JacksonVeroneze.TemplateWebApi.Application.Queries.Base;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Validators.Base;
 
-public class PagedRequestValidator : AbstractValidator<PagedRequest>
+public class PagedRequestValidator : AbstractValidator<PagedQuery>
 {
 
     public PagedRequestValidator()

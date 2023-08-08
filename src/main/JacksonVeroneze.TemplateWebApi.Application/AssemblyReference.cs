@@ -1,5 +1,3 @@
 namespace JacksonVeroneze.TemplateWebApi.Application;
 
-public class ApplicationMetadata
-{
-}
+public sealed record AssemblyReference;

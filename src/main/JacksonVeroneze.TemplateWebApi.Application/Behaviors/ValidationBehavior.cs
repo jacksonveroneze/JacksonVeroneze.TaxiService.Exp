@@ -1,12 +1,13 @@
 using FluentValidation.Results;
 using JacksonVeroneze.TemplateWebApi.Application.Extensions;
-using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
+using ValidationException = JacksonVeroneze.TemplateWebApi.Application.Exceptions.ValidationException;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Behaviors;
 
 public class ValidationBehavior<TRequest, TResponse> :
-    IPipelineBehavior<TRequest, BaseResponse>
-    where TRequest : IRequest<BaseResponse>
+    IPipelineBehavior<TRequest, TResponse>
+    where TRequest : class, IRequest<TResponse>
+    where TResponse : class
 {
     private readonly ILogger<ValidationBehavior<TRequest, TResponse>> _logger;
     private readonly IEnumerable<IValidator<TRequest>> _validators;
@@ -19,24 +20,37 @@ public class ValidationBehavior<TRequest, TResponse> :
         _validators = validators;
     }
 
-    public async Task<BaseResponse> Handle(
+    public async Task<TResponse> Handle(
         TRequest request,
-        RequestHandlerDelegate<BaseResponse> next,
+        RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         ArgumentNullException.ThrowIfNull(next);
 
+        if (!_validators.Any())
+        {
+            return await next();
+        }
+
+        ValidationContext<TRequest> context = new(request);
+
         ValidationResult[] validationfailures = await Task.WhenAll(
             _validators.Select(validator => validator
-                .ValidateAsync(request, cancellationToken)));
+                .ValidateAsync(context, cancellationToken)));
 
-        ICollection<Notification> failures = validationfailures
+        Dictionary<string, string[]> failures = validationfailures
             .Where(result => !result.IsValid)
             .SelectMany(item => item.Errors)
-            .Select(item => new Notification(
-                item.PropertyName, item.ErrorMessage))
-            .ToArray();
+            .GroupBy(
+                x => x.PropertyName,
+                x => x.ErrorMessage,
+                (propertyName, errorMessages) => new
+                {
+                    Key = propertyName, Values = errorMessages.Distinct().ToArray()
+                })
+            .ToDictionary(x => x.Key, x => x.Values);
+        ;
 
         _logger.LogTotalViolations(
             nameof(ValidationBehavior<TRequest, TResponse>),
@@ -45,7 +59,7 @@ public class ValidationBehavior<TRequest, TResponse> :
 
         if (failures.Any())
         {
-            return new BadRequestResponse(failures);
+            throw new ValidationException(failures);
         }
 
         return await next();

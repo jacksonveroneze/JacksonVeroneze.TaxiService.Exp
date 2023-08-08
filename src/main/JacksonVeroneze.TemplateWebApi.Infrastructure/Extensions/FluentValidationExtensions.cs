@@ -1,5 +1,4 @@
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using JacksonVeroneze.TemplateWebApi.Application;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,8 +10,7 @@ public static class FluentValidationExtensions
     public static IServiceCollection AddFluentValidation(
         this IServiceCollection services)
     {
-        services.AddValidatorsFromAssemblyContaining<ApplicationMetadata>();
-        services.AddFluentValidationAutoValidation();
+        services.AddValidatorsFromAssemblyContaining<AssemblyReference>();
 
         return services;
     }

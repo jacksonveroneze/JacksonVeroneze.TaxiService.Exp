@@ -6,5 +6,5 @@ namespace JacksonVeroneze.TemplateWebApi.Application.Queries.Bank;
 public record GetBankByIdQuery : IRequest<BaseResponse>
 {
     [FromRoute(Name = "id")]
-    public Guid? Id { get; init; }
+    public Guid Id { get; init; }
 }

@@ -11,34 +11,26 @@ public static partial class LogMessagesExtensions
     public static partial void LogNotFound(this ILogger logger,
         string className, string methodName);
 
-    #endregion
-
-    #region City
-
-    [LoggerMessage(
-        EventId = 5000,
-        Level = LogLevel.Information,
-        Message = "{className} - {methodName} - Info - StateId: '{id}'")]
-    public static partial void LogGetCityByState(this ILogger logger,
-        string className, string methodName, string id);
-
-    #endregion
-
-    #region State
-
     [LoggerMessage(
         EventId = 6000,
         Level = LogLevel.Information,
         Message = "{className} - {methodName} - Info - Count: '{count}'")]
-    public static partial void LogGetAllStates(this ILogger logger,
+    public static partial void LogGetPaged(this ILogger logger,
         string className, string methodName, int count);
 
     [LoggerMessage(
         EventId = 6001,
         Level = LogLevel.Information,
         Message = "{className} - {methodName} - Info - Id: '{id}'")]
-    public static partial void LogGetStateById(this ILogger logger,
-        string className, string methodName, string id);
+    public static partial void LogGetById(this ILogger logger,
+        string className, string methodName, Guid? id);
+
+    [LoggerMessage(
+        EventId = 6001,
+        Level = LogLevel.Information,
+        Message = "{className} - {methodName} - Info - Created")]
+    public static partial void LogCreated(this ILogger logger,
+        string className, string methodName);
 
     #endregion
 

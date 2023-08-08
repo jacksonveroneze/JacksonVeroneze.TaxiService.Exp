@@ -1,11 +1,11 @@
 using JacksonVeroneze.NET.Pagination;
-using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Request.Pagination;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
+using JacksonVeroneze.TemplateWebApi.Application.Queries.Base;
 using JacksonVeroneze.TemplateWebApi.Domain.Results.Old.State;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Queries.Bank;
 
-public record GetBankPagedQuery : PagedRequest, IRequest<BaseResponse>
+public record GetBankPagedQuery : PagedQuery, IRequest<BaseResponse>
 {
     private const string DefaultorderBy = nameof(StateResult.Id);
 

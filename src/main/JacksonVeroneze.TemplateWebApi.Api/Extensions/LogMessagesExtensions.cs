@@ -18,5 +18,12 @@ public static partial class LogMessagesExtensions
     public static partial void LogGetById(this ILogger logger,
         string className, string methodName, Guid? id);
 
+    [LoggerMessage(
+        EventId = 2001,
+        Level = LogLevel.Information,
+        Message = "{className} - {methodName} - Create")]
+    public static partial void LogCreate(this ILogger logger,
+        string className, string methodName);
+
     #endregion
 }
