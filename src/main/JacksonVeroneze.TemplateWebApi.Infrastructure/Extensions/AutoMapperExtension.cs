@@ -1,6 +1,5 @@
 using AutoMapper;
 using JacksonVeroneze.TemplateWebApi.Application.Mappers;
-using JacksonVeroneze.TemplateWebApi.Application.Mappers.Old;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
@@ -14,8 +13,9 @@ public static class AutoMapperExtension
         MapperConfiguration configuration = new(cfg =>
         {
             cfg.AddProfile<CommonMapper>();
-            cfg.AddProfile<CityMapper>();
-            cfg.AddProfile<StateMapper>();
+            cfg.AddProfile<PaginationMapper>();
+            //
+            cfg.AddProfile<BankMapper>();
             cfg.AllowNullCollections = true;
         });
 

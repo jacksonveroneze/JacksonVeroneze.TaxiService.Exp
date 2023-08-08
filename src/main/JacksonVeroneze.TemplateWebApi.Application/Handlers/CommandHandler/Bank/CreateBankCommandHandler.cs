@@ -3,6 +3,7 @@ using JacksonVeroneze.TemplateWebApi.Application.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Bank;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
+using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.CommandHandler.Bank;
 
@@ -29,15 +30,15 @@ public class CreateBankCommandHandler :
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Domain.Entities.Bank bank = _mapper
-            .Map<Domain.Entities.Bank>(request);
+        BankEntity data = _mapper
+            .Map<BankEntity>(request);
 
         // exits
 
-        await _repository.CreateAsync(bank, cancellationToken);
+        await _repository.CreateAsync(data, cancellationToken);
 
         CreateBankCommandResponse response =
-            _mapper.Map<CreateBankCommandResponse>(bank);
+            _mapper.Map<CreateBankCommandResponse>(data);
 
         _logger.LogCreated(nameof(CreateBankCommandHandler),
             nameof(Handle));

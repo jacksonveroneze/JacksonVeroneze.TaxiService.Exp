@@ -1,6 +1,7 @@
 using AutoMapper;
 using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
+using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 using Microsoft.Extensions.Logging;
 
@@ -8,8 +9,8 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositori
 
 public class BankReadStubRepository : IBankReadRepository
 {
-    private readonly IList<Domain.Entities.Bank> _data = Enumerable.Range(1, 25)
-        .Select(item => new Domain.Entities.Bank($"Bank_{item}"))
+    private readonly IList<BankEntity> _data = Enumerable.Range(1, 25)
+        .Select(item => new BankEntity($"Bank_{item}"))
         .ToArray();
 
     private readonly ILogger<BankReadStubRepository> _logger;
@@ -22,15 +23,15 @@ public class BankReadStubRepository : IBankReadRepository
         _mapper = mapper;
     }
 
-    public Task<Domain.Entities.Bank?> GetByIdAsync(Guid id,
+    public Task<BankEntity?> GetByIdAsync(Guid id,
         CancellationToken cancellationToken = default)
     {
-        Domain.Entities.Bank? item = _data.FirstOrDefault(item => item.Id == id);
+        BankEntity? item = _data.FirstOrDefault(item => item.Id == id);
 
         return Task.FromResult(item);
     }
 
-    public Task<Page<Domain.Entities.Bank>> GetPagedAsync(BankPagedFilter filter,
+    public Task<Page<BankEntity>> GetPagedAsync(BankPagedFilter filter,
         CancellationToken cancellationToken = default)
     {
         PageInfo pageInfo = new(
@@ -38,7 +39,7 @@ public class BankReadStubRepository : IBankReadRepository
             filter.Pagination!.PageSize,
             _data.Count);
 
-        Page<Domain.Entities.Bank> paged = new(_data, pageInfo);
+        Page<BankEntity> paged = new(_data, pageInfo);
 
         return Task.FromResult(paged);
     }

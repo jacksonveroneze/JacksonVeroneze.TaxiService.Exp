@@ -1,17 +1,25 @@
 using JacksonVeroneze.NET.Pagination;
+using JacksonVeroneze.TemplateWebApi.Application.Models.Bank;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.Base;
-using JacksonVeroneze.TemplateWebApi.Domain.Results.Old.State;
+using JacksonVeroneze.TemplateWebApi.Domain.Enums;
+using Microsoft.AspNetCore.Mvc;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Queries.Bank;
 
 public record GetBankPagedQuery : PagedQuery, IRequest<BaseResponse>
 {
-    private const string DefaultorderBy = nameof(StateResult.Id);
+    private const string DefaultOrderBy = nameof(BankResponse.Id);
 
     private const SortDirection DefaultOrder = SortDirection.Ascending;
 
-    public GetBankPagedQuery() : base(DefaultorderBy, DefaultOrder)
+    [FromQuery(Name = "name")]
+    public string? Name { get; init; }
+
+    [FromQuery(Name = "status")]
+    public BankStatus? Status { get; init; }
+
+    public GetBankPagedQuery() : base(DefaultOrderBy, DefaultOrder)
     {
     }
 }

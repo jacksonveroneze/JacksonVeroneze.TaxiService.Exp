@@ -1,6 +1,7 @@
 using AutoMapper;
 using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
+using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 using Microsoft.Extensions.Logging;
 
@@ -18,31 +19,31 @@ public class ClientRepository : IClientRepository
         _mapper = mapper;
     }
 
-    public Task<Domain.Entities.Client?> GetByIdAsync(Guid id,
+    public Task<ClientEntity?> GetByIdAsync(Guid id,
         CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Page<Domain.Entities.Client>> GetPagedAsync(ClientPagedFilter filter,
+    public Task<Page<ClientEntity>> GetPagedAsync(ClientPagedFilter filter,
         CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task CreateAsync(Domain.Entities.Client client,
+    public Task CreateAsync(ClientEntity clientEntity,
         CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task DeleteAsync(Domain.Entities.Client client,
+    public Task DeleteAsync(ClientEntity clientEntity,
         CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task UpdateAsync(Domain.Entities.Client client,
+    public Task UpdateAsync(ClientEntity clientEntity,
         CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();

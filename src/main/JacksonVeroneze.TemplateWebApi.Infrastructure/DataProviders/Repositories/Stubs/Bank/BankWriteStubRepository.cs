@@ -1,14 +1,14 @@
 using AutoMapper;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
+using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using Microsoft.Extensions.Logging;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Stubs.Bank;
 
 public class BankWriteStubRepository : IBankWriteRepository
 {
-    private readonly IList<Domain.Entities.Bank> _data = Enumerable.Range(1, 25)
-        .Select(item => new Domain.Entities.Bank($"Bank_{item}"))
-        .ToArray();
+    private readonly IList<BankEntity> _data = new List<BankEntity>(Enumerable.Range(1, 25)
+        .Select(item => new BankEntity($"Bank_{item}")));
 
     private readonly ILogger<BankWriteStubRepository> _logger;
     private readonly IMapper _mapper;
@@ -20,28 +20,28 @@ public class BankWriteStubRepository : IBankWriteRepository
         _mapper = mapper;
     }
 
-    public Task CreateAsync(Domain.Entities.Bank bank,
+    public Task CreateAsync(BankEntity bankEntity,
         CancellationToken cancellationToken = default)
     {
-        _data.Add(bank);
+        _data.Add(bankEntity);
 
         return Task.CompletedTask;
     }
 
-    public Task DeleteAsync(Domain.Entities.Bank bank,
+    public Task DeleteAsync(BankEntity bankEntity,
         CancellationToken cancellationToken = default)
     {
-        _data.Remove(bank);
+        _data.Remove(bankEntity);
 
         return Task.CompletedTask;
     }
 
-    public Task UpdateAsync(Domain.Entities.Bank bank,
+    public Task UpdateAsync(BankEntity bankEntity,
         CancellationToken cancellationToken = default)
     {
-        _data.Remove(bank);
+        _data.Remove(bankEntity);
 
-        _data.Add(bank);
+        _data.Add(bankEntity);
 
         return Task.CompletedTask;
     }

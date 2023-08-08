@@ -1,5 +1,6 @@
 using AutoMapper;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
+using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using Microsoft.Extensions.Logging;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Bank;
@@ -16,19 +17,19 @@ public class BankWriteRepository : IBankWriteRepository
         _mapper = mapper;
     }
 
-    public Task CreateAsync(Domain.Entities.Bank bank,
+    public Task CreateAsync(BankEntity bankEntity,
         CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task DeleteAsync(Domain.Entities.Bank bank,
+    public Task DeleteAsync(BankEntity bankEntity,
         CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task UpdateAsync(Domain.Entities.Bank bank,
+    public Task UpdateAsync(BankEntity bankEntity,
         CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();

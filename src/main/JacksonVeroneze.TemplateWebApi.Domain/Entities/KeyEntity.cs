@@ -3,7 +3,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 
 namespace JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
-public class Key : BaseEntity
+public class KeyEntity : BaseEntity
 {
     public KeyType? Type { get; private set; }
 
@@ -11,9 +11,9 @@ public class Key : BaseEntity
 
     public KeyStatus? Status { get; private set; }
 
-    public Account? Account { get; private set; }
+    public AccountEntity? Account { get; private set; }
 
-    public Key(KeyType? type, string? value, Account? account)
+    public KeyEntity(KeyType? type, string? value, AccountEntity? account)
     {
         Type = type;
         Value = value;

@@ -5,14 +5,14 @@ namespace JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 public interface IBankWriteRepository
 {
     Task CreateAsync(
-        Bank bank,
+        BankEntity bankEntity,
         CancellationToken cancellationToken = default);
 
     Task DeleteAsync(
-        Bank bank,
+        BankEntity bankEntity,
         CancellationToken cancellationToken = default);
 
     Task UpdateAsync(
-        Bank bank,
+        BankEntity bankEntity,
         CancellationToken cancellationToken = default);
 }

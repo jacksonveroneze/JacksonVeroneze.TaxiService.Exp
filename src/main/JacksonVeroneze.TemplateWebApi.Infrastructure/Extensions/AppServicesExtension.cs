@@ -4,9 +4,8 @@ using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Mail;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Messaging;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Common;
-using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories;
-using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Bank;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Client;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Stubs.Bank;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Identity;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Mail;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Messaging;
@@ -31,8 +30,11 @@ public static class AppServicesExtension
 
         #region Bank
 
-        services.AddScoped<IBankReadRepository, BankReadRepository>();
-        services.AddScoped<IBankWriteRepository, BankWriteRepository>();
+        // services.AddScoped<IBankReadRepository, BankReadRepository>();
+        // services.AddScoped<IBankWriteRepository, BankWriteRepository>();
+
+        services.AddSingleton<IBankReadRepository, BankReadStubRepository>();
+        services.AddSingleton<IBankWriteRepository, BankWriteStubRepository>();
 
         #endregion
 

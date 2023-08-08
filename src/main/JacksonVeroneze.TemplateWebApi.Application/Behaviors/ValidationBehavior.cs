@@ -30,6 +30,10 @@ public class ValidationBehavior<TRequest, TResponse> :
 
         if (!_validators.Any())
         {
+            _logger.LogNoContainValidators(
+                nameof(ValidationBehavior<TRequest, TResponse>),
+                typeof(TRequest).Name);
+
             return await next();
         }
 
@@ -43,14 +47,13 @@ public class ValidationBehavior<TRequest, TResponse> :
             .Where(result => !result.IsValid)
             .SelectMany(item => item.Errors)
             .GroupBy(
-                x => x.PropertyName,
-                x => x.ErrorMessage,
+                p => p.PropertyName,
+                e => e.ErrorMessage,
                 (propertyName, errorMessages) => new
                 {
                     Key = propertyName, Values = errorMessages.Distinct().ToArray()
                 })
-            .ToDictionary(x => x.Key, x => x.Values);
-        ;
+            .ToDictionary(k => k.Key, v => v.Values);
 
         _logger.LogTotalViolations(
             nameof(ValidationBehavior<TRequest, TResponse>),

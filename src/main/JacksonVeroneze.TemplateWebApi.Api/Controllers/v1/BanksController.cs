@@ -58,7 +58,7 @@ public class BanksController : ControllerBase
         return StatusCode((int)response.Status, response);
     }
 
-    [HttpPost(Name = "Create")]
+    [HttpPost(Name = "CreateBank")]
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Create))]
     public async Task<IActionResult> CreateAsync(
@@ -73,7 +73,26 @@ public class BanksController : ControllerBase
                 .Send(command, cancellationToken);
 
         return response.Status is ResponseStatus.Created
-            ? CreatedAtRoute("GetById", new { id = response.Data.Id }, response)
+            ? CreatedAtRoute("GetByIdBank",
+                new { id = response.Data.Id }, response)
+            : StatusCode((int)response.Status, response);
+    }
+
+    [HttpDelete("{id}", Name = "DeleteBank")]
+    [ApiConventionMethod(typeof(DefaultApiConventions),
+        nameof(DefaultApiConventions.Delete))]
+    public async Task<IActionResult> DeleteAsync(
+        [FromRoute] DeleteBankCommand query,
+        CancellationToken cancellationToken)
+    {
+        _logger.LogGetById(nameof(BanksController),
+            nameof(GetByIdAsync), query.Id);
+
+        BaseResponse response = await _mediator
+            .Send(query, cancellationToken);
+
+        return response.Status is ResponseStatus.NoContent
+            ? NoContent()
             : StatusCode((int)response.Status, response);
     }
 }

@@ -1,9 +1,9 @@
 using Ben.Diagnostics;
 using CorrelationId;
-using JacksonVeroneze.TemplateWebApi.Api.Middlewares;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
 using Prometheus;
+using Hellang.Middleware.ProblemDetails;
 
 namespace JacksonVeroneze.TemplateWebApi.Api.Extensions;
 
@@ -28,6 +28,10 @@ public static class ApiConfigExtension
         }
 
         builder.Services
+            .AddProblemDetails(conf =>
+            {
+                conf.SourceCodeLineCount = 1;
+            })
             .AddAppServices()
             .AddAutoMapper()
             .AddCorrelation()
@@ -54,6 +58,8 @@ public static class ApiConfigExtension
     public static WebApplication Configure(
         this WebApplication app)
     {
+        app.UseProblemDetails();
+
         if (app.Environment.IsDevelopment())
         {
             app.UseBlockingDetection();
@@ -63,7 +69,7 @@ public static class ApiConfigExtension
 
         app.UseHttpMetrics()
             .UseCorrelationId()
-            .UseCustomGlobalErrorHandler()
+            //.UseCustomGlobalErrorHandler()
             .UseAuthentication()
             .UseAuthorization();
 

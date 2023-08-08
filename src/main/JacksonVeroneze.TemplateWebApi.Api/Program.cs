@@ -17,7 +17,7 @@ try
         WebApplication.CreateBuilder(args);
 
     builder.Host.ConfigureHostOptions(options =>
-        options.ShutdownTimeout = TimeSpan.FromSeconds(5));
+        options.ShutdownTimeout = TimeSpan.FromSeconds(2));
 
     // Add custom envs
     builder.Configuration

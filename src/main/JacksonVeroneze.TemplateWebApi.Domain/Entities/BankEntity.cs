@@ -3,13 +3,13 @@ using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 
 namespace JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
-public class Bank : BaseEntity
+public class BankEntity : BaseEntity
 {
     public string? Name { get; private set; }
 
     public BankStatus? Status { get; private set; }
 
-    public Bank(string? name)
+    public BankEntity(string? name)
     {
         Name = name;
 

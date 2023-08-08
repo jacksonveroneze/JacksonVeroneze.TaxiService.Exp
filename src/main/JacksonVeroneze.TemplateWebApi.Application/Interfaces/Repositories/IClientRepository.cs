@@ -6,23 +6,23 @@ namespace JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 
 public interface IClientRepository
 {
-    Task<Client?> GetByIdAsync(
+    Task<ClientEntity?> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken = default);
 
-    Task<Page<Client>> GetPagedAsync(
+    Task<Page<ClientEntity>> GetPagedAsync(
         ClientPagedFilter filter,
         CancellationToken cancellationToken = default);
 
     Task CreateAsync(
-        Client client,
+        ClientEntity clientEntity,
         CancellationToken cancellationToken = default);
 
     Task DeleteAsync(
-        Client client,
+        ClientEntity clientEntity,
         CancellationToken cancellationToken = default);
 
     Task UpdateAsync(
-        Client client,
+        ClientEntity clientEntity,
         CancellationToken cancellationToken = default);
 }

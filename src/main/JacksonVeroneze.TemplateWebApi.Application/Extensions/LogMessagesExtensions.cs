@@ -7,16 +7,19 @@ public static partial class LogMessagesExtensions
     [LoggerMessage(
         EventId = 1000,
         Level = LogLevel.Information,
-        Message = "{className} - {methodName} - NotFound")]
+        Message = "{className} - {methodName} - NotFound - Id: '{id}'")]
     public static partial void LogNotFound(this ILogger logger,
-        string className, string methodName);
+        string className, string methodName, string id);
 
     [LoggerMessage(
         EventId = 6000,
         Level = LogLevel.Information,
-        Message = "{className} - {methodName} - Info - Count: '{count}'")]
+        Message = "{className} - {methodName} - Info - " +
+                  "Page: '{page}' - PageSize: '{pageSize}' - " +
+                  "TotalElements: '{totalElements}'")]
     public static partial void LogGetPaged(this ILogger logger,
-        string className, string methodName, int count);
+        string className, string methodName,
+        int page, int pageSize, int totalElements);
 
     [LoggerMessage(
         EventId = 6001,
@@ -31,6 +34,13 @@ public static partial class LogMessagesExtensions
         Message = "{className} - {methodName} - Info - Created")]
     public static partial void LogCreated(this ILogger logger,
         string className, string methodName);
+
+    [LoggerMessage(
+        EventId = 6001,
+        Level = LogLevel.Information,
+        Message = "{className} - {methodName} - Deleted - Id: '{id}'")]
+    public static partial void LogDeleted(this ILogger logger,
+        string className, string methodName, string id);
 
     #endregion
 

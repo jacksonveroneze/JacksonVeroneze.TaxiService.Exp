@@ -1,6 +1,7 @@
 using AutoMapper;
 using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
+using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 using Microsoft.Extensions.Logging;
 
@@ -18,13 +19,13 @@ public class BankReadRepository : IBankReadRepository
         _mapper = mapper;
     }
 
-    public Task<Domain.Entities.Bank?> GetByIdAsync(Guid id,
+    public Task<BankEntity?> GetByIdAsync(Guid id,
         CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Page<Domain.Entities.Bank>> GetPagedAsync(BankPagedFilter filter,
+    public Task<Page<BankEntity>> GetPagedAsync(BankPagedFilter filter,
         CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();

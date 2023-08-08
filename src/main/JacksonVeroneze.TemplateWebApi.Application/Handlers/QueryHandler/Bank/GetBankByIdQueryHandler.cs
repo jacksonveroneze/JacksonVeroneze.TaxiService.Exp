@@ -3,6 +3,7 @@ using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Bank;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.Bank;
+using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.Bank;
 
@@ -29,19 +30,19 @@ public class GetBankByIdQueryHandler :
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Domain.Entities.Bank? result = await _repository
+        BankEntity? data = await _repository
             .GetByIdAsync(request.Id, cancellationToken);
 
-        if (result is null)
+        if (data is null)
         {
             _logger.LogNotFound(nameof(GetBankByIdQueryHandler),
-                nameof(Handle));
+                nameof(Handle), request.Id.ToString());
 
             return new BankNotFoundResponse(request.Id.ToString());
         }
 
         GetBankByIdQueryResponse response =
-            _mapper.Map<GetBankByIdQueryResponse>(result);
+            _mapper.Map<GetBankByIdQueryResponse>(data);
 
         _logger.LogGetById(nameof(GetBankByIdQueryHandler),
             nameof(Handle), request.Id);
