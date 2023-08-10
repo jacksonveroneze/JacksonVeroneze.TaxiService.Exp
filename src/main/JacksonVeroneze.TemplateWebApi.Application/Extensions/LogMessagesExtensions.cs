@@ -9,7 +9,7 @@ public static partial class LogMessagesExtensions
         Level = LogLevel.Information,
         Message = "{className} - {methodName} - NotFound - Id: '{id}'")]
     public static partial void LogNotFound(this ILogger logger,
-        string className, string methodName, string id);
+        string className, string methodName, Guid? id);
 
     [LoggerMessage(
         EventId = 6000,

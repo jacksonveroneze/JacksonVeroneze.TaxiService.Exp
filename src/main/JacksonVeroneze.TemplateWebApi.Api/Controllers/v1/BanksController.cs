@@ -1,4 +1,6 @@
 using System.Net.Mime;
+using Ardalis.Result;
+using Ardalis.Result.AspNetCore;
 using JacksonVeroneze.TemplateWebApi.Api.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Commands.Bank;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Bank;
@@ -99,18 +101,22 @@ public class BanksController : ControllerBase
     [HttpPut("{id}/activate", Name = "ActivateBank")]
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Delete))]
-    public async Task<IActionResult> ActivateAsync(
+    public async Task<ActionResult<BaseResponse>> ActivateAsync(
         [FromRoute] ActivateBankCommand query,
         CancellationToken cancellationToken)
     {
         // _logger.LogGetById(nameof(BanksController),
         //     nameof(GetByIdAsync), query.Id);
 
-        BaseResponse response = await _mediator
+        Result<BaseResponse> response = await _mediator
             .Send(query, cancellationToken);
 
-        return response.Status is ResponseStatus.NoContent
-            ? NoContent()
-            : StatusCode((int)response.Status, response);
+        var result= response.ToActionResult(this);
+
+        return result;
+
+        // return response.Status is ResponseStatus.NoContent
+        //     ? NoContent()
+        //     : StatusCode((int)response.Status, response);
     }
 }

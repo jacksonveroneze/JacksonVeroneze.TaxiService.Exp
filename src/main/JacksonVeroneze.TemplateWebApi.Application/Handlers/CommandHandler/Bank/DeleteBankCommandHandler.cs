@@ -36,7 +36,7 @@ public class DeleteBankCommandHandler :
         if (data is null)
         {
             _logger.LogNotFound(nameof(DeleteBankCommandHandler),
-                nameof(Handle), request.Id.ToString());
+                nameof(Handle), request.Id);
 
             return new BankNotFoundResponse(request.Id.ToString());
         }

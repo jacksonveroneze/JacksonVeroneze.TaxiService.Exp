@@ -3,7 +3,7 @@ using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Common;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Common;
 
-public class MachineDateTime : IDateTime
+public class SystemDateTime : IDateTime
 {
     private const string WindowsBrTimeZone
         = "E. South America Standard Time";

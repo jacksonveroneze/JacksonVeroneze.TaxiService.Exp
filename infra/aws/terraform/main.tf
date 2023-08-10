@@ -1,7 +1,3 @@
-data "aws_region" "current" {}
-
-data "aws_caller_identity" "current" {}
-
 # ################################################################################
 # VPC
 # ################################################################################
@@ -46,5 +42,12 @@ resource "aws_subnet" "subnet_private_1" {
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = var.subnet_private_1_cidr_block
   availability_zone = var.subnet_private_1_az
+  tags              = merge({ Name = var.subnet_private_1_name }, var.tags)
+}
+
+resource "aws_subnet" "subnet_private_2" {
+  vpc_id            = aws_vpc.vpc.id
+  cidr_block        = var.subnet_private_2_cidr_block
+  availability_zone = var.subnet_private_2_az
   tags              = merge({ Name = var.subnet_private_1_name }, var.tags)
 }

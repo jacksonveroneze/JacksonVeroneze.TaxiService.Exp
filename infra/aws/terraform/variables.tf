@@ -101,5 +101,22 @@ variable "subnet_private_1_cidr_block" {
 
 variable "subnet_private_1_az" {
   type    = string
-  default = "us-east-1c"
+  default = "us-east-1a"
+}
+
+#############################################
+
+variable "subnet_private_2_name" {
+  type    = string
+  default = "subnet-templatewebapi-private-2"
+}
+
+variable "subnet_private_2_cidr_block" {
+  type    = string
+  default = "10.0.4.0/24"
+}
+
+variable "subnet_private_2_az" {
+  type    = string
+  default = "us-east-1b"
 }
