@@ -12,6 +12,13 @@ public static partial class LogMessagesExtensions
         string className, string methodName, Guid? id);
 
     [LoggerMessage(
+        EventId = 1000,
+        Level = LogLevel.Information,
+        Message = "{className} - {methodName} - NotFound - Id: '{id}'")]
+    public static partial void AlreadyProcessed(this ILogger logger,
+        string className, string methodName, Guid? id);
+
+    [LoggerMessage(
         EventId = 6000,
         Level = LogLevel.Information,
         Message = "{className} - {methodName} - Info - " +

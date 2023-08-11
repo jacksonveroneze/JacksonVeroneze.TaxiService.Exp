@@ -1,10 +1,9 @@
 using System.Net.Mime;
-using Ardalis.Result;
-using Ardalis.Result.AspNetCore;
 using JacksonVeroneze.TemplateWebApi.Api.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Commands.Bank;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Bank;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
+using JacksonVeroneze.TemplateWebApi.Application.Primitives;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.Bank;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -108,12 +107,10 @@ public class BanksController : ControllerBase
         // _logger.LogGetById(nameof(BanksController),
         //     nameof(GetByIdAsync), query.Id);
 
-        Result<BaseResponse> response = await _mediator
+        Result response = await _mediator
             .Send(query, cancellationToken);
 
-        var result= response.ToActionResult(this);
-
-        return result;
+        return response.ToResult(this);
 
         // return response.Status is ResponseStatus.NoContent
         //     ? NoContent()

@@ -1,15 +1,15 @@
-using Ardalis.Result;
 using JacksonVeroneze.TemplateWebApi.Application.Commands.Bank;
 using JacksonVeroneze.TemplateWebApi.Application.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
-using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
+using JacksonVeroneze.TemplateWebApi.Application.Primitives;
+using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.CommandHandler.Bank;
 
 public class ActivateBankCommandHandler :
-    IRequestHandler<ActivateBankCommand, Result<BaseResponse>>
+    IRequestHandler<ActivateBankCommand, Result>
 {
     private readonly ILogger<ActivateBankCommandHandler> _logger;
     private readonly IBankReadRepository _readRepository;
@@ -25,7 +25,7 @@ public class ActivateBankCommandHandler :
         _writeRepository = writeRepository;
     }
 
-    public async Task<Result<BaseResponse>> Handle(
+    public async Task<Result> Handle(
         ActivateBankCommand request,
         CancellationToken cancellationToken)
     {
@@ -39,12 +39,15 @@ public class ActivateBankCommandHandler :
             _logger.LogNotFound(nameof(ActivateBankCommandHandler),
                 nameof(Handle), request.Id);
 
-            return Result.NotFound();
+            return Result.NotFound(DomainErrors.Bank.NotFound);
         }
 
         if (data.Status is not BankStatus.PendingActivation)
         {
-            return Result.Error("Item já ativado");
+            _logger.AlreadyProcessed(nameof(ActivateBankCommandHandler),
+                nameof(Handle), request.Id);
+
+            return Result.Error(DomainErrors.Bank.AlreadyProcessed);
         }
 
         data.Activate();
