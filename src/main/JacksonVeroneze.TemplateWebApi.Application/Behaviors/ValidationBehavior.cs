@@ -4,7 +4,7 @@ using ValidationException = JacksonVeroneze.TemplateWebApi.Application.Exception
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Behaviors;
 
-public class ValidationBehavior<TRequest, TResponse> :
+public sealed class ValidationBehavior<TRequest, TResponse> :
     IPipelineBehavior<TRequest, TResponse>
     where TRequest : class, IRequest<TResponse>
     where TResponse : class
@@ -51,7 +51,9 @@ public class ValidationBehavior<TRequest, TResponse> :
                 e => e.ErrorMessage,
                 (propertyName, errorMessages) => new
                 {
-                    Key = propertyName, Values = errorMessages.Distinct().ToArray()
+                    Key = propertyName,
+                    Values = errorMessages
+                        .Distinct().ToArray()
                 })
             .ToDictionary(k => k.Key, v => v.Values);
 

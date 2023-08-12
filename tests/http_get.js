@@ -1,25 +1,28 @@
 import http from 'k6/http';
 import {sleep} from 'k6';
 
+// export const options = {
+//     duration: '30000s',
+//     //iterations: 5000,
+//     vus: 250,
+// };
+
+//const url = 'http://localhost/templatewebapi/';
+const url = 'http://localhost:7000';
+
 export const options = {
-    duration: '30000s',
-    //iterations: 5000,
-    vus: 250,
+    // Key configurations for Stress in this section
+    stages: [
+        { duration: '1m', target: 10 }, // traffic ramp-up from 1 to a higher 200 users over 10 minutes.
+        { duration: '1m', target: 50 }, // stay at higher 200 users for 10 minutes
+        { duration: '1m', target: 0 }, // ramp-down to 0 users
+    ],
 };
 
+
 export default function () {
-    http.get('http://localhost/templatewebapi/health');
-    sleep(Math.random() * 5);
-    http.get('http://localhost/templatewebapi/api/v1/states');
-    sleep(Math.random() * 2)
-    http.get('http://localhost/templatewebapi/api/v1/states/SC');
-    http.get('http://localhost/templatewebapi/api/v1/states/RS');
-    http.get('http://localhost/templatewebapi/api/v1/states/RX');
-    sleep(Math.random() * 5)
-    http.get('http://localhost/templatewebapi/api/v1/states/SC/cities');
-    http.get('http://localhost/templatewebapi/api/v1/states/RS/cities');
-    http.get('http://localhost/templatewebapi/api/v1/states/RX/cities');
-    sleep(Math.random() * 1)
+    http.get(`${url}/health`);
+    http.get(`${url}/api/v1/banks`);
 }
 
 

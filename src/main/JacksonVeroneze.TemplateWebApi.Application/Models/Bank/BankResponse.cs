@@ -2,7 +2,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Models.Bank;
 
-public struct BankResponse
+public class BankResponse
 {
     [JsonPropertyName("id")]
     public Guid? Id { get; init; }

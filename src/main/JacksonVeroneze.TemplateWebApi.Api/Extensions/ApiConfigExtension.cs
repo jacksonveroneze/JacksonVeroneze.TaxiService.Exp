@@ -1,7 +1,3 @@
-using System.Net;
-using System.Text.Json;
-using Ardalis.Result;
-using Ardalis.Result.AspNetCore;
 using Ben.Diagnostics;
 using CorrelationId;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
@@ -20,14 +16,7 @@ public static class ApiConfigExtension
         AppConfiguration appConfiguration)
     {
         builder.Services
-            .AddControllers(options => options.AddResultConvention(resultStatusMap => resultStatusMap
-                .AddDefaultMap()
-                .For(ResultStatus.Ok, HttpStatusCode.OK, resultStatusOptions => resultStatusOptions
-                    .For("POST", HttpStatusCode.Created)
-                    .For("DELETE", HttpStatusCode.NoContent))
-                .Remove(ResultStatus.Forbidden)
-                .Remove(ResultStatus.Unauthorized)
-            ))
+            .AddControllers()
             .AddJsonOptionsSerialize()
             .ConfigureApiBehaviorOptions(options =>
                 options.SuppressInferBindingSourcesForParameters = true);

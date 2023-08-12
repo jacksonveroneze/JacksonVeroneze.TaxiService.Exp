@@ -1,7 +1,6 @@
 using System.Net.Mime;
 using JacksonVeroneze.TemplateWebApi.Api.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Commands.Bank;
-using JacksonVeroneze.TemplateWebApi.Application.Models.Bank;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
 using JacksonVeroneze.TemplateWebApi.Application.Primitives;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.Bank;
@@ -34,29 +33,29 @@ public class BanksController : ControllerBase
         GetBankPagedQuery query,
         CancellationToken cancellationToken)
     {
-        _logger.LogGetPaged(nameof(BanksController),
-            nameof(GetPagedAsync));
+        // _logger.LogGetPaged(nameof(BanksController),
+        //     nameof(GetPagedAsync));
 
-        BaseResponse response = await _mediator
+        Result<BaseResponse> response = await _mediator
             .Send(query, cancellationToken);
 
-        return StatusCode((int)response.Status, response);
+        return response.MatchGet(this);
     }
 
-    [HttpGet("{id}", Name = "GetByIdBank")]
+    [HttpGet("{id}", Name = "FindById")]
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Find))]
-    public async Task<IActionResult> GetByIdAsync(
+    public async Task<IActionResult> FindByIdAsync(
         [FromRoute] GetBankByIdQuery query,
         CancellationToken cancellationToken)
     {
-        _logger.LogGetById(nameof(BanksController),
-            nameof(GetByIdAsync), query.Id);
+        // _logger.LogGetById(nameof(BanksController),
+        //     nameof(FindByIdAsync), query.Id);
 
-        BaseResponse response = await _mediator
+        Result<BaseResponse> response = await _mediator
             .Send(query, cancellationToken);
 
-        return StatusCode((int)response.Status, response);
+        return response.MatchFind(this);
     }
 
     [HttpPost(Name = "CreateBank")]
@@ -69,14 +68,10 @@ public class BanksController : ControllerBase
         // _logger.LogCreate(nameof(BanksController),
         //     nameof(GetByIdAsync));
 
-        CreateBankCommandResponse response =
-            (CreateBankCommandResponse)await _mediator
-                .Send(command, cancellationToken);
+        Result<BaseResponse> response = await _mediator
+            .Send(command, cancellationToken);
 
-        return response.Status is ResponseStatus.Created
-            ? CreatedAtRoute("GetByIdBank",
-                new { id = response.Data.Id }, response)
-            : StatusCode((int)response.Status, response);
+        return response.MatchPost(this);
     }
 
     [HttpDelete("{id}", Name = "DeleteBank")]
@@ -89,31 +84,25 @@ public class BanksController : ControllerBase
         // _logger.LogGetById(nameof(BanksController),
         //     nameof(GetByIdAsync), query.Id);
 
-        BaseResponse response = await _mediator
+        Result<BaseResponse> response = await _mediator
             .Send(query, cancellationToken);
 
-        return response.Status is ResponseStatus.NoContent
-            ? NoContent()
-            : StatusCode((int)response.Status, response);
+        return response.MatchDelete(this);
     }
 
     [HttpPut("{id}/activate", Name = "ActivateBank")]
     [ApiConventionMethod(typeof(DefaultApiConventions),
-        nameof(DefaultApiConventions.Delete))]
-    public async Task<ActionResult<BaseResponse>> ActivateAsync(
+        nameof(DefaultApiConventions.Put))]
+    public async Task<IActionResult> PutActivateAsync(
         [FromRoute] ActivateBankCommand query,
         CancellationToken cancellationToken)
     {
         // _logger.LogGetById(nameof(BanksController),
         //     nameof(GetByIdAsync), query.Id);
 
-        Result response = await _mediator
+        Result<BaseResponse> response = await _mediator
             .Send(query, cancellationToken);
 
-        return response.ToResult(this);
-
-        // return response.Status is ResponseStatus.NoContent
-        //     ? NoContent()
-        //     : StatusCode((int)response.Status, response);
+        return response.MatchPut(this);
     }
 }

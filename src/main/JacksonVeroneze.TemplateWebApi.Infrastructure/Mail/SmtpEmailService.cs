@@ -6,16 +6,16 @@ using MailKit.Security;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Mail;
 
-public class SmtpMailService : IMailService
+public class SmtpEmailService : IEmailService
 {
     private readonly MailParameters _parameters;
 
-    public SmtpMailService(MailParameters parameters)
+    public SmtpEmailService(MailParameters parameters)
     {
         _parameters = parameters;
     }
 
-    public async Task SendEmailAsync(MailRequest mailRequest,
+    public async Task SendAsync(EmailRequest request,
         CancellationToken cancellationToken)
     {
         try
@@ -23,30 +23,30 @@ public class SmtpMailService : IMailService
             MimeMessage mail = new();
 
             mail.From.Add(new MailboxAddress(_parameters.DisplayName,
-                mailRequest.From ?? _parameters.From));
+                request.From ?? _parameters.From));
 
-            mail.Sender = new MailboxAddress(mailRequest.DisplayName ?? _parameters.DisplayName,
-                mailRequest.From ?? _parameters.From);
+            mail.Sender = new MailboxAddress(request.DisplayName ?? _parameters.DisplayName,
+                request.From ?? _parameters.From);
 
-            mail.To.AddRange(mailRequest.To
+            mail.To.AddRange(request.To
                 .Where(item => !string.IsNullOrEmpty(item))
                 .Select(MailboxAddress.Parse));
 
-            if (!string.IsNullOrEmpty(mailRequest.ReplyTo))
+            if (!string.IsNullOrEmpty(request.ReplyTo))
                 mail.ReplyTo.Add(new MailboxAddress(
-                    mailRequest.ReplyToName, mailRequest.ReplyTo));
+                    request.ReplyToName, request.ReplyTo));
 
-            mail.Bcc.AddRange(mailRequest.Bcc
+            mail.Bcc.AddRange(request.Bcc
                 .Where(item => !string.IsNullOrEmpty(item))
                 .Select(MailboxAddress.Parse));
 
-            mail.Cc.AddRange(mailRequest.Cc
+            mail.Cc.AddRange(request.Cc
                 .Where(item => !string.IsNullOrEmpty(item))
                 .Select(MailboxAddress.Parse));
 
             BodyBuilder body = new();
-            mail.Subject = mailRequest?.Subject;
-            body.HtmlBody = mailRequest?.Body;
+            mail.Subject = request?.Subject;
+            body.HtmlBody = request?.Body;
             mail.Body = body.ToMessageBody();
 
             using MailKit.Net.Smtp.SmtpClient smtp = new();

@@ -1,16 +1,15 @@
-using System.Runtime.InteropServices.JavaScript;
-using Ardalis.Result;
 using JacksonVeroneze.TemplateWebApi.Application.Commands.Bank;
 using JacksonVeroneze.TemplateWebApi.Application.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Bank;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
+using JacksonVeroneze.TemplateWebApi.Application.Primitives;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.CommandHandler.Bank;
 
 public class CreateBankCommandHandler :
-    IRequestHandler<CreateBankCommand, BaseResponse>
+    IRequestHandler<CreateBankCommand, Result<BaseResponse>>
 {
     private readonly ILogger<CreateBankCommandHandler> _logger;
     private readonly IMapper _mapper;
@@ -26,7 +25,7 @@ public class CreateBankCommandHandler :
         _repository = repository;
     }
 
-    public async Task<BaseResponse> Handle(
+    public async Task<Result<BaseResponse>> Handle(
         CreateBankCommand request,
         CancellationToken cancellationToken)
     {
@@ -45,6 +44,6 @@ public class CreateBankCommandHandler :
         _logger.LogCreated(nameof(CreateBankCommandHandler),
             nameof(Handle));
 
-        return response;
+        return Result<BaseResponse>.Success(response);
     }
 }

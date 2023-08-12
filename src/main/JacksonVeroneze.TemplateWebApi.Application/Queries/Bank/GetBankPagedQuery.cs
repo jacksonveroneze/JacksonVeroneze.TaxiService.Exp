@@ -1,13 +1,14 @@
 using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Bank;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
+using JacksonVeroneze.TemplateWebApi.Application.Primitives;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.Base;
 using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Queries.Bank;
 
-public record GetBankPagedQuery : PagedQuery, IRequest<BaseResponse>
+public class GetBankPagedQuery : PagedQuery, IRequest<Result<BaseResponse>>
 {
     private const string DefaultOrderBy = nameof(BankResponse.Id);
 

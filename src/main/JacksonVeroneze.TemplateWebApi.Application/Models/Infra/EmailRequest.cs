@@ -1,6 +1,6 @@
 namespace JacksonVeroneze.TemplateWebApi.Application.Models.Infra;
 
-public sealed class MailRequest
+public sealed class EmailRequest
 {
     // Receiver
     public List<string> To { get; }
@@ -22,7 +22,7 @@ public sealed class MailRequest
 
     public string? Body { get; }
 
-    public MailRequest(List<string> to, string subject, string? body = null, string? from = null,
+    public EmailRequest(List<string> to, string subject, string? body = null, string? from = null,
         string? displayName = null, string? replyTo = null, string? replyToName = null, List<string>? bcc = null,
         List<string>? cc = null)
     {

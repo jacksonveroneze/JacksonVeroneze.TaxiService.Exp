@@ -23,7 +23,7 @@ public static class AppServicesExtension
 
         services.AddScoped<IDateTime, SystemDateTime>();
         services.AddScoped<IIdentityService, IdentityService>();
-        services.AddScoped<IMailService, SmtpMailService>();
+        services.AddScoped<IEmailService, SmtpEmailService>();
         services.AddScoped<IIntegrationEventPublisher, RabbitMqEventPublisher>();
 
         #endregion

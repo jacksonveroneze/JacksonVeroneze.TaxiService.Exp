@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Queries.Base;
 
-public record PagedQuery
+public class PagedQuery
 {
     private const int DefaultPage = 1;
 

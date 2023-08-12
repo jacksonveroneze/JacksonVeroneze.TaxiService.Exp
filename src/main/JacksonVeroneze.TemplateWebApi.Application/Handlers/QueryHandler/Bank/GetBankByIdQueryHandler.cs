@@ -2,13 +2,15 @@ using JacksonVeroneze.TemplateWebApi.Application.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Bank;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
+using JacksonVeroneze.TemplateWebApi.Application.Primitives;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.Bank;
+using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.Bank;
 
 public class GetBankByIdQueryHandler :
-    IRequestHandler<GetBankByIdQuery, BaseResponse>
+    IRequestHandler<GetBankByIdQuery, Result<BaseResponse>>
 {
     private readonly ILogger<GetBankByIdQueryHandler> _logger;
     private readonly IMapper _mapper;
@@ -24,7 +26,7 @@ public class GetBankByIdQueryHandler :
         _repository = repository;
     }
 
-    public async Task<BaseResponse> Handle(
+    public async Task<Result<BaseResponse>> Handle(
         GetBankByIdQuery request,
         CancellationToken cancellationToken)
     {
@@ -38,7 +40,8 @@ public class GetBankByIdQueryHandler :
             _logger.LogNotFound(nameof(GetBankByIdQueryHandler),
                 nameof(Handle), request.Id);
 
-            return new BankNotFoundResponse(request.Id.ToString());
+            return Result<BaseResponse>
+                .NotFound(DomainErrors.Bank.NotFound);
         }
 
         GetBankByIdQueryResponse response =
@@ -47,6 +50,7 @@ public class GetBankByIdQueryHandler :
         _logger.LogGetById(nameof(GetBankByIdQueryHandler),
             nameof(Handle), request.Id);
 
-        return response;
+        return Result<BaseResponse>
+            .Success(response);
     }
 }

@@ -2,8 +2,8 @@ using JacksonVeroneze.TemplateWebApi.Application.Models.Infra;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Interfaces.Mail;
 
-public interface IMailService
+public interface IEmailService
 {
-    Task SendEmailAsync(MailRequest mailRequest,
+    Task SendAsync(EmailRequest request,
         CancellationToken cancellationToken);
 }

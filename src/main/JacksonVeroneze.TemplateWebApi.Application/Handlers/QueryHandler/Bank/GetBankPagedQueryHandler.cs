@@ -3,6 +3,7 @@ using JacksonVeroneze.TemplateWebApi.Application.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Bank;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
+using JacksonVeroneze.TemplateWebApi.Application.Primitives;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.Bank;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
@@ -10,7 +11,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.Bank;
 
 public class GetBankPagedQueryHandler :
-    IRequestHandler<GetBankPagedQuery, BaseResponse>
+    IRequestHandler<GetBankPagedQuery, Primitives.Result<BaseResponse>>
 {
     private readonly ILogger<GetBankPagedQueryHandler> _logger;
     private readonly IMapper _mapper;
@@ -26,7 +27,7 @@ public class GetBankPagedQueryHandler :
         _repository = repository;
     }
 
-    public async Task<BaseResponse> Handle(
+    public async Task<Result<BaseResponse>> Handle(
         GetBankPagedQuery request,
         CancellationToken cancellationToken)
     {
@@ -47,6 +48,6 @@ public class GetBankPagedQueryHandler :
             data.Pagination.PageSize,
             data.Pagination.TotalElements);
 
-        return response;
+        return Result<BaseResponse>.Success(response);
     }
 }
