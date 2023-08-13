@@ -1,6 +1,6 @@
 ﻿namespace JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response.Pagination;
 
-public class PageInfoResponse
+public sealed class PageInfoResponse
 {
     [JsonPropertyName("page")]
     public int Page { get; init; }

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Commands.Bank;
 
-public sealed record ActivateBankCommand : IRequest<Result<BaseResponse>>
+public sealed record ActivateBankCommand : IRequest<IResult<VoidResponse>>
 {
     [FromRoute(Name = "id")]
     public Guid Id { get; init; }

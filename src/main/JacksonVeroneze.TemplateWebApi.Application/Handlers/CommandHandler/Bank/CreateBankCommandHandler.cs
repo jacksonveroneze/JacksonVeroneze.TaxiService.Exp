@@ -2,41 +2,51 @@ using JacksonVeroneze.TemplateWebApi.Application.Commands.Bank;
 using JacksonVeroneze.TemplateWebApi.Application.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Bank;
-using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
 using JacksonVeroneze.TemplateWebApi.Application.Primitives;
+using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.CommandHandler.Bank;
 
 public class CreateBankCommandHandler :
-    IRequestHandler<CreateBankCommand, Result<BaseResponse>>
+    IRequestHandler<CreateBankCommand, IResult<CreateBankCommandResponse>>
 {
     private readonly ILogger<CreateBankCommandHandler> _logger;
     private readonly IMapper _mapper;
-    private readonly IBankWriteRepository _repository;
+    private readonly IBankReadRepository _readRepository;
+    private readonly IBankWriteRepository _writeRepository;
 
     public CreateBankCommandHandler(
         ILogger<CreateBankCommandHandler> logger,
         IMapper mapper,
-        IBankWriteRepository repository)
+        IBankReadRepository readRepository,
+        IBankWriteRepository writeRepository)
     {
         _logger = logger;
         _mapper = mapper;
-        _repository = repository;
+        _readRepository = readRepository;
+        _writeRepository = writeRepository;
     }
 
-    public async Task<Result<BaseResponse>> Handle(
+    public async Task<IResult<CreateBankCommandResponse>> Handle(
         CreateBankCommand request,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
+        bool any = await _readRepository
+            .AnyByNameAsync(request.Name!, cancellationToken);
+
+        if (any)
+        {
+            return Result<CreateBankCommandResponse>.Invalid(
+                DomainErrors.Bank.DuplicateName);
+        }
+
         BankEntity data = _mapper
             .Map<BankEntity>(request);
 
-        // validate exits
-
-        await _repository.CreateAsync(data, cancellationToken);
+        await _writeRepository.CreateAsync(data, cancellationToken);
 
         CreateBankCommandResponse response =
             _mapper.Map<CreateBankCommandResponse>(data);
@@ -44,6 +54,6 @@ public class CreateBankCommandHandler :
         _logger.LogCreated(nameof(CreateBankCommandHandler),
             nameof(Handle));
 
-        return Result<BaseResponse>.Success(response);
+        return Result<CreateBankCommandResponse>.Success(response);
     }
 }

@@ -1,6 +1,6 @@
 namespace JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
 
-public record DataResponse<TType> : OkResponse
+public abstract record DataResponse<TType> : BaseResponse
 {
     [JsonPropertyName("data")]
     public TType? Data { get; init; }

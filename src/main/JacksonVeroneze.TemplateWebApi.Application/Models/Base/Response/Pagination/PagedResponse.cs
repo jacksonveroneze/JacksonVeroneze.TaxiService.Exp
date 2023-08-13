@@ -1,6 +1,6 @@
 ﻿namespace JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response.Pagination;
 
-public record PagedResponse<TType> : OkResponse
+public record PagedResponse<TType> : BaseResponse
 {
     [JsonPropertyName("data")]
     public ICollection<TType>? Data { get; init; }

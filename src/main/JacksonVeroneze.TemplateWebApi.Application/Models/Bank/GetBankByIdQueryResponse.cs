@@ -2,4 +2,4 @@ using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Models.Bank;
 
-public record GetBankByIdQueryResponse : DataResponse<BankResponse>;
+public sealed record GetBankByIdQueryResponse : DataResponse<BankResponse>;

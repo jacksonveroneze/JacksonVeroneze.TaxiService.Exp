@@ -10,7 +10,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.Bank;
 
 public class GetBankByIdQueryHandler :
-    IRequestHandler<GetBankByIdQuery, Result<BaseResponse>>
+    IRequestHandler<GetBankByIdQuery, IResult<GetBankByIdQueryResponse>>
 {
     private readonly ILogger<GetBankByIdQueryHandler> _logger;
     private readonly IMapper _mapper;
@@ -26,7 +26,7 @@ public class GetBankByIdQueryHandler :
         _repository = repository;
     }
 
-    public async Task<Result<BaseResponse>> Handle(
+    public async Task<IResult<GetBankByIdQueryResponse>> Handle(
         GetBankByIdQuery request,
         CancellationToken cancellationToken)
     {
@@ -40,7 +40,7 @@ public class GetBankByIdQueryHandler :
             _logger.LogNotFound(nameof(GetBankByIdQueryHandler),
                 nameof(Handle), request.Id);
 
-            return Result<BaseResponse>
+            return Result<GetBankByIdQueryResponse>
                 .NotFound(DomainErrors.Bank.NotFound);
         }
 
@@ -50,7 +50,7 @@ public class GetBankByIdQueryHandler :
         _logger.LogGetById(nameof(GetBankByIdQueryHandler),
             nameof(Handle), request.Id);
 
-        return Result<BaseResponse>
+        return Result<GetBankByIdQueryResponse>
             .Success(response);
     }
 }

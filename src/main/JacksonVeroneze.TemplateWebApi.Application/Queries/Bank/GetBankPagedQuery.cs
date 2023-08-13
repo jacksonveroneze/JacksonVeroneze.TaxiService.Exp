@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Queries.Bank;
 
-public class GetBankPagedQuery : PagedQuery, IRequest<Result<BaseResponse>>
+public class GetBankPagedQuery : PagedQuery, IRequest<IResult<BaseResponse>>
 {
     private const string DefaultOrderBy = nameof(BankResponse.Id);
 

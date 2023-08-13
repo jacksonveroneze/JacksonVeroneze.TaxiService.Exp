@@ -18,17 +18,14 @@ public class BankMapper : Profile
             .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status));
 
         CreateMap<BankEntity, GetBankByIdQueryResponse>()
-            .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src))
-            .ForMember(dest => dest.Messages, opts => opts.Ignore());
+            .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
 
         CreateMap<BankEntity, CreateBankCommandResponse>()
-            .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src))
-            .ForMember(dest => dest.Messages, opts => opts.Ignore());
+            .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
 
         CreateMap<Page<BankEntity>, GetBankPagedQueryResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src.Data))
-            .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src.Pagination))
-            .ForMember(dest => dest.Messages, opts => opts.Ignore());
+            .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src.Pagination));
 
         // Query -> Filter
         CreateMap<GetBankPagedQuery, BankPagedFilter>()
@@ -39,6 +36,11 @@ public class BankMapper : Profile
         // Command -> Entity
         CreateMap<CreateBankCommand, BankEntity>()
             .ConstructUsing(src => new BankEntity(src.Name))
+            .ForMember(dest => dest.Id, opts => opts.Ignore())
+            .ForMember(dest => dest.CreatedAt, opts => opts.Ignore())
+            .ForMember(dest => dest.UpdatedAt, opts => opts.Ignore())
+            .ForMember(dest => dest.DeletedAt, opts => opts.Ignore())
+            .ForMember(dest => dest.Version, opts => opts.Ignore())
             .ForMember(dest => dest.Status, opts => opts.Ignore());
     }
 }

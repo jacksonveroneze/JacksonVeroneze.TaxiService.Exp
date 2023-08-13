@@ -10,7 +10,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.CommandHandler.Bank;
 
 public class ActivateBankCommandHandler :
-    IRequestHandler<ActivateBankCommand, Result<BaseResponse>>
+    IRequestHandler<ActivateBankCommand, IResult<VoidResponse>>
 {
     private readonly ILogger<ActivateBankCommandHandler> _logger;
     private readonly IBankReadRepository _readRepository;
@@ -26,7 +26,7 @@ public class ActivateBankCommandHandler :
         _writeRepository = writeRepository;
     }
 
-    public async Task<Result<BaseResponse>> Handle(ActivateBankCommand request,
+    public async Task<IResult<VoidResponse>> Handle(ActivateBankCommand request,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
@@ -39,7 +39,7 @@ public class ActivateBankCommandHandler :
             _logger.LogNotFound(nameof(ActivateBankCommandHandler),
                 nameof(Handle), request.Id);
 
-            return Result<BaseResponse>.NotFound(DomainErrors.Bank.NotFound);
+            return Result<VoidResponse>.NotFound(DomainErrors.Bank.NotFound);
         }
 
         if (data.Status is not BankStatus.PendingActivation)
@@ -47,7 +47,7 @@ public class ActivateBankCommandHandler :
             _logger.AlreadyProcessed(nameof(ActivateBankCommandHandler),
                 nameof(Handle), request.Id);
 
-            return Result<BaseResponse>.Invalid(DomainErrors.Bank.AlreadyProcessed);
+            return Result<VoidResponse>.Invalid(DomainErrors.Bank.AlreadyProcessed);
         }
 
         data.Activate();
@@ -57,6 +57,6 @@ public class ActivateBankCommandHandler :
         _logger.LogActivated(nameof(ActivateBankCommandHandler),
             nameof(Handle), request.Id);
 
-        return Result<BaseResponse>.Success();
+        return Result<VoidResponse>.Success();
     }
 }

@@ -11,7 +11,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.Bank;
 
 public class GetBankPagedQueryHandler :
-    IRequestHandler<GetBankPagedQuery, Primitives.Result<BaseResponse>>
+    IRequestHandler<GetBankPagedQuery, Primitives.IResult<BaseResponse>>
 {
     private readonly ILogger<GetBankPagedQueryHandler> _logger;
     private readonly IMapper _mapper;
@@ -27,7 +27,7 @@ public class GetBankPagedQueryHandler :
         _repository = repository;
     }
 
-    public async Task<Result<BaseResponse>> Handle(
+    public async Task<IResult<BaseResponse>> Handle(
         GetBankPagedQuery request,
         CancellationToken cancellationToken)
     {

@@ -1,3 +1,4 @@
+using System.Net;
 using JacksonVeroneze.TemplateWebApi.Application.Primitives;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,7 +7,9 @@ namespace JacksonVeroneze.TemplateWebApi.Api.Extensions;
 public static class ResultExtensions
 {
     public static ValidationProblemDetails ToProblemDetails<T>(
-        this Result<T> result, ControllerBase controllerBase)
+        this IResult<T> result,
+        ControllerBase controllerBase,
+        HttpStatusCode? statusCode = null)
     {
         var empty = Enumerable.Empty<ValidationError>();
 
@@ -17,14 +20,14 @@ public static class ResultExtensions
 
         return new(dict)
         {
-            Status = 400,
+            Status = (int) (statusCode ?? HttpStatusCode.BadRequest),
             Title = result!.Error!.Code,
             Detail = result.Error.Message,
             Instance = controllerBase.HttpContext.Request.Path,
         };
     }
 
-    public static IActionResult MatchPost<T>(this Result<T> result,
+    public static IActionResult MatchPost<T>(this IResult<T> result,
         ControllerBase controllerBase) where T : class
     {
         ArgumentNullException.ThrowIfNull(result);
@@ -34,11 +37,13 @@ public static class ResultExtensions
         {
             ResultStatus.Success => controllerBase.Created("", result.Value),
             ResultStatus.Error => controllerBase.BadRequest(),
+            ResultStatus.Invalid => controllerBase.Conflict(
+                result.ToProblemDetails(controllerBase, HttpStatusCode.Conflict)),
             _ => throw new ArgumentException("")
         };
     }
 
-    public static IActionResult MatchPut<T>(this Result<T> result,
+    public static IActionResult MatchPut<T>(this IResult<T> result,
         ControllerBase controllerBase) where T : class
     {
         ArgumentNullException.ThrowIfNull(result);
@@ -55,7 +60,7 @@ public static class ResultExtensions
         };
     }
 
-    public static IActionResult MatchDelete<T>(this Result<T> result,
+    public static IActionResult MatchDelete<T>(this IResult<T> result,
         ControllerBase controllerBase) where T : class
     {
         ArgumentNullException.ThrowIfNull(result);
@@ -72,7 +77,7 @@ public static class ResultExtensions
         };
     }
 
-    public static IActionResult MatchFind<T>(this Result<T> result,
+    public static ActionResult<T> MatchFind<T>(this IResult<T> result,
         ControllerBase controllerBase) where T : class
     {
         ArgumentNullException.ThrowIfNull(result);
@@ -89,7 +94,7 @@ public static class ResultExtensions
         };
     }
 
-    public static IActionResult MatchGet<T>(this Result<T> result,
+    public static IActionResult MatchGet<T>(this IResult<T> result,
         ControllerBase controllerBase) where T : class
     {
         ArgumentNullException.ThrowIfNull(result);

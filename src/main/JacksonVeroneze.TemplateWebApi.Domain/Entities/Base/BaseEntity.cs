@@ -1,8 +1,16 @@
 namespace JacksonVeroneze.TemplateWebApi.Domain.Entities.Base;
 
-public abstract class BaseEntity
+public abstract class BaseEntity : IEntity
 {
-    public Guid Id { get; } = Guid.NewGuid();
+    public Guid Id { get;} = Guid.NewGuid();
+
+    public DateTime CreatedAt { get; init; } = DateTime.Now;
+
+    public DateTime? UpdatedAt { get; set; }
+
+    public DateTime? DeletedAt { get; set; }
+
+    public int Version { get; set; } = 1;
 
     public override bool Equals(object? obj)
     {

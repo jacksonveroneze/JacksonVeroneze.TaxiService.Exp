@@ -2,7 +2,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Core.Primitives;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Primitives;
 
-public class Result<TValue>
+public class Result<TValue> : IResult<TValue> where TValue : class
 {
     public ResultStatus Status { get; }
 
@@ -10,7 +10,7 @@ public class Result<TValue>
 
     public Error? Error { get; set; }
 
-    public List<ValidationError>? ValidationErrors { get; protected set; }
+    public IList<ValidationError>? ValidationErrors { get; }
 
     #region ctor
 
@@ -35,16 +35,23 @@ public class Result<TValue>
         Error = error;
     }
 
+    private Result(ResultStatus status,
+        IList<ValidationError> validationErrors)
+    {
+        Status = status;
+        ValidationErrors = validationErrors;
+    }
+
     #endregion
 
     #region Success
 
-    public static Result<TValue> Success()
+    public static IResult<TValue> Success()
     {
         return new Result<TValue>(ResultStatus.Success);
     }
 
-    public static Result<TValue> Success(TValue value)
+    public static IResult<TValue> Success(TValue value)
     {
         return new Result<TValue>(ResultStatus.Success, value);
     }
@@ -53,7 +60,7 @@ public class Result<TValue>
 
     #region NotFound
 
-    public static Result<TValue> NotFound(Error error)
+    public static IResult<TValue> NotFound(Error error)
     {
         return new Result<TValue>(ResultStatus.NotFound, error);
     }
@@ -62,14 +69,16 @@ public class Result<TValue>
 
     #region Invalid
 
-    public static Result<TValue> Invalid(Error error)
+    public static IResult<TValue> Invalid(Error error)
     {
         return new Result<TValue>(ResultStatus.Invalid, error);
     }
 
-    public static Result<TValue> Invalid(List<ValidationError> validationErrors)
+    public static IResult<TValue> Invalid(
+        IList<ValidationError> validationErrors)
     {
-        return new(ResultStatus.Invalid) { ValidationErrors = validationErrors };
+        return new Result<TValue>(ResultStatus.Invalid,
+            validationErrors);
     }
 
     #endregion

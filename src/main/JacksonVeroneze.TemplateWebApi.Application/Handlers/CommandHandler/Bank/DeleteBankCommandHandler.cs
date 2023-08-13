@@ -1,7 +1,6 @@
 using JacksonVeroneze.TemplateWebApi.Application.Commands.Bank;
 using JacksonVeroneze.TemplateWebApi.Application.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
-using JacksonVeroneze.TemplateWebApi.Application.Models.Bank;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
 using JacksonVeroneze.TemplateWebApi.Application.Primitives;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
@@ -10,7 +9,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.CommandHandler.Bank;
 
 public class DeleteBankCommandHandler :
-    IRequestHandler<DeleteBankCommand, Result<BaseResponse>>
+    IRequestHandler<DeleteBankCommand, IResult<VoidResponse>>
 {
     private readonly ILogger<DeleteBankCommandHandler> _logger;
     private readonly IBankReadRepository _readRepository;
@@ -26,7 +25,7 @@ public class DeleteBankCommandHandler :
         _writeRepository = writeRepository;
     }
 
-    public async Task<Result<BaseResponse>> Handle(
+    public async Task<IResult<VoidResponse>> Handle(
         DeleteBankCommand request,
         CancellationToken cancellationToken)
     {
@@ -40,7 +39,7 @@ public class DeleteBankCommandHandler :
             _logger.LogNotFound(nameof(DeleteBankCommandHandler),
                 nameof(Handle), request.Id);
 
-            return Result<BaseResponse>.NotFound(DomainErrors.Bank.NotFound);
+            return Result<VoidResponse>.NotFound(DomainErrors.Bank.NotFound);
         }
 
         await _writeRepository.DeleteAsync(data, cancellationToken);
@@ -48,6 +47,6 @@ public class DeleteBankCommandHandler :
         _logger.LogDeleted(nameof(DeleteBankCommandHandler),
             nameof(Handle), request.Id.ToString());
 
-        return Result<BaseResponse>.Success();
+        return Result<VoidResponse>.Success();
     }
 }

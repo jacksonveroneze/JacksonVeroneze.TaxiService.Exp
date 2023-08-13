@@ -1,15 +1,17 @@
+using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities.Base;
 using JacksonVeroneze.TemplateWebApi.Domain.Enums;
+using JacksonVeroneze.TemplateWebApi.Domain.Exceptions;
 
 namespace JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 public class BankEntity : BaseEntity
 {
-    public string? Name { get; private set; }
+    public string Name { get; private set; }
 
     public BankStatus? Status { get; private set; }
 
-    public BankEntity(string? name)
+    public BankEntity(string name)
     {
         Name = name;
 
@@ -20,7 +22,8 @@ public class BankEntity : BaseEntity
     {
         if (Status != BankStatus.PendingActivation)
         {
-            throw new InvalidOperationException("Status não permitido");
+            throw new DomainException(
+                DomainErrors.Bank.StatusNotAllowed);
         }
 
         Status = BankStatus.Active;
@@ -30,7 +33,8 @@ public class BankEntity : BaseEntity
     {
         if (Status != BankStatus.Active)
         {
-            throw new InvalidOperationException("Status não permitido");
+            throw new DomainException(
+                DomainErrors.Bank.StatusNotAllowed);
         }
 
         Status = BankStatus.Inactive;

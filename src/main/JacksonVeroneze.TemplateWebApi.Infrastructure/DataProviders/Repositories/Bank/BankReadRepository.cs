@@ -19,6 +19,12 @@ public class BankReadRepository : IBankReadRepository
         _mapper = mapper;
     }
 
+    public Task<bool> AnyByNameAsync(string name,
+        CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<BankEntity?> GetByIdAsync(Guid id,
         CancellationToken cancellationToken = default)
     {

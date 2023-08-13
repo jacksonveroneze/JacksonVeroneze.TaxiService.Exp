@@ -2,7 +2,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Core.Primitives;
 
 namespace JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 
-public partial class DomainErrors
+public static class DomainErrors
 {
     public static class Bank
     {
@@ -15,18 +15,15 @@ public partial class DomainErrors
                 "The bank has already been processed.");
 
         public static Error DuplicateName =>
-            new("Bank.DuplicateEmail",
+            new("Bank.DuplicateName",
                 "The specified name is already in use.");
+
+        public static Error StatusNotAllowed =>
+            new("Bank.ChangeStatus",
+                "The status status not allowed");
     }
 
     public static class Client
     {
-        public static Error NotFound =>
-            new("Client.NotFound",
-                "The client with the specified identifier was not found.");
-
-        public static Error AlreadyProcessed =>
-            new("Client.AlreadyProcessed",
-                "The client has already been processed.");
     }
 }

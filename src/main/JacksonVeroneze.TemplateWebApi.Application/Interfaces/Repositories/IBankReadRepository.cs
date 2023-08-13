@@ -6,6 +6,10 @@ namespace JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 
 public interface IBankReadRepository
 {
+    Task<bool> AnyByNameAsync(
+        string name,
+        CancellationToken cancellationToken = default);
+
     Task<BankEntity?> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken = default);

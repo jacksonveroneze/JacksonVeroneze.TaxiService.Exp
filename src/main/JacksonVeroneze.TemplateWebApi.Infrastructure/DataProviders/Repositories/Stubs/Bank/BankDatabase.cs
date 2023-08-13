@@ -4,19 +4,19 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositori
 
 public static class BankDatabase
 {
-    private static readonly List<BankEntity> _data = new();
+    private static readonly List<BankEntity> Db = new();
 
     public static IList<BankEntity> Data
     {
         get
         {
-            if (!_data.Any())
+            if (!Db.Any())
             {
-                _data.AddRange(Enumerable.Range(1, 25)
+                Db.AddRange(Enumerable.Range(1, 25)
                     .Select(item => new BankEntity($"Bank_{item}")));
             }
 
-            return _data;
+            return Db;
         }
     }
 }

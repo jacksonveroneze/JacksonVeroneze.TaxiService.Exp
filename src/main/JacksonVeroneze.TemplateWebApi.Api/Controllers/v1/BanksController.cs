@@ -1,6 +1,7 @@
 using System.Net.Mime;
 using JacksonVeroneze.TemplateWebApi.Api.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Commands.Bank;
+using JacksonVeroneze.TemplateWebApi.Application.Models.Bank;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
 using JacksonVeroneze.TemplateWebApi.Application.Primitives;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.Bank;
@@ -33,27 +34,22 @@ public class BanksController : ControllerBase
         GetBankPagedQuery query,
         CancellationToken cancellationToken)
     {
-        // _logger.LogGetPaged(nameof(BanksController),
-        //     nameof(GetPagedAsync));
-
-        Result<BaseResponse> response = await _mediator
+        IResult<BaseResponse> response = await _mediator
             .Send(query, cancellationToken);
 
         return response.MatchGet(this);
     }
 
-    [HttpGet("{id}", Name = "FindById")]
+    [HttpGet("{id}", Name = "GetBankById")]
+    //[ActionName(nameof(GetByIdAsync))]
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Find))]
-    public async Task<IActionResult> FindByIdAsync(
+    public async Task<ActionResult<GetBankByIdQueryResponse>> GetByIdAsync(
         [FromRoute] GetBankByIdQuery query,
         CancellationToken cancellationToken)
     {
-        // _logger.LogGetById(nameof(BanksController),
-        //     nameof(FindByIdAsync), query.Id);
-
-        Result<BaseResponse> response = await _mediator
-            .Send(query, cancellationToken);
+        IResult<GetBankByIdQueryResponse> response =
+            await _mediator.Send(query, cancellationToken);
 
         return response.MatchFind(this);
     }
@@ -65,10 +61,7 @@ public class BanksController : ControllerBase
         [FromBody] CreateBankCommand command,
         CancellationToken cancellationToken)
     {
-        // _logger.LogCreate(nameof(BanksController),
-        //     nameof(GetByIdAsync));
-
-        Result<BaseResponse> response = await _mediator
+        IResult<BaseResponse> response = await _mediator
             .Send(command, cancellationToken);
 
         return response.MatchPost(this);
@@ -81,10 +74,7 @@ public class BanksController : ControllerBase
         [FromRoute] DeleteBankCommand query,
         CancellationToken cancellationToken)
     {
-        // _logger.LogGetById(nameof(BanksController),
-        //     nameof(GetByIdAsync), query.Id);
-
-        Result<BaseResponse> response = await _mediator
+        IResult<BaseResponse> response = await _mediator
             .Send(query, cancellationToken);
 
         return response.MatchDelete(this);
@@ -92,15 +82,12 @@ public class BanksController : ControllerBase
 
     [HttpPut("{id}/activate", Name = "ActivateBank")]
     [ApiConventionMethod(typeof(DefaultApiConventions),
-        nameof(DefaultApiConventions.Put))]
-    public async Task<IActionResult> PutActivateAsync(
+        nameof(DefaultApiConventions.Update))]
+    public async Task<IActionResult> UpdateActivateAsync(
         [FromRoute] ActivateBankCommand query,
         CancellationToken cancellationToken)
     {
-        // _logger.LogGetById(nameof(BanksController),
-        //     nameof(GetByIdAsync), query.Id);
-
-        Result<BaseResponse> response = await _mediator
+        IResult<BaseResponse> response = await _mediator
             .Send(query, cancellationToken);
 
         return response.MatchPut(this);
