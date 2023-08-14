@@ -43,8 +43,7 @@ public class CreateBankCommandHandler :
                 DomainErrors.Bank.DuplicateName);
         }
 
-        BankEntity data = _mapper
-            .Map<BankEntity>(request);
+        BankEntity data = _mapper.Map<BankEntity>(request);
 
         await _writeRepository.CreateAsync(data, cancellationToken);
 

@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
+using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 using JacksonVeroneze.TemplateWebApi.Domain.Specifications.Base;
 
@@ -7,20 +8,20 @@ namespace JacksonVeroneze.TemplateWebApi.Domain.Specifications;
 
 public class BankStatusSpecification : BaseSpecification<BankEntity>
 {
-    private readonly BankPagedFilter _filter;
+    private readonly BankStatus _status;
 
-    public BankStatusSpecification(BankPagedFilter filter)
+    public BankStatusSpecification(BankStatus status)
     {
-        _filter = filter;
+        _status = status;
     }
 
-    protected override Expression<Func<BankEntity, bool>> ToExpression()
+    public override Expression<Func<BankEntity, bool>> ToExpression()
     {
-        return spec => spec.Status ==  _filter.Status;
+        return spec => spec.Status == _status;
     }
 
     protected override Func<BankEntity, bool> ToFunc()
     {
-        return spec => spec.Status ==  _filter.Status;
+        return spec => spec.Status == _status;
     }
 }

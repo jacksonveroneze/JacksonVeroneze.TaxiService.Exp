@@ -41,6 +41,7 @@ public class BankMapper : Profile
             .ForMember(dest => dest.UpdatedAt, opts => opts.Ignore())
             .ForMember(dest => dest.DeletedAt, opts => opts.Ignore())
             .ForMember(dest => dest.Version, opts => opts.Ignore())
+            .ForMember(dest => dest.TenantId, opts => opts.Ignore())
             .ForMember(dest => dest.Status, opts => opts.Ignore());
     }
 }

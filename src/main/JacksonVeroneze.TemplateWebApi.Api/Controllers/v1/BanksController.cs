@@ -92,4 +92,17 @@ public class BanksController : ControllerBase
 
         return response.MatchPut(this);
     }
+
+    [HttpPut("{id}/inactivate", Name = "InactivateBank")]
+    [ApiConventionMethod(typeof(DefaultApiConventions),
+        nameof(DefaultApiConventions.Update))]
+    public async Task<IActionResult> UpdateInactivateAsync(
+        [FromRoute] InactivateBankCommand query,
+        CancellationToken cancellationToken)
+    {
+        IResult<BaseResponse> response = await _mediator
+            .Send(query, cancellationToken);
+
+        return response.MatchPut(this);
+    }
 }

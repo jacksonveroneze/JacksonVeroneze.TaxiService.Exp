@@ -13,10 +13,9 @@ public class BankNameSpecification : BaseSpecification<BankEntity>
         _name = name;
     }
 
-    protected override Expression<Func<BankEntity, bool>> ToExpression()
+    public override Expression<Func<BankEntity, bool>> ToExpression()
     {
-        return spec => spec.Name.Contains(_name ?? string.Empty,
-            StringComparison.OrdinalIgnoreCase);
+        return spec => spec.Name.Contains(_name ?? string.Empty);
     }
 
     protected override Func<BankEntity, bool> ToFunc()

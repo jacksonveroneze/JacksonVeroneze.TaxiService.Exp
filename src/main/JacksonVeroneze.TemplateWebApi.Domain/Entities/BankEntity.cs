@@ -1,18 +1,20 @@
+using JacksonVeroneze.NET.MongoDB.DomainObjects;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
-using JacksonVeroneze.TemplateWebApi.Domain.Entities.Base;
 using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 using JacksonVeroneze.TemplateWebApi.Domain.Exceptions;
 
 namespace JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
-public class BankEntity : BaseEntity
+public class BankEntity : BaseEntity<Guid>
 {
     public string Name { get; private set; }
 
-    public BankStatus? Status { get; private set; }
+    public BankStatus Status { get; private set; }
 
     public BankEntity(string name)
     {
+        Id = Guid.NewGuid();
+
         Name = name;
 
         Status = BankStatus.PendingActivation;
@@ -29,7 +31,7 @@ public class BankEntity : BaseEntity
         Status = BankStatus.Active;
     }
 
-    public void Inativate()
+    public void Inactivate()
     {
         if (Status != BankStatus.Active)
         {

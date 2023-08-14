@@ -49,7 +49,7 @@ public static partial class LogMessagesExtensions
         Level = LogLevel.Information,
         Message = "{className} - {methodName} - Deleted - Id: '{id}'")]
     public static partial void LogDeleted(this ILogger logger,
-        string className, string methodName, string id);
+        string className, string methodName, Guid id);
 
     #endregion
 
@@ -60,6 +60,12 @@ public static partial class LogMessagesExtensions
     public static partial void LogActivated(this ILogger logger,
         string className, string methodName, Guid id);
 
+    [LoggerMessage(
+        EventId = 6002,
+        Level = LogLevel.Information,
+        Message = "{className} - {methodName} - Inactivated - Id: '{id}'")]
+    public static partial void LogInactivated(this ILogger logger,
+        string className, string methodName, Guid id);
 
     # region ValidationBehavior
 

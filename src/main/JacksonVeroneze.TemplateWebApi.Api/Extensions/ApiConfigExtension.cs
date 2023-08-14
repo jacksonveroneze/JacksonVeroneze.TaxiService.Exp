@@ -45,6 +45,7 @@ public static class ApiConfigExtension
             .AddAutoMapper()
             .AddCorrelation()
             .AddMediatr()
+            .AddDatabase()
             .AddFluentValidation()
             .AddAppVersioning()
             .AddHttpContextAccessor()

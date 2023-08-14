@@ -1,6 +1,7 @@
 using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
+using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 using JacksonVeroneze.TemplateWebApi.Domain.Specifications;
 
@@ -31,8 +32,11 @@ public class BankReadStubRepository : IBankReadRepository
     public Task<Page<BankEntity>> GetPagedAsync(BankPagedFilter filter,
         CancellationToken cancellationToken = default)
     {
-        BankNameSpecification specName = new(filter.Name);
-        BankStatusSpecification specStatus = new(filter);
+        BankNameSpecification specName =
+            new(filter.Name);
+
+        BankStatusSpecification specStatus =
+            new(filter.Status ?? BankStatus.None);
 
         IEnumerable<BankEntity> data = BankDatabase.Data
             .Where(specName)

@@ -1,5 +1,4 @@
 using JacksonVeroneze.TemplateWebApi.Application.Models.Bank;
-using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
 using JacksonVeroneze.TemplateWebApi.Application.Primitives;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Commands.Bank;

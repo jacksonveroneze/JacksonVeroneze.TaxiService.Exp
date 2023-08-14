@@ -1,39 +1,50 @@
 using AutoMapper;
+using JacksonVeroneze.NET.MongoDB.Interfaces;
+using JacksonVeroneze.NET.MongoDB.Repository;
 using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
+using JacksonVeroneze.TemplateWebApi.Domain.Specifications;
 using Microsoft.Extensions.Logging;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Bank;
 
-public class BankReadRepository : IBankReadRepository
+public class BankReadRepository :
+    BaseRepository<BankEntity, Guid>, IBankReadRepository
 {
-    private readonly ILogger<BankReadRepository> _logger;
     private readonly IMapper _mapper;
 
     public BankReadRepository(ILogger<BankReadRepository> logger,
-        IMapper mapper)
+        IMapper mapper,
+        IDatabaseContext context) :
+        base(logger, context.GetCollection<BankEntity>(nameof(BankEntity)))
     {
-        _logger = logger;
         _mapper = mapper;
     }
 
     public Task<bool> AnyByNameAsync(string name,
         CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return AnyAsync(x => x.Name.Equals(name,
+            StringComparison.OrdinalIgnoreCase), cancellationToken);
     }
 
-    public Task<BankEntity?> GetByIdAsync(Guid id,
+    public new Task<BankEntity?> GetByIdAsync(Guid id,
         CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return base.GetByIdAsync(id, cancellationToken);
     }
 
-    public Task<Page<BankEntity>> GetPagedAsync(BankPagedFilter filter,
+    public new Task<Page<BankEntity>> GetPagedAsync(BankPagedFilter filter,
         CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        BankNameSpecification specName = new(filter.Name);
+        //BankStatusSpecification specStatus = new(filter);
+
+        //Specification<BankEntity>? spec = specName.And(specStatus);
+
+        return base.GetPagedAsync(
+            filter.Pagination!, specName, cancellationToken);
     }
 }
