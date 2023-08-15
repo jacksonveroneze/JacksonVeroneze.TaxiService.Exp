@@ -35,13 +35,12 @@ public class BankMapper : Profile
 
         // Command -> Entity
         CreateMap<CreateBankCommand, BankEntity>()
-            .ConstructUsing(src => new BankEntity(src.Name))
+            .ConstructUsing(src => new BankEntity(src.Name!))
             .ForMember(dest => dest.Id, opts => opts.Ignore())
             .ForMember(dest => dest.CreatedAt, opts => opts.Ignore())
             .ForMember(dest => dest.UpdatedAt, opts => opts.Ignore())
             .ForMember(dest => dest.DeletedAt, opts => opts.Ignore())
             .ForMember(dest => dest.Version, opts => opts.Ignore())
-            .ForMember(dest => dest.TenantId, opts => opts.Ignore())
             .ForMember(dest => dest.Status, opts => opts.Ignore());
     }
 }

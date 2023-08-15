@@ -582,3 +582,15 @@ dotnet_diagnostic.CA1501.severity = warning
 dotnet_diagnostic.CA1502.severity = warning
 dotnet_diagnostic.CA1505.severity = warning
 dotnet_diagnostic.CA1506.severity = warning
+
+
+# Arrangement of Attributes
+# csharp_max_attribute_length_for_same_line = 2
+csharp_keep_existing_attribute_arrangement = true
+csharp_keep_existing_arrangement = true
+csharp_place_type_attribute_on_same_line = if_owner_is_single_line
+csharp_place_method_attribute_on_same_line = if_owner_is_single_line
+csharp_place_attribute_on_same_line = if_owner_is_single_line
+csharp_place_accessorholder_attribute_on_same_line = if_owner_is_single_line
+csharp_place_accessor_attribute_on_same_line = if_owner_is_single_line
+csharp_place_field_attribute_on_same_line = if_owner_is_single_line

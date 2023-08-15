@@ -1,8 +1,9 @@
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Mail;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Infra;
 using JacksonVeroneze.TemplateWebApi.Domain.Parameters;
-using MimeKit;
+using MailKit.Net.Smtp;
 using MailKit.Security;
+using MimeKit;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Mail;
 
@@ -49,7 +50,7 @@ public class SmtpEmailService : IEmailService
             body.HtmlBody = request?.Body;
             mail.Body = body.ToMessageBody();
 
-            using MailKit.Net.Smtp.SmtpClient smtp = new();
+            using SmtpClient smtp = new();
 
             if (_parameters.UseSsl)
             {

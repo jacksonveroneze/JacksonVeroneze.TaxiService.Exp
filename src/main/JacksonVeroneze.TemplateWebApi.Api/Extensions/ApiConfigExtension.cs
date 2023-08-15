@@ -1,11 +1,11 @@
 using Ben.Diagnostics;
 using CorrelationId;
-using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
-using JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
-using Prometheus;
 using Hellang.Middleware.ProblemDetails;
 using JacksonVeroneze.TemplateWebApi.Application.Exceptions;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Prometheus;
 
 namespace JacksonVeroneze.TemplateWebApi.Api.Extensions;
 
@@ -45,16 +45,16 @@ public static class ApiConfigExtension
             .AddAutoMapper()
             .AddCorrelation()
             .AddMediatr()
-            .AddDatabase()
             .AddFluentValidation()
             .AddAppVersioning()
-            .AddHttpContextAccessor()
+            .AddDatabase(appConfiguration)
             .AddAuthentication(appConfiguration)
             .AddAuthorization(appConfiguration)
             .AddOpenTelemetry(appConfiguration)
             .AddCached(appConfiguration)
             .AddHttpClients(appConfiguration)
             .AddCultureConfiguration()
+            .AddHttpContextAccessor()
             .AddRouting(options =>
             {
                 options.LowercaseUrls = true;

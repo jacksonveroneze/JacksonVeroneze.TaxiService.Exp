@@ -43,7 +43,6 @@ public static partial class LogMessagesExtensions
         string className, string methodName);
 
 
-
     [LoggerMessage(
         EventId = 6001,
         Level = LogLevel.Information,

@@ -11,7 +11,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.Bank;
 
 public class GetBankPagedQueryHandler :
-    IRequestHandler<GetBankPagedQuery, Primitives.IResult<BaseResponse>>
+    IRequestHandler<GetBankPagedQuery, IResult<BaseResponse>>
 {
     private readonly ILogger<GetBankPagedQueryHandler> _logger;
     private readonly IMapper _mapper;

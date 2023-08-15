@@ -1,50 +1,49 @@
-using AutoMapper;
+using System.Linq.Expressions;
+using JacksonVeroneze.NET.Extensions.Predicate;
 using JacksonVeroneze.NET.MongoDB.Interfaces;
-using JacksonVeroneze.NET.MongoDB.Repository;
 using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 using JacksonVeroneze.TemplateWebApi.Domain.Specifications;
-using Microsoft.Extensions.Logging;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Bank;
 
-public class BankReadRepository :
-    BaseRepository<BankEntity, Guid>, IBankReadRepository
+public class BankReadRepository : IBankReadRepository
 {
-    private readonly IMapper _mapper;
+    private readonly IBaseRepository<BankEntity> _repository;
 
-    public BankReadRepository(ILogger<BankReadRepository> logger,
-        IMapper mapper,
-        IDatabaseContext context) :
-        base(logger, context.GetCollection<BankEntity>(nameof(BankEntity)))
+    public BankReadRepository(
+        IBaseRepository<BankEntity> repository)
     {
-        _mapper = mapper;
+        _repository = repository;
     }
 
     public Task<bool> AnyByNameAsync(string name,
         CancellationToken cancellationToken = default)
     {
-        return AnyAsync(x => x.Name.Equals(name,
-            StringComparison.OrdinalIgnoreCase), cancellationToken);
+        BankNameSpecification specName = new(name, matchExactly: true);
+
+        return _repository.AnyAsync(specName, cancellationToken);
     }
 
-    public new Task<BankEntity?> GetByIdAsync(Guid id,
+    public Task<BankEntity?> GetByIdAsync(Guid id,
         CancellationToken cancellationToken = default)
     {
-        return base.GetByIdAsync(id, cancellationToken);
+        return _repository.GetByIdAsync(id, cancellationToken);
     }
 
-    public new Task<Page<BankEntity>> GetPagedAsync(BankPagedFilter filter,
+    public Task<Page<BankEntity>> GetPagedAsync(
+        BankPagedFilter filter,
         CancellationToken cancellationToken = default)
     {
         BankNameSpecification specName = new(filter.Name);
-        //BankStatusSpecification specStatus = new(filter);
+        BankStatusSpecification specStatus = new(filter.Status);
 
-        //Specification<BankEntity>? spec = specName.And(specStatus);
+        Expression<Func<BankEntity, bool>> spec =
+            specName.ToExpression().And(specStatus);
 
-        return base.GetPagedAsync(
-            filter.Pagination!, specName, cancellationToken);
+        return _repository.GetPagedAsync(
+            filter.Pagination!, spec, cancellationToken);
     }
 }

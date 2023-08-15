@@ -6,7 +6,6 @@ using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Common;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Bank;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Client;
-using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Stubs.Bank;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Identity;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Mail;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Messaging;

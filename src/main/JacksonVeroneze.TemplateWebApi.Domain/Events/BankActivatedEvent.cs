@@ -4,5 +4,4 @@ namespace JacksonVeroneze.TemplateWebApi.Domain.Events;
 
 public class BankActivatedEvent : DomainEvent
 {
-
 }

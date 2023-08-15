@@ -58,13 +58,13 @@ export default function () {
     // http.put(`${url}/api/v1/banks/850323ca-567e-40fc-b16d-9e0021a8dfde/activate`);
 
     var body = JSON.stringify({name: uuidv4()});
-    
+
     //console.log(body);
-    
+
     var responsePost = http.post(`${url}/api/v1/banks`, body, {
         headers: {'Content-Type': 'application/json'},
     });
-    
+
     var id = JSON.parse(responsePost.body).data.id;
 
     http.get(`${url}/api/v1/banks/${id}`);

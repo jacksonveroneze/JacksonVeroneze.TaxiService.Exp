@@ -20,7 +20,7 @@ public static class ResultExtensions
 
         return new(dict)
         {
-            Status = (int) (statusCode ?? HttpStatusCode.BadRequest),
+            Status = (int)(statusCode ?? HttpStatusCode.BadRequest),
             Title = result!.Error!.Code,
             Detail = result.Error.Message,
             Instance = controllerBase.HttpContext.Request.Path,

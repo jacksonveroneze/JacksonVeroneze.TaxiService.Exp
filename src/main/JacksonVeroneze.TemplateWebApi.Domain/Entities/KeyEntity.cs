@@ -43,5 +43,5 @@ public class KeyEntity : BaseEntity
     }
 
     public override bool IsValid()
-        =>  Type != KeyType.None && Status != KeyStatus.None;
-    }
+        => Type != KeyType.None && Status != KeyStatus.None;
+}

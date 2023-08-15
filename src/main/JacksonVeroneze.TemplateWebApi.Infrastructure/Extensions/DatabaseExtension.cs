@@ -1,4 +1,7 @@
 using JacksonVeroneze.NET.MongoDB.Extensions;
+using JacksonVeroneze.NET.MongoDB.Interfaces;
+using JacksonVeroneze.NET.MongoDB.Repository;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Mappings;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,15 +11,19 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
 public static class DatabaseExtension
 {
     public static IServiceCollection AddDatabase(
-        this IServiceCollection services)
+        this IServiceCollection services,
+        AppConfiguration appConfiguration)
     {
+        CommonMapping.MapEntities();
         BankMapping.MapEntities();
 
         services.AddMongDb(options =>
         {
-            options.ConnectionString = "mongodb://admin:admin@10.0.0.199:27017";
-            options.DatabaseName = "Pix";
+            options.ConnectionString = appConfiguration.Database!.ConnectionString!;
+            options.DatabaseName = appConfiguration.Database!.DatabaseName!;
         });
+
+        services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
         return services;
     }

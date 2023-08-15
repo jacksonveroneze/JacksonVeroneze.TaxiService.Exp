@@ -8,8 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JacksonVeroneze.NET.MongoDB" Version="1.1.1" />
-    <PackageReference Include="NetDevPack" Version="6.1.0" />
+    <!--    <PackageReference Include="JacksonVeroneze.NET.MongoDB" Version="1.1.1" />-->
+    <PackageReference Include="NetDevPack" Version="6.1.0"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\JacksonVeroneze.NET.Extensions\src\JacksonVeroneze.NET.Extensions\JacksonVeroneze.NET.Extensions.csproj"/>
+    <ProjectReference Include="..\..\..\..\JacksonVeroneze.NET.MongoDB\src\JacksonVeroneze.NET.MongoDB\JacksonVeroneze.NET.MongoDB.csproj"/>
   </ItemGroup>
 
 </Project>

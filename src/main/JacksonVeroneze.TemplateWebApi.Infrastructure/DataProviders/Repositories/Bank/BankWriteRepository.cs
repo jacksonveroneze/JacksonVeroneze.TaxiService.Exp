@@ -1,43 +1,37 @@
-using AutoMapper;
 using JacksonVeroneze.NET.MongoDB.Interfaces;
-using JacksonVeroneze.NET.MongoDB.Repository;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
-using Microsoft.Extensions.Logging;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Bank;
 
-public class BankWriteRepository :
-    BaseRepository<BankEntity, Guid>, IBankWriteRepository
+public class BankWriteRepository : IBankWriteRepository
 {
-    private readonly IMapper _mapper;
+    private readonly IBaseRepository<BankEntity> _repository;
 
-    public BankWriteRepository(ILogger<BankWriteRepository> logger,
-        IMapper mapper,
-        IDatabaseContext context) :
-        base(logger, context.GetCollection<BankEntity>(nameof(BankEntity)))
+    public BankWriteRepository(
+        IBaseRepository<BankEntity> repository)
     {
-        _mapper = mapper;
+        _repository = repository;
     }
 
-    public new Task CreateAsync(BankEntity bankEntity,
+    public Task CreateAsync(BankEntity bankEntity,
         CancellationToken cancellationToken = default)
     {
-        return base.CreateAsync(
+        return _repository.CreateAsync(
             bankEntity, cancellationToken);
     }
 
-    public new Task DeleteAsync(BankEntity bankEntity,
+    public Task DeleteAsync(BankEntity bankEntity,
         CancellationToken cancellationToken = default)
     {
-        return base.DeleteAsync(
+        return _repository.DeleteAsync(
             bankEntity, cancellationToken);
     }
 
-    public new Task UpdateAsync(BankEntity bankEntity,
+    public Task UpdateAsync(BankEntity bankEntity,
         CancellationToken cancellationToken = default)
     {
-        return base.UpdateAsync(
+        return _repository.UpdateAsync(
             bankEntity, cancellationToken);
     }
 }

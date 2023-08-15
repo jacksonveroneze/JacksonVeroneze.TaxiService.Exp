@@ -1,16 +1,23 @@
+using JacksonVeroneze.NET.MongoDB.DomainObjects;
+
 namespace JacksonVeroneze.TemplateWebApi.Domain.Entities.Base;
 
-public abstract class BaseEntity : IEntity
+public abstract class BaseEntity : BaseEntity<Guid>
 {
-    public Guid Id { get;} = Guid.NewGuid();
+    public BaseEntity()
+    {
+        Id = Guid.NewGuid();
+    }
 
-    public DateTime CreatedAt { get; init; } = DateTime.Now;
-
-    public DateTime? UpdatedAt { get; set; }
-
-    public DateTime? DeletedAt { get; set; }
-
-    public int Version { get; set; } = 1;
+    // public Guid Id { get;} = Guid.NewGuid();
+    //
+    // public DateTime CreatedAt { get; init; } = DateTime.Now;
+    //
+    // public DateTime? UpdatedAt { get; set; }
+    //
+    // public DateTime? DeletedAt { get; set; }
+    //
+    // public int Version { get; set; } = 1;
 
     public override bool Equals(object? obj)
     {

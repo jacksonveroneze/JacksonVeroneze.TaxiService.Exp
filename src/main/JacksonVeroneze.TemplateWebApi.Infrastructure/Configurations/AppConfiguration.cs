@@ -16,6 +16,8 @@ public class AppConfiguration
 
     public CacheConfiguration? Cache { get; init; }
 
+    public DatabaseConfiguration? Database { get; init; }
+
     public DistributedTracingConfiguration? DistributedTracing { get; init; }
 
     public ICollection<HttpClientConfiguration>? HttpClients { get; init; }

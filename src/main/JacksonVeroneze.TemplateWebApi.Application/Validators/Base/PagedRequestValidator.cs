@@ -4,7 +4,6 @@ namespace JacksonVeroneze.TemplateWebApi.Application.Validators.Base;
 
 public class PagedRequestValidator : AbstractValidator<PagedQuery>
 {
-
     public PagedRequestValidator()
     {
         RuleFor(request => request)
