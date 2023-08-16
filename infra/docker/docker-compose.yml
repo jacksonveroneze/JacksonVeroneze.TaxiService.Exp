@@ -80,6 +80,8 @@ services:
       - APP_CONFIG_DistributedTracing__IsEnabled=false
       - APP_CONFIG_DistributedTracing__Jaeger__Host=10.0.0.199
       - APP_CONFIG_DistributedTracing__Jaeger__Port=6831
+      - APP_CONFIG_Database__ConnectionString=mongodb://admin:admin@10.0.0.199:27017
+      - APP_CONFIG_Database__DatabaseName=Pix
       - Serilog__MinimumLevel__Default=Information
       - Serilog__WriteTo__0__Args__configure__1__Name=Seq
       - Serilog__WriteTo__0__Args__configure__1__Args__serverUrl=http://10.0.0.199:5341

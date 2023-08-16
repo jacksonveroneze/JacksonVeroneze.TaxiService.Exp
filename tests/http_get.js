@@ -1,12 +1,31 @@
 import http from 'k6/http';
-import {sleep} from 'k6';
+import {sleep, randomSeed} from 'k6';
 import {uuidv4} from 'https://jslib.k6.io/k6-utils/1.4.0/index.js';
+import { crypto } from "k6/experimental/webcrypto";
+import { randomIntBetween } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
-export const options = {
-    //duration: '30000s',
-    iterations: 100,
-    vus: 5,
+// export const options = {
+//     //duration: '30000s',
+//     iterations: 100000,
+//     vus: 50,
+// };
+
+export let options = {
+    stages: [
+        { duration: '30s', target: 0 }, // simulate ramp-up of traffic from 1 to 3 virtual users over 0.5 minutes.
+        { duration: '2m', target: 2 }, // simulate ramp-up of traffic from 1 to 3 virtual users over 0.5 minutes.
+        { duration: '2m', target: 15 }, // ramp-down to 0 users
+        { duration: '2m', target: 5 }, // ramp-down to 0 users
+        { duration: '2m', target: 50 }, // ramp-down to 0 users
+        // { duration: '2m', target: 500 }, // ramp-down to 0 users
+        { duration: '2m', target: 100 }, // ramp-down to 0 users
+        { duration: '2m', target: 50 }, // ramp-down to 0 users
+        { duration: '2m', target: 2 }, // ramp-down to 0 users
+        { duration: '2m', target: 100 }, // ramp-down to 0 users
+        { duration: '2m', target: 0 }, // ramp-down to 0 users
+    ],
 };
+
 
 //const url = 'http://localhost/templatewebapi';
 const url = 'http://localhost:7000';
@@ -14,8 +33,8 @@ const url = 'http://localhost:7000';
 // export const options = {
 //     vus: 50,
 //     stages: [
-//         {duration: '2m', target: 10},
-//         {duration: '5m', target: 40},
+//         {duration: '1m', target: 10},
+//         {duration: '2m', target: 40},
 //         {duration: '30s', target: 0}
 //     ]
 //     // scenarios: {
@@ -50,16 +69,9 @@ const url = 'http://localhost:7000';
 
 
 export default function () {
-    // http.get(`${url}/api/v1/banks`);
-    // http.get(`${url}/api/v1/banks/00000000-0000-0000-0000-000000000000`);
-    // http.get(`${url}/api/v1/banks/850323ca-567e-40fc-b16d-9e0021a8dfde`);
-    // http.del(`${url}/api/v1/banks/00000000-0000-0000-0000-000000000000`);
-    // http.del(`${url}/api/v1/banks/850323ca-567e-40fc-b16d-9e0021a8dfde`);
-    // http.put(`${url}/api/v1/banks/850323ca-567e-40fc-b16d-9e0021a8dfde/activate`);
-
-    var body = JSON.stringify({name: uuidv4()});
-
-    //console.log(body);
+    const rnd = randomIntBetween(1, 50000)
+    
+    var body = JSON.stringify({name: crypto.randomUUID() + '_' + rnd});
 
     var responsePost = http.post(`${url}/api/v1/banks`, body, {
         headers: {'Content-Type': 'application/json'},
@@ -68,7 +80,29 @@ export default function () {
     var id = JSON.parse(responsePost.body).data.id;
 
     http.get(`${url}/api/v1/banks/${id}`);
+    http.put(`${url}/api/v1/banks/${id}/activate`);
+    http.put(`${url}/api/v1/banks/${id}/inactivate`);
 
+    console.log('___' + rnd + '____')
+    
+    if(rnd % 2 === 0)
+    {
+        //console.log('___2___')
+        http.del(`${url}/api/v1/banks/${id}`);
+    }
+
+    if(rnd % 20 === 0)
+    {
+        //console.log('___3___')
+        http.del(`${url}/api/v1/banks/1111`);
+    }
+
+    if(rnd % 10 === 0)
+    {
+        //console.log('___4___')
+        http.del(`${url}/api/v1/banks/850323ca-567e-40fc-b16d-9e0021a8dfde`);
+    }
+    
     //console.log(JSON.parse(responsePost.body).data.id);
 }
 
