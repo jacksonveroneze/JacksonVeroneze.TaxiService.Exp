@@ -47,7 +47,7 @@ public static class ApiConfigExtension
             .AddMediatr()
             .AddFluentValidation()
             .AddAppVersioning()
-            .AddDatabase(appConfiguration)
+            .AddDatabase(builder.Configuration, appConfiguration)
             .AddAuthentication(appConfiguration)
             .AddAuthorization(appConfiguration)
             .AddOpenTelemetry(appConfiguration)

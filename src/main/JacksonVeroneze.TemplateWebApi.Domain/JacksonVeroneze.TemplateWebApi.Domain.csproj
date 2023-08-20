@@ -10,6 +10,7 @@
   <ItemGroup>
     <!--    <PackageReference Include="JacksonVeroneze.NET.MongoDB" Version="1.1.1" />-->
     <PackageReference Include="NetDevPack" Version="6.1.0"/>
+    <PackageReference Include="Dapper.SimpleCRUD" Version="2.3.0" />
   </ItemGroup>
 
   <ItemGroup>

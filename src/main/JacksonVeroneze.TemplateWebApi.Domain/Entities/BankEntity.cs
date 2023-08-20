@@ -7,9 +7,9 @@ namespace JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 public class BankEntity : BaseEntity<Guid>
 {
-    public string Name { get; private set; }
+    public string Name { get; set; }
 
-    public BankStatus Status { get; private set; }
+    public BankStatus Status { get; set; }
 
     public BankEntity(string name)
     {

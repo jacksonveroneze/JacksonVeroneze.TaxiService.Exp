@@ -8,14 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.200.22" />
+    <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.7"/>
+
     <PackageReference Include="CorrelationId" Version="3.0.1"/>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1"/>
-    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.6.0"/>
+    <PackageReference Include="Dapper.SimpleCRUD" Version="2.3.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.7.1" />
     <!--    <PackageReference Include="JacksonVeroneze.NET.MongoDB" Version="1.1.1" />-->
     <PackageReference Include="MailKit" Version="4.1.0"/>
-    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.9"/>
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.10" />
     <PackageReference Include="MiniProfiler.AspNetCore" Version="4.3.8"/>
     <PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.3.8"/>
+    <PackageReference Include="Npgsql" Version="7.0.4" />
     <PackageReference Include="prometheus-net.AspNetCore" Version="8.0.1"/>
     <PackageReference Include="prometheus-net.DotNetRuntime" Version="4.4.0"/>
 
@@ -46,6 +51,8 @@
 
 
   </ItemGroup>
+
+
 
 
 </Project>

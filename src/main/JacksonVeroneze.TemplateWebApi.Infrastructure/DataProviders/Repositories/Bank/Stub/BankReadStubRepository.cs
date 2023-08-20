@@ -5,7 +5,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 using JacksonVeroneze.TemplateWebApi.Domain.Specifications;
 
-namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Stubs.Bank;
+namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Bank.Stub;
 
 public class BankReadStubRepository : IBankReadRepository
 {

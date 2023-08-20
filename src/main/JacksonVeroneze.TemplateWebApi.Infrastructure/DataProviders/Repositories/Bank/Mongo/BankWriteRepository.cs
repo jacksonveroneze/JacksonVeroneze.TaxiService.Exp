@@ -2,7 +2,7 @@ using JacksonVeroneze.NET.MongoDB.Interfaces;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
-namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Bank;
+namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Bank.Mongo;
 
 public class BankWriteRepository : IBankWriteRepository
 {

@@ -7,7 +7,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 using JacksonVeroneze.TemplateWebApi.Domain.Specifications;
 
-namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Bank;
+namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Bank.Mongo;
 
 public class BankReadRepository : IBankReadRepository
 {
