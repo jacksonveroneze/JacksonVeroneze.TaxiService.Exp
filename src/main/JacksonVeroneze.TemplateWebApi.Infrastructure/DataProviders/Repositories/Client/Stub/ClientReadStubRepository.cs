@@ -1,4 +1,5 @@
 using JacksonVeroneze.NET.Pagination;
+using JacksonVeroneze.NET.Pagination.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Client;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
@@ -34,20 +35,17 @@ public class ClientReadStubRepository : IClientReadRepository
     public Task<Page<ClientEntity>> GetPagedAsync(ClientPagedFilter filter,
         CancellationToken cancellationToken = default)
     {
+        ArgumentNullException.ThrowIfNull(filter);
+
         ClientNameSpecification specName =
             new(filter.Name);
 
-        IEnumerable<ClientEntity> data = ClientDatabase.Data
+        IList<ClientEntity> items = ClientDatabase.Data
             .Where(specName)
-            .Skip(filter.Pagination!.Page - 1)
-            .Take(filter.Pagination!.PageSize);
+            .ToList();
 
-        PageInfo pageInfo = new(
-            filter.Pagination!.Page,
-            filter.Pagination!.PageSize,
-            ClientDatabase.Data.Count);
-
-        Page<ClientEntity> paged = new(data, pageInfo);
+        Page<ClientEntity> paged = items
+            .ToPageInMemory(filter.Pagination!, items.Count);
 
         return Task.FromResult(paged);
     }

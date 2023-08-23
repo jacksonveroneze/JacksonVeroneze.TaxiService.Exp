@@ -27,7 +27,7 @@ public class ClientsController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet(Name = "GetPagedClients")]
+    [HttpGet]
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Get))]
     public async Task<IActionResult> GetPagedAsync(
@@ -40,8 +40,7 @@ public class ClientsController : ControllerBase
         return response.MatchGet(this);
     }
 
-    [HttpGet("{id}", Name = "GetClientById")]
-    //[ActionName(nameof(GetByIdAsync))]
+    [HttpGet("{id}")]
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Find))]
     public async Task<ActionResult<GetClientByIdQueryResponse>> GetByIdAsync(
@@ -54,7 +53,7 @@ public class ClientsController : ControllerBase
         return response.MatchFind(this);
     }
 
-    [HttpPost(Name = "CreateClient")]
+    [HttpPost]
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Create))]
     public async Task<IActionResult> CreateAsync(
@@ -67,7 +66,7 @@ public class ClientsController : ControllerBase
         return response.MatchPost(this);
     }
 
-    [HttpDelete("{id}", Name = "DeleteClient")]
+    [HttpDelete("{id}")]
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Delete))]
     public async Task<IActionResult> DeleteAsync(

@@ -27,7 +27,7 @@ public class BanksController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet(Name = "GetPagedBanks")]
+    [HttpGet]
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Get))]
     public async Task<IActionResult> GetPagedAsync(
@@ -40,8 +40,7 @@ public class BanksController : ControllerBase
         return response.MatchGet(this);
     }
 
-    [HttpGet("{id}", Name = "GetBankById")]
-    //[ActionName(nameof(GetByIdAsync))]
+    [HttpGet("{id}")]
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Find))]
     public async Task<ActionResult<GetBankByIdQueryResponse>> GetByIdAsync(
@@ -54,7 +53,7 @@ public class BanksController : ControllerBase
         return response.MatchFind(this);
     }
 
-    [HttpPost(Name = "CreateBank")]
+    [HttpPost]
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Create))]
     public async Task<IActionResult> CreateAsync(
@@ -67,7 +66,7 @@ public class BanksController : ControllerBase
         return response.MatchPost(this);
     }
 
-    [HttpDelete("{id}", Name = "DeleteBank")]
+    [HttpDelete("{id}")]
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Delete))]
     public async Task<IActionResult> DeleteAsync(
@@ -80,7 +79,7 @@ public class BanksController : ControllerBase
         return response.MatchDelete(this);
     }
 
-    [HttpPut("{id}/activate", Name = "ActivateBank")]
+    [HttpPut("{id}/activate")]
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Update))]
     public async Task<IActionResult> UpdateActivateAsync(
@@ -93,7 +92,7 @@ public class BanksController : ControllerBase
         return response.MatchPut(this);
     }
 
-    [HttpPut("{id}/inactivate", Name = "InactivateBank")]
+    [HttpPut("{id}/inactivate")]
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Update))]
     public async Task<IActionResult> UpdateInactivateAsync(

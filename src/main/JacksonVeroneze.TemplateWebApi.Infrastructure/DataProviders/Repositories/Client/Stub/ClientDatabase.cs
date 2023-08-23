@@ -15,7 +15,7 @@ public static class ClientDatabase
             {
                 Db.AddRange(Enumerable.Range(1, 25)
                     .Select(item => new ClientEntity(
-                        new PersonName($"Bank_{item}"),
+                        new PersonName($"Client_{item}"),
                         new Email($"mail_{item}@mail.com"))));
             }
 

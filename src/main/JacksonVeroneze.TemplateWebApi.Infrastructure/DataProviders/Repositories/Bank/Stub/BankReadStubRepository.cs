@@ -1,4 +1,5 @@
 using JacksonVeroneze.NET.Pagination;
+using JacksonVeroneze.NET.Pagination.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Enums;
@@ -39,18 +40,12 @@ public class BankReadStubRepository : IBankReadRepository
         BankStatusSpecification specStatus =
             new(filter.Status ?? BankStatus.None);
 
-        IEnumerable<BankEntity> data = BankDatabase.Data
+        IList<BankEntity> items = BankDatabase.Data
             .Where(specName)
-            .Where(specStatus)
-            .Skip(filter.Pagination!.Page - 1)
-            .Take(filter.Pagination!.PageSize);
+            .ToList();
 
-        PageInfo pageInfo = new(
-            filter.Pagination!.Page,
-            filter.Pagination!.PageSize,
-            BankDatabase.Data.Count);
-
-        Page<BankEntity> paged = new(data, pageInfo);
+        Page<BankEntity> paged = items
+            .ToPageInMemory(filter.Pagination!, items.Count);
 
         return Task.FromResult(paged);
     }
