@@ -1,6 +1,6 @@
 using JacksonVeroneze.NET.DomainObjects;
 
-namespace JacksonVeroneze.TemplateWebApi.Application.Primitives;
+namespace JacksonVeroneze.TemplateWebApi.Domain.Core.Primitives;
 
 public class Result<TValue> : IResult<TValue> where TValue : class
 {

@@ -1,9 +1,8 @@
 using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
-using JacksonVeroneze.TemplateWebApi.Domain.Models;
 
-namespace JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
+namespace JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Bank;
 
 public interface IBankReadRepository
 {

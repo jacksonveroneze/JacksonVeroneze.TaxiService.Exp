@@ -1,4 +1,4 @@
-namespace JacksonVeroneze.TemplateWebApi.Application.Primitives;
+namespace JacksonVeroneze.TemplateWebApi.Domain.Core.Primitives;
 
 public class ValidationError
 {

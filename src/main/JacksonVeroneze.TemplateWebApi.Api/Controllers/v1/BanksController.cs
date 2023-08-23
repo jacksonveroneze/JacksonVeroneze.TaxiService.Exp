@@ -3,8 +3,8 @@ using JacksonVeroneze.TemplateWebApi.Api.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Commands.Bank;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Bank;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
-using JacksonVeroneze.TemplateWebApi.Application.Primitives;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.Bank;
+using JacksonVeroneze.TemplateWebApi.Domain.Core.Primitives;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

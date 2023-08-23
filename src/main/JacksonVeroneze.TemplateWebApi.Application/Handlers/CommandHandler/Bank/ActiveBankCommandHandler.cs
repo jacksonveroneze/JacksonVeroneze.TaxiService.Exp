@@ -1,12 +1,11 @@
 using JacksonVeroneze.TemplateWebApi.Application.Commands.Bank;
 using JacksonVeroneze.TemplateWebApi.Application.Extensions;
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
+using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Common;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Bank;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
-using JacksonVeroneze.TemplateWebApi.Application.Primitives;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
+using JacksonVeroneze.TemplateWebApi.Domain.Core.Primitives;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
-using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.CommandHandler.Bank;
 
@@ -16,15 +15,18 @@ internal sealed class ActivateBankCommandHandler :
     private readonly ILogger<ActivateBankCommandHandler> _logger;
     private readonly IBankReadRepository _readRepository;
     private readonly IBankWriteRepository _writeRepository;
+    private readonly IDateTime _dateTime;
 
     public ActivateBankCommandHandler(
         ILogger<ActivateBankCommandHandler> logger,
         IBankReadRepository readRepository,
-        IBankWriteRepository writeRepository)
+        IBankWriteRepository writeRepository,
+        IDateTime dateTime)
     {
         _logger = logger;
         _readRepository = readRepository;
         _writeRepository = writeRepository;
+        _dateTime = dateTime;
     }
 
     public async Task<IResult<VoidResponse>> Handle(
@@ -45,16 +47,15 @@ internal sealed class ActivateBankCommandHandler :
                 DomainErrors.Bank.NotFound);
         }
 
-        if (data.Status is not BankStatus.PendingActivation)
+        IResult result = data.Activate(_dateTime.UtcNow);
+
+        if (result.Status != ResultStatus.Success)
         {
             _logger.AlreadyProcessed(nameof(ActivateBankCommandHandler),
                 nameof(Handle), request.Id);
 
-            return Result<VoidResponse>.Invalid(
-                DomainErrors.Bank.AlreadyProcessed);
+            return Result<VoidResponse>.Invalid(result.Error!);
         }
-
-        data.Activate();
 
         await _writeRepository.UpdateAsync(data, cancellationToken);
 

@@ -1,6 +1,5 @@
 using System.Data;
 using Dapper;
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Bank;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Models;

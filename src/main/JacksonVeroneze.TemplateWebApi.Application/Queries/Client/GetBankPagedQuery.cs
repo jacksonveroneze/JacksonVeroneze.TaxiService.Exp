@@ -1,9 +1,8 @@
 using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Client;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
-using JacksonVeroneze.TemplateWebApi.Application.Primitives;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.Base;
-using JacksonVeroneze.TemplateWebApi.Domain.Enums;
+using JacksonVeroneze.TemplateWebApi.Domain.Core.Primitives;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Queries.Client;

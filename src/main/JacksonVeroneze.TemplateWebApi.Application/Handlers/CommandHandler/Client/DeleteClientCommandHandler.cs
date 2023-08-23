@@ -1,10 +1,9 @@
 using JacksonVeroneze.TemplateWebApi.Application.Commands.Client;
 using JacksonVeroneze.TemplateWebApi.Application.Extensions;
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Client;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
-using JacksonVeroneze.TemplateWebApi.Application.Primitives;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
+using JacksonVeroneze.TemplateWebApi.Domain.Core.Primitives;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.CommandHandler.Client;

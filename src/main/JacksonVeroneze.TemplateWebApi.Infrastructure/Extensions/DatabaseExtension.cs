@@ -1,14 +1,10 @@
 using System.Data;
-using Amazon.DynamoDBv2;
-using Amazon.DynamoDBv2.DataModel;
-using Amazon.Extensions.NETCore.Setup;
 using Dapper;
 using JacksonVeroneze.NET.MongoDB.Interfaces;
 using JacksonVeroneze.NET.MongoDB.Repository;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Npgsql;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;

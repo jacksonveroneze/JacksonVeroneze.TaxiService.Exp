@@ -1,5 +1,5 @@
 using JacksonVeroneze.TemplateWebApi.Application.Models.Client;
-using JacksonVeroneze.TemplateWebApi.Application.Primitives;
+using JacksonVeroneze.TemplateWebApi.Domain.Core.Primitives;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Commands.Client;
 
