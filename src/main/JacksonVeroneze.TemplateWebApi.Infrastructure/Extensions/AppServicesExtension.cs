@@ -3,9 +3,11 @@ using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Identity;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Mail;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Messaging;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
+using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Bank;
+using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Client;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Common;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Bank.Dapper;
-using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Client;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Client.Stub;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Identity;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Mail;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Messaging;
@@ -43,7 +45,8 @@ public static class AppServicesExtension
 
         #region Client
 
-        services.AddScoped<IClientRepository, ClientRepository>();
+        services.AddScoped<IClientReadRepository, ClientReadStubRepository>();
+        services.AddScoped<IClientWriteRepository, ClientWriteStubRepository>();
 
         #endregion
 

@@ -8,7 +8,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.Bank;
 
-public class GetBankByIdQueryHandler :
+internal sealed  class GetBankByIdQueryHandler :
     IRequestHandler<GetBankByIdQuery, IResult<GetBankByIdQueryResponse>>
 {
     private readonly ILogger<GetBankByIdQueryHandler> _logger;

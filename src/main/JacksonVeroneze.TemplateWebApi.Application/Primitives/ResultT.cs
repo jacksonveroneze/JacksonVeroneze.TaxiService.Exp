@@ -1,4 +1,4 @@
-using JacksonVeroneze.TemplateWebApi.Domain.Core.Primitives;
+using JacksonVeroneze.NET.DomainObjects;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Primitives;
 

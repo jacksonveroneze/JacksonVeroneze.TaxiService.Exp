@@ -1,4 +1,4 @@
-using JacksonVeroneze.TemplateWebApi.Domain.Core.Primitives;
+using JacksonVeroneze.NET.DomainObjects;
 
 namespace JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 
@@ -25,5 +25,12 @@ public static class DomainErrors
 
     public static class Client
     {
+        public static Error NotFound =>
+            new("Client.NotFound",
+                "The client with the specified identifier was not found.");
+
+        public static Error DuplicateDocument =>
+            new("Bank.Document",
+                "The specified document is already in use.");
     }
 }

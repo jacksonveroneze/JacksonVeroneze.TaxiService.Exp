@@ -1,9 +1,9 @@
 using Dapper;
 
-namespace JacksonVeroneze.TemplateWebApi.Domain.Results;
+namespace JacksonVeroneze.TemplateWebApi.Domain.Models;
 
 [Table("bank")]
-public class BankResult
+public class BankModel
 {
     [Key]
     [Required]

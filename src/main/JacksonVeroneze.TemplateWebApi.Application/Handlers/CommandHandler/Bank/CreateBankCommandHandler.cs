@@ -1,6 +1,7 @@
 using JacksonVeroneze.TemplateWebApi.Application.Commands.Bank;
 using JacksonVeroneze.TemplateWebApi.Application.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
+using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Bank;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Bank;
 using JacksonVeroneze.TemplateWebApi.Application.Primitives;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
@@ -8,7 +9,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.CommandHandler.Bank;
 
-public class CreateBankCommandHandler :
+internal sealed  class CreateBankCommandHandler :
     IRequestHandler<CreateBankCommand, IResult<CreateBankCommandResponse>>
 {
     private readonly ILogger<CreateBankCommandHandler> _logger;
@@ -39,6 +40,9 @@ public class CreateBankCommandHandler :
 
         if (any)
         {
+            _logger.AlreadyExists(nameof(CreateBankCommandHandler),
+                nameof(Handle), request.Name!);
+
             return Result<CreateBankCommandResponse>.Invalid(
                 DomainErrors.Bank.DuplicateName);
         }

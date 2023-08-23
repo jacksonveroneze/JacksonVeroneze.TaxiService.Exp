@@ -1,6 +1,8 @@
+using JacksonVeroneze.NET.DomainObjects.ValueObjects;
+
 namespace JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
 
-public record PersonName
+public class PersonName : ValueObject
 {
     public const int MaxLength = 100;
 
@@ -16,5 +18,10 @@ public record PersonName
         }
 
         Value = value;
+    }
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        throw new NotImplementedException();
     }
 }

@@ -1,8 +1,9 @@
 using System.Text.RegularExpressions;
+using JacksonVeroneze.NET.DomainObjects.ValueObjects;
 
 namespace JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
 
-public record Email
+public class Email : ValueObject
 {
     public const int MaxLength = 256;
 
@@ -24,5 +25,10 @@ public record Email
         }
 
         Value = value;
+    }
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        throw new NotImplementedException();
     }
 }

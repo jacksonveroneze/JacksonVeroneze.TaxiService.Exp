@@ -1,11 +1,11 @@
-using JacksonVeroneze.NET.MongoDB.DomainObjects;
+using JacksonVeroneze.NET.DomainObjects.Exception;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
+using JacksonVeroneze.TemplateWebApi.Domain.Entities.Base;
 using JacksonVeroneze.TemplateWebApi.Domain.Enums;
-using JacksonVeroneze.TemplateWebApi.Domain.Exceptions;
 
 namespace JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
-public class BankEntity : BaseEntity<Guid>
+public class BankEntity : BaseEntity
 {
     public string Name { get; set; }
 
@@ -13,8 +13,6 @@ public class BankEntity : BaseEntity<Guid>
 
     public BankEntity(string name)
     {
-        Id = Guid.NewGuid();
-
         Name = name;
 
         Status = BankStatus.PendingActivation;

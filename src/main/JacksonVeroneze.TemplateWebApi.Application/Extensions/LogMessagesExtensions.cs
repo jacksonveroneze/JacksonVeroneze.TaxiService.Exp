@@ -14,12 +14,19 @@ public static partial class LogMessagesExtensions
     [LoggerMessage(
         EventId = 1000,
         Level = LogLevel.Information,
-        Message = "{className} - {methodName} - NotFound - Id: '{id}'")]
+        Message = "{className} - {methodName} - Exists - Value: '{value}'")]
+    public static partial void AlreadyExists(this ILogger logger,
+        string className, string methodName, string value);
+
+    [LoggerMessage(
+        EventId = 1001,
+        Level = LogLevel.Information,
+        Message = "{className} - {methodName} - AlreadyProcessed - Id: '{id}'")]
     public static partial void AlreadyProcessed(this ILogger logger,
         string className, string methodName, Guid? id);
 
     [LoggerMessage(
-        EventId = 6000,
+        EventId = 1002,
         Level = LogLevel.Information,
         Message = "{className} - {methodName} - Info - " +
                   "Page: '{page}' - PageSize: '{pageSize}' - " +
@@ -29,14 +36,14 @@ public static partial class LogMessagesExtensions
         int page, int pageSize, int totalElements);
 
     [LoggerMessage(
-        EventId = 6001,
+        EventId = 1003,
         Level = LogLevel.Information,
         Message = "{className} - {methodName} - Info - Id: '{id}'")]
     public static partial void LogGetById(this ILogger logger,
         string className, string methodName, Guid? id);
 
     [LoggerMessage(
-        EventId = 6001,
+        EventId = 1003,
         Level = LogLevel.Information,
         Message = "{className} - {methodName} - Info - Created")]
     public static partial void LogCreated(this ILogger logger,
@@ -44,7 +51,7 @@ public static partial class LogMessagesExtensions
 
 
     [LoggerMessage(
-        EventId = 6001,
+        EventId = 1004,
         Level = LogLevel.Information,
         Message = "{className} - {methodName} - Deleted - Id: '{id}'")]
     public static partial void LogDeleted(this ILogger logger,

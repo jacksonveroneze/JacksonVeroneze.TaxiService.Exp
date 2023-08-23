@@ -10,7 +10,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.Bank;
 
-public class GetBankPagedQueryHandler :
+internal sealed  class GetBankPagedQueryHandler :
     IRequestHandler<GetBankPagedQuery, IResult<BaseResponse>>
 {
     private readonly ILogger<GetBankPagedQueryHandler> _logger;

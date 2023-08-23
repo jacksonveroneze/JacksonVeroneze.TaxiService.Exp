@@ -5,7 +5,7 @@ using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
-using JacksonVeroneze.TemplateWebApi.Domain.Results;
+using JacksonVeroneze.TemplateWebApi.Domain.Models;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Bank.Dapper;
 
@@ -23,7 +23,7 @@ public class BankReadRepository : IBankReadRepository
         CancellationToken cancellationToken = default)
     {
         int result = await _repository
-            .RecordCountAsync<BankResult>(new { name = name });
+            .RecordCountAsync<BankModel>(new { name = name });
 
         return result > 0;
     }
@@ -31,8 +31,8 @@ public class BankReadRepository : IBankReadRepository
     public async Task<BankEntity?> GetByIdAsync(Guid id,
         CancellationToken cancellationToken = default)
     {
-        BankResult? result = await _repository
-            .GetAsync<BankResult>(id);
+        BankModel? result = await _repository
+            .GetAsync<BankModel>(id);
 
         if (result is null)
         {
@@ -41,7 +41,7 @@ public class BankReadRepository : IBankReadRepository
 
         return new BankEntity(result.Name!)
         {
-            Id = result.Id!.Value,
+            //Id = result.Id!.Value,
             Status = (BankStatus)result.Status
         };
     }

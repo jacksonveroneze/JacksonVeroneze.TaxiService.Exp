@@ -16,6 +16,7 @@ public static class AutoMapperExtension
             cfg.AddProfile<PaginationMapper>();
             //
             cfg.AddProfile<BankMapper>();
+            cfg.AddProfile<ClientMapper>();
             cfg.AllowNullCollections = true;
         });
 

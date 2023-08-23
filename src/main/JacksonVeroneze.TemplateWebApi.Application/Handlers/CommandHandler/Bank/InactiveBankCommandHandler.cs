@@ -1,6 +1,7 @@
 using JacksonVeroneze.TemplateWebApi.Application.Commands.Bank;
 using JacksonVeroneze.TemplateWebApi.Application.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
+using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Bank;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
 using JacksonVeroneze.TemplateWebApi.Application.Primitives;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
@@ -9,7 +10,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.CommandHandler.Bank;
 
-public class InactivateBankCommandHandler :
+internal sealed  class InactivateBankCommandHandler :
     IRequestHandler<InactivateBankCommand, IResult<VoidResponse>>
 {
     private readonly ILogger<InactivateBankCommandHandler> _logger;

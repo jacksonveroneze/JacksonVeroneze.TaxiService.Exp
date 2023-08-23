@@ -41,7 +41,4 @@ public class KeyEntity : BaseEntity
 
         Status = KeyStatus.Inactive;
     }
-
-    public override bool IsValid()
-        => Type != KeyType.None && Status != KeyStatus.None;
 }

@@ -3,7 +3,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 using JacksonVeroneze.TemplateWebApi.Domain.Specifications.Base;
 
-namespace JacksonVeroneze.TemplateWebApi.Domain.Specifications;
+namespace JacksonVeroneze.TemplateWebApi.Domain.Specifications.Bank;
 
 public class BankStatusSpecification : BaseSpecification<BankEntity>
 {

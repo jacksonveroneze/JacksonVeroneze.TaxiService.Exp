@@ -50,6 +50,7 @@
     <ProjectReference Include="..\JacksonVeroneze.TemplateWebApi.Domain\JacksonVeroneze.TemplateWebApi.Domain.csproj"/>
 
 
+
   </ItemGroup>
 
 

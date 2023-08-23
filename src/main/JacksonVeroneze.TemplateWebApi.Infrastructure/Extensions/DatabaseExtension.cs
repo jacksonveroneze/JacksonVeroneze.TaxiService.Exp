@@ -36,7 +36,7 @@ public static class DatabaseExtension
 
         #region Dapper
 
-        services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+        services.AddScoped(typeof(IBaseRepository<,>), typeof(BaseRepository<,>));
 
         services.AddScoped<IDbConnection, NpgsqlConnection>(_ =>
             new NpgsqlConnection(appConfiguration.Database!.ConnectionString!));
@@ -49,10 +49,10 @@ public static class DatabaseExtension
 
         #region DynamoDb
 
-        AWSOptions? config = configuration.GetAWSOptions();
-
-        services.TryAddAWSService<IAmazonDynamoDB>(config);
-        services.TryAddSingleton<IDynamoDBContext, DynamoDBContext>();
+        // AWSOptions? config = configuration.GetAWSOptions();
+        //
+        // services.TryAddAWSService<IAmazonDynamoDB>(config);
+        // services.TryAddSingleton<IDynamoDBContext, DynamoDBContext>();
 
         #endregion
 

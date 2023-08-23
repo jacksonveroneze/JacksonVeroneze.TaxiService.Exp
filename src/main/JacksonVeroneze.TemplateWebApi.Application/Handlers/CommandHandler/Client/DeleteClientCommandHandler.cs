@@ -1,25 +1,25 @@
-using JacksonVeroneze.TemplateWebApi.Application.Commands.Bank;
+using JacksonVeroneze.TemplateWebApi.Application.Commands.Client;
 using JacksonVeroneze.TemplateWebApi.Application.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories;
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Bank;
+using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Client;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
 using JacksonVeroneze.TemplateWebApi.Application.Primitives;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
-namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.CommandHandler.Bank;
+namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.CommandHandler.Client;
 
-internal sealed  class DeleteBankCommandHandler :
-    IRequestHandler<DeleteBankCommand, IResult<VoidResponse>>
+internal sealed  class DeleteClientCommandHandler :
+    IRequestHandler<DeleteClientCommand, IResult<VoidResponse>>
 {
-    private readonly ILogger<DeleteBankCommandHandler> _logger;
-    private readonly IBankReadRepository _readRepository;
-    private readonly IBankWriteRepository _writeRepository;
+    private readonly ILogger<DeleteClientCommandHandler> _logger;
+    private readonly IClientReadRepository _readRepository;
+    private readonly IClientWriteRepository _writeRepository;
 
-    public DeleteBankCommandHandler(
-        ILogger<DeleteBankCommandHandler> logger,
-        IBankReadRepository readRepository,
-        IBankWriteRepository writeRepository)
+    public DeleteClientCommandHandler(
+        ILogger<DeleteClientCommandHandler> logger,
+        IClientReadRepository readRepository,
+        IClientWriteRepository writeRepository)
     {
         _logger = logger;
         _readRepository = readRepository;
@@ -27,26 +27,26 @@ internal sealed  class DeleteBankCommandHandler :
     }
 
     public async Task<IResult<VoidResponse>> Handle(
-        DeleteBankCommand request,
+        DeleteClientCommand request,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        BankEntity? data = await _readRepository
+        ClientEntity? data = await _readRepository
             .GetByIdAsync(request.Id, cancellationToken);
 
         if (data is null)
         {
-            _logger.LogNotFound(nameof(DeleteBankCommandHandler),
+            _logger.LogNotFound(nameof(DeleteClientCommandHandler),
                 nameof(Handle), request.Id);
 
             return Result<VoidResponse>.NotFound(
-                DomainErrors.Bank.NotFound);
+                DomainErrors.Client.NotFound);
         }
 
         await _writeRepository.DeleteAsync(data, cancellationToken);
 
-        _logger.LogDeleted(nameof(DeleteBankCommandHandler),
+        _logger.LogDeleted(nameof(DeleteClientCommandHandler),
             nameof(Handle), request.Id);
 
         return Result<VoidResponse>.Success();

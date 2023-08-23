@@ -2,7 +2,7 @@ using System.Linq.Expressions;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Specifications.Base;
 
-namespace JacksonVeroneze.TemplateWebApi.Domain.Specifications;
+namespace JacksonVeroneze.TemplateWebApi.Domain.Specifications.Bank;
 
 public class BankNameSpecification : BaseSpecification<BankEntity>
 {
