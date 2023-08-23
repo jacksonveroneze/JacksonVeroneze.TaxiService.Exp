@@ -12,7 +12,7 @@ namespace JacksonVeroneze.TemplateWebApi.Api.Controllers.v1;
 
 [ApiController]
 [ApiVersion("1.0")]
-[Route("/api/v{version:apiVersion}/Clients")]
+[Route("/api/v{version:apiVersion}/clients")]
 [Produces(MediaTypeNames.Application.Json)]
 public class ClientsController : ControllerBase
 {
