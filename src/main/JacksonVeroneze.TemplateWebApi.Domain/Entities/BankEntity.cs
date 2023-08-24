@@ -1,3 +1,4 @@
+using JacksonVeroneze.NET.DomainObjects.Domain;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Primitives;
 using JacksonVeroneze.TemplateWebApi.Domain.DomainEvents;
@@ -6,7 +7,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 
 namespace JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
-public class BankEntity : BaseEntity
+public class BankEntity : BaseEntity, IAggregateRoot
 {
     public string Name { get; private set; }
 
@@ -51,7 +52,7 @@ public class BankEntity : BaseEntity
 
     public IResult Inactivate(DateTime utcNow)
     {
-        if (Status != BankStatus.PendingActivation)
+        if (Status != BankStatus.Active)
         {
             return Result.Invalid(
                 DomainErrors.Bank.AlreadyProcessed);
