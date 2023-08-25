@@ -68,22 +68,22 @@ export default function () {
     
     var body = JSON.stringify({name: crypto.randomUUID() + '_' + rnd});
 
-    var responsePost = http.post(`${url}/api/v1/banks`, body, {
+    var responsePost = http.post(`${url}/api/v1/users`, body, {
         headers: {'Content-Type': 'application/json'},
     });
 
     var id = JSON.parse(responsePost.body).data.id;
 
-    http.get(`${url}/api/v1/banks/${id}`);
-    http.put(`${url}/api/v1/banks/${id}/activate`);
-    http.put(`${url}/api/v1/banks/${id}/inactivate`);
+    http.get(`${url}/api/v1/users/${id}`);
+    http.put(`${url}/api/v1/users/${id}/activate`);
+    http.put(`${url}/api/v1/users/${id}/inactivate`);
     //
     // //console.log('___' + rnd + '____')
     //
     if(rnd % 2 === 0)
     {
         //console.log('___2___')
-        http.del(`${url}/api/v1/banks/${id}`);
+        http.del(`${url}/api/v1/users/${id}`);
     }
     //
     // if(rnd % 20 === 0)

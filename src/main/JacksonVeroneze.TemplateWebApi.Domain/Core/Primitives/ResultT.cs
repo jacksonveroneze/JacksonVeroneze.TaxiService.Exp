@@ -12,6 +12,10 @@ public class Result<TValue> : IResult<TValue> where TValue : class
 
     public IList<ValidationError>? ValidationErrors { get; }
 
+    public bool IsSuccess => Status is ResultStatus.Success;
+
+    public bool IsNotSuccess => !IsSuccess;
+
     #region ctor
 
     private Result()

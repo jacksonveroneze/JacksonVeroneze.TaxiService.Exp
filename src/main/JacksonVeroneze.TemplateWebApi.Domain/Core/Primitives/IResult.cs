@@ -9,4 +9,7 @@ public interface IResult
     public Error? Error { get; set; }
 
     public IList<ValidationError>? ValidationErrors { get; }
+
+    public bool IsSuccess { get; }
+    public bool IsNotSuccess { get; }
 }

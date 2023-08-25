@@ -10,6 +10,10 @@ public class Result : IResult
 
     public IList<ValidationError>? ValidationErrors { get; }
 
+    public bool IsSuccess => Status is ResultStatus.Success;
+
+    public bool IsNotSuccess => !IsSuccess;
+
     #region ctor
 
     private Result()

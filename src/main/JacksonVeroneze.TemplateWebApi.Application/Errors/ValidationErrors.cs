@@ -4,9 +4,9 @@ namespace JacksonVeroneze.TemplateWebApi.Application.Errors;
 
 public class ValidationErrors
 {
-    internal static class Bank
+    internal static class User
     {
         internal static Error NameIsRequired =>
-            new("Bank.NameIsRequired", "The name is required.");
+            new("User.NameIsRequired", "The name is required.");
     }
 }

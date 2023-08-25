@@ -32,14 +32,14 @@ public static class DatabaseExtension
 
         #region Dapper
 
-        services.AddScoped(typeof(IBaseRepository<,>), typeof(BaseRepository<,>));
-
-        services.AddScoped<IDbConnection, NpgsqlConnection>(_ =>
-            new NpgsqlConnection(appConfiguration.Database!.ConnectionString!));
-
-        SimpleCRUD.SetDialect(SimpleCRUD.Dialect.PostgreSQL);
-
-        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        // services.AddScoped(typeof(IBaseRepository<,>), typeof(BaseRepository<,>));
+        //
+        // services.AddScoped<IDbConnection, NpgsqlConnection>(_ =>
+        //     new NpgsqlConnection(appConfiguration.Database!.ConnectionString!));
+        //
+        // SimpleCRUD.SetDialect(SimpleCRUD.Dialect.PostgreSQL);
+        //
+        // AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
         #endregion
 
