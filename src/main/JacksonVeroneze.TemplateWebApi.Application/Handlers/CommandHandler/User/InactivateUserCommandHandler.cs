@@ -40,7 +40,7 @@ internal sealed  class InactivateUserCommandHandler :
 
         if (data is null)
         {
-            _logger.LogNotFound(nameof(InactivateUserCommandHandler),
+            _logger.LogNotFound(nameof(ActivateUserCommandHandler),
                 nameof(Handle), request.Id);
 
             return Result<VoidResponse>.NotFound(
@@ -51,7 +51,7 @@ internal sealed  class InactivateUserCommandHandler :
 
         if (result.IsNotSuccess)
         {
-            _logger.AlreadyProcessed(nameof(ActivateUserCommandHandler),
+            _logger.AlreadyProcessed(nameof(InactivateUserCommandHandler),
                 nameof(Handle), request.Id);
 
             return Result<VoidResponse>.Invalid(result.Error!);

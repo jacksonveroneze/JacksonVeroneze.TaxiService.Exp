@@ -1,11 +1,10 @@
-using System.Data;
-using Dapper;
+using JacksonVeroneze.NET.MongoDB.Extensions;
 using JacksonVeroneze.NET.MongoDB.Interfaces;
 using JacksonVeroneze.NET.MongoDB.Repository;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.Mappings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Npgsql;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
 
@@ -19,14 +18,16 @@ public static class DatabaseExtension
     {
         #region MongoDB
 
-        // CommonMapping.MapEntities();
-        // BankMapping.MapEntities();
-        //
-        // services.AddMongDb(options =>
-        // {
-        //     options.ConnectionString = appConfiguration.Database!.ConnectionString!;
-        //     options.DatabaseName = appConfiguration.Database!.DatabaseName!;
-        // });
+        CommonMapping.MapEntities();
+        UserMapping.MapEntities();
+
+        services.AddMongDb(options =>
+        {
+            options.ConnectionString = appConfiguration.Database!.ConnectionString!;
+            options.DatabaseName = appConfiguration.Database!.DatabaseName!;
+        });
+
+        services.AddScoped(typeof(IBaseRepository<,>), typeof(BaseRepository<,>));
 
         #endregion
 

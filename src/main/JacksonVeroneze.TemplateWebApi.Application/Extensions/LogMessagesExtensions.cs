@@ -14,9 +14,9 @@ public static partial class LogMessagesExtensions
     [LoggerMessage(
         EventId = 1000,
         Level = LogLevel.Information,
-        Message = "{className} - {methodName} - Exists - Value: '{value}'")]
+        Message = "{className} - {methodName} - Exists - Message: '{message}' - Value: '{value}'")]
     public static partial void AlreadyExists(this ILogger logger,
-        string className, string methodName, string value);
+        string className, string methodName, string message, string value);
 
     [LoggerMessage(
         EventId = 1001,
@@ -45,9 +45,9 @@ public static partial class LogMessagesExtensions
     [LoggerMessage(
         EventId = 1003,
         Level = LogLevel.Information,
-        Message = "{className} - {methodName} - Info - Created")]
+        Message = "{className} - {methodName} - Created - Id: '{id}'")]
     public static partial void LogCreated(this ILogger logger,
-        string className, string methodName);
+        string className, string methodName, Guid id);
 
 
     [LoggerMessage(

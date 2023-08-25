@@ -5,9 +5,9 @@ namespace JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 public class EmailEntity : BaseEntity
 {
-    public Email Email { get; private set; }
+    public EmailValueObject Email { get; private set; }
 
-    public EmailEntity(Email email)
+    public EmailEntity(EmailValueObject email)
     {
         ArgumentNullException.ThrowIfNull(email);
 

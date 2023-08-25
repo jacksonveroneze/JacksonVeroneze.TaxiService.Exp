@@ -2,7 +2,6 @@ using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.TemplateWebApi.Application.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.Models.User;
-using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.Client;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Primitives;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
@@ -11,7 +10,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.User;
 
 internal sealed  class GetUserPagedQueryHandler :
-    IRequestHandler<GetUserPagedQuery, IResult<BaseResponse>>
+    IRequestHandler<GetUserPagedQuery, IResult<GetUserPagedQueryResponse>>
 {
     private readonly ILogger<GetUserPagedQueryHandler> _logger;
     private readonly IMapper _mapper;
@@ -27,7 +26,7 @@ internal sealed  class GetUserPagedQueryHandler :
         _repository = repository;
     }
 
-    public async Task<IResult<BaseResponse>> Handle(
+    public async Task<IResult<GetUserPagedQueryResponse>> Handle(
         GetUserPagedQuery request,
         CancellationToken cancellationToken)
     {
@@ -48,6 +47,6 @@ internal sealed  class GetUserPagedQueryHandler :
             data.Pagination.PageSize,
             data.Pagination.TotalElements);
 
-        return Result<BaseResponse>.Success(response);
+        return Result<GetUserPagedQueryResponse>.Success(response);
     }
 }

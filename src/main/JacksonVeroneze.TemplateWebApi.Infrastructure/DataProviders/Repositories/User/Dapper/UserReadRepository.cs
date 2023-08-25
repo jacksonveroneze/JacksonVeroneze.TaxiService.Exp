@@ -40,7 +40,7 @@ public class UserReadRepository : IUserReadRepository
             return null;
         }
 
-        return new UserEntity(new PersonName(result.Name!), DateTime.Now);
+        return new UserEntity(new NameValueObject(result.Name!), DateTime.Now, Gender.Male);
     }
 
     public Task<Page<UserEntity>> GetPagedAsync(

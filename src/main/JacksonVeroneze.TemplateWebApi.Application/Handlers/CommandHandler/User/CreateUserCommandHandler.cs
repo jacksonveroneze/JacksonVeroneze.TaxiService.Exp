@@ -8,7 +8,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.CommandHandler.User;
 
-internal sealed  class CreateUserCommandHandler :
+internal sealed class CreateUserCommandHandler :
     IRequestHandler<CreateUserCommand, IResult<CreateUserCommandResponse>>
 {
     private readonly ILogger<CreateUserCommandHandler> _logger;
@@ -40,7 +40,7 @@ internal sealed  class CreateUserCommandHandler :
         if (any)
         {
             _logger.AlreadyExists(nameof(CreateUserCommandHandler),
-                nameof(Handle), request.Name!);
+                nameof(Handle), DomainErrors.User.DuplicateName, request.Name!);
 
             return Result<CreateUserCommandResponse>.Invalid(
                 DomainErrors.User.DuplicateName);
@@ -54,7 +54,7 @@ internal sealed  class CreateUserCommandHandler :
             _mapper.Map<CreateUserCommandResponse>(data);
 
         _logger.LogCreated(nameof(CreateUserCommandHandler),
-            nameof(Handle));
+            nameof(Handle), data.Id);
 
         return Result<CreateUserCommandResponse>.Success(response);
     }

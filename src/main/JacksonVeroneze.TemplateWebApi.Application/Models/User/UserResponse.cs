@@ -1,3 +1,5 @@
+using JacksonVeroneze.TemplateWebApi.Domain.Enums;
+
 namespace JacksonVeroneze.TemplateWebApi.Application.Models.User;
 
 public sealed record UserResponse
@@ -10,4 +12,7 @@ public sealed record UserResponse
 
     [JsonPropertyName("birthday")]
     public DateTime? Birthday { get; init; }
+
+    [JsonPropertyName("gender")]
+    public Gender? Gender { get; init; }
 }

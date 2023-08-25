@@ -1,4 +1,5 @@
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
+using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 using JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.Stub;
@@ -21,12 +22,12 @@ public static class UserDatabase
                 {
                     Random rnd = new();
 
-                    UserEntity user = new(new PersonName($"User_{item}"), DateTime.Now);
+                    UserEntity user = new(new NameValueObject($"User_{item}"), DateTime.Now, Gender.Male);
 
                     _ = Enumerable.Range(1, rnd.Next(2, 5))
                         .Select(i =>
                         {
-                            EmailEntity email = new(new Email($"User_{i}@mail.com"));
+                            EmailEntity email = new(new EmailValueObject($"User_{i}@mail.com"));
 
                             user.AddEmail(email);
 
@@ -36,7 +37,7 @@ public static class UserDatabase
                     _ = Enumerable.Range(1, rnd.Next(2, 5))
                         .Select(i =>
                         {
-                            PhoneEntity phone = new($"(49) 99999-999{item}");
+                            PhoneEntity phone = new(new PhoneValueObject($"(49) 99999-999{item}"));
 
                             user.AddPhone(phone);
 

@@ -16,9 +16,11 @@ public class UserEntity : BaseEntity, IAggregateRoot
     private readonly IReadOnlyCollection<PhoneEntity> _emptyPhones =
         Enumerable.Empty<PhoneEntity>().ToList().AsReadOnly();
 
-    public PersonName Name { get; private set; }
+    public NameValueObject Name { get; private set; }
 
     public DateTime Birthday { get; private set; }
+
+    public Gender Gender { get; private set; }
 
     public UserStatus Status { get; private set; }
 
@@ -36,13 +38,14 @@ public class UserEntity : BaseEntity, IAggregateRoot
     public IReadOnlyCollection<PhoneEntity> Phones =>
         _phones?.AsReadOnly() ?? _emptyPhones;
 
-    public UserEntity(PersonName name, DateTime birthday)
+    public UserEntity(NameValueObject name, DateTime birthday, Gender gender)
     {
         ArgumentNullException.ThrowIfNull(name);
         ArgumentNullException.ThrowIfNull(birthday);
 
         Name = name;
         Birthday = birthday;
+        Gender = gender;
 
         Status = UserStatus.PendingActivation;
     }
@@ -121,6 +124,12 @@ public class UserEntity : BaseEntity, IAggregateRoot
         _emails.Remove(emailEntity);
     }
 
+    public EmailEntity? GetEmailById(Guid id)
+    {
+        return Emails.FirstOrDefault(
+            item => item.Id == id);
+    }
+
     #endregion
 
     #region Phone
@@ -157,6 +166,12 @@ public class UserEntity : BaseEntity, IAggregateRoot
         }
 
         _phones.Remove(phoneEntity);
+    }
+
+    public PhoneEntity? GetPhoneById(Guid id)
+    {
+        return Phones.FirstOrDefault(
+            item => item.Id == id);
     }
 
     #endregion

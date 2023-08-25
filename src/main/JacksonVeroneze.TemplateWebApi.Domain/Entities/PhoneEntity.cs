@@ -1,15 +1,16 @@
 using JacksonVeroneze.TemplateWebApi.Domain.Entities.Base;
+using JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
 
 namespace JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 public class PhoneEntity : BaseEntity
 {
-    public string Number { get; private set; }
+    public PhoneValueObject Phone { get; private set; }
 
-    public PhoneEntity(string number)
+    public PhoneEntity(PhoneValueObject phone)
     {
-        ArgumentException.ThrowIfNullOrEmpty(number);
+        ArgumentNullException.ThrowIfNull(phone);
 
-        Number = number;
+        Phone = phone;
     }
 }

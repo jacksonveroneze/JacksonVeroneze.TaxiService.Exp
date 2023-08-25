@@ -2,20 +2,13 @@ using JacksonVeroneze.NET.DomainObjects.ValueObjects;
 
 namespace JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
 
-public class PersonName : ValueObject
+public class EmailValueObject : ValueObject
 {
-    public const int MaxLength = 100;
-
     public string? Value { get; }
 
-    public PersonName(string value)
+    public EmailValueObject(string value)
     {
         ArgumentException.ThrowIfNullOrEmpty(value);
-
-        if (value.Length > MaxLength)
-        {
-            throw new ArgumentException();
-        }
 
         Value = value;
     }

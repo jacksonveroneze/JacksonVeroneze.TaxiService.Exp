@@ -37,7 +37,7 @@ public class UserMapper : Profile
         // Command -> Entity
         CreateMap<CreateUserCommand, UserEntity>()
             .ConstructUsing(src => new UserEntity(
-                new PersonName(src.Name!), src.Birthday!.Value))
+                new NameValueObject(src.Name!), src.Birthday!.Value, src.Gender!.Value))
             .ForMember(dest => dest.Id, opts => opts.Ignore())
             .ForMember(dest => dest.Status, opts => opts.Ignore())
             .ForMember(dest => dest.Emails, opts => opts.Ignore())

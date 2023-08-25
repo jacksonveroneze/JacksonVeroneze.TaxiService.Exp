@@ -36,7 +36,7 @@ internal sealed  class DeleteUserCommandHandler :
 
         if (data is null)
         {
-            _logger.LogNotFound(nameof(DeleteUserCommandHandler),
+            _logger.LogNotFound(nameof(ActivateUserCommandHandler),
                 nameof(Handle), request.Id);
 
             return Result<VoidResponse>.NotFound(
