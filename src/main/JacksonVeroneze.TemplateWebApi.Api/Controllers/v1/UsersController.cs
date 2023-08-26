@@ -1,10 +1,10 @@
 using System.Net.Mime;
+using JacksonVeroneze.NET.DomainObjects.Result;
 using JacksonVeroneze.TemplateWebApi.Api.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Commands.User;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base;
 using JacksonVeroneze.TemplateWebApi.Application.Models.User;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.Client;
-using JacksonVeroneze.TemplateWebApi.Domain.Core.Primitives;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

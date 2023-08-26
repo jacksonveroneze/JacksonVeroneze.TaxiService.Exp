@@ -1,5 +1,5 @@
+using JacksonVeroneze.NET.DomainObjects.Result;
 using JacksonVeroneze.TemplateWebApi.Application.Models.User;
-using JacksonVeroneze.TemplateWebApi.Domain.Core.Primitives;
 using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Commands.User;

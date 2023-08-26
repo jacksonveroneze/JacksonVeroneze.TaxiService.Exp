@@ -1,5 +1,5 @@
 using System.Net;
-using JacksonVeroneze.TemplateWebApi.Domain.Core.Primitives;
+using JacksonVeroneze.NET.DomainObjects.Result;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JacksonVeroneze.TemplateWebApi.Api.Extensions;

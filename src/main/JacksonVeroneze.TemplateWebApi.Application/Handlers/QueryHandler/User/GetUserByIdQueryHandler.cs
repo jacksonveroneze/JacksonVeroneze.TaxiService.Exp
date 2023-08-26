@@ -1,9 +1,9 @@
+using JacksonVeroneze.NET.DomainObjects.Result;
 using JacksonVeroneze.TemplateWebApi.Application.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.Models.User;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.Client;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
-using JacksonVeroneze.TemplateWebApi.Domain.Core.Primitives;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.User;

@@ -22,7 +22,7 @@ public static class UserDatabase
                 {
                     Random rnd = new();
 
-                    UserEntity user = new(new NameValueObject($"User_{item}"), DateTime.Now, Gender.Male);
+                    UserEntity user = new(new NameValueObject($"User_{item}"), DateTime.UtcNow, Gender.Male);
 
                     _ = Enumerable.Range(1, rnd.Next(2, 5))
                         .Select(i =>
@@ -37,7 +37,7 @@ public static class UserDatabase
                     _ = Enumerable.Range(1, rnd.Next(2, 5))
                         .Select(i =>
                         {
-                            PhoneEntity phone = new(new PhoneValueObject($"(49) 99999-999{item}"));
+                            PhoneEntity phone = new(new PhoneValueObject($"(49) 99999-999{i}"));
 
                             user.AddPhone(phone);
 

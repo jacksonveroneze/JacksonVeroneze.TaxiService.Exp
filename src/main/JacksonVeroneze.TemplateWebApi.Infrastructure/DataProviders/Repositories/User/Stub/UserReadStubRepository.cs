@@ -15,10 +15,10 @@ public class UserReadStubRepository : IUserReadRepository
     {
         UserNameSpecification specName = new(name);
 
-        bool any = UserDatabase.Data
+        bool exists = UserDatabase.Data
             .Any(specName);
 
-        return Task.FromResult(any);
+        return Task.FromResult(exists);
     }
 
     public Task<UserEntity?> GetByIdAsync(Guid id,
@@ -40,7 +40,7 @@ public class UserReadStubRepository : IUserReadRepository
             new(filter.Status);
 
         Func<UserEntity, bool> expression = specName.ToExpression()
-            .Or(specStatus.ToExpression())
+            .And(specStatus.ToExpression())
             .Compile();
 
         IList<UserEntity> items = UserDatabase.Data

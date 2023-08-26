@@ -18,16 +18,16 @@ public static class DatabaseExtension
     {
         #region MongoDB
 
-        CommonMapping.MapEntities();
-        UserMapping.MapEntities();
-
-        services.AddMongDb(options =>
-        {
-            options.ConnectionString = appConfiguration.Database!.ConnectionString!;
-            options.DatabaseName = appConfiguration.Database!.DatabaseName!;
-        });
-
-        services.AddScoped(typeof(IBaseRepository<,>), typeof(BaseRepository<,>));
+        // CommonMapping.MapEntities();
+        // UserMapping.MapEntities();
+        //
+        // services.AddMongDb(options =>
+        // {
+        //     options.ConnectionString = appConfiguration.Database!.ConnectionString!;
+        //     options.DatabaseName = appConfiguration.Database!.DatabaseName!;
+        // });
+        //
+        // services.AddScoped(typeof(IBaseRepository<,>), typeof(BaseRepository<,>));
 
         #endregion
 

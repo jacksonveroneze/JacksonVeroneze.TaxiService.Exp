@@ -1,6 +1,6 @@
 using JacksonVeroneze.NET.DomainObjects.Domain;
+using JacksonVeroneze.NET.DomainObjects.Result;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
-using JacksonVeroneze.TemplateWebApi.Domain.Core.Primitives;
 using JacksonVeroneze.TemplateWebApi.Domain.DomainEvents;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities.Base;
 using JacksonVeroneze.TemplateWebApi.Domain.Enums;
