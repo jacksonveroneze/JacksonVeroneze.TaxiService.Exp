@@ -19,7 +19,7 @@ public class UserReadRepository : IUserReadRepository
         _repository = repository;
     }
 
-    public Task<bool> AnyByNameAsync(string name,
+    public Task<bool> ExistsByNameAsync(string name,
         CancellationToken cancellationToken = default)
     {
         UserNameSpecification specName = new(name, matchExactly: true);

@@ -20,7 +20,7 @@ public class UserReadRepository : IUserReadRepository
         _repository = connection;
     }
 
-    public async Task<bool> AnyByNameAsync(string name,
+    public async Task<bool> ExistsByNameAsync(string name,
         CancellationToken cancellationToken = default)
     {
         int result = await _repository

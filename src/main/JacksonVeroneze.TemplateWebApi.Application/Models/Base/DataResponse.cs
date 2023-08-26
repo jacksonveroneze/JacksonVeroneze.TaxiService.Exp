@@ -1,4 +1,4 @@
-namespace JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
+namespace JacksonVeroneze.TemplateWebApi.Application.Models.Base;
 
 public abstract record DataResponse<TType> : BaseResponse
 {

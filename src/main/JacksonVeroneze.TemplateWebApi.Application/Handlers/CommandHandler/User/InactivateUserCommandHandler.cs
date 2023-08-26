@@ -2,7 +2,7 @@ using JacksonVeroneze.TemplateWebApi.Application.Commands.User;
 using JacksonVeroneze.TemplateWebApi.Application.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Common;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
-using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
+using JacksonVeroneze.TemplateWebApi.Application.Models.Base;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Primitives;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
@@ -35,31 +35,31 @@ internal sealed  class InactivateUserCommandHandler :
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        UserEntity? data = await _readRepository
+        UserEntity? entity = await _readRepository
             .GetByIdAsync(request.Id, cancellationToken);
 
-        if (data is null)
+        if (entity is null)
         {
-            _logger.LogNotFound(nameof(ActivateUserCommandHandler),
-                nameof(Handle), request.Id);
+            _logger.LogNotFound(nameof(InactivateUserCommandHandler),
+                nameof(Handle), DomainErrors.User.NotFound, request.Id);
 
             return Result<VoidResponse>.NotFound(
                 DomainErrors.User.NotFound);
         }
 
-        IResult result = data.Inactivate(_dateTime.UtcNow);
+        IResult result = entity.Inactivate(_dateTime.UtcNow);
 
-        if (result.IsNotSuccess)
+        if (result.IsFailure)
         {
             _logger.AlreadyProcessed(nameof(InactivateUserCommandHandler),
-                nameof(Handle), request.Id);
+                nameof(Handle), result.Error!, request.Id);
 
             return Result<VoidResponse>.Invalid(result.Error!);
         }
 
-        await _writeRepository.UpdateAsync(data, cancellationToken);
+        await _writeRepository.UpdateAsync(entity, cancellationToken);
 
-        _logger.LogInactivated(nameof(InactivateUserCommandHandler),
+        _logger.LogProcessed(nameof(InactivateUserCommandHandler),
             nameof(Handle), request.Id);
 
         return Result<VoidResponse>.Success();

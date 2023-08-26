@@ -12,7 +12,7 @@ public class Result : IResult
 
     public bool IsSuccess => Status is ResultStatus.Success;
 
-    public bool IsNotSuccess => !IsSuccess;
+    public bool IsFailure => !IsSuccess;
 
     #region ctor
 
@@ -40,7 +40,7 @@ public class Result : IResult
 
     #endregion
 
-    #region Success
+    #region success
 
     public static IResult Success()
     {
@@ -49,11 +49,25 @@ public class Result : IResult
 
     #endregion
 
-    #region Invalid
+    #region invalid
 
     public static IResult Invalid(Error error)
     {
         return new Result(ResultStatus.Invalid, error);
+    }
+
+    #endregion
+
+    #region helpers
+
+    public static IResult FirstFailureOrSuccess(params Result[] results)
+    {
+        ArgumentNullException.ThrowIfNull(nameof(results));
+
+        IResult? result = results.FirstOrDefault(
+            item => item.IsFailure);
+
+        return result ?? Success();
     }
 
     #endregion

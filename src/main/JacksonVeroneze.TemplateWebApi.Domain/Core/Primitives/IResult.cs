@@ -11,5 +11,6 @@ public interface IResult
     public IList<ValidationError>? ValidationErrors { get; }
 
     public bool IsSuccess { get; }
-    public bool IsNotSuccess { get; }
+
+    public bool IsFailure { get; }
 }

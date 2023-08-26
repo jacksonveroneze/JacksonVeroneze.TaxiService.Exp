@@ -10,7 +10,7 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositori
 
 public class UserReadStubRepository : IUserReadRepository
 {
-    public Task<bool> AnyByNameAsync(string name,
+    public Task<bool> ExistsByNameAsync(string name,
         CancellationToken cancellationToken = default)
     {
         UserNameSpecification specName = new(name);

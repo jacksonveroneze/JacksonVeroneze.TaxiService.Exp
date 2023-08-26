@@ -1,4 +1,4 @@
-using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
+using JacksonVeroneze.TemplateWebApi.Application.Models.Base;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Models.User;
 

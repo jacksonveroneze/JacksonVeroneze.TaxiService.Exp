@@ -1,4 +1,5 @@
 using JacksonVeroneze.TemplateWebApi.Application.Commands.User;
+using JacksonVeroneze.TemplateWebApi.Application.Validators.Base;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Validators.User;
 
@@ -10,8 +11,6 @@ public class DeleteUserCommandValidator : AbstractValidator<DeleteUserCommand>
             .NotNull();
 
         RuleFor(request => request.Id)
-            .Cascade(CascadeMode.Stop)
-            .NotNull()
-            .NotEmpty();
+            .SetValidator(new IdGuidValidator());
     }
 }

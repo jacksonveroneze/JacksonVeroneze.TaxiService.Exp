@@ -6,7 +6,7 @@ namespace JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Use
 
 public interface IUserReadRepository
 {
-    Task<bool> AnyByNameAsync(
+    Task<bool> ExistsByNameAsync(
         string name,
         CancellationToken cancellationToken = default);
 

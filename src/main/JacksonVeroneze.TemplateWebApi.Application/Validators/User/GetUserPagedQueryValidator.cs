@@ -8,7 +8,6 @@ public class GetUserPagedQueryValidator : AbstractValidator<GetUserPagedQuery>
     public GetUserPagedQueryValidator()
     {
         RuleFor(request => request)
-            .NotNull()
             .SetValidator(new PagedRequestValidator());
     }
 }

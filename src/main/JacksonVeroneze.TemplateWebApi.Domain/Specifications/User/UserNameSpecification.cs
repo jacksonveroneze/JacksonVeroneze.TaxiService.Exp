@@ -21,7 +21,7 @@ public class UserNameSpecification : BaseSpecification<UserEntity>
     {
         if (string.IsNullOrEmpty(_name))
         {
-            return spec => true;
+            return _ => true;
         }
 
         return spec => _matchExactly
@@ -31,7 +31,13 @@ public class UserNameSpecification : BaseSpecification<UserEntity>
 
     protected override Func<UserEntity, bool> ToFunc()
     {
-        return spec => string.IsNullOrEmpty(_name) ||
-                       spec.Name.Value!.Contains(_name, StringComparison.OrdinalIgnoreCase);
+        if (string.IsNullOrEmpty(_name))
+        {
+            return _ => true;
+        }
+
+        return spec => _matchExactly
+            ? spec.Name.Value!.Equals(_name, StringComparison.OrdinalIgnoreCase)
+            : spec.Name.Value!.Contains(_name, StringComparison.OrdinalIgnoreCase);
     }
 }

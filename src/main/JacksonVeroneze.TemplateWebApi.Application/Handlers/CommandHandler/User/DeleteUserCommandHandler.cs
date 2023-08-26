@@ -1,7 +1,7 @@
 using JacksonVeroneze.TemplateWebApi.Application.Commands.User;
 using JacksonVeroneze.TemplateWebApi.Application.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
-using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
+using JacksonVeroneze.TemplateWebApi.Application.Models.Base;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Primitives;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
@@ -31,19 +31,19 @@ internal sealed  class DeleteUserCommandHandler :
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        UserEntity? data = await _readRepository
+        UserEntity? entity = await _readRepository
             .GetByIdAsync(request.Id, cancellationToken);
 
-        if (data is null)
+        if (entity is null)
         {
-            _logger.LogNotFound(nameof(ActivateUserCommandHandler),
-                nameof(Handle), request.Id);
+            _logger.LogNotFound(nameof(DeleteUserCommandHandler),
+                nameof(Handle), DomainErrors.User.NotFound, request.Id);
 
             return Result<VoidResponse>.NotFound(
                 DomainErrors.User.NotFound);
         }
 
-        await _writeRepository.DeleteAsync(data, cancellationToken);
+        await _writeRepository.DeleteAsync(entity, cancellationToken);
 
         _logger.LogDeleted(nameof(DeleteUserCommandHandler),
             nameof(Handle), request.Id);

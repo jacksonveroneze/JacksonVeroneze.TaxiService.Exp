@@ -2,9 +2,9 @@ using JacksonVeroneze.NET.DomainObjects.Messaging;
 
 namespace JacksonVeroneze.TemplateWebApi.Domain.DomainEvents;
 
-public class UserInactivatedEvent : DomainEvent
+public class UserCreatedDomainEvent : DomainEvent
 {
-    public UserInactivatedEvent(Guid aggregateId) : base(aggregateId)
+    public UserCreatedDomainEvent(Guid aggregateId) : base(aggregateId)
     {
     }
 }

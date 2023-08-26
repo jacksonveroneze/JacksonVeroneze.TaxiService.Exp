@@ -42,46 +42,49 @@ public class UserEntity : BaseEntity, IAggregateRoot
     {
         ArgumentNullException.ThrowIfNull(name);
         ArgumentNullException.ThrowIfNull(birthday);
+        ArgumentNullException.ThrowIfNull(gender);
 
         Name = name;
         Birthday = birthday;
         Gender = gender;
 
         Status = UserStatus.PendingActivation;
+
+        AddEvent(new UserCreatedDomainEvent(Id));
     }
 
     #region Active/Inative
 
     public IResult Activate(DateTime utcNow)
     {
-        if (Status != UserStatus.PendingActivation)
+        if (Status == UserStatus.Active)
         {
             return Result.Invalid(
-                DomainErrors.User.AlreadyProcessed);
+                DomainErrors.User.AlreadyActivated);
         }
 
         Status = UserStatus.Active;
 
         ActivedOnUtc = utcNow;
 
-        AddEvent(new UserActivatedEvent(Id));
+        AddEvent(new UserActivatedDomainEvent(Id));
 
         return Result.Success();
     }
 
     public IResult Inactivate(DateTime utcNow)
     {
-        if (Status != UserStatus.Active)
+        if (Status == UserStatus.Inactive)
         {
             return Result.Invalid(
-                DomainErrors.User.AlreadyProcessed);
+                DomainErrors.User.AlreadyInactivated);
         }
 
         Status = UserStatus.Inactive;
 
         InactivedOnUtc = utcNow;
 
-        AddEvent(new UserInactivatedEvent(Id));
+        AddEvent(new UserInactivatedDomainEvent(Id));
 
         return Result.Success();
     }
@@ -90,38 +93,52 @@ public class UserEntity : BaseEntity, IAggregateRoot
 
     #region Email
 
-    public void AddEmail(EmailEntity emailEntity)
+    public IResult AddEmail(EmailEntity email)
     {
-        ArgumentNullException.ThrowIfNull(emailEntity);
+        ArgumentNullException.ThrowIfNull(email);
 
         _emails ??= new List<EmailEntity>();
 
-        _emails.Add(emailEntity);
-    }
-
-    public void UpdateEmail(EmailEntity emailEntity)
-    {
-        ArgumentNullException.ThrowIfNull(emailEntity);
-
-        if (!(_emails?.Contains(emailEntity) ?? false))
+        if (_emails.Contains(email))
         {
-            return;
+            return Result.Invalid(
+                DomainErrors.User.DuplicateEmail);
         }
 
-        _emails.Remove(emailEntity);
-        _emails.Add(emailEntity);
+        _emails.Add(email);
+
+        return Result.Success();
     }
 
-    public void RemoveEmail(EmailEntity emailEntity)
+    public IResult UpdateEmail(EmailEntity email)
     {
-        ArgumentNullException.ThrowIfNull(emailEntity);
+        ArgumentNullException.ThrowIfNull(email);
 
-        if (!(_emails?.Contains(emailEntity) ?? false))
+        if (!(_emails?.Contains(email) ?? false))
         {
-            return;
+            return Result.Invalid(
+                DomainErrors.User.EmailNotFound);
         }
 
-        _emails.Remove(emailEntity);
+        _emails.Remove(email);
+        _emails.Add(email);
+
+        return Result.Success();
+    }
+
+    public IResult RemoveEmail(EmailEntity email)
+    {
+        ArgumentNullException.ThrowIfNull(email);
+
+        if (!(_emails?.Contains(email) ?? false))
+        {
+            return Result.Invalid(
+                DomainErrors.User.EmailNotFound);
+        }
+
+        _emails.Remove(email);
+
+        return Result.Success();
     }
 
     public EmailEntity? GetEmailById(Guid id)
@@ -130,48 +147,74 @@ public class UserEntity : BaseEntity, IAggregateRoot
             item => item.Id == id);
     }
 
+    public EmailEntity? GetEmailByValue(EmailValueObject value)
+    {
+        return Emails.FirstOrDefault(
+            item => item.Email == value);
+    }
+
     #endregion
 
     #region Phone
 
-    public void AddPhone(PhoneEntity phoneEntity)
+    public IResult AddPhone(PhoneEntity phone)
     {
-        ArgumentNullException.ThrowIfNull(phoneEntity);
+        ArgumentNullException.ThrowIfNull(phone);
 
         _phones ??= new List<PhoneEntity>();
 
-        _phones.Add(phoneEntity);
-    }
-
-    public void UpdatePhone(PhoneEntity phoneEntity)
-    {
-        ArgumentNullException.ThrowIfNull(phoneEntity);
-
-        if (!(_phones?.Contains(phoneEntity) ?? false))
+        if (_phones.Contains(phone))
         {
-            return;
+            return Result.Invalid(
+                DomainErrors.User.DuplicatePhone);
         }
 
-        _phones.Remove(phoneEntity);
-        _phones.Add(phoneEntity);
+        _phones.Add(phone);
+
+        return Result.Success();
     }
 
-    public void RemovePhone(PhoneEntity phoneEntity)
+    public IResult UpdatePhone(PhoneEntity phone)
     {
-        ArgumentNullException.ThrowIfNull(phoneEntity);
+        ArgumentNullException.ThrowIfNull(phone);
 
-        if (!(_phones?.Contains(phoneEntity) ?? false))
+        if (!(_phones?.Contains(phone) ?? false))
         {
-            return;
+            return Result.Invalid(
+                DomainErrors.User.PhoneNotFound);
         }
 
-        _phones.Remove(phoneEntity);
+        _phones.Remove(phone);
+        _phones.Add(phone);
+
+        return Result.Success();
+    }
+
+    public IResult RemovePhone(PhoneEntity phone)
+    {
+        ArgumentNullException.ThrowIfNull(phone);
+
+        if (!(_phones?.Contains(phone) ?? false))
+        {
+            return Result.Invalid(
+                DomainErrors.User.PhoneNotFound);
+        }
+
+        _phones.Remove(phone);
+
+        return Result.Success();
     }
 
     public PhoneEntity? GetPhoneById(Guid id)
     {
         return Phones.FirstOrDefault(
             item => item.Id == id);
+    }
+
+    public PhoneEntity? GetPhoneByValue(PhoneValueObject value)
+    {
+        return Phones.FirstOrDefault(
+            item => item.Phone == value);
     }
 
     #endregion

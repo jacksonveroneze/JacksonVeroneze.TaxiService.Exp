@@ -15,7 +15,7 @@ public class UserReadRepository : IUserReadRepository
         _dynamoDbContext = dynamoDbContext;
     }
 
-    public Task<bool> AnyByNameAsync(string name,
+    public Task<bool> ExistsByNameAsync(string name,
         CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();

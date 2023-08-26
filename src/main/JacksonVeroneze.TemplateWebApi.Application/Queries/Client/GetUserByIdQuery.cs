@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Queries.Client;
 
-public record GetUserByIdQuery : IRequest<IResult<GetUserByIdQueryResponse>>
+public sealed record GetUserByIdQuery : IRequest<IResult<GetUserByIdQueryResponse>>
 {
     [FromRoute(Name = "id")]
     public Guid Id { get; init; }

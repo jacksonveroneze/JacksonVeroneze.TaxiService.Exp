@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Queries.Base;
 
-public class PagedQuery
+public record PagedQuery
 {
     private const int DefaultPage = 1;
 
     private const int DefaulPageSize = 20;
 
-    public PagedQuery(string defaultOrderBy, SortDirection defaultOrder)
+    protected PagedQuery(string defaultOrderBy, SortDirection defaultOrder)
     {
         ArgumentException.ThrowIfNullOrEmpty(nameof(defaultOrderBy));
         ArgumentException.ThrowIfNullOrEmpty(nameof(defaultOrder));
@@ -21,10 +21,10 @@ public class PagedQuery
         _pageSize = DefaulPageSize;
     }
 
-    private int _page;
-    private int _pageSize;
-    private string? _orderBy;
-    private SortDirection? _order;
+    private readonly int _page;
+    private readonly int _pageSize;
+    private readonly string? _orderBy;
+    private readonly SortDirection? _order;
 
     [FromQuery(Name = "page")]
     public int? Page

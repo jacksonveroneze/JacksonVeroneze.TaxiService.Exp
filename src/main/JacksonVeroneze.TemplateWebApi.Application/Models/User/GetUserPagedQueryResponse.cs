@@ -1,4 +1,4 @@
-using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response.Pagination;
+using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Pagination;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Models.User;
 

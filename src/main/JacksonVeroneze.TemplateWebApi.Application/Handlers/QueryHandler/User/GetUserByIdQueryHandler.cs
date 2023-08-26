@@ -31,20 +31,20 @@ internal sealed  class GetUserByIdQueryHandler :
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        UserEntity? data = await _repository
+        UserEntity? entity = await _repository
             .GetByIdAsync(request.Id, cancellationToken);
 
-        if (data is null)
+        if (entity is null)
         {
             _logger.LogNotFound(nameof(GetUserByIdQueryHandler),
-                nameof(Handle), request.Id);
+                nameof(Handle), DomainErrors.User.NotFound, request.Id);
 
             return Result<GetUserByIdQueryResponse>
                 .NotFound(DomainErrors.User.NotFound);
         }
 
         GetUserByIdQueryResponse response =
-            _mapper.Map<GetUserByIdQueryResponse>(data);
+            _mapper.Map<GetUserByIdQueryResponse>(entity);
 
         _logger.LogGetById(nameof(GetUserByIdQueryHandler),
             nameof(Handle), request.Id);

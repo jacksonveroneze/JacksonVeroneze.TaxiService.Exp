@@ -1,4 +1,4 @@
-﻿namespace JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response.Pagination;
+﻿namespace JacksonVeroneze.TemplateWebApi.Application.Models.Base.Pagination;
 
 public sealed class PageInfoResponse
 {

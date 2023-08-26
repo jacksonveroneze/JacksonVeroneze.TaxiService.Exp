@@ -14,7 +14,7 @@ public class Result<TValue> : IResult<TValue> where TValue : class
 
     public bool IsSuccess => Status is ResultStatus.Success;
 
-    public bool IsNotSuccess => !IsSuccess;
+    public bool IsFailure => !IsSuccess;
 
     #region ctor
 
@@ -48,7 +48,7 @@ public class Result<TValue> : IResult<TValue> where TValue : class
 
     #endregion
 
-    #region Success
+    #region success
 
     public static IResult<TValue> Success()
     {
@@ -62,7 +62,7 @@ public class Result<TValue> : IResult<TValue> where TValue : class
 
     #endregion
 
-    #region NotFound
+    #region notFound
 
     public static IResult<TValue> NotFound(Error error)
     {
@@ -71,7 +71,7 @@ public class Result<TValue> : IResult<TValue> where TValue : class
 
     #endregion
 
-    #region Invalid
+    #region invalid
 
     public static IResult<TValue> Invalid(Error error)
     {
@@ -83,6 +83,20 @@ public class Result<TValue> : IResult<TValue> where TValue : class
     {
         return new Result<TValue>(ResultStatus.Invalid,
             validationErrors);
+    }
+
+    #endregion
+
+    #region helpers
+
+    public static IResult FirstFailureOrSuccess(params Result[] results)
+    {
+        ArgumentNullException.ThrowIfNull(nameof(results));
+
+        IResult? result = results.FirstOrDefault(
+            item => item.IsFailure);
+
+        return result ?? Success();
     }
 
     #endregion

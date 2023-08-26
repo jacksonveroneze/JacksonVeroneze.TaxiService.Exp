@@ -35,17 +35,17 @@ internal sealed  class GetUserPagedQueryHandler :
         UserPagedFilter filter = _mapper
             .Map<UserPagedFilter>(request);
 
-        Page<UserEntity> data = await _repository
+        Page<UserEntity> page = await _repository
             .GetPagedAsync(filter, cancellationToken);
 
         GetUserPagedQueryResponse response =
-            _mapper.Map<GetUserPagedQueryResponse>(data);
+            _mapper.Map<GetUserPagedQueryResponse>(page);
 
         _logger.LogGetPaged(nameof(GetUserPagedQueryHandler),
             nameof(Handle),
-            data.Pagination.Page,
-            data.Pagination.PageSize,
-            data.Pagination.TotalElements);
+            page.Pagination.Page,
+            page.Pagination.PageSize,
+            page.Pagination.TotalElements);
 
         return Result<GetUserPagedQueryResponse>.Success(response);
     }

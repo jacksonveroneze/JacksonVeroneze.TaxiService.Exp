@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.Pagination;
-using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response;
 using JacksonVeroneze.TemplateWebApi.Application.Models.User;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.Base;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Primitives;
@@ -8,9 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Queries.Client;
 
-public class GetUserPagedQuery : PagedQuery, IRequest<IResult<GetUserPagedQueryResponse>>
+public sealed record GetUserPagedQuery : PagedQuery, IRequest<IResult<GetUserPagedQueryResponse>>
 {
-    private const string DefaultOrderBy = nameof(UserResponse.Id);
+    private const string DefaultOrderBy = nameof(UserResponse.Name);
 
     private const SortDirection DefaultOrder = SortDirection.Ascending;
 

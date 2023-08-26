@@ -1,5 +1,5 @@
 using JacksonVeroneze.NET.Pagination;
-using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Response.Pagination;
+using JacksonVeroneze.TemplateWebApi.Application.Models.Base.Pagination;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.Base;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Mappers;

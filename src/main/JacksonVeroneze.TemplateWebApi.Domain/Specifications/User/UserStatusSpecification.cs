@@ -16,13 +16,21 @@ public class UserStatusSpecification : BaseSpecification<UserEntity>
 
     public override Expression<Func<UserEntity, bool>> ToExpression()
     {
-        return spec => !_status.HasValue ||
-                       spec.Status == _status;
+        if (!_status.HasValue)
+        {
+            return _ => true;
+        }
+
+        return spec => spec.Status == _status;
     }
 
     protected override Func<UserEntity, bool> ToFunc()
     {
-        return spec => !_status.HasValue ||
-                       spec.Status == _status;
+        if (!_status.HasValue)
+        {
+            return _ => true;
+        }
+
+        return spec => spec.Status == _status;
     }
 }

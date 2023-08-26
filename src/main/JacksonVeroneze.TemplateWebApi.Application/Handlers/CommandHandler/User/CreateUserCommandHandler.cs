@@ -34,10 +34,10 @@ internal sealed class CreateUserCommandHandler :
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        bool any = await _readRepository
-            .AnyByNameAsync(request.Name!, cancellationToken);
+        bool existsByName = await _readRepository
+            .ExistsByNameAsync(request.Name!, cancellationToken);
 
-        if (any)
+        if (existsByName)
         {
             _logger.AlreadyExists(nameof(CreateUserCommandHandler),
                 nameof(Handle), DomainErrors.User.DuplicateName, request.Name!);
@@ -46,15 +46,18 @@ internal sealed class CreateUserCommandHandler :
                 DomainErrors.User.DuplicateName);
         }
 
-        UserEntity data = _mapper.Map<UserEntity>(request);
+        // TODO - Validar DomainObjects
+        // TODO - Criar user manualmente
 
-        await _writeRepository.CreateAsync(data, cancellationToken);
+        UserEntity entity = _mapper.Map<UserEntity>(request);
+
+        await _writeRepository.CreateAsync(entity, cancellationToken);
 
         CreateUserCommandResponse response =
-            _mapper.Map<CreateUserCommandResponse>(data);
+            _mapper.Map<CreateUserCommandResponse>(entity);
 
         _logger.LogCreated(nameof(CreateUserCommandHandler),
-            nameof(Handle), data.Id);
+            nameof(Handle), entity.Id);
 
         return Result<CreateUserCommandResponse>.Success(response);
     }

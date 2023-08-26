@@ -11,12 +11,16 @@ public abstract class BaseSpecification<TEntity> where TEntity : class
     public static implicit operator Expression<Func<TEntity, bool>>(
         BaseSpecification<TEntity> specification)
     {
+        ArgumentNullException.ThrowIfNull(specification);
+
         return specification.ToExpression();
     }
 
     public static implicit operator Func<TEntity, bool>(
         BaseSpecification<TEntity> specification)
     {
+        ArgumentNullException.ThrowIfNull(specification);
+
         return specification.ToFunc();
     }
 }
