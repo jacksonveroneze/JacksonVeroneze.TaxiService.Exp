@@ -26,7 +26,7 @@ public class UserNameSpecification : BaseSpecification<UserEntity>
 
         return spec => _matchExactly
             ? spec.Name.Value!.Equals(_name, StringComparison.OrdinalIgnoreCase)
-            : spec.Name.Value!.Contains(_name);
+            : spec.Name.Value!.Contains(_name, StringComparison.OrdinalIgnoreCase);
     }
 
     protected override Func<UserEntity, bool> ToFunc()

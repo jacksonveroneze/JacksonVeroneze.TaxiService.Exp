@@ -15,4 +15,7 @@ public sealed record UserResponse
 
     [JsonPropertyName("gender")]
     public Gender? Gender { get; init; }
+
+    [JsonPropertyName("status")]
+    public UserStatus? Status { get; init; }
 }

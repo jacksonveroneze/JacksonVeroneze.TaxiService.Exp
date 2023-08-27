@@ -14,9 +14,9 @@ public static partial class LogMessagesExtensions
     [LoggerMessage(
         EventId = 1001,
         Level = LogLevel.Information,
-        Message = "{className} - {methodName} - NotFound - Message: '{message}' - Id: '{id}'")]
+        Message = "{className} - {methodName} - NotFound - Id: '{id}' - Message: '{message}'")]
     public static partial void LogNotFound(this ILogger logger,
-        string className, string methodName, string message, Guid id);
+        string className, string methodName, Guid id, string message);
 
     [LoggerMessage(
         EventId = 1002,
@@ -45,7 +45,7 @@ public static partial class LogMessagesExtensions
     [LoggerMessage(
         EventId = 1005,
         Level = LogLevel.Information,
-        Message = "{className} - {methodName} - Info - Id: '{id}'")]
+        Message = "{className} - {methodName} - Found - Id: '{id}'")]
     public static partial void LogGetById(this ILogger logger,
         string className, string methodName, Guid? id);
 

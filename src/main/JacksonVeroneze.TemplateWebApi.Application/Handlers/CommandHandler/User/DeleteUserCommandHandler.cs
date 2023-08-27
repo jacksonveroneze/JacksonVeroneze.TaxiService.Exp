@@ -37,7 +37,7 @@ internal sealed  class DeleteUserCommandHandler :
         if (entity is null)
         {
             _logger.LogNotFound(nameof(DeleteUserCommandHandler),
-                nameof(Handle), DomainErrors.User.NotFound, request.Id);
+                nameof(Handle), request.Id, DomainErrors.User.NotFound);
 
             return Result<VoidResponse>.NotFound(
                 DomainErrors.User.NotFound);
