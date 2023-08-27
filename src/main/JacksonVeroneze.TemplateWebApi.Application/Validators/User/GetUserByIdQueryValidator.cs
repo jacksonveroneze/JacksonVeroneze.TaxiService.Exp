@@ -1,4 +1,4 @@
-using JacksonVeroneze.TemplateWebApi.Application.Queries.Client;
+using JacksonVeroneze.TemplateWebApi.Application.Queries.User;
 using JacksonVeroneze.TemplateWebApi.Application.Validators.Base;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Validators.User;

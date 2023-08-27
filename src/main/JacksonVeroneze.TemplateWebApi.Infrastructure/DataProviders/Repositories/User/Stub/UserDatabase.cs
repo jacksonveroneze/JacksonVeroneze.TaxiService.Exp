@@ -27,7 +27,7 @@ public static class UserDatabase
                     _ = Enumerable.Range(1, rnd.Next(2, 5))
                         .Select(i =>
                         {
-                            EmailEntity email = new(new EmailValueObject($"User_{i}@mail.com"));
+                            EmailEntity email = new(EmailValueObject.Create($"User_{i}@mail.com").Value!);
 
                             user.AddEmail(email);
 

@@ -37,5 +37,9 @@ public static class DomainErrors
         public static Error DuplicateEmail =>
             new("User.DuplicateEmail",
                 "The specified email is already in use.");
+
+        public static Error InvalidEmail =>
+            new("User.InvalidEmail",
+                "The specified email is invalid.");
     }
 }

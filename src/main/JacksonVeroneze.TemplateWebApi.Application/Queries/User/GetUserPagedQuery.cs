@@ -5,7 +5,7 @@ using JacksonVeroneze.TemplateWebApi.Application.Queries.Base;
 using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 
-namespace JacksonVeroneze.TemplateWebApi.Application.Queries.Client;
+namespace JacksonVeroneze.TemplateWebApi.Application.Queries.User;
 
 public sealed record GetUserPagedQuery : PagedQuery, IRequest<IResult<GetUserPagedQueryResponse>>
 {

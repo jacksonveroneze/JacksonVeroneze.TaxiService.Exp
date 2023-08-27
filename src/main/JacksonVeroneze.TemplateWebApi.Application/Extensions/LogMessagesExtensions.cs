@@ -5,6 +5,20 @@ public static partial class LogMessagesExtensions
     #region Common
 
     [LoggerMessage(
+        EventId = 998,
+        Level = LogLevel.Error,
+        Message = "{className} - {methodName} - Error - Message: '{message}'")]
+    public static partial void LogGenericError(this ILogger logger,
+        string className, string methodName, string message);
+
+    [LoggerMessage(
+        EventId = 999,
+        Level = LogLevel.Error,
+        Message = "{className} - {methodName} - Error - Message: '{message}' - Value: '{value}'")]
+    public static partial void LogGenericError(this ILogger logger,
+        string className, string methodName, string message, string value);
+
+    [LoggerMessage(
         EventId = 1000,
         Level = LogLevel.Information,
         Message = "{className} - {methodName} - Exists - Message: '{message}' - Value: '{value}'")]
