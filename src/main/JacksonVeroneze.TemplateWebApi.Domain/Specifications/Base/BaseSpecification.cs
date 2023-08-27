@@ -6,8 +6,6 @@ public abstract class BaseSpecification<TEntity> where TEntity : class
 {
     public abstract Expression<Func<TEntity, bool>> ToExpression();
 
-    protected abstract Func<TEntity, bool> ToFunc();
-
     public static implicit operator Expression<Func<TEntity, bool>>(
         BaseSpecification<TEntity> specification)
     {
@@ -16,11 +14,10 @@ public abstract class BaseSpecification<TEntity> where TEntity : class
         return specification.ToExpression();
     }
 
-    public static implicit operator Func<TEntity, bool>(
-        BaseSpecification<TEntity> specification)
+    public bool IsSatisfiedBy(TEntity entity)
     {
-        ArgumentNullException.ThrowIfNull(specification);
+        ArgumentNullException.ThrowIfNull(entity);
 
-        return specification.ToFunc();
+        return ToExpression().Compile()(entity);
     }
 }

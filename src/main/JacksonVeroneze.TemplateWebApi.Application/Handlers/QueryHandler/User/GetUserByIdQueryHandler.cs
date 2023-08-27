@@ -5,10 +5,12 @@ using JacksonVeroneze.TemplateWebApi.Application.Models.User;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.Client;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
+using JacksonVeroneze.TemplateWebApi.Domain.Enums;
+using JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.User;
 
-internal sealed  class GetUserByIdQueryHandler :
+internal sealed class GetUserByIdQueryHandler :
     IRequestHandler<GetUserByIdQuery, IResult<GetUserByIdQueryResponse>>
 {
     private readonly ILogger<GetUserByIdQueryHandler> _logger;

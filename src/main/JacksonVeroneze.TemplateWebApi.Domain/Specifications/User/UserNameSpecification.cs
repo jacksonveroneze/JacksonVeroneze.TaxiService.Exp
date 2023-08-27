@@ -28,16 +28,4 @@ public class UserNameSpecification : BaseSpecification<UserEntity>
             ? spec.Name.Value!.Equals(_name, StringComparison.OrdinalIgnoreCase)
             : spec.Name.Value!.Contains(_name, StringComparison.OrdinalIgnoreCase);
     }
-
-    protected override Func<UserEntity, bool> ToFunc()
-    {
-        if (string.IsNullOrEmpty(_name))
-        {
-            return _ => true;
-        }
-
-        return spec => _matchExactly
-            ? spec.Name.Value!.Equals(_name, StringComparison.OrdinalIgnoreCase)
-            : spec.Name.Value!.Contains(_name, StringComparison.OrdinalIgnoreCase);
-    }
 }

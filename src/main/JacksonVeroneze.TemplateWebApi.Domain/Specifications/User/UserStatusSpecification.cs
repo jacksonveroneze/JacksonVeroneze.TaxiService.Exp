@@ -23,14 +23,4 @@ public class UserStatusSpecification : BaseSpecification<UserEntity>
 
         return spec => spec.Status == _status;
     }
-
-    protected override Func<UserEntity, bool> ToFunc()
-    {
-        if (!_status.HasValue)
-        {
-            return _ => true;
-        }
-
-        return spec => spec.Status == _status;
-    }
 }

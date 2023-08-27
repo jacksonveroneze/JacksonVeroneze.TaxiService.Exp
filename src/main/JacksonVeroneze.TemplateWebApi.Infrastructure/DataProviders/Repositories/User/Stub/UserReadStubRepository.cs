@@ -16,7 +16,7 @@ public class UserReadStubRepository : IUserReadRepository
         UserNameSpecification specName = new(name);
 
         bool exists = UserDatabase.Data
-            .Any(specName);
+            .Any(specName.IsSatisfiedBy);
 
         return Task.FromResult(exists);
     }
