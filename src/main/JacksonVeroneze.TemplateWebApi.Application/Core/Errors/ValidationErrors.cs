@@ -1,4 +1,4 @@
-using JacksonVeroneze.NET.DomainObjects;
+using JacksonVeroneze.NET.DomainObjects.Errors;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Core.Errors;
 

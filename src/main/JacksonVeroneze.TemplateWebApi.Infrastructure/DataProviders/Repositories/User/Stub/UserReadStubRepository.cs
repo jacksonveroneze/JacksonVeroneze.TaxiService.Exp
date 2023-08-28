@@ -1,9 +1,9 @@
-using JacksonVeroneze.NET.Extensions.Predicate;
 using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.NET.Pagination.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
+using JacksonVeroneze.TemplateWebApi.Domain.Specifications.Base.Predicate;
 using JacksonVeroneze.TemplateWebApi.Domain.Specifications.User;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.Stub;

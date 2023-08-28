@@ -1,8 +1,8 @@
 import http from 'k6/http';
 import {sleep, randomSeed} from 'k6';
 import {uuidv4} from 'https://jslib.k6.io/k6-utils/1.4.0/index.js';
-import { crypto } from "k6/experimental/webcrypto";
-import { randomIntBetween } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
+import {crypto} from "k6/experimental/webcrypto";
+import {randomIntBetween} from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 export const options = {
     //duration: '30000s',
@@ -65,7 +65,7 @@ const url = 'http://localhost:7000';
 
 export default function () {
     const rnd = randomIntBetween(1, 50000)
-    
+
     var body = JSON.stringify({name: crypto.randomUUID() + '_' + rnd, birthday: "2023-08-25T00:03:43.462Z"});
 
     var responsePost = http.post(`${url}/api/v1/users`, body, {
@@ -80,24 +80,21 @@ export default function () {
     // //
     // // //console.log('___' + rnd + '____')
     // //
-    if(rnd % 2 === 0)
-    {
+    if (rnd % 2 === 0) {
         //console.log('___2___')
         http.del(`${url}/api/v1/users/${id}`);
     }
     //
-    if(rnd % 20 === 0)
-    {
+    if (rnd % 20 === 0) {
         //console.log('___3___')
         http.del(`${url}/api/v1/users/1111`);
     }
     //
-    if(rnd % 10 === 0)
-    {
+    if (rnd % 10 === 0) {
         //console.log('___4___')
         http.del(`${url}/api/v1/users/850323ca-567e-40fc-b16d-9e0021a8dfde`);
     }
-    
+
     //console.log(JSON.parse(responsePost.body).data.id);
 }
 
