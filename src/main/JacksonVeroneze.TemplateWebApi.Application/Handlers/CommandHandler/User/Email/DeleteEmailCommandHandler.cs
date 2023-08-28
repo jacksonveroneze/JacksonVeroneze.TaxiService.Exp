@@ -5,7 +5,6 @@ using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
-using JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.CommandHandler.User.Email;
 
@@ -49,10 +48,10 @@ internal sealed class DeleteEmailCommandHandler :
         if (email is null)
         {
             _logger.LogNotFound(nameof(DeleteEmailCommandHandler),
-                nameof(Handle), request.Id, DomainErrors.User.NotFound);
+                nameof(Handle), request.Id, DomainErrors.User.EmailNotFound);
 
             return Result<VoidResponse>.NotFound(
-                DomainErrors.User.NotFound);
+                DomainErrors.User.EmailNotFound);
         }
 
         IResult result = entity.RemoveEmail(email);

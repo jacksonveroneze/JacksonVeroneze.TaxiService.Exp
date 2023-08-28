@@ -21,5 +21,9 @@ internal static class ValidationErrors
         internal static Error GenderIsRequired =>
             new("User.GenderIsRequired",
                 "The gender is required.");
+
+        internal static Error EmailIsRequired =>
+            new("User.EmailIsRequired",
+                "The e-mail is required.");
     }
 }

@@ -2,9 +2,12 @@ using System.Net.Mime;
 using JacksonVeroneze.NET.DomainObjects.Result;
 using JacksonVeroneze.TemplateWebApi.Api.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Commands.User;
+using JacksonVeroneze.TemplateWebApi.Application.Commands.User.Email;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base;
 using JacksonVeroneze.TemplateWebApi.Application.Models.User;
+using JacksonVeroneze.TemplateWebApi.Application.Models.User.Email;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.User;
+using JacksonVeroneze.TemplateWebApi.Application.Queries.User.Email;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -103,5 +106,44 @@ public class UsersController : ControllerBase
             .Send(query, cancellationToken);
 
         return response.MatchPut(this);
+    }
+
+    [HttpGet("{id}/emails")]
+    [ApiConventionMethod(typeof(DefaultApiConventions),
+        nameof(DefaultApiConventions.Find))]
+    public async Task<IActionResult> GetEmailsByIdAsync(
+        [FromRoute] GetAllEmailsByUserIdQuery query,
+        CancellationToken cancellationToken)
+    {
+        IResult<GetAllEmailsByUserIdQueryResponse> response =
+            await _mediator.Send(query, cancellationToken);
+
+        return response.MatchGet(this);
+    }
+
+    [HttpPost("{id}/emails")]
+    [ApiConventionMethod(typeof(DefaultApiConventions),
+        nameof(DefaultApiConventions.Create))]
+    public async Task<IActionResult> CreateEmailAsync(
+        [FromBody] CreateEmailCommand command,
+        CancellationToken cancellationToken)
+    {
+        IResult<VoidResponse> response = await _mediator
+            .Send(command, cancellationToken);
+
+        return response.MatchPost(this);
+    }
+
+    [HttpPost("{id}/emails/{email_id}")]
+    [ApiConventionMethod(typeof(DefaultApiConventions),
+        nameof(DefaultApiConventions.Create))]
+    public async Task<IActionResult> DeleteEmailAsync(
+        [FromBody] DeleteEmailCommand command,
+        CancellationToken cancellationToken)
+    {
+        IResult<VoidResponse> response = await _mediator
+            .Send(command, cancellationToken);
+
+        return response.MatchDelete(this);
     }
 }

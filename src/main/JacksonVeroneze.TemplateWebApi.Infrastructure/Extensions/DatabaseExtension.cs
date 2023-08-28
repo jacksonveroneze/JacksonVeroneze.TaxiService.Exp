@@ -1,8 +1,4 @@
-using JacksonVeroneze.NET.MongoDB.Extensions;
-using JacksonVeroneze.NET.MongoDB.Interfaces;
-using JacksonVeroneze.NET.MongoDB.Repository;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
-using JacksonVeroneze.TemplateWebApi.Infrastructure.Mappings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

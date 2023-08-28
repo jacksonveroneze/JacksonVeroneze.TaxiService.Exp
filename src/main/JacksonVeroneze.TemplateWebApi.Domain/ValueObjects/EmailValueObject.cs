@@ -13,20 +13,11 @@ public class EmailValueObject : ValueObject
         Value = value;
     }
 
-    protected override IEnumerable<object> GetEqualityComponents()
-    {
-        throw new NotImplementedException();
-    }
-
-    public static implicit operator string(EmailValueObject password)
-        => password?.Value ?? string.Empty;
+    public static implicit operator string(EmailValueObject value)
+        => value?.Value ?? string.Empty;
 
     public static IResult<EmailValueObject> Create(string value)
     {
-        ArgumentException.ThrowIfNullOrEmpty(value);
-
-        // TODO - Validações
-
         if (string.IsNullOrEmpty(value))
         {
             return Result<EmailValueObject>.Invalid(

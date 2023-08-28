@@ -16,6 +16,7 @@ public static class AutoMapperExtension
             cfg.AddProfile<PaginationMapper>();
             //
             cfg.AddProfile<UserMapper>();
+            cfg.AddProfile<EmailMapper>();
             cfg.AllowNullCollections = true;
         });
 

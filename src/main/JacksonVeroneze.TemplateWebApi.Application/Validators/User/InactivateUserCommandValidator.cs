@@ -11,6 +11,6 @@ public class InactivateUserCommandValidator : AbstractValidator<InactivateUserCo
             .NotNull();
 
         RuleFor(request => request.Id)
-            .SetValidator(new IdGuidValidator());
+            .SetValidator(new GuidValidator());
     }
 }

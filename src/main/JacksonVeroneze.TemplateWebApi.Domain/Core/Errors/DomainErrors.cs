@@ -41,5 +41,13 @@ public static class DomainErrors
         public static Error InvalidEmail =>
             new("User.InvalidEmail",
                 "The specified email is invalid.");
+
+        public static Error InvalidName =>
+            new("User.InvalidName",
+                "The specified name is invalid.");
+
+        public static Error InvalidPhone =>
+            new("User.InvalidPhone",
+                "The specified phone is invalid.");
     }
 }

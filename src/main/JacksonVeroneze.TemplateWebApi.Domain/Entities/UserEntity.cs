@@ -8,7 +8,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
 
 namespace JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
-public class UserEntity : BaseEntity, IAggregateRoot
+public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
 {
     private readonly IReadOnlyCollection<EmailEntity> _emptyEmails =
         Enumerable.Empty<EmailEntity>().ToList().AsReadOnly();
@@ -93,50 +93,54 @@ public class UserEntity : BaseEntity, IAggregateRoot
 
     #region Email
 
-    public IResult AddEmail(EmailEntity email)
+    public IResult AddEmail(EmailEntity entity)
     {
-        ArgumentNullException.ThrowIfNull(email);
+        ArgumentNullException.ThrowIfNull(entity);
 
         _emails ??= new List<EmailEntity>();
 
-        if (_emails.Contains(email))
+        if (ExistsEmailByValue(entity.Email))
         {
             return Result.Invalid(
                 DomainErrors.User.DuplicateEmail);
         }
 
-        _emails.Add(email);
+        _emails.Add(entity);
 
         return Result.Success();
     }
 
-    public IResult UpdateEmail(EmailEntity email)
+    public IResult UpdateEmail(EmailEntity entity)
     {
-        ArgumentNullException.ThrowIfNull(email);
+        ArgumentNullException.ThrowIfNull(entity);
 
-        if (!(_emails?.Contains(email) ?? false))
+        _emails ??= new List<EmailEntity>();
+
+        if (!ExistsEmailByValue(entity.Email))
         {
             return Result.Invalid(
                 DomainErrors.User.EmailNotFound);
         }
 
-        _emails.Remove(email);
-        _emails.Add(email);
+        _emails.Remove(entity);
+        _emails.Add(entity);
 
         return Result.Success();
     }
 
-    public IResult RemoveEmail(EmailEntity email)
+    public IResult RemoveEmail(EmailEntity entity)
     {
-        ArgumentNullException.ThrowIfNull(email);
+        ArgumentNullException.ThrowIfNull(entity);
 
-        if (!(_emails?.Contains(email) ?? false))
+        _emails ??= new List<EmailEntity>();
+
+        if (!ExistsEmailByValue(entity.Email))
         {
             return Result.Invalid(
                 DomainErrors.User.EmailNotFound);
         }
 
-        _emails.Remove(email);
+        _emails.Remove(entity);
 
         return Result.Success();
     }
@@ -147,10 +151,10 @@ public class UserEntity : BaseEntity, IAggregateRoot
             item => item.Id == id);
     }
 
-    public EmailEntity? GetEmailByValue(EmailValueObject value)
+    public bool ExistsEmailByValue(EmailValueObject value)
     {
-        return Emails.FirstOrDefault(
-            item => item.Email == value);
+        return Emails.Any(
+            entity => entity.Email.Value == value.Value);
     }
 
     #endregion

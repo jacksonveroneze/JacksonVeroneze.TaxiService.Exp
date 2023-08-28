@@ -11,6 +11,6 @@ public class DeleteUserCommandValidator : AbstractValidator<DeleteUserCommand>
             .NotNull();
 
         RuleFor(request => request.Id)
-            .SetValidator(new IdGuidValidator());
+            .SetValidator(new GuidValidator());
     }
 }

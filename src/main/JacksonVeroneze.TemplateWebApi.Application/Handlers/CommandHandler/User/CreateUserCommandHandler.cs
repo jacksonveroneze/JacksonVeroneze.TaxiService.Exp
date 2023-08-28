@@ -5,6 +5,7 @@ using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.Models.User;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
+using JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.CommandHandler.User;
 
@@ -46,10 +47,19 @@ internal sealed class CreateUserCommandHandler :
                 DomainErrors.User.DuplicateName);
         }
 
-        // TODO - Validar DomainObjects
-        // TODO - Criar user manualmente
+        IResult<NameValueObject> nameValueObject = NameValueObject
+            .Create(request.Name!);
 
-        UserEntity entity = _mapper.Map<UserEntity>(request);
+        if (nameValueObject.IsFailure)
+        {
+            _logger.LogGenericError(nameof(CreateUserCommandResponse),
+                nameof(Handle), nameValueObject.Error!);
+
+            return Result<CreateUserCommandResponse>.Invalid(nameValueObject.Error!);
+        }
+
+        UserEntity entity = new(nameValueObject.Value!, request.Birthday!.Value,
+            request.Gender!.Value);
 
         await _writeRepository.CreateAsync(entity, cancellationToken);
 
