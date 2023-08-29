@@ -48,10 +48,10 @@ internal sealed class DeleteEmailCommandHandler :
         if (email is null)
         {
             _logger.LogNotFound(nameof(DeleteEmailCommandHandler),
-                nameof(Handle), request.Id, DomainErrors.User.EmailNotFound);
+                nameof(Handle), request.Id, DomainErrors.Email.NotFound);
 
             return Result<VoidResponse>.NotFound(
-                DomainErrors.User.EmailNotFound);
+                DomainErrors.Email.NotFound);
         }
 
         IResult result = entity.RemoveEmail(email);

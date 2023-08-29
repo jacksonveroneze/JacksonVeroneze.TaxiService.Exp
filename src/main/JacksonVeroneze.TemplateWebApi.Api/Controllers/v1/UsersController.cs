@@ -19,14 +19,11 @@ namespace JacksonVeroneze.TemplateWebApi.Api.Controllers.v1;
 [Produces(MediaTypeNames.Application.Json)]
 public class UsersController : ControllerBase
 {
-    private readonly ILogger<UsersController> _logger;
     private readonly ISender _mediator;
 
     public UsersController(
-        ILogger<UsersController> logger,
         ISender mediator)
     {
-        _logger = logger;
         _mediator = mediator;
     }
 
@@ -43,13 +40,15 @@ public class UsersController : ControllerBase
         return response.MatchGet(this);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:guid}")]
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Find))]
     public async Task<ActionResult<GetUserByIdQueryResponse>> GetByIdAsync(
-        [FromRoute] GetUserByIdQuery query,
+        [FromRoute(Name = "id")] Guid id,
         CancellationToken cancellationToken)
     {
+        GetUserByIdQuery query = new(id);
+
         IResult<GetUserByIdQueryResponse> response =
             await _mediator.Send(query, cancellationToken);
 
@@ -69,59 +68,67 @@ public class UsersController : ControllerBase
         return response.MatchPost(this);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:guid}")]
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Delete))]
     public async Task<IActionResult> DeleteAsync(
-        [FromRoute] DeleteUserCommand query,
+        [FromRoute(Name = "id")] Guid id,
         CancellationToken cancellationToken)
     {
+        DeleteUserCommand command = new(id);
+
         IResult<BaseResponse> response = await _mediator
-            .Send(query, cancellationToken);
+            .Send(command, cancellationToken);
 
         return response.MatchDelete(this);
     }
 
-    [HttpPut("{id}/activate")]
+    [HttpPut("{id:guid}/activate")]
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Update))]
     public async Task<IActionResult> UpdateActivateAsync(
-        [FromRoute] ActivateUserCommand query,
+        [FromRoute(Name = "id")] Guid id,
         CancellationToken cancellationToken)
     {
+        ActivateUserCommand command = new(id);
+
         IResult<BaseResponse> response = await _mediator
-            .Send(query, cancellationToken);
+            .Send(command, cancellationToken);
 
         return response.MatchPut(this);
     }
 
-    [HttpPut("{id}/inactivate")]
+    [HttpPut("{id:guid}/inactivate")]
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Update))]
     public async Task<IActionResult> UpdateInactivateAsync(
-        [FromRoute] InactivateUserCommand query,
+        [FromRoute(Name = "id")] Guid id,
         CancellationToken cancellationToken)
     {
+        InactivateUserCommand command = new(id);
+
         IResult<BaseResponse> response = await _mediator
-            .Send(query, cancellationToken);
+            .Send(command, cancellationToken);
 
         return response.MatchPut(this);
     }
 
-    [HttpGet("{id}/emails")]
+    [HttpGet("{id:guid}/emails")]
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Find))]
     public async Task<IActionResult> GetEmailsByIdAsync(
-        [FromRoute] GetAllEmailsByUserIdQuery query,
+        [FromRoute(Name = "id")] Guid id,
         CancellationToken cancellationToken)
     {
+        GetAllEmailsByUserIdQuery query = new(id);
+
         IResult<GetAllEmailsByUserIdQueryResponse> response =
             await _mediator.Send(query, cancellationToken);
 
         return response.MatchGet(this);
     }
 
-    [HttpPost("{id}/emails")]
+    [HttpPost("{id:guid}/emails")]
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Create))]
     public async Task<IActionResult> CreateEmailAsync(
@@ -134,13 +141,16 @@ public class UsersController : ControllerBase
         return response.MatchPost(this);
     }
 
-    [HttpPost("{id}/emails/{email_id}")]
+    [HttpPost("{id:guid}/emails/{email_id:guid}")]
     [ApiConventionMethod(typeof(DefaultApiConventions),
-        nameof(DefaultApiConventions.Create))]
+        nameof(DefaultApiConventions.Delete))]
     public async Task<IActionResult> DeleteEmailAsync(
-        [FromBody] DeleteEmailCommand command,
+        [FromRoute(Name = "id")] Guid id,
+        [FromRoute(Name = "email_id")] Guid emailId,
         CancellationToken cancellationToken)
     {
+        DeleteEmailCommand command = new(id, emailId);
+
         IResult<VoidResponse> response = await _mediator
             .Send(command, cancellationToken);
 

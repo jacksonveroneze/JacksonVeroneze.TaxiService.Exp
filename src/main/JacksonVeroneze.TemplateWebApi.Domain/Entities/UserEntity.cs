@@ -102,7 +102,7 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
         if (ExistsEmailByValue(entity.Email))
         {
             return Result.Invalid(
-                DomainErrors.User.DuplicateEmail);
+                DomainErrors.Email.DuplicateEmail);
         }
 
         _emails.Add(entity);
@@ -119,7 +119,7 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
         if (!ExistsEmailByValue(entity.Email))
         {
             return Result.Invalid(
-                DomainErrors.User.EmailNotFound);
+                DomainErrors.Email.NotFound);
         }
 
         _emails.Remove(entity);
@@ -137,7 +137,7 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
         if (!ExistsEmailByValue(entity.Email))
         {
             return Result.Invalid(
-                DomainErrors.User.EmailNotFound);
+                DomainErrors.Email.NotFound);
         }
 
         _emails.Remove(entity);
@@ -170,7 +170,7 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
         if (_phones.Contains(phone))
         {
             return Result.Invalid(
-                DomainErrors.User.DuplicatePhone);
+                DomainErrors.Phone.DuplicatePhone);
         }
 
         _phones.Add(phone);
@@ -185,7 +185,7 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
         if (!(_phones?.Contains(phone) ?? false))
         {
             return Result.Invalid(
-                DomainErrors.User.PhoneNotFound);
+                DomainErrors.Phone.NotFound);
         }
 
         _phones.Remove(phone);
@@ -201,7 +201,7 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
         if (!(_phones?.Contains(phone) ?? false))
         {
             return Result.Invalid(
-                DomainErrors.User.PhoneNotFound);
+                DomainErrors.Phone.NotFound);
         }
 
         _phones.Remove(phone);

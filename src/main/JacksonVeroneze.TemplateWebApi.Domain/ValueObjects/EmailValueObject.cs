@@ -21,7 +21,7 @@ public class EmailValueObject : ValueObject
         if (string.IsNullOrEmpty(value))
         {
             return Result<EmailValueObject>.Invalid(
-                DomainErrors.User.InvalidEmail);
+                DomainErrors.Email.InvalidEmail);
         }
 
         EmailValueObject valueObject = new(value);

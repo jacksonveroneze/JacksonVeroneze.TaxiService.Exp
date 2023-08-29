@@ -4,8 +4,5 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Commands.User;
 
-public sealed record InactivateUserCommand : IRequest<IResult<VoidResponse>>
-{
-    [FromRoute(Name = "id")]
-    public Guid Id { get; init; }
-}
+public sealed record InactivateUserCommand(Guid Id) :
+    IRequest<IResult<VoidResponse>>;

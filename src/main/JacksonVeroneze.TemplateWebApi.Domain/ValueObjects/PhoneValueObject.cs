@@ -21,7 +21,7 @@ public class PhoneValueObject : ValueObject
         if (string.IsNullOrEmpty(value))
         {
             return Result<PhoneValueObject>.Invalid(
-                DomainErrors.User.InvalidPhone);
+                DomainErrors.Phone.InvalidPhone);
         }
 
         PhoneValueObject valueObject = new(value);

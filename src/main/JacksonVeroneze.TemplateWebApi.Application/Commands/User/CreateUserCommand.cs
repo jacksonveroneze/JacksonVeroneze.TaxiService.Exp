@@ -4,7 +4,8 @@ using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Commands.User;
 
-public sealed record CreateUserCommand : IRequest<IResult<CreateUserCommandResponse>>
+public sealed record CreateUserCommand :
+    IRequest<IResult<CreateUserCommandResponse>>
 {
     [JsonPropertyName("name")]
     public string? Name { get; init; }
