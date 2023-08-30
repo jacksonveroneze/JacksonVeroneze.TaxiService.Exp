@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 using JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
@@ -6,23 +7,24 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositori
 
 public static class UserDatabase
 {
-    private static readonly List<UserEntity> Db = new();
+    private static ConcurrentBag<UserEntity> _db = new();
 
-    public static IList<UserEntity> Data
+    public static ConcurrentBag<UserEntity> Data
     {
         get
         {
-            if (Db.Any())
+            if (_db.Any())
             {
-                return Db;
+                return _db;
             }
 
-            Db.AddRange(Enumerable.Range(1, 25)
+            IEnumerable<UserEntity> collection = Enumerable.Range(1, 25)
                 .Select(item =>
                 {
                     Random rnd = new();
 
-                    UserEntity user = new(NameValueObject.Create($"User_{item}").Value!, DateTime.UtcNow, Gender.Male);
+                    UserEntity user = new(NameValueObject.Create($"User_{item}").Value!,
+                        DateOnly.FromDateTime(DateTime.UtcNow), Gender.Male);
 
                     _ = Enumerable.Range(1, rnd.Next(2, 5))
                         .Select(i =>
@@ -45,9 +47,11 @@ public static class UserDatabase
                         });
 
                     return user;
-                }));
+                });
 
-            return Db;
+            _db = new ConcurrentBag<UserEntity>(collection);
+
+            return _db;
         }
     }
 }

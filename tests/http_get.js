@@ -6,8 +6,8 @@ import {randomIntBetween} from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 export const options = {
     //duration: '30000s',
-    iterations: 10000,
-    vus: 1,
+    iterations: 5000,
+    vus: 200,
 };
 
 // export let options = {
@@ -22,8 +22,8 @@ export const options = {
 // };
 
 
-//const url = 'http://localhost/templatewebapi';
-const url = 'http://localhost:7000';
+const url = 'http://localhost/templatewebapi';
+//const url = 'http://localhost:7000';
 
 // export const options = {
 //     vus: 50,
@@ -66,7 +66,7 @@ const url = 'http://localhost:7000';
 export default function () {
     const rnd = randomIntBetween(1, 50000)
 
-    var body = JSON.stringify({name: crypto.randomUUID() + '_' + rnd, birthday: "2023-08-25T00:03:43.462Z"});
+    var body = JSON.stringify({name: crypto.randomUUID() + '_' + rnd, birthday: "2023-08-25", gender: "Male"});
 
     var responsePost = http.post(`${url}/api/v1/users`, body, {
         headers: {'Content-Type': 'application/json'},
@@ -74,26 +74,26 @@ export default function () {
 
     var id = JSON.parse(responsePost.body).data.id;
     //
-    http.get(`${url}/api/v1/users/${id}`);
-    http.put(`${url}/api/v1/users/${id}/activate`);
-    http.put(`${url}/api/v1/users/${id}/inactivate`);
+    // http.get(`${url}/api/v1/users/${id}`);
+    // http.put(`${url}/api/v1/users/${id}/activate`);
+    // http.put(`${url}/api/v1/users/${id}/inactivate`);
+    // // //
+    // // // //console.log('___' + rnd + '____')
+    // // //
+    // if (rnd % 2 === 0) {
+    //     //console.log('___2___')
+    //     http.del(`${url}/api/v1/users/${id}`);
+    // }
     // //
-    // // //console.log('___' + rnd + '____')
+    // if (rnd % 20 === 0) {
+    //     //console.log('___3___')
+    //     http.del(`${url}/api/v1/users/1111`);
+    // }
     // //
-    if (rnd % 2 === 0) {
-        //console.log('___2___')
-        http.del(`${url}/api/v1/users/${id}`);
-    }
-    //
-    if (rnd % 20 === 0) {
-        //console.log('___3___')
-        http.del(`${url}/api/v1/users/1111`);
-    }
-    //
-    if (rnd % 10 === 0) {
-        //console.log('___4___')
-        http.del(`${url}/api/v1/users/850323ca-567e-40fc-b16d-9e0021a8dfde`);
-    }
+    // if (rnd % 10 === 0) {
+    //     //console.log('___4___')
+    //     http.del(`${url}/api/v1/users/850323ca-567e-40fc-b16d-9e0021a8dfde`);
+    // }
 
     //console.log(JSON.parse(responsePost.body).data.id);
 }

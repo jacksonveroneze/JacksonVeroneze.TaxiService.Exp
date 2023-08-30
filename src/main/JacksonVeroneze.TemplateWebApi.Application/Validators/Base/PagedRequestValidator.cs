@@ -12,11 +12,11 @@ public class PagedRequestValidator : AbstractValidator<PagedQuery>
         RuleFor(request => request.Page)
             .Cascade(CascadeMode.Stop)
             .NotNull()
-            .NotEmpty();
+            .GreaterThan(0);
 
         RuleFor(request => request.PageSize)
             .Cascade(CascadeMode.Stop)
             .NotNull()
-            .NotEmpty();
+            .GreaterThan(0);
     }
 }

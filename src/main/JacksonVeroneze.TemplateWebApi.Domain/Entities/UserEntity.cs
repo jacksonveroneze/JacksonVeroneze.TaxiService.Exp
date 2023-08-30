@@ -18,7 +18,7 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
 
     public NameValueObject Name { get; private set; }
 
-    public DateTime Birthday { get; private set; }
+    public DateOnly Birthday { get; private set; }
 
     public Gender Gender { get; private set; }
 
@@ -38,7 +38,7 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
     public IReadOnlyCollection<PhoneEntity> Phones =>
         _phones?.AsReadOnly() ?? _emptyPhones;
 
-    public UserEntity(NameValueObject name, DateTime birthday, Gender gender)
+    public UserEntity(NameValueObject name, DateOnly birthday, Gender gender)
     {
         ArgumentNullException.ThrowIfNull(name);
         ArgumentNullException.ThrowIfNull(birthday);

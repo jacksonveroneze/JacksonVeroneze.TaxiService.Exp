@@ -33,21 +33,5 @@ public class UserMapper : Profile
             .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name))
             .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status))
             .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src));
-
-        // Command -> Entity
-        // CreateMap<CreateUserCommand, UserEntity>()
-        //     .ConstructUsing(src => new UserEntity(
-        //         new NameValueObject(src.Name!), src.Birthday!.Value, src.Gender!.Value))
-        //     .ForMember(dest => dest.Id, opts => opts.Ignore())
-        //     .ForMember(dest => dest.Status, opts => opts.Ignore())
-        //     .ForMember(dest => dest.Emails, opts => opts.Ignore())
-        //     .ForMember(dest => dest.Phones, opts => opts.Ignore())
-        //     .ForMember(dest => dest.ActivedOnUtc, opts => opts.Ignore())
-        //     .ForMember(dest => dest.InactivedOnUtc, opts => opts.Ignore())
-        //     .ForMember(dest => dest.Events, opts => opts.Ignore())
-        //     .ForMember(dest => dest.CreatedAt, opts => opts.Ignore())
-        //     .ForMember(dest => dest.UpdatedAt, opts => opts.Ignore())
-        //     .ForMember(dest => dest.DeletedAt, opts => opts.Ignore())
-        //     .ForMember(dest => dest.Version, opts => opts.Ignore());
     }
 }

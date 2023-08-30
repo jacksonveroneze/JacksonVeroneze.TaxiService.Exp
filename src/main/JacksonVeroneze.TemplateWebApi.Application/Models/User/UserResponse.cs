@@ -11,7 +11,7 @@ public sealed record UserResponse
     public string? Name { get; init; }
 
     [JsonPropertyName("birthday")]
-    public DateTime? Birthday { get; init; }
+    public DateOnly? Birthday { get; init; }
 
     [JsonPropertyName("gender")]
     public Gender? Gender { get; init; }

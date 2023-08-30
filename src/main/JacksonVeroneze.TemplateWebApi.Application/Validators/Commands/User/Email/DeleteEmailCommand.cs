@@ -1,7 +1,7 @@
 using JacksonVeroneze.TemplateWebApi.Application.Commands.User.Email;
 using JacksonVeroneze.TemplateWebApi.Application.Validators.Base;
 
-namespace JacksonVeroneze.TemplateWebApi.Application.Validators.User.Email;
+namespace JacksonVeroneze.TemplateWebApi.Application.Validators.Commands.User.Email;
 
 public class DeleteEmailCommandValidator : AbstractValidator<DeleteEmailCommand>
 {
@@ -11,9 +11,9 @@ public class DeleteEmailCommandValidator : AbstractValidator<DeleteEmailCommand>
             .NotNull();
 
         RuleFor(request => request.Id)
-            .SetValidator(new GuidValidator());
+            .SetValidator(new IdGuidValidator());
 
         RuleFor(request => request.EmailId)
-            .SetValidator(new GuidValidator());
+            .SetValidator(new IdGuidValidator());
     }
 }

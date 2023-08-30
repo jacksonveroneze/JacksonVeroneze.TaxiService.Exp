@@ -4,21 +4,23 @@ namespace JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 
 public static class DomainErrors
 {
-    private static string _templateNotFound = "The {0} with the specified identifier was not found.";
+    private const string TemplateNotFound = "The {0} with the specified identifier was not found.";
+    private const string TemplateDataInUse = "The specified {0} is already in use.";
+    private const string TemplateDataInvalid = "The specified {0} is invalid.";
 
     public static class User
     {
         public static Error NotFound =>
             new("User.NotFound",
-                "The user with the specified identifier was not found.");
+                string.Format(TemplateNotFound, "user"));
 
         public static Error DuplicateName =>
             new("User.DuplicateName",
-                "The specified name is already in use.");
+                string.Format(TemplateDataInUse, "name"));
 
         public static Error InvalidName =>
             new("User.InvalidName",
-                "The specified name is invalid.");
+                string.Format(TemplateDataInvalid, "name"));
 
         public static Error AlreadyActivated =>
             new("User.AlreadyActivated",
@@ -33,29 +35,29 @@ public static class DomainErrors
     {
         public static Error NotFound =>
             new("User.NotFound",
-                "The email with the specified identifier was not found.");
+                string.Format(TemplateNotFound, "e-mail"));
 
         public static Error DuplicateEmail =>
             new("User.DuplicateEmail",
-                "The specified email is already in use.");
+                string.Format(TemplateDataInUse, "e-mail"));
 
         public static Error InvalidEmail =>
             new("User.InvalidEmail",
-                "The specified email is invalid.");
+                string.Format(TemplateDataInvalid, "e-mail"));
     }
 
     public static class Phone
     {
         public static Error NotFound =>
             new("User.NotFound",
-                "The phone with the specified identifier was not found.");
+                string.Format(TemplateNotFound, "phone"));
 
         public static Error DuplicatePhone =>
             new("User.DuplicatePhone",
-                "The specified phone is already in use.");
+                string.Format(TemplateDataInUse, "phone"));
 
         public static Error InvalidPhone =>
             new("User.InvalidPhone",
-                "The specified phone is invalid.");
+                string.Format(TemplateDataInvalid, "phone"));
     }
 }

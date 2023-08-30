@@ -3,9 +3,9 @@ using JacksonVeroneze.TemplateWebApi.Application.Core.Extensions;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Validators.Base;
 
-public class GuidValidator : AbstractValidator<Guid>
+public class IdGuidValidator : AbstractValidator<Guid>
 {
-    public GuidValidator()
+    public IdGuidValidator()
     {
         RuleFor(request => request)
             .NotNull();

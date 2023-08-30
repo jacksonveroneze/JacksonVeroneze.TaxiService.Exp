@@ -3,7 +3,7 @@ using JacksonVeroneze.TemplateWebApi.Application.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Application.Core.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Validators.Base;
 
-namespace JacksonVeroneze.TemplateWebApi.Application.Validators.User.Email;
+namespace JacksonVeroneze.TemplateWebApi.Application.Validators.Commands.User.Email;
 
 public class CreateEmailCommandValidator : AbstractValidator<CreateEmailCommand>
 {
@@ -13,11 +13,12 @@ public class CreateEmailCommandValidator : AbstractValidator<CreateEmailCommand>
             .NotNull();
 
         RuleFor(request => request.Id)
-            .SetValidator(new GuidValidator());
+            .SetValidator(new IdGuidValidator());
 
         RuleFor(request => request.Email)
             .Cascade(CascadeMode.Stop)
             .NotEmpty()
-            .WithError(ValidationErrors.User.EmailIsRequired);
+            .WithError(ValidationErrors.User.EmailIsRequired)
+            .EmailAddress();
     }
 }

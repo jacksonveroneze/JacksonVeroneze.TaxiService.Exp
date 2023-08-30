@@ -27,4 +27,8 @@
   <ItemGroup>
     <ProjectReference Include="..\JacksonVeroneze.TemplateWebApi.Domain\JacksonVeroneze.TemplateWebApi.Domain.csproj"/>
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Validators\Commands\" />
+  </ItemGroup>
 </Project>
