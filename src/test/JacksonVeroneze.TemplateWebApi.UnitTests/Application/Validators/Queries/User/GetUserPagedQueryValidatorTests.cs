@@ -48,6 +48,7 @@ public class GetUserPagedQueryValidatorTests
 
     public static readonly object?[][] MockData =
     {
+        new object?[] { string.Empty, UserStatus.None, 0, 0, 3 },
         new object?[] { "", UserStatus.None, 0, 0, 3 },
         new object?[] { "a", UserStatus.None, 0, 0, 4 },
         new object?[] { "name", UserStatus.None, 0, 0, 3 },

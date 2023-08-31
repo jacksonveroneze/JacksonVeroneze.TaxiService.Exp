@@ -45,9 +45,7 @@
     <Folder Include="Application\Handlers\EventHandler\" />
     <Folder Include="Application\Handlers\QueryHandler\" />
     <Folder Include="Application\Validators\Commands\" />
-    <Folder Include="Domain\Entities\" />
     <Folder Include="Domain\Specifications\" />
-    <Folder Include="Domain\ValueObjects\" />
   </ItemGroup>
 
 </Project>

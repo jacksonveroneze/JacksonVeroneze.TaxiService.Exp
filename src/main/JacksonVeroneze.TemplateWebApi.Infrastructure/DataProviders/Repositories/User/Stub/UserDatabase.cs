@@ -41,7 +41,7 @@ public static class UserDatabase
                         {
                             PhoneEntity phone = new(PhoneValueObject.Create($"(49) 99999-999{i}").Value!);
 
-                            user.AddPhone(phone);
+                            //user.AddPhone(phone);
 
                             return phone;
                         });

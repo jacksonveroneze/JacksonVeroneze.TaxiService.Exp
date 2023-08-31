@@ -7,7 +7,7 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
 public static class MetricsExtension
 {
     public static IDisposable? AddMetrics(
-        AppConfiguration appConfiguration)
+        AppConfiguration? appConfiguration)
     {
         if (appConfiguration?.Metrics?.Detailed ?? false)
         {

@@ -13,7 +13,7 @@ public class PhoneValueObject : ValueObject
         Value = value;
     }
 
-    public static implicit operator string(PhoneValueObject value)
+    public static implicit operator string(PhoneValueObject? value)
         => value?.Value ?? string.Empty;
 
     public static IResult<PhoneValueObject> Create(string value)

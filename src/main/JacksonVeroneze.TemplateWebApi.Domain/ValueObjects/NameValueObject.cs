@@ -6,6 +6,9 @@ namespace JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
 
 public class NameValueObject : ValueObject
 {
+    private const int MinLength = 2;
+    private const int MaxLength = 100;
+
     public string? Value { get; }
 
     private NameValueObject(string value)
@@ -18,7 +21,9 @@ public class NameValueObject : ValueObject
 
     public static IResult<NameValueObject> Create(string value)
     {
-        if (string.IsNullOrEmpty(value))
+        if (string.IsNullOrEmpty(value) ||
+            value.Length <= MinLength ||
+            value.Length > MaxLength)
         {
             return Result<NameValueObject>.Invalid(
                 DomainErrors.User.InvalidName);
