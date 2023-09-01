@@ -26,6 +26,7 @@ public static class UserEntityBuilder
             .CustomInstantiator(conf => new UserEntity(
                 NameValueObjectBuilder.BuildSingle(),
                 DateOnly.FromDateTime(conf.Date.Past()),
-                Gender.Male));
+                Gender.Male,
+                CpfValueObjectBuilder.BuildSingle()));
     }
 }

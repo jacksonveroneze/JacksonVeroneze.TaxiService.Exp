@@ -1,7 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
 using JacksonVeroneze.NET.DomainObjects.Errors;
 
 namespace JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 
+[ExcludeFromCodeCoverage]
 public static class DomainErrors
 {
     private const string TemplateNotFound = "The {0} with the specified identifier was not found.";
@@ -21,6 +23,10 @@ public static class DomainErrors
         public static Error InvalidName =>
             new("User.InvalidName",
                 string.Format(TemplateDataInvalid, "name"));
+
+        public static Error InvalidCpf =>
+            new("User.InvalidCpf",
+                "The document is invalid.");
 
         public static Error AlreadyActivated =>
             new("User.AlreadyActivated",

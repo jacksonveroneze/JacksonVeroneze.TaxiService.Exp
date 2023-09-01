@@ -15,4 +15,7 @@ public sealed record CreateUserCommand :
 
     [JsonPropertyName("gender")]
     public Gender? Gender { get; init; }
+
+    [JsonPropertyName("Document")]
+    public string? Document { get; init; }
 }

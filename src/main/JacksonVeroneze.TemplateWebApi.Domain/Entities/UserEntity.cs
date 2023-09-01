@@ -22,6 +22,8 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
 
     public Gender Gender { get; private set; }
 
+    public CpfValueObject Cpf { get; private set; }
+
     public UserStatus Status { get; private set; }
 
     public DateTime? ActivedOnUtc { get; private set; }
@@ -38,15 +40,19 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
     public IReadOnlyCollection<PhoneEntity> Phones =>
         _phones?.AsReadOnly() ?? _emptyPhones;
 
-    public UserEntity(NameValueObject name, DateOnly birthday, Gender gender)
+    public UserEntity(NameValueObject name,
+        DateOnly birthday, Gender gender,
+        CpfValueObject cpf)
     {
         ArgumentNullException.ThrowIfNull(name);
         ArgumentNullException.ThrowIfNull(birthday);
         ArgumentNullException.ThrowIfNull(gender);
+        ArgumentNullException.ThrowIfNull(cpf);
 
         Name = name;
         Birthday = birthday;
         Gender = gender;
+        Cpf = cpf;
 
         Status = UserStatus.PendingActivation;
 
@@ -105,24 +111,6 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
                 DomainErrors.Email.DuplicateEmail);
         }
 
-        _emails.Add(entity);
-
-        return Result.Success();
-    }
-
-    public IResult UpdateEmail(EmailEntity entity)
-    {
-        ArgumentNullException.ThrowIfNull(entity);
-
-        _emails ??= new List<EmailEntity>();
-
-        if (!ExistsEmailByValue(entity.Email))
-        {
-            return Result.Invalid(
-                DomainErrors.Email.NotFound);
-        }
-
-        _emails.Remove(entity);
         _emails.Add(entity);
 
         return Result.Success();

@@ -1,5 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace JacksonVeroneze.TemplateWebApi.Domain.Parameters;
 
+[ExcludeFromCodeCoverage]
 public sealed class MailParameters
 {
     public const string Name = "Mail";

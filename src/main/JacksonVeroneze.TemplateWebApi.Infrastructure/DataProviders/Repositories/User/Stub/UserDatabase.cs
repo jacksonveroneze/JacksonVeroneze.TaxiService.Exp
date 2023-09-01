@@ -24,7 +24,8 @@ public static class UserDatabase
                     Random rnd = new();
 
                     UserEntity user = new(NameValueObject.Create($"User_{item}").Value!,
-                        DateOnly.FromDateTime(DateTime.UtcNow), Gender.Male);
+                        DateOnly.FromDateTime(DateTime.UtcNow), Gender.Male,
+                        CpfValueObject.Create("000.000.000-00").Value!);
 
                     _ = Enumerable.Range(1, rnd.Next(2, 5))
                         .Select(i =>

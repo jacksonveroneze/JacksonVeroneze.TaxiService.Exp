@@ -19,19 +19,19 @@ public class UserEntityTests
         // -------------------------------------------------------
         // Arrange
         // -------------------------------------------------------
-        IResult<NameValueObject> nameObject =
-            NameValueObject.Create("User Test");
+        NameValueObject name = NameValueObjectBuilder.BuildSingle();
 
-        DateOnly birthday = DateOnly
-            .FromDateTime(DateTime.Now);
+        DateOnly birthday = DateOnly.FromDateTime(DateTime.Now);
 
         Gender gender = Gender.Male;
+
+        CpfValueObject cpf = CpfValueObjectBuilder.BuildSingle();
 
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
         UserEntity entity = new(
-            nameObject.Value!, birthday, gender);
+            name, birthday, gender, cpf);
 
         // -------------------------------------------------------
         // Assert
@@ -41,7 +41,7 @@ public class UserEntityTests
 
         entity.Name.Should()
             .NotBeNull()
-            .And.Be(nameObject.Value);
+            .And.Be(name);
 
         entity.Birthday.Should()
             .Be(birthday);

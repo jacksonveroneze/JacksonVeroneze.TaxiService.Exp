@@ -9,7 +9,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.CommandHandler.User;
 
-internal sealed class CreateUserCommandHandler :
+public sealed class CreateUserCommandHandler :
     IRequestHandler<CreateUserCommand, IResult<CreateUserCommandResponse>>
 {
     private readonly ILogger<CreateUserCommandHandler> _logger;
@@ -50,18 +50,27 @@ internal sealed class CreateUserCommandHandler :
         IResult<NameValueObject> nameValueObject = NameValueObject
             .Create(request.Name!);
 
-        if (nameValueObject.IsFailure)
+        IResult<CpfValueObject> cpfValueObject = CpfValueObject
+            .Create(request.Document!);
+
+        IResult resultValidateVos = Result
+            .FirstFailureOrSuccess(nameValueObject, cpfValueObject);
+
+        if (resultValidateVos.IsFailure)
         {
             _logger.LogGenericError(nameof(CreateUserCommandResponse),
-                nameof(Handle), nameValueObject.Error!);
+                nameof(Handle), resultValidateVos.Error!);
 
-            return Result<CreateUserCommandResponse>.Invalid(nameValueObject.Error!);
+            return Result<CreateUserCommandResponse>
+                .Invalid(resultValidateVos.Error!);
         }
 
-        UserEntity entity = new(nameValueObject.Value!, request.Birthday!.Value,
-            request.Gender!.Value);
+        UserEntity entity = new(nameValueObject.Value!,
+            request.Birthday!.Value, request.Gender!.Value,
+            cpfValueObject.Value!);
 
-        await _writeRepository.CreateAsync(entity, cancellationToken);
+        await _writeRepository.CreateAsync(
+            entity, cancellationToken);
 
         CreateUserCommandResponse response =
             _mapper.Map<CreateUserCommandResponse>(entity);

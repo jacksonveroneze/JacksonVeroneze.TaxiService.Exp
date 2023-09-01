@@ -20,7 +20,7 @@ public static partial class LogMessagesExtensions
 
     [LoggerMessage(
         EventId = 1000,
-        Level = LogLevel.Information,
+        Level = LogLevel.Warning,
         Message = "{className} - {methodName} - Exists - Message: '{message}' - Value: '{value}'")]
     public static partial void AlreadyExists(this ILogger logger,
         string className, string methodName, string message, string value);

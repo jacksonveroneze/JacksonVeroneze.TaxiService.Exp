@@ -1,3 +1,4 @@
+using JacksonVeroneze.NET.DomainObjects.Result;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities.Base;
 using JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
 
@@ -12,5 +13,14 @@ public class EmailEntity : BaseEntity
         ArgumentNullException.ThrowIfNull(email);
 
         Email = email;
+    }
+
+    public IResult Update(EmailValueObject email)
+    {
+        ArgumentNullException.ThrowIfNull(email);
+
+        Email = email;
+
+        return Result.Success();
     }
 }
