@@ -25,7 +25,8 @@ public class UserReadStubRepository : IUserReadRepository
         CancellationToken cancellationToken = default)
     {
         UserEntity? item = UserDatabase.Data
-            .FirstOrDefault(item => item.Id == id);
+            .FirstOrDefault(item =>
+                item.DeletedAt == null && item.Id == id);
 
         return Task.FromResult(item);
     }
@@ -44,6 +45,7 @@ public class UserReadStubRepository : IUserReadRepository
             .Compile();
 
         IList<UserEntity> items = UserDatabase.Data
+            .Where(item => item.DeletedAt == null)
             .Where(expression)
             .ToList();
 

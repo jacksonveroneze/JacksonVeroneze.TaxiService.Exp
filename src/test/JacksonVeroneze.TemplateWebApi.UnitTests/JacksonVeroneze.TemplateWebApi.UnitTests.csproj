@@ -41,6 +41,7 @@
 
   <ItemGroup>
     <Folder Include="Application\Behaviors\" />
+    <Folder Include="Application\Handlers\CommandHandler\User\Email\" />
     <Folder Include="Application\Handlers\EventHandler\" />
     <Folder Include="Application\Validators\Commands\" />
     <Folder Include="Domain\Specifications\" />

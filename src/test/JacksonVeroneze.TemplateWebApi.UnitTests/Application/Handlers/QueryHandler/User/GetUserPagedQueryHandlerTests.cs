@@ -15,6 +15,7 @@ using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Commands;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Queries;
+using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Queries.User;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Util;
 using Microsoft.Extensions.Logging;
 

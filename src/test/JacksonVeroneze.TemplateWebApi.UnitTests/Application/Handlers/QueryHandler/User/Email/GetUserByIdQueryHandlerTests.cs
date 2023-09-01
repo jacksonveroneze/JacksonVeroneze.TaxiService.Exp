@@ -1,36 +1,32 @@
 using AutoMapper;
 using JacksonVeroneze.NET.DomainObjects.Result;
-using JacksonVeroneze.TemplateWebApi.Application.Commands.User;
-using JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.User;
+using JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.User.Email;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.Mappers;
-using JacksonVeroneze.TemplateWebApi.Application.Models.Base;
-using JacksonVeroneze.TemplateWebApi.Application.Models.User;
-using JacksonVeroneze.TemplateWebApi.Application.Queries.User;
+using JacksonVeroneze.TemplateWebApi.Application.Models.User.Email;
+using JacksonVeroneze.TemplateWebApi.Application.Queries.User.Email;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders;
-using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Commands;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Domain.Entities;
-using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Queries;
-using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Queries.User;
+using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Queries.User.Email;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Util;
 using Microsoft.Extensions.Logging;
 
-namespace JacksonVeroneze.TemplateWebApi.UnitTests.Application.Handlers.QueryHandler.User;
+namespace JacksonVeroneze.TemplateWebApi.UnitTests.Application.Handlers.QueryHandler.User.Email;
 
-public class GetUserByIdQueryHandlerTests
+public class GetAllEmailsByUserIdQueryHandlerTests
 {
-    private readonly GetUserByIdQueryHandler _handler;
-    private readonly Mock<ILogger<GetUserByIdQueryHandler>> _mockLogger;
+    private readonly GetAllEmailsByUserIdQueryHandler _handler;
+    private readonly Mock<ILogger<GetAllEmailsByUserIdQueryHandler>> _mockLogger;
     private readonly Mock<IUserReadRepository> _mockReadRepository;
 
-    public GetUserByIdQueryHandlerTests()
+    public GetAllEmailsByUserIdQueryHandlerTests()
     {
-        _mockLogger = new Mock<ILogger<GetUserByIdQueryHandler>>();
+        _mockLogger = new Mock<ILogger<GetAllEmailsByUserIdQueryHandler>>();
         _mockReadRepository = new Mock<IUserReadRepository>();
 
-        IMapper mapper = AutoMapperBuilder.Build<UserMapper>();
+        IMapper mapper = AutoMapperBuilder.Build<EmailMapper>();
 
         _mockLogger
             .Setup(mock => mock.IsEnabled(LogLevel.Information))
@@ -44,7 +40,7 @@ public class GetUserByIdQueryHandlerTests
             .Setup(mock => mock.IsEnabled(LogLevel.Error))
             .Returns(true);
 
-        _handler = new GetUserByIdQueryHandler(
+        _handler = new GetAllEmailsByUserIdQueryHandler(
             _mockLogger.Object,
             mapper,
             _mockReadRepository.Object
@@ -53,18 +49,18 @@ public class GetUserByIdQueryHandlerTests
 
     #region success
 
-    [Fact(DisplayName = nameof(GetUserByIdQueryHandler)
-                        + nameof(GetUserByIdQueryHandler.Handle)
+    [Fact(DisplayName = nameof(GetAllEmailsByUserIdQueryHandler)
+                        + nameof(GetAllEmailsByUserIdQueryHandler.Handle)
                         + "Should Success")]
     public async Task Handle_ReturnSuccess()
     {
         // -------------------------------------------------------
         // Arrange
         // -------------------------------------------------------
-        GetUserByIdQuery command = GetUserByIdQueryBuilder
-            .BuildSingle();
+        GetAllEmailsByUserIdQuery command =
+            GetAllEmailsByUserIdQueryBuilder.BuildSingle();
 
-        UserEntity userEntity = UserEntityBuilder.BuildSingle();
+        UserEntity userEntity = UserEntityBuilder.BuildSingle(2);
 
         _mockReadRepository.Setup(mock =>
                 mock.GetByIdAsync(
@@ -80,7 +76,7 @@ public class GetUserByIdQueryHandlerTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult<GetUserByIdQueryResponse> result = await _handler
+        IResult<GetAllEmailsByUserIdQueryResponse> result = await _handler
             .Handle(command, CancellationToken.None);
 
         // -------------------------------------------------------
@@ -92,23 +88,9 @@ public class GetUserByIdQueryHandlerTests
         result.IsSuccess.Should()
             .BeTrue();
 
-        // result.Value!.Data.Should()
-        //     .NotBeNull()
-        //     .And.BeEquivalentTo(userEntity,
-        //         options =>
-        //         {
-        //             options
-        //                 .WithMapping<UserResponse>(e => e.Id, s => s.Id)
-        //                 //.WithMapping<UserResponse>(e => e.Name.Value, s => s.Name)
-        //                 .WithMapping<UserResponse>(e => e.Birthday, s => s.Birthday)
-        //                 .WithMapping<UserResponse>(e => e.Gender, s => s.Gender)
-        //                 .WithMapping<UserResponse>(e => e.Status, s => s.Status)
-        //                 .ExcludingMissingMembers()
-        //                 .ExcludingNestedObjects()
-        //                 .ExcludingNonBrowsableMembers();
-        //
-        //             return options;
-        //         });
+        result.Value!.Data.Should()
+            .NotBeNullOrEmpty()
+            .And.HaveSameCount(userEntity.Emails);
 
         result.Errors.Should()
             .BeNullOrEmpty();
@@ -117,7 +99,7 @@ public class GetUserByIdQueryHandlerTests
             mock.GetByIdAsync(It.IsAny<Guid>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
-        _mockLogger.Verify(nameof(GetUserByIdQueryHandler),
+        _mockLogger.Verify(nameof(GetAllEmailsByUserIdQueryHandler),
             expectedLogLevel: LogLevel.Information,
             times: Times.Once);
     }
@@ -126,16 +108,16 @@ public class GetUserByIdQueryHandlerTests
 
     #region error
 
-    [Fact(DisplayName = nameof(GetUserByIdQueryHandler)
-                        + nameof(GetUserByIdQueryHandler.Handle)
+    [Fact(DisplayName = nameof(GetAllEmailsByUserIdQueryHandler)
+                        + nameof(GetAllEmailsByUserIdQueryHandler.Handle)
                         + "User Not Exists - Should Error")]
     public async Task Handle_UserNotExists_ShouldReturnError()
     {
         // -------------------------------------------------------
         // Arrange
         // -------------------------------------------------------
-        GetUserByIdQuery command = GetUserByIdQueryBuilder
-            .BuildSingle();
+        GetAllEmailsByUserIdQuery command =
+            GetAllEmailsByUserIdQueryBuilder.BuildSingle();
 
         UserEntity? userEntity = null;
 
@@ -153,7 +135,7 @@ public class GetUserByIdQueryHandlerTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult<GetUserByIdQueryResponse> result = await _handler
+        IResult<GetAllEmailsByUserIdQueryResponse> result = await _handler
             .Handle(command, CancellationToken.None);
 
         // -------------------------------------------------------
@@ -173,7 +155,7 @@ public class GetUserByIdQueryHandlerTests
             mock.GetByIdAsync(It.IsAny<Guid>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
-        _mockLogger.Verify(nameof(GetUserByIdQueryHandler),
+        _mockLogger.Verify(nameof(GetAllEmailsByUserIdQueryHandler),
             expectedLogLevel: LogLevel.Warning,
             times: Times.Once);
     }

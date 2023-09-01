@@ -8,7 +8,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.User.Email;
 
-internal sealed class GetAllEmailsByUserIdQueryHandler :
+public sealed class GetAllEmailsByUserIdQueryHandler :
     IRequestHandler<GetAllEmailsByUserIdQuery, IResult<GetAllEmailsByUserIdQueryResponse>>
 {
     private readonly ILogger<GetAllEmailsByUserIdQueryHandler> _logger;

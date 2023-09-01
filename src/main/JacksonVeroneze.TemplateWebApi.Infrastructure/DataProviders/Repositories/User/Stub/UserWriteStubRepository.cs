@@ -16,7 +16,7 @@ public class UserWriteStubRepository : IUserWriteRepository
     public Task DeleteAsync(UserEntity entity,
         CancellationToken cancellationToken = default)
     {
-        entity.MarkAsUpdated();
+        entity.MarkAsDeleted();
 
         return Task.CompletedTask;
     }
@@ -24,7 +24,7 @@ public class UserWriteStubRepository : IUserWriteRepository
     public Task UpdateAsync(UserEntity entity,
         CancellationToken cancellationToken = default)
     {
-        entity.MarkAsDeleted();
+        entity.MarkAsUpdated();
 
         return Task.CompletedTask;
     }

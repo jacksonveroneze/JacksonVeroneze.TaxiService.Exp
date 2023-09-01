@@ -1,7 +1,7 @@
 using Bogus;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.User;
 
-namespace JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Queries;
+namespace JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Queries.User;
 
 public static class GetUserByIdQueryBuilder
 {
