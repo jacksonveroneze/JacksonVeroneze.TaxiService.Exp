@@ -34,7 +34,7 @@ public static partial class LogMessagesExtensions
 
     [LoggerMessage(
         EventId = 1001,
-        Level = LogLevel.Information,
+        Level = LogLevel.Warning,
         Message = "{className} - {methodName} - NotFound - Id: '{id}' - Message: '{message}'")]
     public static partial void LogNotFound(this ILogger logger,
         string className, string methodName, Guid id, string message);
@@ -48,7 +48,7 @@ public static partial class LogMessagesExtensions
 
     [LoggerMessage(
         EventId = 1003,
-        Level = LogLevel.Information,
+        Level = LogLevel.Error,
         Message = "{className} - {methodName} - AlreadyProcessed - Message: '{message}' - Id: '{id}'")]
     public static partial void AlreadyProcessed(this ILogger logger,
         string className, string methodName, string message, Guid id);

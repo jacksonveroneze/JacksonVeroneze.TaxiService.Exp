@@ -3,23 +3,23 @@ using JacksonVeroneze.TemplateWebApi.Application.Commands.User;
 
 namespace JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Commands;
 
-public static class ActivateUserCommandBuilder
+public static class DeleteUserCommandBuilder
 {
-    public static ActivateUserCommand BuildSingle()
+    public static DeleteUserCommand BuildSingle()
     {
         return Factory().Generate();
     }
 
-    public static ActivateUserCommand BuildSingleInvalid()
+    public static DeleteUserCommand BuildSingleInvalid()
     {
         return Factory(false).Generate();
     }
 
-    private static Faker<ActivateUserCommand> Factory(
+    private static Faker<DeleteUserCommand> Factory(
         bool valid = true)
     {
-        return new Faker<ActivateUserCommand>("pt_BR")
-            .CustomInstantiator(s => new ActivateUserCommand(
+        return new Faker<DeleteUserCommand>("pt_BR")
+            .CustomInstantiator(s => new DeleteUserCommand(
                 valid ? s.Random.Guid() : Guid.Empty));
     }
 }
