@@ -8,7 +8,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.CommandHandler.User;
 
-internal sealed class DeleteUserCommandHandler :
+public sealed class DeleteUserCommandHandler :
     IRequestHandler<DeleteUserCommand, IResult<VoidResponse>>
 {
     private readonly ILogger<DeleteUserCommandHandler> _logger;

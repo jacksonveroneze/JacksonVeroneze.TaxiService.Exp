@@ -9,7 +9,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.CommandHandler.User;
 
-internal sealed class InactivateUserCommandHandler :
+public sealed class InactivateUserCommandHandler :
     IRequestHandler<InactivateUserCommand, IResult<VoidResponse>>
 {
     private readonly ILogger<InactivateUserCommandHandler> _logger;

@@ -38,6 +38,10 @@ public class CreateUserCommandHandlerTests
             .Setup(mock => mock.IsEnabled(LogLevel.Warning))
             .Returns(true);
 
+        _mockLogger
+            .Setup(mock => mock.IsEnabled(LogLevel.Error))
+            .Returns(true);
+
         _handler = new CreateUserCommandHandler(
             _mockLogger.Object,
             mapper,
@@ -46,10 +50,12 @@ public class CreateUserCommandHandlerTests
         );
     }
 
+    #region success
+
     [Fact(DisplayName = nameof(CreateUserCommandHandler)
                         + nameof(CreateUserCommandHandler.Handle)
                         + "Should Success")]
-    public async Task Create_ReturnSuccess()
+    public async Task Handle_ReturnSuccess()
     {
         // -------------------------------------------------------
         // Arrange
@@ -99,10 +105,14 @@ public class CreateUserCommandHandlerTests
             times: Times.Once);
     }
 
+    #endregion
+
+    #region error
+
     [Fact(DisplayName = nameof(CreateUserCommandHandler)
                         + nameof(CreateUserCommandHandler.Handle)
-                        + "User Exists - Should Success")]
-    public async Task Create_UserExists_ShouldReturnError()
+                        + "User Exists - Should Error")]
+    public async Task Handle_UserExists_ShouldReturnError()
     {
         // -------------------------------------------------------
         // Arrange
@@ -156,4 +166,66 @@ public class CreateUserCommandHandlerTests
             expectedLogLevel: LogLevel.Warning,
             times: Times.Once);
     }
+
+    [Fact(DisplayName = nameof(CreateUserCommandHandler)
+                        + nameof(CreateUserCommandHandler.Handle)
+                        + "Invalid Data - Should Error")]
+    public async Task Handle_InvalidData_ShouldReturnError()
+    {
+        // -------------------------------------------------------
+        // Arrange
+        // -------------------------------------------------------
+        CreateUserCommand command = CreateUserCommandBuilder
+            .BuildInvalidSingle();
+
+        _mockReadRepository.Setup(mock =>
+                mock.ExistsByNameAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<CancellationToken>()))
+            .Callback((string name, CancellationToken _) =>
+            {
+                name.Should()
+                    .NotBeNullOrEmpty()
+                    .And.Be(command.Name);
+            })
+            .ReturnsAsync(false);
+
+        // -------------------------------------------------------
+        // Act
+        // -------------------------------------------------------
+        IResult<CreateUserCommandResponse> result = await _handler
+            .Handle(command, CancellationToken.None);
+
+        // -------------------------------------------------------
+        // Assert
+        // -------------------------------------------------------
+        result.Should()
+            .NotBeNull();
+
+        result.IsSuccess.Should()
+            .BeFalse();
+
+        result.Value.Should()
+            .BeNull();
+
+        result.Errors.Should()
+            .NotBeNullOrEmpty()
+            .And.HaveCount(2)
+            .And.Contain(x => x.Code == DomainErrors.User.InvalidName.Code
+                              || x.Code == DomainErrors.User.InvalidCpf.Code);
+
+        _mockReadRepository.Verify(mock =>
+            mock.ExistsByNameAsync(It.IsAny<string>(),
+                It.IsAny<CancellationToken>()), Times.Once);
+
+        _mockWriteRepository.Verify(mock =>
+            mock.CreateAsync(It.IsAny<UserEntity>(),
+                It.IsAny<CancellationToken>()), Times.Never);
+
+        _mockLogger.Verify(nameof(CreateUserCommandHandler),
+            expectedLogLevel: LogLevel.Error,
+            times: Times.Once);
+    }
+
+    #endregion
 }

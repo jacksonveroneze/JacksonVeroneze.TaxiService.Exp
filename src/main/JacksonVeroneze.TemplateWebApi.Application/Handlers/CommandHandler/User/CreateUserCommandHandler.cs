@@ -54,15 +54,15 @@ public sealed class CreateUserCommandHandler :
             .Create(request.Document!);
 
         IResult resultValidateVos = Result
-            .FirstFailureOrSuccess(nameValueObject, cpfValueObject);
+            .FailuresOrSuccess(nameValueObject, cpfValueObject);
 
         if (resultValidateVos.IsFailure)
         {
-            _logger.LogGenericError(nameof(CreateUserCommandResponse),
-                nameof(Handle), resultValidateVos.Error!);
+            _logger.LogGenericError(nameof(CreateUserCommandHandler),
+                nameof(Handle), resultValidateVos.Errors!.Count());
 
             return Result<CreateUserCommandResponse>
-                .Invalid(resultValidateVos.Error!);
+                .Invalid(resultValidateVos.Errors!);
         }
 
         UserEntity entity = new(nameValueObject.Value!,

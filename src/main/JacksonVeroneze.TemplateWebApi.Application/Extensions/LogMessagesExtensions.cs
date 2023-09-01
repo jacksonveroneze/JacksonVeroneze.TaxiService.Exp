@@ -5,11 +5,18 @@ public static partial class LogMessagesExtensions
     #region Common
 
     [LoggerMessage(
-        EventId = 998,
+        EventId = 997,
         Level = LogLevel.Error,
         Message = "{className} - {methodName} - Error - Message: '{message}'")]
     public static partial void LogGenericError(this ILogger logger,
         string className, string methodName, string message);
+
+    [LoggerMessage(
+        EventId = 998,
+        Level = LogLevel.Error,
+        Message = "{className} - {methodName} - Error - Count: '{count}'")]
+    public static partial void LogGenericError(this ILogger logger,
+        string className, string methodName, int count);
 
     [LoggerMessage(
         EventId = 999,
