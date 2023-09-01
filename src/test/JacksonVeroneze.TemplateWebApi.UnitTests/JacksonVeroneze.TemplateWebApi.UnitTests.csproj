@@ -42,7 +42,6 @@
   <ItemGroup>
     <Folder Include="Application\Behaviors\" />
     <Folder Include="Application\Handlers\EventHandler\" />
-    <Folder Include="Application\Handlers\QueryHandler\" />
     <Folder Include="Application\Validators\Commands\" />
     <Folder Include="Domain\Specifications\" />
   </ItemGroup>

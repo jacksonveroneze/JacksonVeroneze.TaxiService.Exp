@@ -8,7 +8,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.User;
 
-internal sealed class GetUserByIdQueryHandler :
+public sealed class GetUserByIdQueryHandler :
     IRequestHandler<GetUserByIdQuery, IResult<GetUserByIdQueryResponse>>
 {
     private readonly ILogger<GetUserByIdQueryHandler> _logger;

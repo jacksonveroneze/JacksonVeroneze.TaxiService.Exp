@@ -9,7 +9,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.User;
 
-internal sealed class GetUserPagedQueryHandler :
+public sealed class GetUserPagedQueryHandler :
     IRequestHandler<GetUserPagedQuery, IResult<GetUserPagedQueryResponse>>
 {
     private readonly ILogger<GetUserPagedQueryHandler> _logger;

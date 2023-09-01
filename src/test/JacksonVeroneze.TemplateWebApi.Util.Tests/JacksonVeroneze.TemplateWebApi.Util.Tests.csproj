@@ -25,4 +25,5 @@
     <ProjectReference Include="..\..\main\JacksonVeroneze.TemplateWebApi.Infrastructure\JacksonVeroneze.TemplateWebApi.Infrastructure.csproj"/>
   </ItemGroup>
 
+
 </Project>

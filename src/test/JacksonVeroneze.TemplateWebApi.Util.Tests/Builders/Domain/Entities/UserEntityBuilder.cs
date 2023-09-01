@@ -1,4 +1,6 @@
 using Bogus;
+using JacksonVeroneze.NET.Pagination;
+using JacksonVeroneze.NET.Pagination.Extensions;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Domain.ValueObjects;
@@ -18,6 +20,17 @@ public static class UserEntityBuilder
         }
 
         return entity;
+    }
+
+    public static Page<UserEntity> BuildPagedSingle(
+        int total = 10)
+    {
+        List<UserEntity>? data = Factory()
+            .Generate(total);
+
+        PaginationParameters parameters = new(1, data.Count);
+
+        return data.ToPageInMemory(parameters);
     }
 
     private static Faker<UserEntity> Factory()
