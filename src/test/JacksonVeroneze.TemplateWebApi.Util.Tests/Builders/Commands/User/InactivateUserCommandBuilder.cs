@@ -1,7 +1,7 @@
 using Bogus;
 using JacksonVeroneze.TemplateWebApi.Application.Commands.User;
 
-namespace JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Commands;
+namespace JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Commands.User;
 
 public static class InactivateUserCommandBuilder
 {

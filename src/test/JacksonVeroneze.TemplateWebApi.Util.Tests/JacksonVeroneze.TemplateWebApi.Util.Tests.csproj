@@ -23,7 +23,9 @@
     <ProjectReference Include="..\..\main\JacksonVeroneze.TemplateWebApi.Application\JacksonVeroneze.TemplateWebApi.Application.csproj"/>
     <ProjectReference Include="..\..\main\JacksonVeroneze.TemplateWebApi.Domain\JacksonVeroneze.TemplateWebApi.Domain.csproj"/>
     <ProjectReference Include="..\..\main\JacksonVeroneze.TemplateWebApi.Infrastructure\JacksonVeroneze.TemplateWebApi.Infrastructure.csproj"/>
+
   </ItemGroup>
+
 
 
 

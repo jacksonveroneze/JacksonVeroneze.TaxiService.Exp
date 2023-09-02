@@ -9,7 +9,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.CommandHandler.User.Email;
 
-internal sealed class CreateEmailCommandHandler :
+public sealed class CreateEmailCommandHandler :
     IRequestHandler<CreateEmailCommand, IResult<VoidResponse>>
 {
     private readonly ILogger<CreateEmailCommandHandler> _logger;

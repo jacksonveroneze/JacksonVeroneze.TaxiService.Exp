@@ -14,7 +14,7 @@ public static class UserEntityBuilder
     {
         UserEntity entity = Factory().Generate();
 
-        if (totalIncludeEmail > 0)
+        for (int i = 1; i <= totalIncludeEmail; i++)
         {
             entity.AddEmail(EmailEntityBuilder.BuildSingle());
         }

@@ -1,6 +1,6 @@
 using JacksonVeroneze.NET.DomainObjects.Result;
-using JacksonVeroneze.TemplateWebApi.Application.Commands.User;
-using JacksonVeroneze.TemplateWebApi.Application.Handlers.CommandHandler.User;
+using JacksonVeroneze.TemplateWebApi.Application.Commands.User.Email;
+using JacksonVeroneze.TemplateWebApi.Application.Handlers.CommandHandler.User.Email;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
@@ -10,18 +10,18 @@ using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Util;
 using Microsoft.Extensions.Logging;
 
-namespace JacksonVeroneze.TemplateWebApi.UnitTests.Application.Handlers.CommandHandler.User;
+namespace JacksonVeroneze.TemplateWebApi.UnitTests.Application.Handlers.CommandHandler.User.Email;
 
-public class DeleteUserCommandHandlerTests
+public class DeleteEmailCommandHandlerTests
 {
-    private readonly DeleteUserCommandHandler _handler;
-    private readonly Mock<ILogger<DeleteUserCommandHandler>> _mockLogger;
+    private readonly DeleteEmailCommandHandler _handler;
+    private readonly Mock<ILogger<DeleteEmailCommandHandler>> _mockLogger;
     private readonly Mock<IUserReadRepository> _mockReadRepository;
     private readonly Mock<IUserWriteRepository> _mockWriteRepository;
 
-    public DeleteUserCommandHandlerTests()
+    public DeleteEmailCommandHandlerTests()
     {
-        _mockLogger = new Mock<ILogger<DeleteUserCommandHandler>>();
+        _mockLogger = new Mock<ILogger<DeleteEmailCommandHandler>>();
         _mockReadRepository = new Mock<IUserReadRepository>();
         _mockWriteRepository = new Mock<IUserWriteRepository>();
 
@@ -37,7 +37,7 @@ public class DeleteUserCommandHandlerTests
             .Setup(mock => mock.IsEnabled(LogLevel.Error))
             .Returns(true);
 
-        _handler = new DeleteUserCommandHandler(
+        _handler = new DeleteEmailCommandHandler(
             _mockLogger.Object,
             _mockReadRepository.Object,
             _mockWriteRepository.Object
@@ -46,18 +46,19 @@ public class DeleteUserCommandHandlerTests
 
     #region success
 
-    [Fact(DisplayName = nameof(DeleteUserCommandHandler)
-                        + nameof(DeleteUserCommandHandler.Handle)
+    [Fact(DisplayName = nameof(DeleteEmailCommandHandler)
+                        + nameof(DeleteEmailCommandHandler.Handle)
                         + "Should Success")]
     public async Task Handle_ReturnSuccess()
     {
         // -------------------------------------------------------
         // Arrange
         // -------------------------------------------------------
-        DeleteUserCommand command = DeleteUserCommandBuilder
-            .BuildSingle();
+        UserEntity userEntity = UserEntityBuilder
+            .BuildSingle(totalIncludeEmail: 2);
 
-        UserEntity userEntity = UserEntityBuilder.BuildSingle();
+        DeleteEmailCommand command = DeleteEmailCommandBuilder
+            .BuildSingle(userEntity.Id, userEntity.Emails.First().Id);
 
         _mockReadRepository.Setup(mock =>
                 mock.GetByIdAsync(
@@ -88,15 +89,19 @@ public class DeleteUserCommandHandlerTests
         result.Errors.Should()
             .BeNullOrEmpty();
 
+        userEntity.Emails.Should()
+            .NotBeNullOrEmpty()
+            .And.HaveCount(1);
+
         _mockReadRepository.Verify(mock =>
             mock.GetByIdAsync(It.IsAny<Guid>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
         _mockWriteRepository.Verify(mock =>
-            mock.DeleteAsync(It.IsAny<UserEntity>(),
+            mock.UpdateAsync(It.IsAny<UserEntity>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
-        _mockLogger.Verify(nameof(DeleteUserCommandHandler),
+        _mockLogger.Verify(nameof(DeleteEmailCommandHandler),
             expectedLogLevel: LogLevel.Information,
             times: Times.Once);
     }
@@ -105,15 +110,15 @@ public class DeleteUserCommandHandlerTests
 
     #region error
 
-    [Fact(DisplayName = nameof(DeleteUserCommandHandler)
-                        + nameof(DeleteUserCommandHandler.Handle)
+    [Fact(DisplayName = nameof(DeleteEmailCommandHandler)
+                        + nameof(DeleteEmailCommandHandler.Handle)
                         + "User Not Exists - Should Error")]
     public async Task Handle_UserNotExists_ShouldReturnError()
     {
         // -------------------------------------------------------
         // Arrange
         // -------------------------------------------------------
-        DeleteUserCommand command = DeleteUserCommandBuilder
+        DeleteEmailCommand command = DeleteEmailCommandBuilder
             .BuildSingle();
 
         UserEntity? userEntity = null;
@@ -153,10 +158,67 @@ public class DeleteUserCommandHandlerTests
                 It.IsAny<CancellationToken>()), Times.Once);
 
         _mockWriteRepository.Verify(mock =>
-            mock.DeleteAsync(It.IsAny<UserEntity>(),
+            mock.UpdateAsync(It.IsAny<UserEntity>(),
                 It.IsAny<CancellationToken>()), Times.Never);
 
-        _mockLogger.Verify(nameof(DeleteUserCommandHandler),
+        _mockLogger.Verify(nameof(DeleteEmailCommandHandler),
+            expectedLogLevel: LogLevel.Warning,
+            times: Times.Once);
+    }
+
+    [Fact(DisplayName = nameof(DeleteEmailCommandHandler)
+                        + nameof(DeleteEmailCommandHandler.Handle)
+                        + "User Not Exists - Should Error")]
+    public async Task Handle_EmailNotExists_ShouldReturnError()
+    {
+        // -------------------------------------------------------
+        // Arrange
+        // -------------------------------------------------------
+        UserEntity userEntity = UserEntityBuilder
+            .BuildSingle(totalIncludeEmail: 2);
+
+        DeleteEmailCommand command = DeleteEmailCommandBuilder
+            .BuildSingleInvalid();
+
+        _mockReadRepository.Setup(mock =>
+                mock.GetByIdAsync(
+                    It.IsAny<Guid>(),
+                    It.IsAny<CancellationToken>()))
+            .Callback((Guid id, CancellationToken _) =>
+            {
+                id.Should()
+                    .Be(command.Id);
+            })
+            .ReturnsAsync(userEntity);
+
+        // -------------------------------------------------------
+        // Act
+        // -------------------------------------------------------
+        IResult<VoidResponse> result = await _handler
+            .Handle(command, CancellationToken.None);
+
+        // -------------------------------------------------------
+        // Assert
+        // -------------------------------------------------------
+        result.Should()
+            .NotBeNull();
+
+        result.IsSuccess.Should()
+            .BeFalse();
+
+        result.Error.Should()
+            .NotBeNull()
+            .And.BeEquivalentTo(DomainErrors.Email.NotFound);
+
+        _mockReadRepository.Verify(mock =>
+            mock.GetByIdAsync(It.IsAny<Guid>(),
+                It.IsAny<CancellationToken>()), Times.Once);
+
+        _mockWriteRepository.Verify(mock =>
+            mock.UpdateAsync(It.IsAny<UserEntity>(),
+                It.IsAny<CancellationToken>()), Times.Never);
+
+        _mockLogger.Verify(nameof(DeleteEmailCommandHandler),
             expectedLogLevel: LogLevel.Warning,
             times: Times.Once);
     }

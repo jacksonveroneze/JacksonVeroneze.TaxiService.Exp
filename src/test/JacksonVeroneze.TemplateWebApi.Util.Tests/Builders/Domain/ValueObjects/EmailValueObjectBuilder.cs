@@ -5,15 +5,17 @@ namespace JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Domain.ValueObjects
 
 public static class EmailValueObjectBuilder
 {
-    public static EmailValueObject BuildSingle()
+    public static EmailValueObject BuildSingle(
+        string? value = null)
     {
-        return Factory().Generate();
+        return Factory(value).Generate();
     }
 
-    private static Faker<EmailValueObject> Factory()
+    private static Faker<EmailValueObject> Factory(
+        string? value = null)
     {
         return new Faker<EmailValueObject>("pt_BR")
             .CustomInstantiator(conf =>
-                EmailValueObject.Create(conf.Person.Email).Value!);
+                EmailValueObject.Create(value ?? conf.Person.Email).Value!);
     }
 }

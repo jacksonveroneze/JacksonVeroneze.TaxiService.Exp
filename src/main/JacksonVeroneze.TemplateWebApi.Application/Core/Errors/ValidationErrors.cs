@@ -1,7 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
 using JacksonVeroneze.NET.DomainObjects.Errors;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Core.Errors;
 
+[ExcludeFromCodeCoverage]
 internal static class ValidationErrors
 {
     internal static class User

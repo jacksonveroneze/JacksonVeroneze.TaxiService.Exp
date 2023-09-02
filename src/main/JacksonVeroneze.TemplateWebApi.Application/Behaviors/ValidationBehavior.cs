@@ -1,9 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using FluentValidation.Results;
 using JacksonVeroneze.TemplateWebApi.Application.Extensions;
 using ValidationException = JacksonVeroneze.TemplateWebApi.Application.Exceptions.ValidationException;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Behaviors;
 
+[ExcludeFromCodeCoverage]
 public sealed class ValidationBehavior<TRequest, TResponse> :
     IPipelineBehavior<TRequest, TResponse>
     where TRequest : class, IRequest<TResponse>

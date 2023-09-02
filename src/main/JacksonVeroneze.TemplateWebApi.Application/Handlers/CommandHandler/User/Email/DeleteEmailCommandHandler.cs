@@ -8,7 +8,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.CommandHandler.User.Email;
 
-internal sealed class DeleteEmailCommandHandler :
+public sealed class DeleteEmailCommandHandler :
     IRequestHandler<DeleteEmailCommand, IResult<VoidResponse>>
 {
     private readonly ILogger<DeleteEmailCommandHandler> _logger;

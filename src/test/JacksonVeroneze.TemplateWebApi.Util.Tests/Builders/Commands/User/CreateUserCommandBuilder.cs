@@ -3,7 +3,7 @@ using Bogus.Extensions.Brazil;
 using JacksonVeroneze.TemplateWebApi.Application.Commands.User;
 using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 
-namespace JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Commands;
+namespace JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Commands.User;
 
 public static class CreateUserCommandBuilder
 {

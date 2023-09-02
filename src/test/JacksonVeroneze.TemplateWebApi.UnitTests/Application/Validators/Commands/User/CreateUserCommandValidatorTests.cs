@@ -2,7 +2,7 @@ using FluentValidation.Results;
 using JacksonVeroneze.TemplateWebApi.Application.Commands.User;
 using JacksonVeroneze.TemplateWebApi.Application.Validators.Commands.User;
 using JacksonVeroneze.TemplateWebApi.Domain.Enums;
-using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Commands;
+using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Commands.User;
 
 namespace JacksonVeroneze.TemplateWebApi.UnitTests.Application.Validators.Commands.User;
 

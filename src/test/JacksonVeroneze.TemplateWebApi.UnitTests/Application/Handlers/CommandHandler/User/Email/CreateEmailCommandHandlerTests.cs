@@ -1,32 +1,29 @@
 using JacksonVeroneze.NET.DomainObjects.Result;
-using JacksonVeroneze.TemplateWebApi.Application.Commands.User;
-using JacksonVeroneze.TemplateWebApi.Application.Handlers.CommandHandler.User;
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Common;
+using JacksonVeroneze.TemplateWebApi.Application.Commands.User.Email;
+using JacksonVeroneze.TemplateWebApi.Application.Handlers.CommandHandler.User.Email;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
-using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Commands.User;
+using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Commands.User.Email;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Util;
 using Microsoft.Extensions.Logging;
 
-namespace JacksonVeroneze.TemplateWebApi.UnitTests.Application.Handlers.CommandHandler.User;
+namespace JacksonVeroneze.TemplateWebApi.UnitTests.Application.Handlers.CommandHandler.User.Email;
 
-public class ActivateUserCommandHandlerTests
+public class CreateEmailCommandHandlerTests
 {
-    private readonly ActivateUserCommandHandler _handler;
-    private readonly Mock<IDateTime> _mockDateTime;
-    private readonly Mock<ILogger<ActivateUserCommandHandler>> _mockLogger;
+    private readonly CreateEmailCommandHandler _handler;
+    private readonly Mock<ILogger<CreateEmailCommandHandler>> _mockLogger;
     private readonly Mock<IUserReadRepository> _mockReadRepository;
     private readonly Mock<IUserWriteRepository> _mockWriteRepository;
 
-    public ActivateUserCommandHandlerTests()
+    public CreateEmailCommandHandlerTests()
     {
-        _mockLogger = new Mock<ILogger<ActivateUserCommandHandler>>();
+        _mockLogger = new Mock<ILogger<CreateEmailCommandHandler>>();
         _mockReadRepository = new Mock<IUserReadRepository>();
         _mockWriteRepository = new Mock<IUserWriteRepository>();
-        _mockDateTime = new Mock<IDateTime>();
 
         _mockLogger
             .Setup(mock => mock.IsEnabled(LogLevel.Information))
@@ -40,25 +37,24 @@ public class ActivateUserCommandHandlerTests
             .Setup(mock => mock.IsEnabled(LogLevel.Error))
             .Returns(true);
 
-        _handler = new ActivateUserCommandHandler(
+        _handler = new CreateEmailCommandHandler(
             _mockLogger.Object,
             _mockReadRepository.Object,
-            _mockWriteRepository.Object,
-            _mockDateTime.Object
+            _mockWriteRepository.Object
         );
     }
 
     #region success
 
-    [Fact(DisplayName = nameof(ActivateUserCommandHandler)
-                        + nameof(ActivateUserCommandHandler.Handle)
+    [Fact(DisplayName = nameof(CreateEmailCommandHandler)
+                        + nameof(CreateEmailCommandHandler.Handle)
                         + "Should Success")]
     public async Task Handle_ReturnSuccess()
     {
         // -------------------------------------------------------
         // Arrange
         // -------------------------------------------------------
-        ActivateUserCommand command = ActivateUserCommandBuilder
+        CreateEmailCommand command = CreateEmailCommandBuilder
             .BuildSingle();
 
         UserEntity userEntity = UserEntityBuilder.BuildSingle();
@@ -73,9 +69,6 @@ public class ActivateUserCommandHandlerTests
                     .Be(command.Id);
             })
             .ReturnsAsync(userEntity);
-
-        _mockDateTime.SetupGet(mock =>
-            mock.UtcNow).Returns(DateTime.UtcNow);
 
         // -------------------------------------------------------
         // Act
@@ -103,7 +96,7 @@ public class ActivateUserCommandHandlerTests
             mock.UpdateAsync(It.IsAny<UserEntity>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
-        _mockLogger.Verify(nameof(ActivateUserCommandHandler),
+        _mockLogger.Verify(nameof(CreateEmailCommandHandler),
             expectedLogLevel: LogLevel.Information,
             times: Times.Once);
     }
@@ -112,15 +105,15 @@ public class ActivateUserCommandHandlerTests
 
     #region error
 
-    [Fact(DisplayName = nameof(ActivateUserCommandHandler)
-                        + nameof(ActivateUserCommandHandler.Handle)
+    [Fact(DisplayName = nameof(CreateEmailCommandHandler)
+                        + nameof(CreateEmailCommandHandler.Handle)
                         + "User Not Exists - Should Error")]
     public async Task Handle_UserNotExists_ShouldReturnError()
     {
         // -------------------------------------------------------
         // Arrange
         // -------------------------------------------------------
-        ActivateUserCommand command = ActivateUserCommandBuilder
+        CreateEmailCommand command = CreateEmailCommandBuilder
             .BuildSingle();
 
         UserEntity? userEntity = null;
@@ -163,27 +156,23 @@ public class ActivateUserCommandHandlerTests
             mock.UpdateAsync(It.IsAny<UserEntity>(),
                 It.IsAny<CancellationToken>()), Times.Never);
 
-        _mockLogger.Verify(nameof(ActivateUserCommandHandler),
+        _mockLogger.Verify(nameof(CreateEmailCommandHandler),
             expectedLogLevel: LogLevel.Warning,
             times: Times.Once);
     }
 
-    [Fact(DisplayName = nameof(ActivateUserCommandHandler)
-                        + nameof(ActivateUserCommandHandler.Handle)
+    [Fact(DisplayName = nameof(CreateEmailCommandHandler)
+                        + nameof(CreateEmailCommandHandler.Handle)
                         + "Invalid Data - Should Error")]
     public async Task Handle_InvalidData_ShouldReturnError()
     {
         // -------------------------------------------------------
         // Arrange
         // -------------------------------------------------------
-        ActivateUserCommand command = ActivateUserCommandBuilder
-            .BuildSingle();
+        CreateEmailCommand command = CreateEmailCommandBuilder
+            .BuildSingleInvalid();
 
         UserEntity userEntity = UserEntityBuilder.BuildSingle();
-
-        userEntity.Activate(DateTime.UtcNow);
-
-        userEntity.ClearEvents();
 
         _mockReadRepository.Setup(mock =>
                 mock.GetByIdAsync(
@@ -195,9 +184,6 @@ public class ActivateUserCommandHandlerTests
                     .Be(command.Id);
             })
             .ReturnsAsync(userEntity);
-
-        _mockDateTime.SetupGet(mock =>
-            mock.UtcNow).Returns(DateTime.UtcNow);
 
         // -------------------------------------------------------
         // Act
@@ -216,7 +202,7 @@ public class ActivateUserCommandHandlerTests
 
         result.Error.Should()
             .NotBeNull()
-            .And.BeEquivalentTo(DomainErrors.User.AlreadyActivated);
+            .And.BeEquivalentTo(DomainErrors.Email.InvalidEmail);
 
         _mockReadRepository.Verify(mock =>
             mock.GetByIdAsync(It.IsAny<Guid>(),
@@ -226,7 +212,68 @@ public class ActivateUserCommandHandlerTests
             mock.UpdateAsync(It.IsAny<UserEntity>(),
                 It.IsAny<CancellationToken>()), Times.Never);
 
-        _mockLogger.Verify(nameof(ActivateUserCommandHandler),
+        _mockLogger.Verify(nameof(CreateEmailCommandHandler),
+            expectedLogLevel: LogLevel.Error,
+            times: Times.Once);
+    }
+
+    [Fact(DisplayName = nameof(CreateEmailCommandHandler)
+                        + nameof(CreateEmailCommandHandler.Handle)
+                        + "Exists Data - Should Error")]
+    public async Task Handle_ExistsData_ShouldReturnError()
+    {
+        // -------------------------------------------------------
+        // Arrange
+        // -------------------------------------------------------
+        CreateEmailCommand command = CreateEmailCommandBuilder
+            .BuildSingle();
+
+        UserEntity userEntity = UserEntityBuilder.BuildSingle();
+
+        EmailEntity emailEntity = EmailEntityBuilder.
+            BuildSingle(command.Email);
+
+        userEntity.AddEmail(emailEntity);
+
+        _mockReadRepository.Setup(mock =>
+                mock.GetByIdAsync(
+                    It.IsAny<Guid>(),
+                    It.IsAny<CancellationToken>()))
+            .Callback((Guid id, CancellationToken _) =>
+            {
+                id.Should()
+                    .Be(command.Id);
+            })
+            .ReturnsAsync(userEntity);
+
+        // -------------------------------------------------------
+        // Act
+        // -------------------------------------------------------
+        IResult<VoidResponse> result = await _handler
+            .Handle(command, CancellationToken.None);
+
+        // -------------------------------------------------------
+        // Assert
+        // -------------------------------------------------------
+        result.Should()
+            .NotBeNull();
+
+        result.IsSuccess.Should()
+            .BeFalse();
+
+        result.Error.Should()
+            .NotBeNull()
+            .And.BeEquivalentTo(DomainErrors.Email.DuplicateEmail);
+
+        _mockReadRepository.Verify(mock =>
+            mock.GetByIdAsync(It.IsAny<Guid>(),
+                It.IsAny<CancellationToken>()), Times.Once);
+
+        _mockWriteRepository.Verify(mock =>
+            mock.UpdateAsync(It.IsAny<UserEntity>(),
+                It.IsAny<CancellationToken>()), Times.Never);
+
+        _mockLogger.Verify(nameof(CreateEmailCommandHandler),
             expectedLogLevel: LogLevel.Error,
             times: Times.Once);
     }

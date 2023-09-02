@@ -8,7 +8,7 @@ using JacksonVeroneze.TemplateWebApi.Application.Models.User;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders;
-using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Commands;
+using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Commands.User;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Util;
 using Microsoft.Extensions.Logging;
 
