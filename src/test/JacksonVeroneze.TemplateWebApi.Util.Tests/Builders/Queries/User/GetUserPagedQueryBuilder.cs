@@ -10,14 +10,10 @@ public static class GetUserPagedQueryBuilder
         return Factory().Generate();
     }
 
-    public static GetUserPagedQuery BuildSingleInvalid()
+    private static Faker<GetUserPagedQuery> Factory()
     {
-        return Factory(false).Generate();
-    }
-
-    private static Faker<GetUserPagedQuery> Factory(
-        bool valid = true)
-    {
-        return new Faker<GetUserPagedQuery>("pt_BR");
+        return new Faker<GetUserPagedQuery>("pt_BR")
+            .RuleFor(f => f.Page, s => s.Random.Int(1, 10))
+            .RuleFor(f => f.PageSize, s => s.Random.Int(1, 10));
     }
 }

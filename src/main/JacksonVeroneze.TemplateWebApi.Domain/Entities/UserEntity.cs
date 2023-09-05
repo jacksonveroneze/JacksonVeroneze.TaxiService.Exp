@@ -34,11 +34,15 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
 
     private List<PhoneEntity>? _phones;
 
-    public IReadOnlyCollection<EmailEntity> Emails =>
+    public virtual IReadOnlyCollection<EmailEntity> Emails =>
         _emails?.AsReadOnly() ?? _emptyEmails;
 
-    public IReadOnlyCollection<PhoneEntity> Phones =>
+    public virtual IReadOnlyCollection<PhoneEntity> Phones =>
         _phones?.AsReadOnly() ?? _emptyPhones;
+
+    protected UserEntity()
+    {
+    }
 
     public UserEntity(NameValueObject name,
         DateOnly birthday, Gender gender,

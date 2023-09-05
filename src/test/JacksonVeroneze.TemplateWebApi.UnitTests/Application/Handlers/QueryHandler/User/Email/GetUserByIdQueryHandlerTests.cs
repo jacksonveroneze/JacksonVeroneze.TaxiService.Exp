@@ -10,7 +10,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Queries.User.Email;
-using JacksonVeroneze.TemplateWebApi.Util.Tests.Util;
+using JacksonVeroneze.TemplateWebApi.Util.Tests.Extensions;
 using Microsoft.Extensions.Logging;
 
 namespace JacksonVeroneze.TemplateWebApi.UnitTests.Application.Handlers.QueryHandler.User.Email;
@@ -26,19 +26,9 @@ public class GetAllEmailsByUserIdQueryHandlerTests
         _mockLogger = new Mock<ILogger<GetAllEmailsByUserIdQueryHandler>>();
         _mockReadRepository = new Mock<IUserReadRepository>();
 
+        _mockLogger.MockLogLevel();
+
         IMapper mapper = AutoMapperBuilder.Build<EmailMapper>();
-
-        _mockLogger
-            .Setup(mock => mock.IsEnabled(LogLevel.Information))
-            .Returns(true);
-
-        _mockLogger
-            .Setup(mock => mock.IsEnabled(LogLevel.Warning))
-            .Returns(true);
-
-        _mockLogger
-            .Setup(mock => mock.IsEnabled(LogLevel.Error))
-            .Returns(true);
 
         _handler = new GetAllEmailsByUserIdQueryHandler(
             _mockLogger.Object,

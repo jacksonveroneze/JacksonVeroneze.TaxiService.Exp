@@ -1,13 +1,16 @@
+using AutoMapper;
 using JacksonVeroneze.NET.DomainObjects.Result;
 using JacksonVeroneze.TemplateWebApi.Application.Commands.User.Email;
 using JacksonVeroneze.TemplateWebApi.Application.Handlers.CommandHandler.User.Email;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
-using JacksonVeroneze.TemplateWebApi.Application.Models.Base;
+using JacksonVeroneze.TemplateWebApi.Application.Mappers;
+using JacksonVeroneze.TemplateWebApi.Application.Models.User.Email;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
+using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Commands.User.Email;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Domain.Entities;
-using JacksonVeroneze.TemplateWebApi.Util.Tests.Util;
+using JacksonVeroneze.TemplateWebApi.Util.Tests.Extensions;
 using Microsoft.Extensions.Logging;
 
 namespace JacksonVeroneze.TemplateWebApi.UnitTests.Application.Handlers.CommandHandler.User.Email;
@@ -25,20 +28,14 @@ public class CreateEmailCommandHandlerTests
         _mockReadRepository = new Mock<IUserReadRepository>();
         _mockWriteRepository = new Mock<IUserWriteRepository>();
 
-        _mockLogger
-            .Setup(mock => mock.IsEnabled(LogLevel.Information))
-            .Returns(true);
+        _mockLogger.MockLogLevel();
 
-        _mockLogger
-            .Setup(mock => mock.IsEnabled(LogLevel.Warning))
-            .Returns(true);
-
-        _mockLogger
-            .Setup(mock => mock.IsEnabled(LogLevel.Error))
-            .Returns(true);
+        IMapper mapper = AutoMapperBuilder
+            .Build<UserMapper, EmailMapper>();
 
         _handler = new CreateEmailCommandHandler(
             _mockLogger.Object,
+            mapper,
             _mockReadRepository.Object,
             _mockWriteRepository.Object
         );
@@ -73,7 +70,7 @@ public class CreateEmailCommandHandlerTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult<VoidResponse> result = await _handler
+        IResult<CreateEmailCommandResponse> result = await _handler
             .Handle(command, CancellationToken.None);
 
         // -------------------------------------------------------
@@ -132,7 +129,7 @@ public class CreateEmailCommandHandlerTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult<VoidResponse> result = await _handler
+        IResult<CreateEmailCommandResponse> result = await _handler
             .Handle(command, CancellationToken.None);
 
         // -------------------------------------------------------
@@ -188,7 +185,7 @@ public class CreateEmailCommandHandlerTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult<VoidResponse> result = await _handler
+        IResult<CreateEmailCommandResponse> result = await _handler
             .Handle(command, CancellationToken.None);
 
         // -------------------------------------------------------
@@ -230,8 +227,7 @@ public class CreateEmailCommandHandlerTests
 
         UserEntity userEntity = UserEntityBuilder.BuildSingle();
 
-        EmailEntity emailEntity = EmailEntityBuilder.
-            BuildSingle(command.Email);
+        EmailEntity emailEntity = EmailEntityBuilder.BuildSingle(command.Email);
 
         userEntity.AddEmail(emailEntity);
 
@@ -249,7 +245,7 @@ public class CreateEmailCommandHandlerTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult<VoidResponse> result = await _handler
+        IResult<CreateEmailCommandResponse> result = await _handler
             .Handle(command, CancellationToken.None);
 
         // -------------------------------------------------------

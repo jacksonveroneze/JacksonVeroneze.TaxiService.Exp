@@ -19,7 +19,7 @@ public static class CreateEmailCommandBuilder
         bool valid = true)
     {
         return new Faker<CreateEmailCommand>("pt_BR")
-            .RuleFor(f => f.Id, s => s.Random.Guid())
+            .RuleFor(f => f.Id, s => valid ? s.Random.Guid() : Guid.Empty)
             .RuleFor(f => f.Email, s => valid ? s.Person.Email : "");
     }
 }

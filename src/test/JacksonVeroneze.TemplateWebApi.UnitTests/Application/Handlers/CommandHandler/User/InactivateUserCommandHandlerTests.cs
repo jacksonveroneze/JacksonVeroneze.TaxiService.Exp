@@ -8,7 +8,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Commands.User;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Domain.Entities;
-using JacksonVeroneze.TemplateWebApi.Util.Tests.Util;
+using JacksonVeroneze.TemplateWebApi.Util.Tests.Extensions;
 using Microsoft.Extensions.Logging;
 
 namespace JacksonVeroneze.TemplateWebApi.UnitTests.Application.Handlers.CommandHandler.User;
@@ -28,17 +28,7 @@ public class InactivateUserCommandHandlerTests
         _mockWriteRepository = new Mock<IUserWriteRepository>();
         _mockDateTime = new Mock<IDateTime>();
 
-        _mockLogger
-            .Setup(mock => mock.IsEnabled(LogLevel.Information))
-            .Returns(true);
-
-        _mockLogger
-            .Setup(mock => mock.IsEnabled(LogLevel.Warning))
-            .Returns(true);
-
-        _mockLogger
-            .Setup(mock => mock.IsEnabled(LogLevel.Error))
-            .Returns(true);
+        _mockLogger.MockLogLevel();
 
         _handler = new InactivateUserCommandHandler(
             _mockLogger.Object,

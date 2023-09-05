@@ -135,7 +135,7 @@ public sealed class UsersController : ControllerBase
         [FromBody] CreateEmailCommand command,
         CancellationToken cancellationToken)
     {
-        IResult<VoidResponse> response = await _mediator
+        IResult<CreateEmailCommandResponse> response = await _mediator
             .Send(command, cancellationToken);
 
         return response.MatchPost(this);

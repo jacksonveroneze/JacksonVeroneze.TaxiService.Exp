@@ -5,7 +5,11 @@ namespace JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 public class PhoneEntity : BaseEntity
 {
-    public PhoneValueObject Phone { get; private set; }
+    public virtual PhoneValueObject? Phone { get; private set; }
+
+    protected PhoneEntity()
+    {
+    }
 
     public PhoneEntity(PhoneValueObject phone)
     {

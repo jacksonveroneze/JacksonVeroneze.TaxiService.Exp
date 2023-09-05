@@ -1,4 +1,7 @@
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.Contexts;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.UnitOfWork;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -46,6 +49,19 @@ public static class DatabaseExtension
         //
         // services.TryAddAWSService<IAmazonDynamoDB>(config);
         // services.TryAddSingleton<IDynamoDBContext, DynamoDBContext>();
+
+        #endregion
+
+        #region EntityFramework
+
+        services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
+
+        services.AddDbContext<DbContext, TemplateWebApiContext>((_, options) =>
+            options.UseNpgsql(appConfiguration.Database!.ConnectionString)
+                .UseLazyLoadingProxies()
+                .EnableDetailedErrors()
+                .EnableSensitiveDataLogging()
+                .UseSnakeCaseNamingConvention());
 
         #endregion
 

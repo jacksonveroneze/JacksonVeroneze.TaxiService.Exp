@@ -9,7 +9,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Commands.User;
-using JacksonVeroneze.TemplateWebApi.Util.Tests.Util;
+using JacksonVeroneze.TemplateWebApi.Util.Tests.Extensions;
 using Microsoft.Extensions.Logging;
 
 namespace JacksonVeroneze.TemplateWebApi.UnitTests.Application.Handlers.CommandHandler.User;
@@ -28,19 +28,9 @@ public class CreateUserCommandHandlerTests
         _mockReadRepository = new Mock<IUserReadRepository>();
         _mockWriteRepository = new Mock<IUserWriteRepository>();
 
+        _mockLogger.MockLogLevel();
+
         IMapper mapper = AutoMapperBuilder.Build<UserMapper>();
-
-        _mockLogger
-            .Setup(mock => mock.IsEnabled(LogLevel.Information))
-            .Returns(true);
-
-        _mockLogger
-            .Setup(mock => mock.IsEnabled(LogLevel.Warning))
-            .Returns(true);
-
-        _mockLogger
-            .Setup(mock => mock.IsEnabled(LogLevel.Error))
-            .Returns(true);
 
         _handler = new CreateUserCommandHandler(
             _mockLogger.Object,

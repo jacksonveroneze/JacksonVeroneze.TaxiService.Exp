@@ -1,7 +1,7 @@
 using Bogus;
 using JacksonVeroneze.TemplateWebApi.Application.Commands.User.Email;
 
-namespace JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Commands.User;
+namespace JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Commands.User.Email;
 
 public static class DeleteEmailCommandBuilder
 {

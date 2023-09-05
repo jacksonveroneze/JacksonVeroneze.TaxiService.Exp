@@ -6,7 +6,11 @@ namespace JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
 
 public class PhoneValueObject : ValueObject
 {
-    public string? Value { get; }
+    public string? Value { get; private set; }
+
+    protected PhoneValueObject()
+    {
+    }
 
     private PhoneValueObject(string value)
     {

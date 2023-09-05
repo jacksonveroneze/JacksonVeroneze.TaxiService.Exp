@@ -9,9 +9,13 @@ public class NameValueObject : ValueObject
     private const int MinLength = 2;
     private const int MaxLength = 100;
 
-    public string? Value { get; }
+    public string? Value { get; private set; }
 
-    private NameValueObject(string value)
+    protected NameValueObject()
+    {
+    }
+
+    public NameValueObject(string value)
     {
         Value = value;
     }

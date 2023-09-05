@@ -16,7 +16,11 @@ public class EmailValueObject : ValueObject
         new(() => new Regex(EmailRegexPattern,
             RegexOptions.Compiled | RegexOptions.IgnoreCase));
 
-    public string? Value { get; }
+    public string? Value { get; private set; }
+
+    protected EmailValueObject()
+    {
+    }
 
     private EmailValueObject(string value)
     {

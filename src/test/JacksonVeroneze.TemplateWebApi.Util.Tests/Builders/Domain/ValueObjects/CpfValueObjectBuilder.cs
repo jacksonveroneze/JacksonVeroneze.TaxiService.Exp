@@ -6,15 +6,17 @@ namespace JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Domain.ValueObjects
 
 public static class CpfValueObjectBuilder
 {
-    public static CpfValueObject BuildSingle()
+    public static CpfValueObject BuildSingle(
+        string? value = null)
     {
-        return Factory().Generate();
+        return Factory(value).Generate();
     }
 
-    private static Faker<CpfValueObject> Factory()
+    private static Faker<CpfValueObject> Factory(
+        string? value = null)
     {
         return new Faker<CpfValueObject>("pt_BR")
             .CustomInstantiator(conf =>
-                CpfValueObject.Create(conf.Person.Cpf()).Value!);
+                CpfValueObject.Create(value ?? conf.Person.Cpf()).Value!);
     }
 }

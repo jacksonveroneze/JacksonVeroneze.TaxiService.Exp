@@ -1,5 +1,6 @@
 using AutoMapper;
 using JacksonVeroneze.TemplateWebApi.Application.Mappers;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.Mappers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
@@ -17,6 +18,8 @@ public static class AutoMapperExtension
             //
             cfg.AddProfile<UserMapper>();
             cfg.AddProfile<EmailMapper>();
+            //
+            cfg.AddProfile<UserInfraMapper>();
             cfg.AllowNullCollections = true;
         });
 

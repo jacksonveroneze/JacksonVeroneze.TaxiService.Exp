@@ -47,6 +47,7 @@ public static class ApiConfigExtension
             .AddMediatr()
             .AddFluentValidation()
             .AddAppVersioning()
+            .AddRabbitMq()
             .AddDatabase(builder.Configuration, appConfiguration)
             .AddAuthentication(appConfiguration)
             .AddAuthorization(appConfiguration)

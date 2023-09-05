@@ -5,15 +5,17 @@ namespace JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Domain.ValueObjects
 
 public static class NameValueObjectBuilder
 {
-    public static NameValueObject BuildSingle()
+    public static NameValueObject BuildSingle(
+        string? value = null)
     {
-        return Factory().Generate();
+        return Factory(value).Generate();
     }
 
-    private static Faker<NameValueObject> Factory()
+    private static Faker<NameValueObject> Factory(
+        string? value = null)
     {
         return new Faker<NameValueObject>("pt_BR")
             .CustomInstantiator(conf =>
-                NameValueObject.Create(conf.Person.FullName).Value!);
+                NameValueObject.Create(value ?? conf.Person.FullName).Value!);
     }
 }

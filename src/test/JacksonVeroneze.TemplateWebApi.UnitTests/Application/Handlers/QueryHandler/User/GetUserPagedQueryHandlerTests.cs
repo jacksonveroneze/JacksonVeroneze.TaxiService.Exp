@@ -11,7 +11,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Queries.User;
-using JacksonVeroneze.TemplateWebApi.Util.Tests.Util;
+using JacksonVeroneze.TemplateWebApi.Util.Tests.Extensions;
 using Microsoft.Extensions.Logging;
 
 namespace JacksonVeroneze.TemplateWebApi.UnitTests.Application.Handlers.QueryHandler.User;
@@ -27,19 +27,9 @@ public class GetUserPagedQueryHandlerTests
         _mockLogger = new Mock<ILogger<GetUserPagedQueryHandler>>();
         _mockReadRepository = new Mock<IUserReadRepository>();
 
+        _mockLogger.MockLogLevel();
+
         IMapper mapper = AutoMapperBuilder.Build<UserMapper>();
-
-        _mockLogger
-            .Setup(mock => mock.IsEnabled(LogLevel.Information))
-            .Returns(true);
-
-        _mockLogger
-            .Setup(mock => mock.IsEnabled(LogLevel.Warning))
-            .Returns(true);
-
-        _mockLogger
-            .Setup(mock => mock.IsEnabled(LogLevel.Error))
-            .Returns(true);
 
         _handler = new GetUserPagedQueryHandler(
             _mockLogger.Object,

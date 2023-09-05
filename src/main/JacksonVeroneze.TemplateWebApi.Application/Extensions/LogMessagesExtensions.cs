@@ -29,7 +29,7 @@ public static partial class LogMessagesExtensions
         EventId = 1000,
         Level = LogLevel.Warning,
         Message = "{className} - {methodName} - Exists - Message: '{message}' - Value: '{value}'")]
-    public static partial void AlreadyExists(this ILogger logger,
+    public static partial void LogAlreadyExists(this ILogger logger,
         string className, string methodName, string message, string value);
 
     [LoggerMessage(
@@ -50,7 +50,7 @@ public static partial class LogMessagesExtensions
         EventId = 1003,
         Level = LogLevel.Error,
         Message = "{className} - {methodName} - AlreadyProcessed - Message: '{message}' - Id: '{id}'")]
-    public static partial void AlreadyProcessed(this ILogger logger,
+    public static partial void LogAlreadyProcessed(this ILogger logger,
         string className, string methodName, string message, Guid id);
 
     [LoggerMessage(
@@ -89,16 +89,16 @@ public static partial class LogMessagesExtensions
     # region ValidationBehavior
 
     [LoggerMessage(
-        EventId = 2000,
+        EventId = 5000,
         Level = LogLevel.Information,
         Message = "{className} - {methodName} - Info - Not contain validators")]
     public static partial void LogNoContainValidators(this ILogger logger,
         string className, string methodName);
 
     [LoggerMessage(
-        EventId = 2001,
+        EventId = 5001,
         Level = LogLevel.Information,
-        Message = "{className} - {methodName} - Info - Total Violations: '{count}'")]
+        Message = "{className} - {methodName} - Info - Total violations: '{count}'")]
     public static partial void LogTotalViolations(this ILogger logger,
         string className, string methodName, int count);
 

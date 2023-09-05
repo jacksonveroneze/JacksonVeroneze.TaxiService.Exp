@@ -51,7 +51,7 @@ public sealed class ActivateUserCommandHandler :
 
         if (result.IsFailure)
         {
-            _logger.AlreadyProcessed(nameof(ActivateUserCommandHandler),
+            _logger.LogAlreadyProcessed(nameof(ActivateUserCommandHandler),
                 nameof(Handle), result.Error!, request.Id);
 
             return Result<VoidResponse>.Invalid(result.Error!);

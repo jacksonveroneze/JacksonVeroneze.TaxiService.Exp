@@ -10,7 +10,10 @@ public class EmailMapper : Profile
         // Entity -> Response
         CreateMap<EmailEntity, EmailResponse>()
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
-            .ForMember(dest => dest.Email, opts => opts.MapFrom(src => src.Email));
+            .ForMember(dest => dest.Email, opts => opts.MapFrom(src => src.Email.Value));
+
+        CreateMap<EmailEntity, CreateEmailCommandResponse>()
+            .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
 
         CreateMap<IReadOnlyCollection<EmailEntity>, GetAllEmailsByUserIdQueryResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));

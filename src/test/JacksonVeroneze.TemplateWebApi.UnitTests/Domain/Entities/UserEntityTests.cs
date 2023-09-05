@@ -49,6 +49,10 @@ public class UserEntityTests
         entity.Gender.Should()
             .Be(gender);
 
+        entity.Cpf.Should()
+            .NotBeNull()
+            .And.Be(cpf);
+
         entity.Status.Should()
             .Be(UserStatus.PendingActivation);
 
@@ -539,4 +543,4 @@ public class UserEntityTests
 }
 
 
-// 95% das transações foram atendidas na laterncia
+// 95% das transações foram atendidas na latencia

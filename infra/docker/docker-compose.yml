@@ -80,6 +80,7 @@ services:
       - APP_CONFIG_DistributedTracing__IsEnabled=false
       - APP_CONFIG_DistributedTracing__Jaeger__Host=10.0.0.199
       - APP_CONFIG_DistributedTracing__Jaeger__Port=6831
+      - APP_CONFIG_Database__ConnectionString=Host=172.17.0.1;Port=5432;Database=templatewebapi;Username=postgres;Password=localP@ssword
       - Serilog__MinimumLevel__Default=Information
       - Serilog__WriteTo__0__Args__configure__1__Name=Seq
       - Serilog__WriteTo__0__Args__configure__1__Args__serverUrl=http://10.0.0.199:5341
@@ -125,8 +126,20 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.50'
-          memory: '256M'
+          cpus: '1'
+          memory: '512M'
         reservations:
-          cpus: '0.50'
-          memory: '256M'
+          cpus: '1'
+          memory: '512M'
+          
+  pgbouncer:
+    image: bitnami/pgbouncer
+    environment:
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_PASSWORD=localP@ssword
+      - POSTGRESQL_DATABASE=templatewebapi
+      - POSTGRESQL_HOST=10.0.0.199
+      - POSTGRESQL_PORT=5432
+      - PGBOUNCER_DATABASE=templatewebapi
+    ports:
+      - "6432:6432"

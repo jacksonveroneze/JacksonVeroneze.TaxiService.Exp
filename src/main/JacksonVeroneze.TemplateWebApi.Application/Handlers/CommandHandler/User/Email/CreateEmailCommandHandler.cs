@@ -3,6 +3,7 @@ using JacksonVeroneze.TemplateWebApi.Application.Commands.User.Email;
 using JacksonVeroneze.TemplateWebApi.Application.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.Models.Base;
+using JacksonVeroneze.TemplateWebApi.Application.Models.User.Email;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
@@ -10,23 +11,26 @@ using JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.CommandHandler.User.Email;
 
 public sealed class CreateEmailCommandHandler :
-    IRequestHandler<CreateEmailCommand, IResult<VoidResponse>>
+    IRequestHandler<CreateEmailCommand, IResult<CreateEmailCommandResponse>>
 {
     private readonly ILogger<CreateEmailCommandHandler> _logger;
+    private readonly IMapper _mapper;
     private readonly IUserReadRepository _readRepository;
     private readonly IUserWriteRepository _writeRepository;
 
     public CreateEmailCommandHandler(
         ILogger<CreateEmailCommandHandler> logger,
+        IMapper mapper,
         IUserReadRepository readRepository,
         IUserWriteRepository writeRepository)
     {
         _logger = logger;
+        _mapper = mapper;
         _readRepository = readRepository;
         _writeRepository = writeRepository;
     }
 
-    public async Task<IResult<VoidResponse>> Handle(
+    public async Task<IResult<CreateEmailCommandResponse>> Handle(
         CreateEmailCommand request,
         CancellationToken cancellationToken)
     {
@@ -40,8 +44,8 @@ public sealed class CreateEmailCommandHandler :
             _logger.LogNotFound(nameof(CreateEmailCommandHandler),
                 nameof(Handle), request.Id, DomainErrors.User.NotFound);
 
-            return Result<VoidResponse>.NotFound(
-                DomainErrors.User.NotFound);
+            return Result<CreateEmailCommandResponse>
+                .NotFound(DomainErrors.User.NotFound);
         }
 
         IResult<EmailValueObject> resultEmailVo = EmailValueObject
@@ -52,24 +56,32 @@ public sealed class CreateEmailCommandHandler :
             _logger.LogGenericError(nameof(CreateEmailCommandHandler),
                 nameof(Handle), resultEmailVo.Error!, request.Id.ToString());
 
-            return Result<VoidResponse>.Invalid(resultEmailVo.Error!);
+            return Result<CreateEmailCommandResponse>
+                .Invalid(resultEmailVo.Error!);
         }
 
-        IResult result = entity.AddEmail(new EmailEntity(resultEmailVo.Value!));
+        EmailEntity email = new EmailEntity(entity, resultEmailVo.Value!);
+
+        IResult result = entity.AddEmail(email);
 
         if (result.IsFailure)
         {
             _logger.LogGenericError(nameof(CreateEmailCommandHandler),
                 nameof(Handle), result.Error!, request.Id.ToString());
 
-            return Result<VoidResponse>.Invalid(result.Error!);
+            return Result<CreateEmailCommandResponse>
+                .Invalid(result.Error!);
         }
 
         await _writeRepository.UpdateAsync(entity, cancellationToken);
 
+        CreateEmailCommandResponse response =
+            _mapper.Map<CreateEmailCommandResponse>(email);
+
         _logger.LogProcessed(nameof(CreateEmailCommandHandler),
             nameof(Handle), entity.Id);
 
-        return Result<VoidResponse>.Success();
+        return Result<CreateEmailCommandResponse>
+            .Success(response);
     }
 }

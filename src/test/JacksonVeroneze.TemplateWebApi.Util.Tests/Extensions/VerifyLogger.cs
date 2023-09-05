@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Logging;
 using Moq;
 
-namespace JacksonVeroneze.TemplateWebApi.Util.Tests.Util;
+namespace JacksonVeroneze.TemplateWebApi.Util.Tests.Extensions;
 
 public static class VerifyLogger
 {
@@ -11,6 +11,8 @@ public static class VerifyLogger
         LogLevel expectedLogLevel = LogLevel.Information,
         Func<Times>? times = null)
     {
+        ArgumentNullException.ThrowIfNull(logger);
+
         times ??= Times.Once;
 
         Func<object, Type, bool> state = (x, __)

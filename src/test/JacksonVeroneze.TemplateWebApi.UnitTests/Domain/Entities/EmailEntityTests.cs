@@ -1,5 +1,6 @@
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
+using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Domain.ValueObjects;
 
 namespace JacksonVeroneze.TemplateWebApi.UnitTests.Domain.Entities;
@@ -13,13 +14,15 @@ public class EmailEntityTests
         // -------------------------------------------------------
         // Arrange
         // -------------------------------------------------------
+        UserEntity user = UserEntityBuilder.BuildSingle();
+
         EmailValueObject valueObject =
             EmailValueObjectBuilder.BuildSingle();
 
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        EmailEntity entity = new(valueObject);
+        EmailEntity entity = new(user, valueObject);
 
         // -------------------------------------------------------
         // Assert
@@ -33,19 +36,46 @@ public class EmailEntityTests
     }
 
     [Fact(DisplayName = nameof(EmailEntity)
-                        + "throw Exception")]
-    public void Create_ThrowException()
+                        + "Invalid User - throw Exception")]
+    public void Create_Invaliduser_ThrowException()
     {
         // -------------------------------------------------------
         // Arrange
         // -------------------------------------------------------
+        UserEntity? user = null;
+
+        EmailValueObject valueObject =
+            EmailValueObjectBuilder.BuildSingle();
+
+        // -------------------------------------------------------
+        // Act
+        // -------------------------------------------------------
+        Func<EmailEntity> action =
+            () => new EmailEntity(user!, valueObject!);
+
+        // -------------------------------------------------------
+        // Assert
+        // -------------------------------------------------------
+        action.Should()
+            .ThrowExactly<ArgumentNullException>();
+    }
+
+    [Fact(DisplayName = nameof(EmailEntity)
+                        + "Invalid Email - throw Exception")]
+    public void Create_InvalidEmail_ThrowException()
+    {
+        // -------------------------------------------------------
+        // Arrange
+        // -------------------------------------------------------
+        UserEntity user = UserEntityBuilder.BuildSingle();
+
         EmailValueObject? valueObject = null;
 
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
         Func<EmailEntity> action =
-            () => new EmailEntity(valueObject!);
+            () => new EmailEntity(user, valueObject!);
 
         // -------------------------------------------------------
         // Assert

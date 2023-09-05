@@ -8,7 +8,11 @@ public class CpfValueObject : ValueObject
 {
     private const int MinLength = 11;
 
-    public string? Value { get; }
+    public string? Value { get; private set; }
+
+    protected CpfValueObject()
+    {
+    }
 
     private CpfValueObject(string value)
     {
@@ -21,7 +25,7 @@ public class CpfValueObject : ValueObject
     public static IResult<CpfValueObject> Create(string value)
     {
         if (string.IsNullOrEmpty(value) ||
-            value.Length <= MinLength)
+            value.Length < MinLength)
         {
             return Result<CpfValueObject>.Invalid(
                 DomainErrors.User.InvalidCpf);

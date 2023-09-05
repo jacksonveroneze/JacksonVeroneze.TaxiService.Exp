@@ -6,24 +6,24 @@ import {randomIntBetween} from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 export const options = {
     //duration: '30000s',
-    iterations: 5000,
-    vus: 200,
+    iterations: 10000,
+    vus: 100,
 };
 
 // export let options = {
 //     stages: [
-//         { duration: '30s', target: 500 }, // simulate ramp-up of traffic from 1 to 3 virtual users over 0.5 minutes.
-//         { duration: '10s', target: 10000 }, // simulate ramp-up of traffic from 1 to 3 virtual users over 0.5 minutes.
-//         { duration: '2m', target: 15 }, // ramp-down to 0 users
-//         { duration: '2m', target: 150 }, // ramp-down to 0 users
-//         { duration: '2m', target: 50 }, // ramp-down to 0 users
-//         { duration: '2m', target: 0 }, // ramp-down to 0 users
+//         {duration: '30s', target: 10}, // simulate ramp-up of traffic from 1 to 3 virtual users over 0.5 minutes.
+//         {duration: '10s', target: 100}, // simulate ramp-up of traffic from 1 to 3 virtual users over 0.5 minutes.
+//         {duration: '2m', target: 15}, // ramp-down to 0 users
+//         {duration: '2m', target: 150}, // ramp-down to 0 users
+//         {duration: '2m', target: 50}, // ramp-down to 0 users
+//         {duration: '2m', target: 0}, // ramp-down to 0 users
 //     ],
 // };
 
 
-const url = 'http://localhost/templatewebapi';
-//const url = 'http://localhost:7000';
+//const url = 'http://localhost/templatewebapi';
+const url = 'http://localhost:7000';
 
 // export const options = {
 //     vus: 50,
@@ -66,17 +66,44 @@ const url = 'http://localhost/templatewebapi';
 export default function () {
     const rnd = randomIntBetween(1, 50000)
 
-    var body = JSON.stringify({name: crypto.randomUUID() + '_' + rnd, birthday: "2023-08-25", gender: "Male"});
+    var body = JSON.stringify({
+        name: crypto.randomUUID() + '_' + rnd,
+        birthday: "2023-08-25",
+        gender: "Male",
+        document: "06399214939"
+    });
 
     var responsePost = http.post(`${url}/api/v1/users`, body, {
         headers: {'Content-Type': 'application/json'},
     });
 
     var id = JSON.parse(responsePost.body).data.id;
-    //
-    // http.get(`${url}/api/v1/users/${id}`);
-    // http.put(`${url}/api/v1/users/${id}/activate`);
-    // http.put(`${url}/api/v1/users/${id}/inactivate`);
+
+    http.get(`${url}/api/v1/users/${id}`);
+
+    if (rnd % 2 === 0) {
+        http.put(`${url}/api/v1/users/${id}/activate`);
+
+        if (rnd % 15 === 0) {
+            http.put(`${url}/api/v1/users/${id}/inactivate`);
+        }
+
+        var bodyMail = JSON.stringify({
+            id: id,
+            email: crypto.randomUUID() + '_' + rnd + '@user.com'
+        });
+
+        var responsePostMail = http.post(`${url}/api/v1/users/${id}/emails`, bodyMail, {
+            headers: {'Content-Type': 'application/json'},
+        });
+
+        var idMail = JSON.parse(responsePostMail.body).data.id;
+
+        http.del(`${url}/api/v1/users/${id}/emails/${idMail}`);
+    }
+
+
+    //http.del(`${url}/api/v1/users/${id}`);
     // // //
     // // // //console.log('___' + rnd + '____')
     // // //

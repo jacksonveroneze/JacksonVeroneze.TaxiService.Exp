@@ -4,7 +4,7 @@ using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Mail;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Messaging;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Common;
-using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.Stub;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.EntityFramework;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Identity;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Mail;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Messaging;
@@ -29,14 +29,11 @@ public static class AppServicesExtension
 
         #region User
 
-        // services.AddScoped<IUserReadRepository, UserReadRepository>();
-        // services.AddScoped<IUserWriteRepository, UserWriteRepository>();
+        services.AddScoped<IUserReadRepository, UserReadRepository>();
+        services.AddScoped<IUserWriteRepository, UserWriteRepository>();
 
-        //services.AddScoped<IUserReadRepository, UserReadRepository>();
-        //services.AddScoped<IUserWriteRepository, UserWriteRepository>();
-
-        services.AddSingleton<IUserReadRepository, UserReadStubRepository>();
-        services.AddSingleton<IUserWriteRepository, UserWriteStubRepository>();
+        // services.AddSingleton<IUserReadRepository, UserReadStubRepository>();
+        // services.AddSingleton<IUserWriteRepository, UserWriteStubRepository>();
 
         #endregion
 

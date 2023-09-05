@@ -12,17 +12,13 @@ public static class EmailEntityBuilder
         return Factory(value).Generate();
     }
 
-    public static IEnumerable<EmailEntity> BuildMany(
-        int total)
-    {
-        return Factory().Generate(total);
-    }
-
     private static Faker<EmailEntity> Factory(
         string? value = null)
     {
+        UserEntity user = UserEntityBuilder.BuildSingle();
+
         return new Faker<EmailEntity>("pt_BR")
-            .CustomInstantiator(_ => new EmailEntity(
+            .CustomInstantiator(_ => new EmailEntity(user,
                 EmailValueObjectBuilder.BuildSingle(value)));
     }
 }

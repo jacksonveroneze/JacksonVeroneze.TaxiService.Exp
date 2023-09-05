@@ -40,7 +40,7 @@ public sealed class CreateUserCommandHandler :
 
         if (existsByName)
         {
-            _logger.AlreadyExists(nameof(CreateUserCommandHandler),
+            _logger.LogAlreadyExists(nameof(CreateUserCommandHandler),
                 nameof(Handle), DomainErrors.User.DuplicateName, request.Name!);
 
             return Result<CreateUserCommandResponse>.Invalid(
