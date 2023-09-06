@@ -82,6 +82,21 @@ public class CreateEmailCommandHandlerTests
         result.IsSuccess.Should()
             .BeTrue();
 
+        result.Value.Should()
+            .NotBeNull();
+
+        EmailResponse? emailResponse =
+            result.Value!.Data;
+
+        emailResponse.Should()
+            .NotBeNull();
+
+        emailResponse!.Id.Should()
+            .NotBeNull();
+
+        emailResponse.Email.Should()
+            .Be(command.Email);
+
         result.Errors.Should()
             .BeNullOrEmpty();
 

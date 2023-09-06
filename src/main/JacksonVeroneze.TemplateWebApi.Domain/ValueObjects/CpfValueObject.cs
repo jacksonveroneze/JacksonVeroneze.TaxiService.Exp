@@ -7,8 +7,12 @@ namespace JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
 public class CpfValueObject : ValueObject
 {
     private const int MinLength = 11;
+    private const int MaxLength = 14;
 
     public string? Value { get; private set; }
+
+    public string? ValueFormatted =>
+        Convert.ToUInt64(Value).ToString(@"000\.000\.000\-00");
 
     protected CpfValueObject()
     {
@@ -16,7 +20,10 @@ public class CpfValueObject : ValueObject
 
     private CpfValueObject(string value)
     {
-        Value = value;
+        Value = value
+            .Replace(".", string.Empty, StringComparison.OrdinalIgnoreCase)
+            .Replace("-", string.Empty, StringComparison.OrdinalIgnoreCase)
+            .Replace("/", string.Empty, StringComparison.OrdinalIgnoreCase);
     }
 
     public static implicit operator string(CpfValueObject? value)
@@ -25,7 +32,8 @@ public class CpfValueObject : ValueObject
     public static IResult<CpfValueObject> Create(string value)
     {
         if (string.IsNullOrEmpty(value) ||
-            value.Length < MinLength)
+            value.Length < MinLength ||
+            value.Length > MaxLength)
         {
             return Result<CpfValueObject>.Invalid(
                 DomainErrors.User.InvalidCpf);

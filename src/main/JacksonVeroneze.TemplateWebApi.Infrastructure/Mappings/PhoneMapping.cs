@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Mappings;
 
+[ExcludeFromCodeCoverage]
 public class PhoneMapping : IEntityTypeConfiguration<PhoneEntity>
 {
     public void Configure(EntityTypeBuilder<PhoneEntity> builder)

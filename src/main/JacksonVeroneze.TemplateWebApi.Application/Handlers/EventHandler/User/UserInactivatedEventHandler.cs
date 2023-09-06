@@ -1,8 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Messaging;
 using JacksonVeroneze.TemplateWebApi.Domain.DomainEvents;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Handlers.EventHandler.User;
 
+[ExcludeFromCodeCoverage]
 public class UserInactivatedEventHandler :
     INotificationHandler<UserInactivatedDomainEvent>
 {

@@ -3,6 +3,7 @@ using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Common;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Common;
 
+[ExcludeFromCodeCoverage]
 public class SystemDateTime : IDateTime
 {
     private const string WindowsBrTimeZone

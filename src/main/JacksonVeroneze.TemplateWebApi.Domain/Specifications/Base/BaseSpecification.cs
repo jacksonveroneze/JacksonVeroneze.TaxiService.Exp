@@ -1,7 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 
 namespace JacksonVeroneze.TemplateWebApi.Domain.Specifications.Base;
 
+[ExcludeFromCodeCoverage]
 public abstract class BaseSpecification<TEntity> where TEntity : class
 {
     public abstract Expression<Func<TEntity, bool>> ToExpression();

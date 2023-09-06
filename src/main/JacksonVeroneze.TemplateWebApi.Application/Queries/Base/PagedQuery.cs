@@ -40,17 +40,17 @@ public abstract record PagedQuery
         init => _pageSize = value ?? DefaulPageSize;
     }
 
-    [FromQuery(Name = "order")]
-    public SortDirection? Order
-    {
-        get => _order;
-        init => _order = value ?? _order;
-    }
-
     [FromQuery(Name = "order_by")]
     public string? OrderBy
     {
         get => _orderBy;
         init => _orderBy = value ?? _orderBy;
+    }
+
+    [FromQuery(Name = "order")]
+    public SortDirection? Order
+    {
+        get => _order;
+        init => _order = value ?? _order;
     }
 }

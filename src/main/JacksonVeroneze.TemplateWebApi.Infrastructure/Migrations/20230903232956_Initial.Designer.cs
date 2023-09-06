@@ -11,6 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
 {
+    [ExcludeFromCodeCoverage]
     [DbContext(typeof(TemplateWebApiContext))]
     [Migration("20230903232956_Initial")]
     partial class Initial

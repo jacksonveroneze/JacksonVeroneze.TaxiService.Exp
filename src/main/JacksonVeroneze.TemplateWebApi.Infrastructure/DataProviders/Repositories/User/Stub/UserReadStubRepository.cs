@@ -8,6 +8,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Specifications.User;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.Stub;
 
+[ExcludeFromCodeCoverage]
 public class UserReadStubRepository : IUserReadRepository
 {
     public Task<bool> ExistsByNameAsync(string name,

@@ -7,6 +7,7 @@ using MimeKit;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Mail;
 
+[ExcludeFromCodeCoverage]
 public class SmtpEmailService : IEmailService
 {
     private readonly MailParameters _parameters;

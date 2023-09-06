@@ -1,4 +1,6 @@
 using AutoMapper;
+using FluentAssertions.Execution;
+using FluentAssertions.Primitives;
 using JacksonVeroneze.NET.DomainObjects.Result;
 using JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.User;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
@@ -7,6 +9,7 @@ using JacksonVeroneze.TemplateWebApi.Application.Models.User;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.User;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
+using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Queries.User;
@@ -47,7 +50,7 @@ public class GetUserByIdQueryHandlerTests
         // -------------------------------------------------------
         // Arrange
         // -------------------------------------------------------
-        GetUserByIdQuery command = GetUserByIdQueryBuilder
+        GetUserByIdQuery query = GetUserByIdQueryBuilder
             .BuildSingle();
 
         UserEntity userEntity = UserEntityBuilder.BuildSingle();
@@ -59,7 +62,7 @@ public class GetUserByIdQueryHandlerTests
             .Callback((Guid id, CancellationToken _) =>
             {
                 id.Should()
-                    .Be(command.Id);
+                    .Be(query.Id);
             })
             .ReturnsAsync(userEntity);
 
@@ -67,7 +70,7 @@ public class GetUserByIdQueryHandlerTests
         // Act
         // -------------------------------------------------------
         IResult<GetUserByIdQueryResponse> result = await _handler
-            .Handle(command, CancellationToken.None);
+            .Handle(query, CancellationToken.None);
 
         // -------------------------------------------------------
         // Assert
@@ -78,23 +81,29 @@ public class GetUserByIdQueryHandlerTests
         result.IsSuccess.Should()
             .BeTrue();
 
-        // result.Value!.Data.Should()
-        //     .NotBeNull()
-        //     .And.BeEquivalentTo(userEntity,
-        //         options =>
-        //         {
-        //             options
-        //                 .WithMapping<UserResponse>(e => e.Id, s => s.Id)
-        //                 //.WithMapping<UserResponse>(e => e.Name.Value, s => s.Name)
-        //                 .WithMapping<UserResponse>(e => e.Birthday, s => s.Birthday)
-        //                 .WithMapping<UserResponse>(e => e.Gender, s => s.Gender)
-        //                 .WithMapping<UserResponse>(e => e.Status, s => s.Status)
-        //                 .ExcludingMissingMembers()
-        //                 .ExcludingNestedObjects()
-        //                 .ExcludingNonBrowsableMembers();
-        //
-        //             return options;
-        //         });
+        result.Value.Should()
+            .NotBeNull();
+
+        UserResponse? userResponse =
+            result.Value!.Data;
+
+        userResponse.Should()
+            .NotBeNull();
+
+        userResponse!.Id.Should()
+            .NotBeNull();
+
+        userResponse.Name.Should()
+            .Be(userEntity.Name);
+
+        userResponse.Birthday.Should()
+            .Be(userEntity.Birthday);
+
+        userResponse.Gender.Should()
+            .Be(userEntity.Gender);
+
+        userResponse.Status.Should()
+            .Be(UserStatus.PendingActivation);
 
         result.Errors.Should()
             .BeNullOrEmpty();

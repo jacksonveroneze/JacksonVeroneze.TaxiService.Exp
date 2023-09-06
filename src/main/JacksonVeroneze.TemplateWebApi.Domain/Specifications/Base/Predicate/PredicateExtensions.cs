@@ -1,8 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using JacksonVeroneze.TemplateWebApi.Domain.Specifications.Base.Predicate.Util;
 
 namespace JacksonVeroneze.TemplateWebApi.Domain.Specifications.Base.Predicate;
 
+[ExcludeFromCodeCoverage]
 public static class PredicateExtensions
 {
     public static Expression<Func<TType, bool>> And<TType>(

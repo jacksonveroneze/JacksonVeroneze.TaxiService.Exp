@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.UnitOfWork;
 
+[ExcludeFromCodeCoverage]
 public class UnitOfWork : IUnitOfWork
 {
     private readonly IMediator _bus;

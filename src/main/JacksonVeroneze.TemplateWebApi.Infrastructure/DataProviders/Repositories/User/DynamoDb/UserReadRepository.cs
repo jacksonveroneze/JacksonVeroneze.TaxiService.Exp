@@ -6,6 +6,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.DynamoDb;
 
+[ExcludeFromCodeCoverage]
 public class UserReadRepository : IUserReadRepository
 {
     private readonly IDynamoDBContext _dynamoDbContext;

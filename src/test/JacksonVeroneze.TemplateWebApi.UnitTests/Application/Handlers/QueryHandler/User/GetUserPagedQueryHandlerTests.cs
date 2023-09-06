@@ -51,7 +51,7 @@ public class GetUserPagedQueryHandlerTests
         GetUserPagedQuery command = GetUserPagedQueryBuilder
             .BuildSingle();
 
-        Page<UserEntity> page = UserEntityBuilder.BuildPagedSingle(10);
+        Page<UserEntity> page = UserEntityBuilder.BuildPagedSingle(2);
 
         _mockReadRepository.Setup(mock =>
                 mock.GetPagedAsync(
@@ -78,6 +78,32 @@ public class GetUserPagedQueryHandlerTests
 
         result.IsSuccess.Should()
             .BeTrue();
+
+        result.Value!.Pagination.Should()
+            .NotBeNull()
+            .And.BeEquivalentTo(page.Pagination,
+                opt => opt.ExcludingMissingMembers());
+
+        result.Value!.Data.Should()
+            .NotBeNull();
+
+        result.Value!.Data.Should().SatisfyRespectively(
+            first =>
+            {
+                first.Id.Should().Be(page.Data.First().Id);
+                first.Name.Should().Be(page.Data.First().Name);
+                first.Birthday.Should().Be(page.Data.First().Birthday);
+                first.Gender.Should().Be(page.Data.First().Gender);
+                first.Status.Should().Be(page.Data.First().Status);
+            },
+            second =>
+            {
+                second.Id.Should().Be(page.Data.Last().Id);
+                second.Name.Should().Be(page.Data.Last().Name);
+                second.Birthday.Should().Be(page.Data.Last().Birthday);
+                second.Gender.Should().Be(page.Data.Last().Gender);
+                second.Status.Should().Be(page.Data.Last().Status);
+            });
 
         result.Value!.Data.Should()
             .NotBeNullOrEmpty()

@@ -6,6 +6,7 @@ using JacksonVeroneze.TemplateWebApi.Infrastructure.Models;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Mappers;
 
+[ExcludeFromCodeCoverage]
 public class UserInfraMapper : Profile
 {
     public UserInfraMapper()

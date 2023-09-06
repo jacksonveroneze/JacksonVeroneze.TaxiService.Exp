@@ -1,4 +1,5 @@
 using Bogus;
+using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.TemplateWebApi.Application.Queries.User;
 
 namespace JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Queries.User;
@@ -14,6 +15,8 @@ public static class GetUserPagedQueryBuilder
     {
         return new Faker<GetUserPagedQuery>("pt_BR")
             .RuleFor(f => f.Page, s => s.Random.Int(1, 10))
-            .RuleFor(f => f.PageSize, s => s.Random.Int(1, 10));
+            .RuleFor(f => f.PageSize, s => s.Random.Int(1, 10))
+            .RuleFor(f => f.OrderBy, nameof(GetUserPagedQuery.Name))
+            .RuleFor(f => f.Order, SortDirection.Ascending);
     }
 }

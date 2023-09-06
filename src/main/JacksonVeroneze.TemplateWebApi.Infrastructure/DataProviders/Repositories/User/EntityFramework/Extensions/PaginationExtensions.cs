@@ -2,6 +2,7 @@ using JacksonVeroneze.NET.Pagination;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.EntityFramework.Extensions;
 
+[ExcludeFromCodeCoverage]
 public static class PaginationExtensions
 {
     public static IQueryable<TSource> ConfigurePagination<TSource>(

@@ -2,6 +2,7 @@ using Dapper;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Models;
 
+[ExcludeFromCodeCoverage]
 [Table("user")]
 public record UserModel
 {
@@ -30,4 +31,10 @@ public record UserModel
 
     [Column("inactived_on_utc")]
     public DateTime? InactivedOnUtc { get; set; }
+
+    [Column("created_at")]
+    public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
+
+    [Column("version")]
+    public int Version { get; set; } = 1;
 }

@@ -5,8 +5,8 @@ import {crypto} from "k6/experimental/webcrypto";
 import {randomIntBetween} from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 export const options = {
-    //duration: '30000s',
-    iterations: 10000,
+    duration: '15s',
+    // iterations: 10000,
     vus: 100,
 };
 
@@ -22,8 +22,9 @@ export const options = {
 // };
 
 
-//const url = 'http://localhost/templatewebapi';
-const url = 'http://localhost:7000';
+const url = 'http://localhost/templatewebapi';
+//const url = 'http://localhost:7000';
+//const url = 'http://localhost:9999';
 
 // export const options = {
 //     vus: 50,
@@ -66,41 +67,43 @@ const url = 'http://localhost:7000';
 export default function () {
     const rnd = randomIntBetween(1, 50000)
 
-    var body = JSON.stringify({
-        name: crypto.randomUUID() + '_' + rnd,
-        birthday: "2023-08-25",
-        gender: "Male",
-        document: "06399214939"
-    });
+    // var body = JSON.stringify({
+    //     name: crypto.randomUUID() + '_' + rnd,
+    //     birthday: "2023-08-25",
+    //     gender: "Male",
+    //     document: "06399214939"
+    // });
+    //
+    // var responsePost = http.post(`${url}/api/v1/users`, body, {
+    //     headers: {'Content-Type': 'application/json'},
+    // });
 
-    var responsePost = http.post(`${url}/api/v1/users`, body, {
-        headers: {'Content-Type': 'application/json'},
-    });
-
-    var id = JSON.parse(responsePost.body).data.id;
-
-    http.get(`${url}/api/v1/users/${id}`);
-
-    if (rnd % 2 === 0) {
-        http.put(`${url}/api/v1/users/${id}/activate`);
-
-        if (rnd % 15 === 0) {
-            http.put(`${url}/api/v1/users/${id}/inactivate`);
-        }
-
-        var bodyMail = JSON.stringify({
-            id: id,
-            email: crypto.randomUUID() + '_' + rnd + '@user.com'
-        });
-
-        var responsePostMail = http.post(`${url}/api/v1/users/${id}/emails`, bodyMail, {
-            headers: {'Content-Type': 'application/json'},
-        });
-
-        var idMail = JSON.parse(responsePostMail.body).data.id;
-
-        http.del(`${url}/api/v1/users/${id}/emails/${idMail}`);
-    }
+    http.get(`${url}/api/v2/users?page_size=5`);
+    
+    // var id = JSON.parse(responsePost.body).data.id;
+    //
+    // http.get(`${url}/api/v1/users/${id}`);
+    //
+    // if (rnd % 2 === 0) {
+    //     http.put(`${url}/api/v1/users/${id}/activate`);
+    //
+    //     if (rnd % 15 === 0) {
+    //         http.put(`${url}/api/v1/users/${id}/inactivate`);
+    //     }
+    //
+    //     var bodyMail = JSON.stringify({
+    //         id: id,
+    //         email: crypto.randomUUID() + '_' + rnd + '@user.com'
+    //     });
+    //
+    //     var responsePostMail = http.post(`${url}/api/v1/users/${id}/emails`, bodyMail, {
+    //         headers: {'Content-Type': 'application/json'},
+    //     });
+    //
+    //     var idMail = JSON.parse(responsePostMail.body).data.id;
+    //
+    //     http.del(`${url}/api/v1/users/${id}/emails/${idMail}`);
+    // }
 
 
     //http.del(`${url}/api/v1/users/${id}`);

@@ -4,11 +4,14 @@ using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Mail;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Messaging;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Common;
-using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.EntityFramework;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Identity;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Mail;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Messaging;
 using Microsoft.Extensions.DependencyInjection;
+
+using DapperType = JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.Dapper;
+using EntityFrameworkType = JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.EntityFramework;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
 
@@ -16,7 +19,8 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
 public static class AppServicesExtension
 {
     public static IServiceCollection AddAppServices(
-        this IServiceCollection services)
+        this IServiceCollection services,
+        AppConfiguration appConfiguration)
     {
         #region Common
 
@@ -29,8 +33,16 @@ public static class AppServicesExtension
 
         #region User
 
-        services.AddScoped<IUserReadRepository, UserReadRepository>();
-        services.AddScoped<IUserWriteRepository, UserWriteRepository>();
+        if (appConfiguration.Database!.Type == DatabaseType.Dapper)
+        {
+            services.AddScoped<IUserReadRepository, DapperType.UserReadRepository>();
+            services.AddScoped<IUserWriteRepository, DapperType.UserWriteRepository>();
+        }
+        else
+        {
+            services.AddScoped<IUserReadRepository, EntityFrameworkType.UserReadRepository>();
+            services.AddScoped<IUserWriteRepository, EntityFrameworkType.UserWriteRepository>();
+        }
 
         // services.AddSingleton<IUserReadRepository, UserReadStubRepository>();
         // services.AddSingleton<IUserWriteRepository, UserWriteStubRepository>();

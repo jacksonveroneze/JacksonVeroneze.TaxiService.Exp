@@ -3,6 +3,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.Stub;
 
+[ExcludeFromCodeCoverage]
 public class UserWriteStubRepository : IUserWriteRepository
 {
     public Task CreateAsync(UserEntity entity,

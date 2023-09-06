@@ -1,9 +1,12 @@
+using System.Data;
+using Dapper;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Contexts;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Npgsql;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
 
@@ -32,14 +35,15 @@ public static class DatabaseExtension
 
         #region Dapper
 
-        // services.AddScoped(typeof(IBaseRepository<,>), typeof(BaseRepository<,>));
-        //
-        // services.AddScoped<IDbConnection, NpgsqlConnection>(_ =>
-        //     new NpgsqlConnection(appConfiguration.Database!.ConnectionString!));
-        //
-        // SimpleCRUD.SetDialect(SimpleCRUD.Dialect.PostgreSQL);
-        //
-        // AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        if (appConfiguration.Database!.Type == DatabaseType.Dapper)
+        {
+            services.AddScoped<IDbConnection, NpgsqlConnection>(_ =>
+                new NpgsqlConnection(appConfiguration.Database!.ConnectionString!));
+
+            SimpleCRUD.SetDialect(SimpleCRUD.Dialect.PostgreSQL);
+
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        }
 
         #endregion
 
@@ -54,14 +58,17 @@ public static class DatabaseExtension
 
         #region EntityFramework
 
-        services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
+        if (appConfiguration.Database!.Type == DatabaseType.EntityFramework)
+        {
+            services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
 
-        services.AddDbContext<DbContext, TemplateWebApiContext>((_, options) =>
-            options.UseNpgsql(appConfiguration.Database!.ConnectionString)
-                .UseLazyLoadingProxies()
-                .EnableDetailedErrors()
-                .EnableSensitiveDataLogging()
-                .UseSnakeCaseNamingConvention());
+            services.AddDbContext<DbContext, TemplateWebApiContext>((_, options) =>
+                options.UseNpgsql(appConfiguration.Database!.ConnectionString)
+                    .UseLazyLoadingProxies()
+                    .EnableDetailedErrors(appConfiguration.IsDevelopment)
+                    .EnableSensitiveDataLogging(appConfiguration.IsDevelopment)
+                    .UseSnakeCaseNamingConvention());
+        }
 
         #endregion
 

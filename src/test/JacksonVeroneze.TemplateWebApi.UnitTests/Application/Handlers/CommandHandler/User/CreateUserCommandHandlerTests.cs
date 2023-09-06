@@ -7,6 +7,7 @@ using JacksonVeroneze.TemplateWebApi.Application.Mappers;
 using JacksonVeroneze.TemplateWebApi.Application.Models.User;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
+using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Commands.User;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Extensions;
@@ -82,6 +83,30 @@ public class CreateUserCommandHandlerTests
 
         result.Value.Should()
             .NotBeNull();
+
+        UserResponse? userResponse =
+            result.Value!.Data;
+
+        userResponse.Should()
+            .NotBeNull();
+
+        userResponse!.Id.Should()
+            .NotBeNull();
+
+        userResponse.Name.Should()
+            .Be(command.Name);
+
+        userResponse.Birthday.Should()
+            .Be(command.Birthday);
+
+        userResponse.Gender.Should()
+            .Be(command.Gender);
+
+        userResponse.Status.Should()
+            .Be(UserStatus.PendingActivation);
+
+        result.Errors.Should()
+            .BeNullOrEmpty();
 
         _mockReadRepository.Verify(mock =>
             mock.ExistsByNameAsync(It.IsAny<string>(),

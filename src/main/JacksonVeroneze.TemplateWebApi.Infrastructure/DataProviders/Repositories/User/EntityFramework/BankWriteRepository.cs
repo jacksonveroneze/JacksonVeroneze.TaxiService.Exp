@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.EntityFramework;
 
+[ExcludeFromCodeCoverage]
 public class UserWriteRepository : IUserWriteRepository
 {
     private readonly TemplateWebApiContext _context;

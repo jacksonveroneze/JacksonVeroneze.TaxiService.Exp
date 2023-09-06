@@ -4,6 +4,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.DynamoDb;
 
+[ExcludeFromCodeCoverage]
 public class UserWriteRepository : IUserWriteRepository
 {
     private readonly IDynamoDBContext _dynamoDbContext;

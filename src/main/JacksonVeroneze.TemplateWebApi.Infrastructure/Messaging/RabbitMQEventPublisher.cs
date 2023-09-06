@@ -3,6 +3,7 @@ using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Messaging;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Messaging;
 
+[ExcludeFromCodeCoverage]
 public class RabbitMqEventPublisher : IIntegrationEventPublisher
 {
     private readonly IBus _bus;

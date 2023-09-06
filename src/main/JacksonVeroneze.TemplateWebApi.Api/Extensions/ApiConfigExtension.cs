@@ -41,13 +41,13 @@ public static class ApiConfigExtension
                         Title = ex.Message, Status = StatusCodes.Status404NotFound
                     });
             })
-            .AddAppServices()
             .AddAutoMapper()
             .AddCorrelation()
             .AddMediatr()
             .AddFluentValidation()
             .AddAppVersioning()
             .AddRabbitMq()
+            .AddAppServices(appConfiguration)
             .AddDatabase(builder.Configuration, appConfiguration)
             .AddAuthentication(appConfiguration)
             .AddAuthorization(appConfiguration)

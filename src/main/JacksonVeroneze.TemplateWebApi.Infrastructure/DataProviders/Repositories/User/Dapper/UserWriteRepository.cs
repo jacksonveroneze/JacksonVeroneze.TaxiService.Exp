@@ -8,6 +8,7 @@ using MediatR;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.Dapper;
 
+[ExcludeFromCodeCoverage]
 public class UserWriteRepository : IUserWriteRepository
 {
     private readonly IMapper _mapper;

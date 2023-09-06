@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Contexts;
 
+[ExcludeFromCodeCoverage]
 public class TemplateWebApiContext : DbContext
 {
     public TemplateWebApiContext(DbContextOptions<TemplateWebApiContext> options)

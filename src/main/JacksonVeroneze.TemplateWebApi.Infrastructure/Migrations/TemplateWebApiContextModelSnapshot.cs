@@ -10,6 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
 {
+    [ExcludeFromCodeCoverage]
     [DbContext(typeof(TemplateWebApiContext))]
     partial class TemplateWebApiContextModelSnapshot : ModelSnapshot
     {

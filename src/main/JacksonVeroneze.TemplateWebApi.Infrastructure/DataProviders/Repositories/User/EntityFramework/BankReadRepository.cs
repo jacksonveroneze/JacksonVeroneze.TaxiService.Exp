@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.EntityFramework;
 
+[ExcludeFromCodeCoverage]
 public class UserReadRepository : IUserReadRepository
 {
     private readonly DbSet<UserEntity> _dbSet;

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Mappings;
 
+[ExcludeFromCodeCoverage]
 public class EmailMapping : IEntityTypeConfiguration<EmailEntity>
 {
     public void Configure(EntityTypeBuilder<EmailEntity> builder)

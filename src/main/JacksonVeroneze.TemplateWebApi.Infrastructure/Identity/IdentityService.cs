@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Identity;
 
+[ExcludeFromCodeCoverage]
 public class IdentityService : IIdentityService
 {
     private readonly IHttpContextAccessor _httpContextAccessor;

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Mappings;
 
+[ExcludeFromCodeCoverage]
 public static class DefaultFiledsMapping
 {
     public static void ConfigureDefaultFiledsMapping<T>(

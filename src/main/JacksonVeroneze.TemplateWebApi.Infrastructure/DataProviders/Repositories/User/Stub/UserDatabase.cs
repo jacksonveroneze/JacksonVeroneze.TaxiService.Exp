@@ -5,6 +5,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.Stub;
 
+[ExcludeFromCodeCoverage]
 public static class UserDatabase
 {
     private static ConcurrentBag<UserEntity> _db = new();

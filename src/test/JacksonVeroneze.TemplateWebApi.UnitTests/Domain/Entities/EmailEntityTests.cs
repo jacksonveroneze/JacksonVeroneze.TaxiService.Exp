@@ -33,6 +33,10 @@ public class EmailEntityTests
         entity.Email.Should()
             .NotBeNull()
             .And.Be(valueObject);
+
+        entity.User.Should()
+            .NotBeNull()
+            .And.Be(user);
     }
 
     [Fact(DisplayName = nameof(EmailEntity)
@@ -51,7 +55,7 @@ public class EmailEntityTests
         // Act
         // -------------------------------------------------------
         Func<EmailEntity> action =
-            () => new EmailEntity(user!, valueObject!);
+            () => new EmailEntity(user!, valueObject);
 
         // -------------------------------------------------------
         // Assert

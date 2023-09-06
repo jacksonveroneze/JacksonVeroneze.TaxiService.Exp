@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Contexts.Extensions;
 
+[ExcludeFromCodeCoverage]
 public static class ModelBuilderExtensions
 {
     public static ModelBuilder AddDeletedAtFilter<TEntity, TKey>(

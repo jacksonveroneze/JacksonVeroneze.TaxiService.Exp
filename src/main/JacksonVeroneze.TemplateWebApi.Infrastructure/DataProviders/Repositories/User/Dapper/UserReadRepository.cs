@@ -10,6 +10,7 @@ using JacksonVeroneze.TemplateWebApi.Infrastructure.Models;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.Dapper;
 
+[ExcludeFromCodeCoverage]
 public class UserReadRepository : IUserReadRepository
 {
     private readonly IMapper _mapper;
@@ -50,12 +51,17 @@ public class UserReadRepository : IUserReadRepository
         UserPagedFilter filter,
         CancellationToken cancellationToken = default)
     {
+        int count = await _repository
+            .RecordCountAsync<UserModel>();
+
         IEnumerable<UserModel>? result = await _repository
-            .GetListAsync<UserModel>();
+            .GetListPagedAsync<UserModel>(
+                filter.Pagination!.Page,
+                filter.Pagination!.PageSize, "", "");
 
         IList<UserEntity>? entities =
             _mapper.Map<IList<UserEntity>>(result);
 
-        return entities.ToPageInMemory(filter.Pagination!);
+        return entities.ToPage(filter.Pagination!, count);
     }
 }

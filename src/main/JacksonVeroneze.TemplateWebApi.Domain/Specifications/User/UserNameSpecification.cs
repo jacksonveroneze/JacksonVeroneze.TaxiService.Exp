@@ -1,9 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Specifications.Base;
 
 namespace JacksonVeroneze.TemplateWebApi.Domain.Specifications.User;
 
+[ExcludeFromCodeCoverage]
 public class UserNameSpecification : BaseSpecification<UserEntity>
 {
     private readonly bool _matchExactly;
