@@ -7,9 +7,15 @@ namespace JacksonVeroneze.TemplateWebApi.Application.v1.Commands.User.Email;
 public sealed record CreateEmailCommand :
     IRequest<IResult<CreateEmailCommandResponse>>
 {
-    [FromRoute(Name = "id")]
+    [FromRoute(Name = "userId")]
     public Guid Id { get; init; }
 
+    [FromBody]
+    public CreateEmailBodyCommand? Body { get; init; }
+}
+
+public class CreateEmailBodyCommand
+{
     [JsonPropertyName("email")]
     public string? Email { get; init; }
 }

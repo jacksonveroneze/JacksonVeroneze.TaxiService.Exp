@@ -19,7 +19,7 @@ public static class GetUserByIdQueryBuilder
         bool valid = true)
     {
         return new Faker<GetUserByIdQuery>("pt_BR")
-            .CustomInstantiator(s => new GetUserByIdQuery(
-                valid ? s.Random.Guid() : Guid.Empty));
+            .RuleFor(f => f.Id, s =>
+                valid ? s.Random.Guid() : Guid.Empty);
     }
 }

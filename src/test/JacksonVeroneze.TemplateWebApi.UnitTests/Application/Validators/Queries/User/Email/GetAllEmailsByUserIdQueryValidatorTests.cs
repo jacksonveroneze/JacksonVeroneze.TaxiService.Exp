@@ -17,7 +17,7 @@ public class GetAllEmailsByUserIdQueryValidatorTests
         // -------------------------------------------------------
         // Arrange
         // -------------------------------------------------------
-        GetAllEmailsByUserIdQuery query = new(id);
+        GetAllEmailsByUserIdQuery query = new() { Id = id };
 
         // -------------------------------------------------------
         // Act

@@ -1,5 +1,5 @@
-using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.NET.Pagination;
+using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Models.User;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Queries.Base;
 using JacksonVeroneze.TemplateWebApi.Domain.Enums;

@@ -120,3 +120,17 @@ variable "subnet_private_2_az" {
   type    = string
   default = "us-east-1b"
 }
+
+################################################################################
+# ECS - Cluster
+################################################################################
+
+variable "ecs_cluster_name" {
+  type    = string
+  default = "templatewebapi"
+}
+
+variable "api_service_name" {
+  type    = string
+  default = "service-templatewebapi"
+}

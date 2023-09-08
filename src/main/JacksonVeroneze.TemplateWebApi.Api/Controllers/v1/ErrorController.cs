@@ -1,6 +1,5 @@
 using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
-using IResult = Microsoft.AspNetCore.Http.IResult;
 
 namespace JacksonVeroneze.TemplateWebApi.Api.Controllers.v1;
 

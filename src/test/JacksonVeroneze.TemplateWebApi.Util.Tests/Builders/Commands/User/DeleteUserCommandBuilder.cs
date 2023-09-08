@@ -19,7 +19,7 @@ public static class DeleteUserCommandBuilder
         bool valid = true)
     {
         return new Faker<DeleteUserCommand>("pt_BR")
-            .CustomInstantiator(s => new DeleteUserCommand(
-                valid ? s.Random.Guid() : Guid.Empty));
+            .RuleFor(f => f.Id, s =>
+                valid ? s.Random.Guid() : Guid.Empty);
     }
 }

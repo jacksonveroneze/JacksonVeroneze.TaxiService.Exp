@@ -41,11 +41,9 @@ public sealed class UsersController : ControllerBase
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Find))]
     public async Task<ActionResult<GetUserByIdQueryResponse>> GetByIdAsync(
-        Guid userId,
+        GetUserByIdQuery query,
         CancellationToken cancellationToken)
     {
-        GetUserByIdQuery query = new(userId);
-
         IResult<GetUserByIdQueryResponse> response =
             await _mediator.Send(query, cancellationToken);
 
@@ -69,11 +67,9 @@ public sealed class UsersController : ControllerBase
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Delete))]
     public async Task<IActionResult> DeleteAsync(
-        Guid userId,
+        DeleteUserCommand command,
         CancellationToken cancellationToken)
     {
-        DeleteUserCommand command = new(userId);
-
         IResult<BaseResponse> response = await _mediator
             .Send(command, cancellationToken);
 
@@ -84,11 +80,9 @@ public sealed class UsersController : ControllerBase
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Update))]
     public async Task<IActionResult> UpdateActivateAsync(
-        Guid userId,
+        ActivateUserCommand command,
         CancellationToken cancellationToken)
     {
-        ActivateUserCommand command = new(userId);
-
         IResult<BaseResponse> response = await _mediator
             .Send(command, cancellationToken);
 
@@ -99,11 +93,9 @@ public sealed class UsersController : ControllerBase
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Update))]
     public async Task<IActionResult> UpdateInactivateAsync(
-        Guid userId,
+        InactivateUserCommand command,
         CancellationToken cancellationToken)
     {
-        InactivateUserCommand command = new(userId);
-
         IResult<BaseResponse> response = await _mediator
             .Send(command, cancellationToken);
 

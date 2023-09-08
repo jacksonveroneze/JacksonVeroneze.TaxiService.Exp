@@ -18,7 +18,7 @@ public class DeleteEmailCommandValidatorTests
         // -------------------------------------------------------
         // Arrange
         // -------------------------------------------------------
-        DeleteEmailCommand command = new(id, emailId);
+        DeleteEmailCommand command = new() { Id = id };
 
         // -------------------------------------------------------
         // Act

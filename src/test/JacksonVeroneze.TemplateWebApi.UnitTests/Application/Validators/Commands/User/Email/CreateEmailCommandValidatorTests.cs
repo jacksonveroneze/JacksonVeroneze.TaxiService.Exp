@@ -1,6 +1,7 @@
 using FluentValidation.Results;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Commands.User.Email;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Validators.Commands.User.Email;
+using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Commands.User.Email;
 
 namespace JacksonVeroneze.TemplateWebApi.UnitTests.Application.Validators.Commands.User.Email;
 
@@ -18,11 +19,8 @@ public class CreateEmailCommandValidatorTests
         // -------------------------------------------------------
         // Arrange
         // -------------------------------------------------------
-        CreateEmailCommand command = new()
-        {
-            Id = id,
-            Email = email
-        };
+        CreateEmailCommand command =
+            CreateEmailCommandBuilder.BuildSingle();
 
         // -------------------------------------------------------
         // Act

@@ -15,7 +15,10 @@ public class CreateEmailCommandValidator : AbstractValidator<CreateEmailCommand>
         RuleFor(request => request.Id)
             .SetValidator(new IdGuidValidator());
 
-        RuleFor(request => request.Email)
+        RuleFor(request => request.Body)
+            .NotNull();
+
+        RuleFor(request => request.Body!.Email)
             .Cascade(CascadeMode.Stop)
             .NotEmpty()
             .WithError(ValidationErrors.User.EmailIsRequired)

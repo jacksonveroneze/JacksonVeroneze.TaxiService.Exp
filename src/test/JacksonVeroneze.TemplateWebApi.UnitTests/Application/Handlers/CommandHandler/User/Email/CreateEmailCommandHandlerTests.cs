@@ -95,7 +95,7 @@ public class CreateEmailCommandHandlerTests
             .NotBeNull();
 
         emailResponse.Email.Should()
-            .Be(command.Email);
+            .Be(command.Body!.Email);
 
         result.Errors.Should()
             .BeNullOrEmpty();
@@ -240,9 +240,11 @@ public class CreateEmailCommandHandlerTests
         CreateEmailCommand command = CreateEmailCommandBuilder
             .BuildSingle();
 
-        UserEntity userEntity = UserEntityBuilder.BuildSingle();
+        UserEntity userEntity = UserEntityBuilder
+            .BuildSingle();
 
-        EmailEntity emailEntity = EmailEntityBuilder.BuildSingle(command.Email);
+        EmailEntity emailEntity = EmailEntityBuilder
+            .BuildSingle(command.Body!.Email);
 
         userEntity.AddEmail(emailEntity);
 

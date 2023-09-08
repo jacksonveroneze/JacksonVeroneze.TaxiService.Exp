@@ -28,11 +28,9 @@ public sealed class EmailsController : ControllerBase
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Find))]
     public async Task<IActionResult> GetEmailsByIdAsync(
-        Guid userId,
+        GetAllEmailsByUserIdQuery query,
         CancellationToken cancellationToken)
     {
-        GetAllEmailsByUserIdQuery query = new(userId);
-
         IResult<GetAllEmailsByUserIdQueryResponse> response =
             await _mediator.Send(query, cancellationToken);
 
@@ -43,7 +41,7 @@ public sealed class EmailsController : ControllerBase
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Create))]
     public async Task<IActionResult> CreateEmailAsync(
-        [FromBody] CreateEmailCommand command,
+        CreateEmailCommand command,
         CancellationToken cancellationToken)
     {
         IResult<CreateEmailCommandResponse> response = await _mediator
@@ -56,12 +54,9 @@ public sealed class EmailsController : ControllerBase
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Delete))]
     public async Task<IActionResult> DeleteEmailAsync(
-        Guid userId,
-        Guid emailId,
+        DeleteEmailCommand command,
         CancellationToken cancellationToken)
     {
-        DeleteEmailCommand command = new(userId, emailId);
-
         IResult<VoidResponse> response = await _mediator
             .Send(command, cancellationToken);
 

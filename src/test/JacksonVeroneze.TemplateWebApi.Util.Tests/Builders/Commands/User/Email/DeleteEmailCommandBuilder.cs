@@ -21,8 +21,9 @@ public static class DeleteEmailCommandBuilder
         Guid? userId = null, Guid? emailId = null)
     {
         return new Faker<DeleteEmailCommand>("pt_BR")
-            .CustomInstantiator(s => new DeleteEmailCommand(
-                valid ? userId ?? s.Random.Guid() : Guid.Empty,
-                valid ? emailId ?? s.Random.Guid() : Guid.Empty));
+            .RuleFor(f => f.Id, s =>
+                valid ? s.Random.Guid() : Guid.Empty)
+            .RuleFor(f => f.EmailId, s =>
+                valid ? s.Random.Guid() : Guid.Empty);
     }
 }

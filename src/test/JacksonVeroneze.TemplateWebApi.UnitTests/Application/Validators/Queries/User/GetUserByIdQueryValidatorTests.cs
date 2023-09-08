@@ -17,7 +17,7 @@ public class GetUserByIdQueryValidatorTests
         // -------------------------------------------------------
         // Arrange
         // -------------------------------------------------------
-        GetUserByIdQuery query = new(id);
+        GetUserByIdQuery query = new() { Id = id };
 
         // -------------------------------------------------------
         // Act

@@ -19,7 +19,7 @@ public static class InactivateUserCommandBuilder
         bool valid = true)
     {
         return new Faker<InactivateUserCommand>("pt_BR")
-            .CustomInstantiator(s => new InactivateUserCommand(
-                valid ? s.Random.Guid() : Guid.Empty));
+            .RuleFor(f => f.Id, s =>
+                valid ? s.Random.Guid() : Guid.Empty);
     }
 }

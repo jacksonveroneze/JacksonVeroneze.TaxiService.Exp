@@ -50,7 +50,7 @@ public class CreateUserCommandValidatorTests
         // -------------------------------------------------------
         // Arrange
         // -------------------------------------------------------
-        CreateUserCommand command = new CreateUserCommand()
+        CreateUserCommand command = new()
         {
             Name = name,
             Birthday = birthday,

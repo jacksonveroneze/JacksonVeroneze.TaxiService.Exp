@@ -17,7 +17,7 @@ public class InactivateUserCommandValidatorTests
         // -------------------------------------------------------
         // Arrange
         // -------------------------------------------------------
-        InactivateUserCommand command = new(id);
+        InactivateUserCommand command = new() { Id = id };
 
         // -------------------------------------------------------
         // Act

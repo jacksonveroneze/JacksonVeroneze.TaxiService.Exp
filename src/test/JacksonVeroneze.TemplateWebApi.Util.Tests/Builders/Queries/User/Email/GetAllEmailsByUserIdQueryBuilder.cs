@@ -19,7 +19,7 @@ public static class GetAllEmailsByUserIdQueryBuilder
         bool valid = true)
     {
         return new Faker<GetAllEmailsByUserIdQuery>("pt_BR")
-            .CustomInstantiator(s => new GetAllEmailsByUserIdQuery(
-                valid ? s.Random.Guid() : Guid.Empty));
+            .RuleFor(f => f.Id, s =>
+                valid ? s.Random.Guid() : Guid.Empty);
     }
 }

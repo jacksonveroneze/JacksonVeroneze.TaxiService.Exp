@@ -17,7 +17,7 @@ public class DeleteUserCommandValidatorTests
         // -------------------------------------------------------
         // Arrange
         // -------------------------------------------------------
-        DeleteUserCommand command = new(id);
+        DeleteUserCommand command = new() { Id = id };
 
         // -------------------------------------------------------
         // Act

@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
-using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.NET.DomainObjects.ValueObjects;
+using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 
 namespace JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;

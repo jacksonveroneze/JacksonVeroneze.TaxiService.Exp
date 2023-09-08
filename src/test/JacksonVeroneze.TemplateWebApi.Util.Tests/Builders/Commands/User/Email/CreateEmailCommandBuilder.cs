@@ -20,6 +20,13 @@ public static class CreateEmailCommandBuilder
     {
         return new Faker<CreateEmailCommand>("pt_BR")
             .RuleFor(f => f.Id, s => valid ? s.Random.Guid() : Guid.Empty)
+            .RuleFor(f => f.Body, FactoryBody(valid).Generate());
+    }
+
+    private static Faker<CreateEmailBodyCommand> FactoryBody(
+        bool valid = true)
+    {
+        return new Faker<CreateEmailBodyCommand>("pt_BR")
             .RuleFor(f => f.Email, s => valid ? s.Person.Email : "");
     }
 }

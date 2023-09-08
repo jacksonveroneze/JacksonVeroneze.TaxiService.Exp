@@ -48,7 +48,7 @@ public sealed class CreateEmailCommandHandler :
         }
 
         IResult<EmailValueObject> resultEmailVo = EmailValueObject
-            .Create(request.Email!);
+            .Create(request.Body!.Email!);
 
         if (resultEmailVo.IsFailure)
         {
@@ -59,7 +59,7 @@ public sealed class CreateEmailCommandHandler :
                 .Invalid(resultEmailVo.Error!);
         }
 
-        EmailEntity email = new EmailEntity(entity, resultEmailVo.Value!);
+        EmailEntity email = new(entity, resultEmailVo.Value!);
 
         IResult result = entity.AddEmail(email);
 

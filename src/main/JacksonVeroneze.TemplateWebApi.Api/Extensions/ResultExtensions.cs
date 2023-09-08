@@ -37,6 +37,7 @@ public static class ResultExtensions
         {
             ResultStatus.Success => controllerBase.Created("", result.Value),
             ResultStatus.Error => controllerBase.BadRequest(),
+            ResultStatus.NotFound => controllerBase.NotFound(),
             ResultStatus.Invalid => controllerBase.Conflict(
                 result.ToProblemDetails(controllerBase, HttpStatusCode.Conflict)),
             _ => throw new ArgumentException("")

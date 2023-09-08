@@ -17,7 +17,7 @@ public class ActivateUserCommandValidatorTests
         // -------------------------------------------------------
         // Arrange
         // -------------------------------------------------------
-        ActivateUserCommand command = new(id);
+        ActivateUserCommand command = new() { Id = id };
 
         // -------------------------------------------------------
         // Act
