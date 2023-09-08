@@ -19,8 +19,14 @@ public class CreateEmailCommandValidatorTests
         // -------------------------------------------------------
         // Arrange
         // -------------------------------------------------------
-        CreateEmailCommand command =
-            CreateEmailCommandBuilder.BuildSingle();
+        CreateEmailCommand command = new()
+        {
+            Id = id,
+            Body = new CreateEmailBodyCommand()
+            {
+                Email = email
+            }
+        };
 
         // -------------------------------------------------------
         // Act

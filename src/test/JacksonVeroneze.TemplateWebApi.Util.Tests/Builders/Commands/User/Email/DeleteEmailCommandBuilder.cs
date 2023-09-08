@@ -22,8 +22,8 @@ public static class DeleteEmailCommandBuilder
     {
         return new Faker<DeleteEmailCommand>("pt_BR")
             .RuleFor(f => f.Id, s =>
-                valid ? s.Random.Guid() : Guid.Empty)
+                valid ? userId ?? s.Random.Guid() : Guid.Empty)
             .RuleFor(f => f.EmailId, s =>
-                valid ? s.Random.Guid() : Guid.Empty);
+                valid ? emailId ?? s.Random.Guid() : Guid.Empty);
     }
 }
