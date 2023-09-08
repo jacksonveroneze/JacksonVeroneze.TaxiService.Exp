@@ -1,11 +1,11 @@
 using AutoMapper;
-using JacksonVeroneze.NET.DomainObjects.Result;
+using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.NET.Pagination;
-using JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.User;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
-using JacksonVeroneze.TemplateWebApi.Application.Mappers;
-using JacksonVeroneze.TemplateWebApi.Application.Models.User;
-using JacksonVeroneze.TemplateWebApi.Application.Queries.User;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Handlers.QueryHandler.User;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Mappers;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Models.User;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Queries.User;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders;

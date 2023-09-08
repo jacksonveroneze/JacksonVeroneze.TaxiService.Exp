@@ -1,5 +1,5 @@
 using Bogus;
-using JacksonVeroneze.TemplateWebApi.Application.Commands.User.Email;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Commands.User.Email;
 
 namespace JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Commands.User.Email;
 

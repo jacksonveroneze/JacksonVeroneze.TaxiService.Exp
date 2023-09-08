@@ -1,14 +1,30 @@
 version: "3.9"
 
 services:
-  nginx: # Load Balancer
+  nginx:
+    container_name: nginx
     image: nginx:latest
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    restart: always
+    tty: true
+    healthcheck:
+      test: curl --silent --fail http://nginx:9999/health?source=nginx || exit 1
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 3s
     depends_on:
+      - api
+    links:
       - api
     ports:
       - "9999:9999"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "2"
+        max-size: "1m"
     deploy:
       resources:
         limits:
@@ -19,8 +35,8 @@ services:
           memory: '512M'
   
   traefik:
-    container_name: templatewebapi-traefik
-    image: traefik:v3.0
+    container_name: traefik
+    image: traefik:v2.9
     restart: always
     tty: true
     command:
@@ -38,10 +54,10 @@ services:
       - --entrypoints.http.address=:80
       - --entrypoints.ping.address=:8081
       - --entrypoints.metrics.address=:8082
-
-      - --metrics.prometheus=true
-      - --metrics.prometheus.entryPoint=metrics
-      - --metrics.prometheus.addServicesLabels=true
+      
+      #      - --metrics.prometheus=false
+      #      - --metrics.prometheus.entryPoint=metrics
+      #      - --metrics.prometheus.addServicesLabels=true
 
       - --ping.entryPoint=ping
     labels:
@@ -98,7 +114,7 @@ services:
       - APP_CONFIG_DistributedTracing__Jaeger__Host=10.0.0.199
       - APP_CONFIG_DistributedTracing__Jaeger__Port=6831
       - APP_CONFIG_Database__ConnectionString=Host=172.17.0.1;Port=5432;Database=templatewebapi;Username=postgres;Password=localP@ssword
-      - APP_CONFIG_Database__Type=Dapper
+      - APP_CONFIG_Database__Type=EntityFramework
       - Serilog__MinimumLevel__Default=Information
       - Serilog__WriteTo__0__Args__configure__1__Name=Seq
       - Serilog__WriteTo__0__Args__configure__1__Args__serverUrl=http://10.0.0.199:5341
@@ -123,9 +139,9 @@ services:
 
       - traefik.http.middlewares.middleware-stripprefix0.stripprefix.prefixes=/templatewebapi
       - traefik.http.middlewares.middleware-compress.compress=true
-      - traefik.http.middlewares.middleware-ratelimit.ratelimit.average=10000
-      - traefik.http.middlewares.middleware-ratelimit.ratelimit.burst=100
-      - traefik.http.middlewares.middleware-ratelimit.ratelimit.period=10
+      #      - traefik.http.middlewares.middleware-ratelimit.ratelimit.average=10000
+      #      - traefik.http.middlewares.middleware-ratelimit.ratelimit.burst=100
+      #      - traefik.http.middlewares.middleware-ratelimit.ratelimit.period=10
       - traefik.http.middlewares.middleware-request-body.buffering.maxRequestBodyBytes=2000000
       - traefik.http.middlewares.middleware-retry.retry.attempts=4
       - traefik.http.middlewares.middleware-retry.retry.initialinterval=50ms
@@ -135,7 +151,7 @@ services:
 
       - --metrics=true
     ports:
-      - "8085-8087:8080"
+      - "8085-8086:8080"
     logging:
       driver: "json-file"
       options:
@@ -144,17 +160,5 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.7'
-          memory: '2GB'
-          
-  pgbouncer:
-    image: bitnami/pgbouncer
-    environment:
-      - POSTGRESQL_USERNAME=postgres
-      - POSTGRESQL_PASSWORD=localP@ssword
-      - POSTGRESQL_DATABASE=templatewebapi
-      - POSTGRESQL_HOST=10.0.0.199
-      - POSTGRESQL_PORT=5432
-      - PGBOUNCER_DATABASE=templatewebapi
-    ports:
-      - "6432:6432"
+          cpus: '0.5'
+          memory: '1GB'

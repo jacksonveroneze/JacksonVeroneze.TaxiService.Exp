@@ -104,7 +104,7 @@ dotnet_diagnostic.CA1813.severity = warning
 dotnet_diagnostic.CA1806.severity = warning
 
 # CA1852: Seal internal types
-dotnet_diagnostic.CA1852.severity = warning
+dotnet_diagnostic.CA1852.severity = suggestion
 
 # CA1854: Prefer the IDictionary.TryGetValue(TKey, out TValue) method
 dotnet_diagnostic.CA1854.severity = warning
@@ -581,7 +581,7 @@ dotnet_diagnostic.MA0022.severity = error
 dotnet_diagnostic.CA1501.severity = warning
 dotnet_diagnostic.CA1502.severity = warning
 dotnet_diagnostic.CA1505.severity = warning
-dotnet_diagnostic.CA1506.severity = warning
+dotnet_diagnostic.CA1506.severity = suggestion
 
 
 # Arrangement of Attributes

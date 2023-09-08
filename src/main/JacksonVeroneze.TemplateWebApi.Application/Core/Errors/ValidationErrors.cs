@@ -1,5 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
-using JacksonVeroneze.NET.DomainObjects.Errors;
+using JacksonVeroneze.NET.Result;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Core.Errors;
 

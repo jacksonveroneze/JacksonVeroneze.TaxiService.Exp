@@ -1,5 +1,5 @@
 using System.Net;
-using JacksonVeroneze.NET.DomainObjects.Result;
+using JacksonVeroneze.NET.Result;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JacksonVeroneze.TemplateWebApi.Api.Extensions;
@@ -11,12 +11,12 @@ public static class ResultExtensions
         ControllerBase controllerBase,
         HttpStatusCode? statusCode = null)
     {
-        var empty = Enumerable.Empty<ValidationError>();
+        // IEnumerable<ValidationError> empty = Enumerable.Empty<ValidationError>();
+        //
+        IEnumerable<Error> listErrros = result.Errors ?? Enumerable.Empty<Error>();
 
-        var listErrros = result.ValidationErrors ?? empty;
-
-        var dict = listErrros
-            .ToDictionary(k => k.ErrorCode!, v => new[] { v.ErrorMessage! });
+        Dictionary<string, string[]> dict = listErrros
+            .ToDictionary(k => k.Code!, v => new[] { v.Message! });
 
         return new(dict)
         {

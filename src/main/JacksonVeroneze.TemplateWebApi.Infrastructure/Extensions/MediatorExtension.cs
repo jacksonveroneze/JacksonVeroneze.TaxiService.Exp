@@ -1,5 +1,3 @@
-using JacksonVeroneze.TemplateWebApi.Application.Behaviors;
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;

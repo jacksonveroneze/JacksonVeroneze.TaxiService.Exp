@@ -9,7 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JacksonVeroneze.NET.DomainObjects" Version="0.0.3"/>
+    <PackageReference Include="JacksonVeroneze.NET.DomainObjects" Version="0.0.4"/>
     <PackageReference Include="JacksonVeroneze.NET.Pagination" Version="1.1.2"/>
+    <PackageReference Include="JacksonVeroneze.NET.Result" Version="0.0.1"/>
   </ItemGroup>
 </Project>

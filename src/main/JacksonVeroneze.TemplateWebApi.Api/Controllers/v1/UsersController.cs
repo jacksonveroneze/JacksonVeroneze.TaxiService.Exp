@@ -1,13 +1,10 @@
 using System.Net.Mime;
-using JacksonVeroneze.NET.DomainObjects.Result;
+using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TemplateWebApi.Api.Extensions;
-using JacksonVeroneze.TemplateWebApi.Application.Commands.User;
-using JacksonVeroneze.TemplateWebApi.Application.Commands.User.Email;
-using JacksonVeroneze.TemplateWebApi.Application.Models.Base;
-using JacksonVeroneze.TemplateWebApi.Application.Models.User;
-using JacksonVeroneze.TemplateWebApi.Application.Models.User.Email;
-using JacksonVeroneze.TemplateWebApi.Application.Queries.User;
-using JacksonVeroneze.TemplateWebApi.Application.Queries.User.Email;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Commands.User;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Models.Base;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Models.User;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Queries.User;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -111,49 +108,5 @@ public sealed class UsersController : ControllerBase
             .Send(command, cancellationToken);
 
         return response.MatchPut(this);
-    }
-
-    [HttpGet("{userId:guid}/emails")]
-    [ApiConventionMethod(typeof(DefaultApiConventions),
-        nameof(DefaultApiConventions.Find))]
-    public async Task<IActionResult> GetEmailsByIdAsync(
-        Guid userId,
-        CancellationToken cancellationToken)
-    {
-        GetAllEmailsByUserIdQuery query = new(userId);
-
-        IResult<GetAllEmailsByUserIdQueryResponse> response =
-            await _mediator.Send(query, cancellationToken);
-
-        return response.MatchGet(this);
-    }
-
-    [HttpPost("{userId:guid}/emails")]
-    [ApiConventionMethod(typeof(DefaultApiConventions),
-        nameof(DefaultApiConventions.Create))]
-    public async Task<IActionResult> CreateEmailAsync(
-        [FromBody] CreateEmailCommand command,
-        CancellationToken cancellationToken)
-    {
-        IResult<CreateEmailCommandResponse> response = await _mediator
-            .Send(command, cancellationToken);
-
-        return response.MatchPost(this);
-    }
-
-    [HttpDelete("{userId:guid}/emails/{emailId:guid}")]
-    [ApiConventionMethod(typeof(DefaultApiConventions),
-        nameof(DefaultApiConventions.Delete))]
-    public async Task<IActionResult> DeleteEmailAsync(
-        Guid userId,
-        Guid emailId,
-        CancellationToken cancellationToken)
-    {
-        DeleteEmailCommand command = new(userId, emailId);
-
-        IResult<VoidResponse> response = await _mediator
-            .Send(command, cancellationToken);
-
-        return response.MatchDelete(this);
     }
 }

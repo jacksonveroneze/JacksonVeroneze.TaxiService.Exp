@@ -1,8 +1,8 @@
 using System.Data;
 using Dapper;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
-using JacksonVeroneze.TemplateWebApi.Infrastructure.Contexts;
-using JacksonVeroneze.TemplateWebApi.Infrastructure.UnitOfWork;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Contexts.EntityFramework;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.UnitOfWork.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -60,7 +60,7 @@ public static class DatabaseExtension
 
         if (appConfiguration.Database!.Type == DatabaseType.EntityFramework)
         {
-            services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddDbContext<DbContext, TemplateWebApiContext>((_, options) =>
                 options.UseNpgsql(appConfiguration.Database!.ConnectionString)

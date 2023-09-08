@@ -1,6 +1,6 @@
 using FluentValidation.Results;
-using JacksonVeroneze.TemplateWebApi.Application.Commands.User;
-using JacksonVeroneze.TemplateWebApi.Application.Validators.Commands.User;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Commands.User;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Validators.Commands.User;
 using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Commands.User;
 

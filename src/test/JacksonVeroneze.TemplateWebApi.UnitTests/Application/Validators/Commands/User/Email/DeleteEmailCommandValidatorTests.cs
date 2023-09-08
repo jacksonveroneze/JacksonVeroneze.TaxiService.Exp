@@ -1,6 +1,6 @@
 using FluentValidation.Results;
-using JacksonVeroneze.TemplateWebApi.Application.Commands.User.Email;
-using JacksonVeroneze.TemplateWebApi.Application.Validators.Commands.User.Email;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Commands.User.Email;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Validators.Commands.User.Email;
 
 namespace JacksonVeroneze.TemplateWebApi.UnitTests.Application.Validators.Commands.User.Email;
 

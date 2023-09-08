@@ -2,10 +2,10 @@ using System.Data;
 using AutoMapper;
 using Dapper;
 using JacksonVeroneze.NET.Pagination;
+using JacksonVeroneze.NET.Pagination.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
-using JacksonVeroneze.NET.Pagination.Extensions;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Models;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.Dapper;
@@ -24,11 +24,11 @@ public class UserReadRepository : IUserReadRepository
         _repository = connection;
     }
 
-    public async Task<bool> ExistsByNameAsync(string name,
+    public async Task<bool> ExistsUserAsync(string document,
         CancellationToken cancellationToken = default)
     {
         int result = await _repository
-            .RecordCountAsync<UserModel>(new { name = name });
+            .RecordCountAsync<UserModel>(new { name = document });
 
         return result > 0;
     }

@@ -1,10 +1,10 @@
 using AutoMapper;
-using JacksonVeroneze.NET.DomainObjects.Result;
-using JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.User.Email;
+using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
-using JacksonVeroneze.TemplateWebApi.Application.Mappers;
-using JacksonVeroneze.TemplateWebApi.Application.Models.User.Email;
-using JacksonVeroneze.TemplateWebApi.Application.Queries.User.Email;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Handlers.QueryHandler.User.Email;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Mappers;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Models.User.Email;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Queries.User.Email;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders;

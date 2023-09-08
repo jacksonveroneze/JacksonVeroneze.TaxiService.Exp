@@ -19,7 +19,7 @@
 //         _repository = repository;
 //     }
 //
-//     public Task<bool> ExistsByNameAsync(string name,
+//     public Task<bool> ExistsUserAsync(string name,
 //         CancellationToken cancellationToken = default)
 //     {
 //         UserNameSpecification specName = new(name, matchExactly: true);
@@ -47,5 +47,6 @@
 //             filter.Pagination!, spec, cancellationToken);
 //     }
 // }
+
 
 

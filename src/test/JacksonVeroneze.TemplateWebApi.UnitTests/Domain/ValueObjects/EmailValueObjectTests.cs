@@ -1,4 +1,4 @@
-using JacksonVeroneze.NET.DomainObjects.Result;
+using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
 

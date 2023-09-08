@@ -9,9 +9,9 @@ using JacksonVeroneze.TemplateWebApi.Infrastructure.Identity;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Mail;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Messaging;
 using Microsoft.Extensions.DependencyInjection;
-
 using DapperType = JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.Dapper;
-using EntityFrameworkType = JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.EntityFramework;
+using EntityFrameworkType =
+    JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.EntityFramework;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
 

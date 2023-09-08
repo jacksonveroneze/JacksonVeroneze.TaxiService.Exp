@@ -6,8 +6,8 @@ namespace JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Use
 
 public interface IUserReadRepository
 {
-    Task<bool> ExistsByNameAsync(
-        string name,
+    Task<bool> ExistsUserAsync(
+        string document,
         CancellationToken cancellationToken = default);
 
     Task<UserEntity?> GetByIdAsync(

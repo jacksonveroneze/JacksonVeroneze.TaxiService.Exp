@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using AutoMapper;
-using JacksonVeroneze.TemplateWebApi.Application.Mappers;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Mappers;
 
 namespace JacksonVeroneze.TemplateWebApi.Util.Tests.Builders;
 

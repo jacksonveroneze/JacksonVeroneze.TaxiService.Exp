@@ -1,5 +1,5 @@
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Mail;
-using JacksonVeroneze.TemplateWebApi.Application.Models.Infra;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Models.Infra;
 using JacksonVeroneze.TemplateWebApi.Domain.Parameters;
 using MailKit.Net.Smtp;
 using MailKit.Security;

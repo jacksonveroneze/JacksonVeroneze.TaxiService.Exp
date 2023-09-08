@@ -15,8 +15,8 @@
 
   <ItemGroup>
     <PackageReference Include="Bogus" Version="34.0.2"/>
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.1" />
-    <PackageReference Include="Moq" Version="4.20.69" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.1"/>
+    <PackageReference Include="Moq" Version="4.20.69"/>
   </ItemGroup>
 
   <ItemGroup>

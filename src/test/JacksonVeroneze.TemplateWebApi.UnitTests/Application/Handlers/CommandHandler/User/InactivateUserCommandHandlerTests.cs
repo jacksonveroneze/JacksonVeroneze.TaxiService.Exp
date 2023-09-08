@@ -1,9 +1,9 @@
-using JacksonVeroneze.NET.DomainObjects.Result;
-using JacksonVeroneze.TemplateWebApi.Application.Commands.User;
-using JacksonVeroneze.TemplateWebApi.Application.Handlers.CommandHandler.User;
+using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Common;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
-using JacksonVeroneze.TemplateWebApi.Application.Models.Base;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Commands.User;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Handlers.CommandHandler.User;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Models.Base;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Commands.User;

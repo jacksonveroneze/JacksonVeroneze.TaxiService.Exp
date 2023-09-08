@@ -1,5 +1,5 @@
 using System.Text.RegularExpressions;
-using JacksonVeroneze.NET.DomainObjects.Result;
+using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.NET.DomainObjects.ValueObjects;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 

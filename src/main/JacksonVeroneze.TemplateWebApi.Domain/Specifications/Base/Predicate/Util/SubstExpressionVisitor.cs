@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 namespace JacksonVeroneze.TemplateWebApi.Domain.Specifications.Base.Predicate.Util;
 
 [ExcludeFromCodeCoverage]
-internal class SubstExpressionVisitor : ExpressionVisitor
+public class SubstExpressionVisitor : ExpressionVisitor
 {
     public readonly Dictionary<Expression, Expression> Subst = new();
 

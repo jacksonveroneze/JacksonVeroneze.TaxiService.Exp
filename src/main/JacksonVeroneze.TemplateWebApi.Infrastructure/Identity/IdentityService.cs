@@ -1,6 +1,6 @@
 using System.Security.Claims;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Identity;
-using JacksonVeroneze.TemplateWebApi.Application.Models.Infra;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Models.Infra;
 using Microsoft.AspNetCore.Http;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Identity;

@@ -6,7 +6,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 using JacksonVeroneze.TemplateWebApi.Domain.Specifications.Base.Predicate;
 using JacksonVeroneze.TemplateWebApi.Domain.Specifications.User;
-using JacksonVeroneze.TemplateWebApi.Infrastructure.Contexts;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Contexts.EntityFramework;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.EntityFramework.Extensions;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,10 +22,10 @@ public class UserReadRepository : IUserReadRepository
         _dbSet = context.Set<UserEntity>();
     }
 
-    public Task<bool> ExistsByNameAsync(string name,
+    public Task<bool> ExistsUserAsync(string document,
         CancellationToken cancellationToken = default)
     {
-        UserNameSpecification specName = new(name, matchExactly: true);
+        UserCpfSpecification specName = new(document);
 
         return _dbSet.AnyAsync(specName, cancellationToken);
     }

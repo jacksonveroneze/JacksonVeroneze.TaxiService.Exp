@@ -1,6 +1,6 @@
 using Bogus;
 using JacksonVeroneze.NET.Pagination;
-using JacksonVeroneze.TemplateWebApi.Application.Queries.User;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Queries.User;
 
 namespace JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Queries.User;
 

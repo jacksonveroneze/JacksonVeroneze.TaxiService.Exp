@@ -1,12 +1,10 @@
 using AutoMapper;
-using FluentAssertions.Execution;
-using FluentAssertions.Primitives;
-using JacksonVeroneze.NET.DomainObjects.Result;
-using JacksonVeroneze.TemplateWebApi.Application.Handlers.QueryHandler.User;
+using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
-using JacksonVeroneze.TemplateWebApi.Application.Mappers;
-using JacksonVeroneze.TemplateWebApi.Application.Models.User;
-using JacksonVeroneze.TemplateWebApi.Application.Queries.User;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Handlers.QueryHandler.User;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Mappers;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Models.User;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Queries.User;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Enums;

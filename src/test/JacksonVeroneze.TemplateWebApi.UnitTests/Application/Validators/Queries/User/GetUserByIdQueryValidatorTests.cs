@@ -1,6 +1,6 @@
 using FluentValidation.Results;
-using JacksonVeroneze.TemplateWebApi.Application.Queries.User;
-using JacksonVeroneze.TemplateWebApi.Application.Validators.Queries.User;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Queries.User;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Validators.Queries.User;
 
 namespace JacksonVeroneze.TemplateWebApi.UnitTests.Application.Validators.Queries.User;
 

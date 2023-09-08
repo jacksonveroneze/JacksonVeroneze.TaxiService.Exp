@@ -11,10 +11,10 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositori
 [ExcludeFromCodeCoverage]
 public class UserReadStubRepository : IUserReadRepository
 {
-    public Task<bool> ExistsByNameAsync(string name,
+    public Task<bool> ExistsUserAsync(string document,
         CancellationToken cancellationToken = default)
     {
-        UserNameSpecification specName = new(name);
+        UserNameSpecification specName = new(document);
 
         bool exists = UserDatabase.Data
             .Any(specName.IsSatisfiedBy);
