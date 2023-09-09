@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
 {
     [ExcludeFromCodeCoverage]
-    [DbContext(typeof(TemplateWebApiContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     partial class TemplateWebApiContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

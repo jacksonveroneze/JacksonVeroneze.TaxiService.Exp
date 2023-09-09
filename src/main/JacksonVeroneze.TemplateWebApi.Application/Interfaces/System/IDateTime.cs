@@ -1,4 +1,4 @@
-namespace JacksonVeroneze.TemplateWebApi.Application.Interfaces.Common;
+namespace JacksonVeroneze.TemplateWebApi.Application.Interfaces.System;
 
 public interface IDateTime
 {

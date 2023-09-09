@@ -1,7 +1,7 @@
 using System.Runtime.InteropServices;
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Common;
+using JacksonVeroneze.TemplateWebApi.Application.Interfaces.System;
 
-namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Common;
+namespace JacksonVeroneze.TemplateWebApi.Infrastructure.System;
 
 [ExcludeFromCodeCoverage]
 public class SystemDateTime : IDateTime

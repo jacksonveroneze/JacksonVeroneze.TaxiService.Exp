@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Contexts.EntityFramework;
 
 [ExcludeFromCodeCoverage]
-public class TemplateWebApiContext : DbContext
+public class ApplicationDbContext : DbContext
 {
-    public TemplateWebApiContext(DbContextOptions<TemplateWebApiContext> options)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
     }
@@ -16,7 +16,7 @@ public class TemplateWebApiContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(
-            typeof(TemplateWebApiContext).Assembly);
+            typeof(ApplicationDbContext).Assembly);
 
         modelBuilder.Ignore<Event>();
 

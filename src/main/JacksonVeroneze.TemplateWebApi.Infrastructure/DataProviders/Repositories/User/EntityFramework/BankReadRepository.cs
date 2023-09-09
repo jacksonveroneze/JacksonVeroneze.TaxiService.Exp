@@ -17,7 +17,7 @@ public class UserReadRepository : IUserReadRepository
 {
     private readonly DbSet<UserEntity> _dbSet;
 
-    public UserReadRepository(TemplateWebApiContext context)
+    public UserReadRepository(ApplicationDbContext context)
     {
         _dbSet = context.Set<UserEntity>();
     }

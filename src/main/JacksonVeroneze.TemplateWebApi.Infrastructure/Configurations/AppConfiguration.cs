@@ -1,5 +1,3 @@
-using JacksonVeroneze.NET.HttpClient.Configuration;
-
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
 
 [ExcludeFromCodeCoverage]
@@ -19,8 +17,6 @@ public class AppConfiguration
     public DatabaseConfiguration? Database { get; init; }
 
     public DistributedTracingConfiguration? DistributedTracing { get; init; }
-
-    public ICollection<HttpClientConfiguration>? HttpClients { get; init; }
 
     public AppMetricsConfiguration? Metrics { get; init; }
 

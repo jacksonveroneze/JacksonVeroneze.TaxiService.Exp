@@ -78,3 +78,7 @@ finally
 
     dotNetRuntimeStats?.Dispose();
 }
+
+public partial class Program
+{
+}

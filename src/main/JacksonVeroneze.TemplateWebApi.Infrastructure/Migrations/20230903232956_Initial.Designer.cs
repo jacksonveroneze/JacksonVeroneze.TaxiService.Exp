@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
 {
     [ExcludeFromCodeCoverage]
-    [DbContext(typeof(TemplateWebApiContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20230903232956_Initial")]
     partial class Initial
     {
