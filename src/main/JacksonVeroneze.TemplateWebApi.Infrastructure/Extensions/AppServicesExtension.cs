@@ -1,8 +1,10 @@
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Identity;
+using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Messaging;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.System;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.EntityFramework;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Identity;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.Messaging;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.System;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,7 +20,7 @@ public static class AppServicesExtension
 
         services.AddScoped<IDateTime, SystemDateTime>();
         services.AddScoped<IIdentityService, IdentityService>();
-        ;
+        services.AddScoped<IIntegrationEventPublisher, RabbitMqEventPublisher>();
 
         #endregion
 

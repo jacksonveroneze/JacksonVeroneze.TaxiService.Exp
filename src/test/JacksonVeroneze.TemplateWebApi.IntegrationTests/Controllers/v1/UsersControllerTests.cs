@@ -18,6 +18,11 @@ public class UsersControllerTests : IClassFixture<CustomWebApplicationFactory<Pr
     public UsersControllerTests(CustomWebApplicationFactory<Program> factory)
     {
         _factory = factory;
+
+        // DbContext context = _factory.Services
+        //     .GetRequiredService<ApplicationDbContext>();
+        //
+        // context.Database.EnsureCreated();
     }
 
     #region GetPagedAsync

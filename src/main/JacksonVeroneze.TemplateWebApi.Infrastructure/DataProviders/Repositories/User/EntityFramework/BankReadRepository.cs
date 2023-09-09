@@ -6,7 +6,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 using JacksonVeroneze.TemplateWebApi.Domain.Specifications.Base.Predicate;
 using JacksonVeroneze.TemplateWebApi.Domain.Specifications.User;
-using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Contexts.EntityFramework;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.Contexts;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.EntityFramework.Extensions;
 using Microsoft.EntityFrameworkCore;
 

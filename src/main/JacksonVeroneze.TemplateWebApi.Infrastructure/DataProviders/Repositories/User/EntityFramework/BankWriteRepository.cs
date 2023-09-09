@@ -1,7 +1,7 @@
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
-using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Contexts.EntityFramework;
-using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.UnitOfWork.EntityFramework;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.Contexts;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.EntityFramework;
@@ -28,7 +28,7 @@ public class UserWriteRepository : IUserWriteRepository
         await _dbSet.AddAsync(
             entity, cancellationToken);
 
-        await _unitOfWork.CommitAsync();
+        await _unitOfWork.CommitAsync(cancellationToken);
     }
 
     public async Task DeleteAsync(UserEntity entity,
@@ -36,7 +36,7 @@ public class UserWriteRepository : IUserWriteRepository
     {
         _dbSet.Remove(entity);
 
-        await _unitOfWork.CommitAsync();
+        await _unitOfWork.CommitAsync(cancellationToken);
     }
 
     public async Task UpdateAsync(UserEntity entity,
@@ -44,6 +44,6 @@ public class UserWriteRepository : IUserWriteRepository
     {
         _dbSet.Update(entity);
 
-        await _unitOfWork.CommitAsync();
+        await _unitOfWork.CommitAsync(cancellationToken);
     }
 }

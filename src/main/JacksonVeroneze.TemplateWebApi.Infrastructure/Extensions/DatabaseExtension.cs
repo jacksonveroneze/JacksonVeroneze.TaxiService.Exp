@@ -1,6 +1,6 @@
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
-using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Contexts.EntityFramework;
-using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.UnitOfWork.EntityFramework;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.Contexts;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,7 +15,7 @@ public static class DatabaseExtension
     {
         #region EntityFramework
 
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
 
         services.AddDbContext<DbContext, ApplicationDbContext>((_, options) =>
             options.UseNpgsql(appConfiguration.Database!.ConnectionString)

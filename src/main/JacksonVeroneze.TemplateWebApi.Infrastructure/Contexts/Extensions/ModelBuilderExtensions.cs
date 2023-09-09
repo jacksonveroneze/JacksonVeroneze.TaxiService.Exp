@@ -1,7 +1,7 @@
 using JacksonVeroneze.NET.DomainObjects.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Contexts.EntityFramework.Extensions;
+namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Contexts.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class ModelBuilderExtensions

@@ -1,5 +1,5 @@
 using System.Data.Common;
-using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Contexts.EntityFramework;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.Contexts;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Data.Sqlite;

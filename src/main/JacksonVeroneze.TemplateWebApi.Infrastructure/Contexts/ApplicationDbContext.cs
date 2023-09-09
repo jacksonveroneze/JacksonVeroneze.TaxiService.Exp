@@ -1,9 +1,9 @@
 using JacksonVeroneze.NET.DomainObjects.Messaging;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
-using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Contexts.EntityFramework.Extensions;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.Contexts.Extensions;
 using Microsoft.EntityFrameworkCore;
 
-namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Contexts.EntityFramework;
+namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Contexts;
 
 [ExcludeFromCodeCoverage]
 public class ApplicationDbContext : DbContext
