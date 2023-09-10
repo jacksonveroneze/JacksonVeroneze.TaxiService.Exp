@@ -22,7 +22,7 @@ services:
       - --entrypoints.ping.address=:8081
       - --entrypoints.metrics.address=:8082
 
-      - --metrics.prometheus=false
+      - --metrics.prometheus=true
       - --metrics.prometheus.entryPoint=metrics
       - --metrics.prometheus.addServicesLabels=true
 
