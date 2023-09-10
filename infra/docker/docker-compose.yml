@@ -94,7 +94,7 @@ services:
       - traefik.enable=true
 
       - traefik.http.routers.apitemplatewebapi-http.entrypoints=http
-      - traefik.http.routers.apitemplatewebapi-http.rule=Host(`localhost`) && PathPrefix(`/templatewebapi`)
+      - traefik.http.routers.apitemplatewebapi-http.rule=PathPrefix(`/templatewebapi`)
 
       - traefik.http.services.apitemplatewebapi.loadbalancer.server.port=8080
       - traefik.http.services.apitemplatewebapi.loadbalancer.passhostheader=true
