@@ -10,16 +10,16 @@ export const options = {
     vus: 200,
 };
 
-//export let options = {
-//    stages: [
-//        {duration: '30s', target: 10}, // simulate ramp-up of traffic from 1 to 3 virtual users over 0.5 minutes.
-//        {duration: '1m', target: 100}, // simulate ramp-up of traffic from 1 to 3 virtual users over 0.5 minutes.
-//        {duration: '30s', target: 15}, // ramp-down to 0 users
-//        {duration: '1m', target: 150}, // ramp-down to 0 users
-//        {duration: '30s', target: 50}, // ramp-down to 0 users
-//        {duration: '30s', target: 0}, // ramp-down to 0 users
-//    ],
-//};
+export let options = {
+    stages: [
+        {duration: '30s', target: 10}, // simulate ramp-up of traffic from 1 to 3 virtual users over 0.5 minutes.
+        {duration: '1m', target: 100}, // simulate ramp-up of traffic from 1 to 3 virtual users over 0.5 minutes.
+        {duration: '30s', target: 15}, // ramp-down to 0 users
+        {duration: '1m', target: 150}, // ramp-down to 0 users
+        {duration: '30s', target: 50}, // ramp-down to 0 users
+        {duration: '30s', target: 0}, // ramp-down to 0 users
+    ],
+};
 
 //const url = 'http://localhost/templatewebapi';
 //const url = 'http://localhost:8088/api';
