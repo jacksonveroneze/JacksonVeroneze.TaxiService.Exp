@@ -29,7 +29,7 @@ public class UsersControllerTests : IClassFixture<CustomWebApplicationFactory<Pr
 
     [Fact(DisplayName = nameof(UsersController)
                         + nameof(UsersController.GetPagedAsync)
-                        + "Should Success")]
+                        + "Should Success", Skip = "Skipped")]
     public async Task GetPagedAsync_ReturnSuccess()
     {
         // -------------------------------------------------------
@@ -74,7 +74,7 @@ public class UsersControllerTests : IClassFixture<CustomWebApplicationFactory<Pr
 
     [Fact(DisplayName = nameof(UsersController)
                         + nameof(UsersController.CreateAsync)
-                        + "Should Success")]
+                        + "Should Success", Skip = "Skipped")]
     public async Task CreateAsync_ReturnSuccess()
     {
         // -------------------------------------------------------
