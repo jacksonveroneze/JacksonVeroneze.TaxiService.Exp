@@ -67,7 +67,7 @@ services:
           memory: '512M'
 
   api:
-    image: jacksonveroneze/templatewebapi-service:latest
+    image: jacksonveroneze/templatewebapi-service:0.0.3
     restart: always
     tty: true
     build:
