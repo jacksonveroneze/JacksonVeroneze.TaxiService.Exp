@@ -35,16 +35,16 @@ public sealed class CreateUserCommandHandler :
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        bool existsByName = await _readRepository
+        bool existsUser = await _readRepository
             .ExistsUserAsync(request.Document!, cancellationToken);
 
-        if (existsByName)
+        if (existsUser)
         {
             _logger.LogAlreadyExists(nameof(CreateUserCommandHandler),
-                nameof(Handle), DomainErrors.User.DuplicateName, request.Name!);
+                nameof(Handle), DomainErrors.User.DuplicateCpf, request.Name!);
 
             return Result<CreateUserCommandResponse>.Invalid(
-                DomainErrors.User.DuplicateName);
+                DomainErrors.User.DuplicateCpf);
         }
 
         IResult<NameValueObject> nameValueObject = NameValueObject

@@ -28,6 +28,10 @@ public static class DomainErrors
             new("User.InvalidCpf",
                 "The document is invalid.");
 
+        public static Error DuplicateCpf =>
+            new("User.DuplicateCpf",
+                string.Format(TemplateDataInUse, "cpf"));
+
         public static Error AlreadyActivated =>
             new("User.AlreadyActivated",
                 "The user has already been activated.");

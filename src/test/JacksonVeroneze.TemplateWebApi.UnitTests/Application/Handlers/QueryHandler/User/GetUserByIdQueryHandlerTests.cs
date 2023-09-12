@@ -9,6 +9,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders;
+using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.AutoMapper;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Queries.User;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Extensions;

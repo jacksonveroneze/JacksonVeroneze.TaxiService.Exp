@@ -1,7 +1,9 @@
 using JacksonVeroneze.TemplateWebApi.Application.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Application.Core.Extensions;
+using JacksonVeroneze.TemplateWebApi.Application.Interfaces.System;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Commands.User;
 using JacksonVeroneze.TemplateWebApi.Domain.Enums;
+using JacksonVeroneze.TemplateWebApi.Domain.Util;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.v1.Validators.Commands.User;
 
@@ -10,7 +12,7 @@ public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
     private const int MinLengthName = 2;
     private const int MaxLengthName = 100;
 
-    public CreateUserCommandValidator()
+    public CreateUserCommandValidator(IDateTime dateTime)
     {
         RuleFor(request => request)
             .NotNull();
@@ -24,7 +26,8 @@ public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
         RuleFor(request => request.Birthday)
             .Cascade(CascadeMode.Stop)
             .NotNull()
-            .WithError(ValidationErrors.User.BirthdayIsRequired);
+            .WithError(ValidationErrors.User.BirthdayIsRequired)
+            .LessThan(dateTime.DateNow);
 
         RuleFor(request => request.Gender)
             .Cascade(CascadeMode.Stop)
@@ -32,5 +35,12 @@ public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
             .WithError(ValidationErrors.User.GenderIsRequired)
             .NotEqual(Gender.None)
             .IsInEnum();
+
+        RuleFor(request => request.Document)
+            .Cascade(CascadeMode.Stop)
+            .NotEmpty()
+            .WithError(ValidationErrors.User.DocumentIsRequired)
+            .Must(ValidarCpf.Validar)
+            .WithError(ValidationErrors.User.DocumentIsInvalid);
     }
 }

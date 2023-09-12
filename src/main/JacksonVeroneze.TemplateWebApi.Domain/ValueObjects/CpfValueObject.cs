@@ -1,6 +1,7 @@
 using JacksonVeroneze.NET.DomainObjects.ValueObjects;
 using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
+using JacksonVeroneze.TemplateWebApi.Domain.Util;
 
 namespace JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
 
@@ -33,7 +34,8 @@ public class CpfValueObject : ValueObject
     {
         if (string.IsNullOrEmpty(value) ||
             value.Length < MinLength ||
-            value.Length > MaxLength)
+            value.Length > MaxLength ||
+            !ValidarCpf.Validar(value))
         {
             return Result<CpfValueObject>.Invalid(
                 DomainErrors.User.InvalidCpf);

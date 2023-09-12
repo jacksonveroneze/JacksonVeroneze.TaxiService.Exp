@@ -27,7 +27,7 @@ public class UserNameSpecification : BaseSpecification<UserEntity>
         }
 
         return spec => _matchExactly
-            ? spec.Name.Value!.Equals(_name)
-            : spec.Name.Value!.Contains(_name);
+            ? spec.Name.Value!.ToUpper().Equals(_name.ToUpper())
+            : spec.Name.Value!.ToUpper().Contains(_name.ToUpper());
     }
 }

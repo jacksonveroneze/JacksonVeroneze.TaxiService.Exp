@@ -1,4 +1,5 @@
 using FluentValidation.Results;
+using JacksonVeroneze.TemplateWebApi.Application.Interfaces.System;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Commands.User;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Validators.Commands.User;
 using JacksonVeroneze.TemplateWebApi.Domain.Enums;
@@ -8,7 +9,22 @@ namespace JacksonVeroneze.TemplateWebApi.UnitTests.Application.Validators.Comman
 
 public class CreateUserCommandValidatorTests
 {
-    private readonly CreateUserCommandValidator _validator = new();
+    private readonly Mock<IDateTime> _mockDatetime;
+
+    private CreateUserCommandValidator _validator;
+
+    public CreateUserCommandValidatorTests()
+    {
+        _mockDatetime = new Mock<IDateTime>();
+
+        DateOnly now = DateOnly.FromDateTime(DateTime.Now);
+
+        _mockDatetime.SetupGet(mock =>
+            mock.DateNow).Returns(now);
+
+        _validator = new CreateUserCommandValidator(
+            _mockDatetime.Object);
+    }
 
     [Fact(DisplayName = nameof(CreateUserCommandValidator)
                         + nameof(CreateUserCommandValidator.Validate)
@@ -39,22 +55,31 @@ public class CreateUserCommandValidatorTests
             .BeEmpty();
     }
 
-    [Theory(
-         DisplayName = nameof(CreateUserCommandValidator)
-                       + nameof(CreateUserCommandValidator.Validate)
-                       + "Should Return Error"
-     ), MemberData(nameof(CorrectData))]
+    [Theory(DisplayName = nameof(CreateUserCommandValidator)
+                          + nameof(CreateUserCommandValidator.Validate)
+                          + "Should Return Error"
+     ), MemberData(nameof(MockData))]
     public void Validate_Valid_ShouldReturnError(
-        string name, DateOnly? birthday, Gender? gender, int totalErrors)
+        string name, DateOnly? birthday, Gender? gender,
+        string? document, int totalErrors)
     {
         // -------------------------------------------------------
         // Arrange
         // -------------------------------------------------------
+        DateOnly now = DateOnly.FromDateTime(DateTime.Now);
+
+        _mockDatetime.SetupGet(mock =>
+            mock.DateNow).Returns(now);
+
+        _validator = new CreateUserCommandValidator(
+            _mockDatetime.Object);
+
         CreateUserCommand command = new()
         {
             Name = name,
             Birthday = birthday,
-            Gender = gender
+            Gender = gender,
+            Document = document
         };
 
         // -------------------------------------------------------
@@ -76,24 +101,18 @@ public class CreateUserCommandValidatorTests
             .And.HaveCount(totalErrors);
     }
 
-    public static readonly object[][] CorrectData =
+    public static readonly object?[][] MockData =
     {
-        new object[] { null!, (null as DateOnly?)!, (null as Gender?)!, 3 },
-        new object[] { StringUtils.Generate(0), (null as DateOnly?)!, (null as Gender?)!, 3 },
+        new object?[] { null, null, null, null, 4 },
+        new object?[] { "", null, null, null, 4 },
+        new object?[] { string.Empty, null, null, null, 4 },
+        new object?[] { "a", null, null, null, 4 },
+        new object?[] { "ab", null, null, null, 3 },
+        new object?[] { "ab", DateOnly.FromDateTime(DateTime.Now.AddDays(1)), null, null, 3 },
+        new object?[] { "ab", DateOnly.FromDateTime(DateTime.Now.AddDays(-10)), null, null, 2 },
+        new object?[] { "ab", DateOnly.FromDateTime(DateTime.Now.AddDays(-10)), Gender.None, null, 2 },
+        new object?[] { "ab", DateOnly.FromDateTime(DateTime.Now.AddDays(-10)), Gender.Male, "", 1 },
+        new object?[] { "ab", DateOnly.FromDateTime(DateTime.Now.AddDays(-10)), Gender.Male, "12", 1 },
     };
 }
 
-public static class StringUtils
-{
-    public static string Generate(int length)
-    {
-        const string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-                                "abcdefghijklmnopqrstuvwxyz" +
-                                "0123456789";
-
-        char[] result = Enumerable.Repeat(alphabet, length)
-            .Select(s => s[new Random().Next(s.Length)]).ToArray();
-
-        return new string(result);
-    }
-}

@@ -27,5 +27,13 @@ internal static class ValidationErrors
         internal static Error EmailIsRequired =>
             new("User.EmailIsRequired",
                 "The e-mail is required.");
+
+        internal static Error DocumentIsRequired =>
+            new("User.DocumentIsRequired",
+                "The document is required.");
+
+        internal static Error DocumentIsInvalid =>
+            new("User.DocumentIsInvalid",
+                "The document is invalid.");
     }
 }

@@ -5,7 +5,7 @@ namespace JacksonVeroneze.TemplateWebApi.Util.Tests.Extensions;
 
 public static class MockLogger
 {
-    public static Mock<ILogger<T>> MockLogLevel<T>(
+    public static void MockLogLevel<T>(
         this Mock<ILogger<T>> mockLogger)
     {
         ArgumentNullException.ThrowIfNull(mockLogger);
@@ -21,7 +21,5 @@ public static class MockLogger
         mockLogger
             .Setup(mock => mock.IsEnabled(LogLevel.Error))
             .Returns(true);
-
-        return mockLogger;
     }
 }

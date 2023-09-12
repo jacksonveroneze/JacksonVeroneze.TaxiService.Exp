@@ -11,41 +11,43 @@ using Xunit;
 
 namespace JacksonVeroneze.TemplateWebApi.IntegrationTests.Controllers.v1;
 
-public class UsersControllerTests : IClassFixture<CustomWebApplicationFactory<Program>>
+public class UsersControllerTests : IDisposable,
+    IClassFixture<CustomWebApplicationFactory<Program>>
 {
-    private readonly CustomWebApplicationFactory<Program> _factory;
+    private const string BaseUrl = "/api/v1/users";
+
+    private readonly HttpClient _httpClient;
 
     public UsersControllerTests(CustomWebApplicationFactory<Program> factory)
     {
-        _factory = factory;
-
-        // DbContext context = _factory.Services
-        //     .GetRequiredService<ApplicationDbContext>();
-        //
-        // context.Database.EnsureCreated();
+        _httpClient = factory.CreateClient(new
+            WebApplicationFactoryClientOptions
+            {
+                AllowAutoRedirect = false
+            });
     }
 
     #region GetPagedAsync
 
     [Fact(DisplayName = nameof(UsersController)
                         + nameof(UsersController.GetPagedAsync)
-                        + "Should Success", Skip = "Skipped")]
+                        + "Should Success")]
     public async Task GetPagedAsync_ReturnSuccess()
     {
         // -------------------------------------------------------
         // Arrange
         // -------------------------------------------------------
-        HttpClient client = _factory.CreateClient(new
-            WebApplicationFactoryClientOptions
-            {
-                AllowAutoRedirect = false
-            });
+        int page = 1;
+        int pageSize = 10;
+
+        Uri uri = new($"{BaseUrl}?page={page}&page_size={pageSize}",
+            UriKind.Relative);
 
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        HttpResponseMessage response = await client
-            .GetAsync("/api/v1/users?page=1&page_size=2");
+        HttpResponseMessage response = await _httpClient
+            .GetAsync(uri);
 
         // -------------------------------------------------------
         // Assert
@@ -65,7 +67,7 @@ public class UsersControllerTests : IClassFixture<CustomWebApplicationFactory<Pr
 
         content.Data.Should()
             .NotBeNull()
-            .And.HaveCount(2);
+            .And.HaveCount(0);
     }
 
     #endregion
@@ -74,26 +76,22 @@ public class UsersControllerTests : IClassFixture<CustomWebApplicationFactory<Pr
 
     [Fact(DisplayName = nameof(UsersController)
                         + nameof(UsersController.CreateAsync)
-                        + "Should Success", Skip = "Skipped")]
+                        + "Should Success")]
     public async Task CreateAsync_ReturnSuccess()
     {
         // -------------------------------------------------------
         // Arrange
         // -------------------------------------------------------
-        HttpClient client = _factory.CreateClient(new
-            WebApplicationFactoryClientOptions
-            {
-                AllowAutoRedirect = false
-            });
-
         CreateUserCommand command = CreateUserCommandBuilder
             .BuildSingle();
+
+        Uri uri = new(BaseUrl, UriKind.Relative);
 
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        HttpResponseMessage response = await client
-            .PostAsJsonAsync("/api/v1/users", command);
+        HttpResponseMessage response = await _httpClient
+            .PostAsJsonAsync(uri, command);
 
         // -------------------------------------------------------
         // Assert
@@ -117,4 +115,9 @@ public class UsersControllerTests : IClassFixture<CustomWebApplicationFactory<Pr
     }
 
     #endregion
+
+    public void Dispose()
+    {
+        _httpClient.Dispose();
+    }
 }

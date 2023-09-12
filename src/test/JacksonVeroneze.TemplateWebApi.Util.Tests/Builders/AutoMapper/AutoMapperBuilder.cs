@@ -2,7 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using AutoMapper;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Mappers;
 
-namespace JacksonVeroneze.TemplateWebApi.Util.Tests.Builders;
+namespace JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.AutoMapper;
 
 [ExcludeFromCodeCoverage]
 public class AutoMapperBuilder

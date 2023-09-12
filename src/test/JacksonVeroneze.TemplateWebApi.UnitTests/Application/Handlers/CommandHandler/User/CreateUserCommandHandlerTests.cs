@@ -9,6 +9,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders;
+using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.AutoMapper;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Commands.User;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Extensions;
 using Microsoft.Extensions.Logging;
@@ -166,7 +167,7 @@ public class CreateUserCommandHandlerTests
 
         result.Error.Should()
             .NotBeNull()
-            .And.BeEquivalentTo(DomainErrors.User.DuplicateName);
+            .And.BeEquivalentTo(DomainErrors.User.DuplicateCpf);
 
         _mockReadRepository.Verify(mock =>
             mock.ExistsUserAsync(It.IsAny<string>(),
