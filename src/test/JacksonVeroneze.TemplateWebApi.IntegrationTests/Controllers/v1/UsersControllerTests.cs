@@ -31,7 +31,7 @@ public class UsersControllerTests : IDisposable,
 
     [Fact(DisplayName = nameof(UsersController)
                         + nameof(UsersController.GetPagedAsync)
-                        + "Should Success")]
+                        + "Should Success", Skip = "")]
     public async Task GetPagedAsync_ReturnSuccess()
     {
         // -------------------------------------------------------
@@ -76,7 +76,7 @@ public class UsersControllerTests : IDisposable,
 
     [Fact(DisplayName = nameof(UsersController)
                         + nameof(UsersController.CreateAsync)
-                        + "Should Success")]
+                        + "Should Success", Skip = "")]
     public async Task CreateAsync_ReturnSuccess()
     {
         // -------------------------------------------------------
