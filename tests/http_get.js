@@ -1,29 +1,30 @@
 import http from 'k6/http';
-import {sleep, randomSeed, check} from 'k6';
-import {uuidv4} from 'https://jslib.k6.io/k6-utils/1.4.0/index.js';
-import {crypto} from "k6/experimental/webcrypto";
-import {randomIntBetween} from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
+import { sleep, randomSeed, check } from 'k6';
+import { uuidv4 } from 'https://jslib.k6.io/k6-utils/1.4.0/index.js';
+import { crypto } from "k6/experimental/webcrypto";
+import { randomIntBetween } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 export const options = {
-    duration: '15s',
+    duration: '60s',
     //iterations: 10000,
-    vus: 200,
+    vus: 500,
 };
 
-export let options = {
-    stages: [
-        {duration: '30s', target: 10}, // simulate ramp-up of traffic from 1 to 3 virtual users over 0.5 minutes.
-        {duration: '1m', target: 100}, // simulate ramp-up of traffic from 1 to 3 virtual users over 0.5 minutes.
-        {duration: '30s', target: 15}, // ramp-down to 0 users
-        {duration: '1m', target: 150}, // ramp-down to 0 users
-        {duration: '30s', target: 50}, // ramp-down to 0 users
-        {duration: '30s', target: 0}, // ramp-down to 0 users
-    ],
-};
+// export let options = {
+//     stages: [
+//         {duration: '3m', target: 10}, // simulate ramp-up of traffic from 1 to 3 virtual users over 0.5 minutes.
+//         {duration: '3m', target: 100}, // simulate ramp-up of traffic from 1 to 3 virtual users over 0.5 minutes.
+//         {duration: '2m', target: 15}, // ramp-down to 0 users
+//         {duration: '1m', target: 150}, // ramp-down to 0 users
+//         {duration: '5m', target: 50}, // ramp-down to 0 users
+//         {duration: '30s', target: 0}, // ramp-down to 0 users
+//     ],
+// };
 
 //const url = 'http://localhost/templatewebapi';
 //const url = 'http://localhost:8088/api';
-const url = 'http://localhost:9999';
+//const url = 'http://localhost:9999';
+const url = 'http://10.0.0.199/templatewebapi';
 //const url = 'http://localhost:7000';
 //const url = 'http://localhost:9999';
 
@@ -66,18 +67,18 @@ const url = 'http://localhost:9999';
 
 
 export default function () {
-    const rnd = randomIntBetween(10000, 99999)
-    const rnd1 = randomIntBetween(10000, 99999)
-
-    var body = JSON.stringify({
-        Nome: crypto.randomUUID() + '_' + rnd,
-        Nascimento: "2023-08-25",
-        Apelido: "Jack" + '_' + rnd + '_' + rnd1
-    });
-
-    var responsePost = http.post(`${url}/pessoas`, body, {
-        headers: {'Content-Type': 'application/json'},
-    });
+    // const rnd = randomIntBetween(10000, 99999)
+    // const rnd1 = randomIntBetween(10000, 99999)
+    //
+    // var body = JSON.stringify({
+    //     Nome: crypto.randomUUID() + '_' + rnd,
+    //     Nascimento: "2023-08-25",
+    //     Apelido: "Jack" + '_' + rnd + '_' + rnd1
+    // });
+    //
+    // var responsePost = http.post(`${url}/pessoas`, body, {
+    //     headers: {'Content-Type': 'application/json'},
+    // });
 
 
     // var body = JSON.stringify({
@@ -102,45 +103,41 @@ export default function () {
     //     headers: {'Content-Type': 'application/json'},
     // });
     //
-    check(responsePost, {
-        'status is sucess': (r) => r.status === 201,
-    });
+    // check(responsePost, {
+    //     'status is sucess': (r) => r.status === 201,
+    // });
 
-//
-    var res = http.get(`${url}/api/v1/errors?error=200`);
+    var res = http.get(`${url}/api/v1/users`);
 
     check(res, {
-        'status is sucess': (r) => r.status === 200,
+        'status is 200': (r) => r.status === 200,
     });
-//
-//    check(res, {
-//        'status is 500': (r) => r.status === 500,
-//    });
-//
-//    var id = JSON.parse(responsePost.body).data.id;
-//
-//    http.get(`${url}/api/v1/users/${id}`);
-//
-//    if (rnd % 2 === 0) {
-//        http.put(`${url}/api/v1/users/${id}/activate`);
-//
-//        if (rnd % 15 === 0) {
-//            http.put(`${url}/api/v1/users/${id}/inactivate`);
-//        }
-//
-//        var bodyMail = JSON.stringify({
-//            id: id,
-//            email: crypto.randomUUID() + '_' + rnd + '@user.com'
-//        });
-//
-//        var responsePostMail = http.post(`${url}/api/v1/users/${id}/emails`, bodyMail, {
-//            headers: {'Content-Type': 'application/json'},
-//        });
-//
-//        var idMail = JSON.parse(responsePostMail.body).data.id;
-//
-//        http.del(`${url}/api/v1/users/${id}/emails/${idMail}`);
-//    }
+
+    //
+    //    var id = JSON.parse(responsePost.body).data.id;
+    //
+    //    http.get(`${url}/api/v1/users/${id}`);
+    //
+    //    if (rnd % 2 === 0) {
+    //        http.put(`${url}/api/v1/users/${id}/activate`);
+    //
+    //        if (rnd % 15 === 0) {
+    //            http.put(`${url}/api/v1/users/${id}/inactivate`);
+    //        }
+    //
+    //        var bodyMail = JSON.stringify({
+    //            id: id,
+    //            email: crypto.randomUUID() + '_' + rnd + '@user.com'
+    //        });
+    //
+    //        var responsePostMail = http.post(`${url}/api/v1/users/${id}/emails`, bodyMail, {
+    //            headers: {'Content-Type': 'application/json'},
+    //        });
+    //
+    //        var idMail = JSON.parse(responsePostMail.body).data.id;
+    //
+    //        http.del(`${url}/api/v1/users/${id}/emails/${idMail}`);
+    //    }
 
 
     //http.del(`${url}/api/v1/users/${id}`);
