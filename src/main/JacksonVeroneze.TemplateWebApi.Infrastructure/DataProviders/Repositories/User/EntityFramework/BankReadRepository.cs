@@ -58,6 +58,7 @@ public class UserReadRepository : IUserReadRepository
             .AsNoTracking()
             .Where(spec)
             .ConfigurePagination(filter.Pagination!)
+            .OrderByDescending(ord => ord.CreatedAt)
             .ToListAsync(cancellationToken);
 
         Page<UserEntity> data = result

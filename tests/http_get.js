@@ -21,10 +21,10 @@ export const options = {
 //     ],
 // };
 
-//const url = 'http://localhost/templatewebapi';
+const url = 'http://localhost/templatewebapi';
 //const url = 'http://localhost:8088/api';
 //const url = 'http://localhost:9999';
-const url = 'http://10.0.0.199/templatewebapi';
+//const url = 'http://10.0.0.199/templatewebapi';
 //const url = 'http://localhost:7000';
 //const url = 'http://localhost:9999';
 

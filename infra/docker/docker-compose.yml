@@ -81,7 +81,7 @@ services:
       - APP_CONFIG_DistributedTracing__Jaeger__Host=10.0.0.199
       - APP_CONFIG_DistributedTracing__Jaeger__Port=6831
       - APP_CONFIG_Database__ConnectionString=Host=10.0.0.199;Port=5432;Database=templatewebapi;Username=postgres;Password=localP@ssword
-      - Serilog__MinimumLevel__Default=Information
+      - Serilog__MinimumLevel__Default=Warning
       - Serilog__WriteTo__0__Args__configure__1__Name=Seq
       - Serilog__WriteTo__0__Args__configure__1__Args__serverUrl=http://10.0.0.199:5341
     healthcheck:
@@ -117,7 +117,7 @@ services:
 
       - --metrics=true
     ports:
-      - "8085-8086:8080"
+      - "8085-8090:8080"
     logging:
       driver: "json-file"
       options:
