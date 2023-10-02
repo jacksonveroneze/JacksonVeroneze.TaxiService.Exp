@@ -12,7 +12,7 @@ namespace JacksonVeroneze.TemplateWebApi.Api.Controllers.v1;
 
 [ApiController]
 [ApiVersion("1.0")]
-[Route("/api/v{version:apiVersion}/users/{userId:guid}")]
+[Route("/api/v{version:apiVersion}/users/{userId:guid}/emails")]
 [Produces(MediaTypeNames.Application.Json)]
 public sealed class EmailsController : ControllerBase
 {
@@ -24,7 +24,7 @@ public sealed class EmailsController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet("emails")]
+    [HttpGet]
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Find))]
     public async Task<IActionResult> GetEmailsByIdAsync(
@@ -37,7 +37,7 @@ public sealed class EmailsController : ControllerBase
         return response.MatchGet(this);
     }
 
-    [HttpPost("emails")]
+    [HttpPost]
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Create))]
     public async Task<IActionResult> CreateEmailAsync(
@@ -50,7 +50,7 @@ public sealed class EmailsController : ControllerBase
         return response.MatchPost(this);
     }
 
-    [HttpDelete("emails/{emailId:guid}")]
+    [HttpDelete("{emailId:guid}")]
     [ApiConventionMethod(typeof(DefaultApiConventions),
         nameof(DefaultApiConventions.Delete))]
     public async Task<IActionResult> DeleteEmailAsync(
