@@ -75,7 +75,7 @@ services:
       dockerfile: ./Dockerfile
     environment:
       - APP_CONFIG_Metrics__Detailed=true
-      - APP_CONFIG_Cache__Type=Redis
+      - APP_CONFIG_Cache__Type=Memory
       - APP_CONFIG_Cache__Endpoint=10.0.0.199:6379
       - APP_CONFIG_DistributedTracing__IsEnabled=false
       - APP_CONFIG_DistributedTracing__Jaeger__Host=10.0.0.199
