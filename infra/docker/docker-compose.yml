@@ -116,6 +116,8 @@ services:
       - traefik.http.routers.apitemplatewebapi-http.middlewares=middleware-stripprefix0,middleware-compress,middleware-request-body,middleware-retry
 
       - --metrics=true
+    ports:
+      - "8085-8090:8080"
     logging:
       driver: "json-file"
       options:
