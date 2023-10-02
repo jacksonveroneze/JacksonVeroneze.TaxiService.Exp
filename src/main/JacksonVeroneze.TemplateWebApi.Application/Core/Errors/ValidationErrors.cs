@@ -6,31 +6,33 @@ namespace JacksonVeroneze.TemplateWebApi.Application.Core.Errors;
 [ExcludeFromCodeCoverage]
 internal static class ValidationErrors
 {
+    private const string TemplateIsRequired = "The {0} is required.";
+
     internal static class User
     {
         internal static Error IdIsRequired =>
             new("User.IdIsRequired",
-                "The ID is required.");
+                string.Format(TemplateIsRequired, "id"));
 
         internal static Error NameIsRequired =>
             new("User.NameIsRequired",
-                "The name is required.");
+                string.Format(TemplateIsRequired, "name"));
 
         internal static Error BirthdayIsRequired =>
             new("User.BirthdayIsRequired",
-                "The birthday is required.");
+                string.Format(TemplateIsRequired, "birthday"));
 
         internal static Error GenderIsRequired =>
             new("User.GenderIsRequired",
-                "The gender is required.");
+                string.Format(TemplateIsRequired, "gender"));
 
         internal static Error EmailIsRequired =>
             new("User.EmailIsRequired",
-                "The e-mail is required.");
+                string.Format(TemplateIsRequired, "e-mail"));
 
         internal static Error DocumentIsRequired =>
             new("User.DocumentIsRequired",
-                "The document is required.");
+                string.Format(TemplateIsRequired, "document"));
 
         internal static Error DocumentIsInvalid =>
             new("User.DocumentIsInvalid",

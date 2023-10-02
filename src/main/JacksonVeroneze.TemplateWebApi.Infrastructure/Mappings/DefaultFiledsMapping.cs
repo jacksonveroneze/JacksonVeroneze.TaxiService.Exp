@@ -6,8 +6,9 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Mappings;
 [ExcludeFromCodeCoverage]
 public static class DefaultFiledsMapping
 {
-    public static void ConfigureDefaultFiledsMapping<T>(
-        this EntityTypeBuilder<T> builder) where T : Entity<Guid>
+    public static void ConfigureDefaultFiledsMapping<TEntity>(
+        this EntityTypeBuilder<TEntity> builder)
+        where TEntity : Entity<Guid>
     {
         builder.Property(c => c.CreatedAt)
             .IsRequired();

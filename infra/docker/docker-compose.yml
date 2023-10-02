@@ -35,12 +35,12 @@ services:
       - traefik.http.routers.traefik_ping.rule=Path(`/ping`)
       - traefik.http.routers.traefik_ping.entrypoints=ping
       - traefik.http.routers.traefik_ping.service=ping@internal
-    healthcheck:
-      test: traefik healthcheck --ping
-      interval: 15s
-      timeout: 3s
-      retries: 3
-      start_period: 5s
+    #    healthcheck:
+    #      test: traefik healthcheck --ping
+    #      interval: 15s
+    #      timeout: 3s
+    #      retries: 3
+    #      start_period: 5s
     depends_on:
       - api
     links:
@@ -58,6 +58,8 @@ services:
         max-file: "2"
         max-size: "1m"
     deploy:
+      mode: replicated
+      replicas: 1
       resources:
         limits:
           cpus: '0.50'
@@ -84,12 +86,12 @@ services:
       - Serilog__MinimumLevel__Default=Warning
       - Serilog__WriteTo__0__Args__configure__1__Name=Seq
       - Serilog__WriteTo__0__Args__configure__1__Args__serverUrl=http://10.0.0.199:5341
-    healthcheck:
-      test: curl --silent --fail http://api:8080/health?source=docker || exit 1
-      interval: 10s
-      timeout: 3s
-      retries: 3
-      start_period: 3s
+    #    healthcheck:
+    #      test: curl --silent --fail http://api:8080/health?source=docker || exit 1
+    #      interval: 10s
+    #      timeout: 3s
+    #      retries: 3
+    #      start_period: 3s
     labels:
       - traefik.enable=true
 
@@ -116,15 +118,18 @@ services:
       - traefik.http.routers.apitemplatewebapi-http.middlewares=middleware-stripprefix0,middleware-compress,middleware-request-body,middleware-retry
 
       - --metrics=true
-    ports:
-      - "8085-8090:8080"
     logging:
       driver: "json-file"
       options:
         max-file: 2
         max-size: 1m
     deploy:
+      mode: replicated
+      replicas: 2
+      update_config:
+        parallelism: 2
+        delay: 10s
       resources:
         limits:
-          cpus: '0.5'
+          cpus: '1'
           memory: '1GB'

@@ -9,15 +9,13 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositori
 [ExcludeFromCodeCoverage]
 public class UserWriteRepository : IUserWriteRepository
 {
-    private readonly ApplicationDbContext _context;
     private readonly IUnitOfWork _unitOfWork;
     private readonly DbSet<UserEntity> _dbSet;
 
     public UserWriteRepository(
-        IUnitOfWork unitOfWork,
-        ApplicationDbContext context)
+        ApplicationDbContext context,
+        IUnitOfWork unitOfWork)
     {
-        _context = context;
         _unitOfWork = unitOfWork;
         _dbSet = context.Set<UserEntity>();
     }

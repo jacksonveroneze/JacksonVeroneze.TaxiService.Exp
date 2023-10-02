@@ -7,7 +7,6 @@ using JacksonVeroneze.TemplateWebApi.Application.v1.Models.User.Email;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Queries.User.Email;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
-using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.AutoMapper;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Queries.User.Email;

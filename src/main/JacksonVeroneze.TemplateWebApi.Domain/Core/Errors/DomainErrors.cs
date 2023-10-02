@@ -14,11 +14,7 @@ public static class DomainErrors
     {
         public static Error NotFound =>
             new("User.NotFound",
-                string.Format(TemplateNotFound, "user"));
-
-        public static Error DuplicateName =>
-            new("User.DuplicateName",
-                string.Format(TemplateDataInUse, "name"));
+                string.Format(TemplateNotFound, "user id"));
 
         public static Error InvalidName =>
             new("User.InvalidName",
@@ -26,7 +22,7 @@ public static class DomainErrors
 
         public static Error InvalidCpf =>
             new("User.InvalidCpf",
-                "The document is invalid.");
+                string.Format(TemplateDataInvalid, "cpf"));
 
         public static Error DuplicateCpf =>
             new("User.DuplicateCpf",
@@ -44,30 +40,30 @@ public static class DomainErrors
     public static class Email
     {
         public static Error NotFound =>
-            new("User.NotFound",
+            new("Email.NotFound",
                 string.Format(TemplateNotFound, "e-mail"));
 
         public static Error DuplicateEmail =>
-            new("User.DuplicateEmail",
+            new("Email.DuplicateEmail",
                 string.Format(TemplateDataInUse, "e-mail"));
 
         public static Error InvalidEmail =>
-            new("User.InvalidEmail",
+            new("Email.InvalidEmail",
                 string.Format(TemplateDataInvalid, "e-mail"));
     }
 
     public static class Phone
     {
         public static Error NotFound =>
-            new("User.NotFound",
+            new("Phone.NotFound",
                 string.Format(TemplateNotFound, "phone"));
 
         public static Error DuplicatePhone =>
-            new("User.DuplicatePhone",
+            new("Phone.DuplicatePhone",
                 string.Format(TemplateDataInUse, "phone"));
 
         public static Error InvalidPhone =>
-            new("User.InvalidPhone",
+            new("Phone.InvalidPhone",
                 string.Format(TemplateDataInvalid, "phone"));
     }
 }

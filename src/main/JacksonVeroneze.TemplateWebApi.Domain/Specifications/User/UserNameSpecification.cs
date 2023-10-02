@@ -8,6 +8,8 @@ namespace JacksonVeroneze.TemplateWebApi.Domain.Specifications.User;
 [ExcludeFromCodeCoverage]
 public class UserNameSpecification : BaseSpecification<UserEntity>
 {
+    private readonly Expression<Func<UserEntity, bool>> _defaultExpression = _ => true;
+
     private readonly bool _matchExactly;
 
     private readonly string? _name;
@@ -23,7 +25,7 @@ public class UserNameSpecification : BaseSpecification<UserEntity>
     {
         if (string.IsNullOrEmpty(_name))
         {
-            return _ => true;
+            return _defaultExpression;
         }
 
         return spec => _matchExactly

@@ -13,16 +13,16 @@ public sealed class GetAllEmailsByUserIdQueryHandler :
 {
     private readonly ILogger<GetAllEmailsByUserIdQueryHandler> _logger;
     private readonly IMapper _mapper;
-    private readonly IUserReadRepository _readRepository;
+    private readonly IUserReadRepository _repository;
 
     public GetAllEmailsByUserIdQueryHandler(
         ILogger<GetAllEmailsByUserIdQueryHandler> logger,
         IMapper mapper,
-        IUserReadRepository readRepository)
+        IUserReadRepository repository)
     {
         _logger = logger;
         _mapper = mapper;
-        _readRepository = readRepository;
+        _repository = repository;
     }
 
     public async Task<IResult<GetAllEmailsByUserIdQueryResponse>> Handle(
@@ -31,7 +31,7 @@ public sealed class GetAllEmailsByUserIdQueryHandler :
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        UserEntity? entity = await _readRepository
+        UserEntity? entity = await _repository
             .GetByIdAsync(request.Id, cancellationToken);
 
         if (entity is null)

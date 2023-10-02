@@ -115,4 +115,3 @@ public class CreateUserCommandValidatorTests
         new object?[] { "ab", DateOnly.FromDateTime(DateTime.Now.AddDays(-10)), Gender.Male, "12", 1 },
     };
 }
-

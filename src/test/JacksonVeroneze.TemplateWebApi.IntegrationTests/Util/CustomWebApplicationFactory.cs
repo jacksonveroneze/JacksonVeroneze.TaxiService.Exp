@@ -59,6 +59,5 @@ public class CustomWebApplicationFactory<TProgram>
         });
 
         base.ConfigureWebHost(builder);
-
     }
 }

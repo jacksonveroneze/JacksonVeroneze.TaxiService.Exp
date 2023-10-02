@@ -33,8 +33,8 @@ public class UserReadRepository : IUserReadRepository
     public async Task<UserEntity?> GetByIdAsync(Guid id,
         CancellationToken cancellationToken = default)
     {
-        UserEntity? result = await _dbSet
-            .FindAsync(new object[] { id }, cancellationToken);
+        UserEntity? result = await _dbSet.FindAsync(
+            new object[] { id }, cancellationToken);
 
         return result;
     }

@@ -43,7 +43,8 @@ public sealed class DeleteUserCommandHandler :
                 DomainErrors.User.NotFound);
         }
 
-        await _writeRepository.DeleteAsync(entity, cancellationToken);
+        await _writeRepository.DeleteAsync(
+            entity, cancellationToken);
 
         _logger.LogDeleted(nameof(DeleteUserCommandHandler),
             nameof(Handle), request.Id);

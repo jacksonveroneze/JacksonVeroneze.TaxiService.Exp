@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
         - name: templatewebapi
-          image: jacksonveroneze/templatewebapi-service:0.0.2
+          image: jacksonveroneze/templatewebapi-service:0.0.4
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
@@ -84,6 +84,11 @@ spec:
                 configMapKeyRef:
                   name: templatewebapi-configmap
                   key: ASPNETCORE_ENVIRONMENT
+            - name: APP_CONFIG_Database__ConnectionString
+              valueFrom:
+                configMapKeyRef:
+                  name: templatewebapi-configmap
+                  key: APP_CONFIG_Database__ConnectionString
 
 ---
 apiVersion: v1
@@ -110,14 +115,14 @@ metadata:
   namespace: templatewebapi-application
 spec:
   minReplicas: 2
-  maxReplicas: 5
+  maxReplicas: 30
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
     name: templatewebapi-deployment
   behavior:
     scaleDown:
-      stabilizationWindowSeconds: 30
+      stabilizationWindowSeconds: 10
     scaleUp:
       stabilizationWindowSeconds: 30
   metrics:
@@ -126,13 +131,13 @@ spec:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: 80
-    - type: Resource
-      resource:
-        name: memory
-        target:
-          type: Utilization
-          averageUtilization: 80
+          averageUtilization: 30
+    # - type: Resource
+    #   resource:
+    #     name: memory
+    #     target:
+    #       type: Utilization
+    #       averageUtilization: 70
 
 ---
 

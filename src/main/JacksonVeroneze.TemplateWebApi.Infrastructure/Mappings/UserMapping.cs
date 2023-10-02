@@ -14,8 +14,7 @@ public class UserMapping : IEntityTypeConfiguration<UserEntity>
         builder.HasKey(c => c.Id);
 
         builder.Property(c => c.Id)
-            .ValueGeneratedNever()
-            .HasColumnName("id");
+            .ValueGeneratedNever();
 
         builder.OwnsOne(conf => conf.Name, conf =>
         {

@@ -26,6 +26,7 @@ public static class AppServicesExtension
 
         #region User
 
+        //
         services.AddScoped<IUserReadRepository, UserReadRepository>();
         services.AddScoped<IUserWriteRepository, UserWriteRepository>();
 

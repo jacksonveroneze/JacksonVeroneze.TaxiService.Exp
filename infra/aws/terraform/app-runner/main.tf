@@ -5,8 +5,6 @@
 resource "aws_apprunner_service" "apprunner_service" {
   service_name = "templatewebapi"
 
-
-
   observability_configuration {
     observability_configuration_arn = aws_apprunner_observability_configuration.observability_configuration.arn
     observability_enabled           = true

@@ -9,6 +9,8 @@ namespace JacksonVeroneze.TemplateWebApi.Domain.Specifications.User;
 [ExcludeFromCodeCoverage]
 public class UserStatusSpecification : BaseSpecification<UserEntity>
 {
+    private readonly Expression<Func<UserEntity, bool>> _defaultExpression = _ => true;
+
     private readonly UserStatus? _status;
 
     public UserStatusSpecification(UserStatus? status)
@@ -20,7 +22,7 @@ public class UserStatusSpecification : BaseSpecification<UserEntity>
     {
         if (!_status.HasValue)
         {
-            return _ => true;
+            return _defaultExpression;
         }
 
         return spec => spec.Status == _status;

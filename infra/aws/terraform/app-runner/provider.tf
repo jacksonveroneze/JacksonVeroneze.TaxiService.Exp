@@ -9,12 +9,12 @@ terraform {
   backend "s3" {
     bucket  = "jacksonveroneze-tf-states"
     key     = "templatewebapi"
-    region  = "us-east-1"
+    region  = "sa-east-1"
     profile = "default"
   }
 }
 
 provider "aws" {
-  region  = "us-east-1"
-  profile = "default"
+  region  = "sa-east-1"
+  profile = "terraform"
 }

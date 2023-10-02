@@ -18,16 +18,19 @@ public class UnitOfWork : IUnitOfWork
         _bus = bus;
     }
 
-    public async Task<bool> CommitAsync(CancellationToken cancellationToken)
+    public async Task<bool> CommitAsync(
+        CancellationToken cancellationToken)
     {
-        bool isSuccess = await _dbContext.SaveChangesAsync(cancellationToken) > 0;
+        bool isSuccess = await _dbContext
+            .SaveChangesAsync(cancellationToken) > 0;
 
         if (!isSuccess)
         {
             throw new InvalidOperationException();
         }
 
-        await PublishDomainEvents(_dbContext, cancellationToken);
+        await PublishDomainEvents(_dbContext,
+            cancellationToken);
 
         return true;
     }

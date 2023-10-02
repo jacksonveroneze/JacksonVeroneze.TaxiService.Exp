@@ -9,18 +9,16 @@ public static class PaginationExtensions
         this IQueryable<TSource> queryable,
         PaginationParameters pagination)
     {
-        int skip = pagination.Page;
+        ArgumentNullException.ThrowIfNull(pagination);
+
+        int skip = pagination.Page switch
+        {
+            < 0 => 0,
+            > 0 => pagination.Page - 1,
+            _ => pagination.Page
+        };
+
         int take = pagination.PageSize;
-
-        if (skip < 0)
-        {
-            skip = 0;
-        }
-
-        if (skip > 0)
-        {
-            skip--;
-        }
 
         return queryable
             .Skip(skip * take)

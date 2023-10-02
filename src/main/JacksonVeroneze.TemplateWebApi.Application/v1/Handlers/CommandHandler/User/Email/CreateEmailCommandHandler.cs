@@ -53,7 +53,8 @@ public sealed class CreateEmailCommandHandler :
         if (resultEmailVo.IsFailure)
         {
             _logger.LogGenericError(nameof(CreateEmailCommandHandler),
-                nameof(Handle), resultEmailVo.Error!, request.Id.ToString());
+                nameof(Handle), resultEmailVo.Error!,
+                request.Id.ToString());
 
             return Result<CreateEmailCommandResponse>
                 .Invalid(resultEmailVo.Error!);
@@ -66,7 +67,8 @@ public sealed class CreateEmailCommandHandler :
         if (result.IsFailure)
         {
             _logger.LogGenericError(nameof(CreateEmailCommandHandler),
-                nameof(Handle), result.Error!, request.Id.ToString());
+                nameof(Handle), result.Error!,
+                request.Id.ToString());
 
             return Result<CreateEmailCommandResponse>
                 .Invalid(result.Error!);

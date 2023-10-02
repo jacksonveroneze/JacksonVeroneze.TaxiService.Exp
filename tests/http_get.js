@@ -1,19 +1,19 @@
 import http from 'k6/http';
-import { sleep, randomSeed, check } from 'k6';
-import { uuidv4 } from 'https://jslib.k6.io/k6-utils/1.4.0/index.js';
-import { crypto } from "k6/experimental/webcrypto";
-import { randomIntBetween } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
+import {sleep, randomSeed, check} from 'k6';
+import {uuidv4} from 'https://jslib.k6.io/k6-utils/1.4.0/index.js';
+import {crypto} from "k6/experimental/webcrypto";
+import {randomIntBetween} from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 export const options = {
-    duration: '60s',
+    duration: '240s',
     //iterations: 10000,
-    vus: 500,
+    vus: 600,
 };
 
 // export let options = {
 //     stages: [
 //         {duration: '3m', target: 10}, // simulate ramp-up of traffic from 1 to 3 virtual users over 0.5 minutes.
-//         {duration: '3m', target: 100}, // simulate ramp-up of traffic from 1 to 3 virtual users over 0.5 minutes.
+//         {duration: '5m', target: 100}, // simulate ramp-up of traffic from 1 to 3 virtual users over 0.5 minutes.
 //         {duration: '2m', target: 15}, // ramp-down to 0 users
 //         {duration: '1m', target: 150}, // ramp-down to 0 users
 //         {duration: '5m', target: 50}, // ramp-down to 0 users
@@ -21,12 +21,13 @@ export const options = {
 //     ],
 // };
 
-const url = 'http://localhost/templatewebapi';
+//const url = 'http://10.0.0.150/templatewebapi';
 //const url = 'http://localhost:8088/api';
 //const url = 'http://localhost:9999';
-//const url = 'http://10.0.0.199/templatewebapi';
+const url = 'http://10.0.0.199/templatewebapi';
 //const url = 'http://localhost:7000';
 //const url = 'http://localhost:9999';
+//const url = 'http://10.152.183.41:8084';
 
 // export const options = {
 //     vus: 50,
@@ -71,15 +72,19 @@ export default function () {
     // const rnd1 = randomIntBetween(10000, 99999)
     //
     // var body = JSON.stringify({
-    //     Nome: crypto.randomUUID() + '_' + rnd,
-    //     Nascimento: "2023-08-25",
-    //     Apelido: "Jack" + '_' + rnd + '_' + rnd1
+    //     name: crypto.randomUUID() + '_' + rnd,
+    //     birthday: "2023-08-25",
+    //     gender: "Male",
+    //     document: rnd1 + "2" + rnd
     // });
     //
-    // var responsePost = http.post(`${url}/pessoas`, body, {
+    // var responsePost = http.post(`${url}/api/v1/users`, body, {
     //     headers: {'Content-Type': 'application/json'},
     // });
-
+    //
+    // check(responsePost, {
+    //     'status is 201': (r) => r.status === 201,
+    // });
 
     // var body = JSON.stringify({
     //     name: crypto.randomUUID() + '_' + rnd,
@@ -107,7 +112,7 @@ export default function () {
     //     'status is sucess': (r) => r.status === 201,
     // });
 
-    var res = http.get(`${url}/api/v1/users`);
+    var res = http.get(`${url}/api/v1/users/4f568cb6-f7d6-4621-9574-a9d4a3e5dacf`);
 
     check(res, {
         'status is 200': (r) => r.status === 200,
