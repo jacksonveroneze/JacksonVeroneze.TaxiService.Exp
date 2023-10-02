@@ -76,7 +76,7 @@ finally
     Log.Information("Server Shutting down");
     Log.CloseAndFlush();
 
-    dotNetRuntimeStats?.Dispose();
+    //dotNetRuntimeStats?.Dispose();
 }
 
 public partial class Program
