@@ -54,12 +54,23 @@ public class UserReadRepository : IUserReadRepository
             .Where(spec)
             .CountAsync(cancellationToken);
 
-        List<UserEntity> result = await _dbSet
-            .AsNoTracking()
-            .Where(spec)
-            .ConfigurePagination(filter.Pagination!)
-            .OrderByDescending(ord => ord.CreatedAt)
-            .ToListAsync(cancellationToken);
+        List<UserEntity> result;
+
+        if (count == 0)
+        {
+            result = Enumerable
+                .Empty<UserEntity>()
+                .ToList();
+        }
+        else
+        {
+            result = await _dbSet
+                .AsNoTracking()
+                .Where(spec)
+                .ConfigurePagination(filter.Pagination!)
+                .OrderByDescending(ord => ord.CreatedAt)
+                .ToListAsync(cancellationToken);
+        }
 
         Page<UserEntity> data = result
             .ToPage(filter.Pagination!, count);

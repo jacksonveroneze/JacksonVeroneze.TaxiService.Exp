@@ -35,8 +35,22 @@ public sealed class CreateUserCommandHandler :
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        bool existsUser = await _readRepository.ExistsUserAsync(
-            request.Document!, cancellationToken);
+        IResult<NameValueObject> name = NameValueObject.Create(request.Name!);
+        IResult<CpfValueObject> cpf = CpfValueObject.Create(request.Document!);
+
+        IResult resultValidate = Result.FailuresOrSuccess(name, cpf);
+
+        if (resultValidate.IsFailure)
+        {
+            _logger.LogGenericError(nameof(CreateUserCommandHandler),
+                nameof(Handle), resultValidate.Errors!.Count());
+
+            return Result<CreateUserCommandResponse>
+                .Invalid(resultValidate.Errors!);
+        }
+
+        bool existsUser = await _readRepository
+            .ExistsUserAsync(cpf.Value!.Value!, cancellationToken);
 
         if (existsUser)
         {
@@ -48,27 +62,9 @@ public sealed class CreateUserCommandHandler :
                 DomainErrors.User.DuplicateCpf);
         }
 
-        IResult<NameValueObject> nameValueObject = NameValueObject
-            .Create(request.Name!);
-
-        IResult<CpfValueObject> cpfValueObject = CpfValueObject
-            .Create(request.Document!);
-
-        IResult resultValidateVos = Result
-            .FailuresOrSuccess(nameValueObject, cpfValueObject);
-
-        if (resultValidateVos.IsFailure)
-        {
-            _logger.LogGenericError(nameof(CreateUserCommandHandler),
-                nameof(Handle), resultValidateVos.Errors!.Count());
-
-            return Result<CreateUserCommandResponse>
-                .Invalid(resultValidateVos.Errors!);
-        }
-
-        UserEntity entity = new(nameValueObject.Value!,
+        UserEntity entity = UserEntity.Create(name.Value!,
             request.Birthday!.Value, request.Gender!.Value,
-            cpfValueObject.Value!);
+            cpf.Value!);
 
         await _writeRepository.CreateAsync(
             entity, cancellationToken);

@@ -40,6 +40,7 @@ public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
             .Cascade(CascadeMode.Stop)
             .NotEmpty()
             .WithError(ValidationErrors.User.DocumentIsRequired)
+            .Must(value => value!.All(char.IsNumber))
             .Must(ValidarCpf.Validar)
             .WithError(ValidationErrors.User.DocumentIsInvalid);
     }
