@@ -13,7 +13,7 @@ resource "aws_cloudwatch_log_group" "cloudwatch_log_group" {
 
 resource "aws_security_group" "security_group" {
   name   = "security-group-${var.feature_name}"
-  vpc_id = var.vpc_id
+  vpc_id = data.aws_vpc.vpc_id.id
   ingress {
     protocol    = "tcp"
     from_port   = var.container_port
@@ -64,7 +64,7 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
         }
       }
       environment = [
-        { name = "variable", value = "value" }
+        { name = "APP_CONFIG_Database__ConnectionString", value = "Host=${data.aws_secretsmanager_secret_version.database_endpoint.secret_string};Port=5432;Database=templatewebapi;Username=${data.aws_secretsmanager_secret_version.database_username.secret_string};Password=${data.aws_secretsmanager_secret_version.database_password.secret_string}" }
       ]
       healthCheck = {
         command     = ["CMD-SHELL", "curl -f http://localhost:${var.container_port}/health || exit 1"]
@@ -86,15 +86,15 @@ resource "aws_ecs_cluster" "ecs_cluster" {
   tags = var.tags
 }
 
-# resource "aws_ecs_cluster_capacity_providers" "ecs_cluster_capacity_providers" {
-#   cluster_name       = aws_ecs_cluster.ecs_cluster.name
-#   capacity_providers = ["FARGATE_SPOT"]
-#   default_capacity_provider_strategy {
-#     base              = 1
-#     weight            = 100
-#     capacity_provider = "FARGATE_SPOT"
-#   }
-# }
+resource "aws_ecs_cluster_capacity_providers" "ecs_cluster_capacity_providers" {
+  cluster_name       = aws_ecs_cluster.ecs_cluster.name
+  capacity_providers = ["FARGATE_SPOT"]
+  default_capacity_provider_strategy {
+    base              = 1
+    weight            = 100
+    capacity_provider = "FARGATE_SPOT"
+  }
+}
 
 # ################################################################################
 # ECS - SERVICE
@@ -122,7 +122,7 @@ resource "aws_ecs_service" "ecs_service" {
   }
   network_configuration {
     assign_public_ip = true
-    subnets          = var.subnets_ids
+    subnets          = data.aws_subnets.subnets_ids.ids
     security_groups  = [aws_security_group.security_group.id]
   }
   scheduling_strategy = "REPLICA"
@@ -139,7 +139,7 @@ resource "aws_lb" "lb" {
   load_balancer_type = "network"
   security_groups    = [aws_security_group.security_group.id]
   internal           = false
-  subnets            = var.subnets_ids
+  subnets            = data.aws_subnets.subnets_ids.ids
 }
 
 resource "aws_lb_target_group" "lb_target_group" {
@@ -156,7 +156,7 @@ resource "aws_lb_target_group" "lb_target_group" {
     unhealthy_threshold = 2
   }
   protocol             = "TCP"
-  vpc_id               = var.vpc_id
+  vpc_id               = data.aws_vpc.vpc_id.id
   target_type          = "ip"
   deregistration_delay = 5
 }

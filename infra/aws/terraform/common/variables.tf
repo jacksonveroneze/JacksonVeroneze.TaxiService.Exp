@@ -7,7 +7,7 @@ variable "tags" {
   default = {
     terraform   = "true"
     environment = "dev"
-    feature     = "api"
+    feature     = "common"
   }
 }
 
@@ -22,7 +22,7 @@ variable "azs" {
 
 variable "vpc_name" {
   type    = string
-  default = "api-vpc"
+  default = "common-vpc"
 }
 
 variable "vpc_cidr_block" {
@@ -46,7 +46,7 @@ variable "vpc_enable_dns_hostnames" {
 
 variable "internet_gateway_name" {
   type    = string
-  default = "api-ig"
+  default = "common-ig"
 }
 
 ################################################################################
@@ -60,7 +60,7 @@ variable "public_subnet_cidrs" {
 
 variable "public_subnet_name" {
   type    = string
-  default = "api-pub-subnet"
+  default = "common-pub-subnet"
 }
 
 ################################################################################
@@ -69,13 +69,12 @@ variable "public_subnet_name" {
 
 variable "private_subnet_cidrs" {
   type        = list(string)
-  description = "Private Subnet CIDR values"
-  default     = ["10.0.4.0/24", "10.0.5.0/24"]
+  default     = ["10.0.3.0/24", "10.0.4.0/24"]
 }
 
 variable "private_subnet_name" {
   type    = string
-  default = "api-pvt-subnet"
+  default = "common-pvt-subnet"
 }
 
 ################################################################################
@@ -84,5 +83,10 @@ variable "private_subnet_name" {
 
 variable "route_table_public_name" {
   type    = string
-  default = "api-route-table-pub"
+  default = "common-route-table-pub"
+}
+
+variable "route_table_private_name" {
+  type    = string
+  default = "common-route-table-pvt"
 }

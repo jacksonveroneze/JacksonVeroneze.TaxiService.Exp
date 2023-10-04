@@ -36,7 +36,7 @@ variable "log_group_retention" {
 
 variable "vpc_id" {
   type    = string
-  default = "vpc-0e296d7e4288511c0"
+  default = "vpc-0000f5a7217465766"
 }
 
 ################################################################################
@@ -45,7 +45,7 @@ variable "vpc_id" {
 
 variable "subnets_ids" {
   type    = list(string)
-  default = ["subnet-078f6edc126a61a46", "subnet-0bcc5a8bc29918156"]
+  default = ["subnet-0a4673c36225e7265", "subnet-01973a725a7679018"]
 }
 
 # ################################################################################
@@ -141,12 +141,12 @@ variable "max_number_of_tasks" {
 
 variable "scaling_target_cpu" {
   type    = number
-  default = 40
+  default = 50
 }
 
 variable "scaling_target_memory" {
   type    = number
-  default = 40
+  default = 70
 }
 
 variable "scaling_in_cool_down" {

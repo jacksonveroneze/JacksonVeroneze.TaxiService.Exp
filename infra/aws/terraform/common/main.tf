@@ -54,6 +54,17 @@ resource "aws_route_table" "route_table_public" {
   tags = merge({ Name = var.route_table_public_name }, var.tags)
 }
 
+resource "aws_route_table" "route_table_private" {
+  vpc_id = aws_vpc.vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.internet_gateway.id
+  }
+
+  tags = merge({ Name = var.route_table_private_name }, var.tags)
+}
+
 # ################################################################################
 # 6. ROUTE TABLE - ASSOCIATION
 # ################################################################################
@@ -62,4 +73,10 @@ resource "aws_route_table_association" "route_table_association_public_subnet" {
   count          = length(var.public_subnet_cidrs)
   subnet_id      = element(aws_subnet.public_subnets[*].id, count.index)
   route_table_id = aws_route_table.route_table_public.id
+}
+
+resource "aws_route_table_association" "route_table_association_private_subnet" {
+  count          = length(var.private_subnet_cidrs)
+  subnet_id      = element(aws_subnet.private_subnets[*].id, count.index)
+  route_table_id = aws_route_table.route_table_private.id
 }
