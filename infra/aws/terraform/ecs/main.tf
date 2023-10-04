@@ -109,7 +109,7 @@ resource "aws_ecs_service" "ecs_service" {
   }
   deployment_minimum_healthy_percent = 100
   deployment_maximum_percent         = 200
-  desired_count                      = 1
+  desired_count                      = var.desired_number_of_tasks
   capacity_provider_strategy {
     base              = 1
     weight            = 100
@@ -137,9 +137,9 @@ resource "aws_ecs_service" "ecs_service" {
 resource "aws_lb" "lb" {
   name               = "nlb-${var.feature_name}"
   load_balancer_type = "network"
-  #security_groups    = [aws_security_group.security_group.id]
-  internal = false
-  subnets  = var.subnets_ids
+  security_groups    = [aws_security_group.security_group.id]
+  internal           = false
+  subnets            = var.subnets_ids
 }
 
 resource "aws_lb_target_group" "lb_target_group" {
@@ -175,41 +175,46 @@ resource "aws_lb_listener" "lb_listener" {
 # AUTOSCALING
 # ################################################################################
 
-# resource "aws_appautoscaling_target" "appautoscaling_target" {
-#   max_capacity       = 4
-#   min_capacity       = 1
-#   resource_id        = "service/${aws_ecs_cluster.ecs_cluster.name}/${aws_ecs_service.ecs_service.name}"
-#   scalable_dimension = "ecs:service:DesiredCount"
-#   service_namespace  = "ecs"
-# }
+resource "aws_appautoscaling_target" "appautoscaling_target" {
+  max_capacity       = var.max_number_of_tasks
+  min_capacity       = var.min_number_of_tasks
+  resource_id        = "service/${aws_ecs_cluster.ecs_cluster.name}/${aws_ecs_service.ecs_service.name}"
+  scalable_dimension = "ecs:service:DesiredCount"
+  service_namespace  = "ecs"
+}
 
-# resource "aws_appautoscaling_policy" "appautoscaling_policy_cpu" {
-#   name               = "appautoscaling-policy-cpu"
-#   policy_type        = "TargetTrackingScaling"
-#   resource_id        = aws_appautoscaling_target.appautoscaling_target.resource_id
-#   scalable_dimension = aws_appautoscaling_target.appautoscaling_target.scalable_dimension
-#   service_namespace  = aws_appautoscaling_target.appautoscaling_target.service_namespace
-#   target_tracking_scaling_policy_configuration {
-#     predefined_metric_specification {
-#       predefined_metric_type = "ECSServiceAverageCPUUtilization"
-#     }
+resource "aws_appautoscaling_policy" "appautoscaling_policy_cpu" {
+  name               = "appautoscaling-policy-cpu"
+  policy_type        = "TargetTrackingScaling"
+  resource_id        = aws_appautoscaling_target.appautoscaling_target.resource_id
+  scalable_dimension = aws_appautoscaling_target.appautoscaling_target.scalable_dimension
+  service_namespace  = aws_appautoscaling_target.appautoscaling_target.service_namespace
 
-#     target_value = 50
-#   }
-# }
+  target_tracking_scaling_policy_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = "ECSServiceAverageCPUUtilization"
+    }
 
-# resource "aws_appautoscaling_policy" "appautoscaling_policy_cpu_memory" {
-#   name               = "appautoscaling-policy-memory"
-#   policy_type        = "TargetTrackingScaling"
-#   resource_id        = aws_appautoscaling_target.dev_to_target.resource_id
-#   scalable_dimension = aws_appautoscaling_target.dev_to_target.scalable_dimension
-#   service_namespace  = aws_appautoscaling_target.dev_to_target.service_namespace
+    target_value       = var.scaling_target_cpu
+    scale_in_cooldown  = var.scaling_in_cool_down
+    scale_out_cooldown = var.scaling_out_cool_down
+  }
+}
 
-#   target_tracking_scaling_policy_configuration {
-#     predefined_metric_specification {
-#       predefined_metric_type = "ECSServiceAverageMemoryUtilization"
-#     }
+resource "aws_appautoscaling_policy" "appautoscaling_policy_memory" {
+  name               = "appautoscaling-policy-memory"
+  policy_type        = "TargetTrackingScaling"
+  resource_id        = aws_appautoscaling_target.appautoscaling_target.resource_id
+  scalable_dimension = aws_appautoscaling_target.appautoscaling_target.scalable_dimension
+  service_namespace  = aws_appautoscaling_target.appautoscaling_target.service_namespace
 
-#     target_value = 80
-#   }
-# }
+  target_tracking_scaling_policy_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = "ECSServiceAverageMemoryUtilization"
+    }
+
+    target_value       = var.scaling_target_memory
+    scale_in_cooldown  = var.scaling_in_cool_down
+    scale_out_cooldown = var.scaling_out_cool_down
+  }
+}

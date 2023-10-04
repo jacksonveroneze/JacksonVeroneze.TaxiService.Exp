@@ -121,6 +121,46 @@ variable "task_healthcheck_timeout" {
 }
 
 # ################################################################################
+# AUTOSCALING
+# ################################################################################
+
+variable "desired_number_of_tasks" {
+  type    = number
+  default = 1
+}
+
+variable "min_number_of_tasks" {
+  type    = number
+  default = 1
+}
+
+variable "max_number_of_tasks" {
+  type    = number
+  default = 2
+}
+
+variable "scaling_target_cpu" {
+  type    = number
+  default = 40
+}
+
+variable "scaling_target_memory" {
+  type    = number
+  default = 40
+}
+
+variable "scaling_in_cool_down" {
+  type    = number
+  default = 60
+}
+
+variable "scaling_out_cool_down" {
+  type    = number
+  default = 60
+}
+
+
+# ################################################################################
 # LOAD BALANCER
 # ################################################################################
 
