@@ -134,14 +134,6 @@ resource "aws_ecs_service" "ecs_service" {
 # NLB
 # ################################################################################
 
-resource "aws_lb" "lb" {
-  name               = "nlb-${var.feature_name}"
-  load_balancer_type = "network"
-  security_groups    = [aws_security_group.security_group.id]
-  internal           = false
-  subnets            = data.aws_subnets.subnets_ids.ids
-}
-
 resource "aws_lb_target_group" "lb_target_group" {
   name = "target-group-${var.feature_name}"
   port = var.container_port
@@ -164,7 +156,7 @@ resource "aws_lb_target_group" "lb_target_group" {
 resource "aws_lb_listener" "lb_listener" {
   port              = var.container_port
   protocol          = "TCP"
-  load_balancer_arn = aws_lb.lb.arn
+  load_balancer_arn = var.load_balancer_arn
   default_action {
     target_group_arn = aws_lb_target_group.lb_target_group.arn
     type             = "forward"

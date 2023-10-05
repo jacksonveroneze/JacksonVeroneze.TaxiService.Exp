@@ -82,17 +82,17 @@ variable "task_container_image" {
 
 variable "task_cpu" {
   type    = number
-  default = 256
+  default = 512
 }
 
 variable "task_memory" {
   type    = number
-  default = 512
+  default = 1024
 }
 
 variable "task_memory_reservation" {
   type    = number
-  default = 512
+  default = 1024
 }
 
 variable "container_port" {
@@ -164,9 +164,9 @@ variable "scaling_out_cool_down" {
 # LOAD BALANCER
 # ################################################################################
 
-variable "load_balancer_name" {
+variable "load_balancer_arn" {
   type    = string
-  default = "nlb-templatewebapi"
+  default = "arn:aws:elasticloadbalancing:sa-east-1:848475311237:loadbalancer/net/nlb-common/9de66486b881ea4b"
 }
 
 variable "target_group_name" {
