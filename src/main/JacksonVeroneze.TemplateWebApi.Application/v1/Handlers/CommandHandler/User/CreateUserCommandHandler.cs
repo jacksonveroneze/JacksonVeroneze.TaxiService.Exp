@@ -35,6 +35,19 @@ public sealed class CreateUserCommandHandler :
     {
         ArgumentNullException.ThrowIfNull(request);
 
+        bool existsUser = await _readRepository
+            .ExistsUserAsync(request.Document!, cancellationToken);
+
+        if (existsUser)
+        {
+            _logger.LogAlreadyExists(nameof(CreateUserCommandHandler),
+                nameof(Handle), DomainErrors.User.DuplicateCpf,
+                request.Document!);
+
+            return Result<CreateUserCommandResponse>.Invalid(
+                DomainErrors.User.DuplicateCpf);
+        }
+
         IResult<NameValueObject> name = NameValueObject.Create(request.Name!);
         IResult<CpfValueObject> cpf = CpfValueObject.Create(request.Document!);
 
@@ -47,19 +60,6 @@ public sealed class CreateUserCommandHandler :
 
             return Result<CreateUserCommandResponse>
                 .Invalid(resultValidate.Errors!);
-        }
-
-        bool existsUser = await _readRepository
-            .ExistsUserAsync(cpf.Value!.Value!, cancellationToken);
-
-        if (existsUser)
-        {
-            _logger.LogAlreadyExists(nameof(CreateUserCommandHandler),
-                nameof(Handle), DomainErrors.User.DuplicateCpf,
-                request.Document!);
-
-            return Result<CreateUserCommandResponse>.Invalid(
-                DomainErrors.User.DuplicateCpf);
         }
 
         UserEntity entity = new UserEntity(name.Value!,

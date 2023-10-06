@@ -60,4 +60,12 @@ public class CustomWebApplicationFactory<TProgram>
 
         base.ConfigureWebHost(builder);
     }
+
+    protected override void ConfigureClient(HttpClient client)
+    {
+        client.DefaultRequestHeaders.Add("X-TenantId",
+            Guid.NewGuid().ToString());
+
+        base.ConfigureClient(client);
+    }
 }

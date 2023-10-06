@@ -29,7 +29,7 @@ public static class CreateUserCommandBuilder
             .RuleFor(f => f.Birthday,
                 s => DateOnly.FromDateTime(s.Date.Past()))
             .RuleFor(f => f.Gender, s => s.PickRandom(genders))
-            .RuleFor(f => f.Document, s => s.Person.Cpf());
+            .RuleFor(f => f.Document, s => s.Person.Cpf(false));
     }
 
     private static Faker<CreateUserCommand> FactoryInvalid(
@@ -46,6 +46,6 @@ public static class CreateUserCommandBuilder
             .RuleFor(f => f.Gender,
                 s => invalidGender ? Gender.None : s.PickRandom(genders))
             .RuleFor(f => f.Document,
-                s => invalidCpf ? string.Empty : s.Person.Cpf());
+                s => invalidCpf ? string.Empty : s.Person.Cpf(false));
     }
 }
