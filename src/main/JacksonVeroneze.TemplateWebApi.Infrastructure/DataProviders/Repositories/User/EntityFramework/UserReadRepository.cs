@@ -15,10 +15,12 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositori
 [ExcludeFromCodeCoverage]
 public class UserReadRepository : IUserReadRepository
 {
+    private readonly ApplicationDbContext _context;
     private readonly DbSet<UserEntity> _dbSet;
 
     public UserReadRepository(ApplicationDbContext context)
     {
+        _context = context;
         _dbSet = context.Set<UserEntity>();
     }
 
@@ -27,7 +29,8 @@ public class UserReadRepository : IUserReadRepository
     {
         UserCpfSpecification specName = new(document);
 
-        return _dbSet.AnyAsync(specName, cancellationToken);
+        return _context.Set<UserEntity>()
+            .AnyAsync(specName, cancellationToken);
     }
 
     public async Task<UserEntity?> GetByIdAsync(Guid id,

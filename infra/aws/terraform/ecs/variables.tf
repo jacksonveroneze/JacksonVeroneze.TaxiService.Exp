@@ -34,19 +34,19 @@ variable "log_group_retention" {
 # VPC
 ################################################################################
 
-variable "vpc_id" {
-  type    = string
-  default = "vpc-0000f5a7217465766"
-}
+# variable "vpc_id" {
+#   type    = string
+#   default = "vpc-0000f5a7217465766"
+# }
 
 ################################################################################
 # SUBNETS
 ################################################################################
 
-variable "subnets_ids" {
-  type    = list(string)
-  default = ["subnet-0a4673c36225e7265", "subnet-01973a725a7679018"]
-}
+# variable "subnets_ids" {
+#   type    = list(string)
+#   default = ["subnet-0a4673c36225e7265", "subnet-01973a725a7679018"]
+# }
 
 # ################################################################################
 # ECS - CLUSTER
@@ -82,17 +82,17 @@ variable "task_container_image" {
 
 variable "task_cpu" {
   type    = number
-  default = 512
+  default = 256
 }
 
 variable "task_memory" {
   type    = number
-  default = 1024
+  default = 512
 }
 
 variable "task_memory_reservation" {
   type    = number
-  default = 1024
+  default = 512
 }
 
 variable "container_port" {

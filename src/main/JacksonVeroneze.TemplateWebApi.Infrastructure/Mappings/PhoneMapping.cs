@@ -27,5 +27,7 @@ public class PhoneMapping : IEntityTypeConfiguration<PhoneEntity>
         });
 
         builder.ConfigureDefaultFiledsMapping();
+
+        builder.Ignore(x => x.Events);
     }
 }

@@ -142,16 +142,4 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
     }
 
     #endregion
-
-    public static UserEntity Create(NameValueObject name,
-        DateOnly birthday, Gender gender,
-        CpfValueObject cpf)
-    {
-        ArgumentNullException.ThrowIfNull(name);
-        ArgumentNullException.ThrowIfNull(birthday);
-        ArgumentNullException.ThrowIfNull(gender);
-        ArgumentNullException.ThrowIfNull(cpf);
-
-        return new UserEntity(name, birthday, gender, cpf);
-    }
 }

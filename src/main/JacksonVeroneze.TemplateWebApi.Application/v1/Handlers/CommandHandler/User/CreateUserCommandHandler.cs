@@ -62,7 +62,7 @@ public sealed class CreateUserCommandHandler :
                 DomainErrors.User.DuplicateCpf);
         }
 
-        UserEntity entity = UserEntity.Create(name.Value!,
+        UserEntity entity = new UserEntity(name.Value!,
             request.Birthday!.Value, request.Gender!.Value,
             cpf.Value!);
 

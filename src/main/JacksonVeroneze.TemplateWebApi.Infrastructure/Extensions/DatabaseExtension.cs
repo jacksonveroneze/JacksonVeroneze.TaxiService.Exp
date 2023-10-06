@@ -17,12 +17,12 @@ public static class DatabaseExtension
 
         services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
 
-        services.AddDbContext<DbContext, ApplicationDbContext>((_, options) =>
+        services.AddDbContextFactory<ApplicationDbContext>((_, options) =>
             options.UseNpgsql(appConfiguration.Database!.ConnectionString)
                 .UseLazyLoadingProxies()
                 .EnableDetailedErrors(appConfiguration.IsDevelopment)
                 .EnableSensitiveDataLogging(appConfiguration.IsDevelopment)
-                .UseSnakeCaseNamingConvention());
+                .UseSnakeCaseNamingConvention(), ServiceLifetime.Scoped);
 
         #endregion
 

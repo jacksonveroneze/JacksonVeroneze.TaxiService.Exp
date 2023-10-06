@@ -3,7 +3,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
 
 namespace JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
-public class EmailEntity : BaseEntity
+public class EmailEntity : BaseEntityAggregateRoot
 {
     public virtual EmailValueObject Email { get; private set; } = null!;
 

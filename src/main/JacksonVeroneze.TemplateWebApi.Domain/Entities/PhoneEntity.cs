@@ -3,7 +3,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
 
 namespace JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
-public class PhoneEntity : BaseEntity
+public class PhoneEntity : BaseEntityAggregateRoot
 {
     public virtual PhoneValueObject? Phone { get; private set; }
 
