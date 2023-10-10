@@ -77,7 +77,7 @@ variable "task_container_name" {
 
 variable "task_container_image" {
   type    = string
-  default = "jacksonveroneze/templatewebapi-service:0.0.5"
+  default = "jacksonveroneze/templatewebapi-service:0.0.7"
 }
 
 variable "task_cpu" {
