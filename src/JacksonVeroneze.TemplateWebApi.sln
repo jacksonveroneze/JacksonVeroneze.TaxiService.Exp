@@ -41,17 +41,21 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "aws", "aws", "{81E56863-860E-4C7C-8B75-442A791EE3CB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "terraform", "terraform", "{F25A0A19-490B-4F5D-8273-E06BF4E80806}"
-	ProjectSection(SolutionItems) = preProject
-		..\infra\aws\terraform\main.tf = ..\infra\aws\terraform\main.tf
-		..\infra\aws\terraform\provider.tf = ..\infra\aws\terraform\provider.tf
-		..\infra\aws\terraform\variables.tf = ..\infra\aws\terraform\variables.tf
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TemplateWebApi.IntegrationTests", "test\JacksonVeroneze.TemplateWebApi.IntegrationTests\JacksonVeroneze.TemplateWebApi.IntegrationTests.csproj", "{16C2E57F-2EAA-4D85-8697-2CF2FD3E270C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TemplateWebApi.UnitTests", "test\JacksonVeroneze.TemplateWebApi.UnitTests\JacksonVeroneze.TemplateWebApi.UnitTests.csproj", "{C0CA9EC5-0B83-4CC6-A37D-E928DCF15FA3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TemplateWebApi.Util.Tests", "test\JacksonVeroneze.TemplateWebApi.Util.Tests\JacksonVeroneze.TemplateWebApi.Util.Tests.csproj", "{26EBA3B9-A9A3-4AA1-A9B2-34D62C91911B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ecs", "ecs", "{AF90CCA6-A6E3-448F-B51D-3A6B0A9D4383}"
+	ProjectSection(SolutionItems) = preProject
+		..\infra\aws\terraform\ecs\main.tf = ..\infra\aws\terraform\ecs\main.tf
+		..\infra\aws\terraform\ecs\variables.tf = ..\infra\aws\terraform\ecs\variables.tf
+		..\infra\aws\terraform\ecs\locals.tf = ..\infra\aws\terraform\ecs\locals.tf
+		..\infra\aws\terraform\ecs\data.tf = ..\infra\aws\terraform\ecs\data.tf
+		..\infra\aws\terraform\ecs\provider.tf = ..\infra\aws\terraform\ecs\provider.tf
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -104,5 +108,6 @@ Global
 		{16C2E57F-2EAA-4D85-8697-2CF2FD3E270C} = {911C6EDB-84B3-4A91-B837-74EB587665CF}
 		{C0CA9EC5-0B83-4CC6-A37D-E928DCF15FA3} = {911C6EDB-84B3-4A91-B837-74EB587665CF}
 		{26EBA3B9-A9A3-4AA1-A9B2-34D62C91911B} = {911C6EDB-84B3-4A91-B837-74EB587665CF}
+		{AF90CCA6-A6E3-448F-B51D-3A6B0A9D4383} = {F25A0A19-490B-4F5D-8273-E06BF4E80806}
 	EndGlobalSection
 EndGlobal
