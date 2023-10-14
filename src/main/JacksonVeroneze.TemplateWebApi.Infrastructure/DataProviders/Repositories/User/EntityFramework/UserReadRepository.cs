@@ -15,11 +15,16 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositori
 [ExcludeFromCodeCoverage]
 public class UserReadRepository : IUserReadRepository
 {
+    private readonly List<UserEntity> _empty =
+        Enumerable.Empty<UserEntity>().ToList();
+
     private readonly ApplicationDbContext _context;
     private readonly DbSet<UserEntity> _dbSet;
 
     public UserReadRepository(ApplicationDbContext context)
     {
+        ArgumentNullException.ThrowIfNull(context);
+
         _context = context;
         _dbSet = context.Set<UserEntity>();
     }
@@ -29,8 +34,8 @@ public class UserReadRepository : IUserReadRepository
     {
         UserCpfSpecification specName = new(document);
 
-        return _context.Set<UserEntity>()
-            .AnyAsync(specName, cancellationToken);
+        return _dbSet.AnyAsync(specName,
+            cancellationToken);
     }
 
     public async Task<UserEntity?> GetByIdAsync(Guid id,
@@ -46,6 +51,8 @@ public class UserReadRepository : IUserReadRepository
         UserPagedFilter filter,
         CancellationToken cancellationToken = default)
     {
+        ArgumentNullException.ThrowIfNull(filter);
+
         UserNameSpecification specName = new(filter.Name);
         UserStatusSpecification specStatus = new(filter.Status);
 
@@ -57,23 +64,14 @@ public class UserReadRepository : IUserReadRepository
             .Where(spec)
             .CountAsync(cancellationToken);
 
-        List<UserEntity> result;
-
-        if (count == 0)
-        {
-            result = Enumerable
-                .Empty<UserEntity>()
-                .ToList();
-        }
-        else
-        {
-            result = await _dbSet
+        List<UserEntity> result = count == 0
+            ? _empty
+            : await _dbSet
                 .AsNoTracking()
                 .Where(spec)
                 .ConfigurePagination(filter.Pagination!)
                 .OrderByDescending(ord => ord.CreatedAt)
                 .ToListAsync(cancellationToken);
-        }
 
         Page<UserEntity> data = result
             .ToPage(filter.Pagination!, count);

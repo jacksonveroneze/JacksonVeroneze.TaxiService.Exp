@@ -16,6 +16,8 @@ public class UserWriteRepository : IUserWriteRepository
         ApplicationDbContext context,
         IUnitOfWork unitOfWork)
     {
+        ArgumentNullException.ThrowIfNull(context);
+
         _unitOfWork = unitOfWork;
         _dbSet = context.Set<UserEntity>();
     }
@@ -23,25 +25,24 @@ public class UserWriteRepository : IUserWriteRepository
     public async Task CreateAsync(UserEntity entity,
         CancellationToken cancellationToken = default)
     {
-        await _dbSet.AddAsync(
-            entity, cancellationToken);
+        await _dbSet.AddAsync(entity, cancellationToken);
 
         await _unitOfWork.CommitAsync(cancellationToken);
     }
 
-    public async Task DeleteAsync(UserEntity entity,
+    public Task DeleteAsync(UserEntity entity,
         CancellationToken cancellationToken = default)
     {
         _dbSet.Remove(entity);
 
-        await _unitOfWork.CommitAsync(cancellationToken);
+        return _unitOfWork.CommitAsync(cancellationToken);
     }
 
-    public async Task UpdateAsync(UserEntity entity,
+    public Task UpdateAsync(UserEntity entity,
         CancellationToken cancellationToken = default)
     {
         _dbSet.Update(entity);
 
-        await _unitOfWork.CommitAsync(cancellationToken);
+        return _unitOfWork.CommitAsync(cancellationToken);
     }
 }

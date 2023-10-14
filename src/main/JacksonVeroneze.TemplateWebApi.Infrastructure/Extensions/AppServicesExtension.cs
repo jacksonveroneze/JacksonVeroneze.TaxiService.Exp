@@ -1,8 +1,10 @@
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Identity;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Messaging;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
+using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Services;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.System;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Tenant;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Services;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.EntityFramework;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Identity;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Messaging;
@@ -31,7 +33,10 @@ public static class AppServicesExtension
 
         #region User
 
-        //
+        // Services
+        services.AddScoped<IActivateUserService, ActivateUserService>();
+
+        // Repositories
         services.AddScoped<IUserReadRepository, UserReadRepository>();
         services.AddScoped<IUserWriteRepository, UserWriteRepository>();
 
