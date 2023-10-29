@@ -9,6 +9,8 @@ public class PhoneMapping : IEntityTypeConfiguration<PhoneEntity>
 {
     public void Configure(EntityTypeBuilder<PhoneEntity> builder)
     {
+        ArgumentNullException.ThrowIfNull(builder);
+
         builder.ToTable("phone");
 
         builder.HasKey(c => c.Id);

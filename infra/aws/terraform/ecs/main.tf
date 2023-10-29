@@ -41,7 +41,7 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
   execution_role_arn       = data.aws_ssm_parameter.ssm_ecs_execution_role_arn.value
   task_role_arn            = data.aws_ssm_parameter.ssm_ecs_task_role_arn.value
   requires_compatibilities = ["FARGATE"]
-  container_definitions = jsonencode([
+  container_definitions    = jsonencode([
     {
       name              = var.task_container_name
       image             = var.task_container_image
@@ -49,14 +49,14 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
       memory            = var.task_memory
       memoryReservation = var.task_memory_reservation
       essential         = true
-      portMappings = [
+      portMappings      = [
         {
           containerPort = var.container_port
         }
       ]
       logConfiguration = {
         logDriver = "awslogs"
-        options = {
+        options   = {
           awslogs-region        = data.aws_region.current.name
           awslogs-group         = aws_cloudwatch_log_group.cloudwatch_log_group.name
           awslogs-stream-prefix = "log"
@@ -64,7 +64,9 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
         }
       }
       environment = [
-        { name = "APP_CONFIG_Database__ConnectionString", value = "Host=${data.aws_secretsmanager_secret_version.database_endpoint.secret_string};Port=5432;Database=templatewebapi;Username=${data.aws_secretsmanager_secret_version.database_username.secret_string};Password=${data.aws_secretsmanager_secret_version.database_password.secret_string}" }
+        { name  = "APP_CONFIG_Database__ConnectionString",
+          value = "Host=${data.aws_secretsmanager_secret_version.database_endpoint.secret_string};Port=5432;Database=templatewebapi;Username=${data.aws_secretsmanager_secret_version.database_username.secret_string};Password=${data.aws_secretsmanager_secret_version.database_password.secret_string}"
+        }
       ]
       healthCheck = {
         command     = ["CMD-SHELL", "curl -f http://localhost:${var.container_port}/health || exit 1"]

@@ -13,7 +13,7 @@ public class UserWriteRepository : IUserWriteRepository
     private readonly DbSet<UserEntity> _dbSet;
 
     public UserWriteRepository(
-        ApplicationDbContext context,
+        DbContext context,
         IUnitOfWork unitOfWork)
     {
         ArgumentNullException.ThrowIfNull(context);

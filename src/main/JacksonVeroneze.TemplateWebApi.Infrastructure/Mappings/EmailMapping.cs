@@ -9,6 +9,8 @@ public class EmailMapping : IEntityTypeConfiguration<EmailEntity>
 {
     public void Configure(EntityTypeBuilder<EmailEntity> builder)
     {
+        ArgumentNullException.ThrowIfNull(builder);
+
         builder.ToTable("email");
 
         builder.HasKey(c => c.Id);

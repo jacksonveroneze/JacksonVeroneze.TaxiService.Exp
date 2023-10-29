@@ -6,8 +6,8 @@ import {randomIntBetween} from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 export const options = {
     //duration: '240s',
-    iterations: 2000,
-    vus: 75,
+    iterations: 1000,
+    vus: 50,
 };
 
 // export let options = {
@@ -21,11 +21,11 @@ export const options = {
 //     ],
 // };
 
-//const url = 'http://10.0.0.150/templatewebapi';
+const url = 'http://10.0.0.150/templatewebapi';
 //const url = 'http://localhost:8088/api';
 //const url = 'http://localhost:9999';
 //const url = 'http://10.0.0.199/templatewebapi';
-const url = 'http://nlb-templatewebapi-e99ce0a79ea812ac.elb.sa-east-1.amazonaws.com:8080';
+// const url = 'http://nlb-templatewebapi-e99ce0a79ea812ac.elb.sa-east-1.amazonaws.com:8080';
 //const url = 'http://localhost:7000';
 //const url = 'http://localhost:9999';
 //const url = 'http://10.152.183.41:8084';
@@ -69,7 +69,6 @@ const url = 'http://nlb-templatewebapi-e99ce0a79ea812ac.elb.sa-east-1.amazonaws.
 
 
 export default function () {
-    // const rnd = randomIntBetween(10000, 99999)
     // const rnd1 = randomIntBetween(10000, 99999)
     //
     // var body = JSON.stringify({
@@ -87,37 +86,46 @@ export default function () {
     //     'status is 201': (r) => r.status === 201,
     // });
 
-    // var body = JSON.stringify({
-    //     name: crypto.randomUUID() + '_' + rnd,
-    //     birthday: "2023-08-25",
-    //     gender: "Male",
-    //     document: rnd1 + "2" + rnd
-    // });
-    //
-    // var responsePost = http.post(`${url}/api/v1/users`, body, {
-    //     headers: {'Content-Type': 'application/json'},
-    // });
+    var tenantId = crypto.randomUUID();
 
-    // var body = JSON.stringify({
-    //     firstName: crypto.randomUUID() + '_' + rnd,
-    //     lastName: crypto.randomUUID() + '_' + rnd,
-    //     email: crypto.randomUUID() + '@mail.com',
-    //     password: "Admin@123",
-    // });
-    //
-    // var responsePost = http.post(`${url}/authentication/register`, body, {
-    //     headers: {'Content-Type': 'application/json'},
-    // });
-    //
-    // check(responsePost, {
-    //     'status is sucess': (r) => r.status === 201,
-    // });
+    var headers = {
+        headers: {'Content-Type': 'application/json', 'X-TenantId': tenantId},
+    };
 
-    var res = http.get(`${url}/api/v1/users`);
+    const rnd = randomIntBetween(10000, 99999)
 
-    check(res, {
-        'status is 200': (r) => r.status === 200,
+    var body = JSON.stringify({
+        name: crypto.randomUUID() + '_' + rnd,
+        birthday: "2023-08-25",
+        gender: "Male",
+        document: "06399214939"
     });
+
+    var responsePost = http.post(`${url}/api/v1/users`, body, headers);
+
+    check(responsePost, {'Post - status is 201': (r) => r.status === 201});
+
+    var id = JSON.parse(responsePost.body).data.id;
+
+    var responseGetById = http.get(`${url}/api/v1/users/${id}`, headers);
+
+    check(responseGetById, {'GetById - status is 200': (r) => r.status === 200});
+
+    var responseActivated = http.put(`${url}/api/v1/users/${id}/activate`,{}, headers);
+
+    check(responseActivated, {'Activated- status is 204': (r) => r.status === 204});
+
+    var responseInactivate = http.put(`${url}/api/v1/users/${id}/inactivate`,{}, headers);
+
+    check(responseInactivate, {'Inactivate - status is 204': (r) => r.status === 204});
+
+    var responseDelete = http.del(`${url}/api/v1/users/${id}`,null, headers);
+
+    check(responseDelete, {'Delete - status is 200': (r) => r.status === 200});
+
+
+    //var res = http.get(`${url}/api/v1/users`);
+
 
     //
     //    var id = JSON.parse(responsePost.body).data.id;

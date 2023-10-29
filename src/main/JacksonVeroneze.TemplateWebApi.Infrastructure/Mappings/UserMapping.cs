@@ -9,6 +9,8 @@ public class UserMapping : IEntityTypeConfiguration<UserEntity>
 {
     public void Configure(EntityTypeBuilder<UserEntity> builder)
     {
+        ArgumentNullException.ThrowIfNull(builder);
+
         builder.ToTable("user");
 
         builder.HasKey(c => c.Id);

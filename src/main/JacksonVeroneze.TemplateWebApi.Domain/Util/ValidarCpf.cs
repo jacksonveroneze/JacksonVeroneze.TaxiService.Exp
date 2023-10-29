@@ -35,12 +35,9 @@ public class ValidarCpf
             return false;
         }
 
-        foreach (char c in clearCpf)
+        if (clearCpf.Any(c => !char.IsNumber(c)))
         {
-            if (!char.IsNumber(c))
-            {
-                return false;
-            }
+            return false;
         }
 
         for (int posicao = 0; posicao < clearCpf.Length - 2; posicao++)

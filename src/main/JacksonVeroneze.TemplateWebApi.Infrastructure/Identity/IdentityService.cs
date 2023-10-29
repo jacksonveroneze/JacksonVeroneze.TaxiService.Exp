@@ -17,11 +17,17 @@ public class IdentityService : IIdentityService
 
     public Task<UserIdentity> GetAsync()
     {
-        string? name = _httpContextAccessor.HttpContext?.User.Identity?.Name;
+        ClaimsPrincipal? user = _httpContextAccessor.HttpContext?.User;
 
-        string? id = _httpContextAccessor?.HttpContext?.User.FindFirstValue("userId");
+        string? name = user!.Identity?.Name;
 
-        UserIdentity identity = new() { Id = Guid.Parse(id!), Name = name! };
+        string? id = user.FindFirstValue("userId");
+
+        UserIdentity identity = new()
+        {
+            Id = Guid.Parse(id!),
+            Name = name!
+        };
 
         return Task.FromResult(identity);
     }

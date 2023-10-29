@@ -6,7 +6,6 @@ using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 using JacksonVeroneze.TemplateWebApi.Domain.Specifications.Base.Predicate;
 using JacksonVeroneze.TemplateWebApi.Domain.Specifications.User;
-using JacksonVeroneze.TemplateWebApi.Infrastructure.Contexts;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.EntityFramework.Extensions;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,14 +17,12 @@ public class UserReadRepository : IUserReadRepository
     private readonly List<UserEntity> _empty =
         Enumerable.Empty<UserEntity>().ToList();
 
-    private readonly ApplicationDbContext _context;
     private readonly DbSet<UserEntity> _dbSet;
 
-    public UserReadRepository(ApplicationDbContext context)
+    public UserReadRepository(DbContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
 
-        _context = context;
         _dbSet = context.Set<UserEntity>();
     }
 

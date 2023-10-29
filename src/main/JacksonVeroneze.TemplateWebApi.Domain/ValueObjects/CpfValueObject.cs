@@ -9,11 +9,12 @@ public class CpfValueObject : ValueObject
 {
     private const int MinLength = 11;
     private const int MaxLength = 14;
+    private const string MaskFormat = @"000\.000\.000\-00";
 
     public string? Value { get; private set; }
 
-    public string? ValueFormatted =>
-        Convert.ToUInt64(Value).ToString(@"000\.000\.000\-00");
+    public string ValueFormatted =>
+        Convert.ToUInt64(Value).ToString(MaskFormat);
 
     protected CpfValueObject()
     {

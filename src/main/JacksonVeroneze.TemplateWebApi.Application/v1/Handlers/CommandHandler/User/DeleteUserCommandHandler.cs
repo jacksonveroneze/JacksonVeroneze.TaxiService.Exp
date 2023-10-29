@@ -1,6 +1,7 @@
 using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TemplateWebApi.Application.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
+using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Services;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Commands.User;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Models.Base;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
@@ -12,17 +13,14 @@ public sealed class DeleteUserCommandHandler :
     IRequestHandler<DeleteUserCommand, IResult<VoidResponse>>
 {
     private readonly ILogger<DeleteUserCommandHandler> _logger;
-    private readonly IUserReadRepository _readRepository;
-    private readonly IUserWriteRepository _writeRepository;
+    private readonly IDeleteUserService _service;
 
     public DeleteUserCommandHandler(
         ILogger<DeleteUserCommandHandler> logger,
-        IUserReadRepository readRepository,
-        IUserWriteRepository writeRepository)
+        IDeleteUserService service)
     {
         _logger = logger;
-        _readRepository = readRepository;
-        _writeRepository = writeRepository;
+        _service = service;
     }
 
     public async Task<IResult<VoidResponse>> Handle(
@@ -31,24 +29,12 @@ public sealed class DeleteUserCommandHandler :
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        UserEntity? entity = await _readRepository
-            .GetByIdAsync(request.Id, cancellationToken);
+        IResult<VoidResponse> result = await _service
+            .DeleteAsync(request.Id, cancellationToken);
 
-        if (entity is null)
-        {
-            _logger.LogNotFound(nameof(DeleteUserCommandHandler),
-                nameof(Handle), request.Id, DomainErrors.User.NotFound);
-
-            return Result<VoidResponse>.NotFound(
-                DomainErrors.User.NotFound);
-        }
-
-        await _writeRepository.DeleteAsync(
-            entity, cancellationToken);
-
-        _logger.LogDeleted(nameof(DeleteUserCommandHandler),
+        _logger.LogProcessed(nameof(ActivateUserCommandHandler),
             nameof(Handle), request.Id);
 
-        return Result<VoidResponse>.Success();
+        return result;
     }
 }

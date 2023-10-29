@@ -10,6 +10,8 @@ public static class DefaultFiledsMapping
         this EntityTypeBuilder<TEntity> builder)
         where TEntity : BaseEntityAggregateRoot
     {
+        ArgumentNullException.ThrowIfNull(builder);
+
         builder.Property(c => c.CreatedAt)
             .IsRequired();
 

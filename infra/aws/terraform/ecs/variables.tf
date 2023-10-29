@@ -3,7 +3,7 @@
 ################################################################################
 
 variable "tags" {
-  type = map(string)
+  type    = map(string)
   default = {
     terraform   = "true"
     environment = "dev"

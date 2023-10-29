@@ -35,6 +35,8 @@ public static class AppServicesExtension
 
         // Services
         services.AddScoped<IActivateUserService, ActivateUserService>();
+        services.AddScoped<IInactivateUserService, InactivateUserService>();
+        services.AddScoped<IDeleteUserService, DeleteUserService>();
 
         // Repositories
         services.AddScoped<IUserReadRepository, UserReadRepository>();
