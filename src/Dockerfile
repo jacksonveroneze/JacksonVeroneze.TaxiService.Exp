@@ -13,7 +13,7 @@ RUN dotnet publish /build/main/JacksonVeroneze.TemplateWebApi.Api/JacksonVeronez
     --no-restore \
     --runtime linux-x64 \
     --self-contained \
-    /p:PublishTrimmed=true \
+    #/p:PublishTrimmed=true \ skipped - prometheus metrics
     /p:PublishReadyToRun=true \
     /p:PublishSingleFile=false
 
