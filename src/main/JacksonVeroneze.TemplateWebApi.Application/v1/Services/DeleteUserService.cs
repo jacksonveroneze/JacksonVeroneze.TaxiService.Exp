@@ -1,8 +1,8 @@
 using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TemplateWebApi.Application.Extensions;
+using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Messaging;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Services;
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.System;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Models.Base;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
@@ -14,18 +14,18 @@ public sealed class DeleteUserService : IDeleteUserService
     private readonly ILogger<DeleteUserService> _logger;
     private readonly IUserReadRepository _readRepository;
     private readonly IUserWriteRepository _writeRepository;
-    private readonly IDateTime _dateTime;
+    private readonly IIntegrationEventPublisher _eventPublisher;
 
     public DeleteUserService(
         ILogger<DeleteUserService> logger,
         IUserReadRepository readRepository,
         IUserWriteRepository writeRepository,
-        IDateTime dateTime)
+        IIntegrationEventPublisher eventPublisher)
     {
         _logger = logger;
         _readRepository = readRepository;
         _writeRepository = writeRepository;
-        _dateTime = dateTime;
+        _eventPublisher = eventPublisher;
     }
 
     public async Task<IResult<VoidResponse>> DeleteAsync(
@@ -48,6 +48,14 @@ public sealed class DeleteUserService : IDeleteUserService
 
         await _writeRepository.DeleteAsync(
             entity, cancellationToken);
+
+        // IEnumerable<Task>? tasks = entity.Events?
+        //     .Select(evt => _eventPublisher.PublishAsync(
+        //         evt, cancellationToken));
+        //
+        // await Task.WhenAll(tasks!);
+        //
+        // entity.ClearEvents();
 
         _logger.LogDeleted(nameof(DeleteUserService),
             nameof(DeleteAsync), userId);

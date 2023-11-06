@@ -5,8 +5,8 @@ import {crypto} from "k6/experimental/webcrypto";
 import {randomIntBetween} from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 export const options = {
-    //duration: '240s',
-    iterations: 1000,
+    duration: '240s',
+    //iterations: 1000,
     vus: 50,
 };
 

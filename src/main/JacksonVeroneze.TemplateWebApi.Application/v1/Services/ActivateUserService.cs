@@ -1,5 +1,6 @@
 using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TemplateWebApi.Application.Extensions;
+using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Messaging;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Services;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.System;
@@ -14,17 +15,20 @@ public sealed class ActivateUserService : IActivateUserService
     private readonly ILogger<ActivateUserService> _logger;
     private readonly IUserReadRepository _readRepository;
     private readonly IUserWriteRepository _writeRepository;
+    private readonly IIntegrationEventPublisher _eventPublisher;
     private readonly IDateTime _dateTime;
 
     public ActivateUserService(
         ILogger<ActivateUserService> logger,
         IUserReadRepository readRepository,
         IUserWriteRepository writeRepository,
+        IIntegrationEventPublisher eventPublisher,
         IDateTime dateTime)
     {
         _logger = logger;
         _readRepository = readRepository;
         _writeRepository = writeRepository;
+        _eventPublisher = eventPublisher;
         _dateTime = dateTime;
     }
 
@@ -57,7 +61,16 @@ public sealed class ActivateUserService : IActivateUserService
             return Result<VoidResponse>.Invalid(result.Error!);
         }
 
-        await _writeRepository.UpdateAsync(entity, cancellationToken);
+        await _writeRepository.UpdateAsync(
+            entity, cancellationToken);
+
+        IEnumerable<Task>? tasks = entity.Events?
+            .Select(evt => _eventPublisher.PublishAsync(
+                evt, cancellationToken));
+
+        await Task.WhenAll(tasks!);
+
+        entity.ClearEvents();
 
         _logger.LogProcessed(nameof(ActivateUserService),
             nameof(ActivateAsync), userId);

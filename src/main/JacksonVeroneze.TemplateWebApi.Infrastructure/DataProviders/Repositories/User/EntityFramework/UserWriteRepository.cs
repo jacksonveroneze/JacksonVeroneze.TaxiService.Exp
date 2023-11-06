@@ -1,6 +1,5 @@
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
-using JacksonVeroneze.TemplateWebApi.Infrastructure.Contexts;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 

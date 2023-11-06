@@ -86,6 +86,12 @@ services:
     labels:
       - traefik.enable=true
 
+      - traefik.http.middlewares.middleware-cors.headers.accesscontrolallowmethods=GET,POST,HEAD,PUT,DELETE,PATCH,OPTIONS
+      - traefik.http.middlewares.middleware-cors.headers.accesscontrolallowheaders=*
+      - traefik.http.middlewares.middleware-cors.headers.accesscontrolalloworiginlist=*
+      - traefik.http.middlewares.middleware-cors.headers.accesscontrolmaxage=100
+      - traefik.http.middlewares.middleware-cors.headers.addvaryheader=true
+
       - traefik.http.routers.apitemplatewebapi-http.entrypoints=http
       - traefik.http.routers.apitemplatewebapi-http.rule=PathPrefix(`/templatewebapi`)
 
@@ -106,7 +112,7 @@ services:
       - traefik.http.middlewares.middleware-retry.retry.initialinterval=50ms
       - traefik.http.middlewares.latency-check.circuitbreaker.expression=LatencyAtQuantileMS(50.0) > 500
 
-      - traefik.http.routers.apitemplatewebapi-http.middlewares=middleware-stripprefix0,middleware-compress,middleware-request-body,middleware-retry
+      - traefik.http.routers.apitemplatewebapi-http.middlewares=middleware-cors,middleware-stripprefix0,middleware-compress,middleware-request-body,middleware-retry
 
       - --metrics=true
     ports:
