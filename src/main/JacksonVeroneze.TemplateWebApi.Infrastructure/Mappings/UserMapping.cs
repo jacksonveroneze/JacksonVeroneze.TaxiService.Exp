@@ -32,7 +32,7 @@ public class UserMapping : IEntityTypeConfiguration<UserEntity>
             .HasColumnName("birthday")
             .IsRequired();
 
-        builder.Property(c => c.Gender)
+        builder.Property(c => c.GenderType)
             .HasColumnName("gender")
             .IsRequired();
 

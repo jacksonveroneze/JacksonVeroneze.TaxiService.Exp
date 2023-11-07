@@ -1,6 +1,6 @@
 namespace JacksonVeroneze.TemplateWebApi.Domain.Enums;
 
-public enum Gender
+public enum GenderType
 {
     None,
     Male,

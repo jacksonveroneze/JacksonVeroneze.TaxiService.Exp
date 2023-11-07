@@ -14,7 +14,7 @@ public sealed record CreateUserCommand :
     public DateOnly? Birthday { get; init; }
 
     [JsonPropertyName("gender")]
-    public Gender? Gender { get; init; }
+    public GenderType? Gender { get; init; }
 
     [JsonPropertyName("document")]
     public string? Document { get; init; }

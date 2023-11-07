@@ -74,7 +74,11 @@ services:
       context: ../../src
       dockerfile: ./Dockerfile
     environment:
-      - APP_CONFIG_Database__ConnectionString=Host=10.0.0.150;Port=5432;Database=templatewebapi;Username=postgres;Password=localP@ssword
+      - APP_CONFIG_Database__ConnectionString=Host=10.0.0.199;Port=5432;Database=templatewebapi;Username=postgres;Password=localP@ssword
+      - APP_CONFIG_Bus__Address=10.0.0.199
+      - APP_CONFIG_Bus__UserName=admin
+      - APP_CONFIG_Bus__Password=admin
+      - APP_CONFIG_Bus__Exchange=template-web-api
       - Serilog__WriteTo__0__Args__configure__1__Name=Seq
       - Serilog__WriteTo__0__Args__configure__1__Args__serverUrl=http://10.0.0.199:5341
     healthcheck:

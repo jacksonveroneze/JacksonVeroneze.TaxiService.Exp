@@ -66,4 +66,17 @@ public static class DomainErrors
             new("Phone.InvalidPhone",
                 string.Format(TemplateDataInvalid, "phone"));
     }
+
+    public static class Coordinate
+    {
+        public static Error InvalidCoordinate =>
+            new("Coordinate.InvalidCoordinate",
+                string.Format(TemplateDataInvalid, "coordinate"));
+    }
+
+    public static class Ride
+    {
+        public static Error InvalidStatus =>
+            new("Ride.InvalidStatus","Corrida não está no status correto");
+    }
 }

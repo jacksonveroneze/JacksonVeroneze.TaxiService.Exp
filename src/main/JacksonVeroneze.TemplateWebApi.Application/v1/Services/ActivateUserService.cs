@@ -6,6 +6,7 @@ using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Services;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.System;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Models.Base;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
+using JacksonVeroneze.TemplateWebApi.Domain.DomainEvents;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.v1.Services;
@@ -64,13 +65,16 @@ public sealed class ActivateUserService : IActivateUserService
         await _writeRepository.UpdateAsync(
             entity, cancellationToken);
 
-        IEnumerable<Task>? tasks = entity.Events?
-            .Select(evt => _eventPublisher.PublishAsync(
-                evt, cancellationToken));
+        await _eventPublisher.PublishAsync(
+            new UserActivatedDomainEvent(entity.Id), cancellationToken);
 
-        await Task.WhenAll(tasks!);
-
-        entity.ClearEvents();
+        // IEnumerable<Task>? tasks = entity.Events?
+        //     .Select(evt => _eventPublisher.PublishAsync(
+        //         evt, cancellationToken));
+        //
+        // await Task.WhenAll(tasks!);
+        //
+        // entity.ClearEvents();
 
         _logger.LogProcessed(nameof(ActivateUserService),
             nameof(ActivateAsync), userId);

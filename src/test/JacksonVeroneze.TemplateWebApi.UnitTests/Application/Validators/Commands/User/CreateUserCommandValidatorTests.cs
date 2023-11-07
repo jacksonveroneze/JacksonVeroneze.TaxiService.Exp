@@ -60,7 +60,7 @@ public class CreateUserCommandValidatorTests
                           + "Should Return Error"
      ), MemberData(nameof(MockData))]
     public void Validate_Valid_ShouldReturnError(
-        string name, DateOnly? birthday, Gender? gender,
+        string name, DateOnly? birthday, GenderType? gender,
         string? document, int totalErrors)
     {
         // -------------------------------------------------------
@@ -110,8 +110,8 @@ public class CreateUserCommandValidatorTests
         new object?[] { "ab", null, null, null, 3 },
         new object?[] { "ab", DateOnly.FromDateTime(DateTime.Now.AddDays(1)), null, null, 3 },
         new object?[] { "ab", DateOnly.FromDateTime(DateTime.Now.AddDays(-10)), null, null, 2 },
-        new object?[] { "ab", DateOnly.FromDateTime(DateTime.Now.AddDays(-10)), Gender.None, null, 2 },
-        new object?[] { "ab", DateOnly.FromDateTime(DateTime.Now.AddDays(-10)), Gender.Male, "", 1 },
-        new object?[] { "ab", DateOnly.FromDateTime(DateTime.Now.AddDays(-10)), Gender.Male, "12", 1 },
+        new object?[] { "ab", DateOnly.FromDateTime(DateTime.Now.AddDays(-10)), GenderType.None, null, 2 },
+        new object?[] { "ab", DateOnly.FromDateTime(DateTime.Now.AddDays(-10)), GenderType.Male, "", 1 },
+        new object?[] { "ab", DateOnly.FromDateTime(DateTime.Now.AddDays(-10)), GenderType.Male, "12", 1 },
     };
 }

@@ -29,8 +29,8 @@ public class UnitOfWork : IUnitOfWork
             throw new InvalidOperationException();
         }
 
-        await PublishDomainEvents(_dbContext,
-            cancellationToken);
+        // await PublishDomainEvents(_dbContext,
+        //     cancellationToken);
 
         return true;
     }

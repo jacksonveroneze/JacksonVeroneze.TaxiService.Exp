@@ -16,7 +16,7 @@ public class ApplicationDbContext : DbContext
         DbContextOptions<ApplicationDbContext> options,
         ITenantService tenantService) : base(options)
     {
-        _tenantId = tenantService.TenantId;
+        //_tenantId = tenantService.TenantId;
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

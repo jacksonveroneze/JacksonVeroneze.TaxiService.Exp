@@ -13,8 +13,8 @@ public class UserEntityTests
     #region ctor
 
     [Fact(DisplayName = nameof(UserEntity)
-                        + "Should Success")]
-    public void Create_ShouldSuccess()
+                        + "Should create with sucess")]
+    public void Create_ShouldCreateSuccess()
     {
         // -------------------------------------------------------
         // Arrange
@@ -23,7 +23,7 @@ public class UserEntityTests
 
         DateOnly birthday = DateOnly.FromDateTime(DateTime.Now);
 
-        Gender gender = Gender.Male;
+        GenderType genderType = GenderType.Male;
 
         CpfValueObject cpf = CpfValueObjectBuilder.BuildSingle();
 
@@ -31,7 +31,7 @@ public class UserEntityTests
         // Act
         // -------------------------------------------------------
         UserEntity entity = new(
-            name, birthday, gender, cpf);
+            name, birthday, genderType, cpf);
 
         // -------------------------------------------------------
         // Assert
@@ -46,8 +46,8 @@ public class UserEntityTests
         entity.Birthday.Should()
             .Be(birthday);
 
-        entity.Gender.Should()
-            .Be(gender);
+        entity.GenderType.Should()
+            .Be(genderType);
 
         entity.Cpf.Should()
             .NotBeNull()

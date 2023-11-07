@@ -5,6 +5,7 @@ using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Services;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Models.Base;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
+using JacksonVeroneze.TemplateWebApi.Domain.DomainEvents;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.v1.Services;
@@ -48,6 +49,9 @@ public sealed class DeleteUserService : IDeleteUserService
 
         await _writeRepository.DeleteAsync(
             entity, cancellationToken);
+
+        await _eventPublisher.PublishAsync(
+            new UserDeletedDomainEvent(entity.Id), cancellationToken);
 
         // IEnumerable<Task>? tasks = entity.Events?
         //     .Select(evt => _eventPublisher.PublishAsync(

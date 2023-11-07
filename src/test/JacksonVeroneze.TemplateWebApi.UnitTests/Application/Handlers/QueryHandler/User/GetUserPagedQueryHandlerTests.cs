@@ -93,7 +93,7 @@ public class GetUserPagedQueryHandlerTests
                 first.Id.Should().Be(page.Data.First().Id);
                 first.Name.Should().Be(page.Data.First().Name);
                 first.Birthday.Should().Be(page.Data.First().Birthday);
-                first.Gender.Should().Be(page.Data.First().Gender);
+                first.Gender.Should().Be(page.Data.First().GenderType);
                 first.Status.Should().Be(page.Data.First().Status);
             },
             second =>
@@ -101,7 +101,7 @@ public class GetUserPagedQueryHandlerTests
                 second.Id.Should().Be(page.Data.Last().Id);
                 second.Name.Should().Be(page.Data.Last().Name);
                 second.Birthday.Should().Be(page.Data.Last().Birthday);
-                second.Gender.Should().Be(page.Data.Last().Gender);
+                second.Gender.Should().Be(page.Data.Last().GenderType);
                 second.Status.Should().Be(page.Data.Last().Status);
             });
 

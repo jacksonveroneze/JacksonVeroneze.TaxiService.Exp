@@ -1,26 +1,46 @@
-using EasyNetQ;
+using System.Text.Json;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Messaging;
+using JacksonVeroneze.TemplateWebApi.Domain.DomainEvents;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
+using RabbitMQ.Client;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Messaging;
 
 [ExcludeFromCodeCoverage]
 public class RabbitMqEventPublisher : IIntegrationEventPublisher
 {
-    private readonly IBus _eventBus;
+    private readonly AppConfiguration _appConfiguration;
 
-    public RabbitMqEventPublisher(IBus eventBus)
+    public RabbitMqEventPublisher(
+        AppConfiguration appConfiguration)
     {
-        _eventBus = eventBus;
+        _appConfiguration = appConfiguration;
     }
 
-    public async Task PublishAsync<T>(T data,
-        CancellationToken cancellationToken) where T : class
+    public Task PublishAsync(BaseDomainEvent data,
+        CancellationToken cancellationToken)
     {
-        await _eventBus.PubSub.PublishAsync(data, conf =>
-            {
-                conf.WithTopic("TemplateWebApi");
-                conf.WithExpires(TimeSpan.FromSeconds(10));
-            },
-            cancellationToken: cancellationToken);
+        BusConfiguration? configuration =
+            _appConfiguration.Bus;
+
+        ConnectionFactory factory = new()
+        {
+            HostName = configuration!.Address,
+            UserName = configuration.UserName,
+            Password = configuration.Password
+        };
+
+        using IConnection? connection = factory.CreateConnection();
+
+        using IModel? channel = connection.CreateModel();
+
+        byte[] body = JsonSerializer.SerializeToUtf8Bytes(data);
+
+        channel.BasicPublish(
+            exchange: configuration.Exchange,
+            routingKey: data.Type,
+            body: body);
+
+        return Task.CompletedTask;
     }
 }

@@ -33,7 +33,7 @@ public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
             .Cascade(CascadeMode.Stop)
             .NotNull()
             .WithError(ValidationErrors.User.GenderIsRequired)
-            .NotEqual(Gender.None)
+            .NotEqual(GenderType.None)
             .IsInEnum();
 
         RuleFor(request => request.Document)

@@ -98,7 +98,7 @@ public class GetUserByIdQueryHandlerTests
             .Be(userEntity.Birthday);
 
         userResponse.Gender.Should()
-            .Be(userEntity.Gender);
+            .Be(userEntity.GenderType);
 
         userResponse.Status.Should()
             .Be(UserStatus.PendingActivation);

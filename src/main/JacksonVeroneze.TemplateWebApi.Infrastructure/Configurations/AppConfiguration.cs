@@ -22,6 +22,8 @@ public class AppConfiguration
 
     public PushGatewayConfiguration? PushGateway { get; init; }
 
+    public BusConfiguration? Bus { get; init; }
+
     public string AppName =>
         Application?.Name ??
         throw new ArgumentNullException(nameof(AppName));

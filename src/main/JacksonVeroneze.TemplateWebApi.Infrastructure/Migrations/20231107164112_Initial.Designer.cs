@@ -11,9 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
 {
-    [ExcludeFromCodeCoverage]
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230903232956_Initial")]
+    [Migration("20231107164112_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -22,7 +21,7 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("public")
-                .HasAnnotation("ProductVersion", "7.0.10")
+                .HasAnnotation("ProductVersion", "7.0.13")
                 .HasAnnotation("Proxies:ChangeTracking", false)
                 .HasAnnotation("Proxies:CheckEquality", false)
                 .HasAnnotation("Proxies:LazyLoading", true)
@@ -43,6 +42,10 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("deleted_at");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("tenant_id");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
@@ -80,13 +83,13 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("deleted_at");
 
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("tenant_id");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updated_at");
-
-                    b.Property<Guid?>("UserEntityId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("user_entity_id");
 
                     b.Property<int>("Version")
                         .IsConcurrencyToken()
@@ -96,10 +99,106 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
                     b.HasKey("Id")
                         .HasName("pk_phone");
 
-                    b.HasIndex("UserEntityId")
-                        .HasDatabaseName("ix_phone_user_entity_id");
-
                     b.ToTable("phone", "public");
+                });
+
+            modelBuilder.Entity("JacksonVeroneze.TemplateWebApi.Domain.Entities.PositionEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("deleted_at");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("tenant_id");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.Property<int>("Version")
+                        .IsConcurrencyToken()
+                        .HasColumnType("integer")
+                        .HasColumnName("version");
+
+                    b.Property<Guid>("ride_id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("ride_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_position");
+
+                    b.HasIndex("ride_id")
+                        .HasDatabaseName("ix_position_ride_id");
+
+                    b.ToTable("position", "public");
+                });
+
+            modelBuilder.Entity("JacksonVeroneze.TemplateWebApi.Domain.Entities.RideEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("deleted_at");
+
+                    b.Property<double>("Distance")
+                        .HasColumnType("double precision")
+                        .HasColumnName("distance");
+
+                    b.Property<Guid?>("DriverId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("driver_id");
+
+                    b.Property<decimal>("Fare")
+                        .HasColumnType("numeric")
+                        .HasColumnName("fare");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("tenant_id");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.Property<int>("Version")
+                        .IsConcurrencyToken()
+                        .HasColumnType("integer")
+                        .HasColumnName("version");
+
+                    b.HasKey("Id")
+                        .HasName("pk_ride");
+
+                    b.HasIndex("DriverId")
+                        .HasDatabaseName("ix_ride_driver_id");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_ride_user_id");
+
+                    b.ToTable("ride", "public");
                 });
 
             modelBuilder.Entity("JacksonVeroneze.TemplateWebApi.Domain.Entities.UserEntity", b =>
@@ -124,7 +223,7 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("deleted_at");
 
-                    b.Property<int>("Gender")
+                    b.Property<int>("GenderType")
                         .HasColumnType("integer")
                         .HasColumnName("gender");
 
@@ -135,6 +234,10 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("integer")
                         .HasColumnName("status");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("tenant_id");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
@@ -189,11 +292,6 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
 
             modelBuilder.Entity("JacksonVeroneze.TemplateWebApi.Domain.Entities.PhoneEntity", b =>
                 {
-                    b.HasOne("JacksonVeroneze.TemplateWebApi.Domain.Entities.UserEntity", null)
-                        .WithMany("Phones")
-                        .HasForeignKey("UserEntityId")
-                        .HasConstraintName("fk_phone_user_entity_user_entity_temp_id2");
-
                     b.OwnsOne("JacksonVeroneze.TemplateWebApi.Domain.ValueObjects.PhoneValueObject", "Phone", b1 =>
                         {
                             b1.Property<Guid>("PhoneEntityId")
@@ -215,8 +313,111 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
                                 .HasConstraintName("fk_phone_phone_id");
                         });
 
-                    b.Navigation("Phone")
-                        .IsRequired();
+                    b.Navigation("Phone");
+                });
+
+            modelBuilder.Entity("JacksonVeroneze.TemplateWebApi.Domain.Entities.PositionEntity", b =>
+                {
+                    b.HasOne("JacksonVeroneze.TemplateWebApi.Domain.Entities.RideEntity", "Ride")
+                        .WithMany("Positions")
+                        .HasForeignKey("ride_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_position_ride_entity_ride_entity_temp_id1");
+
+                    b.OwnsOne("JacksonVeroneze.TemplateWebApi.Domain.ValueObjects.CoordinateValueObject", "Position", b1 =>
+                        {
+                            b1.Property<Guid>("PositionEntityId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("id");
+
+                            b1.Property<double>("Latitude")
+                                .HasColumnType("double precision")
+                                .HasColumnName("from_latitude");
+
+                            b1.Property<double>("Longitude")
+                                .HasColumnType("double precision")
+                                .HasColumnName("from_longitude");
+
+                            b1.HasKey("PositionEntityId");
+
+                            b1.ToTable("position", "public");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PositionEntityId")
+                                .HasConstraintName("fk_position_position_id");
+                        });
+
+                    b.Navigation("Position");
+
+                    b.Navigation("Ride");
+                });
+
+            modelBuilder.Entity("JacksonVeroneze.TemplateWebApi.Domain.Entities.RideEntity", b =>
+                {
+                    b.HasOne("JacksonVeroneze.TemplateWebApi.Domain.Entities.UserEntity", "Driver")
+                        .WithMany()
+                        .HasForeignKey("DriverId")
+                        .HasConstraintName("fk_ride_user_entity_driver_temp_id3");
+
+                    b.HasOne("JacksonVeroneze.TemplateWebApi.Domain.Entities.UserEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("fk_ride_user_entity_user_temp_id2");
+
+                    b.OwnsOne("JacksonVeroneze.TemplateWebApi.Domain.ValueObjects.CoordinateValueObject", "From", b1 =>
+                        {
+                            b1.Property<Guid>("RideEntityId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("id");
+
+                            b1.Property<double>("Latitude")
+                                .HasColumnType("double precision")
+                                .HasColumnName("from_latitude");
+
+                            b1.Property<double>("Longitude")
+                                .HasColumnType("double precision")
+                                .HasColumnName("from_longitude");
+
+                            b1.HasKey("RideEntityId");
+
+                            b1.ToTable("ride", "public");
+
+                            b1.WithOwner()
+                                .HasForeignKey("RideEntityId")
+                                .HasConstraintName("fk_ride_ride_id");
+                        });
+
+                    b.OwnsOne("JacksonVeroneze.TemplateWebApi.Domain.ValueObjects.CoordinateValueObject", "To", b1 =>
+                        {
+                            b1.Property<Guid>("RideEntityId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("id");
+
+                            b1.Property<double>("Latitude")
+                                .HasColumnType("double precision")
+                                .HasColumnName("to_latitude");
+
+                            b1.Property<double>("Longitude")
+                                .HasColumnType("double precision")
+                                .HasColumnName("to_longitude");
+
+                            b1.HasKey("RideEntityId");
+
+                            b1.ToTable("ride", "public");
+
+                            b1.WithOwner()
+                                .HasForeignKey("RideEntityId")
+                                .HasConstraintName("fk_ride_ride_id");
+                        });
+
+                    b.Navigation("Driver");
+
+                    b.Navigation("From");
+
+                    b.Navigation("To");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("JacksonVeroneze.TemplateWebApi.Domain.Entities.UserEntity", b =>
@@ -270,11 +471,14 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("JacksonVeroneze.TemplateWebApi.Domain.Entities.RideEntity", b =>
+                {
+                    b.Navigation("Positions");
+                });
+
             modelBuilder.Entity("JacksonVeroneze.TemplateWebApi.Domain.Entities.UserEntity", b =>
                 {
                     b.Navigation("Emails");
-
-                    b.Navigation("Phones");
                 });
 #pragma warning restore 612, 618
         }

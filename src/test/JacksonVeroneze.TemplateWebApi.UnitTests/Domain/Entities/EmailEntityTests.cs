@@ -8,8 +8,8 @@ namespace JacksonVeroneze.TemplateWebApi.UnitTests.Domain.Entities;
 public class EmailEntityTests
 {
     [Fact(DisplayName = nameof(EmailEntity)
-                        + "Should Return Success")]
-    public void Create_ShouldReturnSuccess()
+                        + "Should create with sucess")]
+    public void Create_ShouldCreateSuccess()
     {
         // -------------------------------------------------------
         // Arrange
