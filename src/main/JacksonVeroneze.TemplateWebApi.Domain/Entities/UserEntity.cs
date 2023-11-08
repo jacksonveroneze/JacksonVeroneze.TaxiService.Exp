@@ -13,6 +13,12 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
     private readonly IReadOnlyCollection<EmailEntity> _emptyEmails =
         Enumerable.Empty<EmailEntity>().ToList().AsReadOnly();
 
+    private readonly IReadOnlyCollection<PhoneEntity> _emptyPhones =
+        Enumerable.Empty<PhoneEntity>().ToList().AsReadOnly();
+
+    private readonly IReadOnlyCollection<RideEntity> _emptyRides =
+        Enumerable.Empty<RideEntity>().ToList().AsReadOnly();
+
     public NameValueObject Name { get; private set; } = null!;
 
     public DateOnly Birthday { get; private set; }
@@ -28,9 +34,13 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
     public DateTime? InactivedOnUtc { get; private set; }
 
     private List<EmailEntity>? _emails;
+    private List<PhoneEntity>? _phones;
 
     public virtual IReadOnlyCollection<EmailEntity> Emails =>
         _emails?.AsReadOnly() ?? _emptyEmails;
+
+    public virtual IReadOnlyCollection<PhoneEntity> Phones =>
+        _phones?.AsReadOnly() ?? _emptyPhones;
 
     protected UserEntity()
     {

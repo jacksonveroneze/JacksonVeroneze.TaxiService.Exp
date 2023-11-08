@@ -14,6 +14,6 @@ public static class CoordinateValueObjectBuilder
     {
         return new Faker<CoordinateValueObject>("pt_BR")
             .CustomInstantiator(f => CoordinateValueObject
-                .Create(47.640320, 47.456411).Value!);
+                .Create(47.640320F, 47.456411F).Value!);
     }
 }

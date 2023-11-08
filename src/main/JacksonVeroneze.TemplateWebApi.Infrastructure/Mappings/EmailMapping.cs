@@ -34,7 +34,5 @@ public class EmailMapping : IEntityTypeConfiguration<EmailEntity>
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.ConfigureDefaultFiledsMapping();
-
-        builder.Ignore(x => x.Events);
     }
 }

@@ -18,10 +18,6 @@ public class RideMapping : IEntityTypeConfiguration<RideEntity>
         builder.Property(c => c.Id)
             .ValueGeneratedNever();
 
-        // TODO - Terminar
-        builder.HasOne(p => p.User);
-        builder.HasOne(p => p.Driver);
-
         builder.Property(c => c.Fare)
             .HasColumnName("fare");
 
@@ -58,8 +54,10 @@ public class RideMapping : IEntityTypeConfiguration<RideEntity>
             .HasColumnName("status")
             .IsRequired();
 
-        builder.ConfigureDefaultFiledsMapping();
+        builder.HasOne(p => p.User);
 
-        builder.Ignore(x => x.Events);
+        builder.HasOne(p => p.Driver);
+
+        builder.ConfigureDefaultFiledsMapping();
     }
 }

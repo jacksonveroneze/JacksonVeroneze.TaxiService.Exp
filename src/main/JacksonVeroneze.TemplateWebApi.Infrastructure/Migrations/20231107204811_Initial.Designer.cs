@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231107164112_Initial")]
+    [Migration("20231107204811_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -91,6 +91,10 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updated_at");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
                     b.Property<int>("Version")
                         .IsConcurrencyToken()
                         .HasColumnType("integer")
@@ -98,6 +102,9 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_phone");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_phone_user_id");
 
                     b.ToTable("phone", "public");
                 });
@@ -116,6 +123,10 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("deleted_at");
 
+                    b.Property<Guid>("RideId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("ride_id");
+
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uuid")
                         .HasColumnName("tenant_id");
@@ -129,14 +140,10 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("version");
 
-                    b.Property<Guid>("ride_id")
-                        .HasColumnType("uuid")
-                        .HasColumnName("ride_id");
-
                     b.HasKey("Id")
                         .HasName("pk_position");
 
-                    b.HasIndex("ride_id")
+                    b.HasIndex("RideId")
                         .HasDatabaseName("ix_position_ride_id");
 
                     b.ToTable("position", "public");
@@ -180,7 +187,7 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updated_at");
 
-                    b.Property<Guid?>("UserId")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uuid")
                         .HasColumnName("user_id");
 
@@ -261,7 +268,7 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_email_user_entity_user_temp_id");
+                        .HasConstraintName("fk_email_user_entity_user_entity_temp_id");
 
                     b.OwnsOne("JacksonVeroneze.TemplateWebApi.Domain.ValueObjects.EmailValueObject", "Email", b1 =>
                         {
@@ -292,6 +299,13 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
 
             modelBuilder.Entity("JacksonVeroneze.TemplateWebApi.Domain.Entities.PhoneEntity", b =>
                 {
+                    b.HasOne("JacksonVeroneze.TemplateWebApi.Domain.Entities.UserEntity", "User")
+                        .WithMany("Phones")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_phone_user_entity_user_temp_id2");
+
                     b.OwnsOne("JacksonVeroneze.TemplateWebApi.Domain.ValueObjects.PhoneValueObject", "Phone", b1 =>
                         {
                             b1.Property<Guid>("PhoneEntityId")
@@ -314,13 +328,15 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
                         });
 
                     b.Navigation("Phone");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("JacksonVeroneze.TemplateWebApi.Domain.Entities.PositionEntity", b =>
                 {
                     b.HasOne("JacksonVeroneze.TemplateWebApi.Domain.Entities.RideEntity", "Ride")
                         .WithMany("Positions")
-                        .HasForeignKey("ride_id")
+                        .HasForeignKey("RideId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_position_ride_entity_ride_entity_temp_id1");
@@ -331,12 +347,12 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
                                 .HasColumnType("uuid")
                                 .HasColumnName("id");
 
-                            b1.Property<double>("Latitude")
-                                .HasColumnType("double precision")
+                            b1.Property<float>("Latitude")
+                                .HasColumnType("real")
                                 .HasColumnName("from_latitude");
 
-                            b1.Property<double>("Longitude")
-                                .HasColumnType("double precision")
+                            b1.Property<float>("Longitude")
+                                .HasColumnType("real")
                                 .HasColumnName("from_longitude");
 
                             b1.HasKey("PositionEntityId");
@@ -358,12 +374,14 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
                     b.HasOne("JacksonVeroneze.TemplateWebApi.Domain.Entities.UserEntity", "Driver")
                         .WithMany()
                         .HasForeignKey("DriverId")
-                        .HasConstraintName("fk_ride_user_entity_driver_temp_id3");
+                        .HasConstraintName("fk_ride_user_entity_driver_temp_id4");
 
                     b.HasOne("JacksonVeroneze.TemplateWebApi.Domain.Entities.UserEntity", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .HasConstraintName("fk_ride_user_entity_user_temp_id2");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_ride_user_entity_user_temp_id3");
 
                     b.OwnsOne("JacksonVeroneze.TemplateWebApi.Domain.ValueObjects.CoordinateValueObject", "From", b1 =>
                         {
@@ -371,12 +389,12 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
                                 .HasColumnType("uuid")
                                 .HasColumnName("id");
 
-                            b1.Property<double>("Latitude")
-                                .HasColumnType("double precision")
+                            b1.Property<float>("Latitude")
+                                .HasColumnType("real")
                                 .HasColumnName("from_latitude");
 
-                            b1.Property<double>("Longitude")
-                                .HasColumnType("double precision")
+                            b1.Property<float>("Longitude")
+                                .HasColumnType("real")
                                 .HasColumnName("from_longitude");
 
                             b1.HasKey("RideEntityId");
@@ -394,12 +412,12 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
                                 .HasColumnType("uuid")
                                 .HasColumnName("id");
 
-                            b1.Property<double>("Latitude")
-                                .HasColumnType("double precision")
+                            b1.Property<float>("Latitude")
+                                .HasColumnType("real")
                                 .HasColumnName("to_latitude");
 
-                            b1.Property<double>("Longitude")
-                                .HasColumnType("double precision")
+                            b1.Property<float>("Longitude")
+                                .HasColumnType("real")
                                 .HasColumnName("to_longitude");
 
                             b1.HasKey("RideEntityId");
@@ -479,6 +497,8 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Migrations
             modelBuilder.Entity("JacksonVeroneze.TemplateWebApi.Domain.Entities.UserEntity", b =>
                 {
                     b.Navigation("Emails");
+
+                    b.Navigation("Phones");
                 });
 #pragma warning restore 612, 618
         }

@@ -28,8 +28,11 @@ public class PhoneMapping : IEntityTypeConfiguration<PhoneEntity>
                 .IsRequired();
         });
 
-        builder.ConfigureDefaultFiledsMapping();
+        builder.HasOne(p => p.User)
+            .WithMany(b => b.Phones)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
 
-        builder.Ignore(x => x.Events);
+        builder.ConfigureDefaultFiledsMapping();
     }
 }

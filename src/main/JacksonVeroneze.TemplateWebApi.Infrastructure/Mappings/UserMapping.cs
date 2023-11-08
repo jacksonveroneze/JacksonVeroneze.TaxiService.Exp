@@ -57,7 +57,5 @@ public class UserMapping : IEntityTypeConfiguration<UserEntity>
             .HasColumnName("inactived_on_utc");
 
         builder.ConfigureDefaultFiledsMapping();
-
-        builder.Ignore(x => x.Events);
     }
 }

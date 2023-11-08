@@ -18,10 +18,14 @@ public static class DefaultFiledsMapping
         builder.Property(c => c.UpdatedAt);
 
         builder.Property(c => c.DeletedAt);
-        builder.Property(c => c.TenantId);
+
+        builder.Property(c => c.TenantId)
+            .IsRequired();
 
         builder.Property(c => c.Version)
             .IsConcurrencyToken()
             .IsRequired();
+
+        builder.Ignore(x => x.Events);
     }
 }

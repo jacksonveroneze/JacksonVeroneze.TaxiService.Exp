@@ -41,7 +41,7 @@ public static class UserDatabase
                     _ = Enumerable.Range(1, rnd.Next(2, 5))
                         .Select(i =>
                         {
-                            PhoneEntity phone = new(PhoneValueObject.Create($"(49) 99999-999{i}").Value!);
+                            PhoneEntity phone = new(user, PhoneValueObject.Create($"(49) 99999-999{i}").Value!);
 
                             //user.AddPhone(phone);
 

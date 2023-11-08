@@ -11,9 +11,9 @@ public class RideEntity : BaseEntityAggregateRoot
     private readonly IReadOnlyCollection<PositionEntity> _emptyPositions =
         Enumerable.Empty<PositionEntity>().ToList().AsReadOnly();
 
-    public virtual UserEntity? User { get; }
+    public virtual UserEntity User { get; }
 
-    public virtual UserEntity? Driver { get;  }
+    public virtual UserEntity? Driver { get; private set; }
 
     public virtual decimal Fare { get; }
 
@@ -117,6 +117,21 @@ public class RideEntity : BaseEntityAggregateRoot
         }
 
         Status = RideStatus.Canceled;
+
+        return Result.Success();
+    }
+
+    public IResult SetDriver(UserEntity driver)
+    {
+        ArgumentNullException.ThrowIfNull(driver);
+
+        if (Driver is not null)
+        {
+            return Result.Invalid(
+                DomainErrors.Ride.InvalidStatus);
+        }
+
+        Driver = driver;
 
         return Result.Success();
     }

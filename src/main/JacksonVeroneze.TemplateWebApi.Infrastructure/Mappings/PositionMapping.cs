@@ -33,13 +33,9 @@ public class PositionMapping : IEntityTypeConfiguration<PositionEntity>
 
         builder.HasOne(p => p.Ride)
             .WithMany(b => b.Positions)
-            .HasForeignKey(f => f.Id)
-            .HasForeignKey("ride_id")
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.ConfigureDefaultFiledsMapping();
-
-        builder.Ignore(x => x.Events);
     }
 }
