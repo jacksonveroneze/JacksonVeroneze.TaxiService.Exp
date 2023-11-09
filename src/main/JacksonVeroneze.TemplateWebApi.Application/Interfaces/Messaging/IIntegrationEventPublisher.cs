@@ -1,4 +1,5 @@
 using JacksonVeroneze.TemplateWebApi.Domain.DomainEvents;
+using JacksonVeroneze.TemplateWebApi.Domain.DomainEvents.Base;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Interfaces.Messaging;
 

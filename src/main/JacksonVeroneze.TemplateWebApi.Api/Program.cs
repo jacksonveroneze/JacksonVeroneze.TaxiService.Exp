@@ -79,6 +79,9 @@ finally
     //dotNetRuntimeStats?.Dispose();
 }
 
-public partial class Program
+namespace JacksonVeroneze.TemplateWebApi.Api
 {
+    public partial class Program
+    {
+    }
 }

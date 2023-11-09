@@ -1,6 +1,7 @@
 using System.Text.Json;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Messaging;
 using JacksonVeroneze.TemplateWebApi.Domain.DomainEvents;
+using JacksonVeroneze.TemplateWebApi.Domain.DomainEvents.Base;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
 using RabbitMQ.Client;
 

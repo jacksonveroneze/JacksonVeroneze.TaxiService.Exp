@@ -12,13 +12,13 @@ using Xunit;
 namespace JacksonVeroneze.TemplateWebApi.IntegrationTests.Controllers.v1;
 
 public class UsersControllerTests : IDisposable,
-    IClassFixture<CustomWebApplicationFactory<Program>>
+    IClassFixture<CustomWebApplicationFactory<Api.Program>>
 {
     private const string BaseUrl = "/api/v1/users";
 
     private readonly HttpClient _httpClient;
 
-    public UsersControllerTests(CustomWebApplicationFactory<Program> factory)
+    public UsersControllerTests(CustomWebApplicationFactory<Api.Program> factory)
     {
         _httpClient = factory.CreateClient(new
             WebApplicationFactoryClientOptions

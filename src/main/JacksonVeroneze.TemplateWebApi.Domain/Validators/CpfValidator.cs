@@ -1,10 +1,10 @@
 using System.Runtime.CompilerServices;
 
-namespace JacksonVeroneze.TemplateWebApi.Domain.Util;
+namespace JacksonVeroneze.TemplateWebApi.Domain.Validators;
 
-public class ValidarCpf
+public class CpfValidator
 {
-    public static bool Validar(string? sourceCpf)
+    public static bool Validate(string? sourceCpf)
     {
         if (string.IsNullOrWhiteSpace(sourceCpf))
             return false;

@@ -1,6 +1,6 @@
 using JacksonVeroneze.NET.DomainObjects.Messaging;
 
-namespace JacksonVeroneze.TemplateWebApi.Domain.DomainEvents;
+namespace JacksonVeroneze.TemplateWebApi.Domain.DomainEvents.Base;
 
 public class BaseDomainEvent : DomainEvent
 {

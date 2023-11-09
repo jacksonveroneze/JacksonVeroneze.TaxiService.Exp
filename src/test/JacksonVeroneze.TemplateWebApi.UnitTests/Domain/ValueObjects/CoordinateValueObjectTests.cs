@@ -81,6 +81,7 @@ public class CoordinateValueObjectTests
     {
         new object?[] { null, null },
         new object?[] { 12.125454F, null },
-        new object?[] { null, 12.1254545F }
+        new object?[] { null, 12.1254545F },
+        new object?[] { 0, 0 }
     };
 }

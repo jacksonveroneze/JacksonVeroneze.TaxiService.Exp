@@ -3,7 +3,7 @@ using JacksonVeroneze.TemplateWebApi.Application.Core.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.System;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Commands.User;
 using JacksonVeroneze.TemplateWebApi.Domain.Enums;
-using JacksonVeroneze.TemplateWebApi.Domain.Util;
+using JacksonVeroneze.TemplateWebApi.Domain.Validators;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.v1.Validators.Commands.User;
 
@@ -41,7 +41,7 @@ public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
             .NotEmpty()
             .WithError(ValidationErrors.User.DocumentIsRequired)
             .Must(value => value!.All(char.IsNumber))
-            .Must(ValidarCpf.Validar)
+            .Must(CpfValidator.Validate)
             .WithError(ValidationErrors.User.DocumentIsInvalid);
     }
 }

@@ -1,5 +1,6 @@
 using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
+using JacksonVeroneze.TemplateWebApi.Domain.DomainEvents.Ride;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities.Base;
 using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 using JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
@@ -15,9 +16,9 @@ public class RideEntity : BaseEntityAggregateRoot
 
     public virtual UserEntity? Driver { get; private set; }
 
-    public virtual decimal Fare { get; }
+    public virtual decimal? Fare { get; }
 
-    public virtual double Distance { get; }
+    public virtual double? Distance { get; }
 
     public virtual CoordinateValueObject? From { get; }
 
@@ -69,15 +70,26 @@ public class RideEntity : BaseEntityAggregateRoot
 
     #region Status
 
-    public IResult Accept()
+    public IResult Accept(UserEntity driver)
     {
+        ArgumentNullException.ThrowIfNull(driver);
+
         if (Status != RideStatus.Requested)
         {
             return Result.Invalid(
                 DomainErrors.Ride.InvalidStatus);
         }
 
+        if (Driver is not null)
+        {
+            return Result.Invalid(
+                DomainErrors.Ride.InvalidStatus);
+        }
+
         Status = RideStatus.Accepted;
+        Driver = driver;
+
+        AddEvent(new RideAcceptedDomainEvent(Id));
 
         return Result.Success();
     }
@@ -92,6 +104,8 @@ public class RideEntity : BaseEntityAggregateRoot
 
         Status = RideStatus.InProgress;
 
+        AddEvent(new RideStartedDomainEvent(Id));
+
         return Result.Success();
     }
 
@@ -104,6 +118,8 @@ public class RideEntity : BaseEntityAggregateRoot
         }
 
         Status = RideStatus.Completed;
+
+        AddEvent(new RideFinishedDomainEvent(Id));
 
         return Result.Success();
     }
@@ -118,20 +134,7 @@ public class RideEntity : BaseEntityAggregateRoot
 
         Status = RideStatus.Canceled;
 
-        return Result.Success();
-    }
-
-    public IResult SetDriver(UserEntity driver)
-    {
-        ArgumentNullException.ThrowIfNull(driver);
-
-        if (Driver is not null)
-        {
-            return Result.Invalid(
-                DomainErrors.Ride.InvalidStatus);
-        }
-
-        Driver = driver;
+        AddEvent(new RideCanceledDomainEvent(Id));
 
         return Result.Success();
     }
