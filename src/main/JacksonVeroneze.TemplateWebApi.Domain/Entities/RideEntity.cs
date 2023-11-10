@@ -12,13 +12,13 @@ public class RideEntity : BaseEntityAggregateRoot
     private readonly IReadOnlyCollection<PositionEntity> _emptyPositions =
         Enumerable.Empty<PositionEntity>().ToList().AsReadOnly();
 
-    public virtual UserEntity User { get; }
+    public virtual UserEntity? User { get; }
 
     public virtual UserEntity? Driver { get; private set; }
 
-    public virtual decimal? Fare { get; }
+    public virtual decimal? Fare { get; private set; }
 
-    public virtual double? Distance { get; }
+    public virtual double? Distance { get; private set; }
 
     public virtual CoordinateValueObject? From { get; }
 
@@ -77,17 +77,17 @@ public class RideEntity : BaseEntityAggregateRoot
         if (Status != RideStatus.Requested)
         {
             return Result.Invalid(
-                DomainErrors.Ride.InvalidStatus);
+                DomainErrors.Ride.InvalidStatusSetAccept);
         }
 
         if (Driver is not null)
         {
             return Result.Invalid(
-                DomainErrors.Ride.InvalidStatus);
+                DomainErrors.Ride.DriverAlready);
         }
 
-        Status = RideStatus.Accepted;
         Driver = driver;
+        Status = RideStatus.Accepted;
 
         AddEvent(new RideAcceptedDomainEvent(Id));
 
@@ -99,7 +99,7 @@ public class RideEntity : BaseEntityAggregateRoot
         if (Status != RideStatus.Accepted)
         {
             return Result.Invalid(
-                DomainErrors.Ride.InvalidStatus);
+                DomainErrors.Ride.InvalidStatusSetStart);
         }
 
         Status = RideStatus.InProgress;
@@ -114,7 +114,7 @@ public class RideEntity : BaseEntityAggregateRoot
         if (Status != RideStatus.InProgress)
         {
             return Result.Invalid(
-                DomainErrors.Ride.InvalidStatus);
+                DomainErrors.Ride.InvalidStatusSetFinish);
         }
 
         Status = RideStatus.Completed;
@@ -129,7 +129,7 @@ public class RideEntity : BaseEntityAggregateRoot
         if (Status is RideStatus.Completed or RideStatus.Canceled)
         {
             return Result.Invalid(
-                DomainErrors.Ride.InvalidStatus);
+                DomainErrors.Ride.InvalidStatusSetCancel);
         }
 
         Status = RideStatus.Canceled;

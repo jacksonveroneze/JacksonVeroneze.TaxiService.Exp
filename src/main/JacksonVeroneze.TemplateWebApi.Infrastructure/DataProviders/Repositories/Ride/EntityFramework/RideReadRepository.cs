@@ -1,67 +1,62 @@
 using System.Linq.Expressions;
 using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.NET.Pagination.Extensions;
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
+using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Ride;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
-using JacksonVeroneze.TemplateWebApi.Domain.Specifications.Base.Predicate;
-using JacksonVeroneze.TemplateWebApi.Domain.Specifications.User;
+using JacksonVeroneze.TemplateWebApi.Domain.Specifications.Ride;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.EntityFramework.Extensions;
 using Microsoft.EntityFrameworkCore;
 
-namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.EntityFramework;
+namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Ride.EntityFramework;
 
 [ExcludeFromCodeCoverage]
-public class UserReadRepository : IUserReadRepository
+public class RideReadRepository : IRideReadRepository
 {
-    private readonly List<UserEntity> _empty =
-        Enumerable.Empty<UserEntity>().ToList();
+    private readonly List<RideEntity> _empty =
+        Enumerable.Empty<RideEntity>().ToList();
 
-    private readonly DbSet<UserEntity> _dbSet;
+    private readonly DbSet<RideEntity> _dbSet;
 
-    public UserReadRepository(DbContext context)
+    public RideReadRepository(DbContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
 
-        _dbSet = context.Set<UserEntity>();
+        _dbSet = context.Set<RideEntity>();
     }
 
     public Task<bool> ExistsAsync(string document,
         CancellationToken cancellationToken = default)
     {
-        UserCpfSpecification specName = new(document);
-
-        return _dbSet.AnyAsync(specName,
-            cancellationToken);
+        throw new NotImplementedException();
     }
 
-    public async Task<UserEntity?> GetByIdAsync(Guid id,
+    public async Task<RideEntity?> GetByIdAsync(Guid id,
         CancellationToken cancellationToken = default)
     {
-        UserEntity? result = await _dbSet.FindAsync(
+        RideEntity? result = await _dbSet.FindAsync(
             new object[] { id }, cancellationToken);
 
         return result;
     }
 
-    public async Task<Page<UserEntity>> GetPagedAsync(
-        UserPagedFilter filter,
+    public async Task<Page<RideEntity>> GetPagedAsync(
+        RidePagedFilter filter,
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(filter);
 
-        UserNameSpecification specName = new(filter.Name);
-        UserStatusSpecification specStatus = new(filter.Status);
+        RideStatusSpecification specStatus = new(filter.Status);
 
-        Expression<Func<UserEntity, bool>> spec =
-            specName.ToExpression().And(specStatus);
+        Expression<Func<RideEntity, bool>> spec =
+            specStatus;
 
         int count = await _dbSet
             .AsNoTracking()
             .Where(spec)
             .CountAsync(cancellationToken);
 
-        List<UserEntity> result = count == 0
+        List<RideEntity> result = count == 0
             ? _empty
             : await _dbSet
                 .AsNoTracking()
@@ -70,7 +65,7 @@ public class UserReadRepository : IUserReadRepository
                 .OrderByDescending(ord => ord.CreatedAt)
                 .ToListAsync(cancellationToken);
 
-        Page<UserEntity> data = result
+        Page<RideEntity> data = result
             .ToPage(filter.Pagination!, count);
 
         return data;

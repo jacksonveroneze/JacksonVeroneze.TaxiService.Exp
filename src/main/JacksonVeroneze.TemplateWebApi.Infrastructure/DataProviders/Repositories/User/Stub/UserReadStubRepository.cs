@@ -11,7 +11,7 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositori
 [ExcludeFromCodeCoverage]
 public class UserReadStubRepository : IUserReadRepository
 {
-    public Task<bool> ExistsUserAsync(string document,
+    public Task<bool> ExistsAsync(string document,
         CancellationToken cancellationToken = default)
     {
         UserNameSpecification specName = new(document);

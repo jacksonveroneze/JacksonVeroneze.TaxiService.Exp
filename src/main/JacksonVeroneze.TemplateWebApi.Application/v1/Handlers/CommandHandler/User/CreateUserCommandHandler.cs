@@ -36,7 +36,7 @@ public sealed class CreateUserCommandHandler :
         ArgumentNullException.ThrowIfNull(request);
 
         bool existsUser = await _readRepository
-            .ExistsUserAsync(request.Document!, cancellationToken);
+            .ExistsAsync(request.Document!, cancellationToken);
 
         if (existsUser)
         {

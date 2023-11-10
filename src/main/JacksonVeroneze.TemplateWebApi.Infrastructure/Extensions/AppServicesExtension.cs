@@ -1,10 +1,12 @@
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Identity;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Messaging;
+using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Ride;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Services;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.System;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Tenant;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Services;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Ride.EntityFramework;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.EntityFramework;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Identity;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Messaging;
@@ -44,6 +46,14 @@ public static class AppServicesExtension
 
         // services.AddSingleton<IUserReadRepository, UserReadStubRepository>();
         // services.AddSingleton<IUserWriteRepository, UserWriteStubRepository>();
+
+        #endregion
+
+        #region Ride
+
+        // Repositories
+        services.AddScoped<IRideReadRepository, RideReadRepository>();
+        services.AddScoped<IRideWriteRepository, RideWriteRepository>();
 
         #endregion
 

@@ -55,7 +55,7 @@ public class CreateUserCommandHandlerTests
             .BuildSingle();
 
         _mockReadRepository.Setup(mock =>
-                mock.ExistsUserAsync(
+                mock.ExistsAsync(
                     It.IsAny<string>(),
                     It.IsAny<CancellationToken>()))
             .Callback((string document, CancellationToken _) =>
@@ -109,7 +109,7 @@ public class CreateUserCommandHandlerTests
             .BeNullOrEmpty();
 
         _mockReadRepository.Verify(mock =>
-            mock.ExistsUserAsync(It.IsAny<string>(),
+            mock.ExistsAsync(It.IsAny<string>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
         _mockWriteRepository.Verify(mock =>
@@ -136,7 +136,7 @@ public class CreateUserCommandHandlerTests
             .BuildInvalidSingle();
 
         _mockReadRepository.Setup(mock =>
-                mock.ExistsUserAsync(
+                mock.ExistsAsync(
                     It.IsAny<string>(),
                     It.IsAny<CancellationToken>()))
             .Callback((string document, CancellationToken _) =>
@@ -169,7 +169,7 @@ public class CreateUserCommandHandlerTests
             .And.BeEquivalentTo(DomainErrors.User.DuplicateCpf);
 
         _mockReadRepository.Verify(mock =>
-            mock.ExistsUserAsync(It.IsAny<string>(),
+            mock.ExistsAsync(It.IsAny<string>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
         _mockWriteRepository.Verify(mock =>
@@ -193,7 +193,7 @@ public class CreateUserCommandHandlerTests
             .BuildInvalidSingle();
 
         _mockReadRepository.Setup(mock =>
-                mock.ExistsUserAsync(
+                mock.ExistsAsync(
                     It.IsAny<string>(),
                     It.IsAny<CancellationToken>()))
             .Callback((string document, CancellationToken _) =>
@@ -228,7 +228,7 @@ public class CreateUserCommandHandlerTests
                               || x.Code == DomainErrors.User.InvalidCpf.Code);
 
         _mockReadRepository.Verify(mock =>
-            mock.ExistsUserAsync(It.IsAny<string>(),
+            mock.ExistsAsync(It.IsAny<string>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
         _mockWriteRepository.Verify(mock =>

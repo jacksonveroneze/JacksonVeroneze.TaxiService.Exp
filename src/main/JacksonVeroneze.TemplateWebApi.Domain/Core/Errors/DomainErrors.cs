@@ -76,7 +76,19 @@ public static class DomainErrors
 
     public static class Ride
     {
-        public static Error InvalidStatus =>
-            new("Ride.InvalidStatus","Corrida não está no status correto");
+        public static Error InvalidStatusSetAccept =>
+            new("Ride.InvalidStatusSetAccept", "Corrida não está no status requested");
+
+        public static Error InvalidStatusSetStart =>
+            new("Ride.InvalidStatusSetStart", "Corrida não está no status accepted");
+
+        public static Error InvalidStatusSetFinish =>
+            new("Ride.InvalidStatusSetFinish", "Corrida não está no status in progress");
+
+        public static Error InvalidStatusSetCancel =>
+            new("Ride.InvalidStatusSetCancel", "Corrida já foi finalizada ou cancelada");
+
+        public static Error DriverAlready =>
+            new("Ride.DriverAlready", "Motorista já informado");
     }
 }
