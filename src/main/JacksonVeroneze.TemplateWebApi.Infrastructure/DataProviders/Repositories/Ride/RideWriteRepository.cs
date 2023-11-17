@@ -3,7 +3,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 
-namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Ride.EntityFramework;
+namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Ride;
 
 [ExcludeFromCodeCoverage]
 public class RideWriteRepository : IRideWriteRepository

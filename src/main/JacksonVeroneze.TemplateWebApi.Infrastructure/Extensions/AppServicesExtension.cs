@@ -3,11 +3,15 @@ using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Messaging;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Ride;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Services;
+using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Services.Ride;
+using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Services.User;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.System;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Tenant;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Services;
-using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Ride.EntityFramework;
-using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.EntityFramework;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Services.Ride;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Services.User;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Ride;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Identity;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Messaging;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.System;
@@ -39,6 +43,7 @@ public static class AppServicesExtension
         services.AddScoped<IActivateUserService, ActivateUserService>();
         services.AddScoped<IInactivateUserService, InactivateUserService>();
         services.AddScoped<IDeleteUserService, DeleteUserService>();
+        services.AddScoped<IGetUserService, GetUserService>();
 
         // Repositories
         services.AddScoped<IUserReadRepository, UserReadRepository>();
@@ -50,6 +55,9 @@ public static class AppServicesExtension
         #endregion
 
         #region Ride
+
+        // Services
+        services.AddScoped<IGetRideService, GetRideService>();
 
         // Repositories
         services.AddScoped<IRideReadRepository, RideReadRepository>();

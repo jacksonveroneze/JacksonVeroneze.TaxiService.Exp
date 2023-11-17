@@ -6,8 +6,8 @@ namespace JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Rid
 
 public interface IRideReadRepository
 {
-    Task<bool> ExistsAsync(
-        string document,
+    Task<bool> ExistsByUserAsync(
+        Guid userId,
         CancellationToken cancellationToken = default);
 
     Task<RideEntity?> GetByIdAsync(

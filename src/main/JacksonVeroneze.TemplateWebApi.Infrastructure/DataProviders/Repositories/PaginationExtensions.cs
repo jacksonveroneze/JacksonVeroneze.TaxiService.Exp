@@ -1,6 +1,6 @@
 using JacksonVeroneze.NET.Pagination;
 
-namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.EntityFramework.Extensions;
+namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories;
 
 [ExcludeFromCodeCoverage]
 public static class PaginationExtensions

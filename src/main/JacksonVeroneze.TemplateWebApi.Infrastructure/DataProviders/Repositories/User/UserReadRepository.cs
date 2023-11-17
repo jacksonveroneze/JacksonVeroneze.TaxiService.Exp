@@ -2,14 +2,16 @@ using System.Linq.Expressions;
 using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.NET.Pagination.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
+using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 using JacksonVeroneze.TemplateWebApi.Domain.Specifications.Base.Predicate;
 using JacksonVeroneze.TemplateWebApi.Domain.Specifications.User;
-using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.EntityFramework.Extensions;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
-namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.EntityFramework;
+namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User;
 
 [ExcludeFromCodeCoverage]
 public class UserReadRepository : IUserReadRepository
@@ -17,12 +19,16 @@ public class UserReadRepository : IUserReadRepository
     private readonly List<UserEntity> _empty =
         Enumerable.Empty<UserEntity>().ToList();
 
+    private readonly ILogger<UserReadRepository> _logger;
     private readonly DbSet<UserEntity> _dbSet;
 
-    public UserReadRepository(DbContext context)
+    public UserReadRepository(
+        ILogger<UserReadRepository> logger,
+        DbContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
 
+        _logger = logger;
         _dbSet = context.Set<UserEntity>();
     }
 
@@ -40,6 +46,13 @@ public class UserReadRepository : IUserReadRepository
     {
         UserEntity? result = await _dbSet.FindAsync(
             new object[] { id }, cancellationToken);
+
+        if (result is null)
+        {
+            _logger.LogNotFound(nameof(UserReadRepository),
+                nameof(GetByIdAsync), id,
+                DomainErrors.User.NotFound);
+        }
 
         return result;
     }
@@ -72,6 +85,8 @@ public class UserReadRepository : IUserReadRepository
 
         Page<UserEntity> data = result
             .ToPage(filter.Pagination!, count);
+
+        // log
 
         return data;
     }

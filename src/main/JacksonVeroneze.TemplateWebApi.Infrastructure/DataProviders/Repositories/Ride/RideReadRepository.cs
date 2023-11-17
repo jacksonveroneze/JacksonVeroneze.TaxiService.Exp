@@ -3,12 +3,12 @@ using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.NET.Pagination.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Ride;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
+using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 using JacksonVeroneze.TemplateWebApi.Domain.Specifications.Ride;
-using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.User.EntityFramework.Extensions;
 using Microsoft.EntityFrameworkCore;
 
-namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Ride.EntityFramework;
+namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Ride;
 
 [ExcludeFromCodeCoverage]
 public class RideReadRepository : IRideReadRepository
@@ -25,10 +25,15 @@ public class RideReadRepository : IRideReadRepository
         _dbSet = context.Set<RideEntity>();
     }
 
-    public Task<bool> ExistsAsync(string document,
+    public async Task<bool> ExistsByUserAsync(Guid userId,
         CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        bool exists = await _dbSet.AnyAsync(
+            filter => filter.User!.Id == userId &&
+                      filter.Status == RideStatus.InProgress,
+            cancellationToken: cancellationToken);
+
+        return exists;
     }
 
     public async Task<RideEntity?> GetByIdAsync(Guid id,

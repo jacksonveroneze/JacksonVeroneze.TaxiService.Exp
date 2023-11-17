@@ -3,38 +3,34 @@ using JacksonVeroneze.TemplateWebApi.Application.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Messaging;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Services;
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.System;
+using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Services.User;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Models.Base;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
-using JacksonVeroneze.TemplateWebApi.Domain.DomainEvents;
 using JacksonVeroneze.TemplateWebApi.Domain.DomainEvents.User;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
-namespace JacksonVeroneze.TemplateWebApi.Application.v1.Services;
+namespace JacksonVeroneze.TemplateWebApi.Application.v1.Services.User;
 
-public sealed class ActivateUserService : IActivateUserService
+public sealed class DeleteUserService : IDeleteUserService
 {
-    private readonly ILogger<ActivateUserService> _logger;
+    private readonly ILogger<DeleteUserService> _logger;
     private readonly IUserReadRepository _readRepository;
     private readonly IUserWriteRepository _writeRepository;
     private readonly IIntegrationEventPublisher _eventPublisher;
-    private readonly IDateTime _dateTime;
 
-    public ActivateUserService(
-        ILogger<ActivateUserService> logger,
+    public DeleteUserService(
+        ILogger<DeleteUserService> logger,
         IUserReadRepository readRepository,
         IUserWriteRepository writeRepository,
-        IIntegrationEventPublisher eventPublisher,
-        IDateTime dateTime)
+        IIntegrationEventPublisher eventPublisher)
     {
         _logger = logger;
         _readRepository = readRepository;
         _writeRepository = writeRepository;
         _eventPublisher = eventPublisher;
-        _dateTime = dateTime;
     }
 
-    public async Task<IResult<VoidResponse>> ActivateAsync(
+    public async Task<IResult<VoidResponse>> DeleteAsync(
         Guid userId,
         CancellationToken cancellationToken)
     {
@@ -45,29 +41,18 @@ public sealed class ActivateUserService : IActivateUserService
 
         if (entity is null)
         {
-            _logger.LogNotFound(nameof(ActivateUserService),
-                nameof(ActivateAsync), userId,
-                DomainErrors.User.NotFound);
+            _logger.LogNotFound(nameof(DeleteUserService),
+                nameof(DeleteAsync), userId, DomainErrors.User.NotFound);
 
             return Result<VoidResponse>.NotFound(
                 DomainErrors.User.NotFound);
         }
 
-        IResult result = entity.Activate(_dateTime.UtcNow);
-
-        if (result.IsFailure)
-        {
-            _logger.LogAlreadyProcessed(nameof(ActivateUserService),
-                nameof(ActivateAsync), result.Error!, userId);
-
-            return Result<VoidResponse>.Invalid(result.Error!);
-        }
-
-        await _writeRepository.UpdateAsync(
+        await _writeRepository.DeleteAsync(
             entity, cancellationToken);
 
         await _eventPublisher.PublishAsync(
-            new UserActivatedDomainEvent(entity.Id), cancellationToken);
+            new UserDeletedDomainEvent(entity.Id), cancellationToken);
 
         // IEnumerable<Task>? tasks = entity.Events?
         //     .Select(evt => _eventPublisher.PublishAsync(
@@ -77,8 +62,8 @@ public sealed class ActivateUserService : IActivateUserService
         //
         // entity.ClearEvents();
 
-        _logger.LogProcessed(nameof(ActivateUserService),
-            nameof(ActivateAsync), userId);
+        _logger.LogDeleted(nameof(DeleteUserService),
+            nameof(DeleteAsync), userId);
 
         return Result<VoidResponse>.Success();
     }

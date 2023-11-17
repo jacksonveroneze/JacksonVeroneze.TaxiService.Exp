@@ -86,6 +86,8 @@ public class RideEntity : BaseEntityAggregateRoot
                 DomainErrors.Ride.DriverAlready);
         }
 
+        // user is motorista????
+
         Driver = driver;
         Status = RideStatus.Accepted;
 

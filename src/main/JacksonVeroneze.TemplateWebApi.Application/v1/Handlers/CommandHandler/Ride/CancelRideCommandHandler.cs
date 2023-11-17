@@ -1,4 +1,6 @@
 using JacksonVeroneze.NET.Result;
+using JacksonVeroneze.TemplateWebApi.Application.Extensions;
+using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Ride;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Commands.Ride;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Models.Base;
 
@@ -21,6 +23,10 @@ public sealed class CancelRideCommandHandler :
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        throw new NotImplementedException();
+        _logger.LogProcessed(nameof(CancelRideCommandHandler),
+            nameof(Handle), request.Id);
+
+        return Task.FromResult(
+            Result<VoidResponse>.Success());
     }
 }

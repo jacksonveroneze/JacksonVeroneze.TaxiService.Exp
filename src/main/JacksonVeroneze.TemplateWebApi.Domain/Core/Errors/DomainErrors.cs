@@ -76,6 +76,10 @@ public static class DomainErrors
 
     public static class Ride
     {
+        public static Error NotFound =>
+            new("Ride.NotFound",
+                string.Format(TemplateNotFound, "ride id"));
+
         public static Error InvalidStatusSetAccept =>
             new("Ride.InvalidStatusSetAccept", "Corrida não está no status requested");
 

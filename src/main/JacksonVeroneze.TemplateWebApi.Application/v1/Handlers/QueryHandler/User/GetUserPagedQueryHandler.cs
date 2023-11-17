@@ -47,6 +47,7 @@ public sealed class GetUserPagedQueryHandler :
             page.Pagination.PageSize,
             page.Pagination.TotalElements);
 
-        return Result<GetUserPagedQueryResponse>.Success(response);
+        return Result<GetUserPagedQueryResponse>
+            .Success(response);
     }
 }
