@@ -1,4 +1,5 @@
 using JacksonVeroneze.NET.DomainObjects.Messaging;
+using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Messaging;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities.Base;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Contexts;
 using MediatR;
@@ -10,9 +11,10 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.UnitOfWork;
 public class UnitOfWork : IUnitOfWork
 {
     private readonly ApplicationDbContext _dbContext;
-    private readonly IMediator _bus;
+    private readonly IIntegrationEventPublisher _bus;
 
-    public UnitOfWork(ApplicationDbContext dbContext, IMediator bus)
+    public UnitOfWork(ApplicationDbContext dbContext,
+        IIntegrationEventPublisher bus)
     {
         _dbContext = dbContext;
         _bus = bus;
@@ -29,8 +31,8 @@ public class UnitOfWork : IUnitOfWork
             throw new InvalidOperationException();
         }
 
-        // await PublishDomainEvents(_dbContext,
-        //     cancellationToken);
+        await PublishDomainEvents(_dbContext,
+            cancellationToken);
 
         return true;
     }
@@ -59,7 +61,7 @@ public class UnitOfWork : IUnitOfWork
             .ForEach(entity => entity.Entity.ClearEvents());
 
         IEnumerable<Task> tasks = domainEvents
-            .Select(evt => _bus.Publish(evt, cancellationToken));
+            .Select(evt => _bus.PublishAsync(evt, cancellationToken));
 
         await Task.WhenAll(tasks);
     }

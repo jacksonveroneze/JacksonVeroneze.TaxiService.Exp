@@ -1,6 +1,5 @@
 using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.NET.Result;
-using JacksonVeroneze.TemplateWebApi.Application.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Models.User;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Queries.User;
@@ -40,12 +39,6 @@ public sealed class GetUserPagedQueryHandler :
 
         GetUserPagedQueryResponse response =
             _mapper.Map<GetUserPagedQueryResponse>(page);
-
-        _logger.LogGetPaged(nameof(GetUserPagedQueryHandler),
-            nameof(Handle),
-            page.Pagination.Page,
-            page.Pagination.PageSize,
-            page.Pagination.TotalElements);
 
         return Result<GetUserPagedQueryResponse>
             .Success(response);

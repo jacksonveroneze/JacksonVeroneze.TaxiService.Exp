@@ -1,6 +1,5 @@
 using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.NET.Result;
-using JacksonVeroneze.TemplateWebApi.Application.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Ride;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Models.Ride;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Queries.Ride;
@@ -40,12 +39,6 @@ public sealed class GetRidePagedQueryHandler :
 
         GetRidePagedQueryResponse response =
             _mapper.Map<GetRidePagedQueryResponse>(page);
-
-        _logger.LogGetPaged(nameof(GetRidePagedQueryHandler),
-            nameof(Handle),
-            page.Pagination.Page,
-            page.Pagination.PageSize,
-            page.Pagination.TotalElements);
 
         return Result<GetRidePagedQueryResponse>
             .Success(response);

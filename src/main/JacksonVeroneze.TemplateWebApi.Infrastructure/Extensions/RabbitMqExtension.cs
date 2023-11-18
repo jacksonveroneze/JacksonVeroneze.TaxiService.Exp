@@ -8,7 +8,6 @@ public static class RabbitMqExtension
     public static IServiceCollection AddRabbitMq(
         this IServiceCollection services)
     {
-
         return services;
     }
 }

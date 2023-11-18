@@ -2,5 +2,4 @@ namespace JacksonVeroneze.TemplateWebApi.UnitTests.Application.Handlers.QueryHan
 
 public class GetRidePagedQueryHandlerTests
 {
-
 }

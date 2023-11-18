@@ -1,9 +1,5 @@
 using Bogus;
-using JacksonVeroneze.NET.Pagination;
-using JacksonVeroneze.NET.Pagination.Extensions;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
-using JacksonVeroneze.TemplateWebApi.Domain.Enums;
-using JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
 using JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Domain.ValueObjects;
 
 namespace JacksonVeroneze.TemplateWebApi.Util.Tests.Builders.Domain.Entities;

@@ -10,6 +10,12 @@ public sealed record AcceptRideCommand :
     [FromRoute(Name = "rideId")]
     public Guid Id { get; init; }
 
-    [FromRoute(Name = "driverId")]
-    public Guid DriverId { get; init; }
+    [FromBody]
+    public BodyCommand? Body { get; init; }
+
+    public class BodyCommand
+    {
+        [JsonPropertyName("driver_id")]
+        public Guid DriverId { get; init; }
+    }
 }

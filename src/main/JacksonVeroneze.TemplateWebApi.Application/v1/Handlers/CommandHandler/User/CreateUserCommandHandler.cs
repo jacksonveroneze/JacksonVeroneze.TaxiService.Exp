@@ -35,18 +35,18 @@ public sealed class CreateUserCommandHandler :
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        bool existsUser = await _readRepository
-            .ExistsAsync(request.Document!, cancellationToken);
-
-        if (existsUser)
-        {
-            _logger.LogAlreadyExists(nameof(CreateUserCommandHandler),
-                nameof(Handle), DomainErrors.User.DuplicateCpf,
-                request.Document!);
-
-            return Result<CreateUserCommandResponse>.Invalid(
-                DomainErrors.User.DuplicateCpf);
-        }
+        // bool existsUser = await _readRepository
+        //     .ExistsAsync(request.Document!, cancellationToken);
+        //
+        // if (existsUser)
+        // {
+        //     _logger.LogAlreadyExists(nameof(CreateUserCommandHandler),
+        //         nameof(Handle), request.Document!,
+        //         DomainErrors.User.DuplicateCpf);
+        //
+        //     return Result<CreateUserCommandResponse>.Invalid(
+        //         DomainErrors.User.DuplicateCpf);
+        // }
 
         IResult<NameValueObject> name = NameValueObject.Create(request.Name!);
         IResult<CpfValueObject> cpf = CpfValueObject.Create(request.Document!);

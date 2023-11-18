@@ -1,6 +1,5 @@
 using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TemplateWebApi.Application.Extensions;
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Services;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Services.User;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Commands.User;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Models.Base;

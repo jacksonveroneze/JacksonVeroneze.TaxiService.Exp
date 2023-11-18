@@ -2,5 +2,4 @@ namespace JacksonVeroneze.TemplateWebApi.UnitTests.Application.Handlers.CommandH
 
 public class AcceptRideCommandHandlerTests
 {
-
 }

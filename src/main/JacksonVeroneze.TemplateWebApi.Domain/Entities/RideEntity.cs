@@ -48,6 +48,8 @@ public class RideEntity : BaseEntityAggregateRoot
         To = to;
 
         Status = RideStatus.Requested;
+
+        AddEvent(new RideRequestedDomainEvent(Id));
     }
 
     #region Position
@@ -74,6 +76,12 @@ public class RideEntity : BaseEntityAggregateRoot
     {
         ArgumentNullException.ThrowIfNull(driver);
 
+        if (Status == RideStatus.Accepted)
+        {
+            return Result.Invalid(
+                DomainErrors.Ride.StatusAlreadyDefined);
+        }
+
         if (Status != RideStatus.Requested)
         {
             return Result.Invalid(
@@ -86,8 +94,6 @@ public class RideEntity : BaseEntityAggregateRoot
                 DomainErrors.Ride.DriverAlready);
         }
 
-        // user is motorista????
-
         Driver = driver;
         Status = RideStatus.Accepted;
 
@@ -98,6 +104,12 @@ public class RideEntity : BaseEntityAggregateRoot
 
     public IResult Start()
     {
+        if (Status == RideStatus.InProgress)
+        {
+            return Result.Invalid(
+                DomainErrors.Ride.StatusAlreadyDefined);
+        }
+
         if (Status != RideStatus.Accepted)
         {
             return Result.Invalid(
@@ -113,6 +125,12 @@ public class RideEntity : BaseEntityAggregateRoot
 
     public IResult Finish()
     {
+        if (Status == RideStatus.Completed)
+        {
+            return Result.Invalid(
+                DomainErrors.Ride.StatusAlreadyDefined);
+        }
+
         if (Status != RideStatus.InProgress)
         {
             return Result.Invalid(
@@ -128,7 +146,13 @@ public class RideEntity : BaseEntityAggregateRoot
 
     public IResult Cancel()
     {
-        if (Status is RideStatus.Completed or RideStatus.Canceled)
+        if (Status == RideStatus.Canceled)
+        {
+            return Result.Invalid(
+                DomainErrors.Ride.InvalidStatusSetCancel);
+        }
+
+        if (Status == RideStatus.Completed)
         {
             return Result.Invalid(
                 DomainErrors.Ride.InvalidStatusSetCancel);

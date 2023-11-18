@@ -64,7 +64,8 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
         }
       }
       environment = [
-        { name  = "APP_CONFIG_Database__ConnectionString",
+        {
+          name  = "APP_CONFIG_Database__ConnectionString",
           value = "Host=${data.aws_secretsmanager_secret_version.database_endpoint.secret_string};Port=5432;Database=templatewebapi;Username=${data.aws_secretsmanager_secret_version.database_username.secret_string};Password=${data.aws_secretsmanager_secret_version.database_password.secret_string}"
         }
       ]

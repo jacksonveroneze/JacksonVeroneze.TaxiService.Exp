@@ -80,6 +80,9 @@ public static class DomainErrors
             new("Ride.NotFound",
                 string.Format(TemplateNotFound, "ride id"));
 
+        public static Error StatusAlreadyDefined =>
+            new("Ride.StatusAlreadyDefined", "Corrida já está no status informado");
+
         public static Error InvalidStatusSetAccept =>
             new("Ride.InvalidStatusSetAccept", "Corrida não está no status requested");
 
@@ -94,5 +97,8 @@ public static class DomainErrors
 
         public static Error DriverAlready =>
             new("Ride.DriverAlready", "Motorista já informado");
+
+        public static Error AlreadyByUser =>
+            new("Ride.AlreadyByUser", "Usuário já tem corrida no status: Pending ou Inprogress");
     }
 }

@@ -36,9 +36,6 @@ public sealed class GetUserByIdQueryHandler :
 
         if (entity is null)
         {
-            _logger.LogNotFound(nameof(GetUserByIdQueryHandler),
-                nameof(Handle), request.Id, DomainErrors.User.NotFound);
-
             return Result<GetUserByIdQueryResponse>
                 .NotFound(DomainErrors.User.NotFound);
         }

@@ -2,13 +2,10 @@ using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TemplateWebApi.Application.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Messaging;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Ride;
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Services.Ride;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Services.User;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Commands.Ride;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Models.Base;
-using JacksonVeroneze.TemplateWebApi.Application.v1.Models.Ride;
-using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.DomainEvents.Ride;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
@@ -21,20 +18,17 @@ public sealed class AcceptRideCommandHandler :
     private readonly IGetUserService _userService;
     private readonly IGetRideService _rideService;
     private readonly IRideWriteRepository _writeRepository;
-    private readonly IIntegrationEventPublisher _eventPublisher;
 
     public AcceptRideCommandHandler(
         ILogger<AcceptRideCommandHandler> logger,
         IGetUserService userService,
         IGetRideService rideService,
-        IRideWriteRepository writeRepository,
-        IIntegrationEventPublisher eventPublisher)
+        IRideWriteRepository writeRepository)
     {
         _logger = logger;
         _userService = userService;
         _rideService = rideService;
         _writeRepository = writeRepository;
-        _eventPublisher = eventPublisher;
     }
 
     public async Task<IResult<VoidResponse>> Handle(
@@ -43,21 +37,26 @@ public sealed class AcceptRideCommandHandler :
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        IResult<UserEntity> driveResult = await _userService
-            .TryGetUserAsync(request.DriverId, cancellationToken);
-
         IResult<RideEntity> rideResult = await _rideService
             .TryGetRideAsync(request.Id, cancellationToken);
 
-        IResult resultValidate = Result
-            .FailuresOrSuccess(driveResult, rideResult);
-
-        if (resultValidate.IsFailure)
+        if (rideResult.IsFailure)
+        {
             return Result<VoidResponse>
-                .Invalid(resultValidate.Errors!);
+                .NotFound(rideResult.Error!);
+        }
+
+        IResult<UserEntity> driverResult = await _userService
+            .TryGetUserAsync(request.Body!.DriverId, cancellationToken);
+
+        if (driverResult.IsFailure)
+        {
+            return Result<VoidResponse>
+                .Invalid(driverResult.Error!);
+        }
 
         IResult<VoidResponse> resultStatus = await ProcessAsync(
-            rideResult.Value!, driveResult.Value!, cancellationToken);
+            rideResult.Value!, driverResult.Value!, cancellationToken);
 
         return resultStatus;
     }
@@ -71,16 +70,12 @@ public sealed class AcceptRideCommandHandler :
         if (result.IsFailure)
         {
             _logger.LogGenericError(nameof(AcceptRideCommandHandler),
-                nameof(ProcessAsync), result.Error!, ride.Id.ToString());
+                nameof(ProcessAsync), ride.Id, result.Error!);
 
             return Result<VoidResponse>.Invalid(result.Error!);
         }
 
         await _writeRepository.UpdateAsync(ride, cancellationToken);
-
-        await _eventPublisher.PublishAsync(
-            new RideAcceptedDomainEvent(ride.Id),
-            cancellationToken);
 
         _logger.LogProcessed(nameof(AcceptRideCommandHandler),
             nameof(ProcessAsync), ride.Id);

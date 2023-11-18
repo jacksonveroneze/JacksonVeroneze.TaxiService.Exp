@@ -28,7 +28,7 @@ public class CoordinateValueObject : ValueObject
     public static IResult<CoordinateValueObject> Create(
         float latitude, float longitude)
     {
-        if (latitude <= 0 || longitude <= 0)
+        if (latitude == 0 || longitude == 0)
         {
             return Result<CoordinateValueObject>.Invalid(
                 DomainErrors.Coordinate.InvalidCoordinate);

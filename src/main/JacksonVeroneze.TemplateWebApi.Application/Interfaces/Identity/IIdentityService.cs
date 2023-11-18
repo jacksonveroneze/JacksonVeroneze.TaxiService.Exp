@@ -1,4 +1,4 @@
-using JacksonVeroneze.TemplateWebApi.Application.v1.Models.Infra;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Models.Identity;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Interfaces.Identity;
 

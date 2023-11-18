@@ -13,7 +13,10 @@ public class AcceptRideCommandValidator : AbstractValidator<AcceptRideCommand>
         RuleFor(request => request.Id)
             .SetValidator(new IdGuidValidator());
 
-        RuleFor(request => request.DriverId)
+        RuleFor(request => request.Body)
+            .NotNull();
+
+        RuleFor(request => request.Body!.DriverId)
             .SetValidator(new IdGuidValidator());
     }
 }

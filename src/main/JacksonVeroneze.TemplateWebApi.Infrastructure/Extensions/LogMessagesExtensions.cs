@@ -13,5 +13,15 @@ public static partial class LogMessagesExtensions
     public static partial void LogNotFound(this ILogger logger,
         string className, string methodName, Guid id, string message);
 
+    [LoggerMessage(
+        EventId = 1004,
+        Level = LogLevel.Information,
+        Message = "{className} - {methodName} - Info - " +
+                  "Page: '{page}' - PageSize: '{pageSize}' - " +
+                  "TotalElements: '{totalElements}'")]
+    public static partial void LogGetPaged(this ILogger logger,
+        string className, string methodName,
+        int page, int pageSize, int totalElements);
+
     #endregion
 }

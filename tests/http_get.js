@@ -5,9 +5,9 @@ import {crypto} from "k6/experimental/webcrypto";
 import {randomIntBetween} from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 export const options = {
-    duration: '240s',
-    //iterations: 1000,
-    vus: 50,
+    //duration: '60s',
+    iterations: 1,
+    vus: 1,
 };
 
 // export let options = {
@@ -21,12 +21,12 @@ export const options = {
 //     ],
 // };
 
-const url = 'http://10.0.0.150/templatewebapi';
+//const url = 'http://10.0.0.150/templatewebapi';
 //const url = 'http://localhost:8088/api';
 //const url = 'http://localhost:9999';
 // const url = 'http://10.0.0.199/templatewebapi';
 // const url = 'http://nlb-templatewebapi-e99ce0a79ea812ac.elb.sa-east-1.amazonaws.com:8080';
-//const url = 'http://localhost:7000';
+const url = 'http://localhost:7000';
 //const url = 'http://localhost:9999';
 //const url = 'http://10.152.183.41:8084';
 
@@ -68,113 +68,94 @@ const url = 'http://10.0.0.150/templatewebapi';
 // };
 
 
+const randomUUID = crypto.randomUUID();
+
+const headers = {
+    headers: {
+        'Content-Type': 'application/json',
+        'X-TenantId': randomUUID,
+        'X-Correlation-ID': randomUUID
+    },
+};
+
 export default function () {
-    // const rnd1 = randomIntBetween(10000, 99999)
-    //
-    // var body = JSON.stringify({
-    //     name: crypto.randomUUID() + '_' + rnd,
-    //     birthday: "2023-08-25",
-    //     gender: "Male",
-    //     document: rnd1 + "2" + rnd
-    // });
-    //
-    // var responsePost = http.post(`${url}/api/v1/users`, body, {
-    //     headers: {'Content-Type': 'application/json'},
-    // });
-    //
-    // check(responsePost, {
-    //     'status is 201': (r) => r.status === 201,
-    // });
-
-    var tenantId = crypto.randomUUID();
-
-    var headers = {
-        headers: {'Content-Type': 'application/json', 'X-TenantId': tenantId},
-    };
-
+    // Common
     const rnd = randomIntBetween(10000, 99999)
 
-    var body = JSON.stringify({
+    // 1. Create User
+    const bodyUser = JSON.stringify({
         name: crypto.randomUUID() + '_' + rnd,
         birthday: "2023-08-25",
         gender: "Male",
         document: "06399214939"
     });
+    const responsePostUser = http.post(`${url}/api/v1/users`, bodyUser, headers);
+    const idUser = JSON.parse(responsePostUser.body).data.id;
 
-    var responsePost = http.post(`${url}/api/v1/users`, body, headers);
+    check(responsePostUser, {'[User] - Created - status is 201': (r) => r.status === 201});
 
-    check(responsePost, {'Post - status is 201': (r) => r.status === 201});
+    // 2. Get User By Id
+    const responseGetById = http.get(`${url}/api/v1/users/${idUser}`, headers);
+    check(responseGetById, {'[User] - GetById - status is 200': (r) => r.status === 200});
 
-    var id = JSON.parse(responsePost.body).data.id;
+    // 3. Activate User
+    const responseActivated = http.put(`${url}/api/v1/users/${idUser}/activate`, {}, headers);
+    check(responseActivated, {'[User] - Activated - status is 204': (r) => r.status === 204});
 
-    var responseGetById = http.get(`${url}/api/v1/users/${id}`, headers);
+    // 1. Create Ride
+    const bodyRide = JSON.stringify({
+        user_id: idUser,
+        latitude_from: 27.4153974,
+        longitude_from: -51.5536425,
+        latitude_to: 27.4153974,
+        longitude_to: -51.5536425,
+    });
+    const responsePostRide = http.post(`${url}/api/v1/rides`, bodyRide, headers);
+    const idRide = JSON.parse(responsePostRide.body).data.id;
 
-    check(responseGetById, {'GetById - status is 200': (r) => r.status === 200});
+    check(responsePostRide, {'[Ride] - Created - status is 201': (r) => r.status === 201});
 
-    var responseActivated = http.put(`${url}/api/v1/users/${id}/activate`,{}, headers);
+    // 2. Get Ride By Id
+    const responseGetRideById = http.get(`${url}/api/v1/rides/${idRide}`, headers);
+    check(responseGetRideById, {'[Ride] - GetById - status is 200': (r) => r.status === 200});
 
-    check(responseActivated, {'Activated- status is 204': (r) => r.status === 204});
+    // 3. Accept Ride
+    accept(idRide, idUser);
 
-    var responseInactivate = http.put(`${url}/api/v1/users/${id}/inactivate`,{}, headers);
+    // 4. Start Ride
+    start(idRide);
 
-    check(responseInactivate, {'Inactivate - status is 204': (r) => r.status === 204});
+    // 5. Finish Ride
+    finish(idRide);
 
-    var responseDelete = http.del(`${url}/api/v1/users/${id}`,null, headers);
-
-    check(responseDelete, {'Delete - status is 200': (r) => r.status === 200});
-
-
-    //var res = http.get(`${url}/api/v1/users`);
-
-
-    //
-    //    var id = JSON.parse(responsePost.body).data.id;
-    //
-    //    http.get(`${url}/api/v1/users/${id}`);
-    //
-    //    if (rnd % 2 === 0) {
-    //        http.put(`${url}/api/v1/users/${id}/activate`);
-    //
-    //        if (rnd % 15 === 0) {
-    //            http.put(`${url}/api/v1/users/${id}/inactivate`);
-    //        }
-    //
-    //        var bodyMail = JSON.stringify({
-    //            id: id,
-    //            email: crypto.randomUUID() + '_' + rnd + '@user.com'
-    //        });
-    //
-    //        var responsePostMail = http.post(`${url}/api/v1/users/${id}/emails`, bodyMail, {
-    //            headers: {'Content-Type': 'application/json'},
-    //        });
-    //
-    //        var idMail = JSON.parse(responsePostMail.body).data.id;
-    //
-    //        http.del(`${url}/api/v1/users/${id}/emails/${idMail}`);
-    //    }
-
-
-    //http.del(`${url}/api/v1/users/${id}`);
-    // // //
-    // // // //console.log('___' + rnd + '____')
-    // // //
-    // if (rnd % 2 === 0) {
-    //     //console.log('___2___')
-    //     http.del(`${url}/api/v1/users/${id}`);
-    // }
-    // //
-    // if (rnd % 20 === 0) {
-    //     //console.log('___3___')
-    //     http.del(`${url}/api/v1/users/1111`);
-    // }
-    // //
-    // if (rnd % 10 === 0) {
-    //     //console.log('___4___')
-    //     http.del(`${url}/api/v1/users/850323ca-567e-40fc-b16d-9e0021a8dfde`);
-    // }
-
-    //console.log(JSON.parse(responsePost.body).data.id);
+    // 5. Finish Ride
+    cancel(idRide);
+    
+    // 2. Delete User
+    //const responseDelete = http.del(`${url}/api/v1/users/${idUser}`, null, headers);
+    //check(responseDelete, {'[User] - Delete - status is 200': (r) => r.status === 200});
 }
 
+function accept(id, driveId) {
+    const bodyAcceptRide = JSON.stringify({
+        driver_id: driveId
+    });
 
-//ps -T -p 1043090 -o 'pid tid args comm'
+    const responseAcceptRide = http.put(`${url}/api/v1/rides/${id}/accept`, bodyAcceptRide, headers);
+    check(responseAcceptRide, {'[Ride] - Accepted - status is 204': (r) => r.status === 204});
+}
+
+function start(id) {
+    const responseStartRide = http.put(`${url}/api/v1/rides/${id}/start`, {}, headers);
+    check(responseStartRide, {'[Ride] - Started - status is 204': (r) => r.status === 204});
+}
+
+function finish(id) {
+    const responseFinishRide = http.put(`${url}/api/v1/rides/${id}/finish`, {}, headers);
+    check(responseFinishRide, {'[Ride] - Finished - status is 204': (r) => r.status === 204});
+}
+
+function cancel(id) {
+    const responseFinishRide = http.put(`${url}/api/v1/rides/${id}/cancel`, {}, headers);
+    check(responseFinishRide, {'[Ride] - Canceled - status is 204': (r) => r.status === 204});
+}

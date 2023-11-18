@@ -28,6 +28,6 @@ public sealed class GetUserService : IGetUserService
 
         return entity is not null
             ? Result<UserEntity>.Success(entity)
-            : Result<UserEntity>.NotFound(DomainErrors.Ride.NotFound);
+            : Result<UserEntity>.NotFound(DomainErrors.User.NotFound);
     }
 }

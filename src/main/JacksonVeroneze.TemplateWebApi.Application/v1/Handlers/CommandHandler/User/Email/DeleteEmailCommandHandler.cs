@@ -59,7 +59,7 @@ public sealed class DeleteEmailCommandHandler :
         if (result.IsFailure)
         {
             _logger.LogGenericError(nameof(DeleteEmailCommandHandler),
-                nameof(Handle), result.Error!, request.Id.ToString());
+                nameof(Handle), request.Id, result.Error!);
 
             return Result<VoidResponse>.Invalid(result.Error!);
         }

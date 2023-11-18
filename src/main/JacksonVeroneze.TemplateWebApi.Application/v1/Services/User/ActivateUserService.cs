@@ -2,7 +2,6 @@ using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TemplateWebApi.Application.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Messaging;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Services;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Services.User;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.System;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Models.Base;
@@ -58,7 +57,7 @@ public sealed class ActivateUserService : IActivateUserService
         if (result.IsFailure)
         {
             _logger.LogAlreadyProcessed(nameof(ActivateUserService),
-                nameof(ActivateAsync), result.Error!, userId);
+                nameof(ActivateAsync), userId, result.Error!);
 
             return Result<VoidResponse>.Invalid(result.Error!);
         }

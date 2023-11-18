@@ -17,6 +17,7 @@ public static class AutoMapperExtension
             //
             cfg.AddProfile<UserMapper>();
             cfg.AddProfile<EmailMapper>();
+            cfg.AddProfile<RideMapper>();
             //
             cfg.AllowNullCollections = true;
         });

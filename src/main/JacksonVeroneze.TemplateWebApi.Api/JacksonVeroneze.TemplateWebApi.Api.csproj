@@ -21,17 +21,17 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
 
-    <PackageReference Include="Hellang.Middleware.ProblemDetails" Version="6.5.1" />
+    <PackageReference Include="Hellang.Middleware.ProblemDetails" Version="6.5.1"/>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference
-      Include="..\JacksonVeroneze.TemplateWebApi.Application\JacksonVeroneze.TemplateWebApi.Application.csproj" />
+      Include="..\JacksonVeroneze.TemplateWebApi.Application\JacksonVeroneze.TemplateWebApi.Application.csproj"/>
     <ProjectReference
-      Include="..\JacksonVeroneze.TemplateWebApi.Infrastructure\JacksonVeroneze.TemplateWebApi.Infrastructure.csproj" />
+      Include="..\JacksonVeroneze.TemplateWebApi.Infrastructure\JacksonVeroneze.TemplateWebApi.Infrastructure.csproj"/>
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="JacksonVeroneze.TemplateWebApi.IntegrationTests" />
+    <InternalsVisibleTo Include="JacksonVeroneze.TemplateWebApi.IntegrationTests"/>
   </ItemGroup>
 </Project>

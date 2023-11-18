@@ -36,9 +36,6 @@ public sealed class GetRideByIdQueryHandler :
 
         if (entity is null)
         {
-            _logger.LogNotFound(nameof(GetRideByIdQueryHandler),
-                nameof(Handle), request.Id, DomainErrors.Ride.NotFound);
-
             return Result<GetRideByIdQueryResponse>
                 .NotFound(DomainErrors.Ride.NotFound);
         }

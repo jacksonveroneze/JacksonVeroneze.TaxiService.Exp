@@ -1,10 +1,9 @@
-using JacksonVeroneze.TemplateWebApi.Domain.DomainEvents;
-using JacksonVeroneze.TemplateWebApi.Domain.DomainEvents.Base;
+using JacksonVeroneze.NET.DomainObjects.Messaging;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.Interfaces.Messaging;
 
 public interface IIntegrationEventPublisher
 {
-    public Task PublishAsync(BaseDomainEvent data,
+    public Task PublishAsync(DomainEvent data,
         CancellationToken cancellationToken);
 }

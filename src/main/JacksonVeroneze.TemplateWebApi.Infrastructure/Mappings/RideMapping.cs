@@ -19,10 +19,12 @@ public class RideMapping : IEntityTypeConfiguration<RideEntity>
             .ValueGeneratedNever();
 
         builder.Property(c => c.Fare)
-            .HasColumnName("fare");
+            .HasColumnName("fare")
+            .IsRequired(false);
 
         builder.Property(c => c.Distance)
-            .HasColumnName("distance");
+            .HasColumnName("distance")
+            .IsRequired(false);
 
         builder.OwnsOne(conf => conf.From, conf =>
         {

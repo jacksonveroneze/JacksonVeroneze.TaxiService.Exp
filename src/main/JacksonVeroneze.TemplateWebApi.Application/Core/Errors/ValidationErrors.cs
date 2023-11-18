@@ -8,6 +8,19 @@ internal static class ValidationErrors
 {
     private const string TemplateIsRequired = "The {0} is required.";
 
+    #region common
+
+    internal static class Common
+    {
+        internal static Error IdIsRequired =>
+            new("Common.IdIsRequired",
+                string.Format(TemplateIsRequired, "id"));
+    }
+
+    #endregion
+
+    #region user
+
     internal static class User
     {
         internal static Error IdIsRequired =>
@@ -38,4 +51,6 @@ internal static class ValidationErrors
             new("User.DocumentIsInvalid",
                 "The document is invalid.");
     }
+
+    #endregion
 }

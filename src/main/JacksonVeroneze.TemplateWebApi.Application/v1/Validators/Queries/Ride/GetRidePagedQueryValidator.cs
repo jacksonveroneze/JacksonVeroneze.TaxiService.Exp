@@ -15,8 +15,8 @@ public class GetRidePagedQueryValidator : AbstractValidator<GetRidePagedQuery>
         {
             RuleFor(request => request.Status)
                 .Cascade(CascadeMode.Stop)
-                .NotEqual(RideStatus.None)
-                .IsInEnum();
+                .IsInEnum()
+                .NotEqual(RideStatus.None);
         });
     }
 }

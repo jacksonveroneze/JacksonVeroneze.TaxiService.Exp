@@ -1,6 +1,6 @@
 using System.Text.Json;
+using JacksonVeroneze.NET.DomainObjects.Messaging;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Messaging;
-using JacksonVeroneze.TemplateWebApi.Domain.DomainEvents;
 using JacksonVeroneze.TemplateWebApi.Domain.DomainEvents.Base;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
 using RabbitMQ.Client;
@@ -18,7 +18,7 @@ public class RabbitMqEventPublisher : IIntegrationEventPublisher
         _appConfiguration = appConfiguration;
     }
 
-    public Task PublishAsync(BaseDomainEvent data,
+    public Task PublishAsync(DomainEvent data,
         CancellationToken cancellationToken)
     {
         BusConfiguration? configuration =
@@ -39,7 +39,7 @@ public class RabbitMqEventPublisher : IIntegrationEventPublisher
 
         channel.BasicPublish(
             exchange: configuration.Exchange,
-            routingKey: data.Type,
+            routingKey: data.GetType().Name,
             body: body);
 
         return Task.CompletedTask;

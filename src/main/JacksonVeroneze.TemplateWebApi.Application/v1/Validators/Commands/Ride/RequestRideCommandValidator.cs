@@ -14,19 +14,15 @@ public class RequestRideCommandValidator : AbstractValidator<RequestRideCommand>
             .SetValidator(new IdGuidValidator());
 
         RuleFor(request => request.LatitudeFrom)
-            .Cascade(CascadeMode.Stop)
-            .NotNull();
+            .SetValidator(new CoordinateValidator());
 
         RuleFor(request => request.LongitudeFrom)
-            .Cascade(CascadeMode.Stop)
-            .NotNull();
+            .SetValidator(new CoordinateValidator());
 
         RuleFor(request => request.LatitudeTo)
-            .Cascade(CascadeMode.Stop)
-            .NotNull();
+            .SetValidator(new CoordinateValidator());
 
         RuleFor(request => request.LongitudeTo)
-            .Cascade(CascadeMode.Stop)
-            .NotNull();
+            .SetValidator(new CoordinateValidator());
     }
 }

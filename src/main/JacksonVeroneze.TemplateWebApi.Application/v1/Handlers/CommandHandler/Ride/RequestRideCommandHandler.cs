@@ -1,10 +1,8 @@
 using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TemplateWebApi.Application.Extensions;
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Messaging;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Ride;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Commands.Ride;
-using JacksonVeroneze.TemplateWebApi.Application.v1.Models.Base;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Models.Ride;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
@@ -20,22 +18,19 @@ public sealed class RequestRideCommandHandler :
     private readonly IUserReadRepository _userReadRepository;
     private readonly IRideReadRepository _readRepository;
     private readonly IRideWriteRepository _writeRepository;
-    private readonly IIntegrationEventPublisher _eventPublisher;
 
     public RequestRideCommandHandler(
         ILogger<RequestRideCommandHandler> logger,
         IMapper mapper,
         IUserReadRepository userReadRepository,
         IRideReadRepository readRepository,
-        IRideWriteRepository writeRepository,
-        IIntegrationEventPublisher eventPublisher)
+        IRideWriteRepository writeRepository)
     {
         _logger = logger;
         _mapper = mapper;
         _userReadRepository = userReadRepository;
         _readRepository = readRepository;
         _writeRepository = writeRepository;
-        _eventPublisher = eventPublisher;
     }
 
     public async Task<IResult<RequestRideCommandResponse>> Handle(
@@ -44,43 +39,35 @@ public sealed class RequestRideCommandHandler :
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        // Buscar user
         UserEntity? user = await _userReadRepository
             .GetByIdAsync(request.UserId, cancellationToken);
 
-        // validar se user existe
-        if (user is null)
-        {
-            _logger.LogNotFound(nameof(RequestRideCommandHandler),
-                nameof(Handle), request.UserId,
-                DomainErrors.User.NotFound);
-
-            return Result<RequestRideCommandResponse>.Invalid(
-                DomainErrors.User.NotFound);
-        }
-
-        // validar se existe.
-        bool existsRide = await _readRepository
+        Task<bool> existsRideByUserTask = _readRepository
             .ExistsByUserAsync(request.UserId, cancellationToken);
 
-        if (existsRide)
+        if (user is null)
         {
-            _logger.LogNotFound(nameof(RequestRideCommandHandler),
-                nameof(Handle), request.UserId,
-                DomainErrors.User.NotFound);
-
             return Result<RequestRideCommandResponse>.Invalid(
                 DomainErrors.User.NotFound);
         }
 
-        // Criar VOs
+        bool existsRideByUser = await existsRideByUserTask;
+
+        if (existsRideByUser)
+        {
+            _logger.LogAlreadyExists(nameof(RequestRideCommandHandler),
+                nameof(Handle), user.Id, DomainErrors.Ride.AlreadyByUser);
+
+            return Result<RequestRideCommandResponse>.Invalid(
+                DomainErrors.Ride.AlreadyByUser);
+        }
+
         IResult<CoordinateValueObject> from = CoordinateValueObject.Create(
             request.LatitudeFrom, request.LongitudeFrom);
 
         IResult<CoordinateValueObject> to = CoordinateValueObject.Create(
             request.LatitudeTo, request.LongitudeTo);
 
-        // Validar VOs
         IResult resultValidate = Result.FailuresOrSuccess(from, to);
 
         if (resultValidate.IsFailure)
@@ -92,23 +79,17 @@ public sealed class RequestRideCommandHandler :
                 .Invalid(resultValidate.Errors!);
         }
 
-        // Criar entity
         RideEntity entity = new(user, from.Value, to.Value);
 
-        // Persistir
-        await _writeRepository.CreateAsync(entity, cancellationToken);
+        await _writeRepository.CreateAsync(
+            entity, cancellationToken);
 
-        // Disparar evento
-
-        // Mapear retorno
         RequestRideCommandResponse response =
             _mapper.Map<RequestRideCommandResponse>(entity);
 
-        // Log
         _logger.LogCreated(nameof(RequestRideCommandHandler),
             nameof(Handle), entity.Id);
 
-        // retorno
         return Result<RequestRideCommandResponse>.Success(response);
     }
 }

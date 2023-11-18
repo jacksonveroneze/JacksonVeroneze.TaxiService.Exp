@@ -24,8 +24,8 @@ public class GetUserPagedQueryValidator : AbstractValidator<GetUserPagedQuery>
         {
             RuleFor(request => request.Status)
                 .Cascade(CascadeMode.Stop)
-                .NotEqual(UserStatus.None)
-                .IsInEnum();
+                .IsInEnum()
+                .NotEqual(UserStatus.None);
         });
     }
 }
