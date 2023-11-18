@@ -15,21 +15,18 @@ public sealed class DeleteUserService : IDeleteUserService
     private readonly ILogger<DeleteUserService> _logger;
     private readonly IUserReadRepository _readRepository;
     private readonly IUserWriteRepository _writeRepository;
-    private readonly IIntegrationEventPublisher _eventPublisher;
 
     public DeleteUserService(
         ILogger<DeleteUserService> logger,
         IUserReadRepository readRepository,
-        IUserWriteRepository writeRepository,
-        IIntegrationEventPublisher eventPublisher)
+        IUserWriteRepository writeRepository)
     {
         _logger = logger;
         _readRepository = readRepository;
         _writeRepository = writeRepository;
-        _eventPublisher = eventPublisher;
     }
 
-    public async Task<IResult<VoidResponse>> DeleteAsync(
+    public async Task<IResult> DeleteAsync(
         Guid userId,
         CancellationToken cancellationToken)
     {
@@ -40,30 +37,16 @@ public sealed class DeleteUserService : IDeleteUserService
 
         if (entity is null)
         {
-            _logger.LogNotFound(nameof(DeleteUserService),
-                nameof(DeleteAsync), userId, DomainErrors.User.NotFound);
-
-            return Result<VoidResponse>.NotFound(
+            return Result.Invalid(
                 DomainErrors.User.NotFound);
         }
 
         await _writeRepository.DeleteAsync(
             entity, cancellationToken);
 
-        await _eventPublisher.PublishAsync(
-            new UserDeletedDomainEvent(entity.Id), cancellationToken);
-
-        // IEnumerable<Task>? tasks = entity.Events?
-        //     .Select(evt => _eventPublisher.PublishAsync(
-        //         evt, cancellationToken));
-        //
-        // await Task.WhenAll(tasks!);
-        //
-        // entity.ClearEvents();
-
         _logger.LogDeleted(nameof(DeleteUserService),
             nameof(DeleteAsync), userId);
 
-        return Result<VoidResponse>.Success();
+        return Result.Success();
     }
 }

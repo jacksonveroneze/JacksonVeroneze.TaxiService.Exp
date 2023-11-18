@@ -1,5 +1,5 @@
 # Build
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 
 ADD . /build
 
@@ -17,7 +17,7 @@ RUN dotnet publish /build/main/JacksonVeroneze.TemplateWebApi.Api/JacksonVeronez
     /p:PublishReadyToRun=true \
     /p:PublishSingleFile=false
 
-FROM jacksonveroneze/aspnet:7.0-debian-1.0.8
+FROM jacksonveroneze/aspnet:8.0-debian-1.0.0
 
 COPY --from=build-env /build/out /home/app
 

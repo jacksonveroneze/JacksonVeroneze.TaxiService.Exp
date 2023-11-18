@@ -41,7 +41,8 @@ public sealed class AcceptRideCommandHandler :
         }
 
         IResult<UserEntity> driverResult = await _userService
-            .TryGetUserAsync(request.Body!.DriverId, cancellationToken);
+            .TryGetUserAsync(request.Body!.DriverId,
+                cancellationToken);
 
         if (driverResult.IsFailure)
         {
@@ -51,8 +52,7 @@ public sealed class AcceptRideCommandHandler :
 
         IResult result = await _statusRideService
             .TryAcceptAsync(rideResult.Value!,
-                driverResult.Value!,
-                cancellationToken);
+                driverResult.Value!, cancellationToken);
 
         return result.IsSuccess
             ? Result<VoidResponse>.Success()

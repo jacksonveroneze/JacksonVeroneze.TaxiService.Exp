@@ -16,24 +16,21 @@ public sealed class ActivateUserService : IActivateUserService
     private readonly ILogger<ActivateUserService> _logger;
     private readonly IUserReadRepository _readRepository;
     private readonly IUserWriteRepository _writeRepository;
-    private readonly IIntegrationEventPublisher _eventPublisher;
     private readonly IDateTime _dateTime;
 
     public ActivateUserService(
         ILogger<ActivateUserService> logger,
         IUserReadRepository readRepository,
         IUserWriteRepository writeRepository,
-        IIntegrationEventPublisher eventPublisher,
         IDateTime dateTime)
     {
         _logger = logger;
         _readRepository = readRepository;
         _writeRepository = writeRepository;
-        _eventPublisher = eventPublisher;
         _dateTime = dateTime;
     }
 
-    public async Task<IResult<VoidResponse>> ActivateAsync(
+    public async Task<IResult> ActivateAsync(
         Guid userId,
         CancellationToken cancellationToken)
     {
@@ -44,11 +41,7 @@ public sealed class ActivateUserService : IActivateUserService
 
         if (entity is null)
         {
-            _logger.LogNotFound(nameof(ActivateUserService),
-                nameof(ActivateAsync), userId,
-                DomainErrors.User.NotFound);
-
-            return Result<VoidResponse>.NotFound(
+            return Result.Invalid(
                 DomainErrors.User.NotFound);
         }
 
@@ -59,26 +52,15 @@ public sealed class ActivateUserService : IActivateUserService
             _logger.LogAlreadyProcessed(nameof(ActivateUserService),
                 nameof(ActivateAsync), userId, result.Error!);
 
-            return Result<VoidResponse>.Invalid(result.Error!);
+            return Result.Invalid(result.Error!);
         }
 
         await _writeRepository.UpdateAsync(
             entity, cancellationToken);
 
-        await _eventPublisher.PublishAsync(
-            new UserActivatedDomainEvent(entity.Id), cancellationToken);
-
-        // IEnumerable<Task>? tasks = entity.Events?
-        //     .Select(evt => _eventPublisher.PublishAsync(
-        //         evt, cancellationToken));
-        //
-        // await Task.WhenAll(tasks!);
-        //
-        // entity.ClearEvents();
-
         _logger.LogProcessed(nameof(ActivateUserService),
             nameof(ActivateAsync), userId);
 
-        return Result<VoidResponse>.Success();
+        return Result.Success();
     }
 }

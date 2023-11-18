@@ -2,7 +2,6 @@ using JacksonVeroneze.NET.Logging.Util;
 using JacksonVeroneze.TemplateWebApi.Api.Extensions;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
-using Prometheus;
 using Serilog;
 
 Log.Logger = BootstrapLogger.CreateLogger();
@@ -50,19 +49,6 @@ try
 
     app.Configure();
 
-    if (appConfiguration?.PushGateway?.Enable ?? false)
-    {
-        MetricPusher pusher = new(new MetricPusherOptions
-        {
-            Endpoint = appConfiguration?.PushGateway?.Address,
-            Job = appConfiguration?.AppName,
-            Instance = Environment.MachineName,
-            AdditionalLabels = new List<Tuple<string, string>> { new("service", appConfiguration!.AppName) }
-        });
-
-        pusher.Start();
-    }
-
     app.Run();
 }
 catch (Exception ex)
@@ -76,7 +62,7 @@ finally
     Log.Information("Server Shutting down");
     Log.CloseAndFlush();
 
-    //dotNetRuntimeStats?.Dispose();
+    dotNetRuntimeStats?.Dispose();
 }
 
 namespace JacksonVeroneze.TemplateWebApi.Api

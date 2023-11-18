@@ -3,6 +3,7 @@ using JacksonVeroneze.TemplateWebApi.Application.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Commands.User;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Models.User;
+using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
 
@@ -34,18 +35,18 @@ public sealed class CreateUserCommandHandler :
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        // bool existsUser = await _readRepository
-        //     .ExistsAsync(request.Document!, cancellationToken);
-        //
-        // if (existsUser)
-        // {
-        //     _logger.LogAlreadyExists(nameof(CreateUserCommandHandler),
-        //         nameof(Handle), request.Document!,
-        //         DomainErrors.User.DuplicateCpf);
-        //
-        //     return Result<CreateUserCommandResponse>.Invalid(
-        //         DomainErrors.User.DuplicateCpf);
-        // }
+        bool existsUser = await _readRepository
+            .ExistsAsync(request.Document!, cancellationToken);
+
+        if (existsUser)
+        {
+            _logger.LogAlreadyExists(nameof(CreateUserCommandHandler),
+                nameof(Handle), request.Document!,
+                DomainErrors.User.DuplicateCpf);
+
+            return Result<CreateUserCommandResponse>.Invalid(
+                DomainErrors.User.DuplicateCpf);
+        }
 
         IResult<NameValueObject> name = NameValueObject.Create(request.Name!);
         IResult<CpfValueObject> cpf = CpfValueObject.Create(request.Document!);
@@ -61,7 +62,7 @@ public sealed class CreateUserCommandHandler :
                 .Invalid(resultValidate.Errors!);
         }
 
-        UserEntity entity = new UserEntity(name.Value!,
+        UserEntity entity = new(name.Value!,
             request.Birthday!.Value, request.Gender!.Value,
             cpf.Value!);
 

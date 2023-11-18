@@ -21,12 +21,12 @@ export const options = {
 //     ],
 // };
 
-//const url = 'http://10.0.0.150/templatewebapi';
+const url = 'http://10.0.0.150/templatewebapi';
 //const url = 'http://localhost:8088/api';
 //const url = 'http://localhost:9999';
 // const url = 'http://10.0.0.199/templatewebapi';
 // const url = 'http://nlb-templatewebapi-e99ce0a79ea812ac.elb.sa-east-1.amazonaws.com:8080';
-const url = 'http://localhost:7000';
+//const url = 'http://localhost:7000';
 //const url = 'http://localhost:9999';
 //const url = 'http://10.152.183.41:8084';
 
@@ -98,6 +98,9 @@ export default function () {
     const responseGetById = http.get(`${url}/api/v1/users/${idUser}`, headers);
     check(responseGetById, {'[User] - GetById - status is 200': (r) => r.status === 200});
 
+    const responseGetPagedd = http.get(`${url}/api/v1/users/`, headers);
+    check(responseGetPagedd, {'[User] - GetPaged - status is 200': (r) => r.status === 200});
+    
     // 3. Activate User
     const responseActivated = http.put(`${url}/api/v1/users/${idUser}/activate`, {}, headers);
     check(responseActivated, {'[User] - Activated - status is 204': (r) => r.status === 204});
@@ -132,8 +135,8 @@ export default function () {
     cancel(idRide);
 
     // 2. Delete User
-    //const responseDelete = http.del(`${url}/api/v1/users/${idUser}`, null, headers);
-    //check(responseDelete, {'[User] - Delete - status is 200': (r) => r.status === 200});
+    const responseDelete = http.del(`${url}/api/v1/users/${idUser}`, null, headers);
+    check(responseDelete, {'[User] - Delete - status is 200': (r) => r.status === 200});
 }
 
 function accept(id, driveId) {

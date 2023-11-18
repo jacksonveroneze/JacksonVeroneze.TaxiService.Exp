@@ -26,12 +26,11 @@ public sealed class DeleteUserCommandHandler :
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        IResult<VoidResponse> result = await _service
+        IResult result = await _service
             .DeleteAsync(request.Id, cancellationToken);
 
-        _logger.LogProcessed(nameof(ActivateUserCommandHandler),
-            nameof(Handle), request.Id);
-
-        return result;
+        return result.IsSuccess
+            ? Result<VoidResponse>.Success()
+            : Result<VoidResponse>.Invalid(result.Error!);
     }
 }
