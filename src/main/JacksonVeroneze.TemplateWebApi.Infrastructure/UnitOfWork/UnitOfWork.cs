@@ -2,7 +2,6 @@ using JacksonVeroneze.NET.DomainObjects.Messaging;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Messaging;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities.Base;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Contexts;
-using MediatR;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.UnitOfWork;

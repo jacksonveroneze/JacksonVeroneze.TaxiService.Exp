@@ -56,6 +56,7 @@ public static class AppServicesExtension
 
         // Services
         services.AddScoped<IGetRideService, GetRideService>();
+        services.AddScoped<IStatusRideService, StatusRideService>();
 
         // Repositories
         services.AddScoped<IRideReadRepository, RideReadRepository>();

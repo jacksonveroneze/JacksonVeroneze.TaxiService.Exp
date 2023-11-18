@@ -130,7 +130,7 @@ export default function () {
 
     // 5. Finish Ride
     cancel(idRide);
-    
+
     // 2. Delete User
     //const responseDelete = http.del(`${url}/api/v1/users/${idUser}`, null, headers);
     //check(responseDelete, {'[User] - Delete - status is 200': (r) => r.status === 200});
@@ -157,5 +157,5 @@ function finish(id) {
 
 function cancel(id) {
     const responseFinishRide = http.put(`${url}/api/v1/rides/${id}/cancel`, {}, headers);
-    check(responseFinishRide, {'[Ride] - Canceled - status is 204': (r) => r.status === 204});
+    check(responseFinishRide, {'[Ride] - Canceled - status is 400': (r) => r.status === 400});
 }

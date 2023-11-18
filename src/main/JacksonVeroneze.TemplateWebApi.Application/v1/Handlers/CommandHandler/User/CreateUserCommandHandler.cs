@@ -3,7 +3,6 @@ using JacksonVeroneze.TemplateWebApi.Application.Extensions;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Commands.User;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Models.User;
-using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
 

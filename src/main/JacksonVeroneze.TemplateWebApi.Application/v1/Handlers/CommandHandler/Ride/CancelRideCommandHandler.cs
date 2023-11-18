@@ -1,6 +1,4 @@
 using JacksonVeroneze.NET.Result;
-using JacksonVeroneze.TemplateWebApi.Application.Extensions;
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Ride;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Services.Ride;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Commands.Ride;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Models.Base;
@@ -11,18 +9,15 @@ namespace JacksonVeroneze.TemplateWebApi.Application.v1.Handlers.CommandHandler.
 public sealed class CancelRideCommandHandler :
     IRequestHandler<CancelRideCommand, IResult<VoidResponse>>
 {
-    private readonly ILogger<CancelRideCommandHandler> _logger;
     private readonly IGetRideService _rideService;
-    private readonly IRideWriteRepository _writeRepository;
+    private readonly IStatusRideService _statusRideService;
 
     public CancelRideCommandHandler(
-        ILogger<CancelRideCommandHandler> logger,
         IGetRideService rideService,
-        IRideWriteRepository writeRepository)
+        IStatusRideService statusRideService)
     {
-        _logger = logger;
         _rideService = rideService;
-        _writeRepository = writeRepository;
+        _statusRideService = statusRideService;
     }
 
     public async Task<IResult<VoidResponse>> Handle(
@@ -40,31 +35,12 @@ public sealed class CancelRideCommandHandler :
                 .NotFound(rideResult.Error!);
         }
 
-        IResult<VoidResponse> resultStatus = await ProcessAsync(
-            rideResult.Value!, cancellationToken);
+        IResult result = await _statusRideService
+            .TryCancelAsync(rideResult.Value!,
+                cancellationToken);
 
-        return resultStatus;
-    }
-
-    private async Task<IResult<VoidResponse>> ProcessAsync(
-        RideEntity ride,
-        CancellationToken cancellationToken)
-    {
-        IResult result = ride.Cancel();
-
-        if (result.IsFailure)
-        {
-            _logger.LogGenericError(nameof(CancelRideCommandHandler),
-                nameof(ProcessAsync), ride.Id, result.Error!);
-
-            return Result<VoidResponse>.Invalid(result.Error!);
-        }
-
-        await _writeRepository.UpdateAsync(ride, cancellationToken);
-
-        _logger.LogProcessed(nameof(CancelRideCommandHandler),
-            nameof(ProcessAsync), ride.Id);
-
-        return Result<VoidResponse>.Success();
+        return result.IsSuccess
+            ? Result<VoidResponse>.Success()
+            : Result<VoidResponse>.Invalid(result.Error!);
     }
 }
