@@ -74,7 +74,8 @@ services:
       context: ../../src
       dockerfile: ./Dockerfile
     environment:
-      - APP_CONFIG_Database__ConnectionString=Host=10.0.0.199;Port=5432;Database=templatewebapi1;Username=postgres;Password=localP@ssword
+      - APP_CONFIG_Database__ReadConnectionString=Host=10.0.0.150;Port=5433;Database=templatewebapi;Username=postgres;Password=localP@ssword
+      - APP_CONFIG_Database__WriteConnectionString=Host=10.0.0.150;Port=5432;Database=templatewebapi;Username=postgres;Password=localP@ssword
       - APP_CONFIG_Bus__Address=10.0.0.199
       - APP_CONFIG_Bus__UserName=admin
       - APP_CONFIG_Bus__Password=admin

@@ -57,7 +57,7 @@ public class BaseReadRepository<TEntity> where TEntity : class
         List<TEntity> result = count == 0
             ? _empty
             : await _dbSet
-                //.AsNoTrackingWithIdentityResolution()
+                .AsNoTracking()
                 .Where(filter)
                 .ConfigurePagination(paginationParameters)
                 .ToListAsync(cancellationToken);

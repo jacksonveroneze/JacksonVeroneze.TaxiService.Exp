@@ -20,26 +20,29 @@ public class RabbitMqEventPublisher : IIntegrationEventPublisher
     public Task PublishAsync(DomainEvent data,
         CancellationToken cancellationToken)
     {
-        BusConfiguration? configuration =
-            _appConfiguration.Bus;
-
-        ConnectionFactory factory = new()
-        {
-            HostName = configuration!.Address,
-            UserName = configuration.UserName,
-            Password = configuration.Password
-        };
-
-        using IConnection? connection = factory.CreateConnection();
-
-        using IModel? channel = connection.CreateModel();
-
-        byte[] body = JsonSerializer.SerializeToUtf8Bytes(data);
-
-        channel.BasicPublish(
-            exchange: configuration.Exchange,
-            routingKey: data.GetType().Name,
-            body: body);
+        // _ = Task.Run(() =>
+        // {
+        //     BusConfiguration? configuration =
+        //         _appConfiguration.Bus;
+        //
+        //     ConnectionFactory factory = new()
+        //     {
+        //         HostName = configuration!.Address,
+        //         UserName = configuration.UserName,
+        //         Password = configuration.Password
+        //     };
+        //
+        //     using IConnection? connection = factory.CreateConnection();
+        //
+        //     using IModel? channel = connection.CreateModel();
+        //
+        //     byte[] body = JsonSerializer.SerializeToUtf8Bytes(data);
+        //
+        //     channel.BasicPublish(
+        //         exchange: configuration.Exchange,
+        //         routingKey: data.GetType().Name,
+        //         body: body);
+        // }, cancellationToken);
 
         return Task.CompletedTask;
     }

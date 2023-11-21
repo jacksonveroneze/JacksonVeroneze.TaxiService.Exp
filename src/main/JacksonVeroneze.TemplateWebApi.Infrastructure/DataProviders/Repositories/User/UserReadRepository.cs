@@ -5,6 +5,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 using JacksonVeroneze.TemplateWebApi.Domain.Specifications.Base.Predicate;
 using JacksonVeroneze.TemplateWebApi.Domain.Specifications.User;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.Contexts;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -19,7 +20,7 @@ public class UserReadRepository : BaseReadRepository<UserEntity>, IUserReadRepos
 
     public UserReadRepository(
         ILogger<UserReadRepository> logger,
-        DbContext context) : base(logger, context)
+        ReadApplicationDbContext context) : base(logger, context)
     {
         ArgumentNullException.ThrowIfNull(context);
 

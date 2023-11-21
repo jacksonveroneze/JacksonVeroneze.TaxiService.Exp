@@ -8,7 +8,8 @@
       "launchUrl": "swagger",
       "applicationUrl": "http://0.0.0.0:7000",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DOTNET_ROOT": "/usr/share/dotnet"
       }
     }
   }

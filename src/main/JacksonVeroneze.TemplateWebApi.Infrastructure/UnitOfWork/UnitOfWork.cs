@@ -9,10 +9,10 @@ namespace JacksonVeroneze.TemplateWebApi.Infrastructure.UnitOfWork;
 [ExcludeFromCodeCoverage]
 public class UnitOfWork : IUnitOfWork
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly WriteApplicationDbContext _dbContext;
     private readonly IIntegrationEventPublisher _bus;
 
-    public UnitOfWork(ApplicationDbContext dbContext,
+    public UnitOfWork(WriteApplicationDbContext dbContext,
         IIntegrationEventPublisher bus)
     {
         _dbContext = dbContext;
@@ -36,8 +36,8 @@ public class UnitOfWork : IUnitOfWork
         return true;
     }
 
-    private async Task PublishDomainEvents(
-        ApplicationDbContext dbContext,
+    private Task PublishDomainEvents(
+        WriteApplicationDbContext dbContext,
         CancellationToken cancellationToken)
     {
         IList<EntityEntry<BaseEntityAggregateRoot>> aggregateRoots =
@@ -49,7 +49,7 @@ public class UnitOfWork : IUnitOfWork
 
         if (!aggregateRoots.Any())
         {
-            return;
+            return Task.CompletedTask;
         }
 
         List<DomainEvent> domainEvents = aggregateRoots
@@ -62,6 +62,6 @@ public class UnitOfWork : IUnitOfWork
         IEnumerable<Task> tasks = domainEvents
             .Select(evt => _bus.PublishAsync(evt, cancellationToken));
 
-        await Task.WhenAll(tasks);
+        return Task.WhenAll(tasks);
     }
 }

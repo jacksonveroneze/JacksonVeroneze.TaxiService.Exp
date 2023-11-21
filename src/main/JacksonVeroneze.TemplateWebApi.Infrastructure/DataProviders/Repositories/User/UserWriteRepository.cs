@@ -1,5 +1,6 @@
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.Contexts;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +13,7 @@ public class UserWriteRepository : IUserWriteRepository
     private readonly DbSet<UserEntity> _dbSet;
 
     public UserWriteRepository(
-        DbContext context,
+        WriteApplicationDbContext context,
         IUnitOfWork unitOfWork)
     {
         ArgumentNullException.ThrowIfNull(context);

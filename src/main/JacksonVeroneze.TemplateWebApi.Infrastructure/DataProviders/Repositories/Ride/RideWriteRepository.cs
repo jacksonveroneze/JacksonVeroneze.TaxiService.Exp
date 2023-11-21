@@ -1,5 +1,6 @@
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Ride;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.Contexts;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +13,7 @@ public class RideWriteRepository : IRideWriteRepository
     private readonly DbSet<RideEntity> _dbSet;
 
     public RideWriteRepository(
-        DbContext context,
+        WriteApplicationDbContext context,
         IUnitOfWork unitOfWork)
     {
         ArgumentNullException.ThrowIfNull(context);

@@ -31,7 +31,7 @@ public class CustomWebApplicationFactory<TProgram>
 
             ServiceDescriptor? dbContextDescriptor = services.SingleOrDefault(
                 d => d.ServiceType ==
-                     typeof(DbContextOptions<ApplicationDbContext>));
+                     typeof(DbContextOptions<ReadApplicationDbContext>));
 
             services.Remove(dbContextDescriptor!);
 
@@ -50,7 +50,7 @@ public class CustomWebApplicationFactory<TProgram>
             //     return connection;
             // });
 
-            services.AddDbContext<ApplicationDbContext>((container, options) =>
+            services.AddDbContext<ReadApplicationDbContext>((container, options) =>
             {
                 //DbConnection connection = container.GetRequiredService<DbConnection>();
 

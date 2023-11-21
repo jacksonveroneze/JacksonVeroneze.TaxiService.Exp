@@ -6,6 +6,7 @@ using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 using JacksonVeroneze.TemplateWebApi.Domain.Specifications.Base.Predicate;
 using JacksonVeroneze.TemplateWebApi.Domain.Specifications.Ride;
+using JacksonVeroneze.TemplateWebApi.Infrastructure.Contexts;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -19,7 +20,7 @@ public class RideReadRepository : BaseReadRepository<RideEntity>, IRideReadRepos
     private readonly DbSet<RideEntity> _dbSet;
 
     public RideReadRepository(ILogger<RideReadRepository> logger,
-        DbContext context) : base(logger, context)
+        ReadApplicationDbContext context) : base(logger, context)
     {
         ArgumentNullException.ThrowIfNull(context);
 

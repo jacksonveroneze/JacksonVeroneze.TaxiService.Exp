@@ -13,19 +13,26 @@ public static class DatabaseExtension
         this IServiceCollection services,
         AppConfiguration appConfiguration)
     {
-        #region EntityFramework
-
         services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
 
-        services.AddDbContext<DbContext, ApplicationDbContext>((_, options) =>
-            options.UseNpgsql(appConfiguration.Database!.ConnectionString)
-                .UseLazyLoadingProxies()
-                .EnableDetailedErrors(appConfiguration.IsDevelopment)
-                .EnableSensitiveDataLogging(appConfiguration.IsDevelopment)
-                .UseSnakeCaseNamingConvention());
+        services.AddDbContext<ReadApplicationDbContext>((_, options) =>
+            options.UseNpgsql(appConfiguration.Database!.ReadConnectionString)
+                .ConfigureOptionsDatabase(appConfiguration));
 
-        #endregion
+        services.AddDbContext<WriteApplicationDbContext>((_, options) =>
+            options.UseNpgsql(appConfiguration.Database!.WriteConnectionString)
+                .ConfigureOptionsDatabase(appConfiguration));
 
         return services;
+    }
+
+    private static void ConfigureOptionsDatabase(
+        this DbContextOptionsBuilder optionsBuilder,
+        AppConfiguration appConfiguration)
+    {
+        optionsBuilder.UseLazyLoadingProxies()
+            .EnableDetailedErrors(appConfiguration.IsDevelopment)
+            .EnableSensitiveDataLogging(appConfiguration.IsDevelopment)
+            .UseSnakeCaseNamingConvention();
     }
 }
