@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 using JacksonVeroneze.NET.Pagination;
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Ride;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Interfaces.Repositories.Ride;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
@@ -20,7 +20,7 @@ public class RideReadRepository : BaseReadRepository<RideEntity>, IRideReadRepos
     private readonly DbSet<RideEntity> _dbSet;
 
     public RideReadRepository(ILogger<RideReadRepository> logger,
-        ReadApplicationDbContext context) : base(logger, context)
+        ApplicationDbContext context) : base(logger, context)
     {
         ArgumentNullException.ThrowIfNull(context);
 
@@ -34,19 +34,11 @@ public class RideReadRepository : BaseReadRepository<RideEntity>, IRideReadRepos
         RideUserIdSpecification specUserId = new(userId);
 
         RideStatusSpecification specStatusRequested =
-            new(RideStatus.Requested);
-
-        RideStatusSpecification specStatusAccepted =
-            new(RideStatus.Accepted);
-
-        RideStatusSpecification specStatusInProgress =
-            new(RideStatus.InProgress);
+            new();
 
         Expression<Func<RideEntity, bool>> spec =
             specUserId.ToExpression()
-                .And(specStatusRequested.ToExpression()
-                    .Or(specStatusInProgress)
-                    .Or(specStatusAccepted));
+                .And(specStatusRequested.ToExpression());
 
         bool exists = await _dbSet.AnyAsync(spec,
             cancellationToken);
@@ -60,9 +52,13 @@ public class RideReadRepository : BaseReadRepository<RideEntity>, IRideReadRepos
     {
         ArgumentNullException.ThrowIfNull(filter);
 
-        RideStatusSpecification specStatus = new(filter.Status);
+        RideStatusSpecification specStatus = new();
+        RideUserIdSpecification specUserId = new(filter.UserId);
 
-        return GetPagedAsync(specStatus, filter.Pagination!,
+        Expression<Func<RideEntity, bool>> spec =
+            specStatus.ToExpression().And(specUserId);
+
+        return GetPagedAsync(spec, filter.Pagination!,
             cancellationToken);
     }
 }

@@ -1,6 +1,6 @@
 using JacksonVeroneze.NET.Result;
 
-namespace JacksonVeroneze.TemplateWebApi.Application.Interfaces.Services.User;
+namespace JacksonVeroneze.TemplateWebApi.Application.v1.Interfaces.Services.User;
 
 public interface IInactivateUserService
 {

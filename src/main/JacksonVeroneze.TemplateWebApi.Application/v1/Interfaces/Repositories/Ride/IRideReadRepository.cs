@@ -2,19 +2,19 @@ using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 
-namespace JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
+namespace JacksonVeroneze.TemplateWebApi.Application.v1.Interfaces.Repositories.Ride;
 
-public interface IUserReadRepository
+public interface IRideReadRepository
 {
-    Task<bool> ExistsAsync(
-        string document,
+    Task<bool> ExistsByUserAsync(
+        Guid userId,
         CancellationToken cancellationToken = default);
 
-    Task<UserEntity?> GetByIdAsync(
+    Task<RideEntity?> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken = default);
 
-    Task<Page<UserEntity>> GetPagedAsync(
-        UserPagedFilter filter,
+    Task<Page<RideEntity>> GetPagedAsync(
+        RidePagedFilter filter,
         CancellationToken cancellationToken = default);
 }

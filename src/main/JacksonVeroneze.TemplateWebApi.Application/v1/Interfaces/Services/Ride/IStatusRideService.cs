@@ -1,7 +1,7 @@
 using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
-namespace JacksonVeroneze.TemplateWebApi.Application.Interfaces.Services.Ride;
+namespace JacksonVeroneze.TemplateWebApi.Application.v1.Interfaces.Services.Ride;
 
 public interface IStatusRideService
 {

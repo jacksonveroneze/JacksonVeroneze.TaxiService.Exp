@@ -14,6 +14,8 @@ public class RideEntity : BaseEntityAggregateRoot
 
     public virtual UserEntity? User { get; }
 
+    public Guid UserId { get; set; }
+
     public virtual UserEntity? Driver { get; private set; }
 
     public virtual decimal? Fare { get; private set; }
@@ -66,6 +68,29 @@ public class RideEntity : BaseEntityAggregateRoot
         }
 
         return Result.Success();
+    }
+
+    private double? CalculateDistance()
+    {
+        PositionEntity? fist = _positions?.First();
+
+        return _positions?
+            .Skip(1)
+            .Sum(item =>
+            {
+                double result = CalculateDistanceTwoPoints(
+                    fist!, item);
+
+                fist = item;
+
+                return result;
+            });
+    }
+
+    private double CalculateDistanceTwoPoints(
+        PositionEntity start, PositionEntity end)
+    {
+        return 1D;
     }
 
     #endregion
@@ -136,6 +161,13 @@ public class RideEntity : BaseEntityAggregateRoot
             return Result.Invalid(
                 DomainErrors.Ride.InvalidStatusSetFinish);
         }
+
+        Distance = CalculateDistance();
+
+        //Fare = Distance.Value * 2M;
+
+        // calcular distância
+        // calcular
 
         Status = RideStatus.Completed;
 

@@ -1,7 +1,7 @@
 using AutoMapper;
 using JacksonVeroneze.NET.Result;
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Handlers.QueryHandler.User.Email;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Mappers;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Models.User.Email;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Queries.User.Email;

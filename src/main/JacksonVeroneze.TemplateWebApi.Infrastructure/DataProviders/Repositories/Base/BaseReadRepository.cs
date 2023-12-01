@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.DataProviders.Repositories.Base;
 
 [ExcludeFromCodeCoverage]
-public class BaseReadRepository<TEntity> where TEntity : class
+public abstract class BaseReadRepository<TEntity> where TEntity : class
 {
     private readonly List<TEntity> _empty =
         Enumerable.Empty<TEntity>().ToList();
@@ -18,7 +18,7 @@ public class BaseReadRepository<TEntity> where TEntity : class
     private readonly ILogger<BaseReadRepository<TEntity>> _logger;
     private readonly DbSet<TEntity> _dbSet;
 
-    public BaseReadRepository(ILogger<BaseReadRepository<TEntity>> logger,
+    protected BaseReadRepository(ILogger<BaseReadRepository<TEntity>> logger,
         DbContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
@@ -50,7 +50,7 @@ public class BaseReadRepository<TEntity> where TEntity : class
         ArgumentNullException.ThrowIfNull(filter);
 
         int count = await _dbSet
-            .AsNoTracking()
+            .AsNoTrackingWithIdentityResolution()
             .Where(filter)
             .CountAsync(cancellationToken);
 

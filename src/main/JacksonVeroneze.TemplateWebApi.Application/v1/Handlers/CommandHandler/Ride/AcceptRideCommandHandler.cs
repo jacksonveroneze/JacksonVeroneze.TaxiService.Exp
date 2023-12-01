@@ -1,37 +1,25 @@
 using JacksonVeroneze.NET.Result;
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Services.Ride;
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Services.User;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Commands.Ride;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Interfaces.Services.Ride;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Interfaces.Services.User;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Models.Base;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.v1.Handlers.CommandHandler.Ride;
 
-public sealed class AcceptRideCommandHandler :
-    IRequestHandler<AcceptRideCommand, IResult<VoidResponse>>
+public sealed class AcceptRideCommandHandler(
+    IGetUserService userService,
+    IGetRideService rideService,
+    IStatusRideService statusRideService)
+    : IRequestHandler<AcceptRideCommand, IResult<VoidResponse>>
 {
-    private readonly IGetUserService _userService;
-    private readonly IGetRideService _rideService;
-    private readonly IStatusRideService _statusRideService;
-
-
-    public AcceptRideCommandHandler(
-        IGetUserService userService,
-        IGetRideService rideService,
-        IStatusRideService statusRideService)
-    {
-        _userService = userService;
-        _rideService = rideService;
-        _statusRideService = statusRideService;
-    }
-
     public async Task<IResult<VoidResponse>> Handle(
         AcceptRideCommand request,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        IResult<RideEntity> rideResult = await _rideService
+        IResult<RideEntity> rideResult = await rideService
             .TryGetRideAsync(request.Id, cancellationToken);
 
         if (rideResult.IsFailure)
@@ -40,7 +28,7 @@ public sealed class AcceptRideCommandHandler :
                 .NotFound(rideResult.Error!);
         }
 
-        IResult<UserEntity> driverResult = await _userService
+        IResult<UserEntity> driverResult = await userService
             .TryGetUserAsync(request.Body!.DriverId,
                 cancellationToken);
 
@@ -50,7 +38,7 @@ public sealed class AcceptRideCommandHandler :
                 .Invalid(driverResult.Error!);
         }
 
-        IResult result = await _statusRideService
+        IResult result = await statusRideService
             .TryAcceptAsync(rideResult.Value!,
                 driverResult.Value!, cancellationToken);
 

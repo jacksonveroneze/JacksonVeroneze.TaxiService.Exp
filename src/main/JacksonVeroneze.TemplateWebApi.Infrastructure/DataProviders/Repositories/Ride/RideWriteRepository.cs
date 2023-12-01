@@ -1,4 +1,4 @@
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Ride;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Interfaces.Repositories.Ride;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Contexts;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.UnitOfWork;
@@ -13,7 +13,7 @@ public class RideWriteRepository : IRideWriteRepository
     private readonly DbSet<RideEntity> _dbSet;
 
     public RideWriteRepository(
-        WriteApplicationDbContext context,
+        ApplicationDbContext context,
         IUnitOfWork unitOfWork)
     {
         ArgumentNullException.ThrowIfNull(context);

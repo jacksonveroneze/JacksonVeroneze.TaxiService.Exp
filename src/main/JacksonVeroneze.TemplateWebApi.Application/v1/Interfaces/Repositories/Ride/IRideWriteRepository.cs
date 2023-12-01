@@ -1,6 +1,6 @@
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
-namespace JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Ride;
+namespace JacksonVeroneze.TemplateWebApi.Application.v1.Interfaces.Repositories.Ride;
 
 public interface IRideWriteRepository
 {

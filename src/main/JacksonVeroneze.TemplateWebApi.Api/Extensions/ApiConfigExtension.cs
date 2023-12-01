@@ -1,10 +1,8 @@
 using Ben.Diagnostics;
 using CorrelationId;
-using Hellang.Middleware.ProblemDetails;
-using JacksonVeroneze.TemplateWebApi.Application.Exceptions;
+using JacksonVeroneze.TemplateWebApi.Api.Middlewares;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
-using Microsoft.AspNetCore.Mvc;
 using Prometheus;
 
 namespace JacksonVeroneze.TemplateWebApi.Api.Extensions;
@@ -30,17 +28,6 @@ public static class ApiConfigExtension
         }
 
         builder.Services
-            .AddProblemDetails(options =>
-            {
-                options.IncludeExceptionDetails = (_, _)
-                    => false;
-
-                options.Map<ValidationException>(ex =>
-                    new ValidationProblemDetails(ex.ErrorsDictionary)
-                    {
-                        Title = ex.Message, Status = StatusCodes.Status404NotFound
-                    });
-            })
             .AddAutoMapper()
             .AddCorrelation()
             .AddMediatr()
@@ -68,8 +55,6 @@ public static class ApiConfigExtension
     public static WebApplication Configure(
         this WebApplication app)
     {
-        app.UseProblemDetails();
-
         if (app.Environment.IsDevelopment())
         {
             app.UseBlockingDetection();
@@ -79,7 +64,7 @@ public static class ApiConfigExtension
 
         app.UseHttpMetrics()
             .UseCorrelationId()
-            //.UseCustomGlobalErrorHandler()
+            .UseCustomGlobalErrorHandler()
             .UseAuthentication()
             .UseAuthorization();
 

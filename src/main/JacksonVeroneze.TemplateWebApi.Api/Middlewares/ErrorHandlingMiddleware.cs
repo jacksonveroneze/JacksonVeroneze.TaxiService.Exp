@@ -4,29 +4,21 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JacksonVeroneze.TemplateWebApi.Api.Middlewares;
 
-public class ErrorHandlingMiddleware
+public class ErrorHandlingMiddleware(
+    RequestDelegate next,
+    ILogger<ErrorHandlingMiddleware> logger,
+    IHostEnvironment hostEnvironment)
 {
-    private readonly RequestDelegate _next;
-    private readonly ILogger<ErrorHandlingMiddleware> _logger;
-    private readonly IHostEnvironment _hostEnvironment;
-
-    public ErrorHandlingMiddleware(RequestDelegate next,
-        ILogger<ErrorHandlingMiddleware> logger,
-        IHostEnvironment hostEnvironment)
-    {
-        _next = next;
-        _logger = logger;
-        _hostEnvironment = hostEnvironment;
-    }
-
     public async Task Invoke(HttpContext context)
     {
         try
         {
-            await _next(context);
+            await next(context);
         }
         catch (Exception e)
         {
+            logger.LogError(e, e.Message);
+
             await FactoryResponse(context, e,
                 HttpStatusCode.InternalServerError);
         }
@@ -42,7 +34,7 @@ public class ErrorHandlingMiddleware
             Instance = context.Request.Path,
             Title = exception.Message,
             Status = (int)statusCode,
-            Detail = _hostEnvironment.IsDevelopment()
+            Detail = hostEnvironment.IsDevelopment()
                 ? exception.StackTrace + exception.InnerException?.StackTrace
                 : string.Empty
         };
@@ -58,8 +50,6 @@ public class ErrorHandlingMiddleware
 
         string result = JsonSerializer
             .Serialize(problemDetails, serializeOptions);
-
-        _logger.LogError(exception, result);
 
         await context.Response.WriteAsync(result,
             cancellationToken: context.RequestAborted);

@@ -4,22 +4,22 @@ import {uuidv4} from 'https://jslib.k6.io/k6-utils/1.4.0/index.js';
 import {crypto} from "k6/experimental/webcrypto";
 import {randomIntBetween} from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
-export const options = {
-    //duration: '60s',
-    iterations: 1,
-    vus: 1,
-};
-
-// export let options = {
-//     stages: [
-//         {duration: '3m', target: 10}, // simulate ramp-up of traffic from 1 to 3 virtual users over 0.5 minutes.
-//         {duration: '5m', target: 100}, // simulate ramp-up of traffic from 1 to 3 virtual users over 0.5 minutes.
-//         {duration: '2m', target: 15}, // ramp-down to 0 users
-//         {duration: '1m', target: 150}, // ramp-down to 0 users
-//         {duration: '5m', target: 50}, // ramp-down to 0 users
-//         {duration: '30s', target: 0}, // ramp-down to 0 users
-//     ],
+// export const options = {
+//     //duration: '60s',
+//     iterations: 1000,
+//     vus: 10,
 // };
+
+export let options = {
+    stages: [
+        {duration: '3m', target: 0}, // simulate ramp-up of traffic from 1 to 3 virtual users over 0.5 minutes.
+        {duration: '5m', target: 100}, // simulate ramp-up of traffic from 1 to 3 virtual users over 0.5 minutes.
+        {duration: '2m', target: 15}, // ramp-down to 0 users
+        {duration: '1m', target: 150}, // ramp-down to 0 users
+        {duration: '5m', target: 50}, // ramp-down to 0 users
+        {duration: '30s', target: 0}, // ramp-down to 0 users
+    ],
+};
 
 //const url = 'http://10.0.0.150/templatewebapi';
 //const url = 'http://localhost:8088/api';
@@ -68,18 +68,18 @@ const url = 'http://localhost:7000';
 // };
 
 
-const randomUUID = crypto.randomUUID();
 
-const headers = {
-    headers: {
-        'Content-Type': 'application/json',
-        'X-TenantId': randomUUID,
-        'X-Correlation-ID': randomUUID
-    },
-};
 
 export default function () {
     // Common
+    let headers = {
+        headers: {
+            'Content-Type': 'application/json',
+            'X-TenantId': crypto.randomUUID(),
+            'X-Correlation-ID': crypto.randomUUID()
+        },
+    };
+
     const rnd = randomIntBetween(10000, 99999)
 
     // 1. Create User
@@ -123,42 +123,59 @@ export default function () {
     check(responseGetRideById, {'[Ride] - GetById - status is 200': (r) => r.status === 200});
 
     // 3. Accept Ride
-    accept(idRide, idUser);
+    accept(idRide, idUser, headers);
 
     // 4. Start Ride
-    start(idRide);
+    start(idRide, headers);
 
     // 5. Finish Ride
-    finish(idRide);
+    finish(idRide, headers);
 
     // 5. Finish Ride
-    cancel(idRide);
+    cancel(idRide, headers);
 
     // 2. Delete User
-    const responseDelete = http.del(`${url}/api/v1/users/${idUser}`, null, headers);
-    check(responseDelete, {'[User] - Delete - status is 200': (r) => r.status === 200});
+    //const responseDelete = http.del(`${url}/api/v1/users/${idUser}`, null, headers);
+    //check(responseDelete, {'[User] - Delete - status is 200': (r) => r.status === 200});
 }
 
-function accept(id, driveId) {
+function accept(id, driveId, headers) {
     const bodyAcceptRide = JSON.stringify({
         driver_id: driveId
     });
 
     const responseAcceptRide = http.put(`${url}/api/v1/rides/${id}/accept`, bodyAcceptRide, headers);
     check(responseAcceptRide, {'[Ride] - Accepted - status is 204': (r) => r.status === 204});
+
+    getAndCheckStatusRide(id, 'Accepted', headers);
 }
 
-function start(id) {
+function start(id, headers) {
     const responseStartRide = http.put(`${url}/api/v1/rides/${id}/start`, {}, headers);
     check(responseStartRide, {'[Ride] - Started - status is 204': (r) => r.status === 204});
+
+    getAndCheckStatusRide(id, 'InProgress', headers);
 }
 
-function finish(id) {
+function finish(id, headers) {
     const responseFinishRide = http.put(`${url}/api/v1/rides/${id}/finish`, {}, headers);
     check(responseFinishRide, {'[Ride] - Finished - status is 204': (r) => r.status === 204});
+
+    getAndCheckStatusRide(id, 'Completed', headers);
 }
 
-function cancel(id) {
+function cancel(id, headers) {
     const responseFinishRide = http.put(`${url}/api/v1/rides/${id}/cancel`, {}, headers);
     check(responseFinishRide, {'[Ride] - Canceled - status is 400': (r) => r.status === 400});
+
+    getAndCheckStatusRide(id, 'Completed', headers);
+}
+
+function getAndCheckStatusRide(id, status, headers) {
+    const responseGetById = http.get(`${url}/api/v1/rides/${id}`, headers);
+    check(responseGetById, {'[Ride] - GetById - status is 200': (r) => r.status === 200});
+
+    const bodyResponse = JSON.parse(responseGetById.body).data;
+    
+    check(bodyResponse, {'[Ride] - GetById - status': (r) => r.status ===  status});
 }

@@ -1,22 +1,13 @@
-using System.Text.Json;
 using JacksonVeroneze.NET.DomainObjects.Messaging;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Messaging;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
-using RabbitMQ.Client;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Messaging;
 
 [ExcludeFromCodeCoverage]
-public class RabbitMqEventPublisher : IIntegrationEventPublisher
+public class RabbitMqEventPublisher(
+    AppConfiguration appConfiguration) : IIntegrationEventPublisher
 {
-    private readonly AppConfiguration _appConfiguration;
-
-    public RabbitMqEventPublisher(
-        AppConfiguration appConfiguration)
-    {
-        _appConfiguration = appConfiguration;
-    }
-
     public Task PublishAsync(DomainEvent data,
         CancellationToken cancellationToken)
     {

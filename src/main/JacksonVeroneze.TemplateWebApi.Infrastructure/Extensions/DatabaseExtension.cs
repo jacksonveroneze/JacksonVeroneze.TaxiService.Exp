@@ -19,7 +19,7 @@ public static class DatabaseExtension
             options.UseNpgsql(appConfiguration.Database!.ReadConnectionString)
                 .ConfigureOptionsDatabase(appConfiguration));
 
-        services.AddDbContext<WriteApplicationDbContext>((_, options) =>
+        services.AddDbContext<ApplicationDbContext>((_, options) =>
             options.UseNpgsql(appConfiguration.Database!.WriteConnectionString)
                 .ConfigureOptionsDatabase(appConfiguration));
 

@@ -6,22 +6,13 @@ using ValidationException = JacksonVeroneze.TemplateWebApi.Application.Exception
 namespace JacksonVeroneze.TemplateWebApi.Application.Behaviors;
 
 [ExcludeFromCodeCoverage]
-public sealed class ValidationBehavior<TRequest, TResponse> :
-    IPipelineBehavior<TRequest, TResponse>
+public sealed class ValidationBehavior<TRequest, TResponse>(
+    ILogger<ValidationBehavior<TRequest, TResponse>> logger,
+    IEnumerable<IValidator<TRequest>> validators)
+    : IPipelineBehavior<TRequest, TResponse>
     where TRequest : class, IRequest<TResponse>
     where TResponse : class
 {
-    private readonly ILogger<ValidationBehavior<TRequest, TResponse>> _logger;
-    private readonly IEnumerable<IValidator<TRequest>> _validators;
-
-    public ValidationBehavior(
-        ILogger<ValidationBehavior<TRequest, TResponse>> logger,
-        IEnumerable<IValidator<TRequest>> validators)
-    {
-        _logger = logger;
-        _validators = validators;
-    }
-
     public async Task<TResponse> Handle(
         TRequest request,
         RequestHandlerDelegate<TResponse> next,
@@ -30,9 +21,9 @@ public sealed class ValidationBehavior<TRequest, TResponse> :
         ArgumentNullException.ThrowIfNull(request);
         ArgumentNullException.ThrowIfNull(next);
 
-        if (!_validators.Any())
+        if (!validators.Any())
         {
-            _logger.LogNoContainValidators(
+            logger.LogNoContainValidators(
                 nameof(ValidationBehavior<TRequest, TResponse>),
                 typeof(TRequest).Name);
 
@@ -42,7 +33,7 @@ public sealed class ValidationBehavior<TRequest, TResponse> :
         ValidationContext<TRequest> context = new(request);
 
         ValidationResult[] validationfailures = await Task.WhenAll(
-            _validators.Select(validator => validator
+            validators.Select(validator => validator
                 .ValidateAsync(context, cancellationToken)));
 
         Dictionary<string, string[]> failures = validationfailures
@@ -59,7 +50,7 @@ public sealed class ValidationBehavior<TRequest, TResponse> :
                 })
             .ToDictionary(k => k.Key, v => v.Values);
 
-        _logger.LogTotalViolations(
+        logger.LogTotalViolations(
             nameof(ValidationBehavior<TRequest, TResponse>),
             typeof(TRequest).Name,
             failures.Count);

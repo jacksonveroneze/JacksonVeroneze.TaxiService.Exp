@@ -69,7 +69,7 @@ public static class ResultExtensions
 
         return result.Status switch
         {
-            ResultStatus.Success => controllerBase.Ok(),
+            ResultStatus.Success => controllerBase.NoContent(),
             ResultStatus.Error => controllerBase.BadRequest(
                 result.ToProblemDetails(controllerBase)),
             ResultStatus.NotFound => controllerBase.NotFound(

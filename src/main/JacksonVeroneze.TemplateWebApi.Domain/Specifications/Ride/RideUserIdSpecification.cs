@@ -25,6 +25,6 @@ public class RideUserIdSpecification : BaseSpecification<RideEntity>
             return _defaultExpression;
         }
 
-        return spec => spec.User!.Id == _userId;
+        return spec => spec.UserId == _userId;
     }
 }

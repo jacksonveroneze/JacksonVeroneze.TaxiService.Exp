@@ -22,6 +22,8 @@ public class RideMapping : IEntityTypeConfiguration<RideEntity>
             .HasColumnName("fare")
             .IsRequired(false);
 
+        builder.Property(c => c.UserId);
+
         builder.Property(c => c.Distance)
             .HasColumnName("distance")
             .IsRequired(false);

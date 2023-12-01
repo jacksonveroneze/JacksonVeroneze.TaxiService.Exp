@@ -7,22 +7,15 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.UnitOfWork;
 
 [ExcludeFromCodeCoverage]
-public class UnitOfWork : IUnitOfWork
+public class UnitOfWork(
+    ApplicationDbContext dbContext,
+    IIntegrationEventPublisher bus)
+    : IUnitOfWork
 {
-    private readonly WriteApplicationDbContext _dbContext;
-    private readonly IIntegrationEventPublisher _bus;
-
-    public UnitOfWork(WriteApplicationDbContext dbContext,
-        IIntegrationEventPublisher bus)
-    {
-        _dbContext = dbContext;
-        _bus = bus;
-    }
-
     public async Task<bool> CommitAsync(
         CancellationToken cancellationToken)
     {
-        bool isSuccess = await _dbContext
+        bool isSuccess = await dbContext
             .SaveChangesAsync(cancellationToken) > 0;
 
         if (!isSuccess)
@@ -30,18 +23,18 @@ public class UnitOfWork : IUnitOfWork
             throw new InvalidOperationException();
         }
 
-        await PublishDomainEvents(_dbContext,
+        await PublishDomainEvents(dbContext,
             cancellationToken);
 
         return true;
     }
 
     private Task PublishDomainEvents(
-        WriteApplicationDbContext dbContext,
+        ApplicationDbContext applicationDbContext,
         CancellationToken cancellationToken)
     {
         IList<EntityEntry<BaseEntityAggregateRoot>> aggregateRoots =
-            dbContext.ChangeTracker
+            applicationDbContext.ChangeTracker
                 .Entries<BaseEntityAggregateRoot>()
                 .Where(item => item.Entity.Events != null
                                && item.Entity.Events.Any())
@@ -60,7 +53,7 @@ public class UnitOfWork : IUnitOfWork
             .ForEach(entity => entity.Entity.ClearEvents());
 
         IEnumerable<Task> tasks = domainEvents
-            .Select(evt => _bus.PublishAsync(evt, cancellationToken));
+            .Select(evt => bus.PublishAsync(evt, cancellationToken));
 
         return Task.WhenAll(tasks);
     }

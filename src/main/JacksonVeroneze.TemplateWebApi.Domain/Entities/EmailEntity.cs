@@ -5,9 +5,9 @@ namespace JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 public class EmailEntity : BaseEntityAggregateRoot
 {
-    public virtual EmailValueObject Email { get; }
+    public virtual EmailValueObject Email { get; } = null!;
 
-    public virtual UserEntity User { get; }
+    public virtual UserEntity User { get; } = null!;
 
     protected EmailEntity()
     {

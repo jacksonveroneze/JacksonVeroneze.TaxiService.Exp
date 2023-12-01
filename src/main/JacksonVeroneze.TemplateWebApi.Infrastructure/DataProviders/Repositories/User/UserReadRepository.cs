@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 using JacksonVeroneze.NET.Pagination;
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 using JacksonVeroneze.TemplateWebApi.Domain.Specifications.Base.Predicate;
@@ -20,7 +20,7 @@ public class UserReadRepository : BaseReadRepository<UserEntity>, IUserReadRepos
 
     public UserReadRepository(
         ILogger<UserReadRepository> logger,
-        ReadApplicationDbContext context) : base(logger, context)
+        ApplicationDbContext context) : base(logger, context)
     {
         ArgumentNullException.ThrowIfNull(context);
 

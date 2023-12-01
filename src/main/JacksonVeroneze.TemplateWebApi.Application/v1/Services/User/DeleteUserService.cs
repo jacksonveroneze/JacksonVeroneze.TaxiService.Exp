@@ -1,35 +1,25 @@
 using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TemplateWebApi.Application.Extensions;
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Services.User;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Interfaces.Repositories.User;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Interfaces.Services.User;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.v1.Services.User;
 
-public sealed class DeleteUserService : IDeleteUserService
+public sealed class DeleteUserService(
+    ILogger<DeleteUserService> logger,
+    IUserReadRepository readRepository,
+    IUserWriteRepository writeRepository)
+    : IDeleteUserService
 {
-    private readonly ILogger<DeleteUserService> _logger;
-    private readonly IUserReadRepository _readRepository;
-    private readonly IUserWriteRepository _writeRepository;
-
-    public DeleteUserService(
-        ILogger<DeleteUserService> logger,
-        IUserReadRepository readRepository,
-        IUserWriteRepository writeRepository)
-    {
-        _logger = logger;
-        _readRepository = readRepository;
-        _writeRepository = writeRepository;
-    }
-
     public async Task<IResult> DeleteAsync(
         Guid userId,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(userId);
 
-        UserEntity? entity = await _readRepository
+        UserEntity? entity = await readRepository
             .GetByIdAsync(userId, cancellationToken);
 
         if (entity is null)
@@ -38,10 +28,10 @@ public sealed class DeleteUserService : IDeleteUserService
                 DomainErrors.User.NotFound);
         }
 
-        await _writeRepository.DeleteAsync(
+        await writeRepository.DeleteAsync(
             entity, cancellationToken);
 
-        _logger.LogDeleted(nameof(DeleteUserService),
+        logger.LogDeleted(nameof(DeleteUserService),
             nameof(DeleteAsync), userId);
 
         return Result.Success();

@@ -1,11 +1,11 @@
 using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
-namespace JacksonVeroneze.TemplateWebApi.Application.Interfaces.Services.Ride;
+namespace JacksonVeroneze.TemplateWebApi.Application.v1.Interfaces.Services.User;
 
-public interface IGetRideService
+public interface IGetUserService
 {
-    Task<IResult<RideEntity>> TryGetRideAsync(
+    Task<IResult<UserEntity>> TryGetUserAsync(
         Guid id,
         CancellationToken cancellationToken = default);
 }

@@ -1,8 +1,8 @@
 using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TemplateWebApi.Application.Extensions;
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.Ride;
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Commands.Ride;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Interfaces.Repositories.Ride;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Models.Ride;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
@@ -10,39 +10,24 @@ using JacksonVeroneze.TemplateWebApi.Domain.ValueObjects;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.v1.Handlers.CommandHandler.Ride;
 
-public sealed class RequestRideCommandHandler :
-    IRequestHandler<RequestRideCommand, IResult<RequestRideCommandResponse>>
+public sealed class RequestRideCommandHandler(
+    ILogger<RequestRideCommandHandler> logger,
+    IMapper mapper,
+    IUserReadRepository userReadRepository,
+    IRideReadRepository readRepository,
+    IRideWriteRepository writeRepository)
+    : IRequestHandler<RequestRideCommand, IResult<RequestRideCommandResponse>>
 {
-    private readonly ILogger<RequestRideCommandHandler> _logger;
-    private readonly IMapper _mapper;
-    private readonly IUserReadRepository _userReadRepository;
-    private readonly IRideReadRepository _readRepository;
-    private readonly IRideWriteRepository _writeRepository;
-
-    public RequestRideCommandHandler(
-        ILogger<RequestRideCommandHandler> logger,
-        IMapper mapper,
-        IUserReadRepository userReadRepository,
-        IRideReadRepository readRepository,
-        IRideWriteRepository writeRepository)
-    {
-        _logger = logger;
-        _mapper = mapper;
-        _userReadRepository = userReadRepository;
-        _readRepository = readRepository;
-        _writeRepository = writeRepository;
-    }
-
     public async Task<IResult<RequestRideCommandResponse>> Handle(
         RequestRideCommand request,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        UserEntity? user = await _userReadRepository
+        UserEntity? user = await userReadRepository
             .GetByIdAsync(request.UserId, cancellationToken);
 
-        Task<bool> existsRideByUserTask = _readRepository
+        Task<bool> existsRideByUserTask = readRepository
             .ExistsByUserAsync(request.UserId, cancellationToken);
 
         if (user is null)
@@ -55,7 +40,7 @@ public sealed class RequestRideCommandHandler :
 
         if (existsRideByUser)
         {
-            _logger.LogAlreadyExists(nameof(RequestRideCommandHandler),
+            logger.LogAlreadyExists(nameof(RequestRideCommandHandler),
                 nameof(Handle), user.Id, DomainErrors.Ride.AlreadyByUser);
 
             return Result<RequestRideCommandResponse>.Invalid(
@@ -72,7 +57,7 @@ public sealed class RequestRideCommandHandler :
 
         if (resultValidate.IsFailure)
         {
-            _logger.LogGenericError(nameof(RequestRideCommandHandler),
+            logger.LogGenericError(nameof(RequestRideCommandHandler),
                 nameof(Handle), resultValidate.Errors!.Count());
 
             return Result<RequestRideCommandResponse>
@@ -81,13 +66,13 @@ public sealed class RequestRideCommandHandler :
 
         RideEntity entity = new(user, from.Value, to.Value);
 
-        await _writeRepository.CreateAsync(
+        await writeRepository.CreateAsync(
             entity, cancellationToken);
 
         RequestRideCommandResponse response =
-            _mapper.Map<RequestRideCommandResponse>(entity);
+            mapper.Map<RequestRideCommandResponse>(entity);
 
-        _logger.LogCreated(nameof(RequestRideCommandHandler),
+        logger.LogCreated(nameof(RequestRideCommandHandler),
             nameof(Handle), entity.Id);
 
         return Result<RequestRideCommandResponse>.Success(response);

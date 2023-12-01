@@ -1,7 +1,7 @@
 using JacksonVeroneze.NET.Result;
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Commands.User.Email;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Handlers.CommandHandler.User.Email;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Models.Base;
 using JacksonVeroneze.TemplateWebApi.Domain.Core.Errors;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;

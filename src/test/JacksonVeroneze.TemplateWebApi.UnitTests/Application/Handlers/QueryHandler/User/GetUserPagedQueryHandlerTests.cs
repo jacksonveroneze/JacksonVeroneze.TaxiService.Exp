@@ -1,8 +1,8 @@
 using AutoMapper;
 using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.NET.Result;
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Handlers.QueryHandler.User;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Interfaces.Repositories.User;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Mappers;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Models.User;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Queries.User;

@@ -1,6 +1,6 @@
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
-namespace JacksonVeroneze.TemplateWebApi.Application.Interfaces.Repositories.User;
+namespace JacksonVeroneze.TemplateWebApi.Application.v1.Interfaces.Repositories.User;
 
 public interface IUserWriteRepository
 {

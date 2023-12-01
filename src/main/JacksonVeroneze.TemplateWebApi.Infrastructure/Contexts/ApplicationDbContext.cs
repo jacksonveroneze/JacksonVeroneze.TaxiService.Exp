@@ -1,5 +1,6 @@
 using JacksonVeroneze.NET.DomainObjects.Messaging;
 using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Tenant;
+using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -7,8 +8,8 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Contexts;
 
 [ExcludeFromCodeCoverage]
-public class WriteApplicationDbContext(
-    DbContextOptions<WriteApplicationDbContext> options,
+public class ApplicationDbContext(
+    DbContextOptions<ApplicationDbContext> options,
     ITenantService tenantService)
     : DbContext(options)
 {
@@ -22,6 +23,21 @@ public class WriteApplicationDbContext(
         modelBuilder.Ignore<Event>();
 
         modelBuilder.HasDefaultSchema("public");
+
+        modelBuilder
+            .Entity<UserEntity>()
+            .HasQueryFilter(filter => filter.TenantId ==
+                _tenantId && filter.DeletedAt == null);
+
+        modelBuilder
+            .Entity<EmailEntity>()
+            .HasQueryFilter(filter => filter.TenantId ==
+                _tenantId && filter.DeletedAt == null);
+
+        modelBuilder
+            .Entity<PhoneEntity>()
+            .HasQueryFilter(filter => filter.TenantId ==
+                _tenantId && filter.DeletedAt == null);
     }
 
     public override Task<int> SaveChangesAsync(

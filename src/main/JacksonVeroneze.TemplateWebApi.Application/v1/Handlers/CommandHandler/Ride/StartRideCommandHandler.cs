@@ -1,33 +1,23 @@
 using JacksonVeroneze.NET.Result;
-using JacksonVeroneze.TemplateWebApi.Application.Interfaces.Services.Ride;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Commands.Ride;
+using JacksonVeroneze.TemplateWebApi.Application.v1.Interfaces.Services.Ride;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Models.Base;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.v1.Handlers.CommandHandler.Ride;
 
-public sealed class StartRideCommandHandler :
-    IRequestHandler<StartRideCommand, IResult<VoidResponse>>
+public sealed class StartRideCommandHandler(
+    IGetRideService rideService,
+    IStatusRideService statusRideService)
+    : IRequestHandler<StartRideCommand, IResult<VoidResponse>>
 {
-    private readonly IGetRideService _rideService;
-    private readonly IStatusRideService _statusRideService;
-
-    public StartRideCommandHandler(
-        ILogger<StartRideCommandHandler> logger,
-        IGetRideService rideService,
-        IStatusRideService statusRideService)
-    {
-        _rideService = rideService;
-        _statusRideService = statusRideService;
-    }
-
     public async Task<IResult<VoidResponse>> Handle(
         StartRideCommand request,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        IResult<RideEntity> rideResult = await _rideService
+        IResult<RideEntity> rideResult = await rideService
             .TryGetRideAsync(request.Id, cancellationToken);
 
         if (rideResult.IsFailure)
@@ -36,9 +26,8 @@ public sealed class StartRideCommandHandler :
                 .NotFound(rideResult.Error!);
         }
 
-        IResult result = await _statusRideService.
-            TryStartAsync(rideResult.Value!,
-                cancellationToken);
+        IResult result = await statusRideService.TryStartAsync(rideResult.Value!,
+            cancellationToken);
 
         return result.IsSuccess
             ? Result<VoidResponse>.Success()

@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JacksonVeroneze.TemplateWebApi.Application.v1.Queries.Ride;
 
-public sealed record GetRidePagedQuery :
-    PagedQuery, IRequest<IResult<GetRidePagedQueryResponse>>
+public sealed record GetRidePagedQuery() :
+    PagedQuery(DefaultOrderBy, DefaultOrder),
+    IRequest<IResult<GetRidePagedQueryResponse>>
 {
     private const string DefaultOrderBy = nameof(RideResponse.Id);
 
@@ -17,7 +18,6 @@ public sealed record GetRidePagedQuery :
     [FromQuery(Name = "status")]
     public RideStatus? Status { get; init; }
 
-    public GetRidePagedQuery() : base(DefaultOrderBy, DefaultOrder)
-    {
-    }
+    [FromQuery(Name = "user_id")]
+    public Guid? UserId { get; init; }
 }

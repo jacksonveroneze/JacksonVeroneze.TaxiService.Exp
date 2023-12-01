@@ -13,8 +13,8 @@ public class RideMapper : Profile
         // Entity -> Response
         CreateMap<RideEntity, RideResponse>()
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
-            .ForMember(dest => dest.UserId, opts => opts.MapFrom(src => src.User!.Id))
-            .ForMember(dest => dest.DriverId, opts => opts.MapFrom(src => src.Driver!.Id))
+            .ForMember(dest => dest.UserId, opts => opts.Ignore())
+            .ForMember(dest => dest.DriverId, opts => opts.Ignore())
             .ForMember(dest => dest.Fare, opts => opts.MapFrom(src => src.Fare))
             .ForMember(dest => dest.Distance, opts => opts.MapFrom(src => src.Distance))
             .ForMember(dest => dest.From, opts => opts.MapFrom(src => src.From))
@@ -34,6 +34,7 @@ public class RideMapper : Profile
         // Query -> Filter
         CreateMap<GetRidePagedQuery, RidePagedFilter>()
             .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status))
+            .ForMember(dest => dest.UserId, opts => opts.MapFrom(src => src.UserId))
             .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src));
     }
 }

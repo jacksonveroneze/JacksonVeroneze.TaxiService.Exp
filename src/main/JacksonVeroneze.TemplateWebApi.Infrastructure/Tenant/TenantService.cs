@@ -4,22 +4,16 @@ using Microsoft.AspNetCore.Http;
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Tenant;
 
 [ExcludeFromCodeCoverage]
-public class TenantService : ITenantService
+public class TenantService(
+    IHttpContextAccessor httpContextAccessor) : ITenantService
 {
     private const string TenantIdHeaderName = "X-TenantId";
-
-    private readonly IHttpContextAccessor _httpContextAccessor;
-
-    public TenantService(IHttpContextAccessor httpContextAccessor)
-    {
-        _httpContextAccessor = httpContextAccessor;
-    }
 
     public Guid TenantId
     {
         get
         {
-            string? tenant = _httpContextAccessor
+            string? tenant = httpContextAccessor
                 .HttpContext?
                 .Request
                 .Headers[TenantIdHeaderName];

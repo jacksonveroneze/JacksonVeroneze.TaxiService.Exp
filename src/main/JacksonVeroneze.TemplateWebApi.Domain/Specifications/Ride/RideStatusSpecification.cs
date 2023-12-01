@@ -9,22 +9,14 @@ namespace JacksonVeroneze.TemplateWebApi.Domain.Specifications.Ride;
 [ExcludeFromCodeCoverage]
 public class RideStatusSpecification : BaseSpecification<RideEntity>
 {
-    private readonly Expression<Func<RideEntity, bool>> _defaultExpression = _ => true;
-
-    private readonly RideStatus? _status;
-
-    public RideStatusSpecification(RideStatus? status)
-    {
-        _status = status;
-    }
-
     public override Expression<Func<RideEntity, bool>> ToExpression()
     {
-        if (!_status.HasValue)
-        {
-            return _defaultExpression;
-        }
+        RideStatus[] status = {
+            RideStatus.Requested,
+            RideStatus.Accepted,
+            RideStatus.InProgress,
+        };
 
-        return spec => spec.Status == _status;
+        return spec => status.Contains(spec.Status);
     }
 }

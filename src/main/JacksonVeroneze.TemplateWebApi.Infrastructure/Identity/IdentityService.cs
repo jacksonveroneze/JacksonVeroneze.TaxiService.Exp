@@ -6,18 +6,12 @@ using Microsoft.AspNetCore.Http;
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Identity;
 
 [ExcludeFromCodeCoverage]
-public class IdentityService : IIdentityService
+public class IdentityService(
+    IHttpContextAccessor httpContextAccessor) : IIdentityService
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
-
-    public IdentityService(IHttpContextAccessor httpContextAccessor)
-    {
-        _httpContextAccessor = httpContextAccessor;
-    }
-
     public Task<UserIdentity> GetAsync()
     {
-        ClaimsPrincipal? user = _httpContextAccessor.HttpContext?.User;
+        ClaimsPrincipal? user = httpContextAccessor.HttpContext?.User;
 
         string? name = user!.Identity?.Name;
 
