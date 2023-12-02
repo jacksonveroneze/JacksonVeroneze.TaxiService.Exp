@@ -1,15 +1,14 @@
 ﻿{
   "$schema": "https://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "JacksonVeroneze.TaxiService.Exp - Development": {
+    "JacksonVeroneze.TaxiService.Exp.Api - Development": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": false,
       "launchUrl": "swagger",
       "applicationUrl": "http://0.0.0.0:7000",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "DOTNET_ROOT": "/usr/share/dotnet"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
   }
