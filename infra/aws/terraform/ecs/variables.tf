@@ -7,13 +7,13 @@ variable "tags" {
   default = {
     terraform   = "true"
     environment = "dev"
-    feature     = "templatewebapi"
+    feature     = "taxi-service-exp"
   }
 }
 
 variable "feature_name" {
   type    = string
-  default = "templatewebapi"
+  default = "taxi-service-exp"
 }
 
 ################################################################################
@@ -22,7 +22,7 @@ variable "feature_name" {
 
 variable "log_group_name" {
   type    = string
-  default = "templatewebapi"
+  default = "taxi-service-exp"
 }
 
 variable "log_group_retention" {
@@ -54,7 +54,7 @@ variable "log_group_retention" {
 
 variable "ecs_cluster_name" {
   type    = string
-  default = "cluster-templatewebapi"
+  default = "cluster-taxi-service-exp"
 }
 
 # ################################################################################
@@ -63,7 +63,7 @@ variable "ecs_cluster_name" {
 
 variable "ecs_service_name" {
   type    = string
-  default = "service-templatewebapi"
+  default = "service-taxi-service-exp"
 }
 
 # ################################################################################
@@ -77,7 +77,7 @@ variable "task_container_name" {
 
 variable "task_container_image" {
   type    = string
-  default = "jacksonveroneze/templatewebapi-service:0.0.7"
+  default = "jacksonveroneze/taxi-service-exp-service:0.0.7"
 }
 
 variable "task_cpu" {
@@ -171,5 +171,5 @@ variable "load_balancer_arn" {
 
 variable "target_group_name" {
   type    = string
-  default = "target-group-templatewebapi"
+  default = "target-group-taxi-service-exp"
 }

@@ -19,9 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\main\JacksonVeroneze.TemplateWebApi.Application\JacksonVeroneze.TemplateWebApi.Application.csproj"/>
-    <ProjectReference Include="..\..\main\JacksonVeroneze.TemplateWebApi.Domain\JacksonVeroneze.TemplateWebApi.Domain.csproj"/>
-    <ProjectReference Include="..\..\main\JacksonVeroneze.TemplateWebApi.Infrastructure\JacksonVeroneze.TemplateWebApi.Infrastructure.csproj"/>
+    <ProjectReference Include="..\..\main\JacksonVeroneze.TaxiService.Application\JacksonVeroneze.TaxiService.Application.csproj"/>
+    <ProjectReference Include="..\..\main\JacksonVeroneze.TaxiService.Domain\JacksonVeroneze.TaxiService.Domain.csproj"/>
+    <ProjectReference Include="..\..\main\JacksonVeroneze.TaxiService.Infrastructure\JacksonVeroneze.TaxiService.Infrastructure.csproj"/>
 
   </ItemGroup>
 </Project>

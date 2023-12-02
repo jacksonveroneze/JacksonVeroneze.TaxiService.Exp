@@ -33,7 +33,7 @@ data "aws_ssm_parameter" "ssm_ecs_task_role_arn" {
 
 
 data "aws_secretsmanager_secret" "database_username" {
-  name = "/TemplateWebApi/Common/RDS/DatabaseUsername"
+  name = "/TaxiService/Common/RDS/DatabaseUsername"
 }
 
 data "aws_secretsmanager_secret_version" "database_username" {
@@ -43,7 +43,7 @@ data "aws_secretsmanager_secret_version" "database_username" {
 ##
 
 data "aws_secretsmanager_secret" "database_password" {
-  name = "/TemplateWebApi/Common/RDS/DatabasePassword"
+  name = "/TaxiService/Common/RDS/DatabasePassword"
 }
 
 data "aws_secretsmanager_secret_version" "database_password" {
@@ -53,7 +53,7 @@ data "aws_secretsmanager_secret_version" "database_password" {
 ##
 
 data "aws_secretsmanager_secret" "database_endpoint" {
-  name = "/TemplateWebApi/Common/RDS/DatabaseEndpoint"
+  name = "/TaxiService/Common/RDS/DatabaseEndpoint"
 }
 
 data "aws_secretsmanager_secret_version" "database_endpoint" {

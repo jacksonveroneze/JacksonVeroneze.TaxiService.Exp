@@ -8,7 +8,7 @@ terraform {
 
   backend "s3" {
     bucket  = "jacksonveroneze-tf-states"
-    key     = "templatewebapi-infra-ecs"
+    key     = "taxiservice-infra-ecs"
     region  = "sa-east-1"
     profile = "terraform"
   }

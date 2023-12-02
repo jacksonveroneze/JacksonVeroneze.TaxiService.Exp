@@ -67,15 +67,15 @@ services:
           memory: '512M'
 
   api:
-    image: jacksonveroneze/templatewebapi-service:0.0.8
+    image: jacksonveroneze/taxi-service-exp:0.0.8
     restart: always
     tty: true
     build:
       context: ../../src
       dockerfile: ./Dockerfile
     environment:
-      - APP_CONFIG_Database__ReadConnectionString=Host=10.0.0.150;Port=5433;Database=templatewebapi;Username=postgres;Password=localP@ssword
-      - APP_CONFIG_Database__WriteConnectionString=Host=10.0.0.150;Port=5432;Database=templatewebapi;Username=postgres;Password=localP@ssword
+      - APP_CONFIG_Database__ReadConnectionString=Host=10.0.0.150;Port=5433;Database=taxiservice;Username=postgres;Password=localP@ssword
+      - APP_CONFIG_Database__WriteConnectionString=Host=10.0.0.150;Port=5432;Database=taxiservice;Username=postgres;Password=localP@ssword
       - APP_CONFIG_Bus__Address=10.0.0.199
       - APP_CONFIG_Bus__UserName=admin
       - APP_CONFIG_Bus__Password=admin
@@ -100,17 +100,17 @@ services:
       - traefik.http.middlewares.middleware-cors.headers.accesscontrolmaxage=100
       - traefik.http.middlewares.middleware-cors.headers.addvaryheader=true
 
-      - traefik.http.routers.apitemplatewebapi-http.entrypoints=http
-      - traefik.http.routers.apitemplatewebapi-http.rule=PathPrefix(`/templatewebapi`)
+      - traefik.http.routers.api-http.entrypoints=http
+      - traefik.http.routers.api-http.rule=PathPrefix(`/taxi-service-exp`)
 
-      - traefik.http.services.apitemplatewebapi.loadbalancer.server.port=8080
-      - traefik.http.services.apitemplatewebapi.loadbalancer.passhostheader=true
-      - traefik.http.services.apitemplatewebapi.loadbalancer.healthcheck.path=/health
-      - traefik.http.services.apitemplatewebapi.loadbalancer.healthcheck.interval=15s
-      - traefik.http.services.apitemplatewebapi.loadbalancer.healthcheck.timeout=3s
-      - traefik.http.services.apitemplatewebapi.loadbalancer.healthcheck.scheme=http
+      - traefik.http.services.api.loadbalancer.server.port=8080
+      - traefik.http.services.api.loadbalancer.passhostheader=true
+      - traefik.http.services.api.loadbalancer.healthcheck.path=/health
+      - traefik.http.services.api.loadbalancer.healthcheck.interval=15s
+      - traefik.http.services.api.loadbalancer.healthcheck.timeout=3s
+      - traefik.http.services.api.loadbalancer.healthcheck.scheme=http
 
-      - traefik.http.middlewares.middleware-stripprefix0.stripprefix.prefixes=/templatewebapi
+      - traefik.http.middlewares.middleware-stripprefix0.stripprefix.prefixes=/taxi-service-exp
       - traefik.http.middlewares.middleware-compress.compress=true
       - traefik.http.middlewares.middleware-ratelimit.ratelimit.average=10000
       - traefik.http.middlewares.middleware-ratelimit.ratelimit.burst=100
@@ -120,7 +120,7 @@ services:
       - traefik.http.middlewares.middleware-retry.retry.initialinterval=50ms
       - traefik.http.middlewares.latency-check.circuitbreaker.expression=LatencyAtQuantileMS(50.0) > 500
 
-      - traefik.http.routers.apitemplatewebapi-http.middlewares=middleware-cors,middleware-stripprefix0,middleware-compress,middleware-request-body,middleware-retry
+      - traefik.http.routers.api-http.middlewares=middleware-cors,middleware-stripprefix0,middleware-compress,middleware-request-body,middleware-retry
 
       - --metrics=true
     ports:
