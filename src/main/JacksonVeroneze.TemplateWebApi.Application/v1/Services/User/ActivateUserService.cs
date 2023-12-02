@@ -15,7 +15,7 @@ public sealed class ActivateUserService(
     IDateTime dateTime)
     : IActivateUserService
 {
-    public async Task<IResult> ActivateAsync(
+    public async Task<Result> ActivateAsync(
         Guid userId,
         CancellationToken cancellationToken)
     {
@@ -26,18 +26,18 @@ public sealed class ActivateUserService(
 
         if (entity is null)
         {
-            return Result.Invalid(
+            return Result.FromInvalid(
                 DomainErrors.User.NotFound);
         }
 
-        IResult result = entity.Activate(dateTime.UtcNow);
+        Result result = entity.Activate(dateTime.UtcNow);
 
         if (result.IsFailure)
         {
             logger.LogAlreadyProcessed(nameof(ActivateUserService),
                 nameof(ActivateAsync), userId, result.Error!);
 
-            return Result.Invalid(result.Error!);
+            return Result.FromInvalid(result.Error!);
         }
 
         await writeRepository.UpdateAsync(
@@ -46,6 +46,6 @@ public sealed class ActivateUserService(
         logger.LogProcessed(nameof(ActivateUserService),
             nameof(ActivateAsync), userId);
 
-        return Result.Success();
+        return Result.WithSuccess();
     }
 }

@@ -12,9 +12,9 @@ public sealed class DeleteEmailCommandHandler(
     ILogger<DeleteEmailCommandHandler> logger,
     IUserReadRepository readRepository,
     IUserWriteRepository writeRepository)
-    : IRequestHandler<DeleteEmailCommand, IResult<VoidResponse>>
+    : IRequestHandler<DeleteEmailCommand, Result<VoidResponse>>
 {
-    public async Task<IResult<VoidResponse>> Handle(
+    public async Task<Result<VoidResponse>> Handle(
         DeleteEmailCommand request,
         CancellationToken cancellationToken)
     {
@@ -28,7 +28,7 @@ public sealed class DeleteEmailCommandHandler(
             logger.LogNotFound(nameof(DeleteEmailCommandHandler),
                 nameof(Handle), request.Id, DomainErrors.User.NotFound);
 
-            return Result<VoidResponse>.NotFound(
+            return Result<VoidResponse>.FromNotFound(
                 DomainErrors.User.NotFound);
         }
 
@@ -39,18 +39,18 @@ public sealed class DeleteEmailCommandHandler(
             logger.LogNotFound(nameof(DeleteEmailCommandHandler),
                 nameof(Handle), request.Id, DomainErrors.Email.NotFound);
 
-            return Result<VoidResponse>.NotFound(
+            return Result<VoidResponse>.FromNotFound(
                 DomainErrors.Email.NotFound);
         }
 
-        IResult result = entity.RemoveEmail(email);
+        Result result = entity.RemoveEmail(email);
 
         if (result.IsFailure)
         {
             logger.LogGenericError(nameof(DeleteEmailCommandHandler),
                 nameof(Handle), request.Id, result.Error!);
 
-            return Result<VoidResponse>.Invalid(result.Error!);
+            return Result<VoidResponse>.FromInvalid(result.Error!);
         }
 
         await writeRepository.UpdateAsync(entity, cancellationToken);
@@ -58,6 +58,6 @@ public sealed class DeleteEmailCommandHandler(
         logger.LogProcessed(nameof(DeleteEmailCommandHandler),
             nameof(Handle), entity.Id);
 
-        return Result<VoidResponse>.Success();
+        return Result<VoidResponse>.WithSuccess();
     }
 }

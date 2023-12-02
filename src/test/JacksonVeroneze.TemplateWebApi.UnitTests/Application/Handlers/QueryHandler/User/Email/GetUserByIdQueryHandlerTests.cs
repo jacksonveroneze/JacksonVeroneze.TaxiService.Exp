@@ -66,7 +66,7 @@ public class GetAllEmailsByUserIdQueryHandlerTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult<GetAllEmailsByUserIdQueryResponse> result = await _handler
+        Result<GetAllEmailsByUserIdQueryResponse> result = await _handler
             .Handle(command, CancellationToken.None);
 
         // -------------------------------------------------------
@@ -125,7 +125,7 @@ public class GetAllEmailsByUserIdQueryHandlerTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult<GetAllEmailsByUserIdQueryResponse> result = await _handler
+        Result<GetAllEmailsByUserIdQueryResponse> result = await _handler
             .Handle(command, CancellationToken.None);
 
         // -------------------------------------------------------

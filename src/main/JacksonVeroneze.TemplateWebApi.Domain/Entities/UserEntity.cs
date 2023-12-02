@@ -67,11 +67,11 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
 
     #region Active/Inative
 
-    public IResult Activate(DateTime utcNow)
+    public Result Activate(DateTime utcNow)
     {
         if (Status == UserStatus.Active)
         {
-            return Result.Invalid(
+            return Result.FromInvalid(
                 DomainErrors.User.AlreadyActivated);
         }
 
@@ -81,14 +81,14 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
 
         AddEvent(new UserActivatedDomainEvent(Id));
 
-        return Result.Success();
+        return Result.WithSuccess();
     }
 
-    public IResult Inactivate(DateTime utcNow)
+    public Result Inactivate(DateTime utcNow)
     {
         if (Status == UserStatus.Inactive)
         {
-            return Result.Invalid(
+            return Result.FromInvalid(
                 DomainErrors.User.AlreadyInactivated);
         }
 
@@ -98,14 +98,14 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
 
         AddEvent(new UserInactivatedDomainEvent(Id));
 
-        return Result.Success();
+        return Result.WithSuccess();
     }
 
     #endregion
 
     #region Email
 
-    public IResult AddEmail(EmailEntity entity)
+    public Result AddEmail(EmailEntity entity)
     {
         ArgumentNullException.ThrowIfNull(entity);
 
@@ -113,16 +113,16 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
 
         if (ExistsEmailByValue(entity.Email))
         {
-            return Result.Invalid(
+            return Result.FromInvalid(
                 DomainErrors.Email.DuplicateEmail);
         }
 
         _emails.Add(entity);
 
-        return Result.Success();
+        return Result.WithSuccess();
     }
 
-    public IResult RemoveEmail(EmailEntity entity)
+    public Result RemoveEmail(EmailEntity entity)
     {
         ArgumentNullException.ThrowIfNull(entity);
 
@@ -130,13 +130,13 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
 
         if (!ExistsEmailByValue(entity.Email))
         {
-            return Result.Invalid(
+            return Result.FromInvalid(
                 DomainErrors.Email.NotFound);
         }
 
         _emails.Remove(entity);
 
-        return Result.Success();
+        return Result.WithSuccess();
     }
 
     public EmailEntity? GetEmailById(Guid id)

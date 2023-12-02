@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace JacksonVeroneze.TemplateWebApi.Application.v1.Commands.User.Email;
 
 public sealed record DeleteEmailCommand :
-    IRequest<IResult<VoidResponse>>
+    IRequest<Result<VoidResponse>>
 {
     [FromRoute(Name = "userId")]
     public Guid Id { get; init; }

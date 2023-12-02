@@ -16,7 +16,7 @@ public class CoordinateValueObjectTests
         // -------------------------------------------------------
         // Arrange && Act
         // -------------------------------------------------------
-        IResult<CoordinateValueObject> result =
+        Result<CoordinateValueObject> result =
             CoordinateValueObject.Create(latitude, longitude);
 
         // -------------------------------------------------------
@@ -51,7 +51,7 @@ public class CoordinateValueObjectTests
         // -------------------------------------------------------
         // Arrange && Act
         // -------------------------------------------------------
-        IResult<CoordinateValueObject> result =
+        Result<CoordinateValueObject> result =
             CoordinateValueObject.Create(latitude, longitude);
 
         // -------------------------------------------------------

@@ -11,9 +11,9 @@ namespace JacksonVeroneze.TemplateWebApi.Application.v1.Handlers.QueryHandler.Ri
 public sealed class GetRidePagedQueryHandler(
     IMapper mapper,
     IRideReadRepository repository)
-    : IRequestHandler<GetRidePagedQuery, IResult<GetRidePagedQueryResponse>>
+    : IRequestHandler<GetRidePagedQuery, Result<GetRidePagedQueryResponse>>
 {
-    public async Task<IResult<GetRidePagedQueryResponse>> Handle(
+    public async Task<Result<GetRidePagedQueryResponse>> Handle(
         GetRidePagedQuery request,
         CancellationToken cancellationToken)
     {
@@ -29,6 +29,6 @@ public sealed class GetRidePagedQueryHandler(
             mapper.Map<GetRidePagedQueryResponse>(page);
 
         return Result<GetRidePagedQueryResponse>
-            .Success(response);
+            .WithSuccess(response);
     }
 }

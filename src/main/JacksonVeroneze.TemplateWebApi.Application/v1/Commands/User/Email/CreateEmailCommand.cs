@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace JacksonVeroneze.TemplateWebApi.Application.v1.Commands.User.Email;
 
 public sealed record CreateEmailCommand :
-    IRequest<IResult<CreateEmailCommandResponse>>
+    IRequest<Result<CreateEmailCommandResponse>>
 {
     [FromRoute(Name = "userId")]
     public Guid Id { get; init; }

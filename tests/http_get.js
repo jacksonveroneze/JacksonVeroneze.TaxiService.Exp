@@ -68,8 +68,6 @@ const url = 'http://localhost:7000';
 // };
 
 
-
-
 export default function () {
     // Common
     let headers = {
@@ -100,7 +98,7 @@ export default function () {
 
     const responseGetPagedd = http.get(`${url}/api/v1/users/`, headers);
     check(responseGetPagedd, {'[User] - GetPaged - status is 200': (r) => r.status === 200});
-    
+
     // 3. Activate User
     const responseActivated = http.put(`${url}/api/v1/users/${idUser}/activate`, {}, headers);
     check(responseActivated, {'[User] - Activated - status is 204': (r) => r.status === 204});
@@ -176,6 +174,6 @@ function getAndCheckStatusRide(id, status, headers) {
     check(responseGetById, {'[Ride] - GetById - status is 200': (r) => r.status === 200});
 
     const bodyResponse = JSON.parse(responseGetById.body).data;
-    
-    check(bodyResponse, {'[Ride] - GetById - status': (r) => r.status ===  status});
+
+    check(bodyResponse, {'[Ride] - GetById - status': (r) => r.status === status});
 }

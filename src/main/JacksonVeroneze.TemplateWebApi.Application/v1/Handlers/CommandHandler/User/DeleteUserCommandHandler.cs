@@ -7,19 +7,19 @@ namespace JacksonVeroneze.TemplateWebApi.Application.v1.Handlers.CommandHandler.
 
 public sealed class DeleteUserCommandHandler(
     IDeleteUserService service)
-    : IRequestHandler<DeleteUserCommand, IResult<VoidResponse>>
+    : IRequestHandler<DeleteUserCommand, Result<VoidResponse>>
 {
-    public async Task<IResult<VoidResponse>> Handle(
+    public async Task<Result<VoidResponse>> Handle(
         DeleteUserCommand request,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        IResult result = await service
+        Result result = await service
             .DeleteAsync(request.Id, cancellationToken);
 
         return result.IsSuccess
-            ? Result<VoidResponse>.Success()
-            : Result<VoidResponse>.Invalid(result.Error!);
+            ? Result<VoidResponse>.WithSuccess()
+            : Result<VoidResponse>.FromInvalid(result.Error!);
     }
 }

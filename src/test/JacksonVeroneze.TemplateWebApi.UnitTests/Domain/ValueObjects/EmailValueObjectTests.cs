@@ -15,7 +15,7 @@ public class EmailValueObjectTests
         // -------------------------------------------------------
         // Arrange && Act
         // -------------------------------------------------------
-        IResult<EmailValueObject> result =
+        Result<EmailValueObject> result =
             EmailValueObject.Create(value);
 
         // -------------------------------------------------------
@@ -47,7 +47,7 @@ public class EmailValueObjectTests
         // -------------------------------------------------------
         // Arrange && Act
         // -------------------------------------------------------
-        IResult<EmailValueObject> result =
+        Result<EmailValueObject> result =
             EmailValueObject.Create(value);
 
         // -------------------------------------------------------

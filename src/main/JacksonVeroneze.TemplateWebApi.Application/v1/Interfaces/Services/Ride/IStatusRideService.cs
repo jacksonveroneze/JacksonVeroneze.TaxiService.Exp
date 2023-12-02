@@ -5,20 +5,20 @@ namespace JacksonVeroneze.TemplateWebApi.Application.v1.Interfaces.Services.Ride
 
 public interface IStatusRideService
 {
-    Task<IResult> TryAcceptAsync(
+    Task<Result> TryAcceptAsync(
         RideEntity ride,
         UserEntity user,
         CancellationToken cancellationToken = default);
 
-    Task<IResult> TryStartAsync(
+    Task<Result> TryStartAsync(
         RideEntity ride,
         CancellationToken cancellationToken = default);
 
-    Task<IResult> TryFinishAsync(
+    Task<Result> TryFinishAsync(
         RideEntity ride,
         CancellationToken cancellationToken = default);
 
-    Task<IResult> TryCancelAsync(
+    Task<Result> TryCancelAsync(
         RideEntity ride,
         CancellationToken cancellationToken = default);
 }

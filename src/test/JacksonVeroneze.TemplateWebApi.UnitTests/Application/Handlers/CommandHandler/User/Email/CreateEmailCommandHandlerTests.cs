@@ -70,7 +70,7 @@ public class CreateEmailCommandHandlerTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult<CreateEmailCommandResponse> result = await _handler
+        Result<CreateEmailCommandResponse> result = await _handler
             .Handle(command, CancellationToken.None);
 
         // -------------------------------------------------------
@@ -144,7 +144,7 @@ public class CreateEmailCommandHandlerTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult<CreateEmailCommandResponse> result = await _handler
+        Result<CreateEmailCommandResponse> result = await _handler
             .Handle(command, CancellationToken.None);
 
         // -------------------------------------------------------
@@ -200,7 +200,7 @@ public class CreateEmailCommandHandlerTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult<CreateEmailCommandResponse> result = await _handler
+        Result<CreateEmailCommandResponse> result = await _handler
             .Handle(command, CancellationToken.None);
 
         // -------------------------------------------------------
@@ -262,7 +262,7 @@ public class CreateEmailCommandHandlerTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult<CreateEmailCommandResponse> result = await _handler
+        Result<CreateEmailCommandResponse> result = await _handler
             .Handle(command, CancellationToken.None);
 
         // -------------------------------------------------------

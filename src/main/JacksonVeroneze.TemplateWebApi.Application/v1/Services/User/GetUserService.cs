@@ -11,7 +11,7 @@ public sealed class GetUserService(
     IUserReadRepository readRepository)
     : IGetUserService
 {
-    public async Task<IResult<UserEntity>> TryGetUserAsync(
+    public async Task<Result<UserEntity>> TryGetUserAsync(
         Guid id,
         CancellationToken cancellationToken = default)
     {
@@ -19,7 +19,7 @@ public sealed class GetUserService(
             .GetByIdAsync(id, cancellationToken);
 
         return entity is not null
-            ? Result<UserEntity>.Success(entity)
-            : Result<UserEntity>.NotFound(DomainErrors.User.NotFound);
+            ? Result<UserEntity>.WithSuccess(entity)
+            : Result<UserEntity>.FromNotFound(DomainErrors.User.NotFound);
     }
 }

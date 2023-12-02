@@ -13,7 +13,7 @@ public sealed class DeleteUserService(
     IUserWriteRepository writeRepository)
     : IDeleteUserService
 {
-    public async Task<IResult> DeleteAsync(
+    public async Task<Result> DeleteAsync(
         Guid userId,
         CancellationToken cancellationToken)
     {
@@ -24,7 +24,7 @@ public sealed class DeleteUserService(
 
         if (entity is null)
         {
-            return Result.Invalid(
+            return Result.FromInvalid(
                 DomainErrors.User.NotFound);
         }
 
@@ -34,6 +34,6 @@ public sealed class DeleteUserService(
         logger.LogDeleted(nameof(DeleteUserService),
             nameof(DeleteAsync), userId);
 
-        return Result.Success();
+        return Result.WithSuccess();
     }
 }

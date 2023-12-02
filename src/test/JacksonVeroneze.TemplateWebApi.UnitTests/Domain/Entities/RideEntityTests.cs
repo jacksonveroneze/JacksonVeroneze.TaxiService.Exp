@@ -74,7 +74,7 @@ public class RideEntityTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult result = entity.AddPosition(position);
+        Result result = entity.AddPosition(position);
 
         // -------------------------------------------------------
         // Assert
@@ -104,7 +104,7 @@ public class RideEntityTests
         // // -------------------------------------------------------
         // // Act
         // // -------------------------------------------------------
-        // IResult result = entity.Accept();
+        // Result result = entity.Accept();
         //
         // // -------------------------------------------------------
         // // Assert
@@ -133,7 +133,7 @@ public class RideEntityTests
         // // -------------------------------------------------------
         // // Act
         // // -------------------------------------------------------
-        // IResult result = entity.Accept();
+        // Result result = entity.Accept();
         //
         // // -------------------------------------------------------
         // // Assert

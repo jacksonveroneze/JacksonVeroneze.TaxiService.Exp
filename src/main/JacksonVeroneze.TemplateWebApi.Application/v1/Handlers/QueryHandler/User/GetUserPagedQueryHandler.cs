@@ -11,9 +11,9 @@ namespace JacksonVeroneze.TemplateWebApi.Application.v1.Handlers.QueryHandler.Us
 public sealed class GetUserPagedQueryHandler(
     IMapper mapper,
     IUserReadRepository repository)
-    : IRequestHandler<GetUserPagedQuery, IResult<GetUserPagedQueryResponse>>
+    : IRequestHandler<GetUserPagedQuery, Result<GetUserPagedQueryResponse>>
 {
-    public async Task<IResult<GetUserPagedQueryResponse>> Handle(
+    public async Task<Result<GetUserPagedQueryResponse>> Handle(
         GetUserPagedQuery request,
         CancellationToken cancellationToken)
     {
@@ -29,6 +29,6 @@ public sealed class GetUserPagedQueryHandler(
             mapper.Map<GetUserPagedQueryResponse>(page);
 
         return Result<GetUserPagedQueryResponse>
-            .Success(response);
+            .WithSuccess(response);
     }
 }

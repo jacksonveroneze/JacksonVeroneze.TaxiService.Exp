@@ -7,7 +7,7 @@ namespace JacksonVeroneze.TemplateWebApi.Api.Extensions;
 public static class ResultExtensions
 {
     public static ValidationProblemDetails ToProblemDetails<T>(
-        this IResult<T> result,
+        this Result<T> result,
         ControllerBase controllerBase,
         HttpStatusCode? statusCode = null)
     {
@@ -27,84 +27,84 @@ public static class ResultExtensions
         };
     }
 
-    public static IActionResult MatchPost<T>(this IResult<T> result,
+    public static IActionResult MatchPost<T>(this Result<T> result,
         ControllerBase controllerBase) where T : class
     {
         ArgumentNullException.ThrowIfNull(result);
         ArgumentNullException.ThrowIfNull(controllerBase);
 
-        return result.Status switch
+        return result.Type switch
         {
-            ResultStatus.Success => controllerBase.Created("", result.Value),
-            ResultStatus.Error => controllerBase.BadRequest(),
-            ResultStatus.NotFound => controllerBase.NotFound(),
-            ResultStatus.Invalid => controllerBase.Conflict(
+            ResultType.Success => controllerBase.Created("", result.Value),
+            ResultType.Error => controllerBase.BadRequest(),
+            ResultType.NotFound => controllerBase.NotFound(),
+            ResultType.Invalid => controllerBase.Conflict(
                 result.ToProblemDetails(controllerBase, HttpStatusCode.Conflict)),
             _ => throw new ArgumentException("")
         };
     }
 
-    public static IActionResult MatchPut<T>(this IResult<T> result,
+    public static IActionResult MatchPut<T>(this Result<T> result,
         ControllerBase controllerBase) where T : class
     {
         ArgumentNullException.ThrowIfNull(result);
         ArgumentNullException.ThrowIfNull(controllerBase);
 
-        return result.Status switch
+        return result.Type switch
         {
-            ResultStatus.Success => controllerBase.NoContent(),
-            ResultStatus.Invalid => controllerBase.BadRequest(
+            ResultType.Success => controllerBase.NoContent(),
+            ResultType.Invalid => controllerBase.BadRequest(
                 result.ToProblemDetails(controllerBase)),
-            ResultStatus.NotFound => controllerBase.NotFound(
+            ResultType.NotFound => controllerBase.NotFound(
                 result.ToProblemDetails(controllerBase)),
             _ => throw new ArgumentException("")
         };
     }
 
-    public static IActionResult MatchDelete<T>(this IResult<T> result,
+    public static IActionResult MatchDelete<T>(this Result<T> result,
         ControllerBase controllerBase) where T : class
     {
         ArgumentNullException.ThrowIfNull(result);
         ArgumentNullException.ThrowIfNull(controllerBase);
 
-        return result.Status switch
+        return result.Type switch
         {
-            ResultStatus.Success => controllerBase.NoContent(),
-            ResultStatus.Error => controllerBase.BadRequest(
+            ResultType.Success => controllerBase.NoContent(),
+            ResultType.Error => controllerBase.BadRequest(
                 result.ToProblemDetails(controllerBase)),
-            ResultStatus.NotFound => controllerBase.NotFound(
+            ResultType.NotFound => controllerBase.NotFound(
                 result.ToProblemDetails(controllerBase)),
             _ => throw new ArgumentException("")
         };
     }
 
-    public static ActionResult<T> MatchFind<T>(this IResult<T> result,
+    public static ActionResult<T> MatchFind<T>(this Result<T> result,
         ControllerBase controllerBase) where T : class
     {
         ArgumentNullException.ThrowIfNull(result);
         ArgumentNullException.ThrowIfNull(controllerBase);
 
-        return result.Status switch
+        return result.Type switch
         {
-            ResultStatus.Success => controllerBase.Ok(result.Value),
-            ResultStatus.Error => controllerBase.BadRequest(
+            ResultType.Success => controllerBase.Ok(result.Value),
+            ResultType.Error => controllerBase.BadRequest(
                 result.ToProblemDetails(controllerBase)),
-            ResultStatus.NotFound => controllerBase.NotFound(
+            ResultType.NotFound => controllerBase.NotFound(
                 result.ToProblemDetails(controllerBase)),
             _ => throw new ArgumentException("")
         };
     }
 
-    public static IActionResult MatchGet<T>(this IResult<T> result,
+    public static IActionResult MatchGet<T>(this Result<T> result,
         ControllerBase controllerBase) where T : class
     {
         ArgumentNullException.ThrowIfNull(result);
         ArgumentNullException.ThrowIfNull(controllerBase);
 
-        return result.Status switch
+        return result.Type switch
         {
-            ResultStatus.Success => controllerBase.Ok(result.Value),
-            ResultStatus.Error => controllerBase.BadRequest(
+            ResultType.Success => controllerBase.Ok(result.Value),
+            ResultType.Error => controllerBase.BadRequest(
                 result.ToProblemDetails(controllerBase)),
             _ => throw new ArgumentException("")
         };

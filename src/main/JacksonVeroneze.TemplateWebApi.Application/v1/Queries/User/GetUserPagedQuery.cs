@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace JacksonVeroneze.TemplateWebApi.Application.v1.Queries.User;
 
 public sealed record GetUserPagedQuery :
-    PagedQuery, IRequest<IResult<GetUserPagedQueryResponse>>
+    PagedQuery, IRequest<Result<GetUserPagedQueryResponse>>
 {
     private const string DefaultOrderBy = nameof(UserResponse.Name);
 

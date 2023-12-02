@@ -15,7 +15,7 @@ public class CpfValueObjectTests
         // -------------------------------------------------------
         // Arrange && Act
         // -------------------------------------------------------
-        IResult<CpfValueObject> result =
+        Result<CpfValueObject> result =
             CpfValueObject.Create(value);
 
         // -------------------------------------------------------
@@ -52,7 +52,7 @@ public class CpfValueObjectTests
         // -------------------------------------------------------
         // Arrange && Act
         // -------------------------------------------------------
-        IResult<CpfValueObject> result =
+        Result<CpfValueObject> result =
             CpfValueObject.Create(value);
 
         // -------------------------------------------------------

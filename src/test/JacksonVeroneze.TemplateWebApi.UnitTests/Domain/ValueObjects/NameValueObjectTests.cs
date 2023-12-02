@@ -15,7 +15,7 @@ public class NameValueObjectTests
         // -------------------------------------------------------
         // Arrange && Act
         // -------------------------------------------------------
-        IResult<NameValueObject> result =
+        Result<NameValueObject> result =
             NameValueObject.Create(value);
 
         // -------------------------------------------------------
@@ -47,7 +47,7 @@ public class NameValueObjectTests
         // -------------------------------------------------------
         // Arrange && Act
         // -------------------------------------------------------
-        IResult<NameValueObject> result =
+        Result<NameValueObject> result =
             NameValueObject.Create(value);
 
         // -------------------------------------------------------

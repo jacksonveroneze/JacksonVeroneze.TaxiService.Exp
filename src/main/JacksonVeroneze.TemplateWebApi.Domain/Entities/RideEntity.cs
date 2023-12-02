@@ -56,7 +56,7 @@ public class RideEntity : BaseEntityAggregateRoot
 
     #region Position
 
-    public IResult AddPosition(PositionEntity position)
+    public Result AddPosition(PositionEntity position)
     {
         ArgumentNullException.ThrowIfNull(position);
 
@@ -67,7 +67,7 @@ public class RideEntity : BaseEntityAggregateRoot
             _positions.Add(position);
         }
 
-        return Result.Success();
+        return Result.WithSuccess();
     }
 
     private double? CalculateDistance()
@@ -97,25 +97,25 @@ public class RideEntity : BaseEntityAggregateRoot
 
     #region Status
 
-    public IResult Accept(UserEntity driver)
+    public Result Accept(UserEntity driver)
     {
         ArgumentNullException.ThrowIfNull(driver);
 
         if (Status == RideStatus.Accepted)
         {
-            return Result.Invalid(
+            return Result.FromInvalid(
                 DomainErrors.Ride.StatusAlreadyDefined);
         }
 
         if (Status != RideStatus.Requested)
         {
-            return Result.Invalid(
+            return Result.FromInvalid(
                 DomainErrors.Ride.InvalidStatusSetAccept);
         }
 
         if (Driver is not null)
         {
-            return Result.Invalid(
+            return Result.FromInvalid(
                 DomainErrors.Ride.DriverAlready);
         }
 
@@ -124,20 +124,20 @@ public class RideEntity : BaseEntityAggregateRoot
 
         AddEvent(new RideAcceptedDomainEvent(Id));
 
-        return Result.Success();
+        return Result.WithSuccess();
     }
 
-    public IResult Start()
+    public Result Start()
     {
         if (Status == RideStatus.InProgress)
         {
-            return Result.Invalid(
+            return Result.FromInvalid(
                 DomainErrors.Ride.StatusAlreadyDefined);
         }
 
         if (Status != RideStatus.Accepted)
         {
-            return Result.Invalid(
+            return Result.FromInvalid(
                 DomainErrors.Ride.InvalidStatusSetStart);
         }
 
@@ -145,20 +145,20 @@ public class RideEntity : BaseEntityAggregateRoot
 
         AddEvent(new RideStartedDomainEvent(Id));
 
-        return Result.Success();
+        return Result.WithSuccess();
     }
 
-    public IResult Finish()
+    public Result Finish()
     {
         if (Status == RideStatus.Completed)
         {
-            return Result.Invalid(
+            return Result.FromInvalid(
                 DomainErrors.Ride.StatusAlreadyDefined);
         }
 
         if (Status != RideStatus.InProgress)
         {
-            return Result.Invalid(
+            return Result.FromInvalid(
                 DomainErrors.Ride.InvalidStatusSetFinish);
         }
 
@@ -173,20 +173,20 @@ public class RideEntity : BaseEntityAggregateRoot
 
         AddEvent(new RideFinishedDomainEvent(Id));
 
-        return Result.Success();
+        return Result.WithSuccess();
     }
 
-    public IResult Cancel()
+    public Result Cancel()
     {
         if (Status == RideStatus.Canceled)
         {
-            return Result.Invalid(
+            return Result.FromInvalid(
                 DomainErrors.Ride.InvalidStatusSetCancel);
         }
 
         if (Status == RideStatus.Completed)
         {
-            return Result.Invalid(
+            return Result.FromInvalid(
                 DomainErrors.Ride.InvalidStatusSetCancel);
         }
 
@@ -194,7 +194,7 @@ public class RideEntity : BaseEntityAggregateRoot
 
         AddEvent(new RideCanceledDomainEvent(Id));
 
-        return Result.Success();
+        return Result.WithSuccess();
     }
 
     #endregion

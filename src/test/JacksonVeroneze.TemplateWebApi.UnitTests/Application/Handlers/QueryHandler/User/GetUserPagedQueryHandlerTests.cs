@@ -67,7 +67,7 @@ public class GetUserPagedQueryHandlerTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult<GetUserPagedQueryResponse> result = await _handler
+        Result<GetUserPagedQueryResponse> result = await _handler
             .Handle(command, CancellationToken.None);
 
         // -------------------------------------------------------

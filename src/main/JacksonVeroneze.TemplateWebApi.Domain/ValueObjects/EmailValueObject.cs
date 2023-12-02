@@ -30,18 +30,18 @@ public class EmailValueObject : ValueObject
     public static implicit operator string(EmailValueObject? value)
         => value?.Value ?? string.Empty;
 
-    public static IResult<EmailValueObject> Create(string value)
+    public static Result<EmailValueObject> Create(string value)
     {
         if (string.IsNullOrEmpty(value) ||
             value.Length > MaxLength ||
             !EmailFormatRegex.Value.IsMatch(value))
         {
-            return Result<EmailValueObject>.Invalid(
+            return Result<EmailValueObject>.FromInvalid(
                 DomainErrors.Email.InvalidEmail);
         }
 
         EmailValueObject valueObject = new(value);
 
-        return Result<EmailValueObject>.Success(valueObject);
+        return Result<EmailValueObject>.WithSuccess(valueObject);
     }
 }

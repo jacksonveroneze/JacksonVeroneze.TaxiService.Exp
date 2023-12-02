@@ -11,39 +11,39 @@ public sealed class AcceptRideCommandHandler(
     IGetUserService userService,
     IGetRideService rideService,
     IStatusRideService statusRideService)
-    : IRequestHandler<AcceptRideCommand, IResult<VoidResponse>>
+    : IRequestHandler<AcceptRideCommand, Result<VoidResponse>>
 {
-    public async Task<IResult<VoidResponse>> Handle(
+    public async Task<Result<VoidResponse>> Handle(
         AcceptRideCommand request,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        IResult<RideEntity> rideResult = await rideService
+        Result<RideEntity> rideResult = await rideService
             .TryGetRideAsync(request.Id, cancellationToken);
 
         if (rideResult.IsFailure)
         {
             return Result<VoidResponse>
-                .NotFound(rideResult.Error!);
+                .FromNotFound(rideResult.Error!);
         }
 
-        IResult<UserEntity> driverResult = await userService
+        Result<UserEntity> driverResult = await userService
             .TryGetUserAsync(request.Body!.DriverId,
                 cancellationToken);
 
         if (driverResult.IsFailure)
         {
             return Result<VoidResponse>
-                .Invalid(driverResult.Error!);
+                .FromInvalid(driverResult.Error!);
         }
 
-        IResult result = await statusRideService
+        Result result = await statusRideService
             .TryAcceptAsync(rideResult.Value!,
                 driverResult.Value!, cancellationToken);
 
         return result.IsSuccess
-            ? Result<VoidResponse>.Success()
-            : Result<VoidResponse>.Invalid(result.Error!);
+            ? Result<VoidResponse>.WithSuccess()
+            : Result<VoidResponse>.FromInvalid(result.Error!);
     }
 }

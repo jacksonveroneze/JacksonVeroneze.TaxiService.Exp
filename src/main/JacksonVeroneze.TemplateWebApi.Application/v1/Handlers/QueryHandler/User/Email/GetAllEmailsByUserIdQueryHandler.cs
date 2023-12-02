@@ -12,9 +12,9 @@ public sealed class GetAllEmailsByUserIdQueryHandler(
     ILogger<GetAllEmailsByUserIdQueryHandler> logger,
     IMapper mapper,
     IUserReadRepository repository)
-    : IRequestHandler<GetAllEmailsByUserIdQuery, IResult<GetAllEmailsByUserIdQueryResponse>>
+    : IRequestHandler<GetAllEmailsByUserIdQuery, Result<GetAllEmailsByUserIdQueryResponse>>
 {
-    public async Task<IResult<GetAllEmailsByUserIdQueryResponse>> Handle(
+    public async Task<Result<GetAllEmailsByUserIdQueryResponse>> Handle(
         GetAllEmailsByUserIdQuery request,
         CancellationToken cancellationToken)
     {
@@ -28,7 +28,7 @@ public sealed class GetAllEmailsByUserIdQueryHandler(
             logger.LogNotFound(nameof(GetAllEmailsByUserIdQueryHandler),
                 nameof(Handle), request.Id, DomainErrors.User.NotFound);
 
-            return Result<GetAllEmailsByUserIdQueryResponse>.NotFound(
+            return Result<GetAllEmailsByUserIdQueryResponse>.FromNotFound(
                 DomainErrors.User.NotFound);
         }
 
@@ -41,6 +41,6 @@ public sealed class GetAllEmailsByUserIdQueryHandler(
             nameof(Handle), 1, emails.Count, emails.Count);
 
         return Result<GetAllEmailsByUserIdQueryResponse>
-            .Success(response);
+            .WithSuccess(response);
     }
 }

@@ -7,19 +7,19 @@ namespace JacksonVeroneze.TemplateWebApi.Application.v1.Handlers.CommandHandler.
 
 public sealed class InactivateUserCommandHandler(
     IInactivateUserService service)
-    : IRequestHandler<InactivateUserCommand, IResult<VoidResponse>>
+    : IRequestHandler<InactivateUserCommand, Result<VoidResponse>>
 {
-    public async Task<IResult<VoidResponse>> Handle(
+    public async Task<Result<VoidResponse>> Handle(
         InactivateUserCommand request,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        IResult result = await service
+        Result result = await service
             .InactivateAsync(request.Id, cancellationToken);
 
         return result.IsSuccess
-            ? Result<VoidResponse>.Success()
-            : Result<VoidResponse>.Invalid(result.Error!);
+            ? Result<VoidResponse>.WithSuccess()
+            : Result<VoidResponse>.FromInvalid(result.Error!);
     }
 }

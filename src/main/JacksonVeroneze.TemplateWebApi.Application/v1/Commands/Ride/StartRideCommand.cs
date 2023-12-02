@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace JacksonVeroneze.TemplateWebApi.Application.v1.Commands.Ride;
 
 public sealed record StartRideCommand :
-    IRequest<IResult<VoidResponse>>
+    IRequest<Result<VoidResponse>>
 {
     [FromRoute(Name = "rideId")]
     public Guid Id { get; init; }

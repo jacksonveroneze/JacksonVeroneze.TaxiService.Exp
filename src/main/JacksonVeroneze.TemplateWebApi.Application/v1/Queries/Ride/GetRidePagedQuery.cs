@@ -9,7 +9,7 @@ namespace JacksonVeroneze.TemplateWebApi.Application.v1.Queries.Ride;
 
 public sealed record GetRidePagedQuery() :
     PagedQuery(DefaultOrderBy, DefaultOrder),
-    IRequest<IResult<GetRidePagedQueryResponse>>
+    IRequest<Result<GetRidePagedQueryResponse>>
 {
     private const string DefaultOrderBy = nameof(RideResponse.Id);
 

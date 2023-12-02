@@ -12,9 +12,9 @@ public sealed class GetRideByIdQueryHandler(
     ILogger<GetRideByIdQueryHandler> logger,
     IMapper mapper,
     IRideReadRepository repository)
-    : IRequestHandler<GetRideByIdQuery, IResult<GetRideByIdQueryResponse>>
+    : IRequestHandler<GetRideByIdQuery, Result<GetRideByIdQueryResponse>>
 {
-    public async Task<IResult<GetRideByIdQueryResponse>> Handle(
+    public async Task<Result<GetRideByIdQueryResponse>> Handle(
         GetRideByIdQuery request,
         CancellationToken cancellationToken)
     {
@@ -26,7 +26,7 @@ public sealed class GetRideByIdQueryHandler(
         if (entity is null)
         {
             return Result<GetRideByIdQueryResponse>
-                .NotFound(DomainErrors.Ride.NotFound);
+                .FromNotFound(DomainErrors.Ride.NotFound);
         }
 
         GetRideByIdQueryResponse response =
@@ -36,6 +36,6 @@ public sealed class GetRideByIdQueryHandler(
             nameof(Handle), request.Id);
 
         return Result<GetRideByIdQueryResponse>
-            .Success(response);
+            .WithSuccess(response);
     }
 }

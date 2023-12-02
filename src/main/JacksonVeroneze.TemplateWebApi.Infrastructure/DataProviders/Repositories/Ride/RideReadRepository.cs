@@ -2,7 +2,6 @@ using System.Linq.Expressions;
 using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.TemplateWebApi.Application.v1.Interfaces.Repositories.Ride;
 using JacksonVeroneze.TemplateWebApi.Domain.Entities;
-using JacksonVeroneze.TemplateWebApi.Domain.Enums;
 using JacksonVeroneze.TemplateWebApi.Domain.Filters;
 using JacksonVeroneze.TemplateWebApi.Domain.Specifications.Base.Predicate;
 using JacksonVeroneze.TemplateWebApi.Domain.Specifications.Ride;

@@ -84,7 +84,7 @@ public class UserEntityTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult result = entity.Activate(now);
+        Result result = entity.Activate(now);
 
         // -------------------------------------------------------
         // Assert
@@ -127,7 +127,7 @@ public class UserEntityTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult result = entity.Activate(now);
+        Result result = entity.Activate(now);
 
         // -------------------------------------------------------
         // Assert
@@ -167,7 +167,7 @@ public class UserEntityTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult result = entity.Inactivate(now);
+        Result result = entity.Inactivate(now);
 
         // -------------------------------------------------------
         // Assert
@@ -210,7 +210,7 @@ public class UserEntityTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult result = entity.Inactivate(now);
+        Result result = entity.Inactivate(now);
 
         // -------------------------------------------------------
         // Assert
@@ -248,7 +248,7 @@ public class UserEntityTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult result = entity.AddEmail(emailEntity);
+        Result result = entity.AddEmail(emailEntity);
 
         // -------------------------------------------------------
         // Assert
@@ -282,7 +282,7 @@ public class UserEntityTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult result = entity.AddEmail(emailEntity);
+        Result result = entity.AddEmail(emailEntity);
 
         // -------------------------------------------------------
         // Assert
@@ -316,7 +316,7 @@ public class UserEntityTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        Func<IResult> action =
+        Func<Result> action =
             () => entity.AddEmail(emailEntity!);
 
         // -------------------------------------------------------
@@ -350,7 +350,7 @@ public class UserEntityTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult result = entity.RemoveEmail(emailEntity);
+        Result result = entity.RemoveEmail(emailEntity);
 
         // -------------------------------------------------------
         // Assert
@@ -380,7 +380,7 @@ public class UserEntityTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult result = entity.RemoveEmail(emailEntity);
+        Result result = entity.RemoveEmail(emailEntity);
 
         // -------------------------------------------------------
         // Assert
@@ -414,7 +414,7 @@ public class UserEntityTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        Func<IResult> action =
+        Func<Result> action =
             () => entity.RemoveEmail(emailEntity!);
 
         // -------------------------------------------------------

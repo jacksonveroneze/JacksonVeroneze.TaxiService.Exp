@@ -12,9 +12,9 @@ public sealed class GetUserByIdQueryHandler(
     ILogger<GetUserByIdQueryHandler> logger,
     IMapper mapper,
     IUserReadRepository repository)
-    : IRequestHandler<GetUserByIdQuery, IResult<GetUserByIdQueryResponse>>
+    : IRequestHandler<GetUserByIdQuery, Result<GetUserByIdQueryResponse>>
 {
-    public async Task<IResult<GetUserByIdQueryResponse>> Handle(
+    public async Task<Result<GetUserByIdQueryResponse>> Handle(
         GetUserByIdQuery request,
         CancellationToken cancellationToken)
     {
@@ -26,7 +26,7 @@ public sealed class GetUserByIdQueryHandler(
         if (entity is null)
         {
             return Result<GetUserByIdQueryResponse>
-                .NotFound(DomainErrors.User.NotFound);
+                .FromNotFound(DomainErrors.User.NotFound);
         }
 
         GetUserByIdQueryResponse response =
@@ -36,6 +36,6 @@ public sealed class GetUserByIdQueryHandler(
             nameof(Handle), request.Id);
 
         return Result<GetUserByIdQueryResponse>
-            .Success(response);
+            .WithSuccess(response);
     }
 }

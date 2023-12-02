@@ -31,19 +31,19 @@ public class CpfValueObject : ValueObject
     public static implicit operator string(CpfValueObject? value)
         => value?.Value ?? string.Empty;
 
-    public static IResult<CpfValueObject> Create(string value)
+    public static Result<CpfValueObject> Create(string value)
     {
         if (string.IsNullOrEmpty(value) ||
             value.Length < MinLength ||
             value.Length > MaxLength ||
             !CpfValidator.Validate(value))
         {
-            return Result<CpfValueObject>.Invalid(
+            return Result<CpfValueObject>.FromInvalid(
                 DomainErrors.User.InvalidCpf);
         }
 
         CpfValueObject valueObject = new(value);
 
-        return Result<CpfValueObject>.Success(valueObject);
+        return Result<CpfValueObject>.WithSuccess(valueObject);
     }
 }

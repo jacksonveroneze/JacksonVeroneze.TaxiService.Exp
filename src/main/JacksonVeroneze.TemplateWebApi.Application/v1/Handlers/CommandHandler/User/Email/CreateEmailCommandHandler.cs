@@ -14,9 +14,9 @@ public sealed class CreateEmailCommandHandler(
     IMapper mapper,
     IUserReadRepository readRepository,
     IUserWriteRepository writeRepository)
-    : IRequestHandler<CreateEmailCommand, IResult<CreateEmailCommandResponse>>
+    : IRequestHandler<CreateEmailCommand, Result<CreateEmailCommandResponse>>
 {
-    public async Task<IResult<CreateEmailCommandResponse>> Handle(
+    public async Task<Result<CreateEmailCommandResponse>> Handle(
         CreateEmailCommand request,
         CancellationToken cancellationToken)
     {
@@ -31,10 +31,10 @@ public sealed class CreateEmailCommandHandler(
                 nameof(Handle), request.Id, DomainErrors.User.NotFound);
 
             return Result<CreateEmailCommandResponse>
-                .NotFound(DomainErrors.User.NotFound);
+                .FromNotFound(DomainErrors.User.NotFound);
         }
 
-        IResult<EmailValueObject> resultEmailVo = EmailValueObject
+        Result<EmailValueObject> resultEmailVo = EmailValueObject
             .Create(request.Body!.Email!);
 
         if (resultEmailVo.IsFailure)
@@ -43,12 +43,12 @@ public sealed class CreateEmailCommandHandler(
                 nameof(Handle), request.Id, resultEmailVo.Error!);
 
             return Result<CreateEmailCommandResponse>
-                .Invalid(resultEmailVo.Error!);
+                .FromInvalid(resultEmailVo.Error!);
         }
 
         EmailEntity email = new(entity, resultEmailVo.Value!);
 
-        IResult result = entity.AddEmail(email);
+        Result result = entity.AddEmail(email);
 
         if (result.IsFailure)
         {
@@ -56,7 +56,7 @@ public sealed class CreateEmailCommandHandler(
                 nameof(Handle), request.Id, result.Error!);
 
             return Result<CreateEmailCommandResponse>
-                .Invalid(result.Error!);
+                .FromInvalid(result.Error!);
         }
 
         await writeRepository.UpdateAsync(entity, cancellationToken);
@@ -68,6 +68,6 @@ public sealed class CreateEmailCommandHandler(
             nameof(Handle), entity.Id);
 
         return Result<CreateEmailCommandResponse>
-            .Success(response);
+            .WithSuccess(response);
     }
 }

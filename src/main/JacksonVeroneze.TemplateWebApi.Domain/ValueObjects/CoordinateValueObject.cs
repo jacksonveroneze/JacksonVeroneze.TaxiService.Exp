@@ -25,17 +25,17 @@ public class CoordinateValueObject : ValueObject
         CoordinateValueObject value)
         => $"Lat: {value.Latitude} - Lon: {value.Longitude}";
 
-    public static IResult<CoordinateValueObject> Create(
+    public static Result<CoordinateValueObject> Create(
         float latitude, float longitude)
     {
         if (latitude == 0 || longitude == 0)
         {
-            return Result<CoordinateValueObject>.Invalid(
+            return Result<CoordinateValueObject>.FromInvalid(
                 DomainErrors.Coordinate.InvalidCoordinate);
         }
 
         CoordinateValueObject valueObject = new(latitude, longitude);
 
-        return Result<CoordinateValueObject>.Success(valueObject);
+        return Result<CoordinateValueObject>.WithSuccess(valueObject);
     }
 }

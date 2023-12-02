@@ -4,7 +4,7 @@ using JacksonVeroneze.TemplateWebApi.Application.v1.Models.Ride;
 namespace JacksonVeroneze.TemplateWebApi.Application.v1.Commands.Ride;
 
 public sealed record RequestRideCommand :
-    IRequest<IResult<RequestRideCommandResponse>>
+    IRequest<Result<RequestRideCommandResponse>>
 {
     [JsonPropertyName("user_id")]
     public Guid UserId { get; init; }

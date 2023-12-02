@@ -64,7 +64,7 @@ public class DeleteEmailCommandHandlerTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult<VoidResponse> result = await _handler
+        Result<VoidResponse> result = await _handler
             .Handle(command, CancellationToken.None);
 
         // -------------------------------------------------------
@@ -127,7 +127,7 @@ public class DeleteEmailCommandHandlerTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult<VoidResponse> result = await _handler
+        Result<VoidResponse> result = await _handler
             .Handle(command, CancellationToken.None);
 
         // -------------------------------------------------------
@@ -184,7 +184,7 @@ public class DeleteEmailCommandHandlerTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult<VoidResponse> result = await _handler
+        Result<VoidResponse> result = await _handler
             .Handle(command, CancellationToken.None);
 
         // -------------------------------------------------------

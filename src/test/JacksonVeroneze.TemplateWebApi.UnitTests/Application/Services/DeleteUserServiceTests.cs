@@ -65,7 +65,7 @@
 //         // -------------------------------------------------------
 //         // Act
 //         // -------------------------------------------------------
-//         IResult<VoidResponse> result = await _service
+//         Result<VoidResponse> result = await _service
 //             .DeleteAsync(userId, CancellationToken.None);
 //
 //         // -------------------------------------------------------
@@ -123,7 +123,7 @@
 //         // -------------------------------------------------------
 //         // Act
 //         // -------------------------------------------------------
-//         IResult<VoidResponse> result = await _service
+//         Result<VoidResponse> result = await _service
 //             .DeleteAsync(userId, CancellationToken.None);
 //
 //         // -------------------------------------------------------

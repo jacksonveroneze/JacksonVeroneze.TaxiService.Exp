@@ -20,16 +20,16 @@ public class PhoneValueObject : ValueObject
     public static implicit operator string(PhoneValueObject? value)
         => value?.Value ?? string.Empty;
 
-    public static IResult<PhoneValueObject> Create(string value)
+    public static Result<PhoneValueObject> Create(string value)
     {
         if (string.IsNullOrEmpty(value))
         {
-            return Result<PhoneValueObject>.Invalid(
+            return Result<PhoneValueObject>.FromInvalid(
                 DomainErrors.Phone.InvalidPhone);
         }
 
         PhoneValueObject valueObject = new(value);
 
-        return Result<PhoneValueObject>.Success(valueObject);
+        return Result<PhoneValueObject>.WithSuccess(valueObject);
     }
 }

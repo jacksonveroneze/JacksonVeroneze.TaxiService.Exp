@@ -11,7 +11,8 @@ public class RideStatusSpecification : BaseSpecification<RideEntity>
 {
     public override Expression<Func<RideEntity, bool>> ToExpression()
     {
-        RideStatus[] status = {
+        RideStatus[] status =
+        {
             RideStatus.Requested,
             RideStatus.Accepted,
             RideStatus.InProgress,

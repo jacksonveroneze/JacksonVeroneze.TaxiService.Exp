@@ -67,7 +67,7 @@ public class GetUserByIdQueryHandlerTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult<GetUserByIdQueryResponse> result = await _handler
+        Result<GetUserByIdQueryResponse> result = await _handler
             .Handle(query, CancellationToken.None);
 
         // -------------------------------------------------------
@@ -146,7 +146,7 @@ public class GetUserByIdQueryHandlerTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult<GetUserByIdQueryResponse> result = await _handler
+        Result<GetUserByIdQueryResponse> result = await _handler
             .Handle(command, CancellationToken.None);
 
         // -------------------------------------------------------

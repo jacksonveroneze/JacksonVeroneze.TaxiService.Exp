@@ -69,7 +69,7 @@ public class CreateUserCommandHandlerTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult<CreateUserCommandResponse> result = await _handler
+        Result<CreateUserCommandResponse> result = await _handler
             .Handle(command, CancellationToken.None);
 
         // -------------------------------------------------------
@@ -149,7 +149,7 @@ public class CreateUserCommandHandlerTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult<CreateUserCommandResponse> result = await _handler
+        Result<CreateUserCommandResponse> result = await _handler
             .Handle(command, CancellationToken.None);
 
         // -------------------------------------------------------
@@ -206,7 +206,7 @@ public class CreateUserCommandHandlerTests
         // -------------------------------------------------------
         // Act
         // -------------------------------------------------------
-        IResult<CreateUserCommandResponse> result = await _handler
+        Result<CreateUserCommandResponse> result = await _handler
             .Handle(command, CancellationToken.None);
 
         // -------------------------------------------------------

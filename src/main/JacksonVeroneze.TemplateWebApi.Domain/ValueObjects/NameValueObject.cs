@@ -23,18 +23,18 @@ public class NameValueObject : ValueObject
     public static implicit operator string(NameValueObject? value)
         => value?.Value ?? string.Empty;
 
-    public static IResult<NameValueObject> Create(string value)
+    public static Result<NameValueObject> Create(string value)
     {
         if (string.IsNullOrEmpty(value) ||
             value.Length <= MinLength ||
             value.Length > MaxLength)
         {
-            return Result<NameValueObject>.Invalid(
+            return Result<NameValueObject>.FromInvalid(
                 DomainErrors.User.InvalidName);
         }
 
         NameValueObject valueObject = new(value);
 
-        return Result<NameValueObject>.Success(valueObject);
+        return Result<NameValueObject>.WithSuccess(valueObject);
     }
 }

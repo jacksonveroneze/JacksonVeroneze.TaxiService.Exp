@@ -31,7 +31,7 @@ public sealed class EmailsController : ControllerBase
         GetAllEmailsByUserIdQuery query,
         CancellationToken cancellationToken)
     {
-        IResult<GetAllEmailsByUserIdQueryResponse> response =
+        Result<GetAllEmailsByUserIdQueryResponse> response =
             await _mediator.Send(query, cancellationToken);
 
         return response.MatchGet(this);
@@ -44,7 +44,7 @@ public sealed class EmailsController : ControllerBase
         CreateEmailCommand command,
         CancellationToken cancellationToken)
     {
-        IResult<CreateEmailCommandResponse> response = await _mediator
+        Result<CreateEmailCommandResponse> response = await _mediator
             .Send(command, cancellationToken);
 
         return response.MatchPost(this);
@@ -57,7 +57,7 @@ public sealed class EmailsController : ControllerBase
         DeleteEmailCommand command,
         CancellationToken cancellationToken)
     {
-        IResult<VoidResponse> response = await _mediator
+        Result<VoidResponse> response = await _mediator
             .Send(command, cancellationToken);
 
         return response.MatchDelete(this);

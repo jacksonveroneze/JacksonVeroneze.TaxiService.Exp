@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace JacksonVeroneze.TemplateWebApi.Application.v1.Queries.User.Email;
 
 public sealed record GetAllEmailsByUserIdQuery :
-    IRequest<IResult<GetAllEmailsByUserIdQueryResponse>>
+    IRequest<Result<GetAllEmailsByUserIdQueryResponse>>
 {
     [FromRoute(Name = "userId")]
     public Guid Id { get; init; }

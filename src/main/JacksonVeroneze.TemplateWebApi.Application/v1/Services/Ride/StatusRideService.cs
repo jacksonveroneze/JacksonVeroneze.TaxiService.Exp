@@ -12,20 +12,20 @@ public sealed class StatusRideService(
     IRideWriteRepository writeRepository)
     : IStatusRideService
 {
-    public async Task<IResult> TryAcceptAsync(
+    public async Task<Result> TryAcceptAsync(
         RideEntity ride, UserEntity user,
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(ride);
 
-        IResult result = ride.Accept(user);
+        Result result = ride.Accept(user);
 
         if (result.IsFailure)
         {
             logger.LogGenericError(nameof(StatusRideService),
                 nameof(TryAcceptAsync), ride.Id, result.Error!);
 
-            return Result.Invalid(result.Error!);
+            return Result.FromInvalid(result.Error!);
         }
 
         await writeRepository.UpdateAsync(ride, cancellationToken);
@@ -33,23 +33,23 @@ public sealed class StatusRideService(
         logger.LogProcessed(nameof(StatusRideService),
             nameof(TryStartAsync), ride.Id);
 
-        return Result<VoidResponse>.Success();
+        return Result<VoidResponse>.WithSuccess();
     }
 
-    public async Task<IResult> TryStartAsync(
+    public async Task<Result> TryStartAsync(
         RideEntity ride,
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(ride);
 
-        IResult result = ride.Start();
+        Result result = ride.Start();
 
         if (result.IsFailure)
         {
             logger.LogGenericError(nameof(StatusRideService),
                 nameof(TryStartAsync), ride.Id, result.Error!);
 
-            return Result.Invalid(result.Error!);
+            return Result.FromInvalid(result.Error!);
         }
 
         await writeRepository.UpdateAsync(ride, cancellationToken);
@@ -57,23 +57,23 @@ public sealed class StatusRideService(
         logger.LogProcessed(nameof(StatusRideService),
             nameof(TryStartAsync), ride.Id);
 
-        return Result<VoidResponse>.Success();
+        return Result<VoidResponse>.WithSuccess();
     }
 
-    public async Task<IResult> TryFinishAsync(
+    public async Task<Result> TryFinishAsync(
         RideEntity ride,
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(ride);
 
-        IResult result = ride.Finish();
+        Result result = ride.Finish();
 
         if (result.IsFailure)
         {
             logger.LogGenericError(nameof(StatusRideService),
                 nameof(TryFinishAsync), ride.Id, result.Error!);
 
-            return Result.Invalid(result.Error!);
+            return Result.FromInvalid(result.Error!);
         }
 
         await writeRepository.UpdateAsync(ride, cancellationToken);
@@ -81,23 +81,23 @@ public sealed class StatusRideService(
         logger.LogProcessed(nameof(StatusRideService),
             nameof(TryFinishAsync), ride.Id);
 
-        return Result<VoidResponse>.Success();
+        return Result<VoidResponse>.WithSuccess();
     }
 
-    public async Task<IResult> TryCancelAsync(
+    public async Task<Result> TryCancelAsync(
         RideEntity ride,
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(ride);
 
-        IResult result = ride.Cancel();
+        Result result = ride.Cancel();
 
         if (result.IsFailure)
         {
             logger.LogGenericError(nameof(StatusRideService),
                 nameof(TryCancelAsync), ride.Id, result.Error!);
 
-            return Result.Invalid(result.Error!);
+            return Result.FromInvalid(result.Error!);
         }
 
         await writeRepository.UpdateAsync(ride, cancellationToken);
@@ -105,6 +105,6 @@ public sealed class StatusRideService(
         logger.LogProcessed(nameof(StatusRideService),
             nameof(TryCancelAsync), ride.Id);
 
-        return Result<VoidResponse>.Success();
+        return Result<VoidResponse>.WithSuccess();
     }
 }

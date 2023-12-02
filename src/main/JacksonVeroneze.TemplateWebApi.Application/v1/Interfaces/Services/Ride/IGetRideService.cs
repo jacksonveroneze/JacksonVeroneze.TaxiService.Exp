@@ -5,7 +5,7 @@ namespace JacksonVeroneze.TemplateWebApi.Application.v1.Interfaces.Services.Ride
 
 public interface IGetRideService
 {
-    Task<IResult<RideEntity>> TryGetRideAsync(
+    Task<Result<RideEntity>> TryGetRideAsync(
         Guid id,
         CancellationToken cancellationToken = default);
 }

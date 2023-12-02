@@ -10,7 +10,7 @@ public sealed class GetRideService(
     IRideReadRepository readRepository)
     : IGetRideService
 {
-    public async Task<IResult<RideEntity>> TryGetRideAsync(
+    public async Task<Result<RideEntity>> TryGetRideAsync(
         Guid id,
         CancellationToken cancellationToken = default)
     {
@@ -18,7 +18,7 @@ public sealed class GetRideService(
             .GetByIdAsync(id, cancellationToken);
 
         return entity is not null
-            ? Result<RideEntity>.Success(entity)
-            : Result<RideEntity>.NotFound(DomainErrors.Ride.NotFound);
+            ? Result<RideEntity>.WithSuccess(entity)
+            : Result<RideEntity>.FromNotFound(DomainErrors.Ride.NotFound);
     }
 }

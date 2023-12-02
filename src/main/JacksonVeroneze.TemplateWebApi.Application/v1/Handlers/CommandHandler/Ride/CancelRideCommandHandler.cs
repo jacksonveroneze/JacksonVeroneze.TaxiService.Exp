@@ -9,29 +9,29 @@ namespace JacksonVeroneze.TemplateWebApi.Application.v1.Handlers.CommandHandler.
 public sealed class CancelRideCommandHandler(
     IGetRideService rideService,
     IStatusRideService statusRideService)
-    : IRequestHandler<CancelRideCommand, IResult<VoidResponse>>
+    : IRequestHandler<CancelRideCommand, Result<VoidResponse>>
 {
-    public async Task<IResult<VoidResponse>> Handle(
+    public async Task<Result<VoidResponse>> Handle(
         CancelRideCommand request,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        IResult<RideEntity> rideResult = await rideService
+        Result<RideEntity> rideResult = await rideService
             .TryGetRideAsync(request.Id, cancellationToken);
 
         if (rideResult.IsFailure)
         {
             return Result<VoidResponse>
-                .NotFound(rideResult.Error!);
+                .FromNotFound(rideResult.Error!);
         }
 
-        IResult result = await statusRideService
+        Result result = await statusRideService
             .TryCancelAsync(rideResult.Value!,
                 cancellationToken);
 
         return result.IsSuccess
-            ? Result<VoidResponse>.Success()
-            : Result<VoidResponse>.Invalid(result.Error!);
+            ? Result<VoidResponse>.WithSuccess()
+            : Result<VoidResponse>.FromInvalid(result.Error!);
     }
 }

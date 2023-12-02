@@ -16,9 +16,9 @@ public sealed class RequestRideCommandHandler(
     IUserReadRepository userReadRepository,
     IRideReadRepository readRepository,
     IRideWriteRepository writeRepository)
-    : IRequestHandler<RequestRideCommand, IResult<RequestRideCommandResponse>>
+    : IRequestHandler<RequestRideCommand, Result<RequestRideCommandResponse>>
 {
-    public async Task<IResult<RequestRideCommandResponse>> Handle(
+    public async Task<Result<RequestRideCommandResponse>> Handle(
         RequestRideCommand request,
         CancellationToken cancellationToken)
     {
@@ -32,7 +32,7 @@ public sealed class RequestRideCommandHandler(
 
         if (user is null)
         {
-            return Result<RequestRideCommandResponse>.Invalid(
+            return Result<RequestRideCommandResponse>.FromInvalid(
                 DomainErrors.User.NotFound);
         }
 
@@ -43,17 +43,17 @@ public sealed class RequestRideCommandHandler(
             logger.LogAlreadyExists(nameof(RequestRideCommandHandler),
                 nameof(Handle), user.Id, DomainErrors.Ride.AlreadyByUser);
 
-            return Result<RequestRideCommandResponse>.Invalid(
+            return Result<RequestRideCommandResponse>.FromInvalid(
                 DomainErrors.Ride.AlreadyByUser);
         }
 
-        IResult<CoordinateValueObject> from = CoordinateValueObject.Create(
+        Result<CoordinateValueObject> from = CoordinateValueObject.Create(
             request.LatitudeFrom, request.LongitudeFrom);
 
-        IResult<CoordinateValueObject> to = CoordinateValueObject.Create(
+        Result<CoordinateValueObject> to = CoordinateValueObject.Create(
             request.LatitudeTo, request.LongitudeTo);
 
-        IResult resultValidate = Result.FailuresOrSuccess(from, to);
+        Result resultValidate = Result.FailuresOrSuccess(from, to);
 
         if (resultValidate.IsFailure)
         {
@@ -61,7 +61,7 @@ public sealed class RequestRideCommandHandler(
                 nameof(Handle), resultValidate.Errors!.Count());
 
             return Result<RequestRideCommandResponse>
-                .Invalid(resultValidate.Errors!);
+                .FromInvalid(resultValidate.Errors!);
         }
 
         RideEntity entity = new(user, from.Value, to.Value);
@@ -75,6 +75,6 @@ public sealed class RequestRideCommandHandler(
         logger.LogCreated(nameof(RequestRideCommandHandler),
             nameof(Handle), entity.Id);
 
-        return Result<RequestRideCommandResponse>.Success(response);
+        return Result<RequestRideCommandResponse>.WithSuccess(response);
     }
 }

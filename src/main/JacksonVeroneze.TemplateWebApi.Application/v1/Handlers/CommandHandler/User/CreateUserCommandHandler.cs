@@ -14,9 +14,9 @@ public sealed class CreateUserCommandHandler(
     IMapper mapper,
     IUserReadRepository readRepository,
     IUserWriteRepository writeRepository)
-    : IRequestHandler<CreateUserCommand, IResult<CreateUserCommandResponse>>
+    : IRequestHandler<CreateUserCommand, Result<CreateUserCommandResponse>>
 {
-    public async Task<IResult<CreateUserCommandResponse>> Handle(
+    public async Task<Result<CreateUserCommandResponse>> Handle(
         CreateUserCommand request,
         CancellationToken cancellationToken)
     {
@@ -31,14 +31,14 @@ public sealed class CreateUserCommandHandler(
                 nameof(Handle), request.Document!,
                 DomainErrors.User.DuplicateCpf);
 
-            return Result<CreateUserCommandResponse>.Invalid(
+            return Result<CreateUserCommandResponse>.FromInvalid(
                 DomainErrors.User.DuplicateCpf);
         }
 
-        IResult<NameValueObject> name = NameValueObject.Create(request.Name!);
-        IResult<CpfValueObject> cpf = CpfValueObject.Create(request.Document!);
+        Result<NameValueObject> name = NameValueObject.Create(request.Name!);
+        Result<CpfValueObject> cpf = CpfValueObject.Create(request.Document!);
 
-        IResult resultValidate = Result.FailuresOrSuccess(name, cpf);
+        Result resultValidate = Result.FailuresOrSuccess(name, cpf);
 
         if (resultValidate.IsFailure)
         {
@@ -46,7 +46,7 @@ public sealed class CreateUserCommandHandler(
                 nameof(Handle), resultValidate.Errors!.Count());
 
             return Result<CreateUserCommandResponse>
-                .Invalid(resultValidate.Errors!);
+                .FromInvalid(resultValidate.Errors!);
         }
 
         UserEntity entity = new(name.Value!,
@@ -62,6 +62,6 @@ public sealed class CreateUserCommandHandler(
         logger.LogCreated(nameof(CreateUserCommandHandler),
             nameof(Handle), entity.Id);
 
-        return Result<CreateUserCommandResponse>.Success(response);
+        return Result<CreateUserCommandResponse>.WithSuccess(response);
     }
 }

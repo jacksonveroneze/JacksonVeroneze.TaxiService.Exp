@@ -4,7 +4,7 @@ namespace JacksonVeroneze.TemplateWebApi.Application.v1.Interfaces.Services.User
 
 public interface IInactivateUserService
 {
-    Task<IResult> InactivateAsync(
+    Task<Result> InactivateAsync(
         Guid userId,
         CancellationToken cancellationToken = default);
 }

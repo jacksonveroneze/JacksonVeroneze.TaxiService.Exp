@@ -8,7 +8,7 @@ namespace JacksonVeroneze.TemplateWebApi.Domain.Filters;
 public record RidePagedFilter
 {
     public RideStatus? Status { get; init; }
-    
+
     public Guid? UserId { get; init; }
 
     public PaginationParameters? Pagination { get; init; }

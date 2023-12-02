@@ -31,7 +31,7 @@ public sealed class UsersController : ControllerBase
         GetUserPagedQuery query,
         CancellationToken cancellationToken)
     {
-        IResult<BaseResponse> response = await _mediator
+        Result<GetUserPagedQueryResponse> response = await _mediator
             .Send(query, cancellationToken);
 
         return response.MatchGet(this);
@@ -44,7 +44,7 @@ public sealed class UsersController : ControllerBase
         GetUserByIdQuery query,
         CancellationToken cancellationToken)
     {
-        IResult<GetUserByIdQueryResponse> response =
+        Result<GetUserByIdQueryResponse> response =
             await _mediator.Send(query, cancellationToken);
 
         return response.MatchFind(this);
@@ -57,7 +57,7 @@ public sealed class UsersController : ControllerBase
         [FromBody] CreateUserCommand command,
         CancellationToken cancellationToken)
     {
-        IResult<BaseResponse> response = await _mediator
+        Result<CreateUserCommandResponse> response = await _mediator
             .Send(command, cancellationToken);
 
         return response.MatchPost(this);
@@ -70,7 +70,7 @@ public sealed class UsersController : ControllerBase
         DeleteUserCommand command,
         CancellationToken cancellationToken)
     {
-        IResult<BaseResponse> response = await _mediator
+        Result<VoidResponse> response = await _mediator
             .Send(command, cancellationToken);
 
         return response.MatchDelete(this);
@@ -83,7 +83,7 @@ public sealed class UsersController : ControllerBase
         ActivateUserCommand command,
         CancellationToken cancellationToken)
     {
-        IResult<BaseResponse> response = await _mediator
+        Result<VoidResponse> response = await _mediator
             .Send(command, cancellationToken);
 
         return response.MatchPut(this);
@@ -96,7 +96,7 @@ public sealed class UsersController : ControllerBase
         InactivateUserCommand command,
         CancellationToken cancellationToken)
     {
-        IResult<BaseResponse> response = await _mediator
+        Result<VoidResponse> response = await _mediator
             .Send(command, cancellationToken);
 
         return response.MatchPut(this);

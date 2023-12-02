@@ -31,7 +31,7 @@ public sealed class RidesController : ControllerBase
         GetRidePagedQuery query,
         CancellationToken cancellationToken)
     {
-        IResult<BaseResponse> response = await _mediator
+        Result<GetRidePagedQueryResponse> response = await _mediator
             .Send(query, cancellationToken);
 
         return response.MatchGet(this);
@@ -44,7 +44,7 @@ public sealed class RidesController : ControllerBase
         GetRideByIdQuery query,
         CancellationToken cancellationToken)
     {
-        IResult<GetRideByIdQueryResponse> response =
+        Result<GetRideByIdQueryResponse> response =
             await _mediator.Send(query, cancellationToken);
 
         return response.MatchFind(this);
@@ -57,7 +57,7 @@ public sealed class RidesController : ControllerBase
         [FromBody] RequestRideCommand command,
         CancellationToken cancellationToken)
     {
-        IResult<BaseResponse> response = await _mediator
+        Result<RequestRideCommandResponse> response = await _mediator
             .Send(command, cancellationToken);
 
         return response.MatchPost(this);
@@ -70,7 +70,7 @@ public sealed class RidesController : ControllerBase
         AcceptRideCommand command,
         CancellationToken cancellationToken)
     {
-        IResult<BaseResponse> response = await _mediator
+        Result<VoidResponse> response = await _mediator
             .Send(command, cancellationToken);
 
         return response.MatchPut(this);
@@ -83,7 +83,7 @@ public sealed class RidesController : ControllerBase
         StartRideCommand command,
         CancellationToken cancellationToken)
     {
-        IResult<BaseResponse> response = await _mediator
+        Result<VoidResponse> response = await _mediator
             .Send(command, cancellationToken);
 
         return response.MatchPut(this);
@@ -96,7 +96,7 @@ public sealed class RidesController : ControllerBase
         FinishRideCommand command,
         CancellationToken cancellationToken)
     {
-        IResult<BaseResponse> response = await _mediator
+        Result<VoidResponse> response = await _mediator
             .Send(command, cancellationToken);
 
         return response.MatchPut(this);
@@ -109,7 +109,7 @@ public sealed class RidesController : ControllerBase
         CancelRideCommand command,
         CancellationToken cancellationToken)
     {
-        IResult<BaseResponse> response = await _mediator
+        Result<VoidResponse> response = await _mediator
             .Send(command, cancellationToken);
 
         return response.MatchPut(this);
