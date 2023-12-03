@@ -16,7 +16,7 @@ public class EmailValueObject : ValueObject
         new(() => new Regex(EmailRegexPattern,
             RegexOptions.Compiled | RegexOptions.IgnoreCase));
 
-    public string? Value { get; private set; }
+    public string? Value { get; }
 
     protected EmailValueObject()
     {
@@ -30,17 +30,22 @@ public class EmailValueObject : ValueObject
     public static implicit operator string(EmailValueObject? value)
         => value?.Value ?? string.Empty;
 
-    public static Result<EmailValueObject> Create(string value)
+    private static bool IsValid(string? value)
     {
-        if (string.IsNullOrEmpty(value) ||
-            value.Length > MaxLength ||
-            !EmailFormatRegex.Value.IsMatch(value))
+        return !string.IsNullOrEmpty(value) &&
+               value.Length <= MaxLength &&
+               EmailFormatRegex.Value.IsMatch(value);
+    }
+
+    public static Result<EmailValueObject> Create(string? value)
+    {
+        if (!IsValid(value))
         {
             return Result<EmailValueObject>.FromInvalid(
                 DomainErrors.Email.InvalidEmail);
         }
 
-        EmailValueObject valueObject = new(value);
+        EmailValueObject valueObject = new(value!);
 
         return Result<EmailValueObject>.WithSuccess(valueObject);
     }

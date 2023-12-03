@@ -20,6 +20,6 @@ public sealed class ActivateUserCommandHandler(
 
         return result.IsSuccess
             ? Result<VoidResponse>.WithSuccess()
-            : Result<VoidResponse>.FromInvalid(result.Error!);
+            : Result<VoidResponse>.WithError(result.Error!);
     }
 }

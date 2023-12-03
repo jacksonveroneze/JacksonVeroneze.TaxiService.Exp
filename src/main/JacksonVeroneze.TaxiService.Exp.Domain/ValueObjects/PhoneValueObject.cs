@@ -6,7 +6,7 @@ namespace JacksonVeroneze.TaxiService.Exp.Domain.ValueObjects;
 
 public class PhoneValueObject : ValueObject
 {
-    public string? Value { get; private set; }
+    public string? Value { get; }
 
     protected PhoneValueObject()
     {
@@ -20,9 +20,14 @@ public class PhoneValueObject : ValueObject
     public static implicit operator string(PhoneValueObject? value)
         => value?.Value ?? string.Empty;
 
+    private static bool IsValid(string value)
+    {
+        return !string.IsNullOrEmpty(value);
+    }
+
     public static Result<PhoneValueObject> Create(string value)
     {
-        if (string.IsNullOrEmpty(value))
+        if (!IsValid(value))
         {
             return Result<PhoneValueObject>.FromInvalid(
                 DomainErrors.Phone.InvalidPhone);

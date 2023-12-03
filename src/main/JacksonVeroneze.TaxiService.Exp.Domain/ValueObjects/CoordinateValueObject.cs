@@ -6,9 +6,9 @@ namespace JacksonVeroneze.TaxiService.Exp.Domain.ValueObjects;
 
 public class CoordinateValueObject : ValueObject
 {
-    public float Latitude { get; private set; }
+    public float Latitude { get; }
 
-    public float Longitude { get; private set; }
+    public float Longitude { get; }
 
     protected CoordinateValueObject()
     {
@@ -25,10 +25,16 @@ public class CoordinateValueObject : ValueObject
         CoordinateValueObject value)
         => $"Lat: {value.Latitude} - Lon: {value.Longitude}";
 
+    private static bool IsValid(float latitude, float longitude)
+    {
+        return latitude is >= -90 and <= 90 &&
+               longitude is >= -100 and <= 100;
+    }
+
     public static Result<CoordinateValueObject> Create(
         float latitude, float longitude)
     {
-        if (latitude == 0 || longitude == 0)
+        if (!IsValid(latitude, longitude))
         {
             return Result<CoordinateValueObject>.FromInvalid(
                 DomainErrors.Coordinate.InvalidCoordinate);

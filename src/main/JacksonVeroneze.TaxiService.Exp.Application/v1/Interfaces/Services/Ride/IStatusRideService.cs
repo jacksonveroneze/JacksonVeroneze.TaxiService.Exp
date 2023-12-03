@@ -15,7 +15,7 @@ public interface IStatusRideService
         CancellationToken cancellationToken = default);
 
     Task<Result> TryFinishAsync(
-        RideEntity ride,
+        RideEntity ride, double distance,
         CancellationToken cancellationToken = default);
 
     Task<Result> TryCancelAsync(

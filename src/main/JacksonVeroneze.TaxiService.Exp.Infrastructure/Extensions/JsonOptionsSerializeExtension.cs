@@ -6,19 +6,19 @@ namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
 [ExcludeFromCodeCoverage]
 public static class JsonOptionsSerializeExtension
 {
-    public static IMvcBuilder AddJsonOptionsSerialize(
-        this IMvcBuilder builder)
+    public static IServiceCollection AddJsonOptionsSerialize(
+        this IServiceCollection services)
     {
-        builder.AddJsonOptions(options =>
+        services.ConfigureHttpJsonOptions(options =>
         {
-            options.JsonSerializerOptions.DefaultIgnoreCondition =
+            options.SerializerOptions.DefaultIgnoreCondition =
                 JsonIgnoreCondition.WhenWritingNull;
-            options.JsonSerializerOptions.WriteIndented = false;
-            options.JsonSerializerOptions.PropertyNameCaseInsensitive = false;
-            options.JsonSerializerOptions.Converters
+            options.SerializerOptions.WriteIndented = false;
+            options.SerializerOptions.PropertyNameCaseInsensitive = false;
+            options.SerializerOptions.Converters
                 .Add(new JsonStringEnumConverter());
         });
 
-        return builder;
+        return services;
     }
 }

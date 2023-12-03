@@ -30,14 +30,6 @@ public class RideWriteRepository : IRideWriteRepository
         await _unitOfWork.CommitAsync(cancellationToken);
     }
 
-    public Task DeleteAsync(RideEntity entity,
-        CancellationToken cancellationToken = default)
-    {
-        _dbSet.Remove(entity);
-
-        return _unitOfWork.CommitAsync(cancellationToken);
-    }
-
     public Task UpdateAsync(RideEntity entity,
         CancellationToken cancellationToken = default)
     {

@@ -99,6 +99,9 @@ public static class DomainErrors
             new("Ride.DriverAlready", "Motorista já informado");
 
         public static Error AlreadyByUser =>
-            new("Ride.AlreadyByUser", "Usuário já tem corrida no status: Pending ou Inprogress");
+            new("Ride.AlreadyByUser", "Usuário já tem corrida ativa");
+
+        public static Error InvalidStatusAddPosition =>
+            new("Ride.InvalidStatusAddPosition", "Para adicionar posições a corrida deve estar em progresso.");
     }
 }

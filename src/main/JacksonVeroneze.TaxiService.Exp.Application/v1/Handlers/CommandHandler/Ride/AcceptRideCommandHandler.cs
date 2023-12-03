@@ -35,7 +35,7 @@ public sealed class AcceptRideCommandHandler(
         if (driverResult.IsFailure)
         {
             return Result<VoidResponse>
-                .FromInvalid(driverResult.Error!);
+                .WithError(driverResult.Error!);
         }
 
         Result result = await statusRideService
@@ -44,6 +44,6 @@ public sealed class AcceptRideCommandHandler(
 
         return result.IsSuccess
             ? Result<VoidResponse>.WithSuccess()
-            : Result<VoidResponse>.FromInvalid(result.Error!);
+            : Result<VoidResponse>.WithError(result.Error!);
     }
 }

@@ -6,17 +6,12 @@ using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Base;
 namespace JacksonVeroneze.TaxiService.Exp.Domain.Specifications.User;
 
 [ExcludeFromCodeCoverage]
-public class UserCpfSpecification : BaseSpecification<UserEntity>
+public class UserEmailSpecification(string email) :
+    BaseSpecification<UserEntity>
 {
-    private readonly string _cpf;
-
-    public UserCpfSpecification(string cpf)
-    {
-        _cpf = cpf;
-    }
-
     public override Expression<Func<UserEntity, bool>> ToExpression()
     {
-        return spec => spec.Cpf.Value == _cpf;
+        return spec => spec.Emails
+            .Any(item => item.Email.Value == email);
     }
 }

@@ -7,7 +7,7 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Ride;
 public sealed record AcceptRideCommand :
     IRequest<Result<VoidResponse>>
 {
-    [FromRoute(Name = "rideId")]
+    [FromRoute(Name = "id")]
     public Guid Id { get; init; }
 
     [FromBody]

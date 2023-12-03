@@ -1,8 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentValidation.Results;
 using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
-using Exceptions_ValidationException = JacksonVeroneze.TaxiService.Exp.Application.Exceptions.ValidationException;
-using ValidationException = JacksonVeroneze.TaxiService.Exp.Application.Exceptions.ValidationException;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.Behaviors;
 
@@ -37,28 +35,18 @@ public sealed class ValidationBehavior<TRequest, TResponse>(
             validators.Select(validator => validator
                 .ValidateAsync(context, cancellationToken)));
 
-        Dictionary<string, string[]> failures = validationfailures
-            .Where(result => !result.IsValid)
+        ValidationFailure[] res = validationfailures
             .SelectMany(item => item.Errors)
-            .GroupBy(
-                p => p.PropertyName,
-                e => e.ErrorMessage,
-                (propertyName, errorMessages) => new
-                {
-                    Key = propertyName,
-                    Values = errorMessages
-                        .Distinct().ToArray()
-                })
-            .ToDictionary(k => k.Key, v => v.Values);
+            .ToArray();
 
         logger.LogTotalViolations(
             nameof(ValidationBehavior<TRequest, TResponse>),
             typeof(TRequest).Name,
-            failures.Count);
+            res.Length);
 
-        if (failures.Any())
+        if (res.Any())
         {
-            throw new Exceptions_ValidationException(failures);
+            throw new ValidationException(res);
         }
 
         return await next();

@@ -14,8 +14,11 @@ public static class LoggingExtension
 
         host.AddLogging(conf =>
         {
-            conf.ApplicationName = appConfiguration.Application!.Name;
-            conf.ApplicationVersion = appConfiguration.Application!.Version!.ToString();
+            conf.ApplicationName = appConfiguration
+                .Application!.Name;
+
+            conf.ApplicationVersion = appConfiguration
+                .Application!.Version!.ToString();
         });
 
         return host;

@@ -22,13 +22,8 @@ public static class OpenTelemetryExtension
             return services;
         }
 
-        Action<ResourceBuilder> configureResource = r => r.AddService(
-            appConfiguration.AppName,
-            serviceVersion: appConfiguration.AppVersion.ToString(),
-            serviceInstanceId: Environment.MachineName);
-
         services.AddOpenTelemetry()
-            .ConfigureResource(configureResource)
+            .ConfigureResource(ConfigureResource)
             .WithTracing(builder =>
             {
                 ResourceBuilder resourceBuilder = ResourceBuilder
@@ -58,5 +53,10 @@ public static class OpenTelemetryExtension
             });
 
         return services;
+
+        void ConfigureResource(ResourceBuilder r) =>
+            r.AddService(appConfiguration.AppName,
+                serviceVersion: appConfiguration.AppVersion.ToString(),
+                serviceInstanceId: Environment.MachineName);
     }
 }

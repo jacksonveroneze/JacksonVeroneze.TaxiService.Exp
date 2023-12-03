@@ -31,10 +31,7 @@ public class PositionMapping : IEntityTypeConfiguration<PositionEntity>
                 .IsRequired();
         });
 
-        builder.HasOne(p => p.Ride)
-            .WithMany(b => b.Positions)
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
+        builder.HasOne(p => p.Ride);
 
         builder.ConfigureDefaultFiledsMapping();
     }

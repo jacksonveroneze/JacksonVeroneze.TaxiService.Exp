@@ -12,11 +12,11 @@ public sealed record RequestRideCommand :
     [JsonPropertyName("latitude_from")]
     public float LatitudeFrom { get; init; }
 
-    [JsonPropertyName("longitude_from")]
-    public float LongitudeFrom { get; init; }
-
     [JsonPropertyName("latitude_to")]
     public float LatitudeTo { get; init; }
+
+    [JsonPropertyName("longitude_from")]
+    public float LongitudeFrom { get; init; }
 
     [JsonPropertyName("longitude_to")]
     public float LongitudeTo { get; init; }

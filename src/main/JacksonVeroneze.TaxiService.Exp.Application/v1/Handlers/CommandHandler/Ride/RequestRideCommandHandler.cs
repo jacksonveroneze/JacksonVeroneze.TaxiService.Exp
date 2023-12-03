@@ -1,12 +1,11 @@
 using JacksonVeroneze.NET.Result;
+using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Ride;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Ride;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Ride;
-using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Domain.Core.Errors;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
-using JacksonVeroneze.TaxiService.Exp.Domain.ValueObjects;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.CommandHandler.Ride;
 
@@ -27,16 +26,14 @@ public sealed class RequestRideCommandHandler(
         UserEntity? user = await userReadRepository
             .GetByIdAsync(request.UserId, cancellationToken);
 
-        Task<bool> existsRideByUserTask = readRepository
-            .ExistsByUserAsync(request.UserId, cancellationToken);
-
         if (user is null)
         {
-            return Result<RequestRideCommandResponse>.FromInvalid(
+            return Result<RequestRideCommandResponse>.WithError(
                 DomainErrors.User.NotFound);
         }
 
-        bool existsRideByUser = await existsRideByUserTask;
+        bool existsRideByUser = await readRepository
+            .ExistsActiveByUserIdAsync(request.UserId, cancellationToken);
 
         if (existsRideByUser)
         {
@@ -47,33 +44,27 @@ public sealed class RequestRideCommandHandler(
                 DomainErrors.Ride.AlreadyByUser);
         }
 
-        Result<CoordinateValueObject> from = CoordinateValueObject.Create(
-            request.LatitudeFrom, request.LongitudeFrom);
+        Result<RideEntity> entity = RideEntity.Create(user,
+            request.LatitudeFrom, request.LatitudeTo,
+            request.LongitudeFrom, request.LongitudeTo);
 
-        Result<CoordinateValueObject> to = CoordinateValueObject.Create(
-            request.LatitudeTo, request.LongitudeTo);
-
-        Result resultValidate = Result.FailuresOrSuccess(from, to);
-
-        if (resultValidate.IsFailure)
+        if (entity.IsFailure)
         {
             logger.LogGenericError(nameof(RequestRideCommandHandler),
-                nameof(Handle), resultValidate.Errors!.Count());
+                nameof(Handle), entity.Errors!.Count());
 
             return Result<RequestRideCommandResponse>
-                .FromInvalid(resultValidate.Errors!);
+                .FromInvalid(entity.Errors!);
         }
 
-        RideEntity entity = new(user, from.Value, to.Value);
-
         await writeRepository.CreateAsync(
-            entity, cancellationToken);
+            entity.Value!, cancellationToken);
 
         RequestRideCommandResponse response =
-            mapper.Map<RequestRideCommandResponse>(entity);
+            mapper.Map<RequestRideCommandResponse>(entity.Value);
 
         logger.LogCreated(nameof(RequestRideCommandHandler),
-            nameof(Handle), entity.Id);
+            nameof(Handle), entity.Value!.Id);
 
         return Result<RequestRideCommandResponse>.WithSuccess(response);
     }

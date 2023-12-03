@@ -32,7 +32,7 @@ public static class CacheServicesExtension
                 {
                     Ssl = false,
                     AbortOnConnectFail = false,
-                    EndPoints = { appConfiguration.Cache?.Endpoint },
+                    EndPoints = { appConfiguration.Cache!.Endpoint! },
                     ClientName = $"{appConfiguration.AppName}-{Guid.NewGuid()}"
                 };
             });

@@ -1,8 +1,8 @@
 using JacksonVeroneze.NET.Result;
+using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.System;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Services.User;
-using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Domain.Core.Errors;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 
@@ -37,7 +37,7 @@ public sealed class InactivateUserService(
             logger.LogAlreadyProcessed(nameof(InactivateUserService),
                 nameof(InactivateAsync), userId, result.Error!);
 
-            return Result.FromInvalid(result.Error!);
+            return Result.WithError(result.Error!);
         }
 
         await writeRepository.UpdateAsync(

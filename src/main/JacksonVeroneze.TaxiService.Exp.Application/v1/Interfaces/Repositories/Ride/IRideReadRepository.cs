@@ -6,7 +6,7 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories
 
 public interface IRideReadRepository
 {
-    Task<bool> ExistsByUserAsync(
+    Task<bool> ExistsActiveByUserIdAsync(
         Guid userId,
         CancellationToken cancellationToken = default);
 

@@ -7,11 +7,10 @@ namespace JacksonVeroneze.TaxiService.Exp.Domain.ValueObjects;
 
 public class CpfValueObject : ValueObject
 {
-    private const int MinLength = 11;
-    private const int MaxLength = 14;
+    private const int Length = 11;
     private const string MaskFormat = @"000\.000\.000\-00";
 
-    public string? Value { get; private set; }
+    public string? Value { get; }
 
     public string ValueFormatted =>
         Convert.ToUInt64(Value).ToString(MaskFormat);
@@ -22,28 +21,30 @@ public class CpfValueObject : ValueObject
 
     private CpfValueObject(string value)
     {
-        Value = value
-            .Replace(".", string.Empty, StringComparison.OrdinalIgnoreCase)
-            .Replace("-", string.Empty, StringComparison.OrdinalIgnoreCase)
-            .Replace("/", string.Empty, StringComparison.OrdinalIgnoreCase);
+        Value = value;
     }
 
     public static implicit operator string(CpfValueObject? value)
         => value?.Value ?? string.Empty;
 
-    public static Result<CpfValueObject> Create(string value)
+    private static bool IsValid(string? value)
     {
-        if (string.IsNullOrEmpty(value) ||
-            value.Length < MinLength ||
-            value.Length > MaxLength ||
-            !CpfValidator.Validate(value))
+        return !string.IsNullOrEmpty(value) &&
+               value.Length == Length &&
+               CpfValidator.Validate(value);
+    }
+
+    public static Result<CpfValueObject> Create(string? value)
+    {
+        if (!IsValid(value))
         {
             return Result<CpfValueObject>.FromInvalid(
                 DomainErrors.User.InvalidCpf);
         }
 
-        CpfValueObject valueObject = new(value);
+        CpfValueObject valueObject = new(value!);
 
-        return Result<CpfValueObject>.WithSuccess(valueObject);
+        return Result<CpfValueObject>
+            .WithSuccess(valueObject);
     }
 }

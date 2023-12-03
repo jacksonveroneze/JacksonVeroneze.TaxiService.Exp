@@ -11,7 +11,7 @@ public static class MediatorExtension
         this IServiceCollection services)
     {
         services.AddMediatR(conf =>
-            conf.RegisterServicesFromAssemblyContaining<TaxiService.Exp.Application.AssemblyReference>());
+            conf.RegisterServicesFromAssemblyContaining<Application.AssemblyReference>());
 
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 

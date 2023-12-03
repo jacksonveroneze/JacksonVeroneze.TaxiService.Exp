@@ -7,7 +7,7 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User.Email;
 public sealed record CreateEmailCommand :
     IRequest<Result<CreateEmailCommandResponse>>
 {
-    [FromRoute(Name = "userId")]
+    [FromRoute(Name = "id")]
     public Guid Id { get; init; }
 
     [FromBody]

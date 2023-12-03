@@ -4,70 +4,27 @@ import {uuidv4} from 'https://jslib.k6.io/k6-utils/1.4.0/index.js';
 import {crypto} from "k6/experimental/webcrypto";
 import {randomIntBetween} from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
-// export const options = {
-//     //duration: '60s',
-//     iterations: 1000,
-//     vus: 10,
-// };
-
-export let options = {
-    stages: [
-        {duration: '3m', target: 0}, // simulate ramp-up of traffic from 1 to 3 virtual users over 0.5 minutes.
-        {duration: '5m', target: 100}, // simulate ramp-up of traffic from 1 to 3 virtual users over 0.5 minutes.
-        {duration: '2m', target: 15}, // ramp-down to 0 users
-        {duration: '1m', target: 150}, // ramp-down to 0 users
-        {duration: '5m', target: 50}, // ramp-down to 0 users
-        {duration: '30s', target: 0}, // ramp-down to 0 users
-    ],
+export const options = {
+    //duration: '60s',
+    iterations: 1,
+    vus: 1,
 };
 
-//const url = 'http://10.0.0.150/ta';
-//const url = 'http://localhost:8088/api';
-//const url = 'http://localhost:9999';
-const url = 'http://localhost:7000';
-//const url = 'http://localhost:9999';
-//const url = 'http://10.152.183.41:8084';
-
-// export const options = {
-//     vus: 50,
+// export let options = {
 //     stages: [
-//         {duration: '1m', target: 10},
-//         {duration: '2m', target: 40},
-//         {duration: '30s', target: 0}
-//     ]
-//     // scenarios: {
-//     // shared_iter_scenario: {
-//     //     executor: "shared-iterations",
-//     //     vus: 100,
-//     //     iterations: 1000,
-//     //     startTime: "0s",
-//     // },
-//     // per_vu_scenario: {
-//     //     executor: "per-vu-iterations",
-//     //     vus: 10,
-//     //     iterations: 1000,
-//     //     startTime: "120s",
-//     // },
-//     //     ramping_vus: {
-//     //         executor: 'ramping-vus',
-//     //         startVUs: 10,
-//     //         stages: [
-//     //             {duration: '200s', target: 5},
-//     //             {duration: '300s', target: 500},
-//     //             {duration: '200s', target: 5},
-//     //             {duration: '300s', target: 500},
-//     //             {duration: '200s', target: 5},
-//     //             {duration: '300s', target: 500},
-//     //             {duration: '200s', target: 5},
-//     //             {duration: '300s', target: 500},
-//     //         ],
-//     //     }
-//     // },
+//         {duration: '3m', target: 0}, // simulate ramp-up of traffic from 1 to 3 virtual users over 0.5 minutes.
+//         {duration: '5m', target: 100}, // simulate ramp-up of traffic from 1 to 3 virtual users over 0.5 minutes.
+//         {duration: '2m', target: 15}, // ramp-down to 0 users
+//         {duration: '1m', target: 150}, // ramp-down to 0 users
+//         {duration: '5m', target: 50}, // ramp-down to 0 users
+//         {duration: '30s', target: 0}, // ramp-down to 0 users
+//     ],
 // };
 
+// const url = 'http://localhost/taxi-service-exp';
+const url = 'http://localhost:7000';
 
 export default function () {
-    // Common
     let headers = {
         headers: {
             'Content-Type': 'application/json',
@@ -90,16 +47,27 @@ export default function () {
 
     check(responsePostUser, {'[User] - Created - status is 201': (r) => r.status === 201});
 
+    //console.log(`User id: ${idUser}`)
+
     // 2. Get User By Id
-    const responseGetById = http.get(`${url}/api/v1/users/${idUser}`, headers);
+    const responseGetById = http.get(`${url}/api/v1/users/${idUser}?page=1&page_size=2`, headers);
     check(responseGetById, {'[User] - GetById - status is 200': (r) => r.status === 200});
 
-    const responseGetPagedd = http.get(`${url}/api/v1/users/`, headers);
-    check(responseGetPagedd, {'[User] - GetPaged - status is 200': (r) => r.status === 200});
+    const responseGetPaged = http.get(`${url}/api/v1/users/`, headers);
+    check(responseGetPaged, {'[User] - GetPaged - status is 200': (r) => r.status === 200});
 
     // 3. Activate User
     const responseActivated = http.put(`${url}/api/v1/users/${idUser}/activate`, {}, headers);
     check(responseActivated, {'[User] - Activated - status is 204': (r) => r.status === 204});
+
+    // 4. Activate User
+    const responseInactivated = http.put(`${url}/api/v1/users/${idUser}/inactivate`, {}, headers);
+    check(responseInactivated, {'[User] - Inactivated - status is 204': (r) => r.status === 204});
+
+    // 5. Delete User
+    // const responseDelete = http.del(`${url}/api/v1/users/${idUser}`, null, headers);
+    // check(responseDelete, {'[User] - Delete - status is 204': (r) => r.status === 204});
+
 
     // 1. Create Ride
     const bodyRide = JSON.stringify({
@@ -114,6 +82,8 @@ export default function () {
 
     check(responsePostRide, {'[Ride] - Created - status is 201': (r) => r.status === 201});
 
+    console.info(`Ride id: ${idRide}`)
+
     // 2. Get Ride By Id
     const responseGetRideById = http.get(`${url}/api/v1/rides/${idRide}`, headers);
     check(responseGetRideById, {'[Ride] - GetById - status is 200': (r) => r.status === 200});
@@ -124,11 +94,35 @@ export default function () {
     // 4. Start Ride
     start(idRide, headers);
 
+    const positions = [
+        {
+            ride_id: idRide,
+            latitude: -27.4093877,
+            longitude: -51.5631909,
+        },
+        {
+            ride_id: idRide,
+            latitude: -27.3330812,
+            longitude: -51.6073263,
+        },
+        {
+            ride_id: idRide,
+            latitude: -27.1678441,
+            longitude: -51.5048672,
+        }
+    ];
+
+    for (let pos of positions) {
+        const bodyPositionRide = JSON.stringify(pos);
+        const responsePostPosition = http.post(`${url}/api/v1/positions`, bodyPositionRide, headers);
+        check(responsePostPosition, {'[Position] - Created - status is 201': (r) => r.status === 201});
+    }
+
     // 5. Finish Ride
     finish(idRide, headers);
 
     // 5. Finish Ride
-    cancel(idRide, headers);
+    //cancel(idRide, headers);
 
     // 2. Delete User
     //const responseDelete = http.del(`${url}/api/v1/users/${idUser}`, null, headers);

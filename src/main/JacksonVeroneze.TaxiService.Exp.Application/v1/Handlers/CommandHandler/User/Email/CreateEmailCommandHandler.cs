@@ -1,11 +1,10 @@
 using JacksonVeroneze.NET.Result;
+using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User.Email;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User.Email;
-using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Domain.Core.Errors;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
-using JacksonVeroneze.TaxiService.Exp.Domain.ValueObjects;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.CommandHandler.User.Email;
 
@@ -22,10 +21,10 @@ public sealed class CreateEmailCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        UserEntity? entity = await readRepository
+        UserEntity? user = await readRepository
             .GetByIdAsync(request.Id, cancellationToken);
 
-        if (entity is null)
+        if (user is null)
         {
             logger.LogNotFound(nameof(CreateEmailCommandHandler),
                 nameof(Handle), request.Id, DomainErrors.User.NotFound);
@@ -34,21 +33,18 @@ public sealed class CreateEmailCommandHandler(
                 .FromNotFound(DomainErrors.User.NotFound);
         }
 
-        Result<EmailValueObject> resultEmailVo = EmailValueObject
-            .Create(request.Body!.Email!);
+        Result<EmailEntity> entity = EmailEntity.Create(user, request.Body!.Email);
 
-        if (resultEmailVo.IsFailure)
+        if (entity.IsFailure)
         {
             logger.LogGenericError(nameof(CreateEmailCommandHandler),
-                nameof(Handle), request.Id, resultEmailVo.Error!);
+                nameof(Handle), request.Id, entity.Error!);
 
             return Result<CreateEmailCommandResponse>
-                .FromInvalid(resultEmailVo.Error!);
+                .FromInvalid(entity.Error!);
         }
 
-        EmailEntity email = new(entity, resultEmailVo.Value!);
-
-        Result result = entity.AddEmail(email);
+        Result result = user.AddEmail(entity.Value!);
 
         if (result.IsFailure)
         {
@@ -59,13 +55,13 @@ public sealed class CreateEmailCommandHandler(
                 .FromInvalid(result.Error!);
         }
 
-        await writeRepository.UpdateAsync(entity, cancellationToken);
+        await writeRepository.UpdateAsync(user, cancellationToken);
 
         CreateEmailCommandResponse response =
-            mapper.Map<CreateEmailCommandResponse>(email);
+            mapper.Map<CreateEmailCommandResponse>(entity.Value);
 
         logger.LogProcessed(nameof(CreateEmailCommandHandler),
-            nameof(Handle), entity.Id);
+            nameof(Handle), entity.Value!.Id);
 
         return Result<CreateEmailCommandResponse>
             .WithSuccess(response);

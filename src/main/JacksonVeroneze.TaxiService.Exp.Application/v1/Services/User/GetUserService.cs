@@ -7,7 +7,6 @@ using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Services.User;
 
 public sealed class GetUserService(
-    ILogger<GetUserService> logger,
     IUserReadRepository readRepository)
     : IGetUserService
 {

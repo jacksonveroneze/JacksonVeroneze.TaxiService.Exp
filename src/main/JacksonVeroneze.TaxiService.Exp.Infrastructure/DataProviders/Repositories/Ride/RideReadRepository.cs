@@ -27,7 +27,8 @@ public class RideReadRepository : BaseReadRepository<RideEntity>, IRideReadRepos
         _dbSet = context.Set<RideEntity>();
     }
 
-    public async Task<bool> ExistsByUserAsync(Guid userId,
+    public async Task<bool> ExistsActiveByUserIdAsync(
+        Guid userId,
         CancellationToken cancellationToken = default)
     {
         RideUserIdSpecification specUserId = new(userId);

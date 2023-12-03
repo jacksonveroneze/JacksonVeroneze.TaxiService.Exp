@@ -1,8 +1,8 @@
 using JacksonVeroneze.NET.Result;
+using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Ride;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Services.Ride;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Base;
-using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Services.Ride;
@@ -25,7 +25,7 @@ public sealed class StatusRideService(
             logger.LogGenericError(nameof(StatusRideService),
                 nameof(TryAcceptAsync), ride.Id, result.Error!);
 
-            return Result.FromInvalid(result.Error!);
+            return Result.WithError(result.Error!);
         }
 
         await writeRepository.UpdateAsync(ride, cancellationToken);
@@ -49,7 +49,7 @@ public sealed class StatusRideService(
             logger.LogGenericError(nameof(StatusRideService),
                 nameof(TryStartAsync), ride.Id, result.Error!);
 
-            return Result.FromInvalid(result.Error!);
+            return Result.WithError(result.Error!);
         }
 
         await writeRepository.UpdateAsync(ride, cancellationToken);
@@ -61,19 +61,19 @@ public sealed class StatusRideService(
     }
 
     public async Task<Result> TryFinishAsync(
-        RideEntity ride,
+        RideEntity ride, double distance,
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(ride);
 
-        Result result = ride.Finish();
+        Result result = ride.Finish(distance);
 
         if (result.IsFailure)
         {
             logger.LogGenericError(nameof(StatusRideService),
                 nameof(TryFinishAsync), ride.Id, result.Error!);
 
-            return Result.FromInvalid(result.Error!);
+            return Result.WithError(result.Error!);
         }
 
         await writeRepository.UpdateAsync(ride, cancellationToken);
@@ -97,7 +97,7 @@ public sealed class StatusRideService(
             logger.LogGenericError(nameof(StatusRideService),
                 nameof(TryCancelAsync), ride.Id, result.Error!);
 
-            return Result.FromInvalid(result.Error!);
+            return Result.WithError(result.Error!);
         }
 
         await writeRepository.UpdateAsync(ride, cancellationToken);

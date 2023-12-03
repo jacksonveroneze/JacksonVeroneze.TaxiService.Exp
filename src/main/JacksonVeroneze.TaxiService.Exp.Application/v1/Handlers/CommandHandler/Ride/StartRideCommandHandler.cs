@@ -26,11 +26,12 @@ public sealed class StartRideCommandHandler(
                 .FromNotFound(rideResult.Error!);
         }
 
-        Result result = await statusRideService.TryStartAsync(rideResult.Value!,
-            cancellationToken);
+        Result result = await statusRideService
+            .TryStartAsync(rideResult.Value!,
+                cancellationToken);
 
         return result.IsSuccess
             ? Result<VoidResponse>.WithSuccess()
-            : Result<VoidResponse>.FromInvalid(result.Error!);
+            : Result<VoidResponse>.WithError(result.Error!);
     }
 }

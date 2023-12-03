@@ -1,7 +1,7 @@
 using JacksonVeroneze.TaxiService.Exp.Application.Core.Errors;
+using JacksonVeroneze.TaxiService.Exp.Application.Core.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.System;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User;
-using JacksonVeroneze.TaxiService.Exp.Application.Core.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Domain.Enums;
 using JacksonVeroneze.TaxiService.Exp.Domain.Validators;
 

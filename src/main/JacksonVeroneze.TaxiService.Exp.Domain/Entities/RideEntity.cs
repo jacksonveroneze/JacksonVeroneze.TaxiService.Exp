@@ -9,9 +9,6 @@ namespace JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 
 public class RideEntity : BaseEntityAggregateRoot
 {
-    private readonly IReadOnlyCollection<PositionEntity> _emptyPositions =
-        Enumerable.Empty<PositionEntity>().ToList().AsReadOnly();
-
     public virtual UserEntity? User { get; }
 
     public Guid UserId { get; set; }
@@ -28,18 +25,13 @@ public class RideEntity : BaseEntityAggregateRoot
 
     public virtual RideStatus Status { get; private set; }
 
-    private List<PositionEntity>? _positions;
-
-    public virtual IReadOnlyCollection<PositionEntity> Positions =>
-        _positions?.AsReadOnly() ?? _emptyPositions;
-
     protected RideEntity()
     {
     }
 
-    public RideEntity(UserEntity? user,
-        CoordinateValueObject? from,
-        CoordinateValueObject? to)
+    private RideEntity(UserEntity user,
+        CoordinateValueObject from,
+        CoordinateValueObject to)
     {
         ArgumentNullException.ThrowIfNull(user);
         ArgumentNullException.ThrowIfNull(from);
@@ -54,46 +46,30 @@ public class RideEntity : BaseEntityAggregateRoot
         AddEvent(new RideRequestedDomainEvent(Id));
     }
 
-    #region Position
-
-    public Result AddPosition(PositionEntity position)
+    public static Result<RideEntity> Create(UserEntity user,
+        float latitudeFrom, float longitudeFrom,
+        float latitudeTo, float longitudeTo)
     {
-        ArgumentNullException.ThrowIfNull(position);
+        Result<CoordinateValueObject> coordinatefrom =
+            CoordinateValueObject.Create(latitudeFrom, longitudeFrom);
 
-        _positions ??= new List<PositionEntity>();
+        Result<CoordinateValueObject> coordinateTo =
+            CoordinateValueObject.Create(latitudeTo, longitudeTo);
 
-        if (!_positions.Contains(position))
+        Result resultValidate = Result
+            .FailuresOrSuccess(coordinatefrom, coordinateTo);
+
+        if (resultValidate.IsFailure)
         {
-            _positions.Add(position);
+            return Result<RideEntity>
+                .FromInvalid(resultValidate.Errors!);
         }
 
-        return Result.WithSuccess();
+        RideEntity entity = new(user,
+            coordinatefrom.Value!, coordinateTo.Value!);
+
+        return Result<RideEntity>.WithSuccess(entity);
     }
-
-    private double? CalculateDistance()
-    {
-        PositionEntity? fist = _positions?.First();
-
-        return _positions?
-            .Skip(1)
-            .Sum(item =>
-            {
-                double result = CalculateDistanceTwoPoints(
-                    fist!, item);
-
-                fist = item;
-
-                return result;
-            });
-    }
-
-    private double CalculateDistanceTwoPoints(
-        PositionEntity start, PositionEntity end)
-    {
-        return 1D;
-    }
-
-    #endregion
 
     #region Status
 
@@ -148,7 +124,7 @@ public class RideEntity : BaseEntityAggregateRoot
         return Result.WithSuccess();
     }
 
-    public Result Finish()
+    public Result Finish(double distance)
     {
         if (Status == RideStatus.Completed)
         {
@@ -162,12 +138,8 @@ public class RideEntity : BaseEntityAggregateRoot
                 DomainErrors.Ride.InvalidStatusSetFinish);
         }
 
-        Distance = CalculateDistance();
-
-        //Fare = Distance.Value * 2M;
-
-        // calcular distância
-        // calcular
+        Distance = distance;
+        Fare = Convert.ToDecimal(distance) * 2.1M;
 
         Status = RideStatus.Completed;
 
@@ -181,7 +153,7 @@ public class RideEntity : BaseEntityAggregateRoot
         if (Status == RideStatus.Canceled)
         {
             return Result.FromInvalid(
-                DomainErrors.Ride.InvalidStatusSetCancel);
+                DomainErrors.Ride.StatusAlreadyDefined);
         }
 
         if (Status == RideStatus.Completed)

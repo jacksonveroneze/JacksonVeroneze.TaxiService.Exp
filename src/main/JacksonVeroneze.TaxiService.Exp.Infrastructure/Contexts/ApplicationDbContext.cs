@@ -33,11 +33,6 @@ public class ApplicationDbContext(
             .Entity<EmailEntity>()
             .HasQueryFilter(filter => filter.TenantId ==
                 _tenantId && filter.DeletedAt == null);
-
-        modelBuilder
-            .Entity<PhoneEntity>()
-            .HasQueryFilter(filter => filter.TenantId ==
-                _tenantId && filter.DeletedAt == null);
     }
 
     public override Task<int> SaveChangesAsync(

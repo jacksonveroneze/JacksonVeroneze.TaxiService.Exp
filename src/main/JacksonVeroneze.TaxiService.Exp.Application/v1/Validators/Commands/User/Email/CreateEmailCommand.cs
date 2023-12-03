@@ -1,7 +1,7 @@
 using JacksonVeroneze.TaxiService.Exp.Application.Core.Errors;
+using JacksonVeroneze.TaxiService.Exp.Application.Core.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User.Email;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Validators.Base;
-using JacksonVeroneze.TaxiService.Exp.Application.Core.Extensions;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Validators.Commands.User.Email;
 

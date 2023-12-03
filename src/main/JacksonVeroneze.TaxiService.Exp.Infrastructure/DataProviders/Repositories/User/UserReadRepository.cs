@@ -28,10 +28,10 @@ public class UserReadRepository : BaseReadRepository<UserEntity>, IUserReadRepos
         _dbSet = context.Set<UserEntity>();
     }
 
-    public async Task<bool> ExistsAsync(string document,
+    public async Task<bool> ExistsByEmailAsync(string email,
         CancellationToken cancellationToken = default)
     {
-        UserCpfSpecification specName = new(document);
+        UserEmailSpecification specName = new(email);
 
         bool exists = await _dbSet.AnyAsync(specName,
             cancellationToken);

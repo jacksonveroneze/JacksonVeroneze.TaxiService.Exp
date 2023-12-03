@@ -13,12 +13,6 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
     private readonly IReadOnlyCollection<EmailEntity> _emptyEmails =
         Enumerable.Empty<EmailEntity>().ToList().AsReadOnly();
 
-    private readonly IReadOnlyCollection<PhoneEntity> _emptyPhones =
-        Enumerable.Empty<PhoneEntity>().ToList().AsReadOnly();
-
-    private readonly IReadOnlyCollection<RideEntity> _emptyRides =
-        Enumerable.Empty<RideEntity>().ToList().AsReadOnly();
-
     public NameValueObject Name { get; private set; } = null!;
 
     public DateOnly Birthday { get; private set; }
@@ -34,19 +28,15 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
     public DateTime? InactivedOnUtc { get; private set; }
 
     private List<EmailEntity>? _emails;
-    private List<PhoneEntity>? _phones;
 
     public virtual IReadOnlyCollection<EmailEntity> Emails =>
         _emails?.AsReadOnly() ?? _emptyEmails;
-
-    public virtual IReadOnlyCollection<PhoneEntity> Phones =>
-        _phones?.AsReadOnly() ?? _emptyPhones;
 
     protected UserEntity()
     {
     }
 
-    public UserEntity(NameValueObject name,
+    private UserEntity(NameValueObject name,
         DateOnly birthday, GenderType genderType,
         CpfValueObject cpf)
     {
@@ -63,6 +53,26 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
         Status = UserStatus.PendingActivation;
 
         AddEvent(new UserCreatedDomainEvent(Id));
+    }
+
+    public static Result<UserEntity> Create(string? name,
+        DateOnly birthday, GenderType genderType, string? cpf)
+    {
+        Result<NameValueObject> nameVo = NameValueObject.Create(name);
+        Result<CpfValueObject> cpfVo = CpfValueObject.Create(cpf);
+
+        Result resultValidate = Result.FailuresOrSuccess(nameVo, cpfVo);
+
+        if (resultValidate.IsFailure)
+        {
+            return Result<UserEntity>
+                .FromInvalid(resultValidate.Errors!);
+        }
+
+        UserEntity entity = new(nameVo.Value!, birthday,
+            genderType, cpfVo.Value!);
+
+        return Result<UserEntity>.WithSuccess(entity);
     }
 
     #region Active/Inative

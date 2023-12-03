@@ -20,6 +20,6 @@ public sealed class DeleteUserCommandHandler(
 
         return result.IsSuccess
             ? Result<VoidResponse>.WithSuccess()
-            : Result<VoidResponse>.FromInvalid(result.Error!);
+            : Result<VoidResponse>.WithError(result.Error!);
     }
 }

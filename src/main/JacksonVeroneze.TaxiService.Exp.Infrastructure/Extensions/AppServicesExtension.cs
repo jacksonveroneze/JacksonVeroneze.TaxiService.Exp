@@ -2,12 +2,15 @@ using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.Identity;
 using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.Messaging;
 using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.System;
 using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.Tenant;
+using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Position;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Ride;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Services.Ride;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Services.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Services.Ride;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Services.User;
+using JacksonVeroneze.TaxiService.Exp.Domain.Services;
+using JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Repositories.Position;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Repositories.Ride;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Repositories.User;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.Identity;
@@ -63,6 +66,16 @@ public static class AppServicesExtension
         services.AddScoped<IRideWriteRepository, RideWriteRepository>();
 
         #endregion
+
+        #region Position
+
+        // Repositories
+        services.AddScoped<IPositionReadRepository, PositionReadRepository>();
+        services.AddScoped<IPositionWriteRepository, PositionWriteRepository>();
+
+        #endregion
+
+        services.AddScoped<IDistanceCalculatorService, DistanceCalculatorService>();
 
         return services;
     }

@@ -1,11 +1,10 @@
 using JacksonVeroneze.NET.Result;
+using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User;
-using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Domain.Core.Errors;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
-using JacksonVeroneze.TaxiService.Exp.Domain.ValueObjects;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.CommandHandler.User;
 
@@ -23,7 +22,7 @@ public sealed class CreateUserCommandHandler(
         ArgumentNullException.ThrowIfNull(request);
 
         bool existsUser = await readRepository
-            .ExistsAsync(request.Document!, cancellationToken);
+            .ExistsByEmailAsync(request.Document!, cancellationToken);
 
         if (existsUser)
         {
@@ -35,32 +34,26 @@ public sealed class CreateUserCommandHandler(
                 DomainErrors.User.DuplicateCpf);
         }
 
-        Result<NameValueObject> name = NameValueObject.Create(request.Name!);
-        Result<CpfValueObject> cpf = CpfValueObject.Create(request.Document!);
+        Result<UserEntity> entity = UserEntity.Create(request.Name,
+            request.Birthday!.Value, request.Gender!.Value, request.Document);
 
-        Result resultValidate = Result.FailuresOrSuccess(name, cpf);
-
-        if (resultValidate.IsFailure)
+        if (entity.IsFailure)
         {
             logger.LogGenericError(nameof(CreateUserCommandHandler),
-                nameof(Handle), resultValidate.Errors!.Count());
+                nameof(Handle), entity.Errors!.Count());
 
             return Result<CreateUserCommandResponse>
-                .FromInvalid(resultValidate.Errors!);
+                .FromInvalid(entity.Errors!);
         }
 
-        UserEntity entity = new(name.Value!,
-            request.Birthday!.Value, request.Gender!.Value,
-            cpf.Value!);
-
         await writeRepository.CreateAsync(
-            entity, cancellationToken);
+            entity.Value!, cancellationToken);
 
         CreateUserCommandResponse response =
-            mapper.Map<CreateUserCommandResponse>(entity);
+            mapper.Map<CreateUserCommandResponse>(entity.Value);
 
         logger.LogCreated(nameof(CreateUserCommandHandler),
-            nameof(Handle), entity.Id);
+            nameof(Handle), entity.Value!.Id);
 
         return Result<CreateUserCommandResponse>.WithSuccess(response);
     }

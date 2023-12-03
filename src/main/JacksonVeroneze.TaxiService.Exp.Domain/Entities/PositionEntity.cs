@@ -1,3 +1,4 @@
+using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities.Base;
 using JacksonVeroneze.TaxiService.Exp.Domain.ValueObjects;
 
@@ -9,11 +10,13 @@ public class PositionEntity : BaseEntityAggregateRoot
 
     public virtual CoordinateValueObject? Position { get; }
 
+    // public Guid? RideId { get; }
+
     protected PositionEntity()
     {
     }
 
-    public PositionEntity(RideEntity? ride,
+    private PositionEntity(RideEntity? ride,
         CoordinateValueObject? position)
     {
         ArgumentNullException.ThrowIfNull(ride);
@@ -21,5 +24,22 @@ public class PositionEntity : BaseEntityAggregateRoot
 
         Ride = ride;
         Position = position;
+    }
+
+    public static Result<PositionEntity> Create(RideEntity ride,
+        float latitude, float longitude)
+    {
+        Result<CoordinateValueObject> coordinateVo = CoordinateValueObject.Create(
+            latitude, longitude);
+
+        if (coordinateVo.IsFailure)
+        {
+            return Result<PositionEntity>
+                .FromInvalid(coordinateVo.Error!);
+        }
+
+        PositionEntity entity = new(ride, coordinateVo.Value!);
+
+        return Result<PositionEntity>.WithSuccess(entity);
     }
 }

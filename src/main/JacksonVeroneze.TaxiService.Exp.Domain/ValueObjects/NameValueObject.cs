@@ -9,7 +9,7 @@ public class NameValueObject : ValueObject
     private const int MinLength = 2;
     private const int MaxLength = 100;
 
-    public string? Value { get; private set; }
+    public string? Value { get; }
 
     protected NameValueObject()
     {
@@ -23,17 +23,22 @@ public class NameValueObject : ValueObject
     public static implicit operator string(NameValueObject? value)
         => value?.Value ?? string.Empty;
 
-    public static Result<NameValueObject> Create(string value)
+    private static bool IsValid(string? value)
     {
-        if (string.IsNullOrEmpty(value) ||
-            value.Length <= MinLength ||
-            value.Length > MaxLength)
+        return !string.IsNullOrEmpty(value) &&
+               value.Length >= MinLength &&
+               value.Length <= MaxLength;
+    }
+
+    public static Result<NameValueObject> Create(string? value)
+    {
+        if (!IsValid(value))
         {
             return Result<NameValueObject>.FromInvalid(
                 DomainErrors.User.InvalidName);
         }
 
-        NameValueObject valueObject = new(value);
+        NameValueObject valueObject = new(value!);
 
         return Result<NameValueObject>.WithSuccess(valueObject);
     }

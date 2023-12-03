@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.User;
 
-public sealed record GetUserPagedQuery :
-    PagedQuery, IRequest<Result<GetUserPagedQueryResponse>>
+public sealed record GetUserPagedQuery() :
+    PagedQuery(DefaultOrderBy, DefaultOrder),
+    IRequest<Result<GetUserPagedQueryResponse>>
 {
     private const string DefaultOrderBy = nameof(UserResponse.Name);
 
@@ -19,8 +20,4 @@ public sealed record GetUserPagedQuery :
 
     [FromQuery(Name = "status")]
     public UserStatus? Status { get; init; }
-
-    public GetUserPagedQuery() : base(DefaultOrderBy, DefaultOrder)
-    {
-    }
 }
