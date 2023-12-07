@@ -1,32 +1,29 @@
+using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
 
 namespace JacksonVeroneze.TaxiService.Exp.Api.Middlewares;
 
 internal sealed class GlobalExceptionHandler(
-    ILogger<GlobalExceptionHandler> logger) : IExceptionHandler
+    IProblemDetailsService problemDetailsService)
+    : IExceptionHandler
 {
-    public async ValueTask<bool> TryHandleAsync(
+    public ValueTask<bool> TryHandleAsync(
         HttpContext httpContext,
         Exception exception,
         CancellationToken cancellationToken)
     {
-        logger.LogError(
-            exception, "Exception occurred: {Message}", exception.Message);
+        httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-        ProblemDetails problemDetails = new()
+        return problemDetailsService.TryWriteAsync(new ProblemDetailsContext
         {
-            Title = "An error occurred",
-            Detail = exception.Message,
-            Instance = httpContext.Request.Path,
-            Status = StatusCodes.Status500InternalServerError,
-        };
-
-        httpContext.Response.StatusCode = problemDetails.Status.Value;
-
-        await httpContext.Response
-            .WriteAsJsonAsync(problemDetails, cancellationToken);
-
-        return true;
+            HttpContext = httpContext,
+            ProblemDetails =
+            {
+                Title = "An error occurred",
+                Detail = exception.Message,
+                Type = exception.GetType().Name,
+            },
+            Exception = exception
+        });
     }
 }

@@ -38,7 +38,7 @@ public static class UserEndpoint
 
         builder.MapGet("{id:guid:required}", async (
                 [FromServices] IMediator mediator,
-                [FromRoute(Name = "id")] Guid id,
+                [FromRoute] Guid id,
                 CancellationToken cancellationToken) =>
             {
                 GetUserByIdQuery query = new(id);
@@ -66,7 +66,7 @@ public static class UserEndpoint
 
         builder.MapDelete("{id:guid:required}", async (
                 [FromServices] IMediator mediator,
-                [FromRoute(Name = "id")] Guid id,
+                [FromRoute] Guid id,
                 CancellationToken cancellationToken) =>
             {
                 DeleteUserCommand command = new(id);
@@ -81,7 +81,7 @@ public static class UserEndpoint
 
         builder.MapPut("{id:guid:required}/activate", async (
                 [FromServices] IMediator mediator,
-                [FromRoute(Name = "id")] Guid id,
+                [FromRoute] Guid id,
                 CancellationToken cancellationToken) =>
             {
                 ActivateUserCommand command = new(id);
@@ -96,7 +96,7 @@ public static class UserEndpoint
 
         builder.MapPut("{id:guid:required}/inactivate", async (
                 [FromServices] IMediator mediator,
-                [FromRoute(Name = "id")] Guid id,
+                [FromRoute] Guid id,
                 CancellationToken cancellationToken) =>
             {
                 InactivateUserCommand command = new(id);
@@ -113,7 +113,7 @@ public static class UserEndpoint
 
         builder.MapGet("{id:guid:required}/emails", async (
                 [FromServices] IMediator mediator,
-                [FromRoute(Name = "id")] Guid id,
+                [FromRoute] Guid id,
                 CancellationToken cancellationToken) =>
             {
                 GetAllEmailsByUserIdQuery query = new(id);
@@ -141,7 +141,7 @@ public static class UserEndpoint
 
         builder.MapDelete("{id:guid:required}/emails/{emailId:guid:required}", async (
                 [FromServices] IMediator mediator,
-                [FromRoute(Name = "id")] Guid id,
+                [FromRoute] Guid id,
                 [FromRoute(Name = "emailId")] Guid emailId,
                 CancellationToken cancellationToken) =>
             {

@@ -26,14 +26,12 @@ public sealed class CreateEmailCommandHandler(
 
         if (user is null)
         {
-            logger.LogNotFound(nameof(CreateEmailCommandHandler),
-                nameof(Handle), request.Id, DomainErrors.User.NotFound);
-
-            return Result<CreateEmailCommandResponse>
-                .FromNotFound(DomainErrors.User.NotFound);
+            return Result<CreateEmailCommandResponse>.FromInvalid(
+                DomainErrors.User.NotFound);
         }
 
-        Result<EmailEntity> entity = EmailEntity.Create(user, request.Body!.Email);
+        Result<EmailEntity> entity = EmailEntity
+            .Create(user, request.Body!.Email);
 
         if (entity.IsFailure)
         {

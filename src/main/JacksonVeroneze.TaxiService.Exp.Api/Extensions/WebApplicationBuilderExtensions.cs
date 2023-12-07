@@ -1,18 +1,32 @@
-using Ben.Diagnostics;
-using CorrelationId;
-using JacksonVeroneze.TaxiService.Exp.Api.Endpoints;
 using JacksonVeroneze.TaxiService.Exp.Api.Middlewares;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.Configurations;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
-using Prometheus;
-using Serilog;
 using SharpGrip.FluentValidation.AutoValidation.Endpoints.Extensions;
 
 namespace JacksonVeroneze.TaxiService.Exp.Api.Extensions;
 
-public static class ApiConfigExtension
+public static class WebApplicationBuilderExtensions
 {
-    public static WebApplicationBuilder ConfigureServices(
+    public static WebApplicationBuilder Configure(
+        this WebApplicationBuilder builder)
+    {
+        builder.Host.ConfigureHostOptions(options =>
+            options.ShutdownTimeout = TimeSpan.FromSeconds(2));
+
+        builder.Configuration
+            .AddEnvironmentVariables("APP_CONFIG_");
+
+        AppConfiguration appConfiguration =
+            builder.Services.AddAppConfigs(builder.Configuration);
+
+        builder.Host.AddLogger(appConfiguration);
+
+        builder.ConfigureServices(appConfiguration);
+
+        return builder;
+    }
+
+    private static WebApplicationBuilder ConfigureServices(
         this WebApplicationBuilder builder,
         AppConfiguration appConfiguration)
     {
@@ -44,8 +58,7 @@ public static class ApiConfigExtension
                         $"{ctx.HttpContext.Request.Method} {ctx.HttpContext.Request.Path}");
                 };
             })
-            .AddExceptionHandler<ExceptionToProblemDetailsHandler>()
-            //.AddExceptionHandler<GlobalExceptionHandler>()
+            .AddExceptionHandler<GlobalExceptionHandler>()
             .AddRouting(options =>
             {
                 options.LowercaseUrls = true;
@@ -60,39 +73,5 @@ public static class ApiConfigExtension
             .AddRabbitMq();
 
         return builder;
-    }
-
-    public static WebApplication Configure(
-        this WebApplication app)
-    {
-        app.UseExceptionHandler();
-
-        app.Lifetime.ApplicationStarted.Register(() =>
-            Log.Information("ApplicationStarted"));
-
-        app.Lifetime.ApplicationStopping.Register(() =>
-            Log.Information("ApplicationStopping"));
-
-        app.Lifetime.ApplicationStopped.Register(() =>
-            Log.Information("ApplicationStopped"));
-
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseBlockingDetection()
-                .UseSwagger()
-                .UseSwaggerUI();
-        }
-
-        app.UseHttpMetrics()
-            .UseCorrelationId();
-
-        app.MapMetrics();
-        app.UseHealthChecks("/health");
-
-        app.AddUserEndpoints();
-        app.AddRideEndpoints();
-        app.AddPositionEndpoints();
-
-        return app;
     }
 }

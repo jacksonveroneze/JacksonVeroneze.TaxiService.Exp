@@ -13,18 +13,7 @@ try
     WebApplicationBuilder builder =
         WebApplication.CreateSlimBuilder(args);
 
-    builder.Host.ConfigureHostOptions(options =>
-        options.ShutdownTimeout = TimeSpan.FromSeconds(2));
-
-    builder.Configuration
-        .AddEnvironmentVariables("APP_CONFIG_");
-
-    AppConfiguration appConfiguration =
-        builder.Services.AddAppConfigs(builder.Configuration);
-
-    builder.Host.AddLogger(appConfiguration);
-
-    builder.ConfigureServices(appConfiguration);
+    builder.Configure();
 
     WebApplication app = builder.Build();
 
@@ -42,12 +31,4 @@ finally
 {
     Log.Information("Server Shutting down");
     Log.CloseAndFlush();
-}
-
-
-namespace JacksonVeroneze.TaxiService.Exp.Api
-{
-    public partial class Program
-    {
-    }
 }

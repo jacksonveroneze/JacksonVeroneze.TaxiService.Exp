@@ -10,8 +10,6 @@ public class PositionEntity : BaseEntityAggregateRoot
 
     public virtual CoordinateValueObject? Position { get; }
 
-    // public Guid? RideId { get; }
-
     protected PositionEntity()
     {
     }

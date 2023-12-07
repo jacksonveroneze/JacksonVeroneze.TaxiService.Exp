@@ -1,12 +1,17 @@
 using JacksonVeroneze.NET.Result;
+using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Services.User;
+using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Base;
+using JacksonVeroneze.TaxiService.Exp.Domain.Core.Errors;
+using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.CommandHandler.User;
 
 public sealed class DeleteUserCommandHandler(
-    IDeleteUserService service)
+    ILogger<DeleteUserCommandHandler> logger,
+    IUserReadRepository readRepository,
+    IUserWriteRepository writeRepository)
     : IRequestHandler<DeleteUserCommand, Result<VoidResponse>>
 {
     public async Task<Result<VoidResponse>> Handle(
@@ -15,11 +20,21 @@ public sealed class DeleteUserCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result result = await service
-            .DeleteAsync(request.Id, cancellationToken);
+        UserEntity? user = await readRepository
+            .GetByIdAsync(request.Id, cancellationToken);
 
-        return result.IsSuccess
-            ? Result<VoidResponse>.WithSuccess()
-            : Result<VoidResponse>.WithError(result.Error!);
+        if (user is null)
+        {
+            return Result<VoidResponse>.FromInvalid(
+                DomainErrors.User.NotFound);
+        }
+
+        await writeRepository.DeleteAsync(
+            user, cancellationToken);
+
+        logger.LogDeleted(nameof(DeleteUserCommandHandler),
+            nameof(Handle), request.Id);
+
+        return Result<VoidResponse>.WithSuccess();
     }
 }

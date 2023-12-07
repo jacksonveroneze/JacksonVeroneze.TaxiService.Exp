@@ -2,7 +2,7 @@ using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Position;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Position;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Services.Ride;
+using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Ride;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Base;
 using JacksonVeroneze.TaxiService.Exp.Domain.Core.Errors;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
@@ -12,8 +12,8 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.CommandHandler
 
 public sealed class UpdatePositionCommandHandler(
     ILogger<UpdatePositionCommandHandler> logger,
-    IGetRideService rideService,
-    IPositionWriteRepository repository)
+    IRideReadRepository rideReadRepository,
+    IPositionWriteRepository positionWriteRepository)
     : IRequestHandler<UpdatePositionCommand, Result<VoidResponse>>
 {
     public async Task<Result<VoidResponse>> Handle(
@@ -22,16 +22,16 @@ public sealed class UpdatePositionCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<RideEntity> ride = await rideService
-            .TryGetRideAsync(request.RideId, cancellationToken);
+        RideEntity? ride = await rideReadRepository
+            .GetByIdAsync(request.RideId, cancellationToken);
 
-        if (ride.IsFailure)
+        if (ride is null)
         {
             return Result<VoidResponse>
-                .WithError(ride.Error!);
+                .WithError(DomainErrors.Ride.NotFound);
         }
 
-        if (ride.Value!.Status != RideStatus.InProgress)
+        if (ride.Status != RideStatus.InProgress)
         {
             Error error = DomainErrors.Ride.InvalidStatusAddPosition;
 
@@ -43,18 +43,19 @@ public sealed class UpdatePositionCommandHandler(
         }
 
         Result<PositionEntity> entity = PositionEntity.Create(
-            ride.Value!, request.Latitude, request.Longitude);
+            ride, request.Latitude, request.Longitude);
 
         if (entity.IsFailure)
         {
             logger.LogGenericError(nameof(UpdatePositionCommandHandler),
-                nameof(Handle), entity.Errors!.Count());
+                nameof(Handle), entity.Error!);
 
             return Result<VoidResponse>
                 .FromInvalid(entity.Error!);
         }
 
-        await repository.CreateAsync(entity.Value!, cancellationToken);
+        await positionWriteRepository.CreateAsync(
+            entity.Value!, cancellationToken);
 
         logger.LogCreated(nameof(UpdatePositionCommandHandler),
             nameof(Handle), entity.Value!.Id);

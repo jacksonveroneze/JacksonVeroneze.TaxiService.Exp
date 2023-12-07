@@ -1,16 +1,19 @@
 using JacksonVeroneze.NET.Result;
+using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Ride;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Services.Ride;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Services.User;
+using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Ride;
+using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Base;
+using JacksonVeroneze.TaxiService.Exp.Domain.Core.Errors;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.CommandHandler.Ride;
 
 public sealed class AcceptRideCommandHandler(
-    IGetUserService userService,
-    IGetRideService rideService,
-    IStatusRideService statusRideService)
+    ILogger<AcceptRideCommandHandler> logger,
+    IUserReadRepository userReadRepository,
+    IRideReadRepository readRepository,
+    IRideWriteRepository writeRepository)
     : IRequestHandler<AcceptRideCommand, Result<VoidResponse>>
 {
     public async Task<Result<VoidResponse>> Handle(
@@ -19,31 +22,40 @@ public sealed class AcceptRideCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<RideEntity> rideResult = await rideService
-            .TryGetRideAsync(request.Id, cancellationToken);
+        RideEntity? ride = await readRepository
+            .GetByIdAsync(request.Id, cancellationToken);
 
-        if (rideResult.IsFailure)
+        if (ride is null)
         {
             return Result<VoidResponse>
-                .FromNotFound(rideResult.Error!);
+                .FromNotFound(DomainErrors.Ride.NotFound);
         }
 
-        Result<UserEntity> driverResult = await userService
-            .TryGetUserAsync(request.Body!.DriverId,
+        UserEntity? user = await userReadRepository
+            .GetByIdAsync(request.Body!.DriverId,
                 cancellationToken);
 
-        if (driverResult.IsFailure)
+        if (user is null)
         {
             return Result<VoidResponse>
-                .WithError(driverResult.Error!);
+                .WithError(DomainErrors.User.NotFound);
         }
 
-        Result result = await statusRideService
-            .TryAcceptAsync(rideResult.Value!,
-                driverResult.Value!, cancellationToken);
+        Result result = ride.Accept(user);
 
-        return result.IsSuccess
-            ? Result<VoidResponse>.WithSuccess()
-            : Result<VoidResponse>.WithError(result.Error!);
+        if (result.IsFailure)
+        {
+            logger.LogGenericError(nameof(AcceptRideCommandHandler),
+                nameof(Handle), ride.Id, result.Error!);
+
+            return Result<VoidResponse>.WithError(result.Error!);
+        }
+
+        await writeRepository.UpdateAsync(ride, cancellationToken);
+
+        logger.LogProcessed(nameof(AcceptRideCommandHandler),
+            nameof(Handle), ride.Id);
+
+        return Result<VoidResponse>.WithSuccess();
     }
 }

@@ -1,8 +1,10 @@
 using JacksonVeroneze.NET.Result;
+using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Ride;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Position;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Services.Ride;
+using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Ride;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Base;
+using JacksonVeroneze.TaxiService.Exp.Domain.Core.Errors;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 using JacksonVeroneze.TaxiService.Exp.Domain.Services;
 using JacksonVeroneze.TaxiService.Exp.Domain.ValueObjects;
@@ -10,8 +12,9 @@ using JacksonVeroneze.TaxiService.Exp.Domain.ValueObjects;
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.CommandHandler.Ride;
 
 public sealed class FinishRideCommandHandler(
-    IGetRideService rideService,
-    IStatusRideService statusRideService,
+    ILogger<FinishRideCommandHandler> logger,
+    IRideReadRepository readRepository,
+    IRideWriteRepository writeRepository,
     IDistanceCalculatorService distanceCalculatorService,
     IPositionReadRepository positionReadRepository)
     : IRequestHandler<FinishRideCommand, Result<VoidResponse>>
@@ -22,13 +25,13 @@ public sealed class FinishRideCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<RideEntity> rideResult = await rideService
-            .TryGetRideAsync(request.Id, cancellationToken);
+        RideEntity? ride = await readRepository
+            .GetByIdAsync(request.Id, cancellationToken);
 
-        if (rideResult.IsFailure)
+        if (ride is null)
         {
             return Result<VoidResponse>
-                .FromNotFound(rideResult.Error!);
+                .FromNotFound(DomainErrors.Ride.NotFound);
         }
 
         List<PositionEntity> positions = await positionReadRepository
@@ -42,12 +45,21 @@ public sealed class FinishRideCommandHandler(
         double distance = distanceCalculatorService
             .Calculate(positionsCood);
 
-        Result result = await statusRideService
-            .TryFinishAsync(rideResult.Value!,
-                distance, cancellationToken);
+        Result result = ride.Finish(distance);
 
-        return result.IsSuccess
-            ? Result<VoidResponse>.WithSuccess()
-            : Result<VoidResponse>.WithError(result.Error!);
+        if (result.IsFailure)
+        {
+            logger.LogGenericError(nameof(FinishRideCommandHandler),
+                nameof(Handle), ride.Id, result.Error!);
+
+            return Result<VoidResponse>.WithError(result.Error!);
+        }
+
+        await writeRepository.UpdateAsync(ride, cancellationToken);
+
+        logger.LogProcessed(nameof(FinishRideCommandHandler),
+            nameof(Handle), ride.Id);
+
+        return Result<VoidResponse>.WithSuccess();
     }
 }

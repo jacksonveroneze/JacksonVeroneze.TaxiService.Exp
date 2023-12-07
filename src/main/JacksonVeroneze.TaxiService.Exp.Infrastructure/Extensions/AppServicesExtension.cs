@@ -5,10 +5,6 @@ using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.Tenant;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Position;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Ride;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Services.Ride;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Services.User;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Services.Ride;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Services.User;
 using JacksonVeroneze.TaxiService.Exp.Domain.Services;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Repositories.Position;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Repositories.Ride;
@@ -40,12 +36,6 @@ public static class AppServicesExtension
 
         #region User
 
-        // Services
-        services.AddScoped<IActivateUserService, ActivateUserService>();
-        services.AddScoped<IInactivateUserService, InactivateUserService>();
-        services.AddScoped<IDeleteUserService, DeleteUserService>();
-        services.AddScoped<IGetUserService, GetUserService>();
-
         // Repositories
         services.AddScoped<IUserReadRepository, UserReadRepository>();
         services.AddScoped<IUserWriteRepository, UserWriteRepository>();
@@ -56,10 +46,6 @@ public static class AppServicesExtension
         #endregion
 
         #region Ride
-
-        // Services
-        services.AddScoped<IGetRideService, GetRideService>();
-        services.AddScoped<IStatusRideService, StatusRideService>();
 
         // Repositories
         services.AddScoped<IRideReadRepository, RideReadRepository>();

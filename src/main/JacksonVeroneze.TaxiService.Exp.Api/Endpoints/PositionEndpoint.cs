@@ -19,7 +19,7 @@ public static class PositionEndpoint
                 .AddFluentValidationAutoValidation();
 
         builder.MapPost("/", async (
-                IMediator mediator,
+                [FromServices] IMediator mediator,
                 [FromBody] UpdatePositionCommand command,
                 CancellationToken cancellationToken) =>
             {
@@ -28,7 +28,8 @@ public static class PositionEndpoint
 
                 return response.MatchPost();
             })
-            .AddDefaultResponseEndpoints();
+            .AddDefaultResponseEndpoints()
+            .Produces(StatusCodes.Status204NoContent);
 
         return app;
     }

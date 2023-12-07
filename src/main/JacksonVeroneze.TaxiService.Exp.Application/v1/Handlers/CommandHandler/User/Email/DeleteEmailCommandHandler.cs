@@ -20,19 +20,16 @@ public sealed class DeleteEmailCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        UserEntity? entity = await readRepository
+        UserEntity? user = await readRepository
             .GetByIdAsync(request.Id, cancellationToken);
 
-        if (entity is null)
+        if (user is null)
         {
-            logger.LogNotFound(nameof(DeleteEmailCommandHandler),
-                nameof(Handle), request.Id, DomainErrors.User.NotFound);
-
-            return Result<VoidResponse>.FromNotFound(
+            return Result<VoidResponse>.FromInvalid(
                 DomainErrors.User.NotFound);
         }
 
-        EmailEntity? email = entity.GetEmailById(request.EmailId);
+        EmailEntity? email = user.GetEmailById(request.EmailId);
 
         if (email is null)
         {
@@ -43,7 +40,7 @@ public sealed class DeleteEmailCommandHandler(
                 DomainErrors.Email.NotFound);
         }
 
-        Result result = entity.RemoveEmail(email);
+        Result result = user.RemoveEmail(email);
 
         if (result.IsFailure)
         {
@@ -53,10 +50,10 @@ public sealed class DeleteEmailCommandHandler(
             return Result<VoidResponse>.FromInvalid(result.Error!);
         }
 
-        await writeRepository.UpdateAsync(entity, cancellationToken);
+        await writeRepository.UpdateAsync(user, cancellationToken);
 
         logger.LogProcessed(nameof(DeleteEmailCommandHandler),
-            nameof(Handle), entity.Id);
+            nameof(Handle), user.Id);
 
         return Result<VoidResponse>.WithSuccess();
     }

@@ -1,12 +1,19 @@
 using JacksonVeroneze.NET.Result;
+using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
+using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.System;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Services.User;
+using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Base;
+using JacksonVeroneze.TaxiService.Exp.Domain.Core.Errors;
+using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.CommandHandler.User;
 
 public sealed class ActivateUserCommandHandler(
-    IActivateUserService service)
+    ILogger<ActivateUserCommandHandler> logger,
+    IUserReadRepository readRepository,
+    IUserWriteRepository writeRepository,
+    IDateTime dateTime)
     : IRequestHandler<ActivateUserCommand, Result<VoidResponse>>
 {
     public async Task<Result<VoidResponse>> Handle(
@@ -15,11 +22,31 @@ public sealed class ActivateUserCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result result = await service
-            .ActivateAsync(request.Id, cancellationToken);
+        UserEntity? user = await readRepository
+            .GetByIdAsync(request.Id, cancellationToken);
 
-        return result.IsSuccess
-            ? Result<VoidResponse>.WithSuccess()
-            : Result<VoidResponse>.WithError(result.Error!);
+        if (user is null)
+        {
+            return Result<VoidResponse>.FromInvalid(
+                DomainErrors.User.NotFound);
+        }
+
+        Result result = user.Activate(dateTime.UtcNow);
+
+        if (result.IsFailure)
+        {
+            logger.LogAlreadyProcessed(nameof(ActivateUserCommandHandler),
+                nameof(Handle), request.Id, result.Error!);
+
+            return Result<VoidResponse>.WithError(result.Error!);
+        }
+
+        await writeRepository.UpdateAsync(
+            user, cancellationToken);
+
+        logger.LogProcessed(nameof(ActivateUserCommandHandler),
+            nameof(Handle), request.Id);
+
+        return Result<VoidResponse>.WithSuccess();
     }
 }

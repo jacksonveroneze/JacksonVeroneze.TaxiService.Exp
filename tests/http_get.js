@@ -5,24 +5,25 @@ import {crypto} from "k6/experimental/webcrypto";
 import {randomIntBetween} from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 export const options = {
-    //duration: '60s',
-    iterations: 1,
-    vus: 1,
+    duration: '240s',
+    // iterations: 1,
+    vus: 25,
 };
 
 // export let options = {
 //     stages: [
-//         {duration: '3m', target: 0}, // simulate ramp-up of traffic from 1 to 3 virtual users over 0.5 minutes.
-//         {duration: '5m', target: 100}, // simulate ramp-up of traffic from 1 to 3 virtual users over 0.5 minutes.
-//         {duration: '2m', target: 15}, // ramp-down to 0 users
-//         {duration: '1m', target: 150}, // ramp-down to 0 users
-//         {duration: '5m', target: 50}, // ramp-down to 0 users
-//         {duration: '30s', target: 0}, // ramp-down to 0 users
+//         {duration: '10s', target: 10},
+//         {duration: '40s', target: 50},
+//         {duration: '24s', target: 15},
+//         {duration: '50s', target: 25},
+//         {duration: '20s', target: 100},
+//         {duration: '24s', target: 0},
+//         {duration: '24s', target: 2},
 //     ],
 // };
 
-// const url = 'http://localhost/taxi-service-exp';
-const url = 'http://localhost:7000';
+const url = 'http://localhost/taxi-service-exp';
+// const url = 'http://localhost:7000';
 
 export default function () {
     let headers = {
@@ -32,6 +33,8 @@ export default function () {
             'X-Correlation-ID': crypto.randomUUID()
         },
     };
+
+    console.log(headers);
 
     const rnd = randomIntBetween(10000, 99999)
 
@@ -46,8 +49,6 @@ export default function () {
     const idUser = JSON.parse(responsePostUser.body).data.id;
 
     check(responsePostUser, {'[User] - Created - status is 201': (r) => r.status === 201});
-
-    //console.log(`User id: ${idUser}`)
 
     // 2. Get User By Id
     const responseGetById = http.get(`${url}/api/v1/users/${idUser}?page=1&page_size=2`, headers);
@@ -91,7 +92,7 @@ export default function () {
     // 3. Accept Ride
     accept(idRide, idUser, headers);
 
-    // 4. Start Ride
+    // // 4. Start Ride
     start(idRide, headers);
 
     const positions = [

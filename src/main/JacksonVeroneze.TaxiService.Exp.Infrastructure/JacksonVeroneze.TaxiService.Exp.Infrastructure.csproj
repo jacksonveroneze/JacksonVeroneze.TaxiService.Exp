@@ -15,7 +15,7 @@
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.0"/>
     <PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.3.8"/>
 
-    <PackageReference Include="prometheus-net.AspNetCore" Version="8.1.1"/>
+    <PackageReference Include="prometheus-net.AspNetCore" Version="8.2.0" />
     <PackageReference Include="prometheus-net.DotNetRuntime" Version="4.4.0"/>
 
     <PackageReference Include="OpenTelemetry.Exporter.Jaeger" Version="1.5.1"/>
@@ -23,7 +23,7 @@
     <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc9.14"/>
     <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc9.14"/>
 
-    <PackageReference Include="JacksonVeroneze.NET.DistributedCache" Version="1.0.14"/>
+    <PackageReference Include="JacksonVeroneze.NET.DistributedCache" Version="1.0.15" />
     <PackageReference Include="JacksonVeroneze.NET.Logging" Version="1.0.5"/>
     <PackageReference Include="JacksonVeroneze.NET.Swagger" Version="1.0.1"/>
     <PackageReference Include="RabbitMQ.Client" Version="6.7.0"/>
