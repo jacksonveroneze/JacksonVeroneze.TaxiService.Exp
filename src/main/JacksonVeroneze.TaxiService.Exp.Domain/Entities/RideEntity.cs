@@ -9,11 +9,9 @@ namespace JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 
 public class RideEntity : BaseEntityAggregateRoot
 {
-    public virtual UserEntity? User { get; }
+    public Guid? UserId { get; }
 
-    public Guid UserId { get; set; }
-
-    public virtual UserEntity? Driver { get; private set; }
+    public Guid? DriverId { get; private set; }
 
     public virtual decimal? Fare { get; private set; }
 
@@ -29,15 +27,15 @@ public class RideEntity : BaseEntityAggregateRoot
     {
     }
 
-    private RideEntity(UserEntity user,
+    private RideEntity(Guid userId,
         CoordinateValueObject from,
         CoordinateValueObject to)
     {
-        ArgumentNullException.ThrowIfNull(user);
+        ArgumentNullException.ThrowIfNull(userId);
         ArgumentNullException.ThrowIfNull(from);
         ArgumentNullException.ThrowIfNull(to);
 
-        User = user;
+        UserId = userId;
         From = from;
         To = to;
 
@@ -46,7 +44,7 @@ public class RideEntity : BaseEntityAggregateRoot
         AddEvent(new RideRequestedDomainEvent(Id));
     }
 
-    public static Result<RideEntity> Create(UserEntity user,
+    public static Result<RideEntity> Create(Guid userId,
         float latitudeFrom, float longitudeFrom,
         float latitudeTo, float longitudeTo)
     {
@@ -65,7 +63,7 @@ public class RideEntity : BaseEntityAggregateRoot
                 .FromInvalid(resultValidate.Errors!);
         }
 
-        RideEntity entity = new(user,
+        RideEntity entity = new(userId,
             coordinatefrom.Value!, coordinateTo.Value!);
 
         return Result<RideEntity>.WithSuccess(entity);
@@ -73,9 +71,9 @@ public class RideEntity : BaseEntityAggregateRoot
 
     #region Status
 
-    public Result Accept(UserEntity driver)
+    public Result Accept(Guid driverId)
     {
-        ArgumentNullException.ThrowIfNull(driver);
+        ArgumentNullException.ThrowIfNull(driverId);
 
         if (Status == RideStatus.Accepted)
         {
@@ -89,13 +87,13 @@ public class RideEntity : BaseEntityAggregateRoot
                 DomainErrors.Ride.InvalidStatusSetAccept);
         }
 
-        if (Driver is not null)
+        if (DriverId is not null)
         {
             return Result.FromInvalid(
                 DomainErrors.Ride.DriverAlready);
         }
 
-        Driver = driver;
+        DriverId = driverId;
         Status = RideStatus.Accepted;
 
         AddEvent(new RideAcceptedDomainEvent(Id));

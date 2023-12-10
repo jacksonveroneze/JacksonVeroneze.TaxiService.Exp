@@ -1,12 +1,9 @@
 using Ben.Diagnostics;
 using CorrelationId;
 using JacksonVeroneze.TaxiService.Exp.Api.Endpoints;
-using JacksonVeroneze.TaxiService.Exp.Api.Middlewares;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.Configurations;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
 using Prometheus;
 using Serilog;
-using SharpGrip.FluentValidation.AutoValidation.Endpoints.Extensions;
 
 namespace JacksonVeroneze.TaxiService.Exp.Api.Extensions;
 

@@ -1,7 +1,5 @@
 using JacksonVeroneze.NET.Logging.Util;
 using JacksonVeroneze.TaxiService.Exp.Api.Extensions;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.Configurations;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
 using Serilog;
 
 Log.Logger = BootstrapLogger.CreateLogger();

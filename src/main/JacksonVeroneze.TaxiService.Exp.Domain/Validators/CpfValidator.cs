@@ -47,8 +47,14 @@ public class CpfValidator
         }
 
         int modI = totalDigito1 % 11;
-        if (modI < 2) { modI = 0; }
-        else { modI = 11 - modI; }
+        if (modI < 2)
+        {
+            modI = 0;
+        }
+        else
+        {
+            modI = 11 - modI;
+        }
 
         if (ObterDigito(clearCpf, 9) != modI)
         {
@@ -57,8 +63,14 @@ public class CpfValidator
 
         totalDigito2 += modI * 2;
         int mod11 = totalDigito2 % 11;
-        if (mod11 < 2) { mod11 = 0; }
-        else { mod11 = 11 - mod11; }
+        if (mod11 < 2)
+        {
+            mod11 = 0;
+        }
+        else
+        {
+            mod11 = 11 - mod11;
+        }
 
         return ObterDigito(clearCpf, 10) == mod11;
     }

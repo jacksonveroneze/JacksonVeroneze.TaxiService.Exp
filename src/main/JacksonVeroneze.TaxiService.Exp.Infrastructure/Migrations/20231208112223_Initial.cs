@@ -65,32 +65,6 @@ namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "phone",
-                schema: "public",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uuid", nullable: false),
-                    value = table.Column<string>(type: "character varying(11)", maxLength: 11, nullable: true),
-                    user_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    deleted_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    version = table.Column<int>(type: "integer", nullable: false),
-                    tenant_id = table.Column<Guid>(type: "uuid", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_phone", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_phone_user_entity_user_temp_id2",
-                        column: x => x.user_id,
-                        principalSchema: "public",
-                        principalTable: "user",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ride",
                 schema: "public",
                 columns: table => new
@@ -98,8 +72,8 @@ namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     user_id = table.Column<Guid>(type: "uuid", nullable: false),
                     driver_id = table.Column<Guid>(type: "uuid", nullable: true),
-                    fare = table.Column<decimal>(type: "numeric", nullable: false),
-                    distance = table.Column<double>(type: "double precision", nullable: false),
+                    fare = table.Column<decimal>(type: "numeric", nullable: true),
+                    distance = table.Column<double>(type: "double precision", nullable: true),
                     from_latitude = table.Column<float>(type: "real", nullable: true),
                     from_longitude = table.Column<float>(type: "real", nullable: true),
                     to_latitude = table.Column<float>(type: "real", nullable: true),
@@ -115,7 +89,7 @@ namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Migrations
                 {
                     table.PrimaryKey("pk_ride", x => x.id);
                     table.ForeignKey(
-                        name: "fk_ride_user_entity_driver_temp_id4",
+                        name: "fk_ride_user_entity_driver_temp_id2",
                         column: x => x.driver_id,
                         principalSchema: "public",
                         principalTable: "user",
@@ -135,7 +109,7 @@ namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    ride_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ride_id = table.Column<Guid>(type: "uuid", nullable: true),
                     from_latitude = table.Column<float>(type: "real", nullable: true),
                     from_longitude = table.Column<float>(type: "real", nullable: true),
                     created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -148,24 +122,44 @@ namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Migrations
                 {
                     table.PrimaryKey("pk_position", x => x.id);
                     table.ForeignKey(
-                        name: "fk_position_ride_entity_ride_entity_temp_id1",
+                        name: "fk_position_ride_entity_ride_temp_id1",
                         column: x => x.ride_id,
                         principalSchema: "public",
                         principalTable: "ride",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "transaction",
+                schema: "public",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ride_id = table.Column<Guid>(type: "uuid", nullable: true),
+                    ammount = table.Column<decimal>(type: "numeric", nullable: true),
+                    date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    status = table.Column<int>(type: "integer", nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    deleted_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    version = table.Column<int>(type: "integer", nullable: false),
+                    tenant_id = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_transaction", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_transaction_ride_ride_id",
+                        column: x => x.ride_id,
+                        principalSchema: "public",
+                        principalTable: "ride",
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateIndex(
                 name: "ix_email_user_id",
                 schema: "public",
                 table: "email",
-                column: "user_id");
-
-            migrationBuilder.CreateIndex(
-                name: "ix_phone_user_id",
-                schema: "public",
-                table: "phone",
                 column: "user_id");
 
             migrationBuilder.CreateIndex(
@@ -185,6 +179,12 @@ namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Migrations
                 schema: "public",
                 table: "ride",
                 column: "user_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_transaction_ride_id",
+                schema: "public",
+                table: "transaction",
+                column: "ride_id");
         }
 
         /// <inheritdoc />
@@ -195,11 +195,11 @@ namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Migrations
                 schema: "public");
 
             migrationBuilder.DropTable(
-                name: "phone",
+                name: "position",
                 schema: "public");
 
             migrationBuilder.DropTable(
-                name: "position",
+                name: "transaction",
                 schema: "public");
 
             migrationBuilder.DropTable(

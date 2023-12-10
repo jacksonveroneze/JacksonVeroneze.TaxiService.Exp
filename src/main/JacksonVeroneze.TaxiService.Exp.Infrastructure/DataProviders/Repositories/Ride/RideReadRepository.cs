@@ -13,9 +13,9 @@ using Microsoft.Extensions.Logging;
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Repositories.Ride;
 
 [ExcludeFromCodeCoverage]
-public class RideReadRepository : BaseReadRepository<RideEntity>, IRideReadRepository
+public class RideReadRepository :
+    BaseReadRepository<RideEntity>, IRideReadRepository
 {
-    private readonly ILogger<RideReadRepository> _logger;
     private readonly DbSet<RideEntity> _dbSet;
 
     public RideReadRepository(ILogger<RideReadRepository> logger,
@@ -23,7 +23,6 @@ public class RideReadRepository : BaseReadRepository<RideEntity>, IRideReadRepos
     {
         ArgumentNullException.ThrowIfNull(context);
 
-        _logger = logger;
         _dbSet = context.Set<RideEntity>();
     }
 
@@ -52,7 +51,7 @@ public class RideReadRepository : BaseReadRepository<RideEntity>, IRideReadRepos
     {
         ArgumentNullException.ThrowIfNull(filter);
 
-        RideStatusSpecification specStatus = new();
+        RideStatusFilterSpecification specStatus = new(filter.Status);
         RideUserIdSpecification specUserId = new(filter.UserId);
 
         Expression<Func<RideEntity, bool>> spec =

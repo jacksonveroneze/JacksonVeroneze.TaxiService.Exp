@@ -26,6 +26,8 @@ public static class DefaultFiledsMapping
             .IsConcurrencyToken()
             .IsRequired();
 
+        builder.HasIndex(c => c.TenantId);
+
         builder.Ignore(x => x.Events);
     }
 }

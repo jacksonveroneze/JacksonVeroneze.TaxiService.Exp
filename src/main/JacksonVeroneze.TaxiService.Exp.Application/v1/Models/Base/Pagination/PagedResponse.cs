@@ -2,9 +2,7 @@
 
 public record PagedResponse<TType> : BaseResponse
 {
-    [JsonPropertyName("data")]
-    public ICollection<TType>? Data { get; init; }
+    [JsonPropertyName("data")] public ICollection<TType>? Data { get; init; }
 
-    [JsonPropertyName("pagination")]
-    public PageInfoResponse? Pagination { get; init; }
+    [JsonPropertyName("pagination")] public PageInfoResponse? Pagination { get; init; }
 }

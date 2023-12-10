@@ -25,6 +25,7 @@ indent_size = 4
 
 [*.sh]
 indent_size = 4
+
 [*.{cs,vb}]
 
 # Roslynator Configuration
@@ -662,7 +663,7 @@ dotnet_diagnostic.S2094.severity = suggestion
 # MA -----------------------------------------------------
 MA0051.maximum_lines_per_method = 80
 MA0051.maximum_statements_per_method = 60
-MA0011.exclude_tostring_methods=true
+MA0011.exclude_tostring_methods = true
 dotnet_diagnostic.MA0089.severity = error
 # MA0080: Use a cancellation token using .WithCancellation()
 dotnet_diagnostic.MA0080.severity = error

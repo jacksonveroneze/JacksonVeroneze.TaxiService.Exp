@@ -36,7 +36,7 @@ public abstract class BaseReadRepository<TEntity> where TEntity : class
         if (result is null)
         {
             _logger.LogNotFound(nameof(BaseReadRepository<TEntity>),
-                nameof(GetByIdAsync), id, DomainErrors.Ride.NotFound);
+                nameof(GetByIdAsync), id, DomainErrors.Commmon.NotFound);
         }
 
         return result;

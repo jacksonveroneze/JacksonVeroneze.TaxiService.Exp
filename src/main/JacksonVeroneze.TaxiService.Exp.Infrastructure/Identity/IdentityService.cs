@@ -17,11 +17,7 @@ public class IdentityService(
 
         string? id = user.FindFirstValue("userId");
 
-        UserIdentity identity = new()
-        {
-            Id = Guid.Parse(id!),
-            Name = name!
-        };
+        UserIdentity identity = new() { Id = Guid.Parse(id!), Name = name! };
 
         return Task.FromResult(identity);
     }

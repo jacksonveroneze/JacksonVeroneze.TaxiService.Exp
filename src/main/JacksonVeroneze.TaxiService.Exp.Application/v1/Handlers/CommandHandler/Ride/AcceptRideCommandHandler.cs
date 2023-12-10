@@ -41,7 +41,7 @@ public sealed class AcceptRideCommandHandler(
                 .WithError(DomainErrors.User.NotFound);
         }
 
-        Result result = ride.Accept(user);
+        Result result = ride.Accept(user.Id);
 
         if (result.IsFailure)
         {

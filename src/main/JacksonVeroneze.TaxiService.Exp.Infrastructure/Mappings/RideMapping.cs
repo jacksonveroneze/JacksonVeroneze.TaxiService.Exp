@@ -23,6 +23,7 @@ public class RideMapping : IEntityTypeConfiguration<RideEntity>
             .IsRequired(false);
 
         builder.Property(c => c.UserId);
+        builder.Property(c => c.DriverId);
 
         builder.Property(c => c.Distance)
             .HasColumnName("distance")
@@ -57,10 +58,6 @@ public class RideMapping : IEntityTypeConfiguration<RideEntity>
         builder.Property(c => c.Status)
             .HasColumnName("status")
             .IsRequired();
-
-        builder.HasOne(p => p.User);
-
-        builder.HasOne(p => p.Driver);
 
         builder.ConfigureDefaultFiledsMapping();
     }

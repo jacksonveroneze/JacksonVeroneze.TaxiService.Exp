@@ -15,9 +15,7 @@ public sealed record GetUserPagedQuery() :
 
     private const SortDirection DefaultOrder = SortDirection.Ascending;
 
-    [FromQuery(Name = "name")]
-    public string? Name { get; init; }
+    [FromQuery(Name = "name")] public string? Name { get; init; }
 
-    [FromQuery(Name = "status")]
-    public UserStatus? Status { get; init; }
+    [FromQuery(Name = "status")] public UserStatus? Status { get; init; }
 }

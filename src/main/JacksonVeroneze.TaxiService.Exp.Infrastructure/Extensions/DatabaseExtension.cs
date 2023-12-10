@@ -31,7 +31,7 @@ public static class DatabaseExtension
         AppConfiguration appConfiguration)
     {
         optionsBuilder.UseLazyLoadingProxies()
-            .EnableDetailedErrors(appConfiguration.IsDevelopment)
+            .EnableDetailedErrors(false)
             .EnableSensitiveDataLogging(appConfiguration.IsDevelopment)
             .UseSnakeCaseNamingConvention();
     }

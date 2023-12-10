@@ -1,3 +1,4 @@
+using JacksonVeroneze.TaxiService.Exp.Domain.Parameters;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.Configurations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +15,8 @@ public static class AppConfigurationExtension
     {
         ArgumentNullException.ThrowIfNull(configuration);
 
-        services.AddConfiguration<AppConfiguration>(configuration);
+        services.AddConfiguration<AppConfiguration>(configuration)
+            .AddConfiguration<UserParameters>(configuration, UserParameters.Name);
 
         using ServiceProvider provider =
             services.BuildServiceProvider();

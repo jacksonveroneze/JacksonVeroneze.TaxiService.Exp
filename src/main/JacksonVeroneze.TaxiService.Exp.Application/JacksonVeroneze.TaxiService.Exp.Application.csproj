@@ -29,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="v1\Handlers\CommandHandler\Transaction\"/>
     <Folder Include="v1\Interfaces\"/>
   </ItemGroup>
 </Project>

@@ -18,7 +18,7 @@ public static class PositionEndpoint
                 .WithTags("positions")
                 .AddFluentValidationAutoValidation();
 
-        builder.MapPost("/", async (
+        builder.MapPost(string.Empty, async (
                 [FromServices] IMediator mediator,
                 [FromBody] UpdatePositionCommand command,
                 CancellationToken cancellationToken) =>

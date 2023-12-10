@@ -5,9 +5,9 @@ import {crypto} from "k6/experimental/webcrypto";
 import {randomIntBetween} from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 export const options = {
-    duration: '240s',
-    // iterations: 1,
-    vus: 25,
+    //duration: '7200s',
+    iterations: 50,
+    vus: 20,
 };
 
 // export let options = {
@@ -23,7 +23,7 @@ export const options = {
 // };
 
 const url = 'http://localhost/taxi-service-exp';
-// const url = 'http://localhost:7000';
+//const url = 'http://localhost:7000';
 
 export default function () {
     let headers = {
@@ -38,15 +38,21 @@ export default function () {
 
     const rnd = randomIntBetween(10000, 99999)
 
+    const responsehealth = http.get(`${url}/health`, headers);
+    check(responsehealth, {'[Health] - status is 200': (r) => r.status === 200});
+    //return;
+
     // 1. Create User
     const bodyUser = JSON.stringify({
-        name: crypto.randomUUID() + '_' + rnd,
+        name: crypto.randomUUID(),
         birthday: "2023-08-25",
         gender: "Male",
         document: "06399214939"
     });
     const responsePostUser = http.post(`${url}/api/v1/users`, bodyUser, headers);
     const idUser = JSON.parse(responsePostUser.body).data.id;
+
+    console.log("USER_ID: " + idUser);
 
     check(responsePostUser, {'[User] - Created - status is 201': (r) => r.status === 201});
 
@@ -82,7 +88,7 @@ export default function () {
     const idRide = JSON.parse(responsePostRide.body).data.id;
 
     check(responsePostRide, {'[Ride] - Created - status is 201': (r) => r.status === 201});
-
+    return;
     console.info(`Ride id: ${idRide}`)
 
     // 2. Get Ride By Id

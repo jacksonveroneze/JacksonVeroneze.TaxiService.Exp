@@ -24,7 +24,7 @@ public class DistanceCalculatorService : IDistanceCalculatorService
     {
         const double raioTerra = 6371;
 
-        const double radiansOverDegrees = (Math.PI / 180.0);
+        const double radiansOverDegrees = Math.PI / 180.0;
 
         double lat1 = coord1.Latitude * radiansOverDegrees;
         double lon1 = coord1.Longitude * radiansOverDegrees;

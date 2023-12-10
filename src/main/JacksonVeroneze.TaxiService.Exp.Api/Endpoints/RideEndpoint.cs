@@ -21,7 +21,7 @@ public static class RideEndpoint
                 .WithTags("rides")
                 .AddFluentValidationAutoValidation();
 
-        builder.MapGet("/", async (
+        builder.MapGet(string.Empty, async (
                 [FromServices] IMediator mediator,
                 [AsParameters] GetRidePagedQuery query,
                 CancellationToken cancellationToken) =>
@@ -36,7 +36,7 @@ public static class RideEndpoint
 
         builder.MapGet("{id:guid:required}", async (
                 [FromServices] IMediator mediator,
-                [FromRoute(Name = "id")] Guid id,
+                [FromRoute] Guid id,
                 CancellationToken cancellationToken) =>
             {
                 GetRideByIdQuery query = new(id);
@@ -77,7 +77,7 @@ public static class RideEndpoint
 
         builder.MapPut("{id:guid:required}/start", async (
                 [FromServices] IMediator mediator,
-                [FromRoute(Name = "id")] Guid id,
+                [FromRoute] Guid id,
                 CancellationToken cancellationToken) =>
             {
                 StartRideCommand command = new(id);
@@ -92,7 +92,7 @@ public static class RideEndpoint
 
         builder.MapPut("{id:guid:required}/finish", async (
                 [FromServices] IMediator mediator,
-                [FromRoute(Name = "id")] Guid id,
+                [FromRoute] Guid id,
                 CancellationToken cancellationToken) =>
             {
                 FinishRideCommand command = new(id);
@@ -107,7 +107,7 @@ public static class RideEndpoint
 
         builder.MapPut("{id:guid:required}/cancel", async (
                 [FromServices] IMediator mediator,
-                [FromRoute(Name = "id")] Guid id,
+                [FromRoute] Guid id,
                 CancellationToken cancellationToken) =>
             {
                 CancelRideCommand command = new(id);

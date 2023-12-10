@@ -13,9 +13,9 @@ using Microsoft.Extensions.Logging;
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Repositories.User;
 
 [ExcludeFromCodeCoverage]
-public class UserReadRepository : BaseReadRepository<UserEntity>, IUserReadRepository
+public class UserReadRepository :
+    BaseReadRepository<UserEntity>, IUserReadRepository
 {
-    private readonly ILogger<UserReadRepository> _logger;
     private readonly DbSet<UserEntity> _dbSet;
 
     public UserReadRepository(
@@ -24,7 +24,6 @@ public class UserReadRepository : BaseReadRepository<UserEntity>, IUserReadRepos
     {
         ArgumentNullException.ThrowIfNull(context);
 
-        _logger = logger;
         _dbSet = context.Set<UserEntity>();
     }
 

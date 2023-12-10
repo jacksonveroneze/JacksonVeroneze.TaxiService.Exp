@@ -7,15 +7,12 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User.Email;
 public sealed record CreateEmailCommand :
     IRequest<Result<CreateEmailCommandResponse>>
 {
-    [FromRoute(Name = "id")]
-    public Guid Id { get; init; }
+    [FromRoute(Name = "id")] public Guid Id { get; init; }
 
-    [FromBody]
-    public CreateEmailBodyCommand? Body { get; init; }
+    [FromBody] public CreateEmailBodyCommand? Body { get; init; }
 }
 
 public class CreateEmailBodyCommand
 {
-    [JsonPropertyName("email")]
-    public string? Email { get; init; }
+    [JsonPropertyName("email")] public string? Email { get; init; }
 }

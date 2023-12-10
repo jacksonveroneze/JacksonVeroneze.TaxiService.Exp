@@ -32,7 +32,7 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
     public virtual IReadOnlyCollection<EmailEntity> Emails =>
         _emails?.AsReadOnly() ?? _emptyEmails;
 
-    protected UserEntity()
+    public UserEntity()
     {
     }
 

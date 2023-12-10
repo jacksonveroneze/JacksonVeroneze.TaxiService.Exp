@@ -44,7 +44,7 @@ public sealed class RequestRideCommandHandler(
                 DomainErrors.Ride.AlreadyByUser);
         }
 
-        Result<RideEntity> entity = RideEntity.Create(user,
+        Result<RideEntity> entity = RideEntity.Create(user.Id,
             request.LatitudeFrom, request.LatitudeTo,
             request.LongitudeFrom, request.LongitudeTo);
 

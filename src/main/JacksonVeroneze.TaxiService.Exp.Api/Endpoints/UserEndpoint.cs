@@ -23,7 +23,7 @@ public static class UserEndpoint
                 .WithTags("users")
                 .AddFluentValidationAutoValidation();
 
-        builder.MapGet("/", async (
+        builder.MapGet(string.Empty, async (
                 [FromServices] IMediator mediator,
                 [AsParameters] GetUserPagedQuery query,
                 CancellationToken cancellationToken) =>
@@ -142,7 +142,7 @@ public static class UserEndpoint
         builder.MapDelete("{id:guid:required}/emails/{emailId:guid:required}", async (
                 [FromServices] IMediator mediator,
                 [FromRoute] Guid id,
-                [FromRoute(Name = "emailId")] Guid emailId,
+                [FromRoute] Guid emailId,
                 CancellationToken cancellationToken) =>
             {
                 DeleteEmailCommand command = new(id, emailId);

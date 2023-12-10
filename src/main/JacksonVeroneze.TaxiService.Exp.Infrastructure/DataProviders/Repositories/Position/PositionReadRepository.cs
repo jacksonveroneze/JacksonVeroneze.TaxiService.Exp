@@ -9,17 +9,17 @@ using Microsoft.Extensions.Logging;
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Repositories.Position;
 
 [ExcludeFromCodeCoverage]
-public class PositionReadRepository : BaseReadRepository<PositionEntity>, IPositionReadRepository
+public class PositionReadRepository :
+    BaseReadRepository<PositionEntity>, IPositionReadRepository
 {
-    private readonly ILogger<PositionReadRepository> _logger;
     private readonly DbSet<PositionEntity> _dbSet;
 
-    public PositionReadRepository(ILogger<PositionReadRepository> logger,
+    public PositionReadRepository(
+        ILogger<PositionReadRepository> logger,
         ApplicationDbContext context) : base(logger, context)
     {
         ArgumentNullException.ThrowIfNull(context);
 
-        _logger = logger;
         _dbSet = context.Set<PositionEntity>();
     }
 

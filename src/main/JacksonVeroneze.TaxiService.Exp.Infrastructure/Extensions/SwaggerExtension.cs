@@ -1,7 +1,4 @@
-using JacksonVeroneze.NET.Swagger.Extensions;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.Configurations;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
 
