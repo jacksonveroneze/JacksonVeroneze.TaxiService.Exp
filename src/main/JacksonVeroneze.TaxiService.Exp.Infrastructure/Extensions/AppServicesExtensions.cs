@@ -20,7 +20,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class AppServicesExtension
+public static class AppServicesExtensions
 {
     public static IServiceCollection AddAppServices(
         this IServiceCollection services)

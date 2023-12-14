@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class AppConfigurationExtension
+public static class AppConfigurationExtensions
 {
     public static AppConfiguration AddAppConfigs(
         this IServiceCollection services,

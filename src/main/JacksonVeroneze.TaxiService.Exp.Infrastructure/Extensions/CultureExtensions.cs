@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class CultureExtension
+public static class CultureExtensions
 {
     private const string DefaultCulture = "pt-BR";
 

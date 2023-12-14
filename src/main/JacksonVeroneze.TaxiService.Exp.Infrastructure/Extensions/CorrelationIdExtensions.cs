@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class CorrelationIdExtension
+public static class CorrelationIdExtensions
 {
     public static IServiceCollection AddCorrelation(
         this IServiceCollection services)

@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class DatabaseExtension
+public static class DatabaseExtensions
 {
     public static IServiceCollection AddDatabase(
         this IServiceCollection services,

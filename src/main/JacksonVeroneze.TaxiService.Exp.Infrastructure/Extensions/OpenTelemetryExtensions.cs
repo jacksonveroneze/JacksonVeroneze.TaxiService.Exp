@@ -6,7 +6,7 @@ using OpenTelemetry.Trace;
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class OpenTelemetryExtension
+public static class OpenTelemetryExtensions
 {
     public static IServiceCollection AddOpenTelemetry(
         this IServiceCollection services,

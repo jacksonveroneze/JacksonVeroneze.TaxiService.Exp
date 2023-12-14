@@ -6,7 +6,7 @@ using StackExchange.Redis;
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class CacheServicesExtension
+public static class CacheServicesExtensions
 {
     public static IServiceCollection AddCached(
         this IServiceCollection services,

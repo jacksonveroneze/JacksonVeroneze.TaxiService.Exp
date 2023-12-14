@@ -19,7 +19,7 @@ RUN dotnet publish /build/main/JacksonVeroneze.TaxiService.Exp.Api/JacksonVerone
 
 FROM jacksonveroneze/aspnet:8.0-debian-1.0.0
 
-COPY --from=build-env /build/out /home/app
+USER root
 
 # Run
 ENV APP_NAME JacksonVeroneze.TaxiService.Exp.Api.dll

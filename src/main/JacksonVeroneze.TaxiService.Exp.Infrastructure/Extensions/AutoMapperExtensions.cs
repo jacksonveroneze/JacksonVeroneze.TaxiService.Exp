@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class AutoMapperExtension
+public static class AutoMapperExtensions
 {
     public static IServiceCollection AddAutoMapper(
         this IServiceCollection services)

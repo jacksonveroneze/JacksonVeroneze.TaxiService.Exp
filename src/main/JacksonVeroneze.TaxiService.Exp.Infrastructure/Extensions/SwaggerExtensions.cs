@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Builder;
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class SwaggerExtension
+public static class SwaggerExtensions
 {
     public static IApplicationBuilder AddSwagger(
         this IApplicationBuilder app)

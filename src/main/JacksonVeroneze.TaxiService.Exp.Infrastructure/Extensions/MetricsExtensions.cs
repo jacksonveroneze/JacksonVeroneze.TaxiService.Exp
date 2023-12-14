@@ -4,7 +4,7 @@ using Prometheus.DotNetRuntime;
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class MetricsExtension
+public static class MetricsExtensions
 {
     public static IDisposable? AddMetrics(
         AppConfiguration? appConfiguration)

@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class AuthorizationExtension
+public static class AuthorizationExtensions
 {
     public static IServiceCollection AddAuthorization(
         this IServiceCollection services,

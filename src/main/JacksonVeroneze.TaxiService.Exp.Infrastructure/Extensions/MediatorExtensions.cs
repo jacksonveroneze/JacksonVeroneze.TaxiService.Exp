@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class MediatorExtension
+public static class MediatorExtensions
 {
     public static IServiceCollection AddMediatr(
         this IServiceCollection services)

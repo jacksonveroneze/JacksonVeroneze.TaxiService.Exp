@@ -19,7 +19,7 @@ public static class WebApplicationBuilderExtensions
         AppConfiguration appConfiguration =
             builder.Services.AddAppConfigs(builder.Configuration);
 
-        builder.Host.AddLogger(appConfiguration);
+        builder.AddLogger(appConfiguration);
 
         builder.ConfigureServices(appConfiguration);
 

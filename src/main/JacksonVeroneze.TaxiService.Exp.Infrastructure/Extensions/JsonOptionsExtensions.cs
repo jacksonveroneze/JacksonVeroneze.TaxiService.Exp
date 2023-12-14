@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class JsonOptionsSerializeExtension
+public static class JsonOptionsExtensions
 {
     public static IServiceCollection AddJsonOptionsSerialize(
         this IServiceCollection services)
