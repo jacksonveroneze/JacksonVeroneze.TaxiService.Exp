@@ -6,7 +6,7 @@ import {randomIntBetween} from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 export const options = {
     //duration: '7200s',
-    iterations: 50,
+    iterations: 5000,
     vus: 20,
 };
 

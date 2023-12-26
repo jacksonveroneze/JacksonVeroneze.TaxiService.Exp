@@ -21,7 +21,7 @@ services:
       - Serilog__WriteTo__0__Args__configure__1__Name=Seq
       - Serilog__WriteTo__0__Args__configure__1__Args__serverUrl=http://10.0.0.199:5341
     healthcheck:
-      test: curl --silent --fail http://api:8080/health?source=docker || exit 1
+      test: curl --silent --fail http://localhost:8080/health?source=docker || exit 1
       interval: 10s
       timeout: 3s
       retries: 3
@@ -37,7 +37,7 @@ services:
       resources:
         limits:
           cpus: '0.50'
-          memory: '512M'
+          memory: '256M'
         reservations:
           cpus: '0.50'
-          memory: '512M'
+          memory: '256M'

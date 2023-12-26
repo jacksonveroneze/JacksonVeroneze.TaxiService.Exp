@@ -31,8 +31,9 @@ public static class WebApplicationExtensions
                 .AddSwagger();
         }
 
-        app.UseHttpMetrics()
-            .UseCorrelationId();
+        app.UseOpenTelemetryPrometheusScrapingEndpoint("/metrics-open");
+        app.UseHttpMetrics();
+        app.UseCorrelationId();
 
         app.MapMetrics();
         app.UseHealthChecks("/health");

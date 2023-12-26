@@ -3,6 +3,13 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 
 ADD . /build
 
+#RUN dotnet restore /build/main/JacksonVeroneze.TaxiService.Exp.Api/JacksonVeroneze.TaxiService.Exp.Api.csproj
+#
+#RUN dotnet publish /build/main/JacksonVeroneze.TaxiService.Exp.Api/JacksonVeroneze.TaxiService.Exp.Api.csproj \
+#    --configuration Release \
+#    --output /build/out \
+#    --no-restore
+
 RUN dotnet restore /build/main/JacksonVeroneze.TaxiService.Exp.Api/JacksonVeroneze.TaxiService.Exp.Api.csproj \
     --runtime linux-x64 \
     /p:PublishReadyToRun=true
@@ -17,9 +24,6 @@ RUN dotnet publish /build/main/JacksonVeroneze.TaxiService.Exp.Api/JacksonVerone
     /p:PublishReadyToRun=true \
     /p:PublishSingleFile=false
 
-FROM jacksonveroneze/aspnet:8.0-debian-1.0.0
+FROM jacksonveroneze/aspnet:8.0-alpine-1.1.0
 
-USER root
-
-# Run
-ENV APP_NAME JacksonVeroneze.TaxiService.Exp.Api.dll
+COPY --from=build-env /build/out /home/app
