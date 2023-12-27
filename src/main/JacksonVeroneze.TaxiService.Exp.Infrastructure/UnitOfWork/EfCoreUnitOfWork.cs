@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.UnitOfWork;
 
 [ExcludeFromCodeCoverage]
-public class UnitOfWork(
+public class EfCoreUnitOfWork(
     ApplicationDbContext dbContext,
     IIntegrationEventPublisher bus)
     : IUnitOfWork

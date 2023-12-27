@@ -26,7 +26,7 @@ public sealed class StartRideCommandHandler(
         if (ride is null)
         {
             return Result<VoidResponse>
-                .FromNotFound(DomainErrors.Ride.NotFound);
+                .FromNotFound(DomainErrors.RideError.NotFound);
         }
 
         Result result = ride.Start();

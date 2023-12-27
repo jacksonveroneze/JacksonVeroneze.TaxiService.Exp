@@ -1,7 +1,6 @@
 using JacksonVeroneze.NET.Logging.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.Configurations;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;

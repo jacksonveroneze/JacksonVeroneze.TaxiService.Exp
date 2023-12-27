@@ -20,17 +20,13 @@ public class AppConfiguration
 
     public AppMetricsConfiguration? Metrics { get; init; }
 
-    public PushGatewayConfiguration? PushGateway { get; init; }
-
     public BusConfiguration? Bus { get; init; }
 
     public string AppName =>
-        Application?.Name ??
-        throw new ArgumentNullException(nameof(AppName));
+        Application!.Name!;
 
     public Version AppVersion =>
-        Application?.Version ??
-        throw new ArgumentNullException(nameof(AppVersion));
+        Application!.Version!;
 
     public bool IsDevelopment =>
         Environment!.Equals(EnviromentDevelopment,

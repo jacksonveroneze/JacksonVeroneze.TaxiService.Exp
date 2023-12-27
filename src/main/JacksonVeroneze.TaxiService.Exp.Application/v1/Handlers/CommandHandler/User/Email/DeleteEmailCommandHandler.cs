@@ -26,7 +26,7 @@ public sealed class DeleteEmailCommandHandler(
         if (user is null)
         {
             return Result<VoidResponse>.FromInvalid(
-                DomainErrors.User.NotFound);
+                DomainErrors.UserError.NotFound);
         }
 
         EmailEntity? email = user.GetEmailById(request.EmailId);
@@ -34,10 +34,10 @@ public sealed class DeleteEmailCommandHandler(
         if (email is null)
         {
             logger.LogNotFound(nameof(DeleteEmailCommandHandler),
-                nameof(Handle), request.Id, DomainErrors.Email.NotFound);
+                nameof(Handle), request.Id, DomainErrors.EmailError.NotFound);
 
             return Result<VoidResponse>.FromNotFound(
-                DomainErrors.Email.NotFound);
+                DomainErrors.EmailError.NotFound);
         }
 
         Result result = user.RemoveEmail(email);

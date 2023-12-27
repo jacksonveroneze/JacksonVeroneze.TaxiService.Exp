@@ -54,13 +54,13 @@ public class TransactionEntity : BaseEntityAggregateRoot
         if (Status == TransactionStatus.Paid)
         {
             return Result.FromInvalid(
-                DomainErrors.Transaction.StatusAlreadyPaid);
+                DomainErrors.TransactionError.StatusAlreadyPaid);
         }
 
         if (Status != TransactionStatus.WaitingPayment)
         {
             return Result.FromInvalid(
-                DomainErrors.Transaction.InvalidStatusSetPaid);
+                DomainErrors.TransactionError.InvalidStatusSetPaid);
         }
 
         Status = TransactionStatus.Paid;

@@ -28,7 +28,7 @@ public sealed class ActivateUserCommandHandler(
         if (user is null)
         {
             return Result<VoidResponse>.FromInvalid(
-                DomainErrors.User.NotFound);
+                DomainErrors.UserError.NotFound);
         }
 
         Result result = user.Activate(dateTime.UtcNow);

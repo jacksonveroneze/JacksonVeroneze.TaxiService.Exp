@@ -28,7 +28,7 @@ public sealed class InactivateUserCommandHandler(
         if (user is null)
         {
             return Result<VoidResponse>.FromInvalid(
-                DomainErrors.User.NotFound);
+                DomainErrors.UserError.NotFound);
         }
 
         Result result = user.Inactivate(dateTime.UtcNow);

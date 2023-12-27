@@ -11,7 +11,7 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.QueryHandler.U
 public sealed class GetUserByIdQueryHandler(
     ILogger<GetUserByIdQueryHandler> logger,
     IMapper mapper,
-    IUserReadRepository repository)
+    IUserReadDistribCachedRepository repository)
     : IRequestHandler<GetUserByIdQuery, Result<GetUserByIdQueryResponse>>
 {
     public async Task<Result<GetUserByIdQueryResponse>> Handle(
@@ -26,7 +26,7 @@ public sealed class GetUserByIdQueryHandler(
         if (entity is null)
         {
             return Result<GetUserByIdQueryResponse>
-                .FromNotFound(DomainErrors.User.NotFound);
+                .FromNotFound(DomainErrors.UserError.NotFound);
         }
 
         GetUserByIdQueryResponse response =

@@ -28,7 +28,7 @@ public sealed class AcceptRideCommandHandler(
         if (ride is null)
         {
             return Result<VoidResponse>
-                .FromNotFound(DomainErrors.Ride.NotFound);
+                .FromNotFound(DomainErrors.RideError.NotFound);
         }
 
         UserEntity? user = await userReadRepository
@@ -38,7 +38,7 @@ public sealed class AcceptRideCommandHandler(
         if (user is null)
         {
             return Result<VoidResponse>
-                .WithError(DomainErrors.User.NotFound);
+                .WithError(DomainErrors.UserError.NotFound);
         }
 
         Result result = ride.Accept(user.Id);

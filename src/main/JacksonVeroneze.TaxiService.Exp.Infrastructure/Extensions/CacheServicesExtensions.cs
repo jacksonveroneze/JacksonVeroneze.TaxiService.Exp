@@ -22,20 +22,33 @@ public static class CacheServicesExtensions
         }
         else
         {
-            services.AddStackExchangeRedisCache(options =>
-            {
-                options.InstanceName =
-                    $"{appConfiguration.AppName}-" +
-                    $"{appConfiguration.AppVersion}";
-
-                options.ConfigurationOptions = new ConfigurationOptions
+            IConnectionMultiplexer redisConnectionMultiplexer =
+                ConnectionMultiplexer.Connect(appConfiguration.Cache!.Endpoint!, options =>
                 {
-                    Ssl = false,
-                    AbortOnConnectFail = false,
-                    EndPoints = { appConfiguration.Cache!.Endpoint! },
-                    ClientName = $"{appConfiguration.AppName}-{Guid.NewGuid()}"
-                };
-            });
+                    options.Ssl = false;
+                    options.AbortOnConnectFail = false;
+                    options.ClientName = $"{appConfiguration.AppName}-{Guid.NewGuid()}";
+                });
+
+            services.AddSingleton(redisConnectionMultiplexer);
+
+            services.AddStackExchangeRedisCache(options =>
+                options.ConnectionMultiplexerFactory = () => Task.FromResult(redisConnectionMultiplexer));
+
+            // services.AddStackExchangeRedisCache(options =>
+            // {
+            //     options.InstanceName =
+            //         $"{appConfiguration.AppName}-" +
+            //         $"{appConfiguration.AppVersion}";
+            //
+            //     options.ConfigurationOptions = new ConfigurationOptions
+            //     {
+            //         Ssl = false,
+            //         AbortOnConnectFail = false,
+            //         EndPoints = { appConfiguration.Cache!.Endpoint! },
+            //         ClientName = $"{appConfiguration.AppName}-{Guid.NewGuid()}"
+            //     };
+            // });
         }
 
         return services;

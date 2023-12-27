@@ -26,7 +26,7 @@ public sealed class CancelRideCommandHandler(
         if (ride is null)
         {
             return Result<VoidResponse>
-                .FromNotFound(DomainErrors.Ride.NotFound);
+                .FromNotFound(DomainErrors.RideError.NotFound);
         }
 
         Result result = ride.Cancel();

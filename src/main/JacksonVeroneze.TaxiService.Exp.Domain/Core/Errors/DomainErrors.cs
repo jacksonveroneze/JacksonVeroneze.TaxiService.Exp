@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
 using JacksonVeroneze.NET.Result;
 
 namespace JacksonVeroneze.TaxiService.Exp.Domain.Core.Errors;
@@ -6,34 +7,39 @@ namespace JacksonVeroneze.TaxiService.Exp.Domain.Core.Errors;
 [ExcludeFromCodeCoverage]
 public static class DomainErrors
 {
-    private const string TemplateNotFound = "The {0} with the specified identifier was not found.";
-    private const string TemplateDataInUse = "The specified {0} is already in use.";
-    private const string TemplateDataInvalid = "The specified {0} is invalid.";
+    private static readonly CompositeFormat TemplateNotFound =
+        CompositeFormat.Parse("The {{0}} with the specified identifier was not found.");
 
-    public static class Commmon
+    private static readonly CompositeFormat TemplateDataInUse =
+        CompositeFormat.Parse("The specified {{0}} is already in use.");
+
+    private static readonly CompositeFormat TemplateDataInvalid =
+        CompositeFormat.Parse("The specified {{0}} is invalid.");
+
+    public static class CommonError
     {
         public static Error NotFound =>
             new("Commmon.NotFound",
-                string.Format(TemplateNotFound, "resource"));
+                string.Format(null, TemplateNotFound, "resource"));
     }
 
-    public static class User
+    public static class UserError
     {
         public static Error NotFound =>
             new("User.NotFound",
-                string.Format(TemplateNotFound, "user id"));
+                string.Format(null, TemplateNotFound, "user id"));
 
         public static Error InvalidName =>
             new("User.InvalidName",
-                string.Format(TemplateDataInvalid, "name"));
+                string.Format(null, TemplateDataInvalid, "name"));
 
         public static Error InvalidCpf =>
             new("User.InvalidCpf",
-                string.Format(TemplateDataInvalid, "cpf"));
+                string.Format(null, TemplateDataInvalid, "cpf"));
 
         public static Error DuplicateCpf =>
             new("User.DuplicateCpf",
-                string.Format(TemplateDataInUse, "cpf"));
+                string.Format(null, TemplateDataInUse, "cpf"));
 
         public static Error AlreadyActivated =>
             new("User.AlreadyActivated",
@@ -44,33 +50,33 @@ public static class DomainErrors
                 "The user has already been inactivated.");
     }
 
-    public static class Email
+    public static class EmailError
     {
         public static Error NotFound =>
             new("Email.NotFound",
-                string.Format(TemplateNotFound, "e-mail"));
+                string.Format(null, TemplateNotFound, "e-mail"));
 
         public static Error DuplicateEmail =>
             new("Email.DuplicateEmail",
-                string.Format(TemplateDataInUse, "e-mail"));
+                string.Format(null, TemplateDataInUse, "e-mail"));
 
         public static Error InvalidEmail =>
             new("Email.InvalidEmail",
-                string.Format(TemplateDataInvalid, "e-mail"));
+                string.Format(null, TemplateDataInvalid, "e-mail"));
     }
 
-    public static class Coordinate
+    public static class CoordinateError
     {
         public static Error InvalidCoordinate =>
             new("Coordinate.InvalidCoordinate",
-                string.Format(TemplateDataInvalid, "coordinate"));
+                string.Format(null, TemplateDataInvalid, "coordinate"));
     }
 
-    public static class Ride
+    public static class RideError
     {
         public static Error NotFound =>
             new("Ride.NotFound",
-                string.Format(TemplateNotFound, "ride id"));
+                string.Format(null, TemplateNotFound, "ride id"));
 
         public static Error StatusAlreadyDefined =>
             new("Ride.StatusAlreadyDefined", "Corrida já está no status informado");
@@ -97,11 +103,11 @@ public static class DomainErrors
             new("Ride.InvalidStatusAddPosition", "Para adicionar posições a corrida deve estar em progresso.");
     }
 
-    public static class Transaction
+    public static class TransactionError
     {
         public static Error NotFound =>
             new("Transaction.NotFound",
-                string.Format(TemplateNotFound, "transaction id"));
+                string.Format(null, TemplateNotFound, "transaction id"));
 
         public static Error StatusAlreadyPaid =>
             new("Transaction.StatusAlreadyPaid", "A transação já foi paga");
@@ -110,7 +116,7 @@ public static class DomainErrors
             new("Transaction.InvalidStatusSetPaid", "A transação não está aguardando pagamento");
     }
 
-    public static class Money
+    public static class MoneyError
     {
         public static Error InvalidValue =>
             new("Money.InvalidValue", "Valor inválido");

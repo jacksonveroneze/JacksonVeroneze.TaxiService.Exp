@@ -29,7 +29,7 @@ public sealed class RequestRideCommandHandler(
         if (user is null)
         {
             return Result<RequestRideCommandResponse>.WithError(
-                DomainErrors.User.NotFound);
+                DomainErrors.UserError.NotFound);
         }
 
         bool existsRideByUser = await readRepository
@@ -38,10 +38,10 @@ public sealed class RequestRideCommandHandler(
         if (existsRideByUser)
         {
             logger.LogAlreadyExists(nameof(RequestRideCommandHandler),
-                nameof(Handle), user.Id, DomainErrors.Ride.AlreadyByUser);
+                nameof(Handle), user.Id, DomainErrors.RideError.AlreadyByUser);
 
             return Result<RequestRideCommandResponse>.FromInvalid(
-                DomainErrors.Ride.AlreadyByUser);
+                DomainErrors.RideError.AlreadyByUser);
         }
 
         Result<RideEntity> entity = RideEntity.Create(user.Id,

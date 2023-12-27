@@ -17,9 +17,9 @@ public class RideEntity : BaseEntityAggregateRoot
 
     public virtual double? Distance { get; private set; }
 
-    public virtual CoordinateValueObject? From { get; }
+    public virtual CoordinateValueObject? CoordinateFrom { get; }
 
-    public virtual CoordinateValueObject? To { get; }
+    public virtual CoordinateValueObject? CoordinateTo { get; }
 
     public virtual RideStatus Status { get; private set; }
 
@@ -28,16 +28,16 @@ public class RideEntity : BaseEntityAggregateRoot
     }
 
     private RideEntity(Guid userId,
-        CoordinateValueObject from,
-        CoordinateValueObject to)
+        CoordinateValueObject coordinateFrom,
+        CoordinateValueObject coordinateTo)
     {
         ArgumentNullException.ThrowIfNull(userId);
-        ArgumentNullException.ThrowIfNull(from);
-        ArgumentNullException.ThrowIfNull(to);
+        ArgumentNullException.ThrowIfNull(coordinateFrom);
+        ArgumentNullException.ThrowIfNull(coordinateTo);
 
         UserId = userId;
-        From = from;
-        To = to;
+        CoordinateFrom = coordinateFrom;
+        CoordinateTo = coordinateTo;
 
         Status = RideStatus.Requested;
 
@@ -78,19 +78,19 @@ public class RideEntity : BaseEntityAggregateRoot
         if (Status == RideStatus.Accepted)
         {
             return Result.FromInvalid(
-                DomainErrors.Ride.StatusAlreadyDefined);
+                DomainErrors.RideError.StatusAlreadyDefined);
         }
 
         if (Status != RideStatus.Requested)
         {
             return Result.FromInvalid(
-                DomainErrors.Ride.InvalidStatusSetAccept);
+                DomainErrors.RideError.InvalidStatusSetAccept);
         }
 
         if (DriverId is not null)
         {
             return Result.FromInvalid(
-                DomainErrors.Ride.DriverAlready);
+                DomainErrors.RideError.DriverAlready);
         }
 
         DriverId = driverId;
@@ -106,13 +106,13 @@ public class RideEntity : BaseEntityAggregateRoot
         if (Status == RideStatus.InProgress)
         {
             return Result.FromInvalid(
-                DomainErrors.Ride.StatusAlreadyDefined);
+                DomainErrors.RideError.StatusAlreadyDefined);
         }
 
         if (Status != RideStatus.Accepted)
         {
             return Result.FromInvalid(
-                DomainErrors.Ride.InvalidStatusSetStart);
+                DomainErrors.RideError.InvalidStatusSetStart);
         }
 
         Status = RideStatus.InProgress;
@@ -127,13 +127,13 @@ public class RideEntity : BaseEntityAggregateRoot
         if (Status == RideStatus.Completed)
         {
             return Result.FromInvalid(
-                DomainErrors.Ride.StatusAlreadyDefined);
+                DomainErrors.RideError.StatusAlreadyDefined);
         }
 
         if (Status != RideStatus.InProgress)
         {
             return Result.FromInvalid(
-                DomainErrors.Ride.InvalidStatusSetFinish);
+                DomainErrors.RideError.InvalidStatusSetFinish);
         }
 
         Distance = distance;
@@ -151,13 +151,13 @@ public class RideEntity : BaseEntityAggregateRoot
         if (Status == RideStatus.Canceled)
         {
             return Result.FromInvalid(
-                DomainErrors.Ride.StatusAlreadyDefined);
+                DomainErrors.RideError.StatusAlreadyDefined);
         }
 
         if (Status == RideStatus.Completed)
         {
             return Result.FromInvalid(
-                DomainErrors.Ride.InvalidStatusSetCancel);
+                DomainErrors.RideError.InvalidStatusSetCancel);
         }
 
         Status = RideStatus.Canceled;

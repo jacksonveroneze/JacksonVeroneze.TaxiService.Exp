@@ -27,8 +27,8 @@ public class EmailValueObject : ValueObject
         Value = value;
     }
 
-    public static implicit operator string(EmailValueObject? value)
-        => value?.Value ?? string.Empty;
+    public static implicit operator string?(EmailValueObject? value)
+        => value?.ToString();
 
     private static bool IsValid(string? value)
     {
@@ -37,12 +37,17 @@ public class EmailValueObject : ValueObject
                EmailFormatRegex.Value.IsMatch(value);
     }
 
+    public override string ToString()
+    {
+        return Value ?? string.Empty;
+    }
+
     public static Result<EmailValueObject> Create(string? value)
     {
         if (!IsValid(value))
         {
             return Result<EmailValueObject>.FromInvalid(
-                DomainErrors.Email.InvalidEmail);
+                DomainErrors.EmailError.InvalidEmail);
         }
 
         EmailValueObject valueObject = new(value!);

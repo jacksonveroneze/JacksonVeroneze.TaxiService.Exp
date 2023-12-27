@@ -17,8 +17,8 @@ public class RideMapper : Profile
             .ForMember(dest => dest.DriverId, opts => opts.Ignore())
             .ForMember(dest => dest.Fare, opts => opts.MapFrom(src => src.Fare))
             .ForMember(dest => dest.Distance, opts => opts.MapFrom(src => src.Distance))
-            .ForMember(dest => dest.From, opts => opts.MapFrom(src => src.From))
-            .ForMember(dest => dest.To, opts => opts.MapFrom(src => src.To))
+            .ForMember(dest => dest.From, opts => opts.MapFrom(src => src.CoordinateFrom))
+            .ForMember(dest => dest.To, opts => opts.MapFrom(src => src.CoordinateTo))
             .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status));
 
         CreateMap<RideEntity, GetRideByIdQueryResponse>()

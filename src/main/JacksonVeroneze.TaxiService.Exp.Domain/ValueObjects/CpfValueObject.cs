@@ -24,8 +24,8 @@ public class CpfValueObject : ValueObject
         Value = value;
     }
 
-    public static implicit operator string(CpfValueObject? value)
-        => value?.Value ?? string.Empty;
+    public static implicit operator string?(CpfValueObject? value)
+        => value?.ToString();
 
     private static bool IsValid(string? value)
     {
@@ -34,12 +34,17 @@ public class CpfValueObject : ValueObject
                CpfValidator.Validate(value);
     }
 
+    public override string ToString()
+    {
+        return Value ?? string.Empty;
+    }
+
     public static Result<CpfValueObject> Create(string? value)
     {
         if (!IsValid(value))
         {
             return Result<CpfValueObject>.FromInvalid(
-                DomainErrors.User.InvalidCpf);
+                DomainErrors.UserError.InvalidCpf);
         }
 
         CpfValueObject valueObject = new(value!);

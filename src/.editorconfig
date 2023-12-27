@@ -133,18 +133,11 @@ dotnet_diagnostic.CA1843.severity = error
 # CA2200: Rethrow to preserve stack details
 dotnet_diagnostic.CA2200.severity = error
 
-# IDE0005: Remove unnecessary usings
-dotnet_diagnostic.IDE0005.severity = error
+# CS1591: Missing XML comment for publicly visible type or member
+dotnet_diagnostic.CS1591.severity = none
 
-# IDE0055: All formatting rules
-dotnet_diagnostic.IDE0055.severity = error
-
-# IDE0051: Remove unused private members
-dotnet_diagnostic.IDE0051.severity = error
-
-# IDE0060: Remove unused parameter
-dotnet_code_quality_unused_parameters = all
-dotnet_diagnostic.IDE0060.severity = error
+# CA1711: Identifiers must not have an incorrect suffix
+dotnet_diagnostic.CA1711.severity = none
 
 # CA1847: Use string.Contains(char) instead of string.Contains(string) with single characters
 dotnet_diagnostic.CA1847.severity = error
@@ -169,6 +162,22 @@ dotnet_diagnostic.CA1852.severity = error
 
 # CA1854: Prefer the IDictionary.TryGetValue(TKey, out TValue) method
 dotnet_diagnostic.CA1854.severity = error
+
+# CA1034: Nested types should not be visible
+dotnet_diagnostic.CA1034.severity = suggestion
+
+# IDE0005: Remove unnecessary usings
+dotnet_diagnostic.IDE0005.severity = error
+
+# IDE0055: All formatting rules
+dotnet_diagnostic.IDE0055.severity = error
+
+# IDE0051: Remove unused private members
+dotnet_diagnostic.IDE0051.severity = error
+
+# IDE0060: Remove unused parameter
+dotnet_code_quality_unused_parameters = all
+dotnet_diagnostic.IDE0060.severity = error
 
 # IDE0017: Use object initializers
 dotnet_diagnostic.IDE0017.severity = error
@@ -195,7 +204,7 @@ dotnet_diagnostic.IDE0031.severity = error
 dotnet_diagnostic.IDE0033.severity = error
 
 # IDE0072: Add missing cases to switch expression
-dotnet_diagnostic.IDE0072.severity = error
+dotnet_diagnostic.IDE0072.severity = suggestion
 
 # IDE0180: Use tuple to swap values
 dotnet_diagnostic.IDE0180.severity = error
@@ -709,3 +718,14 @@ dotnet_diagnostic.CA1507.severity = error
 dotnet_diagnostic.CA1508.severity = error
 #CA1514: Avoid redundant length argument
 dotnet_diagnostic.CA1514.severity = error
+
+# Arrangement of Attributes
+# csharp_max_attribute_length_for_same_line = 2
+csharp_keep_existing_attribute_arrangement = true
+csharp_keep_existing_arrangement = true
+csharp_place_type_attribute_on_same_line = if_owner_is_single_line
+csharp_place_method_attribute_on_same_line = if_owner_is_single_line
+csharp_place_attribute_on_same_line = if_owner_is_single_line
+csharp_place_accessorholder_attribute_on_same_line = if_owner_is_single_line
+csharp_place_accessor_attribute_on_same_line = if_owner_is_single_line
+csharp_place_field_attribute_on_same_line = if_owner_is_single_line

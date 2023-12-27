@@ -28,10 +28,10 @@ public sealed class CreateUserCommandHandler(
         {
             logger.LogAlreadyExists(nameof(CreateUserCommandHandler),
                 nameof(Handle), request.Document!,
-                DomainErrors.User.DuplicateCpf);
+                DomainErrors.UserError.DuplicateCpf);
 
             return Result<CreateUserCommandResponse>.FromInvalid(
-                DomainErrors.User.DuplicateCpf);
+                DomainErrors.UserError.DuplicateCpf);
         }
 
         Result<UserEntity> entity = UserEntity.Create(request.Name,

@@ -26,7 +26,7 @@ public sealed class GetRideByIdQueryHandler(
         if (entity is null)
         {
             return Result<GetRideByIdQueryResponse>
-                .FromNotFound(DomainErrors.Ride.NotFound);
+                .FromNotFound(DomainErrors.RideError.NotFound);
         }
 
         GetRideByIdQueryResponse response =

@@ -28,12 +28,12 @@ public sealed class UpdatePositionCommandHandler(
         if (ride is null)
         {
             return Result<VoidResponse>
-                .WithError(DomainErrors.Ride.NotFound);
+                .WithError(DomainErrors.RideError.NotFound);
         }
 
         if (ride.Status != RideStatus.InProgress)
         {
-            Error error = DomainErrors.Ride.InvalidStatusAddPosition;
+            Error error = DomainErrors.RideError.InvalidStatusAddPosition;
 
             logger.LogGenericError(nameof(UpdatePositionCommandHandler),
                 nameof(Handle), error.Message);

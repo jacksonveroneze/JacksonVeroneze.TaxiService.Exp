@@ -20,8 +20,8 @@ public class NameValueObject : ValueObject
         Value = value;
     }
 
-    public static implicit operator string(NameValueObject? value)
-        => value?.Value ?? string.Empty;
+    public static implicit operator string?(NameValueObject? value)
+        => value?.ToString();
 
     private static bool IsValid(string? value)
     {
@@ -30,12 +30,17 @@ public class NameValueObject : ValueObject
                value.Length <= MaxLength;
     }
 
+    public override string ToString()
+    {
+        return Value ?? string.Empty;
+    }
+
     public static Result<NameValueObject> Create(string? value)
     {
         if (!IsValid(value))
         {
             return Result<NameValueObject>.FromInvalid(
-                DomainErrors.User.InvalidName);
+                DomainErrors.UserError.InvalidName);
         }
 
         NameValueObject valueObject = new(value!);

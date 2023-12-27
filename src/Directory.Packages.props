@@ -2,6 +2,8 @@
   <PropertyGroup>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.4" />
+    <!--    <GlobalPackageReference Include="IDisposableAnalyzers" Version="4.0.7" PrivateAssets="All" IncludeAssets="Runtime;Build;Native;contentFiles;Analyzers" />-->
+    <!--    <GlobalPackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.4" PrivateAssets="All" IncludeAssets="Runtime;Build;Native;contentFiles;Analyzers" />-->
+    <!--    <PackageVersion Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.4" />-->
   </ItemGroup>
 </Project>

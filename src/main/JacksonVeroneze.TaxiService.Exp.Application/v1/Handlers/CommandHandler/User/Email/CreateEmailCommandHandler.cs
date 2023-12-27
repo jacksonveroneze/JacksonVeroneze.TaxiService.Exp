@@ -27,7 +27,7 @@ public sealed class CreateEmailCommandHandler(
         if (user is null)
         {
             return Result<CreateEmailCommandResponse>.FromInvalid(
-                DomainErrors.User.NotFound);
+                DomainErrors.UserError.NotFound);
         }
 
         Result<EmailEntity> entity = EmailEntity

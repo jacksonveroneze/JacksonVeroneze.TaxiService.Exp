@@ -15,7 +15,9 @@ public sealed record GetRidePagedQuery() :
 
     private const SortDirection DefaultOrder = SortDirection.Ascending;
 
-    [FromQuery(Name = "status")] public RideStatus? Status { get; init; }
+    [FromQuery(Name = "status")]
+    public RideStatus? Status { get; init; }
 
-    [FromQuery(Name = "user_id")] public Guid? UserId { get; init; }
+    [FromQuery(Name = "user_id")]
+    public Guid? UserId { get; init; }
 }

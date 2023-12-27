@@ -31,7 +31,7 @@ public sealed class FinishRideCommandHandler(
         if (ride is null)
         {
             return Result<VoidResponse>
-                .FromNotFound(DomainErrors.Ride.NotFound);
+                .FromNotFound(DomainErrors.RideError.NotFound);
         }
 
         List<PositionEntity> positions = await positionReadRepository

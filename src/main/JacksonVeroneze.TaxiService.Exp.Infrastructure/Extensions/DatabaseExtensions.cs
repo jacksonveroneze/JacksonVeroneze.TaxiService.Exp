@@ -13,7 +13,7 @@ public static class DatabaseExtensions
         this IServiceCollection services,
         AppConfiguration appConfiguration)
     {
-        services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
+        services.AddScoped<IUnitOfWork, UnitOfWork.EfCoreUnitOfWork>();
 
         services.AddDbContext<ReadApplicationDbContext>((_, options) =>
             options.UseNpgsql(appConfiguration.Database!.ReadConnectionString)

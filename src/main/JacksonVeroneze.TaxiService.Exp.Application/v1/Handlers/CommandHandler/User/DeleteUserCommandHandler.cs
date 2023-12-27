@@ -26,7 +26,7 @@ public sealed class DeleteUserCommandHandler(
         if (user is null)
         {
             return Result<VoidResponse>.FromInvalid(
-                DomainErrors.User.NotFound);
+                DomainErrors.UserError.NotFound);
         }
 
         await writeRepository.DeleteAsync(

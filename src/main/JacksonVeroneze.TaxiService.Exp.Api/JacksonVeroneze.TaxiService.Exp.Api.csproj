@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <PublishAot>false</PublishAot>
     <UserSecretsId>C76F2ABA-8681-46CA-ACD7-B8CCA8368535</UserSecretsId>
     <ServerGarbageCollection>false</ServerGarbageCollection>
   </PropertyGroup>

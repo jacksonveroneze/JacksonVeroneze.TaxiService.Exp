@@ -1,6 +1,7 @@
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.Configurations;
 using Microsoft.Extensions.DependencyInjection;
 using OpenTelemetry;
+using OpenTelemetry.Instrumentation.AspNetCore;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -23,6 +24,12 @@ public static class OpenTelemetryExtensions
         {
             return services;
         }
+
+        services.Configure<AspNetCoreTraceInstrumentationOptions>(options =>
+        {
+            options.Filter = ctx => ctx.Request.Path != "/metrics" &&
+                                    ctx.Request.Path != "/health";
+        });
 
         services.AddOpenTelemetry()
             .ConfigureResource(ConfigureResource)
@@ -56,21 +63,17 @@ public static class OpenTelemetryExtensions
     {
         builder.WithTracing(conf =>
         {
-            ResourceBuilder resourceBuilder = ResourceBuilder
-                .CreateDefault()
-                .AddService(appConfiguration.Application!.Name!);
-
-            conf
-                .SetSampler(new AlwaysOnSampler())
-                .SetResourceBuilder(resourceBuilder)
-                .AddAspNetCoreInstrumentation(options =>
+            conf.AddAspNetCoreInstrumentation(options =>
                 {
-                    string[] ignoreRoutes = ["/metrics", "/health"];
-
                     options.RecordException = true;
-                    options.Filter = ctx => Array.IndexOf(ignoreRoutes, ctx.Request.Path) != -1;
+                })
+                .AddEntityFrameworkCoreInstrumentation(options =>
+                {
+                    options.SetDbStatementForText = true;
+                    options.SetDbStatementForStoredProcedure = true;
                 })
                 .AddHttpClientInstrumentation()
+                .AddRedisInstrumentation()
                 .AddJaegerExporter(options =>
                 {
                     DistributedTracingToolConfiguration configuration =

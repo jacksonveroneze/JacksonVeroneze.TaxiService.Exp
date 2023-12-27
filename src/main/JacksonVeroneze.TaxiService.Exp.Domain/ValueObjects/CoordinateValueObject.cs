@@ -21,14 +21,18 @@ public class CoordinateValueObject : ValueObject
         Longitude = longitude;
     }
 
-    public static implicit operator string(
-        CoordinateValueObject value)
-        => $"Lat: {value.Latitude} - Lon: {value.Longitude}";
+    public static implicit operator string?(CoordinateValueObject? value)
+        => value?.ToString();
 
     private static bool IsValid(float latitude, float longitude)
     {
         return latitude is >= -90 and <= 90 &&
                longitude is >= -100 and <= 100;
+    }
+
+    public override string ToString()
+    {
+        return $"Lat: {Latitude} - Lon: {Longitude}";
     }
 
     public static Result<CoordinateValueObject> Create(
@@ -37,7 +41,7 @@ public class CoordinateValueObject : ValueObject
         if (!IsValid(latitude, longitude))
         {
             return Result<CoordinateValueObject>.FromInvalid(
-                DomainErrors.Coordinate.InvalidCoordinate);
+                DomainErrors.CoordinateError.InvalidCoordinate);
         }
 
         CoordinateValueObject valueObject = new(latitude, longitude);

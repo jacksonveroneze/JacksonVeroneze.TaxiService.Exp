@@ -26,10 +26,10 @@ public sealed class GetAllEmailsByUserIdQueryHandler(
         if (entity is null)
         {
             logger.LogNotFound(nameof(GetAllEmailsByUserIdQueryHandler),
-                nameof(Handle), request.Id, DomainErrors.User.NotFound);
+                nameof(Handle), request.Id, DomainErrors.UserError.NotFound);
 
             return Result<GetAllEmailsByUserIdQueryResponse>.FromNotFound(
-                DomainErrors.User.NotFound);
+                DomainErrors.UserError.NotFound);
         }
 
         IReadOnlyCollection<EmailEntity> emails = entity.Emails;

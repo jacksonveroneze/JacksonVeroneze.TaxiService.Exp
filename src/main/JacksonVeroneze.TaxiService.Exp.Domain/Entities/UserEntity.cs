@@ -82,7 +82,7 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
         if (Status == UserStatus.Active)
         {
             return Result.FromInvalid(
-                DomainErrors.User.AlreadyActivated);
+                DomainErrors.UserError.AlreadyActivated);
         }
 
         Status = UserStatus.Active;
@@ -99,7 +99,7 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
         if (Status == UserStatus.Inactive)
         {
             return Result.FromInvalid(
-                DomainErrors.User.AlreadyInactivated);
+                DomainErrors.UserError.AlreadyInactivated);
         }
 
         Status = UserStatus.Inactive;
@@ -124,7 +124,7 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
         if (ExistsEmailByValue(entity.Email))
         {
             return Result.FromInvalid(
-                DomainErrors.Email.DuplicateEmail);
+                DomainErrors.EmailError.DuplicateEmail);
         }
 
         _emails.Add(entity);
@@ -141,7 +141,7 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
         if (!ExistsEmailByValue(entity.Email))
         {
             return Result.FromInvalid(
-                DomainErrors.Email.NotFound);
+                DomainErrors.EmailError.NotFound);
         }
 
         _emails.Remove(entity);

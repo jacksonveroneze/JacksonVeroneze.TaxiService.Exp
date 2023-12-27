@@ -45,7 +45,6 @@ public static class WebApplicationBuilderExtensions
             .AddFluentValidation()
             .AddAuthentication(appConfiguration)
             .AddAuthorization(appConfiguration)
-            .AddOpenTelemetry(appConfiguration)
             .AddCultureConfiguration()
             .AddHttpContextAccessor()
             .AddFluentValidationAutoValidation()
@@ -69,6 +68,7 @@ public static class WebApplicationBuilderExtensions
         builder.Services
             .AddAppServices()
             .AddCached(appConfiguration)
+            .AddOpenTelemetry(appConfiguration)
             .AddDatabase(appConfiguration)
             .AddRabbitMq();
 

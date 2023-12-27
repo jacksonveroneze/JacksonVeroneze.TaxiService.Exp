@@ -98,7 +98,7 @@ public static class ResultExtensions
 
         return result.Type switch
         {
-            ResultType.Success => result.ToNoContentEntity(),
+            ResultType.Success => ToNoContentEntity(),
             ResultType.Invalid => result.ToConflictEntity(),
             ResultType.Error => result.ToBadRequestEntity(),
             ResultType.NotFound => result.ToNotFoundEntity(),
@@ -132,10 +132,10 @@ public static class ResultExtensions
 
     private static IResult ToCreatedEntity<T>(this Result<T> result)
     {
-        return Results.Created(string.Empty, result.Value);
+        return Results.Created(new Uri(string.Empty), result.Value);
     }
 
-    private static IResult ToNoContentEntity(this Result result)
+    private static IResult ToNoContentEntity()
     {
         return Results.NoContent();
     }
@@ -152,11 +152,11 @@ public static class ResultExtensions
             HttpStatusCode.Conflict);
     }
 
-    private static IResult ToUnprocessableEntity(this Result result)
-    {
-        return result.ToValidationProblem(
-            HttpStatusCode.UnprocessableEntity);
-    }
+    // private static IResult ToUnprocessableEntity(this Result result)
+    // {
+    //     return result.ToValidationProblem(
+    //         HttpStatusCode.UnprocessableEntity);
+    // }
 
     private static IResult ToBadRequestEntity(this Result result)
     {

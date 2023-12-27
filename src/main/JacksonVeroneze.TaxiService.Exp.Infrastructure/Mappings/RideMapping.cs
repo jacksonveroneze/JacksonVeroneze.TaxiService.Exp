@@ -29,7 +29,7 @@ public class RideMapping : IEntityTypeConfiguration<RideEntity>
             .HasColumnName("distance")
             .IsRequired(false);
 
-        builder.OwnsOne(conf => conf.From, conf =>
+        builder.OwnsOne(conf => conf.CoordinateFrom, conf =>
         {
             conf.WithOwner();
 
@@ -42,7 +42,7 @@ public class RideMapping : IEntityTypeConfiguration<RideEntity>
                 .IsRequired();
         });
 
-        builder.OwnsOne(conf => conf.To, conf =>
+        builder.OwnsOne(conf => conf.CoordinateTo, conf =>
         {
             conf.WithOwner();
 
