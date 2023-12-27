@@ -33,7 +33,8 @@ public static class CacheServicesExtensions
             services.AddSingleton(redisConnectionMultiplexer);
 
             services.AddStackExchangeRedisCache(options =>
-                options.ConnectionMultiplexerFactory = () => Task.FromResult(redisConnectionMultiplexer));
+                options.ConnectionMultiplexerFactory =
+                    () => Task.FromResult(redisConnectionMultiplexer));
 
             // services.AddStackExchangeRedisCache(options =>
             // {

@@ -100,7 +100,8 @@ public static class DomainErrors
             new("Ride.AlreadyByUser", "Usuário já tem corrida ativa");
 
         public static Error InvalidStatusAddPosition =>
-            new("Ride.InvalidStatusAddPosition", "Para adicionar posições a corrida deve estar em progresso.");
+            new("Ride.InvalidStatusAddPosition",
+                "Para adicionar posições a corrida deve estar em progresso.");
     }
 
     public static class TransactionError

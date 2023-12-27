@@ -83,7 +83,8 @@ public static class ResultExtensions
             ResultType.Success => Results.NoContent(),
             ResultType.Error or ResultType.Invalid =>
                 Results.BadRequest(result.ToValidationProblem(HttpStatusCode.BadRequest)),
-            ResultType.NotFound => Results.NotFound(result.ToValidationProblem(HttpStatusCode.NotFound)),
+            ResultType.NotFound => Results.NotFound(
+                result.ToValidationProblem(HttpStatusCode.NotFound)),
             _ => throw new ArgumentException(nameof(result.Type))
         };
     }
