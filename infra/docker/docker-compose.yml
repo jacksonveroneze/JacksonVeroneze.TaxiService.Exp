@@ -15,6 +15,7 @@ services:
       - APP_CONFIG_Bus__UserName=admin
       - APP_CONFIG_Bus__Password=admin
       - APP_CONFIG_Bus__Exchange=template-web-api
+      - APP_CONFIG_Cache__Type=Memory
       - APP_CONFIG_DistributedTracing__IsEnabled=true
       - APP_CONFIG_DistributedTracing__Jaeger__Host=10.0.0.199
       - APP_CONFIG_DistributedTracing__Jaeger__Port=6831

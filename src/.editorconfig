@@ -779,7 +779,6 @@ MA0053.exceptions_should_be_sealed = true
 #MA0067 - Use Guid.Empty
 dotnet_diagnostic.MA0067.severity = error
 
-
 # Code Metric
 dotnet_diagnostic.CA1501.severity = error
 dotnet_diagnostic.CA1502.severity = error

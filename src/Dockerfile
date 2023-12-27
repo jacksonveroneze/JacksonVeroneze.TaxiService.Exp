@@ -24,6 +24,6 @@ RUN dotnet publish /build/main/JacksonVeroneze.TaxiService.Exp.Api/JacksonVerone
     /p:PublishReadyToRun=true \
     /p:PublishSingleFile=false
 
-FROM jacksonveroneze/aspnet:8.0-alpine-1.1.0
+FROM jacksonveroneze/aspnet:8.0-debian-1.1.0
 
 COPY --from=build-env /build/out /home/app
