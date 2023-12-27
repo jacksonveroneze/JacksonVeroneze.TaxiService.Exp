@@ -20,7 +20,7 @@ public class UserNameSpecification(
         }
 
         return spec => matchExactly
-            ? spec.Name.Value!.ToUpper().Equals(name.ToUpper(),
+            ? spec.Name.Value!.ToUpperInvariant().Equals(name.ToUpperInvariant(),
                 StringComparison.OrdinalIgnoreCase)
             : spec.Name.Value!.Contains(name, StringComparison.OrdinalIgnoreCase);
     }
