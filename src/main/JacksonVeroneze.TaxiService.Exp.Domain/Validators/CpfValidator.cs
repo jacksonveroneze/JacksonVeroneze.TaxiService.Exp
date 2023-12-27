@@ -2,7 +2,7 @@ using System.Runtime.CompilerServices;
 
 namespace JacksonVeroneze.TaxiService.Exp.Domain.Validators;
 
-public class CpfValidator
+public static class CpfValidator
 {
     public static bool Validate(string? sourceCpf)
     {

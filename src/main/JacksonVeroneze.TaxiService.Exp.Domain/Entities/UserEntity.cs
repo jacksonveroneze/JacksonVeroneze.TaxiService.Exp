@@ -119,7 +119,7 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
     {
         ArgumentNullException.ThrowIfNull(entity);
 
-        _emails ??= new List<EmailEntity>();
+        _emails ??= [];
 
         if (ExistsEmailByValue(entity.Email))
         {
@@ -136,7 +136,7 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
     {
         ArgumentNullException.ThrowIfNull(entity);
 
-        _emails ??= new List<EmailEntity>();
+        _emails ??= [];
 
         if (!ExistsEmailByValue(entity.Email))
         {

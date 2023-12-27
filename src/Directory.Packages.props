@@ -1,0 +1,7 @@
+<Project>
+  <PropertyGroup>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.4" />
+  </ItemGroup>
+</Project>

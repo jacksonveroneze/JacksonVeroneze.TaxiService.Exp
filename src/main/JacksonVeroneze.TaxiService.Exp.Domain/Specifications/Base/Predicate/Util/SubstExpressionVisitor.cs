@@ -6,13 +6,11 @@ namespace JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Base.Predicate.U
 [ExcludeFromCodeCoverage]
 public class SubstExpressionVisitor : ExpressionVisitor
 {
-    public readonly Dictionary<Expression, Expression> Subst = new();
+    public readonly Dictionary<Expression, Expression> Subst = [];
 
     protected override Expression VisitParameter(
         ParameterExpression node)
     {
-        return Subst.TryGetValue(node, out Expression? newValue)
-            ? newValue
-            : node;
+        return Subst.GetValueOrDefault(node, node);
     }
 }

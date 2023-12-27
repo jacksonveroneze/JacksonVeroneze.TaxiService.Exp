@@ -2,9 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <LangVersion>latest</LangVersion>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
     <PublishAot>false</PublishAot>
   </PropertyGroup>
 
@@ -18,7 +15,7 @@
     <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
     <PackageReference Include="Serilog.Sinks.Seq" Version="6.0.0"/>
     <PackageReference Include="Ben.BlockingDetector" Version="0.0.4"/>
-    
+
     <PackageReference Include="prometheus-net.AspNetCore" Version="8.2.0"/>
     <PackageReference Include="prometheus-net.DotNetRuntime" Version="4.4.0"/>
 
@@ -48,9 +45,5 @@
   <ItemGroup>
     <ProjectReference Include="..\JacksonVeroneze.TaxiService.Exp.Application\JacksonVeroneze.TaxiService.Exp.Application.csproj"/>
     <ProjectReference Include="..\JacksonVeroneze.TaxiService.Exp.Domain\JacksonVeroneze.TaxiService.Exp.Domain.csproj"/>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\"/>
   </ItemGroup>
 </Project>

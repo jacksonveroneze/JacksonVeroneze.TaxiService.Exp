@@ -17,7 +17,6 @@ public class RideUserIdSpecification : BaseSpecification<RideEntity>
         _userId = userId;
     }
 
-
     public override Expression<Func<RideEntity, bool>> ToExpression()
     {
         if (!_userId.HasValue)

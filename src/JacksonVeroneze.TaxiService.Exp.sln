@@ -19,6 +19,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		global.json = global.json
 		..\tests\http_get.js = ..\tests\http_get.js
 		..\.gitignore = ..\.gitignore
+		Directory.Build.props = Directory.Build.props
+		BannedSymbols.txt = BannedSymbols.txt
+		nuget.config = nuget.config
+		AssemblyInfo.cs = AssemblyInfo.cs
+		Directory.Packages.props = Directory.Packages.props
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{781F0984-F5A6-4051-9B5F-525135392A5A}"
@@ -31,12 +36,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{D169AF
 	ProjectSection(SolutionItems) = preProject
 		..\infra\docker\docker-compose.yml = ..\infra\docker\docker-compose.yml
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TaxiService.IntegrationTests", "test\JacksonVeroneze.TaxiService.IntegrationTests\JacksonVeroneze.TaxiService.IntegrationTests.csproj", "{16C2E57F-2EAA-4D85-8697-2CF2FD3E270C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TaxiService.UnitTests", "test\JacksonVeroneze.TaxiService.UnitTests\JacksonVeroneze.TaxiService.UnitTests.csproj", "{C0CA9EC5-0B83-4CC6-A37D-E928DCF15FA3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TaxiService.Util.Tests", "test\JacksonVeroneze.TaxiService.Util.Tests\JacksonVeroneze.TaxiService.Util.Tests.csproj", "{26EBA3B9-A9A3-4AA1-A9B2-34D62C91911B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,18 +62,6 @@ Global
 		{5DD8DA6C-CFC9-4AF0-8AAD-FFB3C4E6B951}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DD8DA6C-CFC9-4AF0-8AAD-FFB3C4E6B951}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DD8DA6C-CFC9-4AF0-8AAD-FFB3C4E6B951}.Release|Any CPU.Build.0 = Release|Any CPU
-		{16C2E57F-2EAA-4D85-8697-2CF2FD3E270C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{16C2E57F-2EAA-4D85-8697-2CF2FD3E270C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{16C2E57F-2EAA-4D85-8697-2CF2FD3E270C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{16C2E57F-2EAA-4D85-8697-2CF2FD3E270C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C0CA9EC5-0B83-4CC6-A37D-E928DCF15FA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C0CA9EC5-0B83-4CC6-A37D-E928DCF15FA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C0CA9EC5-0B83-4CC6-A37D-E928DCF15FA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C0CA9EC5-0B83-4CC6-A37D-E928DCF15FA3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{26EBA3B9-A9A3-4AA1-A9B2-34D62C91911B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{26EBA3B9-A9A3-4AA1-A9B2-34D62C91911B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{26EBA3B9-A9A3-4AA1-A9B2-34D62C91911B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{26EBA3B9-A9A3-4AA1-A9B2-34D62C91911B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7E75DDC3-1A7D-4806-9DA6-B6BC687D9A51} = {781F0984-F5A6-4051-9B5F-525135392A5A}
@@ -83,8 +70,5 @@ Global
 		{5DD8DA6C-CFC9-4AF0-8AAD-FFB3C4E6B951} = {781F0984-F5A6-4051-9B5F-525135392A5A}
 		{2E06D1F1-951E-43B4-9706-4A931EB38244} = {2FB36637-D019-47A7-8E00-B11FB572D0D8}
 		{D169AF26-FB04-418D-A804-6BFBF6B99227} = {2E06D1F1-951E-43B4-9706-4A931EB38244}
-		{16C2E57F-2EAA-4D85-8697-2CF2FD3E270C} = {911C6EDB-84B3-4A91-B837-74EB587665CF}
-		{C0CA9EC5-0B83-4CC6-A37D-E928DCF15FA3} = {911C6EDB-84B3-4A91-B837-74EB587665CF}
-		{26EBA3B9-A9A3-4AA1-A9B2-34D62C91911B} = {911C6EDB-84B3-4A91-B837-74EB587665CF}
 	EndGlobalSection
 EndGlobal

@@ -22,6 +22,6 @@ public class UserNameSpecification(
         return spec => matchExactly
             ? spec.Name.Value!.ToUpper().Equals(name.ToUpper(),
                 StringComparison.OrdinalIgnoreCase)
-            : spec.Name.Value!.ToUpper().Contains(name.ToUpper());
+            : spec.Name.Value!.Contains(name, StringComparison.OrdinalIgnoreCase);
     }
 }

@@ -20,12 +20,14 @@ public class MoneyValueObject : ValueObject
     public static implicit operator string?(MoneyValueObject? value)
         => value?.ToString();
 
-    private static bool IsValid(decimal value)
+    private static bool IsValid(decimal? value)
     {
+        ArgumentNullException.ThrowIfNull(value);
+
         return true;
     }
 
-    public static Result<MoneyValueObject> Create(decimal value)
+    public static Result<MoneyValueObject> Create(decimal? value)
     {
         if (!IsValid(value))
         {
@@ -33,7 +35,7 @@ public class MoneyValueObject : ValueObject
                 DomainErrors.Money.InvalidValue);
         }
 
-        MoneyValueObject valueObject = new(value);
+        MoneyValueObject valueObject = new(value!.Value);
 
         return Result<MoneyValueObject>.WithSuccess(valueObject);
     }

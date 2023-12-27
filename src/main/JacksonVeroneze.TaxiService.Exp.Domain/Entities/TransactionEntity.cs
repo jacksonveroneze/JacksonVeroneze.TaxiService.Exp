@@ -27,7 +27,7 @@ public class TransactionEntity : BaseEntityAggregateRoot
 
         Ride = ride;
         Ammount = ammount;
-        Date = DateTime.Now;
+        Date = DateTime.UtcNow;
         Status = TransactionStatus.WaitingPayment;
     }
 
