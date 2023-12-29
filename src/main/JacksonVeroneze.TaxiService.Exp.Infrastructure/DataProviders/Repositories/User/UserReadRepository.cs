@@ -30,7 +30,7 @@ public class UserReadRepository :
     public async Task<bool> ExistsByEmailAsync(string email,
         CancellationToken cancellationToken = default)
     {
-        UserEmailSpecification specName = new(email);
+        UserByEmailSpecification specName = new(email);
 
         bool exists = await _dbSet.AnyAsync(specName,
             cancellationToken);
@@ -44,11 +44,11 @@ public class UserReadRepository :
     {
         ArgumentNullException.ThrowIfNull(filter);
 
-        UserNameSpecification specName = new(filter.Name);
-        UserStatusSpecification specStatus = new(filter.Status);
+        UserByNameSpecification specByName = new(filter.Name);
+        UserByStatusSpecification specByStatus = new(filter.Status);
 
         Expression<Func<UserEntity, bool>> spec =
-            specName.ToExpression().And(specStatus);
+            specByName.ToExpression().And(specByStatus);
 
         return GetPagedAsync(spec, filter.Pagination!,
             cancellationToken);

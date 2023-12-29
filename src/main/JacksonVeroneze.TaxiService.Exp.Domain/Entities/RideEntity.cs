@@ -13,15 +13,17 @@ public class RideEntity : BaseEntityAggregateRoot
 
     public Guid? DriverId { get; private set; }
 
-    public virtual decimal? Fare { get; private set; }
+    public decimal? Fare { get; private set; }
 
-    public virtual double? Distance { get; private set; }
+    public double? Distance { get; private set; }
 
-    public virtual CoordinateValueObject? CoordinateFrom { get; }
+    public CoordinateValueObject? CoordinateFrom { get; }
 
-    public virtual CoordinateValueObject? CoordinateTo { get; }
+    public CoordinateValueObject? CoordinateTo { get; }
 
-    public virtual RideStatus Status { get; private set; }
+    public RideStatus Status { get; private set; }
+
+    #region ctor
 
     protected RideEntity()
     {
@@ -44,30 +46,7 @@ public class RideEntity : BaseEntityAggregateRoot
         AddEvent(new RideRequestedDomainEvent(Id));
     }
 
-    public static Result<RideEntity> Create(Guid userId,
-        float latitudeFrom, float longitudeFrom,
-        float latitudeTo, float longitudeTo)
-    {
-        Result<CoordinateValueObject> coordinatefrom =
-            CoordinateValueObject.Create(latitudeFrom, longitudeFrom);
-
-        Result<CoordinateValueObject> coordinateTo =
-            CoordinateValueObject.Create(latitudeTo, longitudeTo);
-
-        Result resultValidate = Result
-            .FailuresOrSuccess(coordinatefrom, coordinateTo);
-
-        if (resultValidate.IsFailure)
-        {
-            return Result<RideEntity>
-                .FromInvalid(resultValidate.Errors!);
-        }
-
-        RideEntity entity = new(userId,
-            coordinatefrom.Value!, coordinateTo.Value!);
-
-        return Result<RideEntity>.WithSuccess(entity);
-    }
+    #endregion
 
     #region Status
 
@@ -165,6 +144,35 @@ public class RideEntity : BaseEntityAggregateRoot
         AddEvent(new RideCanceledDomainEvent(Id));
 
         return Result.WithSuccess();
+    }
+
+    #endregion
+
+    #region Factory
+
+    public static Result<RideEntity> Create(Guid userId,
+        float latitudeFrom, float longitudeFrom,
+        float latitudeTo, float longitudeTo)
+    {
+        Result<CoordinateValueObject> coordinatefrom =
+            CoordinateValueObject.Create(latitudeFrom, longitudeFrom);
+
+        Result<CoordinateValueObject> coordinateTo =
+            CoordinateValueObject.Create(latitudeTo, longitudeTo);
+
+        Result resultValidate = Result
+            .FailuresOrSuccess(coordinatefrom, coordinateTo);
+
+        if (resultValidate.IsFailure)
+        {
+            return Result<RideEntity>
+                .FromInvalid(resultValidate.Errors!);
+        }
+
+        RideEntity entity = new(userId,
+            coordinatefrom.Value!, coordinateTo.Value!);
+
+        return Result<RideEntity>.WithSuccess(entity);
     }
 
     #endregion

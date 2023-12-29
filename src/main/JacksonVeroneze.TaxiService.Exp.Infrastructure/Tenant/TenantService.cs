@@ -9,18 +9,15 @@ public class TenantService(
 {
     private const string TenantIdHeaderName = "X-TenantId";
 
-    public Guid TenantId
+    public Guid GetTenantId()
     {
-        get
-        {
-            string? tenant = httpContextAccessor
-                .HttpContext?
-                .Request
-                .Headers[TenantIdHeaderName];
+        string? tenant = httpContextAccessor
+            .HttpContext?
+            .Request
+            .Headers[TenantIdHeaderName];
 
-            ArgumentException.ThrowIfNullOrEmpty(tenant);
+        ArgumentException.ThrowIfNullOrEmpty(tenant);
 
-            return Guid.Parse(tenant);
-        }
+        return Guid.Parse(tenant);
     }
 }

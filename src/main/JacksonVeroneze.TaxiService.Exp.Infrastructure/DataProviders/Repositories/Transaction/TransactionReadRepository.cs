@@ -23,10 +23,11 @@ public class TransactionReadRepository :
         _dbSet = context.Set<TransactionEntity>();
     }
 
-    public Task<TransactionEntity?> GetByRideIdAsync(Guid rideId,
+    public Task<TransactionEntity?> GetByRideIdAsync(
+        Guid rideId,
         CancellationToken cancellationToken = default)
     {
-        TransactionRideIdSpecification spec = new(rideId);
+        TransactionByRideIdSpecification spec = new(rideId);
 
         return _dbSet
             .AsNoTrackingWithIdentityResolution()

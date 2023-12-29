@@ -6,24 +6,32 @@ namespace JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 
 public class EmailEntity : BaseEntityAggregateRoot
 {
-    public virtual EmailValueObject Email { get; } = null!;
+    public EmailValueObject Email { get; } = null!;
+
+    public Guid UserId { get; }
 
     public virtual UserEntity User { get; } = null!;
+
+    #region ctor
 
     protected EmailEntity()
     {
     }
 
-    private EmailEntity(UserEntity user, EmailValueObject email)
+    private EmailEntity(Guid userId,
+        EmailValueObject email)
     {
-        ArgumentNullException.ThrowIfNull(user);
         ArgumentNullException.ThrowIfNull(email);
 
-        User = user;
+        UserId = userId;
         Email = email;
     }
 
-    public static Result<EmailEntity> Create(UserEntity user,
+    #endregion
+
+    #region Factory
+
+    public static Result<EmailEntity> Create(Guid userId,
         string? value)
     {
         Result<EmailValueObject> emailVo = EmailValueObject.Create(value);
@@ -34,8 +42,10 @@ public class EmailEntity : BaseEntityAggregateRoot
                 .FromInvalid(emailVo.Error!);
         }
 
-        EmailEntity entity = new(user, emailVo.Value!);
+        EmailEntity entity = new(userId, emailVo.Value!);
 
         return Result<EmailEntity>.WithSuccess(entity);
     }
+
+    #endregion
 }

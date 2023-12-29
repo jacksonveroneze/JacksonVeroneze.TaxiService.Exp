@@ -18,6 +18,9 @@ public class TransactionMapping : IEntityTypeConfiguration<TransactionEntity>
         builder.Property(c => c.Id)
             .ValueGeneratedNever();
 
+        builder.Property(c => c.RideId)
+            .IsRequired();
+
         builder.OwnsOne(conf => conf.Ammount, conf =>
         {
             conf.WithOwner();
@@ -32,8 +35,6 @@ public class TransactionMapping : IEntityTypeConfiguration<TransactionEntity>
 
         builder.Property(c => c.Status)
             .IsRequired();
-
-        builder.HasOne(p => p.Ride);
 
         builder.ConfigureDefaultFiledsMapping();
     }

@@ -7,18 +7,11 @@ using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Base;
 namespace JacksonVeroneze.TaxiService.Exp.Domain.Specifications.User;
 
 [ExcludeFromCodeCoverage]
-public class UserStatusSpecification(UserStatus? status) :
+public class UserByStatusSpecification(UserStatus? status) :
     BaseSpecification<UserEntity>
 {
-    private readonly Expression<Func<UserEntity, bool>> _defaultExpression = _ => true;
-
     public override Expression<Func<UserEntity, bool>> ToExpression()
     {
-        if (!status.HasValue)
-        {
-            return _defaultExpression;
-        }
-
-        return spec => spec.Status == status;
+        return status.HasValue ? spec => spec.Status == status : DefaultExpression;
     }
 }

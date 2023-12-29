@@ -18,6 +18,10 @@ public class EmailMapping : IEntityTypeConfiguration<EmailEntity>
         builder.Property(c => c.Id)
             .ValueGeneratedNever();
 
+        builder.Property(c => c.UserId)
+            .HasColumnName("user_id")
+            .IsRequired();
+
         builder.OwnsOne(conf => conf.Email, conf =>
         {
             conf.WithOwner();

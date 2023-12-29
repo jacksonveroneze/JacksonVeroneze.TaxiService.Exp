@@ -43,7 +43,7 @@ public sealed class UpdatePositionCommandHandler(
         }
 
         Result<PositionEntity> entity = PositionEntity.Create(
-            ride, request.Latitude, request.Longitude);
+            ride.Id, request.Latitude, request.Longitude);
 
         if (entity.IsFailure)
         {

@@ -133,7 +133,8 @@ public static class ResultExtensions
 
     private static IResult ToCreatedEntity<T>(this Result<T> result)
     {
-        return Results.Created(new Uri(string.Empty), result.Value);
+        return Results.Json(result.Value,
+            statusCode: (int)HttpStatusCode.Created);
     }
 
     private static IResult ToNoContentEntity()

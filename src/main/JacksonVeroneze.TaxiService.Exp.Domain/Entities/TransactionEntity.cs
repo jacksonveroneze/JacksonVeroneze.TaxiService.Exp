@@ -8,7 +8,7 @@ namespace JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 
 public class TransactionEntity : BaseEntityAggregateRoot
 {
-    public virtual RideEntity? Ride { get; }
+    public Guid RideId { get; }
 
     public MoneyValueObject? Ammount { get; }
 
@@ -16,38 +16,24 @@ public class TransactionEntity : BaseEntityAggregateRoot
 
     public TransactionStatus Status { get; private set; }
 
+    #region ctor
+
     protected TransactionEntity()
     {
     }
 
     private TransactionEntity(
-        RideEntity? ride, MoneyValueObject ammount)
+        Guid rideId, MoneyValueObject ammount)
     {
-        ArgumentNullException.ThrowIfNull(ride);
-
-        Ride = ride;
+        RideId = rideId;
         Ammount = ammount;
         Date = DateTime.UtcNow;
         Status = TransactionStatus.WaitingPayment;
     }
 
-    public static Result<TransactionEntity> Create(
-        RideEntity ride, decimal ammount)
-    {
-        Result<MoneyValueObject> moneyVo = MoneyValueObject
-            .Create(ammount);
+    #endregion
 
-        if (moneyVo.IsFailure)
-        {
-            return Result<TransactionEntity>
-                .FromInvalid(moneyVo.Error!);
-        }
-
-        TransactionEntity entity = new(ride, moneyVo.Value!);
-
-        return Result<TransactionEntity>
-            .WithSuccess(entity);
-    }
+    #region Pay
 
     public Result Pay()
     {
@@ -67,4 +53,28 @@ public class TransactionEntity : BaseEntityAggregateRoot
 
         return Result.WithSuccess();
     }
+
+    #endregion
+
+    #region Factory
+
+    public static Result<TransactionEntity> Create(
+        Guid rideId, decimal ammount)
+    {
+        Result<MoneyValueObject> moneyVo = MoneyValueObject
+            .Create(ammount);
+
+        if (moneyVo.IsFailure)
+        {
+            return Result<TransactionEntity>
+                .FromInvalid(moneyVo.Error!);
+        }
+
+        TransactionEntity entity = new(rideId, moneyVo.Value!);
+
+        return Result<TransactionEntity>
+            .WithSuccess(entity);
+    }
+
+    #endregion
 }

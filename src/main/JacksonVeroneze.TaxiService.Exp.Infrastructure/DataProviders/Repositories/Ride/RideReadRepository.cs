@@ -30,14 +30,12 @@ public class RideReadRepository :
         Guid userId,
         CancellationToken cancellationToken = default)
     {
-        RideUserIdSpecification specUserId = new(userId);
-
-        RideStatusSpecification specStatusRequested =
-            new();
+        RideByUserIdSpecification specByUserId = new(userId);
+        RideActivePerUserSpecification specActivePerUserRequested = new();
 
         Expression<Func<RideEntity, bool>> spec =
-            specUserId.ToExpression()
-                .And(specStatusRequested.ToExpression());
+            specByUserId.ToExpression()
+                .And(specActivePerUserRequested.ToExpression());
 
         bool exists = await _dbSet.AnyAsync(spec,
             cancellationToken);
@@ -51,11 +49,11 @@ public class RideReadRepository :
     {
         ArgumentNullException.ThrowIfNull(filter);
 
-        RideStatusFilterSpecification specStatus = new(filter.Status);
-        RideUserIdSpecification specUserId = new(filter.UserId);
+        RideByStatusSpecification specByStatus = new(filter.Status);
+        RideByUserIdSpecification specByUserId = new(filter.UserId);
 
         Expression<Func<RideEntity, bool>> spec =
-            specStatus.ToExpression().And(specUserId);
+            specByStatus.ToExpression().And(specByUserId);
 
         return GetPagedAsync(spec, filter.Pagination!,
             cancellationToken);

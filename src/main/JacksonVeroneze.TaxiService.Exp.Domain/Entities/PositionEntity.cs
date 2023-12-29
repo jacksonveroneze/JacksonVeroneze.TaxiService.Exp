@@ -6,29 +6,33 @@ namespace JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 
 public class PositionEntity : BaseEntityAggregateRoot
 {
-    public virtual RideEntity? Ride { get; }
+    public Guid RideId { get; }
 
-    public virtual CoordinateValueObject? Position { get; }
+    public CoordinateValueObject Position { get; } = null!;
+
+    #region ctor
 
     protected PositionEntity()
     {
     }
 
-    private PositionEntity(RideEntity? ride,
-        CoordinateValueObject? position)
+    private PositionEntity(Guid rideId,
+        CoordinateValueObject position)
     {
-        ArgumentNullException.ThrowIfNull(ride);
-        ArgumentNullException.ThrowIfNull(position);
-
-        Ride = ride;
+        RideId = rideId;
         Position = position;
     }
 
-    public static Result<PositionEntity> Create(RideEntity ride,
+    #endregion
+
+    #region Factory
+
+    public static Result<PositionEntity> Create(
+        Guid rideId,
         float latitude, float longitude)
     {
-        Result<CoordinateValueObject> coordinateVo = CoordinateValueObject.Create(
-            latitude, longitude);
+        Result<CoordinateValueObject> coordinateVo =
+            CoordinateValueObject.Create(latitude, longitude);
 
         if (coordinateVo.IsFailure)
         {
@@ -36,8 +40,10 @@ public class PositionEntity : BaseEntityAggregateRoot
                 .FromInvalid(coordinateVo.Error!);
         }
 
-        PositionEntity entity = new(ride, coordinateVo.Value!);
+        PositionEntity entity = new(rideId, coordinateVo.Value!);
 
         return Result<PositionEntity>.WithSuccess(entity);
     }
+
+    #endregion
 }

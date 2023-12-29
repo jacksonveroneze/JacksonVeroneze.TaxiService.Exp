@@ -27,7 +27,7 @@ public class PositionReadRepository :
         Guid rideId,
         CancellationToken cancellationToken = default)
     {
-        PositionRideIdSpecification spec = new(rideId);
+        PositionByRideIdSpecification spec = new(rideId);
 
         return _dbSet
             .AsNoTrackingWithIdentityResolution()

@@ -31,7 +31,7 @@ public sealed class CreateEmailCommandHandler(
         }
 
         Result<EmailEntity> entity = EmailEntity
-            .Create(user, request.Body!.Email);
+            .Create(user.Id, request.Body!.Email);
 
         if (entity.IsFailure)
         {

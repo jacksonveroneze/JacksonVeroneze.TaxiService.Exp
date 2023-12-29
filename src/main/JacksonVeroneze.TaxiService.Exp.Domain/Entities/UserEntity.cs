@@ -32,6 +32,8 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
     public virtual IReadOnlyCollection<EmailEntity> Emails =>
         _emails?.AsReadOnly() ?? _emptyEmails;
 
+    #region ctor
+
     public UserEntity()
     {
     }
@@ -55,25 +57,7 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
         AddEvent(new UserCreatedDomainEvent(Id));
     }
 
-    public static Result<UserEntity> Create(string? name,
-        DateOnly birthday, GenderType genderType, string? cpf)
-    {
-        Result<NameValueObject> nameVo = NameValueObject.Create(name);
-        Result<CpfValueObject> cpfVo = CpfValueObject.Create(cpf);
-
-        Result resultValidate = Result.FailuresOrSuccess(nameVo, cpfVo);
-
-        if (resultValidate.IsFailure)
-        {
-            return Result<UserEntity>
-                .FromInvalid(resultValidate.Errors!);
-        }
-
-        UserEntity entity = new(nameVo.Value!, birthday,
-            genderType, cpfVo.Value!);
-
-        return Result<UserEntity>.WithSuccess(entity);
-    }
+    #endregion
 
     #region Active/Inative
 
@@ -159,6 +143,30 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
     {
         return Emails.Any(
             entity => entity.Email.Value == value.Value);
+    }
+
+    #endregion
+
+    #region Factory
+
+    public static Result<UserEntity> Create(string? name,
+        DateOnly birthday, GenderType genderType, string? cpf)
+    {
+        Result<NameValueObject> nameVo = NameValueObject.Create(name);
+        Result<CpfValueObject> cpfVo = CpfValueObject.Create(cpf);
+
+        Result resultValidate = Result.FailuresOrSuccess(nameVo, cpfVo);
+
+        if (resultValidate.IsFailure)
+        {
+            return Result<UserEntity>
+                .FromInvalid(resultValidate.Errors!);
+        }
+
+        UserEntity entity = new(nameVo.Value!, birthday,
+            genderType, cpfVo.Value!);
+
+        return Result<UserEntity>.WithSuccess(entity);
     }
 
     #endregion

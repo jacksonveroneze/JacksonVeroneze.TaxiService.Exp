@@ -6,12 +6,13 @@ using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Base;
 namespace JacksonVeroneze.TaxiService.Exp.Domain.Specifications.User;
 
 [ExcludeFromCodeCoverage]
-public class UserEmailSpecification(string email) :
+public class UserByEmailSpecification(string email) :
     BaseSpecification<UserEntity>
 {
     public override Expression<Func<UserEntity, bool>> ToExpression()
     {
         return spec => spec.Emails
-            .Any(item => item.Email.Value == email);
+            .Any(item => item.Email.Value!.ToUpper()
+                .Equals(email.ToUpper()));
     }
 }

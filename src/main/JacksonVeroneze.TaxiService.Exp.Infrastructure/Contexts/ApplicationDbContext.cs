@@ -13,10 +13,10 @@ public class ApplicationDbContext(
     ITenantService tenantService)
     : DbContext(options)
 {
-    private readonly Guid _tenantId = tenantService.TenantId;
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        ArgumentNullException.ThrowIfNull(modelBuilder);
+
         modelBuilder.ApplyConfigurationsFromAssembly(
             typeof(ReadApplicationDbContext).Assembly);
 
@@ -27,12 +27,27 @@ public class ApplicationDbContext(
         modelBuilder
             .Entity<UserEntity>()
             .HasQueryFilter(filter => filter.TenantId ==
-                _tenantId && filter.DeletedAt == null);
+                tenantService.GetTenantId() && filter.DeletedAt == null);
 
         modelBuilder
             .Entity<EmailEntity>()
             .HasQueryFilter(filter => filter.TenantId ==
-                _tenantId && filter.DeletedAt == null);
+                tenantService.GetTenantId() && filter.DeletedAt == null);
+
+        modelBuilder
+            .Entity<RideEntity>()
+            .HasQueryFilter(filter => filter.TenantId ==
+                tenantService.GetTenantId() && filter.DeletedAt == null);
+
+        modelBuilder
+            .Entity<PositionEntity>()
+            .HasQueryFilter(filter => filter.TenantId ==
+                tenantService.GetTenantId() && filter.DeletedAt == null);
+
+        modelBuilder
+            .Entity<TransactionEntity>()
+            .HasQueryFilter(filter => filter.TenantId ==
+                tenantService.GetTenantId() && filter.DeletedAt == null);
     }
 
     public override Task<int> SaveChangesAsync(
@@ -44,7 +59,7 @@ public class ApplicationDbContext(
         foreach (EntityEntry<BaseEntityAggregateRoot> entry in entityEntries
                      .Where(item => item.State == EntityState.Added))
         {
-            entry.Entity.TenantId = _tenantId;
+            entry.Entity.TenantId = tenantService.GetTenantId();
         }
 
         return base.SaveChangesAsync(cancellationToken);

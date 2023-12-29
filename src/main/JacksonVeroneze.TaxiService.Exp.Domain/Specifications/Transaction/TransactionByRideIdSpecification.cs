@@ -6,18 +6,11 @@ using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Base;
 namespace JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Transaction;
 
 [ExcludeFromCodeCoverage]
-public class TransactionRideIdSpecification(
-    Guid? rideId) : BaseSpecification<TransactionEntity>
+public class TransactionByRideIdSpecification(
+    Guid rideId) : BaseSpecification<TransactionEntity>
 {
-    private readonly Expression<Func<TransactionEntity, bool>> _defaultExpression = _ => true;
-
     public override Expression<Func<TransactionEntity, bool>> ToExpression()
     {
-        if (!rideId.HasValue)
-        {
-            return _defaultExpression;
-        }
-
-        return spec => spec.Ride!.Id == rideId;
+        return spec => spec.RideId == rideId;
     }
 }

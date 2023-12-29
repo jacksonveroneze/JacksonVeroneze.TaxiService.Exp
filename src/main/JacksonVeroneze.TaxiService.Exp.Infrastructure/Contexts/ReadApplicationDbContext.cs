@@ -11,8 +11,6 @@ public class ReadApplicationDbContext(
     ITenantService tenantService)
     : DbContext(options)
 {
-    private readonly Guid _tenantId = tenantService.TenantId;
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(
@@ -25,12 +23,12 @@ public class ReadApplicationDbContext(
         modelBuilder
             .Entity<UserEntity>()
             .HasQueryFilter(filter => filter.TenantId ==
-                _tenantId && filter.DeletedAt == null);
+                tenantService.GetTenantId() && filter.DeletedAt == null);
 
         modelBuilder
             .Entity<EmailEntity>()
             .HasQueryFilter(filter => filter.TenantId ==
-                _tenantId && filter.DeletedAt == null);
+                tenantService.GetTenantId() && filter.DeletedAt == null);
     }
 
     public override int SaveChanges()

@@ -22,7 +22,9 @@ public class RideMapping : IEntityTypeConfiguration<RideEntity>
             .HasColumnName("fare")
             .IsRequired(false);
 
-        builder.Property(c => c.UserId);
+        builder.Property(c => c.UserId)
+            .IsRequired();
+
         builder.Property(c => c.DriverId);
 
         builder.Property(c => c.Distance)

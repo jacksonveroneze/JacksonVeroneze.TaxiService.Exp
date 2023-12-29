@@ -18,6 +18,9 @@ public class PositionMapping : IEntityTypeConfiguration<PositionEntity>
         builder.Property(c => c.Id)
             .ValueGeneratedNever();
 
+        builder.Property(c => c.RideId)
+            .IsRequired();
+
         builder.OwnsOne(conf => conf.Position, conf =>
         {
             conf.WithOwner();
@@ -30,8 +33,6 @@ public class PositionMapping : IEntityTypeConfiguration<PositionEntity>
                 .HasColumnName("from_longitude")
                 .IsRequired();
         });
-
-        builder.HasOne(p => p.Ride);
 
         builder.ConfigureDefaultFiledsMapping();
     }
