@@ -7,7 +7,6 @@ using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Base.Predicate;
 using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.User;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.Contexts;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Repositories.Base;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Repositories.User;
