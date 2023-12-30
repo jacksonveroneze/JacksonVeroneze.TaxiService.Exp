@@ -11,6 +11,6 @@ public class SubstExpressionVisitor : ExpressionVisitor
     protected override Expression VisitParameter(
         ParameterExpression node)
     {
-        return Subst!.GetValueOrDefault(node, node);
+        return Subst.GetValueOrDefault(node, node);
     }
 }

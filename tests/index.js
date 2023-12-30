@@ -11,7 +11,7 @@ export let optionsRamp = {
         {duration: '10s', target: 10},
         {duration: '60s', target: 30},
         {duration: '30s', target: 10},
-        {duration: '10s', target: 1}
+        {duration: '60s', target: 5}
     ]
 };
 
@@ -25,7 +25,7 @@ export const optionsDuration = {
     vus: 5
 };
 
-export const options = optionsRamp;
+export const options = optionsIterations;
 
 const baseUrl = 'http://localhost:7000';
 

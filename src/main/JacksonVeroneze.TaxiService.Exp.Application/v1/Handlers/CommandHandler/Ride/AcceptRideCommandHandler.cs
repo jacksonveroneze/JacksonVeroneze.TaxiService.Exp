@@ -31,17 +31,17 @@ public sealed class AcceptRideCommandHandler(
                 .FromNotFound(DomainErrors.RideError.NotFound);
         }
 
-        UserEntity? user = await userReadRepository
+        UserEntity? drive = await userReadRepository
             .GetByIdAsync(request.Body!.DriverId,
                 cancellationToken);
 
-        if (user is null)
+        if (drive is null)
         {
             return Result<VoidResponse>
                 .WithError(DomainErrors.UserError.NotFound);
         }
 
-        Result result = ride.Accept(user.Id);
+        Result result = ride.Accept(drive.Id);
 
         if (result.IsFailure)
         {

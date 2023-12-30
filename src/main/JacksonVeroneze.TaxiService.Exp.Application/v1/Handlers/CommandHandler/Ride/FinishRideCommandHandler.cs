@@ -39,7 +39,7 @@ public sealed class FinishRideCommandHandler(
 
         CoordinateValueObject[] positionsCood = positions
             .Select(pos => CoordinateValueObject.Create(
-                pos.Position!.Latitude, pos.Position!.Longitude).Value!)
+                pos.Position.Latitude, pos.Position.Longitude).Value!)
             .ToArray();
 
         double distance = distanceCalculatorService
