@@ -13,8 +13,8 @@ public sealed class RequestRideCommandHandler(
     ILogger<RequestRideCommandHandler> logger,
     IMapper mapper,
     IUserReadRepository userReadRepository,
-    IRideReadRepository readRepository,
-    IRideWriteRepository writeRepository)
+    IRideReadRepository rideReadRepository,
+    IRideWriteRepository rideWriteRepository)
     : IRequestHandler<RequestRideCommand, Result<RequestRideCommandResponse>>
 {
     public async Task<Result<RequestRideCommandResponse>> Handle(
@@ -32,7 +32,7 @@ public sealed class RequestRideCommandHandler(
                 DomainErrors.UserError.NotFound);
         }
 
-        bool existsRideByUser = await readRepository
+        bool existsRideByUser = await rideReadRepository
             .ExistsActiveByUserIdAsync(request.UserId, cancellationToken);
 
         if (existsRideByUser)
@@ -57,7 +57,7 @@ public sealed class RequestRideCommandHandler(
                 .FromInvalid(entity.Errors!);
         }
 
-        await writeRepository.CreateAsync(
+        await rideWriteRepository.CreateAsync(
             entity.Value!, cancellationToken);
 
         RequestRideCommandResponse response =

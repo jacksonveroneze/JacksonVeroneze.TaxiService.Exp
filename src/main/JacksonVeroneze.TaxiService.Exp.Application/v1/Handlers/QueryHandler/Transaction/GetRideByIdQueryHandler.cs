@@ -11,7 +11,7 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.QueryHandler.T
 public sealed class GetByRideIdQueryHandler(
     ILogger<GetByRideIdQueryHandler> logger,
     IMapper mapper,
-    ITransactionReadRepository repository)
+    ITransactionReadRepository transactionReadRepository)
     : IRequestHandler<GetByRideIdQuery, Result<GetByRideIdQueryResponse>>
 {
     public async Task<Result<GetByRideIdQueryResponse>> Handle(
@@ -20,7 +20,7 @@ public sealed class GetByRideIdQueryHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        TransactionEntity? entity = await repository
+        TransactionEntity? entity = await transactionReadRepository
             .GetByRideIdAsync(request.Id, cancellationToken);
 
         if (entity is null)

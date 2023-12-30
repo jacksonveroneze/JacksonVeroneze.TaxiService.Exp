@@ -13,7 +13,7 @@ public sealed class CreateUserCommandHandler(
     ILogger<CreateUserCommandHandler> logger,
     IMapper mapper,
     IEmailReadRepository emailReadRepository,
-    IUserWriteRepository writeRepository)
+    IUserWriteRepository userWriteRepository)
     : IRequestHandler<CreateUserCommand, Result<CreateUserCommandResponse>>
 {
     public async Task<Result<CreateUserCommandResponse>> Handle(
@@ -47,7 +47,7 @@ public sealed class CreateUserCommandHandler(
                 .FromInvalid(entity.Errors!);
         }
 
-        await writeRepository.CreateAsync(
+        await userWriteRepository.CreateAsync(
             entity.Value!, cancellationToken);
 
         CreateUserCommandResponse response =

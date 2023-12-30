@@ -11,7 +11,7 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.QueryHandler.U
 public sealed class GetUserByIdQueryHandler(
     ILogger<GetUserByIdQueryHandler> logger,
     IMapper mapper,
-    IUserReadDistribCachedRepository repository)
+    IUserReadRepository userReadRepository)
     : IRequestHandler<GetUserByIdQuery, Result<GetUserByIdQueryResponse>>
 {
     public async Task<Result<GetUserByIdQueryResponse>> Handle(
@@ -20,7 +20,7 @@ public sealed class GetUserByIdQueryHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        UserEntity? entity = await repository
+        UserEntity? entity = await userReadRepository
             .GetByIdAsync(request.Id, cancellationToken);
 
         if (entity is null)

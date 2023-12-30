@@ -13,10 +13,10 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.CommandHandler
 
 public sealed class FinishRideCommandHandler(
     ILogger<FinishRideCommandHandler> logger,
-    IRideReadRepository readRepository,
-    IRideWriteRepository writeRepository,
-    IDistanceCalculatorService distanceCalculatorService,
-    IPositionReadRepository positionReadRepository)
+    IRideReadRepository rideReadRepository,
+    IRideWriteRepository rideWriteRepository,
+    IPositionReadRepository positionReadRepository,
+    IDistanceCalculatorService distanceCalculatorService)
     : IRequestHandler<FinishRideCommand, Result<VoidResponse>>
 {
     public async Task<Result<VoidResponse>> Handle(
@@ -25,7 +25,7 @@ public sealed class FinishRideCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        RideEntity? ride = await readRepository
+        RideEntity? ride = await rideReadRepository
             .GetByIdAsync(request.Id, cancellationToken);
 
         if (ride is null)
@@ -55,7 +55,7 @@ public sealed class FinishRideCommandHandler(
             return Result<VoidResponse>.WithError(result.Error!);
         }
 
-        await writeRepository.UpdateAsync(ride, cancellationToken);
+        await rideWriteRepository.UpdateAsync(ride, cancellationToken);
 
         logger.LogProcessed(nameof(FinishRideCommandHandler),
             nameof(Handle), ride.Id);

@@ -10,7 +10,7 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.QueryHandler.R
 
 public sealed class GetRidePagedQueryHandler(
     IMapper mapper,
-    IRideReadRepository repository)
+    IRideReadRepository rideReadRepository)
     : IRequestHandler<GetRidePagedQuery, Result<GetRidePagedQueryResponse>>
 {
     public async Task<Result<GetRidePagedQueryResponse>> Handle(
@@ -22,7 +22,7 @@ public sealed class GetRidePagedQueryHandler(
         RidePagedFilter filter = mapper
             .Map<RidePagedFilter>(request);
 
-        Page<RideEntity> page = await repository
+        Page<RideEntity> page = await rideReadRepository
             .GetPagedAsync(filter, cancellationToken);
 
         GetRidePagedQueryResponse response =

@@ -11,8 +11,8 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.CommandHandler
 
 public sealed class ActivateUserCommandHandler(
     ILogger<ActivateUserCommandHandler> logger,
-    IUserReadRepository readRepository,
-    IUserWriteRepository writeRepository,
+    IUserReadRepository userReadRepository,
+    IUserWriteRepository userWriteRepository,
     IDateTime dateTime)
     : IRequestHandler<ActivateUserCommand, Result<VoidResponse>>
 {
@@ -22,7 +22,7 @@ public sealed class ActivateUserCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        UserEntity? user = await readRepository
+        UserEntity? user = await userReadRepository
             .GetByIdAsync(request.Id, cancellationToken);
 
         if (user is null)
@@ -41,7 +41,7 @@ public sealed class ActivateUserCommandHandler(
             return Result<VoidResponse>.WithError(result.Error!);
         }
 
-        await writeRepository.UpdateAsync(
+        await userWriteRepository.UpdateAsync(
             user, cancellationToken);
 
         logger.LogProcessed(nameof(ActivateUserCommandHandler),

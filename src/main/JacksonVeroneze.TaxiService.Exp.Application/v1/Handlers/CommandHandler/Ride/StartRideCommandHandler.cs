@@ -10,8 +10,8 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.CommandHandler
 
 public sealed class StartRideCommandHandler(
     ILogger<StartRideCommandHandler> logger,
-    IRideReadRepository readRepository,
-    IRideWriteRepository writeRepository)
+    IRideReadRepository rideReadRepository,
+    IRideWriteRepository rideWriteRepository)
     : IRequestHandler<StartRideCommand, Result<VoidResponse>>
 {
     public async Task<Result<VoidResponse>> Handle(
@@ -20,7 +20,7 @@ public sealed class StartRideCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        RideEntity? ride = await readRepository
+        RideEntity? ride = await rideReadRepository
             .GetByIdAsync(request.Id, cancellationToken);
 
         if (ride is null)
@@ -39,7 +39,7 @@ public sealed class StartRideCommandHandler(
             return Result<VoidResponse>.WithError(result.Error!);
         }
 
-        await writeRepository.UpdateAsync(ride, cancellationToken);
+        await rideWriteRepository.UpdateAsync(ride, cancellationToken);
 
         logger.LogProcessed(nameof(StartRideCommandHandler),
             nameof(Handle), ride.Id);

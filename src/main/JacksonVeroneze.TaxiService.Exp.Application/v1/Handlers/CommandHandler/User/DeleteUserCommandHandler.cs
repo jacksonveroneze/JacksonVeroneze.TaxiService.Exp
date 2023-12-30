@@ -10,8 +10,8 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.CommandHandler
 
 public sealed class DeleteUserCommandHandler(
     ILogger<DeleteUserCommandHandler> logger,
-    IUserReadRepository readRepository,
-    IUserWriteRepository writeRepository)
+    IUserReadRepository userReadRepository,
+    IUserWriteRepository userWriteRepository)
     : IRequestHandler<DeleteUserCommand, Result<VoidResponse>>
 {
     public async Task<Result<VoidResponse>> Handle(
@@ -20,7 +20,7 @@ public sealed class DeleteUserCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        UserEntity? user = await readRepository
+        UserEntity? user = await userReadRepository
             .GetByIdAsync(request.Id, cancellationToken);
 
         if (user is null)
@@ -29,7 +29,7 @@ public sealed class DeleteUserCommandHandler(
                 DomainErrors.UserError.NotFound);
         }
 
-        await writeRepository.DeleteAsync(
+        await userWriteRepository.DeleteAsync(
             user, cancellationToken);
 
         logger.LogDeleted(nameof(DeleteUserCommandHandler),
