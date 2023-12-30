@@ -10,9 +10,6 @@ namespace JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 
 public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
 {
-    private readonly IReadOnlyCollection<EmailEntity> _emptyEmails =
-        Enumerable.Empty<EmailEntity>().ToList().AsReadOnly();
-
     public NameValueObject Name { get; private set; } = null!;
 
     public DateOnly Birthday { get; private set; }
@@ -26,11 +23,6 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
     public DateTime? ActivedOnUtc { get; private set; }
 
     public DateTime? InactivedOnUtc { get; private set; }
-
-    private List<EmailEntity>? _emails;
-
-    public virtual IReadOnlyCollection<EmailEntity> Emails =>
-        _emails?.AsReadOnly() ?? _emptyEmails;
 
     #region ctor
 
@@ -93,56 +85,6 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
         AddEvent(new UserInactivatedDomainEvent(Id));
 
         return Result.WithSuccess();
-    }
-
-    #endregion
-
-    #region Email
-
-    public Result AddEmail(EmailEntity entity)
-    {
-        ArgumentNullException.ThrowIfNull(entity);
-
-        _emails ??= [];
-
-        if (ExistsEmailByValue(entity.Email))
-        {
-            return Result.FromInvalid(
-                DomainErrors.EmailError.DuplicateEmail);
-        }
-
-        _emails.Add(entity);
-
-        return Result.WithSuccess();
-    }
-
-    public Result RemoveEmail(EmailEntity entity)
-    {
-        ArgumentNullException.ThrowIfNull(entity);
-
-        _emails ??= [];
-
-        if (!ExistsEmailByValue(entity.Email))
-        {
-            return Result.FromInvalid(
-                DomainErrors.EmailError.NotFound);
-        }
-
-        _emails.Remove(entity);
-
-        return Result.WithSuccess();
-    }
-
-    public EmailEntity? GetEmailById(Guid id)
-    {
-        return Emails.FirstOrDefault(
-            item => item.Id == id);
-    }
-
-    public bool ExistsEmailByValue(EmailValueObject value)
-    {
-        return Emails.Any(
-            entity => entity.Email.Value == value.Value);
     }
 
     #endregion

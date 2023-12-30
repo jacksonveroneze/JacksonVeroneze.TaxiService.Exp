@@ -6,10 +6,6 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories
 
 public interface IUserReadRepository
 {
-    Task<bool> ExistsByEmailAsync(
-        string email,
-        CancellationToken cancellationToken = default);
-
     Task<UserEntity?> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken = default);

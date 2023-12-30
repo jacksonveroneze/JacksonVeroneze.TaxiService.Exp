@@ -27,7 +27,7 @@ public sealed class InactivateUserCommandHandler(
 
         if (user is null)
         {
-            return Result<VoidResponse>.FromInvalid(
+            return Result<VoidResponse>.FromNotFound(
                 DomainErrors.UserError.NotFound);
         }
 

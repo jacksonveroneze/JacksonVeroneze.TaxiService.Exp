@@ -1,6 +1,7 @@
 using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User;
+using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Email;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User;
 using JacksonVeroneze.TaxiService.Exp.Domain.Core.Errors;
@@ -11,7 +12,7 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.CommandHandler
 public sealed class CreateUserCommandHandler(
     ILogger<CreateUserCommandHandler> logger,
     IMapper mapper,
-    IUserReadRepository readRepository,
+    IEmailReadRepository emailReadRepository,
     IUserWriteRepository writeRepository)
     : IRequestHandler<CreateUserCommand, Result<CreateUserCommandResponse>>
 {
@@ -21,8 +22,8 @@ public sealed class CreateUserCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        bool existsUser = await readRepository
-            .ExistsByEmailAsync(request.Document!, cancellationToken);
+        bool existsUser = await emailReadRepository
+            .ExistsAsync(request.Document!, cancellationToken);
 
         if (existsUser)
         {

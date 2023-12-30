@@ -10,8 +10,6 @@ public class EmailEntity : BaseEntityAggregateRoot
 
     public Guid UserId { get; }
 
-    public virtual UserEntity User { get; } = null!;
-
     #region ctor
 
     protected EmailEntity()

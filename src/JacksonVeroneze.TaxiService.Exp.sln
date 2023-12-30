@@ -17,7 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		.editorconfig = .editorconfig
 		Dockerfile = Dockerfile
 		global.json = global.json
-		..\tests\http_get.js = ..\tests\http_get.js
 		..\.gitignore = ..\.gitignore
 		Directory.Build.props = Directory.Build.props
 		BannedSymbols.txt = BannedSymbols.txt
@@ -35,6 +34,19 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{D169AF26-FB04-418D-A804-6BFBF6B99227}"
 	ProjectSection(SolutionItems) = preProject
 		..\infra\docker\docker-compose.yml = ..\infra\docker\docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C29D5355-B5A2-4621-86AE-57766C544BDB}"
+	ProjectSection(SolutionItems) = preProject
+		..\tests\scenarios\util.js = ..\tests\scenarios\util.js
+		..\tests\scenarios\ride\ride.scenario.js = ..\tests\scenarios\ride\ride.scenario.js
+		..\tests\scenarios\ride\ride.js = ..\tests\scenarios\ride\ride.js
+		..\tests\scenarios\position\position.js = ..\tests\scenarios\position\position.js
+		..\tests\scenarios\mail\mail.scenario.js = ..\tests\scenarios\mail\mail.scenario.js
+		..\tests\scenarios\mail\mail.js = ..\tests\scenarios\mail\mail.js
+		..\tests\scenarios\user\user.js = ..\tests\scenarios\user\user.js
+		..\tests\scenarios\user\user.scenario.js = ..\tests\scenarios\user\user.scenario.js
+		..\tests\index.js = ..\tests\index.js
 	EndProjectSection
 EndProject
 Global
@@ -70,5 +82,6 @@ Global
 		{5DD8DA6C-CFC9-4AF0-8AAD-FFB3C4E6B951} = {781F0984-F5A6-4051-9B5F-525135392A5A}
 		{2E06D1F1-951E-43B4-9706-4A931EB38244} = {2FB36637-D019-47A7-8E00-B11FB572D0D8}
 		{D169AF26-FB04-418D-A804-6BFBF6B99227} = {2E06D1F1-951E-43B4-9706-4A931EB38244}
+		{C29D5355-B5A2-4621-86AE-57766C544BDB} = {2FB36637-D019-47A7-8E00-B11FB572D0D8}
 	EndGlobalSection
 EndGlobal

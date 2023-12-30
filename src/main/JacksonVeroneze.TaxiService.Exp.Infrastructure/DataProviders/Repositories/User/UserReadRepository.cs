@@ -16,26 +16,11 @@ namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Repositor
 public class UserReadRepository :
     BaseReadRepository<UserEntity>, IUserReadRepository
 {
-    private readonly DbSet<UserEntity> _dbSet;
-
     public UserReadRepository(
         ILogger<UserReadRepository> logger,
         ApplicationDbContext context) : base(logger, context)
     {
         ArgumentNullException.ThrowIfNull(context);
-
-        _dbSet = context.Set<UserEntity>();
-    }
-
-    public async Task<bool> ExistsByEmailAsync(string email,
-        CancellationToken cancellationToken = default)
-    {
-        UserByEmailSpecification specName = new(email);
-
-        bool exists = await _dbSet.AnyAsync(specName,
-            cancellationToken);
-
-        return exists;
     }
 
     public Task<Page<UserEntity>> GetPagedAsync(

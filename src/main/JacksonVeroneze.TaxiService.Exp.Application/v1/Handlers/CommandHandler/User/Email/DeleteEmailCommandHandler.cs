@@ -1,6 +1,7 @@
 using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User.Email;
+using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Email;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Base;
 using JacksonVeroneze.TaxiService.Exp.Domain.Core.Errors;
@@ -10,8 +11,9 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.CommandHandler
 
 public sealed class DeleteEmailCommandHandler(
     ILogger<DeleteEmailCommandHandler> logger,
-    IUserReadRepository readRepository,
-    IUserWriteRepository writeRepository)
+    IUserReadRepository userReadRepository,
+    IEmailReadRepository emailReadRepository,
+    IEmailWriteRepository emailWriteRepository)
     : IRequestHandler<DeleteEmailCommand, Result<VoidResponse>>
 {
     public async Task<Result<VoidResponse>> Handle(
@@ -20,16 +22,17 @@ public sealed class DeleteEmailCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        UserEntity? user = await readRepository
+        UserEntity? user = await userReadRepository
             .GetByIdAsync(request.Id, cancellationToken);
 
         if (user is null)
         {
-            return Result<VoidResponse>.FromInvalid(
+            return Result<VoidResponse>.FromNotFound(
                 DomainErrors.UserError.NotFound);
         }
 
-        EmailEntity? email = user.GetEmailById(request.EmailId);
+        EmailEntity? email = await emailReadRepository
+            .GetByIdAsync(request.EmailId, cancellationToken);
 
         if (email is null)
         {
@@ -40,17 +43,8 @@ public sealed class DeleteEmailCommandHandler(
                 DomainErrors.EmailError.NotFound);
         }
 
-        Result result = user.RemoveEmail(email);
-
-        if (result.IsFailure)
-        {
-            logger.LogGenericError(nameof(DeleteEmailCommandHandler),
-                nameof(Handle), request.Id, result.Error!);
-
-            return Result<VoidResponse>.FromInvalid(result.Error!);
-        }
-
-        await writeRepository.UpdateAsync(user, cancellationToken);
+        await emailWriteRepository.DeleteAsync(
+            email, cancellationToken);
 
         logger.LogProcessed(nameof(DeleteEmailCommandHandler),
             nameof(Handle), user.Id);

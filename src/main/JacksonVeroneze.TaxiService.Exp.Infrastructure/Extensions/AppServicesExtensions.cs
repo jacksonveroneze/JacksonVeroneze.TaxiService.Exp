@@ -2,11 +2,13 @@ using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.Identity;
 using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.Messaging;
 using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.System;
 using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.Tenant;
+using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Email;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Position;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Ride;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Transaction;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
 using JacksonVeroneze.TaxiService.Exp.Domain.Services;
+using JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Repositories.Email;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Repositories.Position;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Repositories.Ride;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Repositories.Transaction;
@@ -46,6 +48,14 @@ public static class AppServicesExtensions
 
         // services.AddSingleton<IUserReadRepository, UserReadStubRepository>();
         // services.AddSingleton<IUserWriteRepository, UserWriteStubRepository>();
+
+        #endregion
+
+        #region Email
+
+        // Repositories
+        services.AddScoped<IEmailReadRepository, EmailReadRepository>();
+        services.AddScoped<IEmailWriteRepository, EmailWriteRepository>();
 
         #endregion
 

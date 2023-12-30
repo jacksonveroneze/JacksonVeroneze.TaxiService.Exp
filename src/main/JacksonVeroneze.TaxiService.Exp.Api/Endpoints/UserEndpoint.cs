@@ -116,14 +116,14 @@ public static class UserEndpoint
                 [FromRoute] Guid id,
                 CancellationToken cancellationToken) =>
             {
-                GetAllEmailsByUserIdQuery query = new(id);
+                GetEmailsByUserIdPagedQuery pagedQuery = new(id);
 
-                Result<GetAllEmailsByUserIdQueryResponse> response =
-                    await mediator.Send(query, cancellationToken);
+                Result<GetEmailsByUserIdPagedQueryResponse> response =
+                    await mediator.Send(pagedQuery, cancellationToken);
 
-                return response.MatchPost();
+                return response.MatchGet();
             })
-            .Produces<GetAllEmailsByUserIdQueryResponse>()
+            .Produces<GetEmailsByUserIdPagedQueryResponse>()
             .AddDefaultResponseEndpoints();
 
         builder.MapPost("{id:guid:required}/emails", async (

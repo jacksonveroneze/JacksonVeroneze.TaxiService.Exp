@@ -30,24 +30,6 @@ public class UserReadDistribCachedRepository : IUserReadDistribCachedRepository
             parameters.CacheExpMilisegundos);
     }
 
-    public Task<bool> ExistsByEmailAsync(
-        string email, CancellationToken
-            cancellationToken = default)
-    {
-        string key = email;
-
-        return _cacheService
-            .GetOrCreateAsync(key, async entry =>
-            {
-                entry.AbsoluteExpirationRelativeToNow = _cacheExpiration;
-
-                bool result = await _repository
-                    .ExistsByEmailAsync(email, cancellationToken);
-
-                return result;
-            }, cancellationToken);
-    }
-
     public Task<UserEntity?> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken = default)

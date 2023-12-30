@@ -32,11 +32,6 @@ public class EmailMapping : IEntityTypeConfiguration<EmailEntity>
                 .IsRequired();
         });
 
-        builder.HasOne(p => p.User)
-            .WithMany(b => b.Emails)
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
-
         builder.ConfigureDefaultFiledsMapping();
     }
 }

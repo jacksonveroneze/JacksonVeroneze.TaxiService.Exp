@@ -25,7 +25,7 @@ public sealed class DeleteUserCommandHandler(
 
         if (user is null)
         {
-            return Result<VoidResponse>.FromInvalid(
+            return Result<VoidResponse>.FromNotFound(
                 DomainErrors.UserError.NotFound);
         }
 

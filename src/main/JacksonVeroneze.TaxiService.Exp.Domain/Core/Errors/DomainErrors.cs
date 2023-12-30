@@ -8,13 +8,13 @@ namespace JacksonVeroneze.TaxiService.Exp.Domain.Core.Errors;
 public static class DomainErrors
 {
     private static readonly CompositeFormat TemplateNotFound =
-        CompositeFormat.Parse("The {{0}} with the specified identifier was not found.");
+        CompositeFormat.Parse("The {0} with the specified identifier was not found.");
 
     private static readonly CompositeFormat TemplateDataInUse =
-        CompositeFormat.Parse("The specified {{0}} is already in use.");
+        CompositeFormat.Parse("The specified {0} is already in use.");
 
     private static readonly CompositeFormat TemplateDataInvalid =
-        CompositeFormat.Parse("The specified {{0}} is invalid.");
+        CompositeFormat.Parse("The specified {0} is invalid.");
 
     public static class CommonError
     {
