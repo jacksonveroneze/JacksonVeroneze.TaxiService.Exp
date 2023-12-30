@@ -38,7 +38,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{D169AF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C29D5355-B5A2-4621-86AE-57766C544BDB}"
 	ProjectSection(SolutionItems) = preProject
-		..\tests\scenarios\util.js = ..\tests\scenarios\util.js
 		..\tests\index.js = ..\tests\index.js
 	EndProjectSection
 EndProject
@@ -63,6 +62,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "position", "position", "{072A7146-CC76-4DBC-9020-2DA1F6613D71}"
 	ProjectSection(SolutionItems) = preProject
 		..\tests\scenarios\position\position.js = ..\tests\scenarios\position\position.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "util", "util", "{FCF116CF-D7A0-479B-B9EA-471FC20BF90B}"
+	ProjectSection(SolutionItems) = preProject
+		..\tests\scenarios\util.js = ..\tests\scenarios\util.js
 	EndProjectSection
 EndProject
 Global
@@ -103,5 +107,6 @@ Global
 		{3E92D80F-561D-4374-A134-F1798FB395C2} = {C29D5355-B5A2-4621-86AE-57766C544BDB}
 		{1ED107B4-974F-4084-8C98-B96C2041D4F5} = {C29D5355-B5A2-4621-86AE-57766C544BDB}
 		{072A7146-CC76-4DBC-9020-2DA1F6613D71} = {C29D5355-B5A2-4621-86AE-57766C544BDB}
+		{FCF116CF-D7A0-479B-B9EA-471FC20BF90B} = {C29D5355-B5A2-4621-86AE-57766C544BDB}
 	EndGlobalSection
 EndGlobal
