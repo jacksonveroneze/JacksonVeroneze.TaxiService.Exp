@@ -18,4 +18,7 @@ public sealed record CreateUserCommand :
 
     [JsonPropertyName("document")]
     public string? Document { get; init; }
+
+    [JsonPropertyName("email")]
+    public string? Email { get; init; }
 }

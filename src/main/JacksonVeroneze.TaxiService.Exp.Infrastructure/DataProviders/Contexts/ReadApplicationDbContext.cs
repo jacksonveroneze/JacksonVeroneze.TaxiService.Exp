@@ -3,7 +3,7 @@ using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.Tenant;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Contexts;
+namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Contexts;
 
 [ExcludeFromCodeCoverage]
 public class ReadApplicationDbContext(

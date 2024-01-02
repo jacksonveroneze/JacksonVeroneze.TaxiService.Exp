@@ -10,7 +10,7 @@ public class TransactionEntity : BaseEntityAggregateRoot
 {
     public Guid RideId { get; }
 
-    public MoneyValueObject? Ammount { get; }
+    public MoneyValueObject Ammount { get; } = null!;
 
     public DateTime Date { get; }
 
@@ -29,6 +29,7 @@ public class TransactionEntity : BaseEntityAggregateRoot
         Ammount = ammount;
         Date = DateTime.UtcNow;
         Status = TransactionStatus.WaitingPayment;
+        Ammount = new MoneyValueObject(0);
     }
 
     #endregion

@@ -1,6 +1,6 @@
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.Configurations;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.Contexts;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.UnitOfWork;
+using JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Contexts;
+using JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

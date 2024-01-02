@@ -49,7 +49,7 @@ public static class RideEndpoint
             .Produces<GetRideByIdQueryResponse>()
             .AddDefaultResponseEndpoints();
 
-        builder.MapPost("/", async (
+        builder.MapPost(string.Empty, async (
                 [FromServices] IMediator mediator,
                 [FromBody] RequestRideCommand command,
                 CancellationToken cancellationToken) =>

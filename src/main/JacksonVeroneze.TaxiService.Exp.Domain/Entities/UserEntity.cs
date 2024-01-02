@@ -14,7 +14,7 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
 
     public DateOnly Birthday { get; private set; }
 
-    public GenderType GenderType { get; private set; }
+    public GenderType Gender { get; private set; }
 
     public CpfValueObject Cpf { get; private set; } = null!;
 
@@ -31,17 +31,17 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
     }
 
     private UserEntity(NameValueObject name,
-        DateOnly birthday, GenderType genderType,
+        DateOnly birthday, GenderType gender,
         CpfValueObject cpf)
     {
         ArgumentNullException.ThrowIfNull(name);
         ArgumentNullException.ThrowIfNull(birthday);
-        ArgumentNullException.ThrowIfNull(genderType);
+        ArgumentNullException.ThrowIfNull(gender);
         ArgumentNullException.ThrowIfNull(cpf);
 
         Name = name;
         Birthday = birthday;
-        GenderType = genderType;
+        Gender = gender;
         Cpf = cpf;
 
         Status = UserStatus.PendingActivation;

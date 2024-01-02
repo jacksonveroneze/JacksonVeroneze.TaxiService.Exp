@@ -5,7 +5,7 @@ using JacksonVeroneze.TaxiService.Exp.Domain.Entities.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Contexts;
+namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Contexts;
 
 [ExcludeFromCodeCoverage]
 public class ApplicationDbContext(

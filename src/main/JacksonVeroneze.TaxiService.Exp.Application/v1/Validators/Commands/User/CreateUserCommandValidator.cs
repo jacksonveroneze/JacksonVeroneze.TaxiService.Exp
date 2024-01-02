@@ -43,5 +43,12 @@ public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
             .Must(value => value!.All(char.IsNumber))
             .Must(CpfValidator.Validate)
             .WithError(ValidationErrors.User.DocumentIsInvalid);
+
+        RuleFor(request => request.Email)
+            .Cascade(CascadeMode.Stop)
+            .NotEmpty()
+            .WithError(ValidationErrors.User.EmailIsRequired)
+            .EmailAddress()
+            .WithError(ValidationErrors.User.EmailIsInvalid);
     }
 }

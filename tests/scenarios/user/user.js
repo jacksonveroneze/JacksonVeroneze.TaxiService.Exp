@@ -2,7 +2,7 @@ import http from 'k6/http';
 import {check} from 'k6';
 import {checker} from '../util.js';
 
-import {randomIntBetween, randomItem, randomString} from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
+import {randomIntBetween, randomItem, randomString, } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 export function createUser(baseUrl, headers) {
     const genders = ['Male', 'Female'];
@@ -11,7 +11,8 @@ export function createUser(baseUrl, headers) {
         name: `${randomString(8)} ${randomString(8)}`,
         birthday: `2023-${randomIntBetween(10, 12)}-${randomIntBetween(10, 25)}`,
         gender: `${randomItem(genders)}`,
-        document: "06399214939"
+        document: "06399214939",
+        email: `${randomString(10)}@mail.com`
     });
 
     const responsePostUser = http.post(`${baseUrl}/api/v1/users`, bodyUser, headers);

@@ -1,7 +1,7 @@
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.Contexts;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.UnitOfWork;
+using JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Contexts;
+using JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Repositories.User;

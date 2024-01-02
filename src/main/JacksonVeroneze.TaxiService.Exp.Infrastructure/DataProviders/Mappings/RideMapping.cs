@@ -2,7 +2,7 @@ using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Mappings;
+namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Mappings;
 
 [ExcludeFromCodeCoverage]
 public class RideMapping : IEntityTypeConfiguration<RideEntity>
@@ -19,7 +19,6 @@ public class RideMapping : IEntityTypeConfiguration<RideEntity>
             .ValueGeneratedNever();
 
         builder.Property(c => c.Fare)
-            .HasColumnName("fare")
             .IsRequired(false);
 
         builder.Property(c => c.UserId)
@@ -28,13 +27,10 @@ public class RideMapping : IEntityTypeConfiguration<RideEntity>
         builder.Property(c => c.DriverId);
 
         builder.Property(c => c.Distance)
-            .HasColumnName("distance")
             .IsRequired(false);
 
-        builder.OwnsOne(conf => conf.CoordinateFrom, conf =>
+        builder.ComplexProperty(conf => conf.CoordinateFrom, conf =>
         {
-            conf.WithOwner();
-
             conf.Property(prop => prop.Latitude)
                 .HasColumnName("from_latitude")
                 .IsRequired();
@@ -44,10 +40,8 @@ public class RideMapping : IEntityTypeConfiguration<RideEntity>
                 .IsRequired();
         });
 
-        builder.OwnsOne(conf => conf.CoordinateTo, conf =>
+        builder.ComplexProperty(conf => conf.CoordinateTo, conf =>
         {
-            conf.WithOwner();
-
             conf.Property(prop => prop.Latitude)
                 .HasColumnName("to_latitude")
                 .IsRequired();
@@ -58,7 +52,6 @@ public class RideMapping : IEntityTypeConfiguration<RideEntity>
         });
 
         builder.Property(c => c.Status)
-            .HasColumnName("status")
             .IsRequired();
 
         builder.ConfigureDefaultFiledsMapping();

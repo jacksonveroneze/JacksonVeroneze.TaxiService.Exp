@@ -49,6 +49,10 @@ internal static class ValidationErrors
             new("User.DocumentIsRequired",
                 string.Format(null, TemplateIsRequired, "document"));
 
+        internal static Error EmailIsInvalid =>
+            new("User.EmailIsInvalid",
+                "The e-mail is invalid.");
+
         internal static Error DocumentIsInvalid =>
             new("User.DocumentIsInvalid",
                 "The document is invalid.");

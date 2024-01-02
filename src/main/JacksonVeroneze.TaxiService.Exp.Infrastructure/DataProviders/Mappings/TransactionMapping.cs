@@ -2,7 +2,7 @@ using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Mappings;
+namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Mappings;
 
 [ExcludeFromCodeCoverage]
 public class TransactionMapping : IEntityTypeConfiguration<TransactionEntity>
@@ -21,12 +21,9 @@ public class TransactionMapping : IEntityTypeConfiguration<TransactionEntity>
         builder.Property(c => c.RideId)
             .IsRequired();
 
-        builder.OwnsOne(conf => conf.Ammount, conf =>
+        builder.ComplexProperty(conf => conf.Ammount, conf =>
         {
-            conf.WithOwner();
-
             conf.Property(prop => prop.Value)
-                .HasColumnName("ammount")
                 .IsRequired();
         });
 

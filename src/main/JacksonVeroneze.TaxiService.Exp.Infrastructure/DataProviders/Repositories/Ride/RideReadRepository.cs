@@ -5,7 +5,7 @@ using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 using JacksonVeroneze.TaxiService.Exp.Domain.Filters;
 using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Base.Predicate;
 using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Ride;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.Contexts;
+using JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Contexts;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;

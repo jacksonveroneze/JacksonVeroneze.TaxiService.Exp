@@ -2,7 +2,7 @@ using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Mappings;
+namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Mappings;
 
 [ExcludeFromCodeCoverage]
 public class EmailMapping : IEntityTypeConfiguration<EmailEntity>
@@ -19,13 +19,10 @@ public class EmailMapping : IEntityTypeConfiguration<EmailEntity>
             .ValueGeneratedNever();
 
         builder.Property(c => c.UserId)
-            .HasColumnName("user_id")
             .IsRequired();
 
-        builder.OwnsOne(conf => conf.Email, conf =>
+        builder.ComplexProperty(conf => conf.Email, conf =>
         {
-            conf.WithOwner();
-
             conf.Property(prop => prop.Value)
                 .HasColumnName("value")
                 .HasMaxLength(100)

@@ -1,7 +1,7 @@
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities.Base;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Mappings;
+namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Mappings;
 
 [ExcludeFromCodeCoverage]
 public static class DefaultFiledsMapping

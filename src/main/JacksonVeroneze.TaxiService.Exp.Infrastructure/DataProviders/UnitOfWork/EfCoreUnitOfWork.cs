@@ -1,10 +1,10 @@
 using JacksonVeroneze.NET.DomainObjects.Messaging;
 using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.Messaging;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities.Base;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.Contexts;
+using JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Contexts;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.UnitOfWork;
+namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.UnitOfWork;
 
 [ExcludeFromCodeCoverage]
 public class EfCoreUnitOfWork(

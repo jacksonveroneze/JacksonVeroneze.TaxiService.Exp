@@ -51,7 +51,7 @@ public static class UserEndpoint
             .Produces<GetUserByIdQueryResponse>()
             .AddDefaultResponseEndpoints();
 
-        builder.MapPost("/", async (
+        builder.MapPost(string.Empty, async (
                 [FromServices] IMediator mediator,
                 [FromBody] CreateUserCommand command,
                 CancellationToken cancellationToken) =>

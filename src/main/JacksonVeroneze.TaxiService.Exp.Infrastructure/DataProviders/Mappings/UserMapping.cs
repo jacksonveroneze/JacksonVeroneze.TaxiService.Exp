@@ -2,7 +2,7 @@ using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Mappings;
+namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Mappings;
 
 [ExcludeFromCodeCoverage]
 public class UserMapping : IEntityTypeConfiguration<UserEntity>
@@ -18,10 +18,8 @@ public class UserMapping : IEntityTypeConfiguration<UserEntity>
         builder.Property(c => c.Id)
             .ValueGeneratedNever();
 
-        builder.OwnsOne(conf => conf.Name, conf =>
+        builder.ComplexProperty(conf => conf.Name, conf =>
         {
-            conf.WithOwner();
-
             conf.Property(prop => prop.Value)
                 .HasColumnName("name")
                 .HasMaxLength(100)
@@ -29,17 +27,13 @@ public class UserMapping : IEntityTypeConfiguration<UserEntity>
         });
 
         builder.Property(c => c.Birthday)
-            .HasColumnName("birthday")
             .IsRequired();
 
-        builder.Property(c => c.GenderType)
-            .HasColumnName("gender")
+        builder.Property(c => c.Gender)
             .IsRequired();
 
-        builder.OwnsOne(conf => conf.Cpf, conf =>
+        builder.ComplexProperty(conf => conf.Cpf, conf =>
         {
-            conf.WithOwner();
-
             conf.Property(prop => prop.Value)
                 .HasMaxLength(11)
                 .HasColumnName("cpf")
@@ -47,14 +41,11 @@ public class UserMapping : IEntityTypeConfiguration<UserEntity>
         });
 
         builder.Property(c => c.Status)
-            .HasColumnName("status")
             .IsRequired();
 
-        builder.Property(c => c.ActivedOnUtc)
-            .HasColumnName("actived_on_utc");
+        builder.Property(c => c.ActivedOnUtc);
 
-        builder.Property(c => c.InactivedOnUtc)
-            .HasColumnName("inactived_on_utc");
+        builder.Property(c => c.InactivedOnUtc);
 
         builder.ConfigureDefaultFiledsMapping();
     }

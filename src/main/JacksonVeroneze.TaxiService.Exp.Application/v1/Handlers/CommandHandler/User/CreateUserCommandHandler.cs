@@ -12,8 +12,9 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.CommandHandler
 public sealed class CreateUserCommandHandler(
     ILogger<CreateUserCommandHandler> logger,
     IMapper mapper,
+    IUserWriteRepository userWriteRepository,
     IEmailReadRepository emailReadRepository,
-    IUserWriteRepository userWriteRepository)
+    IEmailWriteRepository emailWriteRepository)
     : IRequestHandler<CreateUserCommand, Result<CreateUserCommandResponse>>
 {
     public async Task<Result<CreateUserCommandResponse>> Handle(
@@ -28,7 +29,7 @@ public sealed class CreateUserCommandHandler(
         if (existsUser)
         {
             logger.LogAlreadyExists(nameof(CreateUserCommandHandler),
-                nameof(Handle), request.Document!,
+                nameof(Handle), request.Email!,
                 DomainErrors.UserError.DuplicateCpf);
 
             return Result<CreateUserCommandResponse>.FromInvalid(
@@ -49,6 +50,20 @@ public sealed class CreateUserCommandHandler(
 
         await userWriteRepository.CreateAsync(
             entity.Value!, cancellationToken);
+
+        Result<EmailEntity> emailEntity = EmailEntity
+            .Create(entity.Value!.Id, request.Email!);
+
+        if (emailEntity.IsFailure)
+        {
+            logger.LogGenericError(nameof(CreateUserCommandHandler),
+                nameof(Handle), entity.Error!.Message);
+        }
+        else
+        {
+            await emailWriteRepository.CreateAsync(
+                emailEntity.Value!, cancellationToken);
+        }
 
         CreateUserCommandResponse response =
             mapper.Map<CreateUserCommandResponse>(entity.Value);

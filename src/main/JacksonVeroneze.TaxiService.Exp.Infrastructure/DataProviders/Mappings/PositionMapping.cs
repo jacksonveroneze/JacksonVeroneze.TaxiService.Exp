@@ -2,7 +2,7 @@ using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Mappings;
+namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.DataProviders.Mappings;
 
 [ExcludeFromCodeCoverage]
 public class PositionMapping : IEntityTypeConfiguration<PositionEntity>
@@ -21,10 +21,8 @@ public class PositionMapping : IEntityTypeConfiguration<PositionEntity>
         builder.Property(c => c.RideId)
             .IsRequired();
 
-        builder.OwnsOne(conf => conf.Position, conf =>
+        builder.ComplexProperty(conf => conf.Position, conf =>
         {
-            conf.WithOwner();
-
             conf.Property(prop => prop.Latitude)
                 .HasColumnName("from_latitude")
                 .IsRequired();
