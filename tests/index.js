@@ -27,8 +27,8 @@ export const optionsDuration = {
 
 export const options = optionsIterations;
 
-const baseUrl = 'http://localhost:7000';
-//const baseUrl = 'http://localhost:8085';
+//const baseUrl = 'http://localhost:7000';
+const baseUrl = 'http://localhost:8085';
 
 export default () => {
     let headers = {
