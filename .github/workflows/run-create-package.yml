@@ -9,7 +9,8 @@ env:
   DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
   DOTNET_ROOT: "/home/runner/.dotnet/app"
-  PROJECT_NAME: JacksonVeroneze.TemplateWebApi.Api
+  ORG_NAME: jacksonveroneze
+  IMAGE_NAME: taxi-service-exp
 
 jobs:
   publish:
@@ -20,17 +21,17 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '7.0.x'
-
-      - name: Restore dependencies
-        run: |
-          cd src
-          dotnet restore
-
-      - name: Test
-        run: |
-          cd src
-          dotnet test -c Release --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+          dotnet-version: '8.0.x'
+      
+      #      - name: Restore dependencies
+      #        run: |
+      #          cd src
+      #          dotnet restore
+      #
+      #      - name: Test
+      #        run: |
+      #          cd src
+      #          dotnet test -c Release --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
 
       - name: Login
         run: |
@@ -39,12 +40,12 @@ jobs:
       - name: Build
         run: |
           cd src
-          docker build . -t templatewebapi-service:latest
+          docker build . -t ${{ env.IMAGE_NAME }}:latest
 
       - name: Create TAG
         run: |
-          docker tag templatewebapi-service:latest jacksonveroneze/templatewebapi-service:$(echo ${GITHUB_REF:10})
+          docker tag ${{ env.IMAGE_NAME }}:latest ${{ env.ORG_NAME }}/${{ env.IMAGE_NAME }}:$(echo ${GITHUB_REF:10})
 
       - name: Push
         run: |
-          docker push jacksonveroneze/templatewebapi-service:$(echo ${GITHUB_REF:10})
+          docker push ${{ env.ORG_NAME }}/${{ env.IMAGE_NAME }}:$(echo ${GITHUB_REF:10})

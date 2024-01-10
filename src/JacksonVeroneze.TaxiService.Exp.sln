@@ -69,6 +69,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "util", "util", "{FCF116CF-D
 		..\tests\scenarios\util.js = ..\tests\scenarios\util.js
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github", "github", "{22503280-B856-43B3-8174-60F081C35E9A}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\workflows\run-commit-linter.yml = ..\.github\workflows\run-commit-linter.yml
+		..\.github\workflows\run-create-package.yml = ..\.github\workflows\run-create-package.yml
+		..\.github\workflows\run-pr-assign.yml = ..\.github\workflows\run-pr-assign.yml
+		..\.github\workflows\run-unit-tests.yaml = ..\.github\workflows\run-unit-tests.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -108,5 +116,6 @@ Global
 		{1ED107B4-974F-4084-8C98-B96C2041D4F5} = {C29D5355-B5A2-4621-86AE-57766C544BDB}
 		{072A7146-CC76-4DBC-9020-2DA1F6613D71} = {C29D5355-B5A2-4621-86AE-57766C544BDB}
 		{FCF116CF-D7A0-479B-B9EA-471FC20BF90B} = {C29D5355-B5A2-4621-86AE-57766C544BDB}
+		{22503280-B856-43B3-8174-60F081C35E9A} = {2E06D1F1-951E-43B4-9706-4A931EB38244}
 	EndGlobalSection
 EndGlobal
