@@ -24,16 +24,16 @@ public sealed class CreateUserCommandHandler(
         ArgumentNullException.ThrowIfNull(request);
 
         bool existsUser = await emailReadRepository
-            .ExistsAsync(request.Document!, cancellationToken);
+            .ExistsAsync(request.Email!, cancellationToken);
 
         if (existsUser)
         {
             logger.LogAlreadyExists(nameof(CreateUserCommandHandler),
                 nameof(Handle), request.Email!,
-                DomainErrors.UserError.DuplicateCpf);
+                DomainErrors.UserError.DuplicateEmail);
 
             return Result<CreateUserCommandResponse>.FromInvalid(
-                DomainErrors.UserError.DuplicateCpf);
+                DomainErrors.UserError.DuplicateEmail);
         }
 
         Result<UserEntity> entity = UserEntity.Create(request.Name,

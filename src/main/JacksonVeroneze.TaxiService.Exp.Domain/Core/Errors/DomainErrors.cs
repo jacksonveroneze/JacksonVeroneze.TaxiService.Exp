@@ -37,9 +37,9 @@ public static class DomainErrors
             new("User.InvalidCpf",
                 string.Format(null, TemplateDataInvalid, "cpf"));
 
-        public static Error DuplicateCpf =>
-            new("User.DuplicateCpf",
-                string.Format(null, TemplateDataInUse, "cpf"));
+        public static Error DuplicateEmail =>
+            new("User.DuplicateEmail",
+                string.Format(null, TemplateDataInUse, "e-mail"));
 
         public static Error AlreadyActivated =>
             new("User.AlreadyActivated",

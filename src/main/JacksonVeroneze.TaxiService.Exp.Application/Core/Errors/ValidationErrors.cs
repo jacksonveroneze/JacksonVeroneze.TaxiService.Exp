@@ -8,7 +8,7 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.Core.Errors;
 internal static class ValidationErrors
 {
     private static readonly CompositeFormat TemplateIsRequired =
-        CompositeFormat.Parse("The {{0}} is required.");
+        CompositeFormat.Parse("The {0} is required.");
 
     #region common
 
