@@ -10,6 +10,8 @@ namespace JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 
 public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
 {
+    public new Guid Id { get; set; } = Guid.NewGuid();
+
     public NameValueObject Name { get; private set; } = null!;
 
     public DateOnly Birthday { get; private set; }

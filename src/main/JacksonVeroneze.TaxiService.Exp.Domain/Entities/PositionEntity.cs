@@ -6,6 +6,8 @@ namespace JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 
 public class PositionEntity : BaseEntityAggregateRoot
 {
+    public new Guid Id { get; set; } = Guid.NewGuid();
+
     public Guid RideId { get; }
 
     public CoordinateValueObject Position { get; } = null!;

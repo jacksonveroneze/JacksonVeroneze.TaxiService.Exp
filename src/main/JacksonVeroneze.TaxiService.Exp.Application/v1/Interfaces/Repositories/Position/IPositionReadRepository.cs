@@ -4,7 +4,7 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories
 
 public interface IPositionReadRepository
 {
-    Task<List<PositionEntity>> GetByRideIdAsync(
+    Task<ICollection<PositionEntity>> GetByRideIdAsync(
         Guid rideId,
         CancellationToken cancellationToken = default);
 }

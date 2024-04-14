@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="8.0.4"/>
+    <PackageReference Include="EFCore.NamingConventions" Version="8.0.3"/>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.2"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="System.ComponentModel.DataAnnotations"/>
+    <Using Include="System.Diagnostics.CodeAnalysis"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JacksonVeroneze.TaxiService.Exp.Application\JacksonVeroneze.TaxiService.Exp.Application.csproj"/>
+    <ProjectReference Include="..\JacksonVeroneze.TaxiService.Exp.Domain\JacksonVeroneze.TaxiService.Exp.Domain.csproj"/>
+    <ProjectReference Include="..\JacksonVeroneze.TaxiService.Exp.Infrastructure\JacksonVeroneze.TaxiService.Exp.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -15,7 +15,7 @@ export function createUser(baseUrl, headers) {
         email: `${randomString(10)}@mail.com`
     });
 
-    const responsePostUser = http.post(`${baseUrl}/api/v1/users`, bodyUser, headers);
+    const responsePostUser = http.post(`${baseUrl}/users`, bodyUser, headers);
     check(responsePostUser, {'[User] - Created - status is 201': (r) => r.status === 201});
 
     const userContent = JSON.parse(responsePostUser.body);
@@ -24,12 +24,12 @@ export function createUser(baseUrl, headers) {
 }
 
 export function getUsersPaged(baseUrl, headers) {
-    const response = http.get(`${baseUrl}/api/v1/users`, headers);
+    const response = http.get(`${baseUrl}/users`, headers);
     checker(response, 'User', 'GetPaged', 200)
 }
 
 export function getUserById(baseUrl, headers, idUser, statusCodeDefault = null) {
-    const response = http.get(`${baseUrl}/api/v1/users/${idUser}`, headers);
+    const response = http.get(`${baseUrl}/users/${idUser}`, headers);
 
     if (statusCodeDefault) {
         checker(response, 'User', 'GetById', statusCodeDefault)
@@ -39,13 +39,13 @@ export function getUserById(baseUrl, headers, idUser, statusCodeDefault = null) 
 }
 
 export function activateUser(baseUrl, headers, idUser) {
-    return http.put(`${baseUrl}/api/v1/users/${idUser}/activate`, {}, headers);
+    return http.put(`${baseUrl}/users/${idUser}/activate`, {}, headers);
 }
 
 export function inactivateUser(baseUrl, headers, idUser) {
-    return http.put(`${baseUrl}/api/v1/users/${idUser}/inactivate`, {}, headers);
+    return http.put(`${baseUrl}/users/${idUser}/inactivate`, {}, headers);
 }
 
 export function deleteUser(baseUrl, headers, idUser) {
-    return http.del(`${baseUrl}/api/v1/users/${idUser}`, null, headers);
+    return http.del(`${baseUrl}/users/${idUser}`, null, headers);
 }

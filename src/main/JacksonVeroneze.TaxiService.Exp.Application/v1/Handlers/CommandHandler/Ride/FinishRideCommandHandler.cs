@@ -34,7 +34,7 @@ public sealed class FinishRideCommandHandler(
                 .FromNotFound(DomainErrors.RideError.NotFound);
         }
 
-        List<PositionEntity> positions = await positionReadRepository
+        ICollection<PositionEntity> positions = await positionReadRepository
             .GetByRideIdAsync(request.Id, cancellationToken);
 
         CoordinateValueObject[] positionsCood = positions

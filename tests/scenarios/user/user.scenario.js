@@ -9,7 +9,6 @@ export default (baseUrl, headers) => {
     });
 
     group('Get Paged Flow', () => {
-        user.createUser(baseUrl, headers);
         user.getUsersPaged(baseUrl, headers);
     });
 

@@ -8,23 +8,23 @@ export function createBatchEmails(baseUrl, headers, idUser, total = 5) {
             email: `${randomString(8)}@mail.com`
         });
 
-        const response = http.post(`${baseUrl}/api/v1/users/${idUser}/emails`, bodyEmail, headers);
+        const response = http.post(`${baseUrl}/users/${idUser}/emails`, bodyEmail, headers);
         checker(response, 'Mail', 'Created', 201)
     }
 }
 
 export function getEmailsPaged(baseUrl, headers, idUser) {
-    const response = http.get(`${baseUrl}/api/v1/users/${idUser}/emails`, headers);
+    const response = http.get(`${baseUrl}/users/${idUser}/emails`, headers);
     checker(response, 'Mail', 'GetPaged', 200)
 }
 
 export function deleteAllEmails(baseUrl, headers, idUser) {
-    const responseGetPaged = http.get(`${baseUrl}/api/v1/users/${idUser}/emails`, headers);
+    const responseGetPaged = http.get(`${baseUrl}/users/${idUser}/emails`, headers);
 
     const result = JSON.parse(responseGetPaged.body);
 
     for (let email of result.data) {
-        const response = http.del(`${baseUrl}/api/v1/users/${idUser}/emails/${email.id}`, null, headers);
+        const response = http.del(`${baseUrl}/users/${idUser}/emails/${email.id}`, null, headers);
         checker(response, 'Mail', 'DeleteAll', 204)
     }
 }

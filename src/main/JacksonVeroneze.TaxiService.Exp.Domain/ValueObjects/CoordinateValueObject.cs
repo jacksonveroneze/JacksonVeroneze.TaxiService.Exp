@@ -6,15 +6,15 @@ namespace JacksonVeroneze.TaxiService.Exp.Domain.ValueObjects;
 
 public class CoordinateValueObject : ValueObject
 {
-    public float Latitude { get; }
+    public float Latitude { get; private set; }
 
-    public float Longitude { get; }
+    public float Longitude { get; private set; }
 
     protected CoordinateValueObject()
     {
     }
 
-    private CoordinateValueObject(
+    public CoordinateValueObject(
         float latitude, float longitude)
     {
         Latitude = latitude;

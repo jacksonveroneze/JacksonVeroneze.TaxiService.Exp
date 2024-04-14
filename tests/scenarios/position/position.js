@@ -9,7 +9,7 @@ export function createBatchPositions(baseUrl, headers, idRide, total) {
             longitude: -51.5048672 + i,
         });
 
-        const response = http.post(`${baseUrl}/api/v1/positions`, bodyPositionRide, headers);
+        const response = http.post(`${baseUrl}/positions`, bodyPositionRide, headers);
         checker(response, 'Position', 'Created', 201)
     }
 }

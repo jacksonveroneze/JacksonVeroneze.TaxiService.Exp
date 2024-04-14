@@ -19,7 +19,7 @@ public class CpfValueObject : ValueObject
     {
     }
 
-    private CpfValueObject(string value)
+    public CpfValueObject(string value)
     {
         Value = value;
     }

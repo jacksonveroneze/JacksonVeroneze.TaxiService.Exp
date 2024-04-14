@@ -13,7 +13,7 @@ public class EmailMapper : Profile
         // Entity -> Response
         CreateMap<EmailEntity, EmailResponse>()
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
-            .ForMember(dest => dest.Email, opts => opts.MapFrom(src => src.Email.Value));
+            .ForMember(dest => dest.Email, opts => opts.MapFrom(src => src.Email));
 
         CreateMap<EmailEntity, CreateEmailCommandResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));

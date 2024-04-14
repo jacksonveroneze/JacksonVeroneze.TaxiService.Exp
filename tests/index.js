@@ -8,10 +8,10 @@ import ride from "./scenarios/ride/ride.scenario.js";
 export let optionsRamp = {
     stages: [
         {duration: '10s', target: 2},
-        {duration: '10s', target: 10},
-        {duration: '60s', target: 30},
-        {duration: '30s', target: 10},
-        {duration: '60s', target: 5}
+        {duration: '100s', target: 10},
+        {duration: '60s', target: 300},
+        {duration: '30s', target: 100},
+        {duration: '240s', target: 5}
     ]
 };
 
@@ -27,8 +27,9 @@ export const optionsDuration = {
 
 export const options = optionsIterations;
 
-//const baseUrl = 'http://localhost:7000';
-const baseUrl = 'http://localhost:8085';
+const baseUrl = 'http://localhost:7000/api/v1';
+// const baseUrl = 'http://localhost:8080';
+// const baseUrl = 'http://localhost:8085';
 
 export default () => {
     let headers = {

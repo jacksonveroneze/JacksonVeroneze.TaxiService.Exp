@@ -11,7 +11,7 @@ public class EmailByValueSpecification(string email) :
 {
     public override Expression<Func<EmailEntity, bool>> ToExpression()
     {
-        return spec => spec.Email.Value!.ToUpper()
+        return spec => spec.Email!
             .Equals(email.ToUpperInvariant());
     }
 }

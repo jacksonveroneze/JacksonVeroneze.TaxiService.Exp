@@ -22,7 +22,7 @@ public class EmailValueObject : ValueObject
     {
     }
 
-    private EmailValueObject(string value)
+    public EmailValueObject(string value)
     {
         Value = value;
     }

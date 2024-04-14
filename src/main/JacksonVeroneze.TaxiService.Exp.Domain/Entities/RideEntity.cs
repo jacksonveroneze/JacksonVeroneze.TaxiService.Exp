@@ -9,7 +9,9 @@ namespace JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 
 public class RideEntity : BaseEntityAggregateRoot
 {
-    public Guid? UserId { get; }
+    public new Guid Id { get; set; } = Guid.NewGuid();
+
+    public Guid? UserId { get; private set; }
 
     public Guid? DriverId { get; private set; }
 

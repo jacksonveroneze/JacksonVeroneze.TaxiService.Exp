@@ -44,8 +44,8 @@ public static class OpenTelemetryExtensions
             serviceInstanceId: Environment.MachineName);
     }
 
-    private static OpenTelemetryBuilder AddMetrics(
-        this OpenTelemetryBuilder builder)
+    private static IOpenTelemetryBuilder AddMetrics(
+        this IOpenTelemetryBuilder builder)
     {
         builder.WithMetrics(opts => opts
             .AddProcessInstrumentation()
@@ -57,8 +57,8 @@ public static class OpenTelemetryExtensions
         return builder;
     }
 
-    private static OpenTelemetryBuilder AddTracing(
-        this OpenTelemetryBuilder builder,
+    private static IOpenTelemetryBuilder AddTracing(
+        this IOpenTelemetryBuilder builder,
         AppConfiguration appConfiguration)
     {
         builder.WithTracing(conf =>

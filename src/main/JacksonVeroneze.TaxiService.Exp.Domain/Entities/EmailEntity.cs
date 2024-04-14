@@ -6,13 +6,15 @@ namespace JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 
 public class EmailEntity : BaseEntityAggregateRoot
 {
-    public EmailValueObject Email { get; } = null!;
+    public new Guid Id { get; set; } = Guid.NewGuid();
+
+    public EmailValueObject Email { get; private set; } = null!;
 
     public Guid UserId { get; }
 
     #region ctor
 
-    protected EmailEntity()
+    public EmailEntity()
     {
     }
 

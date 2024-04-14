@@ -1,6 +1,8 @@
 using JacksonVeroneze.TaxiService.Exp.Api.Middlewares;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.Configurations;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
+using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Extensions;
+using JacksonVeroneze.TaxiService.Exp.Infrastructure.MongoDb.Extensions;
 using SharpGrip.FluentValidation.AutoValidation.Endpoints.Extensions;
 
 namespace JacksonVeroneze.TaxiService.Exp.Api.Extensions;
@@ -68,8 +70,11 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services
             .AddAppServices()
+            .AddEfCoreServices()
+            .AddMongoDbServices()
             .AddCached(appConfiguration)
-            .AddDatabase(appConfiguration)
+            .AddDatabaseEfCore(appConfiguration)
+            .AddDatabaseMongoDb()
             .AddRabbitMq();
 
         return builder;
