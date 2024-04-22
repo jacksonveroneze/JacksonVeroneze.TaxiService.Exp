@@ -1,6 +1,7 @@
 using JacksonVeroneze.NET.MongoDB.Interfaces;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Email;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
+using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Email;
 
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.MongoDb.Repositories.Email;
 
@@ -31,8 +32,10 @@ public class EmailWriteRepository : IEmailWriteRepository
     {
         ArgumentNullException.ThrowIfNull(entity);
 
+        EmailByIdSpecification spec = new(entity.Id);
+
         return _mongoDbRepository.DeleteAsync(
-            conf => conf.Id == entity.Id, cancellationToken);
+            spec, cancellationToken);
     }
 
     public Task UpdateAsync(EmailEntity entity,
@@ -40,9 +43,11 @@ public class EmailWriteRepository : IEmailWriteRepository
     {
         ArgumentNullException.ThrowIfNull(entity);
 
+        EmailByIdSpecification spec = new(entity.Id);
+
         return _mongoDbRepository.UpdateAsync(
             entity,
-            conf => conf.Id == entity.Id,
+            spec,
             cancellationToken);
     }
 }

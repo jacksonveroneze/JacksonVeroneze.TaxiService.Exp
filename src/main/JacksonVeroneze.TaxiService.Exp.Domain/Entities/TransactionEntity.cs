@@ -38,13 +38,13 @@ public class TransactionEntity : BaseEntityAggregateRoot
 
     public Result Pay()
     {
-        if (Status == TransactionStatus.Paid)
+        if (IsPaid)
         {
             return Result.FromInvalid(
                 DomainErrors.TransactionError.StatusAlreadyPaid);
         }
 
-        if (Status != TransactionStatus.WaitingPayment)
+        if (!IsWaitingPayment)
         {
             return Result.FromInvalid(
                 DomainErrors.TransactionError.InvalidStatusSetPaid);
@@ -54,6 +54,13 @@ public class TransactionEntity : BaseEntityAggregateRoot
 
         return Result.WithSuccess();
     }
+
+    #endregion
+
+    #region Status
+
+    public bool IsWaitingPayment => Status is TransactionStatus.WaitingPayment;
+    public bool IsPaid => Status is TransactionStatus.Paid;
 
     #endregion
 

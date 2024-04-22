@@ -6,7 +6,6 @@ using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Rid
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Base;
 using JacksonVeroneze.TaxiService.Exp.Domain.Core.Errors;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
-using JacksonVeroneze.TaxiService.Exp.Domain.Enums;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.CommandHandler.Position;
 
@@ -31,7 +30,7 @@ public sealed class UpdatePositionCommandHandler(
                 .WithError(DomainErrors.RideError.NotFound);
         }
 
-        if (ride.Status != RideStatus.InProgress)
+        if (!ride.InProgress)
         {
             Error error = DomainErrors.RideError.InvalidStatusAddPosition;
 
@@ -47,7 +46,8 @@ public sealed class UpdatePositionCommandHandler(
 
         if (entity.IsFailure)
         {
-            logger.LogGenericError(nameof(UpdatePositionCommandHandler),
+            logger.LogGenericError(
+                nameof(UpdatePositionCommandHandler),
                 nameof(Handle), entity.Error!);
 
             return Result<VoidResponse>

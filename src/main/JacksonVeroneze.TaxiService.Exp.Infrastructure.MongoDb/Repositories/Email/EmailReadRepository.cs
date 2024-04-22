@@ -1,9 +1,12 @@
+using System.Linq.Expressions;
 using JacksonVeroneze.NET.MongoDB.Interfaces;
 using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Email;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 using JacksonVeroneze.TaxiService.Exp.Domain.Filters;
 using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Email;
+using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.MongoDb.Repositories.Email;
 
@@ -24,10 +27,16 @@ public class EmailReadRepository : IEmailReadRepository
         string email,
         CancellationToken cancellationToken = default)
     {
-        // EmailByValueSpecification specName = new(email);
+        ArgumentException.ThrowIfNullOrEmpty(email);
 
-        bool exists = await _mongoDbRepository.AnyAsync(conf => conf.Email == email,
-            cancellationToken);
+        //EmailByValueSpecification specName = new(email);
+
+        FilterDefinition<EmailEntity>? filtro = Builders<EmailEntity>.Filter.Where(p => p.Email == email);
+
+        Expression<Func<EmailEntity, bool>> filtroExpression = p => filtro.Inject();
+
+        bool exists = await _mongoDbRepository
+            .AnyAsync(filtroExpression, cancellationToken);
 
         return exists;
     }
@@ -38,8 +47,10 @@ public class EmailReadRepository : IEmailReadRepository
     {
         ArgumentNullException.ThrowIfNull(id);
 
+        EmailByIdSpecification spec = new(id);
+
         return _mongoDbRepository.GetByIdAsync(
-            conf => conf.Id == id, cancellationToken);
+            spec, cancellationToken);
     }
 
     public Task<Page<EmailEntity>> GetPagedAsync(

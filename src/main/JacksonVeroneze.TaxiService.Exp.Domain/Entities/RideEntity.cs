@@ -56,13 +56,13 @@ public class RideEntity : BaseEntityAggregateRoot
     {
         ArgumentNullException.ThrowIfNull(driverId);
 
-        if (Status == RideStatus.Accepted)
+        if (IsAccepted)
         {
             return Result.FromInvalid(
                 DomainErrors.RideError.StatusAlreadyDefined);
         }
 
-        if (Status != RideStatus.Requested)
+        if (!IsRequested)
         {
             return Result.FromInvalid(
                 DomainErrors.RideError.InvalidStatusSetAccept);
@@ -84,13 +84,13 @@ public class RideEntity : BaseEntityAggregateRoot
 
     public Result Start()
     {
-        if (Status == RideStatus.InProgress)
+        if (InProgress)
         {
             return Result.FromInvalid(
                 DomainErrors.RideError.StatusAlreadyDefined);
         }
 
-        if (Status != RideStatus.Accepted)
+        if (!IsAccepted)
         {
             return Result.FromInvalid(
                 DomainErrors.RideError.InvalidStatusSetStart);
@@ -105,13 +105,13 @@ public class RideEntity : BaseEntityAggregateRoot
 
     public Result Finish(double distance)
     {
-        if (Status == RideStatus.Completed)
+        if (IsCompleted)
         {
             return Result.FromInvalid(
                 DomainErrors.RideError.StatusAlreadyDefined);
         }
 
-        if (Status != RideStatus.InProgress)
+        if (!InProgress)
         {
             return Result.FromInvalid(
                 DomainErrors.RideError.InvalidStatusSetFinish);
@@ -129,13 +129,13 @@ public class RideEntity : BaseEntityAggregateRoot
 
     public Result Cancel()
     {
-        if (Status == RideStatus.Canceled)
+        if (IsCanceled)
         {
             return Result.FromInvalid(
                 DomainErrors.RideError.StatusAlreadyDefined);
         }
 
-        if (Status == RideStatus.Completed)
+        if (IsCompleted)
         {
             return Result.FromInvalid(
                 DomainErrors.RideError.InvalidStatusSetCancel);
@@ -147,6 +147,12 @@ public class RideEntity : BaseEntityAggregateRoot
 
         return Result.WithSuccess();
     }
+
+    public bool IsRequested => Status is RideStatus.Requested;
+    public bool IsAccepted => Status is RideStatus.Accepted;
+    public bool InProgress => Status is RideStatus.InProgress;
+    public bool IsCompleted => Status is RideStatus.Completed;
+    public bool IsCanceled => Status is RideStatus.Canceled;
 
     #endregion
 

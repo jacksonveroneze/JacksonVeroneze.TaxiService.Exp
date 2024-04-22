@@ -1,6 +1,7 @@
 using JacksonVeroneze.NET.MongoDB.Interfaces;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
+using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.User;
 
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.MongoDb.Repositories.User;
 
@@ -31,8 +32,10 @@ public class UserWriteRepository : IUserWriteRepository
     {
         ArgumentNullException.ThrowIfNull(entity);
 
+        UserByIdSpecification spec = new(entity.Id);
+
         return _mongoDbRepository.DeleteAsync(
-            conf => conf.Id == entity.Id, cancellationToken);
+            spec, cancellationToken);
     }
 
     public Task UpdateAsync(UserEntity entity,
@@ -40,9 +43,11 @@ public class UserWriteRepository : IUserWriteRepository
     {
         ArgumentNullException.ThrowIfNull(entity);
 
+        UserByIdSpecification spec = new(entity.Id);
+
         return _mongoDbRepository.UpdateAsync(
             entity,
-            conf => conf.Id == entity.Id,
+            spec,
             cancellationToken);
     }
 }

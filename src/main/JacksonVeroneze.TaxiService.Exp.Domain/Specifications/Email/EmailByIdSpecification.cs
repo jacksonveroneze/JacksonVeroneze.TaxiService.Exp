@@ -6,11 +6,11 @@ using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Base;
 namespace JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Email;
 
 [ExcludeFromCodeCoverage]
-public class EmailByValueSpecification(string email) :
+public class EmailByIdSpecification(Guid id) :
     BaseSpecification<EmailEntity>
 {
     public override Expression<Func<EmailEntity, bool>> ToExpression()
     {
-        return spec => spec.Email!.Value!.Equals(email, StringComparison.OrdinalIgnoreCase);
+        return spec => spec.Id == id;
     }
 }

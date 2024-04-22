@@ -53,11 +53,11 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
 
     #endregion
 
-    #region Active/Inative
+    #region Status
 
     public Result Activate(DateTime utcNow)
     {
-        if (Status == UserStatus.Active)
+        if (IsActive)
         {
             return Result.FromInvalid(
                 DomainErrors.UserError.AlreadyActivated);
@@ -74,7 +74,7 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
 
     public Result Inactivate(DateTime utcNow)
     {
-        if (Status == UserStatus.Inactive)
+        if (IsInactive)
         {
             return Result.FromInvalid(
                 DomainErrors.UserError.AlreadyInactivated);
@@ -88,6 +88,10 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
 
         return Result.WithSuccess();
     }
+
+    public bool IsActive => Status is UserStatus.Active;
+    public bool IsInactive => Status is UserStatus.Inactive;
+    public bool IsPendingActivation => Status is UserStatus.PendingActivation;
 
     #endregion
 

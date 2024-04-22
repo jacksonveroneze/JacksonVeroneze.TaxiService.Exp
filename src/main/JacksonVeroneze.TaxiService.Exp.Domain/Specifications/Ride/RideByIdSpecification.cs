@@ -6,11 +6,11 @@ using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Base;
 namespace JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Ride;
 
 [ExcludeFromCodeCoverage]
-public class RideByUserIdSpecification(Guid? userId)
+public class RideByIdSpecification(Guid id)
     : BaseSpecification<RideEntity>
 {
     public override Expression<Func<RideEntity, bool>> ToExpression()
     {
-        return userId.HasValue ? spec => spec.UserId == userId : DefaultExpression;
+        return spec => spec.Id == id;
     }
 }

@@ -7,11 +7,19 @@ namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.MongoDb.Serializers;
 public class CpfValueObjectSerializer(IBsonSerializer<string> serializer)
     : SerializerBase<CpfValueObject>
 {
-    public override CpfValueObject Deserialize(BsonDeserializationContext context,
+    public override CpfValueObject Deserialize(
+        BsonDeserializationContext context,
         BsonDeserializationArgs args)
-        => new(serializer.Deserialize(context, args));
+    {
+        return new CpfValueObject(
+            serializer.Deserialize(context, args));
+    }
 
-    public override void Serialize(BsonSerializationContext context, BsonSerializationArgs args,
+    public override void Serialize(
+        BsonSerializationContext context,
+        BsonSerializationArgs args,
         CpfValueObject value)
-        => serializer.Serialize(context, args, value.Value!);
+    {
+        serializer.Serialize(context, args, value.Value!);
+    }
 }

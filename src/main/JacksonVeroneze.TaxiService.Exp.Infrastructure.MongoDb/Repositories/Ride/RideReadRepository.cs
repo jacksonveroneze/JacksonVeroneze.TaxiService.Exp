@@ -45,8 +45,10 @@ public class RideReadRepository : IRideReadRepository
     {
         ArgumentNullException.ThrowIfNull(id);
 
+        RideByIdSpecification spec = new(id);
+
         return _mongoDbRepository.GetByIdAsync(
-            conf => conf.Id == id, cancellationToken);
+            spec, cancellationToken);
     }
 
     public Task<Page<RideEntity>> GetPagedAsync(

@@ -28,8 +28,10 @@ public class UserReadRepository : IUserReadRepository
     {
         ArgumentNullException.ThrowIfNull(id);
 
+        UserByIdSpecification spec = new(id);
+
         return _mongoDbRepository.GetByIdAsync(
-            conf => conf.Id == id, cancellationToken);
+            spec, cancellationToken);
     }
 
     public Task<Page<UserEntity>> GetPagedAsync(

@@ -1,6 +1,7 @@
 using JacksonVeroneze.NET.MongoDB.Interfaces;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Ride;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
+using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Ride;
 
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.MongoDb.Repositories.Ride;
 
@@ -29,9 +30,11 @@ public class RideWriteRepository : IRideWriteRepository
     {
         ArgumentNullException.ThrowIfNull(entity);
 
+        RideByIdSpecification spec = new(entity.Id);
+
         return _mongoDbRepository.UpdateAsync(
             entity,
-            conf => conf.Id == entity.Id,
+            spec,
             cancellationToken);
     }
 }

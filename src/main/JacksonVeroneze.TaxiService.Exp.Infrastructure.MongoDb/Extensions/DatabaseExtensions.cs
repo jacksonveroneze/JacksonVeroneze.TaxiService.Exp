@@ -1,5 +1,6 @@
 using JacksonVeroneze.NET.MongoDB.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.MongoDb.Mappings;
+using JacksonVeroneze.TaxiService.Exp.Infrastructure.MongoDb.Serializers;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
@@ -20,7 +21,18 @@ public static class DatabaseExtensions
         BsonDefaults.GuidRepresentationMode = GuidRepresentationMode.V3;
 #pragma warning restore CS0618
 
-        MapEntities.Map();
+        IBsonSerializer<string>? stringBsonSerializer = BsonSerializer
+            .SerializerRegistry.GetSerializer<string>();
+
+        BsonSerializer.RegisterSerializer(new NameValueObjectSerializer(stringBsonSerializer));
+        BsonSerializer.RegisterSerializer(new CpfValueObjectSerializer(stringBsonSerializer));
+        BsonSerializer.RegisterSerializer(new EmailValueObjectSerializer(stringBsonSerializer));
+
+        MapEntityT.Map();
+        MapUserEntity.Map();
+        MapEmailEntity.Map();
+        MapRideEntity.Map();
+        MapPositionEntity.Map();
 
         services.AddMongDb(conf =>
         {

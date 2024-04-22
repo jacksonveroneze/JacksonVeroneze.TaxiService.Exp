@@ -37,6 +37,21 @@ public class EmailValueObject : ValueObject
                EmailFormatRegex.Value.IsMatch(value);
     }
 
+    public override bool Equals(object? obj)
+    {
+        return Value!.Equals(obj);
+    }
+
+    protected bool Equals(EmailValueObject other)
+    {
+        return Value == other.Value;
+    }
+
+    public override int GetHashCode()
+    {
+        return Value != null ? Value.GetHashCode() : 0;
+    }
+
     public override string ToString()
     {
         return Value ?? string.Empty;
