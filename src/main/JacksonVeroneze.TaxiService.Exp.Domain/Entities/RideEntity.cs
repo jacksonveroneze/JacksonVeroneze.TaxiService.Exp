@@ -9,7 +9,7 @@ namespace JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 
 public class RideEntity : BaseEntityAggregateRoot
 {
-    public new Guid Id { get; set; } = Guid.NewGuid();
+    public new Guid Id { get; private set; }
 
     public Guid? UserId { get; private set; }
 
@@ -19,9 +19,9 @@ public class RideEntity : BaseEntityAggregateRoot
 
     public double? Distance { get; private set; }
 
-    public CoordinateValueObject CoordinateFrom { get; } = null!;
+    public CoordinateValueObject? CoordinateFrom { get; private set; }
 
-    public CoordinateValueObject CoordinateTo { get; } = null!;
+    public CoordinateValueObject? CoordinateTo { get; private set; }
 
     public RideStatus Status { get; private set; }
 
@@ -39,6 +39,7 @@ public class RideEntity : BaseEntityAggregateRoot
         ArgumentNullException.ThrowIfNull(coordinateFrom);
         ArgumentNullException.ThrowIfNull(coordinateTo);
 
+        Id = Guid.NewGuid();
         UserId = userId;
         CoordinateFrom = coordinateFrom;
         CoordinateTo = coordinateTo;

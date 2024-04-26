@@ -18,9 +18,9 @@ public class UserByNameSpecification(
         }
 
         return spec => matchExactly
-            ? spec.Name.Value!.ToUpper()
+            ? spec.Name!.Value!.ToUpper()
                 .Equals(name.ToUpperInvariant())
-            : spec.Name.Value!.ToUpper()
+            : spec.Name!.Value!.ToUpper()
                 .Contains(name.ToUpperInvariant());
     }
 }

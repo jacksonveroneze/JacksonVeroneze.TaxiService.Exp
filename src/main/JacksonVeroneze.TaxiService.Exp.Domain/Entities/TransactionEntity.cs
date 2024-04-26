@@ -8,11 +8,13 @@ namespace JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 
 public class TransactionEntity : BaseEntityAggregateRoot
 {
-    public Guid RideId { get; }
+    public new Guid Id { get; private set; }
 
-    public MoneyValueObject Ammount { get; } = null!;
+    public Guid RideId { get; private set; }
 
-    public DateTime Date { get; }
+    public MoneyValueObject? Ammount { get; private set; }
+
+    public DateTime Date { get; private set; }
 
     public TransactionStatus Status { get; private set; }
 
@@ -25,6 +27,7 @@ public class TransactionEntity : BaseEntityAggregateRoot
     private TransactionEntity(
         Guid rideId, MoneyValueObject ammount)
     {
+        Id = Guid.NewGuid();
         RideId = rideId;
         Ammount = ammount;
         Date = DateTime.UtcNow;

@@ -13,7 +13,7 @@ public class UserMapper : Profile
         // Entity -> Response
         CreateMap<UserEntity, UserResponse>()
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
-            .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name.Value))
+            .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name!.Value))
             .ForMember(dest => dest.Birthday, opts => opts.MapFrom(src => src.Birthday))
             .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender))
             .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status));

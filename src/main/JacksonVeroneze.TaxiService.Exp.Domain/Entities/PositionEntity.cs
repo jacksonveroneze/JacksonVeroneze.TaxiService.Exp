@@ -6,11 +6,11 @@ namespace JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 
 public class PositionEntity : BaseEntityAggregateRoot
 {
-    public new Guid Id { get; set; } = Guid.NewGuid();
+    public new Guid Id { get; private set; }
 
-    public Guid RideId { get; }
+    public Guid RideId { get; private set; }
 
-    public CoordinateValueObject Position { get; } = null!;
+    public CoordinateValueObject? Position { get; private set; }
 
     #region ctor
 
@@ -18,9 +18,11 @@ public class PositionEntity : BaseEntityAggregateRoot
     {
     }
 
-    private PositionEntity(Guid rideId,
+    private PositionEntity(
+        Guid rideId,
         CoordinateValueObject position)
     {
+        Id = Guid.NewGuid();
         RideId = rideId;
         Position = position;
     }

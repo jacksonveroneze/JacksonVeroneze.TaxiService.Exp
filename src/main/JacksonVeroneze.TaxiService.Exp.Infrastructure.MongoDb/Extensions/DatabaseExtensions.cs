@@ -27,12 +27,24 @@ public static class DatabaseExtensions
         BsonSerializer.RegisterSerializer(new NameValueObjectSerializer(stringBsonSerializer));
         BsonSerializer.RegisterSerializer(new CpfValueObjectSerializer(stringBsonSerializer));
         BsonSerializer.RegisterSerializer(new EmailValueObjectSerializer(stringBsonSerializer));
+        BsonSerializer.RegisterSerializer(new CoordinateValueObjectSerializer());
 
         MapEntityT.Map();
         MapUserEntity.Map();
         MapEmailEntity.Map();
         MapRideEntity.Map();
         MapPositionEntity.Map();
+
+        // BsonClassMap.RegisterClassMap<CoordinateValueObject>(cm =>
+        // {
+        //     cm.MapMember(conf => conf.Latitude)
+        //         .SetIsRequired(true);
+        //
+        //     cm.MapMember(conf => conf.Longitude)
+        //         .SetIsRequired(true);
+        //
+        //     cm.MapCreator(c => new CoordinateValueObject(c.Latitude, c.Longitude));
+        // });
 
         services.AddMongDb(conf =>
         {

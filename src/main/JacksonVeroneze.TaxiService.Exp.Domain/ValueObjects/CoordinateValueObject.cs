@@ -6,16 +6,16 @@ namespace JacksonVeroneze.TaxiService.Exp.Domain.ValueObjects;
 
 public class CoordinateValueObject : ValueObject
 {
-    public float Latitude { get; private set; }
+    public double Latitude { get; private set; }
 
-    public float Longitude { get; private set; }
+    public double Longitude { get; private set; }
 
-    protected CoordinateValueObject()
+    public CoordinateValueObject()
     {
     }
 
     public CoordinateValueObject(
-        float latitude, float longitude)
+        double latitude, double longitude)
     {
         Latitude = latitude;
         Longitude = longitude;
@@ -24,7 +24,7 @@ public class CoordinateValueObject : ValueObject
     public static implicit operator string?(CoordinateValueObject? value)
         => value?.ToString();
 
-    private static bool IsValid(float latitude, float longitude)
+    private static bool IsValid(double latitude, double longitude)
     {
         return latitude is >= -90 and <= 90 &&
                longitude is >= -100 and <= 100;
@@ -36,7 +36,7 @@ public class CoordinateValueObject : ValueObject
     }
 
     public static Result<CoordinateValueObject> Create(
-        float latitude, float longitude)
+        double latitude, double longitude)
     {
         if (!IsValid(latitude, longitude))
         {

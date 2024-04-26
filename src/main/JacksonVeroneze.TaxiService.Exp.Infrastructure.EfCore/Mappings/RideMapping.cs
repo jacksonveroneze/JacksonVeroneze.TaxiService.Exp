@@ -31,22 +31,22 @@ public class RideMapping : IEntityTypeConfiguration<RideEntity>
 
         builder.ComplexProperty(conf => conf.CoordinateFrom, conf =>
         {
-            conf.Property(prop => prop.Latitude)
+            conf.Property(prop => prop!.Latitude)
                 .HasColumnName("from_latitude")
                 .IsRequired();
 
-            conf.Property(prop => prop.Longitude)
+            conf.Property(prop => prop!.Longitude)
                 .HasColumnName("from_longitude")
                 .IsRequired();
         });
 
         builder.ComplexProperty(conf => conf.CoordinateTo, conf =>
         {
-            conf.Property(prop => prop.Latitude)
+            conf.Property(prop => prop!.Latitude)
                 .HasColumnName("to_latitude")
                 .IsRequired();
 
-            conf.Property(prop => prop.Longitude)
+            conf.Property(prop => prop!.Longitude)
                 .HasColumnName("to_longitude")
                 .IsRequired();
         });

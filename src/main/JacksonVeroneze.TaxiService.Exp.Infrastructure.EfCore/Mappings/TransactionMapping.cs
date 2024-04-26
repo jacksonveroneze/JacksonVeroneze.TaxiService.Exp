@@ -23,7 +23,7 @@ public class TransactionMapping : IEntityTypeConfiguration<TransactionEntity>
 
         builder.ComplexProperty(conf => conf.Ammount, conf =>
         {
-            conf.Property(prop => prop.Value)
+            conf.Property(prop => prop!.Value)
                 .IsRequired();
         });
 

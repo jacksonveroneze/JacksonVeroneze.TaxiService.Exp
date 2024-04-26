@@ -53,7 +53,7 @@ public class EmailReadRepository : IEmailReadRepository
             spec, cancellationToken);
     }
 
-    public Task<Page<EmailEntity>> GetPagedAsync(
+    public async Task<Page<EmailEntity>> GetPagedAsync(
         EmailPagedFilter filter,
         CancellationToken cancellationToken = default)
     {
@@ -61,7 +61,7 @@ public class EmailReadRepository : IEmailReadRepository
 
         EmailByUserIdSpecification specByUserId = new(filter.UserId);
 
-        return _mongoDbRepository.GetPagedAsync(filter.Pagination!,
+        return await _mongoDbRepository.GetPagedAsync(filter.Pagination!,
             specByUserId, cancellationToken);
     }
 }

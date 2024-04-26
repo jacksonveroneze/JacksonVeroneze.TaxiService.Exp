@@ -10,15 +10,15 @@ namespace JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 
 public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
 {
-    public new Guid Id { get; set; } = Guid.NewGuid();
+    public new Guid Id { get; private set; }
 
-    public NameValueObject Name { get; private set; } = null!;
+    public NameValueObject? Name { get; private set; }
 
     public DateOnly Birthday { get; private set; }
 
     public GenderType Gender { get; private set; }
 
-    public CpfValueObject Cpf { get; private set; } = null!;
+    public CpfValueObject? Cpf { get; private set; }
 
     public UserStatus Status { get; private set; }
 
@@ -41,6 +41,7 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
         ArgumentNullException.ThrowIfNull(gender);
         ArgumentNullException.ThrowIfNull(cpf);
 
+        Id = Guid.NewGuid();
         Name = name;
         Birthday = birthday;
         Gender = gender;

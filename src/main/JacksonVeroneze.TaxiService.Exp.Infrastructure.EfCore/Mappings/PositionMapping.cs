@@ -23,11 +23,11 @@ public class PositionMapping : IEntityTypeConfiguration<PositionEntity>
 
         builder.ComplexProperty(conf => conf.Position, conf =>
         {
-            conf.Property(prop => prop.Latitude)
+            conf.Property(prop => prop!.Latitude)
                 .HasColumnName("from_latitude")
                 .IsRequired();
 
-            conf.Property(prop => prop.Longitude)
+            conf.Property(prop => prop!.Longitude)
                 .HasColumnName("from_longitude")
                 .IsRequired();
         });
