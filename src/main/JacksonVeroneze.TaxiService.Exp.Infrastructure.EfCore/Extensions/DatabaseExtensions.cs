@@ -2,8 +2,10 @@ using JacksonVeroneze.TaxiService.Exp.Infrastructure.Configurations;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using ApplicationDbContext = JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Contexts.ApplicationDbContext;
-using ReadApplicationDbContext = JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Contexts.ReadApplicationDbContext;
+using ApplicationDbContext =
+    JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Contexts.ApplicationDbContext;
+using ReadApplicationDbContext =
+    JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Contexts.ReadApplicationDbContext;
 
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Extensions;
 

@@ -14,7 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\JacksonVeroneze.TaxiService.Exp.Application\JacksonVeroneze.TaxiService.Exp.Application.csproj"/>
     <ProjectReference Include="..\JacksonVeroneze.TaxiService.Exp.Domain\JacksonVeroneze.TaxiService.Exp.Domain.csproj"/>
-    <ProjectReference Include="..\JacksonVeroneze.TaxiService.Exp.Infrastructure\JacksonVeroneze.TaxiService.Exp.Infrastructure.csproj" />
+    <ProjectReference Include="..\JacksonVeroneze.TaxiService.Exp.Infrastructure\JacksonVeroneze.TaxiService.Exp.Infrastructure.csproj"/>
   </ItemGroup>
 
 </Project>

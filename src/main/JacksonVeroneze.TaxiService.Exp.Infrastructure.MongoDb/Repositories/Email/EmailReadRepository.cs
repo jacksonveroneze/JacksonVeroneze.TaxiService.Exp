@@ -31,7 +31,8 @@ public class EmailReadRepository : IEmailReadRepository
 
         //EmailByValueSpecification specName = new(email);
 
-        FilterDefinition<EmailEntity>? filtro = Builders<EmailEntity>.Filter.Where(p => p.Email == email);
+        FilterDefinition<EmailEntity>? filtro =
+            Builders<EmailEntity>.Filter.Where(p => p.Email == email);
 
         Expression<Func<EmailEntity, bool>> filtroExpression = p => filtro.Inject();
 

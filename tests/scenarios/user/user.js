@@ -2,7 +2,7 @@ import http from 'k6/http';
 import {check} from 'k6';
 import {checker} from '../util.js';
 
-import {randomIntBetween, randomItem, randomString, } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
+import {randomIntBetween, randomItem, randomString,} from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 export function createUser(baseUrl, headers) {
     const genders = ['Male', 'Female'];

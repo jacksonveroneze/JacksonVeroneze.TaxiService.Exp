@@ -8,10 +8,10 @@
   <ItemGroup>
     <ProjectReference Include="..\JacksonVeroneze.TaxiService.Exp.Application\JacksonVeroneze.TaxiService.Exp.Application.csproj"/>
     <ProjectReference Include="..\JacksonVeroneze.TaxiService.Exp.Domain\JacksonVeroneze.TaxiService.Exp.Domain.csproj"/>
-    <ProjectReference Include="..\JacksonVeroneze.TaxiService.Exp.Infrastructure\JacksonVeroneze.TaxiService.Exp.Infrastructure.csproj" />
+    <ProjectReference Include="..\JacksonVeroneze.TaxiService.Exp.Infrastructure\JacksonVeroneze.TaxiService.Exp.Infrastructure.csproj"/>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JacksonVeroneze.NET.MongoDB" Version="1.1.2" />
+    <PackageReference Include="JacksonVeroneze.NET.MongoDB" Version="1.1.2"/>
   </ItemGroup>
 </Project>
