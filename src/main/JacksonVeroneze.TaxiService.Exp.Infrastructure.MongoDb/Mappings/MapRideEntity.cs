@@ -10,16 +10,12 @@ public static class MapRideEntity
         BsonClassMap.RegisterClassMap<RideEntity>(cm =>
         {
             cm.MapIdMember(conf => conf.Id)
-                //.SetSerializer(new GuidSerializer(BsonType.String))
-                //.SetIdGenerator(NullIdChecker.Instance)
                 .SetIsRequired(true);
 
             cm.MapMember(conf => conf.UserId)
-                //.SetSerializer(new GuidSerializer())
                 .SetIsRequired(true);
 
             cm.MapMember(conf => conf.DriverId)
-                //.SetSerializer(new GuidSerializer())
                 .SetIsRequired(false);
 
             cm.MapMember(conf => conf.Fare)

@@ -14,30 +14,19 @@ public static class MapEntityT
 
         BsonClassMap.RegisterClassMap<Entity<Guid>>(cm =>
         {
-            // cm.MapIdMember(conf => conf.Id)
-            //     .SetSerializer(new GuidSerializer(BsonType.String))
-            //     .SetIdGenerator(NullIdChecker.Instance)
-            //     .SetIsRequired(true)
-            //     .SetOrder(1);
-
             cm.MapMember(conf => conf.CreatedAt)
                 .SetSerializer(new DateTimeSerializer())
-                .SetIsRequired(true)
-                .SetOrder(2);
+                .SetIsRequired(true);
 
             cm.MapMember(conf => conf.UpdatedAt)
-                .SetSerializer(nullableDateTimeSerializer)
-                .SetOrder(3);
+                .SetSerializer(nullableDateTimeSerializer);
 
             cm.MapMember(conf => conf.DeletedAt)
                 .SetSerializer(nullableDateTimeSerializer)
-                .SetIsRequired(false)
-                .SetOrder(4);
+                .SetIsRequired(false);
 
             cm.MapMember(conf => conf.Version)
-                .SetSerializer(new Int32Serializer())
-                .SetIsRequired(true)
-                .SetOrder(5);
+                .SetIsRequired(true);
 
             cm.SetIgnoreExtraElements(true);
         });
