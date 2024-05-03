@@ -12,7 +12,7 @@ public static class MapEntityT
             new NullableSerializer<DateTime>()
                 .WithSerializer(new DateTimeSerializer());
 
-        BsonClassMap.RegisterClassMap<Entity<Guid>>(cm =>
+        BsonClassMap.RegisterClassMap<Entity>(cm =>
         {
             cm.MapMember(conf => conf.CreatedAt)
                 .SetSerializer(new DateTimeSerializer())

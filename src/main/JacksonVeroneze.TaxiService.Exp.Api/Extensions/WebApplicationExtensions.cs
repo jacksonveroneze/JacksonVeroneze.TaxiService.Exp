@@ -14,8 +14,6 @@ public static class WebApplicationExtensions
     {
         ArgumentNullException.ThrowIfNull(app);
 
-        app.UseExceptionHandler();
-
         app.Lifetime.ApplicationStarted.Register(() =>
             Log.Information("ApplicationStarted"));
 
@@ -31,11 +29,14 @@ public static class WebApplicationExtensions
                 .AddSwagger();
         }
 
-        app.UseOpenTelemetryPrometheusScrapingEndpoint("/metrics-open");
-        app.UseHttpMetrics();
         app.UseCorrelationId();
-
+        app.UseRouting();
+        app.UseHttpMetrics();
         app.MapMetrics();
+        app.UseExceptionHandler();
+
+        app.UseOpenTelemetryPrometheusScrapingEndpoint("/metrics-open");
+
         app.UseHealthChecks("/health");
 
         app.AddUserEndpoints();

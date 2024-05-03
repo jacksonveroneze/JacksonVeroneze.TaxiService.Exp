@@ -87,6 +87,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TaxiService
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore", "main\JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore\JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.csproj", "{3D156DDB-924F-4AE3-B41D-D30A8B0B67E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.NET.DomainObjects", "..\..\JacksonVeroneze.NET.DomainObjects\src\JacksonVeroneze.NET.DomainObjects\JacksonVeroneze.NET.DomainObjects.csproj", "{BD4C066B-A81E-4EA5-8FE1-9A7C7826E347}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -120,6 +122,10 @@ Global
 		{3D156DDB-924F-4AE3-B41D-D30A8B0B67E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D156DDB-924F-4AE3-B41D-D30A8B0B67E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D156DDB-924F-4AE3-B41D-D30A8B0B67E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD4C066B-A81E-4EA5-8FE1-9A7C7826E347}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD4C066B-A81E-4EA5-8FE1-9A7C7826E347}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD4C066B-A81E-4EA5-8FE1-9A7C7826E347}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD4C066B-A81E-4EA5-8FE1-9A7C7826E347}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2E06D1F1-951E-43B4-9706-4A931EB38244} = {2FB36637-D019-47A7-8E00-B11FB572D0D8}
@@ -140,5 +146,6 @@ Global
 		{7E75DDC3-1A7D-4806-9DA6-B6BC687D9A51} = {46125835-ECA6-499D-9012-763C19E6BD34}
 		{18BC92CA-FC03-403A-867F-70C679F89A4A} = {46ECF193-2850-4E43-AA58-FAB42F9B9F1A}
 		{3D156DDB-924F-4AE3-B41D-D30A8B0B67E8} = {46ECF193-2850-4E43-AA58-FAB42F9B9F1A}
+		{BD4C066B-A81E-4EA5-8FE1-9A7C7826E347} = {B441BFF7-2F22-4EC1-BB3C-1D7BCE4AAF7B}
 	EndGlobalSection
 EndGlobal

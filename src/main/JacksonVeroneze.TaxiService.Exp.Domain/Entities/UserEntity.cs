@@ -10,7 +10,7 @@ namespace JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 
 public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
 {
-    public new Guid Id { get; private set; }
+    public Guid Id { get; private set; }
 
     public NameValueObject? Name { get; private set; }
 
@@ -98,6 +98,7 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
 
     #region Factory
 
+    // Factory Method
     public static Result<UserEntity> Create(string? name,
         DateOnly birthday, GenderType genderType, string? cpf)
     {

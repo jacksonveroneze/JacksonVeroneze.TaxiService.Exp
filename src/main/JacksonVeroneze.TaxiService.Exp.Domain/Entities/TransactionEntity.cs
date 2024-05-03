@@ -1,3 +1,4 @@
+using System.Text;
 using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TaxiService.Exp.Domain.Core.Errors;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities.Base;
@@ -8,7 +9,7 @@ namespace JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 
 public class TransactionEntity : BaseEntityAggregateRoot
 {
-    public new Guid Id { get; private set; }
+    public Guid Id { get; private set; }
 
     public Guid RideId { get; private set; }
 
@@ -72,6 +73,9 @@ public class TransactionEntity : BaseEntityAggregateRoot
     public static Result<TransactionEntity> Create(
         Guid rideId, decimal ammount)
     {
+        StringBuilder builder = new();
+        builder.Append("aa");
+
         Result<MoneyValueObject> moneyVo = MoneyValueObject
             .Create(ammount);
 

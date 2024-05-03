@@ -6,7 +6,7 @@ namespace JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 
 public class EmailEntity : BaseEntityAggregateRoot
 {
-    public new Guid Id { get; private set; }
+    public Guid Id { get; private set; }
 
     public EmailValueObject? Email { get; private set; }
 

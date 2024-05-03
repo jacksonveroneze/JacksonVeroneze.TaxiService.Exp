@@ -21,8 +21,9 @@ public sealed class CreateUserCommandHandler(
         CreateUserCommand request,
         CancellationToken cancellationToken)
     {
-        ArgumentNullException.ThrowIfNull(request);
+        int? a = null;
 
+        ArgumentNullException.ThrowIfNull(a);
         bool existsUser = await emailReadRepository
             .ExistsAsync(request.Email!, cancellationToken);
 
