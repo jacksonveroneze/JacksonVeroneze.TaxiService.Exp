@@ -28,13 +28,11 @@ public static class WebApplicationExtensions
             app.UseBlockingDetection()
                 .AddSwagger();
         }
-
         app.UseCorrelationId();
         app.UseRouting();
         app.UseHttpMetrics();
         app.MapMetrics();
         app.UseExceptionHandler();
-
         app.UseOpenTelemetryPrometheusScrapingEndpoint("/metrics-open");
 
         app.UseHealthChecks("/health");

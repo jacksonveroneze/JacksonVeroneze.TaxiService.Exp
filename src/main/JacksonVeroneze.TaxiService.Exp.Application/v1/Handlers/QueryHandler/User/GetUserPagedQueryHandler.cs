@@ -17,9 +17,7 @@ public sealed class GetUserPagedQueryHandler(
         GetUserPagedQuery request,
         CancellationToken cancellationToken)
     {
-        int? a = null;
-
-        ArgumentNullException.ThrowIfNull(a);
+        ArgumentNullException.ThrowIfNull(request);
 
         UserPagedFilter filter = mapper
             .Map<UserPagedFilter>(request);

@@ -16,7 +16,7 @@ export let optionsRamp = {
 };
 
 export const optionsIterations = {
-    iterations: 100,
+    iterations: 10,
     vus: 10
 };
 

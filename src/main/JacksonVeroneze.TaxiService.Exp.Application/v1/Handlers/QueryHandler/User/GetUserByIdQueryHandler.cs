@@ -18,9 +18,8 @@ public sealed class GetUserByIdQueryHandler(
         GetUserByIdQuery request,
         CancellationToken cancellationToken)
     {
-        int? a = null;
+        ArgumentNullException.ThrowIfNull(request);
 
-        ArgumentNullException.ThrowIfNull(a);
         UserEntity? entity = await userReadRepository
             .GetByIdAsync(request.Id, cancellationToken);
 
