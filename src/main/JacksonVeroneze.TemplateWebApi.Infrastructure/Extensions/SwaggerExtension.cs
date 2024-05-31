@@ -21,7 +21,6 @@ public static class SwaggerExtension
             conf.ContactName = appConfiguration.Swagger!.ContactName;
             conf.ContactEmail = appConfiguration.Swagger.ContactEmail;
             conf.UseAuthentication = true;
-            conf.ApiVersion = appConfiguration.AppVersion;
         });
 
         return services;

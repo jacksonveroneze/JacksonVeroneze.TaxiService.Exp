@@ -1,23 +1,40 @@
-using JacksonVeroneze.NET.Logging.Extensions;
-using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
-using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Serilog;
+using Serilog.Enrichers.Span;
+using Serilog.Exceptions;
 
 namespace JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class LoggingExtension
 {
-    public static IHostBuilder AddLogger(this IHostBuilder host,
-        AppConfiguration appConfiguration)
+    public static WebApplicationBuilder AddLogger(
+        this WebApplicationBuilder builder,
+        IConfiguration conf)
     {
-        ArgumentNullException.ThrowIfNull(appConfiguration);
-
-        host.AddLogging(conf =>
+        builder.Host.UseSerilog((hostingContext,
+            services, loggerConfiguration) =>
         {
-            conf.ApplicationName = appConfiguration.Application!.Name;
-            conf.ApplicationVersion = appConfiguration.Application!.Version!.ToString();
+            loggerConfiguration
+                .ReadFrom.Configuration(hostingContext.Configuration)
+                .ReadFrom.Services(services)
+                .ConfigureEnrich();
         });
 
-        return host;
+        return builder;
+    }
+
+    private static void ConfigureEnrich(
+        this LoggerConfiguration loggerConfiguration)
+    {
+        loggerConfiguration
+            .Enrich.FromLogContext()
+            .Enrich.WithMachineName()
+            .Enrich.WithExceptionDetails()
+            .Enrich.WithEnvironmentName()
+            .Enrich.WithEnvironmentUserName()
+            .Enrich.WithCorrelationIdHeader()
+            .Enrich.WithSpan();
     }
 }

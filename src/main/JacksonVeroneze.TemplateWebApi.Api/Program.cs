@@ -1,66 +1,41 @@
-using JacksonVeroneze.NET.Logging.Util;
 using JacksonVeroneze.TemplateWebApi.Api.Extensions;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Extensions;
 using Serilog;
 
-Log.Logger = BootstrapLogger.CreateLogger();
+Log.Information("Starting application");
 
-IDisposable? dotNetRuntimeStats = null;
+WebApplicationBuilder builder =
+    WebApplication.CreateBuilder(args);
 
-try
-{
-    Log.Information("Starting application");
+builder.Host.ConfigureHostOptions(options =>
+    options.ShutdownTimeout = TimeSpan.FromSeconds(5));
 
-    WebApplicationBuilder builder =
-        WebApplication.CreateBuilder(args);
+// Add custom envs
+builder.Configuration
+    .AddEnvironmentVariables("APP_CONFIG_");
 
-    builder.Host.ConfigureHostOptions(options =>
-        options.ShutdownTimeout = TimeSpan.FromSeconds(5));
+// AppConfiguration
+AppConfiguration appConfiguration =
+    builder.Services.AddAppConfigs(builder.Configuration);
 
-    // Add custom envs
-    builder.Configuration
-        .AddEnvironmentVariables("APP_CONFIG_");
+// ConfigureLogger
+builder.AddLogger(builder.Configuration);
 
-    // AppConfiguration
-    AppConfiguration appConfiguration =
-        builder.Services.AddAppConfigs(builder.Configuration);
+// ConfigureServices
+builder.ConfigureServices(appConfiguration);
 
-    // Metrics
-    dotNetRuntimeStats = MetricsExtension
-        .AddMetrics(appConfiguration);
+WebApplication app = builder.Build();
 
-    // ConfigureLogger
-    builder.Host.AddLogger(appConfiguration);
+app.Lifetime.ApplicationStarted.Register(() =>
+    Log.Information("ApplicationStarted"));
 
-    // ConfigureServices
-    builder.ConfigureServices(appConfiguration);
+app.Lifetime.ApplicationStopping.Register(() =>
+    Log.Information("ApplicationStopping"));
 
-    WebApplication app = builder.Build();
+app.Lifetime.ApplicationStopped.Register(() =>
+    Log.Information("ApplicationStopped"));
 
-    app.Lifetime.ApplicationStarted.Register(() =>
-        Log.Information("ApplicationStarted"));
+app.Configure();
 
-    app.Lifetime.ApplicationStopping.Register(() =>
-        Log.Information("ApplicationStopping"));
-
-    app.Lifetime.ApplicationStopped.Register(() =>
-        Log.Information("ApplicationStopped"));
-
-    app.Configure();
-
-    app.Run();
-}
-catch (Exception ex)
-{
-    Log.Fatal(ex, "Host terminated unexpectedly");
-
-    throw;
-}
-finally
-{
-    Log.Information("Server Shutting down");
-    Log.CloseAndFlush();
-
-    dotNetRuntimeStats?.Dispose();
-}
+app.Run();

@@ -9,8 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace JacksonVeroneze.TemplateWebApi.Api.Controllers.v1;
 
 [ApiController]
-[ApiVersion("1.0", Deprecated = true)]
-[Route("/api/v{version:apiVersion}/states")]
+[Route("/api/v1/states")]
 [Produces(MediaTypeNames.Application.Json)]
 public class StatesController : ControllerBase
 {

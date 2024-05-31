@@ -25,7 +25,7 @@ public class StateRepository : IStateRepository
         _ibgeApi = ibgeApi;
     }
 
-    public async Task<ICollection<StateEntity>> GetAllAsync(
+    public async Task<ICollection<StateEntity>?> GetAllAsync(
         CancellationToken cancellationToken = default)
     {
         try

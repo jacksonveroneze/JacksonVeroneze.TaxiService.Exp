@@ -43,7 +43,6 @@ public static class OpenTelemetryExtension
                         string[] ignoreRoutes = { "/metrics", "/health" };
 
                         options.RecordException = true;
-                        options.EnableGrpcAspNetCoreSupport = false;
                         options.Filter = ctx => Array.IndexOf(ignoreRoutes, ctx.Request.Path) != -1;
                     })
                     .AddHttpClientInstrumentation()

@@ -1,4 +1,3 @@
-using Ben.Diagnostics;
 using CorrelationId;
 using JacksonVeroneze.TemplateWebApi.Api.Middlewares;
 using JacksonVeroneze.TemplateWebApi.Infrastructure.Configurations;
@@ -23,8 +22,7 @@ public static class ApiConfigExtension
         {
             builder.Services
                 .AddEndpointsApiExplorer()
-                .AddSwagger(appConfiguration)
-                .AddMiniProfiler();
+                .AddSwagger(appConfiguration);
         }
 
         builder.Services
@@ -33,11 +31,11 @@ public static class ApiConfigExtension
             .AddCorrelation()
             .AddMediatr()
             .AddFluentValidation()
-            .AddAppVersioning()
             .AddAuthentication(appConfiguration)
             .AddAuthorization(appConfiguration)
             .AddOpenTelemetry(appConfiguration)
             .AddCached(appConfiguration)
+            .AddDistributedLock(appConfiguration)
             .AddHttpClients(appConfiguration)
             .AddCultureConfiguration()
             .AddRouting(options =>
@@ -53,12 +51,11 @@ public static class ApiConfigExtension
     public static WebApplication Configure(
         this WebApplication app)
     {
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseBlockingDetection();
-            app.UseMiniProfiler();
-            app.AddSwagger();
-        }
+        // if (app.Environment.IsDevelopment())
+        // {
+        //     //app.UseBlockingDetection();
+        //     //app.UseMiniProfiler();
+        // }
 
         app.UseHttpMetrics()
             .UseCorrelationId()
