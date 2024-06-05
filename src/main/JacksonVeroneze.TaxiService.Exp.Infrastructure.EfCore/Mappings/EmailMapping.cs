@@ -23,10 +23,9 @@ public class EmailMapping : IEntityTypeConfiguration<EmailEntity>
 
         builder.ComplexProperty(conf => conf.Email, conf =>
         {
-            conf.Property(prop => prop!.Value)
+            conf.Property(prop => prop.Value)
                 .HasColumnName("value")
-                .HasMaxLength(100)
-                .IsRequired();
+                .HasMaxLength(100);
         });
 
         builder.ConfigureDefaultFiledsMapping();

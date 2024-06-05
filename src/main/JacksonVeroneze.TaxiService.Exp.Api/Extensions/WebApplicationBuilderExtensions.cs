@@ -71,7 +71,6 @@ public static class WebApplicationBuilderExtensions
         builder.Services
             .AddAppServices()
             .AddEfCoreServices()
-            .AddMongoDbServices()
             .AddCached(appConfiguration)
             .AddDatabaseEfCore(appConfiguration)
             .AddDatabaseMongoDb()

@@ -6,7 +6,6 @@ using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 using JacksonVeroneze.TaxiService.Exp.Domain.Filters;
 using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Email;
 using MongoDB.Driver;
-using MongoDB.Driver.Linq;
 
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.MongoDb.Repositories.Email;
 
@@ -32,9 +31,9 @@ public class EmailReadRepository : IEmailReadRepository
         //EmailByValueSpecification specName = new(email);
 
         FilterDefinition<EmailEntity>? filtro =
-            Builders<EmailEntity>.Filter.Where(p => p.Email == email);
+            Builders<EmailEntity>.Filter.Where(p => p.Email! == email);
 
-        Expression<Func<EmailEntity, bool>> filtroExpression = p => filtro.Inject();
+        Expression<Func<EmailEntity, bool>> filtroExpression = p => p.Email == email;
 
         bool exists = await _mongoDbRepository
             .AnyAsync(filtroExpression, cancellationToken);

@@ -19,9 +19,9 @@ public class RideEntity : BaseEntityAggregateRoot
 
     public double? Distance { get; private set; }
 
-    public CoordinateValueObject? CoordinateFrom { get; private set; }
+    public CoordinateValueObject CoordinateFrom { get; private set; } = null!;
 
-    public CoordinateValueObject? CoordinateTo { get; private set; }
+    public CoordinateValueObject CoordinateTo { get; private set; } = null!;
 
     public RideStatus Status { get; private set; }
 

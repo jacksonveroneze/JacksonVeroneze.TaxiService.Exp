@@ -1,9 +1,13 @@
+using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Email;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Position;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Ride;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Transaction;
+using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
+using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Email;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Position;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Ride;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Transaction;
+using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.User;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Extensions;
@@ -17,18 +21,16 @@ public static class AppServicesExtensions
         #region User
 
         // Repositories
-        //services.AddScoped<IUserReadRepository, UserReadRepository>();
-        //services.AddScoped<IUserWriteRepository, UserWriteRepository>();
-
-        //services.AddScoped<IUserReadDistribCachedRepository, UserReadDistribCachedRepository>();
+        services.AddScoped<IUserReadRepository, UserReadRepository>();
+        services.AddScoped<IUserWriteRepository, UserWriteRepository>();
 
         #endregion
 
         #region Email
 
         // Repositories
-        // services.AddScoped<IEmailReadRepository, EmailReadRepository>();
-        // services.AddScoped<IEmailWriteRepository, EmailWriteRepository>();
+        services.AddScoped<IEmailReadRepository, EmailReadRepository>();
+        services.AddScoped<IEmailWriteRepository, EmailWriteRepository>();
 
         #endregion
 

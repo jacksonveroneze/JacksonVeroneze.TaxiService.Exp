@@ -10,7 +10,7 @@ public class PositionEntity : BaseEntityAggregateRoot
 
     public Guid RideId { get; private set; }
 
-    public CoordinateValueObject? Position { get; private set; }
+    public CoordinateValueObject Position { get; private set; } = null!;
 
     #region ctor
 

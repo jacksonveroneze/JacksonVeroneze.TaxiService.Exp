@@ -4,8 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ApplicationDbContext =
     JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Contexts.ApplicationDbContext;
-using ReadApplicationDbContext =
-    JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Contexts.ReadApplicationDbContext;
 
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Extensions;
 
@@ -18,11 +16,7 @@ public static class DatabaseExtensions
     {
         services.AddScoped<IUnitOfWork, EfCoreUnitOfWork>();
 
-        services.AddDbContext<ReadApplicationDbContext>((_, options) =>
-            options.UseNpgsql(appConfiguration.Database!.ReadConnectionString)
-                .ConfigureOptionsDatabase(appConfiguration));
-
-        services.AddDbContext<ApplicationDbContext>((_, options) =>
+        services.AddDbContextPool<ApplicationDbContext>((_, options) =>
             options.UseNpgsql(appConfiguration.Database!.WriteConnectionString)
                 .ConfigureOptionsDatabase(appConfiguration));
 
@@ -33,8 +27,9 @@ public static class DatabaseExtensions
         this DbContextOptionsBuilder optionsBuilder,
         AppConfiguration appConfiguration)
     {
-        optionsBuilder.UseLazyLoadingProxies()
+        optionsBuilder
             .EnableDetailedErrors(false)
+            .EnableThreadSafetyChecks(false)
             .EnableSensitiveDataLogging(appConfiguration.IsDevelopment)
             .UseSnakeCaseNamingConvention();
     }

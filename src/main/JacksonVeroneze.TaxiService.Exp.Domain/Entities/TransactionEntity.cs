@@ -13,7 +13,7 @@ public class TransactionEntity : BaseEntityAggregateRoot
 
     public Guid RideId { get; private set; }
 
-    public MoneyValueObject? Ammount { get; private set; }
+    public MoneyValueObject Ammount { get; private set; } = null!;
 
     public DateTime Date { get; private set; }
 

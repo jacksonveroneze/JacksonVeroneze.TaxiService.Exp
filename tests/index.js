@@ -16,20 +16,20 @@ export let optionsRamp = {
 };
 
 export const optionsIterations = {
-    iterations: 10,
-    vus: 10
+    iterations: 50,
+    vus: 1
 };
 
 export const optionsDuration = {
-    duration: '7200s',
-    vus: 5
+    duration: '20s',
+    vus: 30
 };
 
-export const options = optionsIterations;
+export const options = optionsDuration;
 
 const baseUrl = 'http://localhost:7000/api/v1';
 // const baseUrl = 'http://localhost:8080';
-// const baseUrl = 'http://localhost:8085';
+// const baseUrl = 'http://localhost:8085/api/v1';
 
 export default () => {
     let headers = {
@@ -44,11 +44,11 @@ export default () => {
         user(baseUrl, headers);
     });
 
-    group('Endpoint Mail', () => {
-        mail(baseUrl, headers);
-    });
-
-    group('Endpoint Ride', () => {
-        ride(baseUrl, headers);
-    });
+    // group('Endpoint Mail', () => {
+    //     mail(baseUrl, headers);
+    // });
+    //
+    // group('Endpoint Ride', () => {
+    //     ride(baseUrl, headers);
+    // });
 }

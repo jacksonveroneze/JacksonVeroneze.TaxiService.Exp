@@ -1,14 +1,12 @@
 using JacksonVeroneze.NET.DomainObjects.Messaging;
-using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.Tenant;
-using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
+using JacksonVeroneze.TaxiService.Exp.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Contexts;
 
 [ExcludeFromCodeCoverage]
 public class ReadApplicationDbContext(
-    DbContextOptions<ReadApplicationDbContext> options,
-    ITenantService tenantService)
+    DbContextOptions<ReadApplicationDbContext> options)
     : DbContext(options)
 {
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -17,18 +15,10 @@ public class ReadApplicationDbContext(
             typeof(ReadApplicationDbContext).Assembly);
 
         modelBuilder.Ignore<Event>();
+        modelBuilder.Ignore<DomainEvent>();
+        modelBuilder.Ignore<EmailValueObject>();
 
         modelBuilder.HasDefaultSchema("public");
-
-        modelBuilder
-            .Entity<UserEntity>()
-            .HasQueryFilter(filter => filter.TenantId ==
-                tenantService.GetTenantId() && filter.DeletedAt == null);
-
-        modelBuilder
-            .Entity<EmailEntity>()
-            .HasQueryFilter(filter => filter.TenantId ==
-                tenantService.GetTenantId() && filter.DeletedAt == null);
     }
 
     public override int SaveChanges()

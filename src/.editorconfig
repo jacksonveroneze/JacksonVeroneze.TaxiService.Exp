@@ -516,7 +516,7 @@ dotnet_diagnostic.IDE0020.severity = error
 dotnet_diagnostic.IDE0038.severity = error
 
 # IDE0059: Unnecessary assignment to a value
-dotnet_diagnostic.IDE0059.severity = error
+dotnet_diagnostic.IDE0059.severity = none
 
 # IDE0062: Make local function static
 dotnet_diagnostic.IDE0062.severity = error

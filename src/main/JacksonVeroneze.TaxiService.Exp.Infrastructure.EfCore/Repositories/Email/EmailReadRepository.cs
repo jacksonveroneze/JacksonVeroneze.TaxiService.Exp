@@ -28,9 +28,8 @@ public class EmailReadRepository :
     public async Task<bool> ExistsAsync(string email,
         CancellationToken cancellationToken = default)
     {
-        EmailByValueSpecification specName = new(email);
-
-        bool exists = await _dbSet.AnyAsync(specName,
+        bool exists = await _dbSet.AnyAsync(conf =>
+                EF.Functions.ILike(conf.Email.Value!, email),
             cancellationToken);
 
         return exists;

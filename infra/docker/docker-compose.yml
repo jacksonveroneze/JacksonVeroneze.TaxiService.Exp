@@ -21,6 +21,7 @@ services:
       - APP_CONFIG_DistributedTracing__Jaeger__Port=6831
       - Serilog__WriteTo__0__Args__configure__1__Name=Seq
       - Serilog__WriteTo__0__Args__configure__1__Args__serverUrl=http://10.0.0.199:5341
+      - PYROSCOPE_SERVER_ADDRESS=http://pyroscope:4040
     healthcheck:
       test: curl --silent --fail http://localhost:8080/health?source=docker || exit 1
       interval: 10s
@@ -37,8 +38,31 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.50'
+          cpus: '1'
           memory: '256M'
         reservations:
-          cpus: '0.50'
+          cpus: '1'
           memory: '256M'
+          
+  pyroscope:
+    container_name: stock-app-pyroscope
+    image: pyroscope/pyroscope:latest
+    restart: always
+    tty: true
+    command:
+      - server
+    ports:
+      - "4040:4040"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: 2
+        max-size: 1m
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: '256M'
+        reservations:
+          cpus: '1'
+          memory: '256M'  

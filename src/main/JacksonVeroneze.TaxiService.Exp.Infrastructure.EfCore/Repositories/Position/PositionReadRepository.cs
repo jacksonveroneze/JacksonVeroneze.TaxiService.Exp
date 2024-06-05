@@ -1,6 +1,5 @@
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Position;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
-using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Position;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Contexts;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
@@ -27,11 +26,9 @@ public class PositionReadRepository :
         Guid rideId,
         CancellationToken cancellationToken = default)
     {
-        PositionByRideIdSpecification spec = new(rideId);
-
         return await _dbSet
             .AsNoTrackingWithIdentityResolution()
-            .Where(spec.ToExpression())
+            .Where(conf => conf.RideId == rideId)
             .ToListAsync(cancellationToken);
     }
 }

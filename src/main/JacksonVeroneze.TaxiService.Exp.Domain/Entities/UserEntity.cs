@@ -12,13 +12,13 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
 {
     public Guid Id { get; private set; }
 
-    public NameValueObject? Name { get; private set; }
+    public NameValueObject Name { get; private set; } = null!;
 
     public DateOnly Birthday { get; private set; }
 
     public GenderType Gender { get; private set; }
 
-    public CpfValueObject? Cpf { get; private set; }
+    public CpfValueObject Cpf { get; private set; } = null!;
 
     public UserStatus Status { get; private set; }
 

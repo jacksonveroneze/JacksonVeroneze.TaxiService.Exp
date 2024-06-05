@@ -8,7 +8,7 @@ public class EmailEntity : BaseEntityAggregateRoot
 {
     public Guid Id { get; private set; }
 
-    public EmailValueObject? Email { get; private set; }
+    public EmailValueObject Email { get; private set; } = null!;
 
     public Guid UserId { get; private set; }
 
