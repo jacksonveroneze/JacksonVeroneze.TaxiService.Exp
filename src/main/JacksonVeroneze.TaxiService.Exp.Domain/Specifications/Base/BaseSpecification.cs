@@ -6,7 +6,7 @@ namespace JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Base;
 [ExcludeFromCodeCoverage]
 public abstract class BaseSpecification<TEntity> where TEntity : class
 {
-    protected Expression<Func<TEntity, bool>> DefaultExpression => _ => true;
+    protected static Expression<Func<TEntity, bool>> DefaultExpression => _ => true;
 
     public abstract Expression<Func<TEntity, bool>> ToExpression();
 

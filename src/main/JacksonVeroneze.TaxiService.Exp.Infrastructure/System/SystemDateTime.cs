@@ -4,7 +4,7 @@ using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.System;
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.System;
 
 [ExcludeFromCodeCoverage]
-public class SystemDateTime : IDateTime
+internal sealed class SystemDateTime : IDateTime
 {
     private const string WindowsBrTimeZone
         = "E. South America Standard Time";

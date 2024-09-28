@@ -1,19 +1,21 @@
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities.Base;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Mappings;
+namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Mappings.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class DefaultFiledsMapping
+public static class EntityTypeBuilderExtensions
 {
-    public static void ConfigureDefaultFiledsMapping<TEntity>(
+    public static void ConfigureDefaultFieldsMapping<TEntity>(
         this EntityTypeBuilder<TEntity> builder)
         where TEntity : BaseEntityAggregateRoot
     {
         ArgumentNullException.ThrowIfNull(builder);
 
         builder.Property(c => c.CreatedAt)
-            .IsRequired();
+            .IsRequired()
+            .HasDefaultValueSql("NOW()");
 
         builder.Property(c => c.UpdatedAt);
 
@@ -23,6 +25,7 @@ public static class DefaultFiledsMapping
             .IsRequired();
 
         builder.Property(c => c.Version)
+            .HasDefaultValue(1)
             .IsConcurrencyToken()
             .IsRequired();
 

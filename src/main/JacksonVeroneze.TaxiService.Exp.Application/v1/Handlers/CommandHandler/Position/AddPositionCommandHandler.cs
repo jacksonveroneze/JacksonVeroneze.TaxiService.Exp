@@ -9,14 +9,14 @@ using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.CommandHandler.Position;
 
-public sealed class UpdatePositionCommandHandler(
-    ILogger<UpdatePositionCommandHandler> logger,
+public sealed class AddPositionCommandHandler(
+    ILogger<AddPositionCommandHandler> logger,
     IRideReadRepository rideReadRepository,
     IPositionWriteRepository positionWriteRepository)
-    : IRequestHandler<UpdatePositionCommand, Result<VoidResponse>>
+    : IRequestHandler<AddPositionCommand, Result<VoidResponse>>
 {
     public async Task<Result<VoidResponse>> Handle(
-        UpdatePositionCommand request,
+        AddPositionCommand request,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
@@ -34,7 +34,7 @@ public sealed class UpdatePositionCommandHandler(
         {
             Error error = DomainErrors.RideError.InvalidStatusAddPosition;
 
-            logger.LogGenericError(nameof(UpdatePositionCommandHandler),
+            logger.LogGenericError(nameof(AddPositionCommandHandler),
                 nameof(Handle), error.Message);
 
             return Result<VoidResponse>
@@ -47,7 +47,7 @@ public sealed class UpdatePositionCommandHandler(
         if (entity.IsFailure)
         {
             logger.LogGenericError(
-                nameof(UpdatePositionCommandHandler),
+                nameof(AddPositionCommandHandler),
                 nameof(Handle), entity.Error!);
 
             return Result<VoidResponse>
@@ -57,7 +57,7 @@ public sealed class UpdatePositionCommandHandler(
         await positionWriteRepository.CreateAsync(
             entity.Value!, cancellationToken);
 
-        logger.LogCreated(nameof(UpdatePositionCommandHandler),
+        logger.LogCreated(nameof(AddPositionCommandHandler),
             nameof(Handle), entity.Value!.Id);
 
         return Result<VoidResponse>.WithSuccess();

@@ -3,13 +3,6 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 
 ADD . /build
 
-#RUN dotnet restore /build/main/JacksonVeroneze.TaxiService.Exp.Api/JacksonVeroneze.TaxiService.Exp.Api.csproj
-#
-#RUN dotnet publish /build/main/JacksonVeroneze.TaxiService.Exp.Api/JacksonVeroneze.TaxiService.Exp.Api.csproj \
-#    --configuration Release \
-#    --output /build/out \
-#    --no-restore
-
 RUN dotnet restore /build/main/JacksonVeroneze.TaxiService.Exp.Api/JacksonVeroneze.TaxiService.Exp.Api.csproj \
     --runtime linux-x64 \
     /p:PublishReadyToRun=true
@@ -39,7 +32,7 @@ ENV LD_PRELOAD=/Pyroscope.Linux.ApiWrapper.x64.so
 ENV PYROSCOPE_APPLICATION_NAME=JacksonVeroneze.TaxiService.Exp.Api
 ENV PYROSCOPE_PROFILING_LOG_DIR=/home/app
 ENV PYROSCOPE_LOG_LEVEL=info
-ENV PYROSCOPE_PROFILING_ENABLED=1
+ENV PYROSCOPE_PROFILING_ENABLED=0
 ENV PYROSCOPE_PROFILING_ALLOCATION_ENABLED=true
 ENV PYROSCOPE_PROFILING_CONTENTION_ENABLED=true
 ENV PYROSCOPE_PROFILING_EXCEPTION_ENABLED=true

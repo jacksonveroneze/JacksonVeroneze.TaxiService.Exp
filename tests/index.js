@@ -16,13 +16,13 @@ export let optionsRamp = {
 };
 
 export const optionsIterations = {
-    iterations: 50,
+    iterations: 1000,
     vus: 1
 };
 
 export const optionsDuration = {
-    duration: '20s',
-    vus: 30
+    duration: '30s',
+    vus: 50
 };
 
 export const options = optionsDuration;
@@ -44,11 +44,11 @@ export default () => {
         user(baseUrl, headers);
     });
 
-    // group('Endpoint Mail', () => {
-    //     mail(baseUrl, headers);
-    // });
-    //
-    // group('Endpoint Ride', () => {
-    //     ride(baseUrl, headers);
-    // });
+    group('Endpoint Mail', () => {
+        mail(baseUrl, headers);
+    });
+
+    group('Endpoint Ride', () => {
+        ride(baseUrl, headers);
+    });
 }

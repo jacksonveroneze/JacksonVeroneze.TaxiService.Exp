@@ -1,25 +1,25 @@
 using System.Linq.Expressions;
+using JacksonVeroneze.NET.EntityFramework.Interfaces;
 using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 using JacksonVeroneze.TaxiService.Exp.Domain.Filters;
 using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Base.Predicate;
 using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.User;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Contexts;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Base;
-using Microsoft.Extensions.Logging;
 
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.User;
 
 [ExcludeFromCodeCoverage]
-public class UserReadRepository :
-    BaseReadRepository<UserEntity>, IUserReadRepository
+public class UserReadRepository(
+    IEfCoreRepository<UserEntity> service) : IUserReadRepository
 {
-    public UserReadRepository(
-        ILogger<UserReadRepository> logger,
-        ApplicationDbContext context) : base(logger, context)
+    public Task<UserEntity?> GetByIdAsync(
+        Guid id, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(context);
+        UserByIdSpecification specByUserId = new(id);
+
+        return service.GetByIdAsync(specByUserId.ToExpression(),
+            cancellationToken);
     }
 
     public Task<Page<UserEntity>> GetPagedAsync(
@@ -34,7 +34,8 @@ public class UserReadRepository :
         Expression<Func<UserEntity, bool>> spec =
             specByName.ToExpression().And(specByStatus);
 
-        return GetPagedAsync(spec, filter.Pagination!,
-            cancellationToken);
+        return service.GetPagedAsync(filter.Pagination!,
+            spec,
+            cancellationToken: cancellationToken);
     }
 }

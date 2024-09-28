@@ -1,4 +1,5 @@
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
+using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Mappings.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -13,8 +14,13 @@ public class PositionMapping : IEntityTypeConfiguration<PositionEntity>
 
         builder.ToTable("position");
 
+        // Keys
         builder.HasKey(c => c.Id);
 
+        // Indexes
+        builder.HasIndex(c => c.RideId);
+
+        // Properties
         builder.Property(c => c.Id)
             .ValueGeneratedNever();
 
@@ -32,6 +38,6 @@ public class PositionMapping : IEntityTypeConfiguration<PositionEntity>
                 .IsRequired();
         });
 
-        builder.ConfigureDefaultFiledsMapping();
+        builder.ConfigureDefaultFieldsMapping();
     }
 }

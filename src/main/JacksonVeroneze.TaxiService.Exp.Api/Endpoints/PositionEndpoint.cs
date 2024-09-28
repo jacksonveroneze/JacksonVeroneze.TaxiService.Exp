@@ -20,7 +20,7 @@ public static class PositionEndpoint
 
         builder.MapPost(string.Empty, async (
                 [FromServices] IMediator mediator,
-                [FromBody] UpdatePositionCommand command,
+                [FromBody] AddPositionCommand command,
                 CancellationToken cancellationToken) =>
             {
                 Result<VoidResponse> response = await mediator

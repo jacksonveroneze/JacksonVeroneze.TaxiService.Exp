@@ -1,4 +1,5 @@
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
+using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Mappings.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -13,8 +14,13 @@ public class TransactionMapping : IEntityTypeConfiguration<TransactionEntity>
 
         builder.ToTable("transaction");
 
+        // Keys
         builder.HasKey(c => c.Id);
 
+        // Indexes
+        builder.HasIndex(c => new { c.RideId, c.Status });
+
+        // Properties
         builder.Property(c => c.Id)
             .ValueGeneratedNever();
 
@@ -33,6 +39,6 @@ public class TransactionMapping : IEntityTypeConfiguration<TransactionEntity>
         builder.Property(c => c.Status)
             .IsRequired();
 
-        builder.ConfigureDefaultFiledsMapping();
+        builder.ConfigureDefaultFieldsMapping();
     }
 }

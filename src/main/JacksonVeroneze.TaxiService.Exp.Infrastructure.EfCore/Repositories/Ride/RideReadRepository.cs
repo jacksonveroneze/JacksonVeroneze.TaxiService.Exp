@@ -1,31 +1,18 @@
 using System.Linq.Expressions;
+using JacksonVeroneze.NET.EntityFramework.Interfaces;
 using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Ride;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 using JacksonVeroneze.TaxiService.Exp.Domain.Filters;
 using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Base.Predicate;
 using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Ride;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Contexts;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Base;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Ride;
 
 [ExcludeFromCodeCoverage]
-public class RideReadRepository :
-    BaseReadRepository<RideEntity>, IRideReadRepository
+public class RideReadRepository(
+    IEfCoreRepository<RideEntity> service) : IRideReadRepository
 {
-    private readonly DbSet<RideEntity> _dbSet;
-
-    public RideReadRepository(ILogger<RideReadRepository> logger,
-        ApplicationDbContext context) : base(logger, context)
-    {
-        ArgumentNullException.ThrowIfNull(context);
-
-        _dbSet = context.Set<RideEntity>();
-    }
-
     public async Task<bool> ExistsActiveByUserIdAsync(
         Guid userId,
         CancellationToken cancellationToken = default)
@@ -37,10 +24,20 @@ public class RideReadRepository :
             specByUserId.ToExpression()
                 .And(specActivePerUserRequested.ToExpression());
 
-        bool exists = await _dbSet.AnyAsync(spec,
+        bool exists = await service.AnyAsync(spec,
             cancellationToken);
 
         return exists;
+    }
+
+    public Task<RideEntity?> GetByIdAsync(
+        Guid id,
+        CancellationToken cancellationToken = default)
+    {
+        RideByIdSpecification specByUserId = new(id);
+
+        return service.GetByIdAsync(specByUserId.ToExpression(),
+            cancellationToken);
     }
 
     public Task<Page<RideEntity>> GetPagedAsync(
@@ -55,7 +52,7 @@ public class RideReadRepository :
         Expression<Func<RideEntity, bool>> spec =
             specByStatus.ToExpression().And(specByUserId);
 
-        return GetPagedAsync(spec, filter.Pagination!,
-            cancellationToken);
+        return service.GetPagedAsync(filter.Pagination!, spec,
+            cancellationToken: cancellationToken);
     }
 }

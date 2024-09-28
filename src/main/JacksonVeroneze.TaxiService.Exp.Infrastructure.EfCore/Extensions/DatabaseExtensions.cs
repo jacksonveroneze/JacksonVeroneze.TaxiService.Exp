@@ -1,5 +1,5 @@
+using JacksonVeroneze.NET.EntityFramework.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.Configurations;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ApplicationDbContext =
@@ -14,10 +14,15 @@ public static class DatabaseExtensions
         this IServiceCollection services,
         AppConfiguration appConfiguration)
     {
-        services.AddScoped<IUnitOfWork, EfCoreUnitOfWork>();
+        services.AddUnitOfWork()
+            .AddRepository();
 
-        services.AddDbContextPool<ApplicationDbContext>((_, options) =>
-            options.UseNpgsql(appConfiguration.Database!.WriteConnectionString)
+        services.AddDbContextPool<DbContext, ApplicationDbContext>((_, options) =>
+            options.UseNpgsql(appConfiguration.Database!.ReadConnectionString, conf =>
+                    conf.EnableRetryOnFailure()
+                        .CommandTimeout(15)
+                        .MaxBatchSize(15))
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
                 .ConfigureOptionsDatabase(appConfiguration));
 
         return services;
@@ -28,9 +33,9 @@ public static class DatabaseExtensions
         AppConfiguration appConfiguration)
     {
         optionsBuilder
-            .EnableDetailedErrors(false)
-            .EnableThreadSafetyChecks(false)
+            .EnableDetailedErrors(appConfiguration.IsDevelopment)
             .EnableSensitiveDataLogging(appConfiguration.IsDevelopment)
+            .EnableThreadSafetyChecks()
             .UseSnakeCaseNamingConvention();
     }
 }

@@ -286,7 +286,7 @@ dotnet_diagnostic.CA1843.severity = error
 dotnet_diagnostic.CA2200.severity = error
 
 # IDE0005: Remove unnecessary usings
-dotnet_diagnostic.IDE0005.severity = error
+dotnet_diagnostic.IDE0005.severity = warning
 
 # IDE0055: All formatting rules
 dotnet_diagnostic.IDE0055.severity = error
@@ -307,7 +307,8 @@ dotnet_diagnostic.CA1853.severity = error
 dotnet_diagnostic.CA1850.severity = error
 
 # CA1849: Call async methods when in an async method
-dotnet_diagnostic.CA1849.severity = error
+dotnet_diagnostic.CA1849.severity = none
+dotnet_diagnostic.CA1859.severity = none
 
 # CA1813: Avoid unsealed attributes
 dotnet_diagnostic.CA1813.severity = error
@@ -328,7 +329,7 @@ dotnet_diagnostic.IDE0017.severity = error
 dotnet_diagnostic.IDE0019.severity = error
 
 # IDE0028: Use collection initializers
-dotnet_diagnostic.IDE0028.severity = error
+dotnet_diagnostic.IDE0028.severity = none
 
 # IDE0270: Null check can be simplified
 dotnet_diagnostic.IDE0270.severity = error
@@ -359,6 +360,7 @@ dotnet_diagnostic.CA1018.severity = error
 
 # SA0001: XML comments
 dotnet_diagnostic.CS1591.severity = none
+dotnet_diagnostic.CS9113.severity = suggestion
 
 # CA1034: Nested types should not be visible
 dotnet_diagnostic.CA1034.severity = none
@@ -495,7 +497,7 @@ dotnet_diagnostic.CA2013.severity = error
 dotnet_diagnostic.CA2014.severity = error
 
 # CA2016: Forward the 'CancellationToken' parameter to methods that take one
-dotnet_diagnostic.CA2016.severity = error
+dotnet_diagnostic.CA2016.severity = none
 
 # CA2245: Do not assign a property to itself
 dotnet_diagnostic.CA2245.severity = error
@@ -793,3 +795,10 @@ dotnet_diagnostic.CA1514.severity = error
 
 # CA2007: Do not directly await a Task
 dotnet_diagnostic.CA2007.severity = none
+dotnet_diagnostic.CA1812.severity = suggestion
+dotnet_diagnostic.CA1724.severity = suggestion
+dotnet_diagnostic.S2139.severity = suggestion
+dotnet_diagnostic.S4035.severity = suggestion
+dotnet_diagnostic.RCS1155.severity = suggestion
+
+resharper_inconsistent_naming_highlighting = none

@@ -8,13 +8,6 @@ public static class SwaggerExtensions
     public static IApplicationBuilder AddSwagger(
         this IApplicationBuilder app)
     {
-        app.UseSwagger()
-            .UseSwaggerUI(conf =>
-            {
-                conf.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-                conf.RoutePrefix = string.Empty;
-            });
-
         return app;
     }
 }

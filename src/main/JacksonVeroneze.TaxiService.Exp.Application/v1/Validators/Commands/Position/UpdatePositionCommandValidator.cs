@@ -3,7 +3,7 @@ using JacksonVeroneze.TaxiService.Exp.Application.v1.Validators.Base;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Validators.Commands.Position;
 
-public class UpdatePositionCommandValidator : AbstractValidator<UpdatePositionCommand>
+public class UpdatePositionCommandValidator : AbstractValidator<AddPositionCommand>
 {
     public UpdatePositionCommandValidator()
     {

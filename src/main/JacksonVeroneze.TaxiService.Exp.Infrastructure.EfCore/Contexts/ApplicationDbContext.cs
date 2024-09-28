@@ -14,7 +14,7 @@ public class ApplicationDbContext(
         ArgumentNullException.ThrowIfNull(modelBuilder);
 
         modelBuilder.ApplyConfigurationsFromAssembly(
-            typeof(ReadApplicationDbContext).Assembly);
+            typeof(ApplicationDbContext).Assembly);
 
         modelBuilder.Ignore<Event>();
         modelBuilder.Ignore<DomainEvent>();

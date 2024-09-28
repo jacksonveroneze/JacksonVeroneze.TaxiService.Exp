@@ -61,7 +61,7 @@ public sealed class CreateUserCommandHandler(
         }
         else
         {
-            _ = emailWriteRepository.CreateAsync(
+            await emailWriteRepository.CreateAsync(
                 emailEntity.Value!, cancellationToken);
         }
 

@@ -10,8 +10,6 @@ public class AppConfiguration
 
     public AppInfoConfiguration? Application { get; init; }
 
-    public SwaggerConfiguration? Swagger { get; init; }
-
     public CacheConfiguration? Cache { get; init; }
 
     public DatabaseConfiguration? Database { get; init; }

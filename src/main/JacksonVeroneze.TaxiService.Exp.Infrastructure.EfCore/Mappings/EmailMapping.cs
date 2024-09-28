@@ -1,4 +1,5 @@
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
+using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Mappings.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -13,8 +14,13 @@ public class EmailMapping : IEntityTypeConfiguration<EmailEntity>
 
         builder.ToTable("email");
 
+        // Keys
         builder.HasKey(c => c.Id);
 
+        // Indexes
+        builder.HasIndex(c => c.UserId);
+
+        // Properties
         builder.Property(c => c.Id)
             .ValueGeneratedNever();
 
@@ -28,6 +34,6 @@ public class EmailMapping : IEntityTypeConfiguration<EmailEntity>
                 .HasMaxLength(100);
         });
 
-        builder.ConfigureDefaultFiledsMapping();
+        builder.ConfigureDefaultFieldsMapping();
     }
 }

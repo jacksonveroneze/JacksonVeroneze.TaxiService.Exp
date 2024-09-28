@@ -17,7 +17,7 @@ try
 
     app.Configure();
 
-    app.Run();
+    await app.RunAsync();
 }
 catch (Exception ex)
 {
@@ -28,5 +28,5 @@ catch (Exception ex)
 finally
 {
     Log.Information("Server Shutting down");
-    Log.CloseAndFlush();
+    await Log.CloseAndFlushAsync();
 }

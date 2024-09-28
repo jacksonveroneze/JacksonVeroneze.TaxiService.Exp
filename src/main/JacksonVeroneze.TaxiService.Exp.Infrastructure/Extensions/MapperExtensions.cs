@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class AutoMapperExtensions
+public static class MapperExtensions
 {
     public static IServiceCollection AddAutoMapper(
         this IServiceCollection services)
@@ -14,11 +14,9 @@ public static class AutoMapperExtensions
         {
             cfg.AddProfile<CommonMapper>();
             cfg.AddProfile<PaginationMapper>();
-            //
             cfg.AddProfile<UserMapper>();
             cfg.AddProfile<EmailMapper>();
             cfg.AddProfile<RideMapper>();
-            //
             cfg.AllowNullCollections = true;
         });
 

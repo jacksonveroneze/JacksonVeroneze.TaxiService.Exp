@@ -1,7 +1,5 @@
-using Ben.Diagnostics;
 using CorrelationId;
 using JacksonVeroneze.TaxiService.Exp.Api.Endpoints;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
 using Prometheus;
 using Serilog;
 
@@ -23,17 +21,11 @@ public static class WebApplicationExtensions
         app.Lifetime.ApplicationStopped.Register(() =>
             Log.Information("ApplicationStopped"));
 
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseBlockingDetection()
-                .AddSwagger();
-        }
         app.UseCorrelationId();
         app.UseRouting();
         app.UseHttpMetrics();
         app.MapMetrics();
         app.UseExceptionHandler();
-        app.UseOpenTelemetryPrometheusScrapingEndpoint("/metrics-open");
 
         app.UseHealthChecks("/health");
 

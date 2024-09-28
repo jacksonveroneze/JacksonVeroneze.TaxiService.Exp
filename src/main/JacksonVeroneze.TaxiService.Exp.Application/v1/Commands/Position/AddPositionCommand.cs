@@ -3,7 +3,7 @@ using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Base;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Position;
 
-public sealed record UpdatePositionCommand :
+public sealed record AddPositionCommand :
     IRequest<Result<VoidResponse>>
 {
     [JsonPropertyName("ride_id")]

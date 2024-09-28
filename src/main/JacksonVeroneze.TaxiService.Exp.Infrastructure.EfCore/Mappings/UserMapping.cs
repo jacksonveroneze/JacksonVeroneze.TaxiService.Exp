@@ -1,4 +1,5 @@
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
+using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Mappings.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -13,8 +14,13 @@ public class UserMapping : IEntityTypeConfiguration<UserEntity>
 
         builder.ToTable("user");
 
+        // Keys
         builder.HasKey(c => c.Id);
 
+        // Indexes
+        builder.HasIndex(c => c.Status);
+
+        // Properties
         builder.Property(c => c.Id)
             .ValueGeneratedNever();
 
@@ -47,6 +53,6 @@ public class UserMapping : IEntityTypeConfiguration<UserEntity>
 
         builder.Property(c => c.InactivedOnUtc);
 
-        builder.ConfigureDefaultFiledsMapping();
+        builder.ConfigureDefaultFieldsMapping();
     }
 }
