@@ -1,6 +1,5 @@
 import {group} from 'k6';
 import {crypto} from "k6/experimental/webcrypto";
-
 import user from "./scenarios/user/user.scenario.js";
 import mail from "./scenarios/mail/mail.scenario.js";
 import ride from "./scenarios/ride/ride.scenario.js";
@@ -15,9 +14,14 @@ export let optionsRamp = {
     ]
 };
 
-export const optionsIterations = {
-    iterations: 1000,
+export const optionsOneIteration = {
+    iterations: 1,
     vus: 1
+};
+
+export const optionsIterations = {
+    iterations: 2,
+    vus: 2
 };
 
 export const optionsDuration = {
@@ -51,4 +55,21 @@ export default () => {
     group('Endpoint Ride', () => {
         ride(baseUrl, headers);
     });
+
+
+    // const idUser1 = "916e4031-34d3-43ce-9cb2-262d816b8041";
+    // const idUser2 = "2e6d0bf8-f6a5-428f-9fa8-069609c582d0";
+    //
+    // const idRide = "2913230e-dd3f-4317-a50a-eae4e61da09a";
+    //
+    // const bodyAcceptRide1 = JSON.stringify({
+    //     driver_id: idUser1
+    // });
+    //
+    // const bodyAcceptRide2 = JSON.stringify({
+    //     driver_id: idUser2
+    // });
+    //
+    // const response1 = http.put(`${baseUrl}/rides/${idRide}/accept`, bodyAcceptRide1, headers);
+    // //const response2 = http.put(`${baseUrl}/rides/${idRide}/accept`, bodyAcceptRide2, headers);
 }

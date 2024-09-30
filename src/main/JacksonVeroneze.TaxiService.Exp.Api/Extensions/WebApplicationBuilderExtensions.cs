@@ -44,21 +44,14 @@ public static class WebApplicationBuilderExtensions
             .AddCorrelation()
             .AddMediatr()
             .AddFluentValidation()
+            .AddDistributedLock(appConfiguration)
             .AddAuthentication(appConfiguration)
             .AddAuthorization(appConfiguration)
             .AddOpenTelemetry(appConfiguration)
             .AddCultureConfiguration()
             .AddHttpContextAccessor()
             .AddFluentValidationAutoValidation()
-            .AddProblemDetails(options =>
-            {
-                options.CustomizeProblemDetails = ctx =>
-                {
-                    ctx.ProblemDetails.Extensions.Add("trace-id", ctx.HttpContext.TraceIdentifier);
-                    ctx.ProblemDetails.Extensions.Add("instance",
-                        $"{ctx.HttpContext.Request.Method} {ctx.HttpContext.Request.Path}");
-                };
-            })
+            .AddProblemDetails()
             .AddExceptionHandler<GlobalExceptionHandler>()
             .AddRouting(options =>
             {

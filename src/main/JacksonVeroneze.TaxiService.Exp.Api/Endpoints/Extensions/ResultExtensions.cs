@@ -93,7 +93,7 @@ public static class ResultExtensions
 
     #region PUT
 
-    public static IResult MatchPut<T>(this Result<T> result) where T : class
+    public static IResult MatchPut(this Result result)
     {
         ArgumentNullException.ThrowIfNull(result);
 

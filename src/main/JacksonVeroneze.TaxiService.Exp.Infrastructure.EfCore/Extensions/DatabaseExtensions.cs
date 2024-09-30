@@ -33,7 +33,7 @@ public static class DatabaseExtensions
         AppConfiguration appConfiguration)
     {
         optionsBuilder
-            .EnableDetailedErrors(appConfiguration.IsDevelopment)
+            .EnableDetailedErrors(false)
             .EnableSensitiveDataLogging(appConfiguration.IsDevelopment)
             .EnableThreadSafetyChecks()
             .UseSnakeCaseNamingConvention();

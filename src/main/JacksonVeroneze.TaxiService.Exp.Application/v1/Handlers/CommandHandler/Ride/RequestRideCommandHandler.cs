@@ -23,49 +23,104 @@ public sealed class RequestRideCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        UserEntity? user = await userReadRepository
-            .GetByIdAsync(request.UserId, cancellationToken);
+        Result<UserEntity> resultUser = await GetUserByIdAsync(
+            request.UserId, cancellationToken);
 
-        if (user is null)
+        if (resultUser.IsFailure)
         {
             return Result<RequestRideCommandResponse>.WithError(
-                DomainErrors.UserError.NotFound);
+                resultUser.Error!);
         }
 
-        bool existsRideByUser = await rideReadRepository
-            .ExistsActiveByUserIdAsync(request.UserId, cancellationToken);
+        Result existsRideByUser = await ExistsActiveRideByUserIdAsync(
+            request.UserId, cancellationToken);
 
-        if (existsRideByUser)
+        if (existsRideByUser.IsFailure)
         {
-            logger.LogAlreadyExists(nameof(RequestRideCommandHandler),
-                nameof(Handle), user.Id, DomainErrors.RideError.AlreadyByUser);
-
-            return Result<RequestRideCommandResponse>.FromInvalid(
-                DomainErrors.RideError.AlreadyByUser);
+            return Result<RequestRideCommandResponse>
+                .FromInvalid(existsRideByUser.Error!);
         }
 
-        Result<RideEntity> entity = RideEntity.Create(user.Id,
-            request.LatitudeFrom, request.LatitudeTo,
-            request.LongitudeFrom, request.LongitudeTo);
+        Result<RideEntity> entity = FactoryEntity(
+            request, resultUser.Value!);
 
         if (entity.IsFailure)
         {
-            logger.LogGenericError(nameof(RequestRideCommandHandler),
-                nameof(Handle), entity.Errors!.Count());
-
             return Result<RequestRideCommandResponse>
                 .FromInvalid(entity.Errors!);
         }
 
-        await rideWriteRepository.CreateAsync(
-            entity.Value!, cancellationToken);
+        await CreateAsync(entity.Value!, cancellationToken);
 
         RequestRideCommandResponse response =
             mapper.Map<RequestRideCommandResponse>(entity.Value);
 
-        logger.LogCreated(nameof(RequestRideCommandHandler),
-            nameof(Handle), entity.Value!.Id);
-
         return Result<RequestRideCommandResponse>.WithSuccess(response);
+    }
+
+    private Result<RideEntity> FactoryEntity(
+        RequestRideCommand request, UserEntity user)
+    {
+        Result<RideEntity> entity = RideEntity.Create(
+            user.Id,
+            request.LatitudeFrom, request.LatitudeTo,
+            request.LongitudeFrom, request.LongitudeTo);
+
+        if (!entity.IsFailure)
+        {
+            return entity;
+        }
+
+        logger.LogGenericError(nameof(RequestRideCommandHandler),
+            nameof(Handle), entity.Errors!.Count());
+
+        return Result<RideEntity>
+            .FromInvalid(entity.Errors!);
+    }
+
+    private async Task<Result<UserEntity>> GetUserByIdAsync(
+        Guid id,
+        CancellationToken cancellationToken)
+    {
+        UserEntity? driver = await userReadRepository
+            .GetByIdAsync(id, cancellationToken);
+
+        if (driver is null)
+        {
+            return Result<UserEntity>
+                .WithError(DomainErrors.UserError.NotFound);
+        }
+
+        return Result<UserEntity>.WithSuccess(driver);
+    }
+
+    private async Task<Result> ExistsActiveRideByUserIdAsync(
+        Guid id,
+        CancellationToken cancellationToken)
+    {
+        bool existsRideByUser = await rideReadRepository
+            .ExistsActiveByUserIdAsync(id, cancellationToken);
+
+        if (!existsRideByUser)
+        {
+            return Result.WithSuccess();
+        }
+
+        logger.LogAlreadyExists(nameof(RequestRideCommandHandler),
+            nameof(Handle), id, DomainErrors.RideError.AlreadyByUser);
+
+        return Result.FromInvalid(
+            DomainErrors.RideError.AlreadyByUser);
+    }
+
+    private async Task CreateAsync(
+        RideEntity ride,
+        CancellationToken cancellationToken)
+    {
+        await rideWriteRepository.CreateAsync(
+            ride, cancellationToken);
+
+        logger.LogCreated(nameof(RequestRideCommandHandler),
+            nameof(Handle), ride.Id);
     }
 }

@@ -1,7 +1,6 @@
 using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Ride;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Base;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Ride;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.Ride;
@@ -67,8 +66,8 @@ public static class RideEndpoint
                 [AsParameters] AcceptRideCommand command,
                 CancellationToken cancellationToken) =>
             {
-                Result<VoidResponse> response =
-                    await mediator.Send(command, cancellationToken);
+                Result response = await mediator
+                    .Send(command, cancellationToken);
 
                 return response.MatchPut();
             })
@@ -82,8 +81,8 @@ public static class RideEndpoint
             {
                 StartRideCommand command = new(id);
 
-                Result<VoidResponse> response =
-                    await mediator.Send(command, cancellationToken);
+                Result response = await mediator
+                    .Send(command, cancellationToken);
 
                 return response.MatchPut();
             })
@@ -97,8 +96,8 @@ public static class RideEndpoint
             {
                 FinishRideCommand command = new(id);
 
-                Result<VoidResponse> response =
-                    await mediator.Send(command, cancellationToken);
+                Result response = await mediator
+                    .Send(command, cancellationToken);
 
                 return response.MatchPut();
             })
@@ -112,7 +111,7 @@ public static class RideEndpoint
             {
                 CancelRideCommand command = new(id);
 
-                Result<VoidResponse> response =
+                Result response =
                     await mediator.Send(command, cancellationToken);
 
                 return response.MatchPut();

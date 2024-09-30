@@ -1,11 +1,10 @@
 using JacksonVeroneze.NET.Result;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Base;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Ride;
 
 public sealed record AcceptRideCommand :
-    IRequest<Result<VoidResponse>>
+    IRequest<Result>
 {
     [FromRoute(Name = "id")]
     public Guid Id { get; init; }

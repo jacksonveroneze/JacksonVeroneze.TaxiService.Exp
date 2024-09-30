@@ -801,4 +801,7 @@ dotnet_diagnostic.S2139.severity = suggestion
 dotnet_diagnostic.S4035.severity = suggestion
 dotnet_diagnostic.RCS1155.severity = suggestion
 
+dotnet_diagnostic.CS0012.severity = suggestion
+dotnet_diagnostic.CS8417.severity = suggestion
+
 resharper_inconsistent_naming_highlighting = none
