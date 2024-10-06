@@ -12,9 +12,8 @@ public class EmailWriteRepository(
     public async Task CreateAsync(EmailEntity entity,
         CancellationToken cancellationToken = default)
     {
-        await service.CreateAsync(entity, cancellationToken);
-
-        await service.UnitOfWork.CommitAsync(cancellationToken);
+        await service.CreateAsync(
+            entity, cancellationToken);
     }
 
     public async Task DeleteAsync(EmailEntity entity,
@@ -22,6 +21,7 @@ public class EmailWriteRepository(
     {
         service.Delete(entity);
 
-        await service.UnitOfWork.CommitAsync(cancellationToken);
+        await service.UnitOfWork.CommitAsync(
+            cancellationToken);
     }
 }

@@ -12,8 +12,6 @@ public class UserWriteRepository(
         CancellationToken cancellationToken = default)
     {
         await service.CreateAsync(entity, cancellationToken);
-
-        await service.UnitOfWork.CommitAsync(cancellationToken);
     }
 
     public Task DeleteAsync(UserEntity entity,

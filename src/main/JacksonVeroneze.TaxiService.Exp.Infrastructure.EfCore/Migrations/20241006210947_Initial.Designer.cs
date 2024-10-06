@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240928145556_Initial")]
+    [Migration("20241006210947_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -26,6 +26,91 @@ namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("JacksonVeroneze.TaxiService.Exp.Domain.Entities.DriverEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime?>("ActivedOnUtc")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("actived_on_utc");
+
+                    b.Property<DateOnly>("Birthday")
+                        .HasColumnType("date")
+                        .HasColumnName("birthday");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("deleted_at");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("integer")
+                        .HasColumnName("gender");
+
+                    b.Property<DateTime?>("InactivedOnUtc")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("inactived_on_utc");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("tenant_id");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.Property<int>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(1)
+                        .HasColumnName("version");
+
+                    b.ComplexProperty<Dictionary<string, object>>("Cpf", "JacksonVeroneze.TaxiService.Exp.Domain.Entities.DriverEntity.Cpf#CpfValueObject", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(11)
+                                .HasColumnType("character varying(11)")
+                                .HasColumnName("cpf");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("Name", "JacksonVeroneze.TaxiService.Exp.Domain.Entities.DriverEntity.Name#NameValueObject", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("name");
+                        });
+
+                    b.HasKey("Id")
+                        .HasName("pk_driver");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("ix_driver_status");
+
+                    b.HasIndex("TenantId")
+                        .HasDatabaseName("ix_driver_tenant_id");
+
+                    b.ToTable("driver", "public");
+                });
 
             modelBuilder.Entity("JacksonVeroneze.TaxiService.Exp.Domain.Entities.EmailEntity", b =>
                 {
@@ -82,6 +167,63 @@ namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Migrations
                         .HasDatabaseName("ix_email_user_id");
 
                     b.ToTable("email", "public");
+                });
+
+            modelBuilder.Entity("JacksonVeroneze.TaxiService.Exp.Domain.Entities.OutboxMessageEntity", b =>
+                {
+                    b.Property<Guid?>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("content");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("deleted_at");
+
+                    b.Property<DateTime?>("OccurredOnUtc")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("occurred_on_utc");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("tenant_id");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("type");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.Property<int>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(1)
+                        .HasColumnName("version");
+
+                    b.HasKey("Id")
+                        .HasName("pk_outbox_message");
+
+                    b.HasIndex("TenantId")
+                        .HasDatabaseName("ix_outbox_message_tenant_id");
+
+                    b.HasIndex("Type")
+                        .HasDatabaseName("ix_outbox_message_type");
+
+                    b.ToTable("outbox_message", "public");
                 });
 
             modelBuilder.Entity("JacksonVeroneze.TaxiService.Exp.Domain.Entities.PositionEntity", b =>

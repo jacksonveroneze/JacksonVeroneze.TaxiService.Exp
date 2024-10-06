@@ -1,9 +1,11 @@
+using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.Repositories.Outbox;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Email;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Position;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Ride;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Transaction;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Email;
+using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Outbox;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Position;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Ride;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Transaction;
@@ -55,6 +57,13 @@ public static class AppServicesExtensions
         // Repositories
         services.AddScoped<ITransactionReadRepository, TransactionReadRepository>();
         services.AddScoped<ITransactionWriteRepository, TransactionWriteRepository>();
+
+        #endregion
+
+        #region Outbox
+
+        // Repositories
+        services.AddScoped<IOutboxWriteRepository, OutboxWriteWriteRepository>();
 
         #endregion
 
