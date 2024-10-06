@@ -13,4 +13,26 @@ public class OutboxWriteWriteRepository(
     {
         await service.CreateAsync(entity, cancellationToken);
     }
+
+    public async Task UpdateAsync(OutboxMessageEntity entity,
+        CancellationToken cancellationToken = default)
+    {
+        service.Update(entity);
+
+        await service.UnitOfWork.CommitAsync(cancellationToken);
+    }
+
+    public Task<ICollection<OutboxMessageEntity>> GetAllAsync(
+        CancellationToken cancellationToken = default)
+    {
+        return service.GetAllAsync(x => x.Id != null,
+            cancellationToken: cancellationToken);
+    }
+
+    public Task<OutboxMessageEntity?> GetByIdAsync(Guid id,
+        CancellationToken cancellationToken = default)
+    {
+        return service.GetByIdAsync(x => x.Id == id,
+            cancellationToken);
+    }
 }

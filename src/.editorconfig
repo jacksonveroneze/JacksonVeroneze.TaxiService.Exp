@@ -619,7 +619,7 @@ dotnet_diagnostic.CA1500.severity = error
 dotnet_diagnostic.CA1864.severity = error
 
 # CA1848: Use the LoggerMessage delegates
-dotnet_diagnostic.CA1848.severity = error
+dotnet_diagnostic.CA1848.severity = suggestion
 
 # CA2250: Use ThrowIfCancellationRequested
 dotnet_diagnostic.CA2250.severity = error
@@ -803,5 +803,6 @@ dotnet_diagnostic.RCS1155.severity = suggestion
 
 dotnet_diagnostic.CS0012.severity = suggestion
 dotnet_diagnostic.CS8417.severity = suggestion
+dotnet_diagnostic.CA1031.severity = suggestion
 
 resharper_inconsistent_naming_highlighting = none
