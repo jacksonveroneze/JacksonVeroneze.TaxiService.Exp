@@ -34,8 +34,10 @@ public class UserReadRepository(
         Expression<Func<UserEntity, bool>> spec =
             specByName.ToExpression().And(specByStatus);
 
-        return service.GetPagedAsync(filter.Pagination!,
+        return service.GetPagedAsync(
+            filter.Pagination!,
             spec,
+            order => order.Name,
             cancellationToken: cancellationToken);
     }
 }

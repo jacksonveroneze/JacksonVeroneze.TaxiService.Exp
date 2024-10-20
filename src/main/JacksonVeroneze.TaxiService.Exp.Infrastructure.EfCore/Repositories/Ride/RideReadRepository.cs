@@ -52,7 +52,10 @@ public class RideReadRepository(
         Expression<Func<RideEntity, bool>> spec =
             specByStatus.ToExpression().And(specByUserId);
 
-        return service.GetPagedAsync(filter.Pagination!, spec,
-            cancellationToken: cancellationToken);
+        return service.GetPagedAsync(
+            filter.Pagination!,
+            spec,
+            order => order.Id,
+            cancellationToken);
     }
 }

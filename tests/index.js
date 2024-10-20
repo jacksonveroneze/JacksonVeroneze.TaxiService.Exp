@@ -1,4 +1,4 @@
-import {group} from 'k6';
+import {group,sleep} from 'k6';
 import {crypto} from "k6/experimental/webcrypto";
 import user from "./scenarios/user/user.scenario.js";
 import mail from "./scenarios/mail/mail.scenario.js";
@@ -20,18 +20,26 @@ export const optionsOneIteration = {
 };
 
 export const optionsIterations = {
-    iterations: 2,
-    vus: 2
+    iterations: 100000,
+    vus: 5
 };
 
 export const optionsDuration = {
     stages: [
         {duration: '10s', target: 2},
-        {duration: '10s', target: 50},
+        {duration: '60s', target: 10},
+        {duration: '240s', target: 10},
+        {duration: '240s', target: 55},
+        {duration: '240s', target: 100},
+        {duration: '240s', target: 50},
+        {duration: '500s', target: 150},
+        {duration: '500s', target: 10},
+        {duration: '500s', target: 250},
+        {duration: '500s', target: 10},
     ]
 };
 
-export const options = optionsRamp;
+export const options = optionsDuration;
 
 const baseUrl = 'http://localhost:7000/api/v1';
 // const baseUrl = 'http://localhost:8080';
@@ -50,13 +58,15 @@ export default () => {
         user(baseUrl, headers);
     });
 
-    group('Endpoint Mail', () => {
-        mail(baseUrl, headers);
-    });
+    sleep(0.5)
 
-    group('Endpoint Ride', () => {
-        ride(baseUrl, headers);
-    });
+    // group('Endpoint Mail', () => {
+    //     mail(baseUrl, headers);
+    // });
+    //
+    // group('Endpoint Ride', () => {
+    //     ride(baseUrl, headers);
+    // });
 
 
     // const idUser1 = "916e4031-34d3-43ce-9cb2-262d816b8041";

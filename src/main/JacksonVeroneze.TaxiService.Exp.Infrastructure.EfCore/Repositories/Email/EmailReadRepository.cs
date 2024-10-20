@@ -39,8 +39,10 @@ public class EmailReadRepository(
 
         EmailByUserIdSpecification specByUserId = new(filter.UserId);
 
-        return service.GetPagedAsync(filter.Pagination!,
-            specByUserId.ToExpression(),
-            cancellationToken: cancellationToken);
+        return service.GetPagedAsync(
+            filter.Pagination!,
+            specByUserId,
+            order => order.Email,
+            cancellationToken);
     }
 }
