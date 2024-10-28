@@ -1,7 +1,7 @@
 using System.Text.Json;
-using JacksonVeroneze.NET.EntityFramework.Interfaces;
 using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
+using JacksonVeroneze.TaxiService.Exp.Application.Interfaces;
 using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.Repositories.Outbox;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Email;
@@ -37,7 +37,7 @@ public sealed class CreateUserCommandHandler(
                 .WithError(resultVerifyEmail.Error!);
         }
 
-        Result<UserEntity> userEntity = FactoryUserEntity(request);
+        Result<UserEntity> userEntity = FactoryEntity(request);
 
         if (userEntity.IsFailure)
         {
@@ -60,9 +60,6 @@ public sealed class CreateUserCommandHandler(
         CreateUserCommandResponse response =
             mapper.Map<CreateUserCommandResponse>(userEntity.Value);
 
-        logger.LogCreated(nameof(CreateUserCommandHandler),
-            nameof(Handle), userEntity.Value!.Id);
-
         return Result<CreateUserCommandResponse>.WithSuccess(response);
     }
 
@@ -70,36 +67,37 @@ public sealed class CreateUserCommandHandler(
         string email,
         CancellationToken cancellationToken)
     {
-        bool existsUser = await emailReadRepository
+        bool existsEmail = await emailReadRepository
             .ExistsAsync(email, cancellationToken);
 
-        if (!existsUser)
+        if (!existsEmail)
         {
             return Result.WithSuccess();
         }
 
-        logger.LogAlreadyExists(nameof(CreateUserCommandHandler),
-            nameof(Handle), email,
-            DomainErrors.UserError.DuplicateEmail);
+        Error error = DomainErrors.UserError.DuplicateEmail;
 
-        return Result.FromInvalid(
-            DomainErrors.UserError.DuplicateEmail);
+        logger.LogAlreadyExists(nameof(CreateUserCommandHandler),
+            nameof(ExistEmailAsync), email, error);
+
+        return Result.FromInvalid(error);
     }
 
-    private Result<UserEntity> FactoryUserEntity(
+    private Result<UserEntity> FactoryEntity(
         CreateUserCommand request)
     {
         Result<UserEntity> entity = UserEntity.Create(
             request.Name, request.Birthday!.Value,
             request.Gender!.Value, request.Document);
 
-        if (!entity.IsFailure)
+        if (entity.IsSuccess)
         {
             return entity;
         }
 
-        logger.LogGenericError(nameof(CreateUserCommandHandler),
-            nameof(Handle), entity.Errors!.Count());
+        logger.LogGenericError(
+            nameof(CreateUserCommandHandler),
+            nameof(FactoryEntity), entity.Errors!.Count());
 
         return Result<UserEntity>
             .FromInvalid(entity.Errors!);
@@ -111,13 +109,14 @@ public sealed class CreateUserCommandHandler(
         Result<EmailEntity> entity = EmailEntity
             .Create(user.Id, request.Email);
 
-        if (!entity.IsFailure)
+        if (entity.IsSuccess)
         {
             return entity;
         }
 
-        logger.LogGenericError(nameof(CreateUserCommandHandler),
-            nameof(Handle), entity.Error!.Message);
+        logger.LogGenericError(
+            nameof(CreateUserCommandHandler),
+            nameof(Handle), entity.Errors!.Count());
 
         return Result<EmailEntity>
             .FromInvalid(entity.Errors!);
@@ -162,15 +161,14 @@ public sealed class CreateUserCommandHandler(
             await unitOfWork.CommitAsync(
                 cancellationToken);
 
-            logger.LogCreated(
-                nameof(CreateUserCommandHandler),
-                nameof(Handle), emailEntity.Id);
+            logger.LogCreated(nameof(CreateUserCommandHandler),
+                nameof(CreateAsync), userEntity!.Id);
         }
         catch (Exception ex)
         {
             logger.LogGenericError(
                 nameof(CreateUserCommandHandler),
-                nameof(Handle), ex.Message);
+                nameof(CreateAsync), ex.Message);
 
             throw;
         }

@@ -37,7 +37,7 @@ public class UserReadRepository(
         return service.GetPagedAsync(
             filter.Pagination!,
             spec,
-            order => order.Name,
+            order => order.Name.Value,
             cancellationToken: cancellationToken);
     }
 }

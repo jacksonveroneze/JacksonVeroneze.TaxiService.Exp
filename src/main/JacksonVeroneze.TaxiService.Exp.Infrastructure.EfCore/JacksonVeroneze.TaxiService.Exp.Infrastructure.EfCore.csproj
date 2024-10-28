@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <PackageReference Include="JacksonVeroneze.NET.EntityFramework" Version="1.3.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="8.0.10" />
     <PackageReference Include="EFCore.NamingConventions" Version="8.0.3"/>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.10" />
@@ -32,7 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\JacksonVeroneze.NET.EntityFramework\src\JacksonVeroneze.NET.EntityFramework\JacksonVeroneze.NET.EntityFramework.csproj" />
     <ProjectReference Include="..\JacksonVeroneze.TaxiService.Exp.Application\JacksonVeroneze.TaxiService.Exp.Application.csproj"/>
     <ProjectReference Include="..\JacksonVeroneze.TaxiService.Exp.Domain\JacksonVeroneze.TaxiService.Exp.Domain.csproj"/>
     <ProjectReference Include="..\JacksonVeroneze.TaxiService.Exp.Infrastructure\JacksonVeroneze.TaxiService.Exp.Infrastructure.csproj"/>

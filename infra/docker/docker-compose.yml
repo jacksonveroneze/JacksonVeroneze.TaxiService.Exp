@@ -11,10 +11,10 @@ services:
     environment:
       - APP_CONFIG_Database__ReadConnectionString=Host=10.0.0.150;Port=6432;Database=taxiservice;Username=postgres;Password=localP@ssword;Maximum Pool Size=200;Minimum Pool Size=10;Timeout=10;Command Timeout=20
       - APP_CONFIG_Bus__Address=10.0.0.199
-      - APP_CONFIG_Cache__Type=Memory
+      - APP_CONFIG_Cache__Type=Redis
+      - APP_CONFIG_Cache__Endpoint=10.0.0.199:6379
       - Serilog__WriteTo__0__Args__configure__1__Name=Seq
       - Serilog__WriteTo__0__Args__configure__1__Args__serverUrl=http://10.0.0.199:5341
-      - PYROSCOPE_SERVER_ADDRESS=http://pyroscope:4040
     healthcheck:
       test: curl --silent --fail http://localhost:8080/health?source=docker || exit 1
       interval: 10s

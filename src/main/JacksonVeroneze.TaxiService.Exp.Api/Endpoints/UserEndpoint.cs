@@ -2,7 +2,6 @@ using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User.Email;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Base;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User.Email;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.User;
@@ -71,7 +70,7 @@ public static class UserEndpoint
             {
                 DeleteUserCommand command = new(id);
 
-                Result<VoidResponse> response =
+                Result response =
                     await mediator.Send(command, cancellationToken);
 
                 return response.MatchDelete();
@@ -86,7 +85,7 @@ public static class UserEndpoint
             {
                 ActivateUserCommand command = new(id);
 
-                Result<VoidResponse> response =
+                Result response =
                     await mediator.Send(command, cancellationToken);
 
                 return response.MatchPut();
@@ -101,7 +100,7 @@ public static class UserEndpoint
             {
                 InactivateUserCommand command = new(id);
 
-                Result<VoidResponse> response =
+                Result response =
                     await mediator.Send(command, cancellationToken);
 
                 return response.MatchPut();
@@ -147,7 +146,7 @@ public static class UserEndpoint
             {
                 DeleteEmailCommand command = new(id, emailId);
 
-                Result<VoidResponse> response =
+                Result response =
                     await mediator.Send(command, cancellationToken);
 
                 return response.MatchPut();

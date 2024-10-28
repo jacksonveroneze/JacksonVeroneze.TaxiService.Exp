@@ -23,50 +23,107 @@ public sealed class CreateEmailCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        UserEntity? user = await userReadRepository
-            .GetByIdAsync(request.Id, cancellationToken);
+        Result<UserEntity> resultUser = await GetUserByIdAsync(
+            request.Id, cancellationToken);
 
-        if (user is null)
+        if (resultUser.IsFailure)
         {
             return Result<CreateEmailCommandResponse>.FromNotFound(
-                DomainErrors.UserError.NotFound);
+                resultUser.Error!);
         }
 
-        bool existsEmail = await emailReadRepository
-            .ExistsAsync(request.Body!.Email!, cancellationToken);
+        Result existsEmail = await ExistsEmailAsync(
+            request, cancellationToken);
 
-        if (existsEmail)
+        if (existsEmail.IsFailure)
         {
-            logger.LogGenericError(nameof(CreateEmailCommandHandler),
-                nameof(Handle), request.Id,
-                DomainErrors.EmailError.DuplicateEmail);
-
             return Result<CreateEmailCommandResponse>
-                .FromInvalid(DomainErrors.EmailError.DuplicateEmail);
+                .FromInvalid(existsEmail.Error!);
         }
 
-        Result<EmailEntity> entity = EmailEntity
-            .Create(user.Id, request.Body!.Email);
+        Result<EmailEntity> entity = FactoryEntity(
+            request, resultUser.Value!);
 
         if (entity.IsFailure)
         {
-            logger.LogGenericError(nameof(CreateEmailCommandHandler),
-                nameof(Handle), request.Id, entity.Error!);
-
             return Result<CreateEmailCommandResponse>
-                .FromInvalid(entity.Error!);
+                .FromInvalid(entity.Errors!);
         }
 
-        await emailWriteRepository.CreateAsync(
-            entity.Value!, cancellationToken);
+        await CreateAsync(entity.Value!, cancellationToken);
 
         CreateEmailCommandResponse response =
             mapper.Map<CreateEmailCommandResponse>(entity.Value);
 
-        logger.LogProcessed(nameof(CreateEmailCommandHandler),
-            nameof(Handle), entity.Value!.Id);
+        return Result<CreateEmailCommandResponse>.WithSuccess(response);
+    }
+
+    private Result<EmailEntity> FactoryEntity(
+        CreateEmailCommand request, UserEntity user)
+    {
+        Result<EmailEntity> entity = EmailEntity
+            .Create(user.Id, request.Body!.Email);
+
+        if (!entity.IsFailure)
+        {
+            return entity;
+        }
+
+        logger.LogGenericError(
+            nameof(CreateEmailCommandHandler),
+            nameof(FactoryEntity), entity.Errors!.Count());
+
+        return Result<EmailEntity>
+            .FromInvalid(entity.Errors!);
+    }
+
+    private async Task<Result<UserEntity>> GetUserByIdAsync(
+        Guid id,
+        CancellationToken cancellationToken)
+    {
+        UserEntity? user = await userReadRepository
+            .GetByIdAsync(id, cancellationToken);
+
+        if (user is null)
+        {
+            return Result<UserEntity>.FromNotFound(
+                DomainErrors.UserError.NotFound);
+        }
+
+        return Result<UserEntity>.WithSuccess(user);
+    }
+
+    private async Task<Result> ExistsEmailAsync(
+        CreateEmailCommand request,
+        CancellationToken cancellationToken)
+    {
+        bool existsEmail = await emailReadRepository
+            .ExistsAsync(request.Body!.Email!, cancellationToken);
+
+        if (!existsEmail)
+        {
+            return Result.WithSuccess();
+        }
+
+        Error error = DomainErrors.EmailError.DuplicateEmail;
+
+        logger.LogGenericError(
+            nameof(CreateEmailCommandHandler),
+            nameof(Handle), request.Id, error);
 
         return Result<CreateEmailCommandResponse>
-            .WithSuccess(response);
+            .FromInvalid(error);
+    }
+
+    private async Task CreateAsync(
+        EmailEntity email,
+        CancellationToken cancellationToken)
+    {
+        await emailWriteRepository.CreateAsync(
+            email, cancellationToken);
+
+        logger.LogProcessed(
+            nameof(CreateEmailCommandHandler),
+            nameof(CreateAsync), email.Id);
     }
 }

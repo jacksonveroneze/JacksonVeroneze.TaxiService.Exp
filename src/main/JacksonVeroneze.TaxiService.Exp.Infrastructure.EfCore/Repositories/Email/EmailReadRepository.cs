@@ -42,7 +42,7 @@ public class EmailReadRepository(
         return service.GetPagedAsync(
             filter.Pagination!,
             specByUserId,
-            order => order.Email,
+            order => order.Email.Value,
             cancellationToken);
     }
 }

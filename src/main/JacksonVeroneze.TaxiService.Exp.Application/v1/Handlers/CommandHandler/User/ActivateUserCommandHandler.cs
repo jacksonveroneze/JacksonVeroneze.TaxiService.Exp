@@ -3,7 +3,6 @@ using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.System;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Base;
 using JacksonVeroneze.TaxiService.Exp.Domain.Core.Errors;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 
@@ -14,39 +13,78 @@ public sealed class ActivateUserCommandHandler(
     IUserReadRepository userReadRepository,
     IUserWriteRepository userWriteRepository,
     IDateTime dateTime)
-    : IRequestHandler<ActivateUserCommand, Result<VoidResponse>>
+    : IRequestHandler<ActivateUserCommand, Result>
 {
-    public async Task<Result<VoidResponse>> Handle(
+    public async Task<Result> Handle(
         ActivateUserCommand request,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        UserEntity? user = await userReadRepository
-            .GetByIdAsync(request.Id, cancellationToken);
+        Result<UserEntity> resultEntity = await GetUserByIdAsync(
+            request.Id, cancellationToken);
 
-        if (user is null)
+        if (resultEntity.IsFailure)
         {
-            return Result<VoidResponse>.FromNotFound(
-                DomainErrors.UserError.NotFound);
+            return resultEntity;
         }
 
-        Result result = user.Activate(dateTime.UtcNow);
+        Result resultAction = Activate(resultEntity.Value!);
+
+        if (resultAction.IsFailure)
+        {
+            return resultAction;
+        }
+
+        await UpdateAsync(resultEntity.Value!, cancellationToken);
+
+        return Result.WithSuccess();
+    }
+
+    private async Task<Result<UserEntity>> GetUserByIdAsync(
+        Guid id,
+        CancellationToken cancellationToken)
+    {
+        UserEntity? entity = await userReadRepository
+            .GetByIdAsync(id, cancellationToken);
+
+        if (entity is not null)
+        {
+            return Result<UserEntity>.WithSuccess(entity);
+        }
+
+        Error error = DomainErrors.UserError.NotFound;
+
+        logger.LogNotFound(
+            nameof(ActivateUserCommandHandler),
+            nameof(GetUserByIdAsync), id, error);
+
+        return Result<UserEntity>.FromNotFound(error);
+    }
+
+    private Result Activate(UserEntity entity)
+    {
+        Result result = entity.Activate(dateTime.UtcNow);
 
         if (result.IsFailure)
         {
-            logger.LogAlreadyProcessed(nameof(ActivateUserCommandHandler),
-                nameof(Handle), request.Id, result.Error!);
-
-            return Result<VoidResponse>.WithError(result.Error!);
+            logger.LogAlreadyProcessed(
+                nameof(ActivateUserCommandHandler),
+                nameof(Activate), entity.Id, result.Error!);
         }
 
+        return result;
+    }
+
+    private async Task UpdateAsync(
+        UserEntity entity,
+        CancellationToken cancellationToken)
+    {
         await userWriteRepository.UpdateAsync(
-            user, cancellationToken);
+            entity, cancellationToken);
 
-        logger.LogProcessed(nameof(ActivateUserCommandHandler),
-            nameof(Handle), request.Id);
-
-        return Result<VoidResponse>.WithSuccess();
+        logger.LogProcessed(
+            nameof(ActivateUserCommandHandler),
+            nameof(UpdateAsync), entity.Id);
     }
 }

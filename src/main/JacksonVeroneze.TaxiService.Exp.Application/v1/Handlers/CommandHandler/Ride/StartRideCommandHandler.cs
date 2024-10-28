@@ -19,22 +19,22 @@ public sealed class StartRideCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<RideEntity> resultRide = await GetRideByIdAsync(
+        Result<RideEntity> resultEntity = await GetRideByIdAsync(
             request.Id, cancellationToken);
 
-        if (resultRide.IsFailure)
+        if (resultEntity.IsFailure)
         {
-            return resultRide;
+            return resultEntity;
         }
 
-        Result resultAction = Start(resultRide.Value!);
+        Result resultAction = Start(resultEntity.Value!);
 
         if (resultAction.IsFailure)
         {
             return resultAction;
         }
 
-        await UpdateAsync(resultRide.Value!, cancellationToken);
+        await UpdateAsync(resultEntity.Value!, cancellationToken);
 
         return Result.WithSuccess();
     }
@@ -43,41 +43,46 @@ public sealed class StartRideCommandHandler(
         Guid id,
         CancellationToken cancellationToken)
     {
-        RideEntity? ride = await rideReadRepository
+        RideEntity? entity = await rideReadRepository
             .GetByIdAsync(id, cancellationToken);
 
-        if (ride is null)
+        if (entity is not null)
         {
-            return Result<RideEntity>.FromNotFound(
-                DomainErrors.RideError.NotFound);
+            return Result<RideEntity>.WithSuccess(entity);
         }
 
-        return Result<RideEntity>.WithSuccess(ride);
+        Error error = DomainErrors.RideError.NotFound;
+
+        logger.LogNotFound(
+            nameof(CancelRideCommandHandler),
+            nameof(GetRideByIdAsync), id, error);
+
+        return Result<RideEntity>.FromNotFound(error);
     }
 
-    private Result Start(RideEntity ride)
+    private Result Start(RideEntity entity)
     {
-        Result result = ride.Start();
+        Result result = entity.Start();
 
-        if (result.IsSuccess)
+        if (result.IsFailure)
         {
-            return Result.WithSuccess();
+            logger.LogGenericError(
+                nameof(StartRideCommandHandler),
+                nameof(Start), entity.Id, result.Error!);
         }
-
-        logger.LogGenericError(nameof(StartRideCommandHandler),
-            nameof(Handle), ride.Id, result.Error!);
 
         return result;
     }
 
     private async Task UpdateAsync(
-        RideEntity ride,
+        RideEntity entity,
         CancellationToken cancellationToken)
     {
         await rideWriteRepository.UpdateAsync(
-            ride, cancellationToken);
+            entity, cancellationToken);
 
-        logger.LogProcessed(nameof(StartRideCommandHandler),
-            nameof(Handle), ride.Id);
+        logger.LogProcessed(
+            nameof(StartRideCommandHandler),
+            nameof(Handle), entity.Id);
     }
 }

@@ -1,10 +1,8 @@
 using JacksonVeroneze.NET.Result;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Base;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Position;
 
-public sealed record AddPositionCommand :
-    IRequest<Result<VoidResponse>>
+public sealed record AddPositionCommand : IRequest<Result>
 {
     [JsonPropertyName("ride_id")]
     public Guid RideId { get; init; }

@@ -2,7 +2,6 @@ using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Base;
 using JacksonVeroneze.TaxiService.Exp.Domain.Core.Errors;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 
@@ -12,29 +11,56 @@ public sealed class DeleteUserCommandHandler(
     ILogger<DeleteUserCommandHandler> logger,
     IUserReadRepository userReadRepository,
     IUserWriteRepository userWriteRepository)
-    : IRequestHandler<DeleteUserCommand, Result<VoidResponse>>
+    : IRequestHandler<DeleteUserCommand, Result>
 {
-    public async Task<Result<VoidResponse>> Handle(
+    public async Task<Result> Handle(
         DeleteUserCommand request,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        UserEntity? user = await userReadRepository
-            .GetByIdAsync(request.Id, cancellationToken);
+        Result<UserEntity> resultEntity = await GetUserByIdAsync(
+            request.Id, cancellationToken);
 
-        if (user is null)
+        if (resultEntity.IsFailure)
         {
-            return Result<VoidResponse>.FromNotFound(
-                DomainErrors.UserError.NotFound);
+            return resultEntity;
         }
 
+        await DeleteAsync(resultEntity.Value!, cancellationToken);
+
+        return Result.WithSuccess();
+    }
+
+    private async Task<Result<UserEntity>> GetUserByIdAsync(
+        Guid id,
+        CancellationToken cancellationToken)
+    {
+        UserEntity? entity = await userReadRepository
+            .GetByIdAsync(id, cancellationToken);
+
+        if (entity is not null)
+        {
+            return Result<UserEntity>.WithSuccess(entity);
+        }
+
+        Error error = DomainErrors.UserError.NotFound;
+
+        logger.LogNotFound(
+            nameof(DeleteUserCommandHandler),
+            nameof(GetUserByIdAsync), id, error);
+
+        return Result<UserEntity>.FromNotFound(error);
+    }
+
+    private async Task DeleteAsync(
+        UserEntity user,
+        CancellationToken cancellationToken)
+    {
         await userWriteRepository.DeleteAsync(
             user, cancellationToken);
 
         logger.LogDeleted(nameof(DeleteUserCommandHandler),
-            nameof(Handle), request.Id);
-
-        return Result<VoidResponse>.WithSuccess();
+            nameof(Handle), user.Id);
     }
 }

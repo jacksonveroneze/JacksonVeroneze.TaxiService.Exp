@@ -44,12 +44,12 @@ public sealed class AcceptRideCommandHandler(
                 new Error("Lock", "Lock não adquirido"));
         }
 
-        Result<RideEntity> resultRide = await GetRideByIdAsync(
+        Result<RideEntity> resultEntity = await GetRideByIdAsync(
             request.Id, cancellationToken);
 
-        if (resultRide.IsFailure)
+        if (resultEntity.IsFailure)
         {
-            return resultRide;
+            return resultEntity;
         }
 
         Result<UserEntity> resultDriver = await GetDriverByIdAsync(
@@ -60,7 +60,7 @@ public sealed class AcceptRideCommandHandler(
             return resultDriver;
         }
 
-        Result resultAction = Accept(resultRide.Value!,
+        Result resultAction = Accept(resultEntity.Value!,
             resultDriver.Value!);
 
         if (resultAction.IsFailure)
@@ -68,7 +68,7 @@ public sealed class AcceptRideCommandHandler(
             return resultAction;
         }
 
-        await UpdateAsync(resultRide.Value!, cancellationToken);
+        await UpdateAsync(resultEntity.Value!, cancellationToken);
 
         return Result.WithSuccess();
     }
@@ -87,57 +87,67 @@ public sealed class AcceptRideCommandHandler(
         Guid id,
         CancellationToken cancellationToken)
     {
-        RideEntity? ride = await rideReadRepository
+        RideEntity? entity = await rideReadRepository
             .GetByIdAsync(id, cancellationToken);
 
-        if (ride is null)
+        if (entity is not null)
         {
-            return Result<RideEntity>.FromNotFound(
-                DomainErrors.RideError.NotFound);
+            return Result<RideEntity>.WithSuccess(entity);
         }
 
-        return Result<RideEntity>.WithSuccess(ride);
+        Error error = DomainErrors.RideError.NotFound;
+
+        logger.LogNotFound(
+            nameof(CancelRideCommandHandler),
+            nameof(GetRideByIdAsync), id, error);
+
+        return Result<RideEntity>.FromNotFound(error);
     }
 
     private async Task<Result<UserEntity>> GetDriverByIdAsync(
         Guid id,
         CancellationToken cancellationToken)
     {
-        UserEntity? driver = await userReadRepository
+        UserEntity? entity = await userReadRepository
             .GetByIdAsync(id, cancellationToken);
 
-        if (driver is null)
+        if (entity is not null)
         {
-            return Result<UserEntity>
-                .WithError(DomainErrors.UserError.NotFound);
+            return Result<UserEntity>.WithSuccess(entity);
         }
 
-        return Result<UserEntity>.WithSuccess(driver);
+        Error error = DomainErrors.UserError.NotFound;
+
+        logger.LogNotFound(
+            nameof(AcceptRideCommandHandler),
+            nameof(GetDriverByIdAsync), id, error);
+
+        return Result<UserEntity>.FromNotFound(error);
     }
 
-    private Result Accept(RideEntity ride, UserEntity driver)
+    private Result Accept(RideEntity entity, UserEntity driver)
     {
-        Result result = ride.Accept(driver.Id);
+        Result result = entity.Accept(driver.Id);
 
-        if (result.IsSuccess)
+        if (result.IsFailure)
         {
-            return Result.WithSuccess();
+            logger.LogGenericError(
+                nameof(AcceptRideCommandHandler),
+                nameof(Accept), entity.Id, result.Error!);
         }
-
-        logger.LogGenericError(nameof(AcceptRideCommandHandler),
-            nameof(Handle), ride.Id, result.Error!);
 
         return result;
     }
 
     private async Task UpdateAsync(
-        RideEntity ride,
+        RideEntity entity,
         CancellationToken cancellationToken)
     {
         await rideWriteRepository.UpdateAsync(
-            ride, cancellationToken);
+            entity, cancellationToken);
 
-        logger.LogProcessed(nameof(AcceptRideCommandHandler),
-            nameof(Handle), ride.Id);
+        logger.LogProcessed(
+            nameof(AcceptRideCommandHandler),
+            nameof(UpdateAsync), entity.Id);
     }
 }

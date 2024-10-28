@@ -24,25 +24,25 @@ public sealed class FinishRideCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<RideEntity> resultRide = await GetRideByIdAsync(
+        Result<RideEntity> resultEntity = await GetRideByIdAsync(
             request.Id, cancellationToken);
 
-        if (resultRide.IsFailure)
+        if (resultEntity.IsFailure)
         {
-            return resultRide;
+            return resultEntity;
         }
 
         double distance = await CalculateDistanceAsync(
             request.Id, cancellationToken);
 
-        Result resultAction = Finish(resultRide.Value!, distance);
+        Result resultAction = Finish(resultEntity.Value!, distance);
 
         if (resultAction.IsFailure)
         {
             return resultAction;
         }
 
-        await UpdateAsync(resultRide.Value!, cancellationToken);
+        await UpdateAsync(resultEntity.Value!, cancellationToken);
 
         return Result.WithSuccess();
     }
@@ -79,29 +79,29 @@ public sealed class FinishRideCommandHandler(
             .Calculate(positionsCood);
     }
 
-    private Result Finish(RideEntity ride, double distance)
+    private Result Finish(RideEntity entity, double distance)
     {
-        Result result = ride.Finish(distance);
+        Result result = entity.Finish(distance);
 
-        if (result.IsSuccess)
+        if (result.IsFailure)
         {
-            return Result.WithSuccess();
+            logger.LogGenericError(
+                nameof(FinishRideCommandHandler),
+                nameof(Finish), entity.Id, result.Error!);
         }
-
-        logger.LogGenericError(nameof(FinishRideCommandHandler),
-            nameof(Handle), ride.Id, result.Error!);
 
         return result;
     }
 
     private async Task UpdateAsync(
-        RideEntity ride,
+        RideEntity entity,
         CancellationToken cancellationToken)
     {
         await rideWriteRepository.UpdateAsync(
-            ride, cancellationToken);
+            entity, cancellationToken);
 
-        logger.LogProcessed(nameof(FinishRideCommandHandler),
-            nameof(Handle), ride.Id);
+        logger.LogProcessed(
+            nameof(FinishRideCommandHandler),
+            nameof(UpdateAsync), entity.Id);
     }
 }

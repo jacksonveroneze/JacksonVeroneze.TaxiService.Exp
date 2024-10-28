@@ -38,7 +38,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\JacksonVeroneze.NET.EntityFramework\src\JacksonVeroneze.NET.EntityFramework\JacksonVeroneze.NET.EntityFramework.csproj" />
     <ProjectReference Include="..\JacksonVeroneze.TaxiService.Exp.Domain\JacksonVeroneze.TaxiService.Exp.Domain.csproj"/>
   </ItemGroup>
 

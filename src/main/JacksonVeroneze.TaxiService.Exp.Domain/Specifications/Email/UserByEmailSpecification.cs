@@ -11,6 +11,6 @@ public class EmailByUserIdSpecification(Guid? userId) :
 {
     public override Expression<Func<EmailEntity, bool>> ToExpression()
     {
-        return userId.HasValue ? spec => spec.UserId == userId : DefaultExpression;
+        return userId.HasValue ? spec => spec.UserId == userId! : DefaultExpression;
     }
 }

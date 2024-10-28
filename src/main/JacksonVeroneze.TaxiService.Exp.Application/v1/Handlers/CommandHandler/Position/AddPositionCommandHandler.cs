@@ -3,7 +3,6 @@ using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Position;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Position;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Ride;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Base;
 using JacksonVeroneze.TaxiService.Exp.Domain.Core.Errors;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 
@@ -13,53 +12,108 @@ public sealed class AddPositionCommandHandler(
     ILogger<AddPositionCommandHandler> logger,
     IRideReadRepository rideReadRepository,
     IPositionWriteRepository positionWriteRepository)
-    : IRequestHandler<AddPositionCommand, Result<VoidResponse>>
+    : IRequestHandler<AddPositionCommand, Result>
 {
-    public async Task<Result<VoidResponse>> Handle(
+    public async Task<Result> Handle(
         AddPositionCommand request,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        RideEntity? ride = await rideReadRepository
-            .GetByIdAsync(request.RideId, cancellationToken);
+        Result<RideEntity> resultEntity = await GetRideByIdAsync(
+            request.RideId, cancellationToken);
 
-        if (ride is null)
+        if (resultEntity.IsFailure)
         {
-            return Result<VoidResponse>
-                .WithError(DomainErrors.RideError.NotFound);
+            return resultEntity;
         }
 
-        if (!ride.InProgress)
+        Result validateStatus = ValidateStatusEntity(resultEntity.Value!);
+
+        if (validateStatus.IsFailure)
         {
-            Error error = DomainErrors.RideError.InvalidStatusAddPosition;
-
-            logger.LogGenericError(nameof(AddPositionCommandHandler),
-                nameof(Handle), error.Message);
-
-            return Result<VoidResponse>
-                .WithError(error);
+            return validateStatus;
         }
 
-        Result<PositionEntity> entity = PositionEntity.Create(
-            ride.Id, request.Latitude, request.Longitude);
+        Result<PositionEntity> entity = FactoryEntity(request);
 
         if (entity.IsFailure)
         {
-            logger.LogGenericError(
-                nameof(AddPositionCommandHandler),
-                nameof(Handle), entity.Error!);
-
-            return Result<VoidResponse>
-                .FromInvalid(entity.Error!);
+            return Result<AddPositionCommandHandler>
+                .FromInvalid(entity.Errors!);
         }
 
+        await CreateAsync(entity.Value!, cancellationToken);
+
+        return Result.WithSuccess();
+    }
+
+    private Result<PositionEntity> FactoryEntity(
+        AddPositionCommand request)
+    {
+        Result<PositionEntity> entity = PositionEntity.Create(
+            request.RideId, request.Latitude, request.Longitude);
+
+        if (entity.IsSuccess)
+        {
+            return entity;
+        }
+
+        logger.LogGenericError(
+            nameof(AddPositionCommandHandler),
+            nameof(FactoryEntity), entity.Errors!.Count());
+
+        return Result<PositionEntity>
+            .FromInvalid(entity.Errors!);
+    }
+
+    private Result ValidateStatusEntity(
+        RideEntity entity)
+    {
+        if (entity.InProgress)
+        {
+            return Result.WithSuccess();
+        }
+
+        Error error = DomainErrors.RideError.InvalidStatusAddPosition;
+
+        logger.LogGenericError(
+            nameof(AddPositionCommandHandler),
+            nameof(ValidateStatusEntity), error.Message);
+
+        return Result.WithError(error);
+    }
+
+    private async Task<Result<RideEntity>> GetRideByIdAsync(
+        Guid id,
+        CancellationToken cancellationToken)
+    {
+        RideEntity? entity = await rideReadRepository
+            .GetByIdAsync(id, cancellationToken);
+
+        if (entity is not null)
+        {
+            return Result<RideEntity>.WithSuccess(entity);
+        }
+
+        Error error = DomainErrors.RideError.NotFound;
+
+        logger.LogNotFound(
+            nameof(AddPositionCommandHandler),
+            nameof(GetRideByIdAsync), id, error);
+
+        return Result<RideEntity>.FromNotFound(error);
+    }
+
+    private async Task CreateAsync(
+        PositionEntity entity,
+        CancellationToken cancellationToken)
+    {
         await positionWriteRepository.CreateAsync(
-            entity.Value!, cancellationToken);
+            entity, cancellationToken);
 
-        logger.LogCreated(nameof(AddPositionCommandHandler),
-            nameof(Handle), entity.Value!.Id);
-
-        return Result<VoidResponse>.WithSuccess();
+        logger.LogCreated(
+            nameof(AddPositionCommandHandler),
+            nameof(CreateAsync), entity.Id);
     }
 }

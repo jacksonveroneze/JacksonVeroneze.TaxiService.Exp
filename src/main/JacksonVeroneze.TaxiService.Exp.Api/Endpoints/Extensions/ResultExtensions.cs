@@ -74,7 +74,7 @@ public static class ResultExtensions
 
     #region DELETE
 
-    public static IResult MatchDelete<T>(this Result<T> result) where T : class
+    public static IResult MatchDelete(this Result result)
     {
         ArgumentNullException.ThrowIfNull(result);
 
@@ -111,6 +111,19 @@ public static class ResultExtensions
 
     #region POST
 
+    public static IResult MatchPost(this Result result)
+    {
+        ArgumentNullException.ThrowIfNull(result);
+
+        return result.Type switch
+        {
+            ResultType.Success => ToCreatedEntity(),
+            ResultType.Invalid => result.ToConflictEntity(),
+            ResultType.Error => result.ToBadRequestEntity(),
+            _ => throw new ArgumentException(nameof(result.Type))
+        };
+    }
+
     public static IResult MatchPost<T>(this Result<T> result) where T : class
     {
         ArgumentNullException.ThrowIfNull(result);
@@ -135,6 +148,11 @@ public static class ResultExtensions
     {
         return Results.Json(result.Value,
             statusCode: (int)HttpStatusCode.Created);
+    }
+
+    private static IResult ToCreatedEntity()
+    {
+        return Results.Created();
     }
 
     private static IResult ToNoContentEntity()

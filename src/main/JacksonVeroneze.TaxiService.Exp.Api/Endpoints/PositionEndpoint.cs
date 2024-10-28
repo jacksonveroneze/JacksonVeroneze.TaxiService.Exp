@@ -1,7 +1,6 @@
 using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Position;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Base;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SharpGrip.FluentValidation.AutoValidation.Endpoints.Extensions;
@@ -23,7 +22,7 @@ public static class PositionEndpoint
                 [FromBody] AddPositionCommand command,
                 CancellationToken cancellationToken) =>
             {
-                Result<VoidResponse> response = await mediator
+                Result response = await mediator
                     .Send(command, cancellationToken);
 
                 return response.MatchPost();

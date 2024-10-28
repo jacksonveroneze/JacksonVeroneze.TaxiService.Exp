@@ -28,8 +28,8 @@ public sealed class RequestRideCommandHandler(
 
         if (resultUser.IsFailure)
         {
-            return Result<RequestRideCommandResponse>.WithError(
-                resultUser.Error!);
+            return Result<RequestRideCommandResponse>
+                .WithError(resultUser.Error!);
         }
 
         Result existsRideByUser = await ExistsActiveRideByUserIdAsync(
@@ -66,12 +66,13 @@ public sealed class RequestRideCommandHandler(
             request.LatitudeFrom, request.LatitudeTo,
             request.LongitudeFrom, request.LongitudeTo);
 
-        if (!entity.IsFailure)
+        if (entity.IsSuccess)
         {
             return entity;
         }
 
-        logger.LogGenericError(nameof(RequestRideCommandHandler),
+        logger.LogGenericError(
+            nameof(RequestRideCommandHandler),
             nameof(Handle), entity.Errors!.Count());
 
         return Result<RideEntity>
@@ -82,16 +83,21 @@ public sealed class RequestRideCommandHandler(
         Guid id,
         CancellationToken cancellationToken)
     {
-        UserEntity? driver = await userReadRepository
+        UserEntity? entity = await userReadRepository
             .GetByIdAsync(id, cancellationToken);
 
-        if (driver is null)
+        if (entity is not null)
         {
-            return Result<UserEntity>
-                .WithError(DomainErrors.UserError.NotFound);
+            return Result<UserEntity>.WithSuccess(entity);
         }
 
-        return Result<UserEntity>.WithSuccess(driver);
+        Error error = DomainErrors.UserError.NotFound;
+
+        logger.LogNotFound(
+            nameof(RequestRideCommandHandler),
+            nameof(GetUserByIdAsync), id, error);
+
+        return Result<UserEntity>.FromNotFound(error);
     }
 
     private async Task<Result> ExistsActiveRideByUserIdAsync(
@@ -106,21 +112,24 @@ public sealed class RequestRideCommandHandler(
             return Result.WithSuccess();
         }
 
-        logger.LogAlreadyExists(nameof(RequestRideCommandHandler),
-            nameof(Handle), id, DomainErrors.RideError.AlreadyByUser);
+        Error error = DomainErrors.RideError.AlreadyByUser;
 
-        return Result.FromInvalid(
-            DomainErrors.RideError.AlreadyByUser);
+        logger.LogAlreadyExists(
+            nameof(RequestRideCommandHandler),
+            nameof(Handle), id, error);
+
+        return Result.FromInvalid(error);
     }
 
     private async Task CreateAsync(
-        RideEntity ride,
+        RideEntity entity,
         CancellationToken cancellationToken)
     {
         await rideWriteRepository.CreateAsync(
-            ride, cancellationToken);
+            entity, cancellationToken);
 
-        logger.LogCreated(nameof(RequestRideCommandHandler),
-            nameof(Handle), ride.Id);
+        logger.LogCreated(
+            nameof(RequestRideCommandHandler),
+            nameof(CreateAsync), entity.Id);
     }
 }
