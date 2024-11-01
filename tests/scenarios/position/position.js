@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import {checker} from '../util.js';
+import {checker, factoryHeaders} from "../util.js";
 
 export function createBatchPositions(baseUrl, headers, idRide, total) {
     for (let i = 0; i < total; i++) {
@@ -9,7 +9,7 @@ export function createBatchPositions(baseUrl, headers, idRide, total) {
             longitude: -51.5048672 + i,
         });
 
-        const response = http.post(`${baseUrl}/positions`, bodyPositionRide, headers);
+        const response = http.post(`${baseUrl}/positions`, bodyPositionRide, factoryHeaders());
         checker(response, 'Position', 'Created', 201)
     }
 }
