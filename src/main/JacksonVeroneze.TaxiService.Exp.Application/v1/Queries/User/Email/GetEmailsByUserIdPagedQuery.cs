@@ -8,7 +8,7 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.User.Email;
 
 public sealed record GetEmailsByUserIdPagedQuery(Guid UserId) :
     PagedQuery(DefaultOrderBy, DefaultOrder),
-    IRequest<Result<GetEmailsByUserIdPagedQueryResponse>>
+    IRequest<Result<GetEmailsByUserIdQueryResponse>>
 {
     private const string DefaultOrderBy = nameof(UserResponse.Name);
 

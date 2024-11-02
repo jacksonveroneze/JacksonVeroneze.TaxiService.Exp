@@ -1,5 +1,6 @@
 using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
+using JacksonVeroneze.TaxiService.Exp.Application.Interfaces;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User.Email;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Email;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
@@ -14,7 +15,8 @@ public sealed class CreateEmailCommandHandler(
     IMapper mapper,
     IUserReadRepository userReadRepository,
     IEmailReadRepository emailReadRepository,
-    IEmailWriteRepository emailWriteRepository)
+    IEmailWriteRepository emailWriteRepository,
+    IUnitOfWork unitOfWork)
     : IRequestHandler<CreateEmailCommand, Result<CreateEmailCommandResponse>>
 {
     public async Task<Result<CreateEmailCommandResponse>> Handle(
@@ -121,6 +123,8 @@ public sealed class CreateEmailCommandHandler(
     {
         await emailWriteRepository.CreateAsync(
             email, cancellationToken);
+
+        await unitOfWork.CommitAsync(cancellationToken);
 
         logger.LogProcessed(
             nameof(CreateEmailCommandHandler),

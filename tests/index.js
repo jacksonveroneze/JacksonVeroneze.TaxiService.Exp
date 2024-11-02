@@ -32,7 +32,7 @@ export const optionsIterations = {
 export const optionsDuration = {
     stages: [
         {duration: '10s', target: 10},
-        {duration: '50s', target: 500}
+        {duration: '20s', target: 250}
     ]
 };
 

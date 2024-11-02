@@ -117,12 +117,12 @@ public static class UserEndpoint
             {
                 GetEmailsByUserIdPagedQuery pagedQuery = new(id);
 
-                Result<GetEmailsByUserIdPagedQueryResponse> response =
+                Result<GetEmailsByUserIdQueryResponse> response =
                     await mediator.Send(pagedQuery, cancellationToken);
 
                 return response.MatchGet();
             })
-            .Produces<GetEmailsByUserIdPagedQueryResponse>()
+            .Produces<GetEmailsByUserIdQueryResponse>()
             .AddDefaultResponseEndpoints();
 
         builder.MapPost("{id:guid:required}/emails", async (

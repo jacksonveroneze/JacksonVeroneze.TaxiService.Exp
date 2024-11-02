@@ -1,4 +1,3 @@
-using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Email;
@@ -16,9 +15,9 @@ public sealed class GetAllEmailsByUserIdQueryHandler(
     IMapper mapper,
     IUserReadRepository userReadRepository,
     IEmailReadRepository emailReadRepository)
-    : IRequestHandler<GetEmailsByUserIdPagedQuery, Result<GetEmailsByUserIdPagedQueryResponse>>
+    : IRequestHandler<GetEmailsByUserIdPagedQuery, Result<GetEmailsByUserIdQueryResponse>>
 {
-    public async Task<Result<GetEmailsByUserIdPagedQueryResponse>> Handle(
+    public async Task<Result<GetEmailsByUserIdQueryResponse>> Handle(
         GetEmailsByUserIdPagedQuery request,
         CancellationToken cancellationToken)
     {
@@ -32,20 +31,20 @@ public sealed class GetAllEmailsByUserIdQueryHandler(
             logger.LogNotFound(nameof(GetAllEmailsByUserIdQueryHandler),
                 nameof(Handle), request.UserId, DomainErrors.UserError.NotFound);
 
-            return Result<GetEmailsByUserIdPagedQueryResponse>.FromNotFound(
+            return Result<GetEmailsByUserIdQueryResponse>.FromNotFound(
                 DomainErrors.UserError.NotFound);
         }
 
         EmailPagedFilter filter = mapper
             .Map<EmailPagedFilter>(request);
 
-        Page<EmailEntity> page = await emailReadRepository
+        ICollection<EmailEntity> page = await emailReadRepository
             .GetPagedAsync(filter, cancellationToken);
 
-        GetEmailsByUserIdPagedQueryResponse response =
-            mapper.Map<GetEmailsByUserIdPagedQueryResponse>(page);
+        GetEmailsByUserIdQueryResponse response =
+            mapper.Map<GetEmailsByUserIdQueryResponse>(page);
 
-        return Result<GetEmailsByUserIdPagedQueryResponse>
+        return Result<GetEmailsByUserIdQueryResponse>
             .WithSuccess(response);
     }
 }

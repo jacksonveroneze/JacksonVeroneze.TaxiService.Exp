@@ -1,10 +1,10 @@
-using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.User;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 using JacksonVeroneze.TaxiService.Exp.Domain.Filters;
+using JacksonVeroneze.TaxiService.Exp.Domain.Results;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.QueryHandler.User;
 
@@ -22,8 +22,14 @@ public sealed class GetUserPagedQueryHandler(
         UserPagedFilter filter = mapper
             .Map<UserPagedFilter>(request);
 
-        Page<UserEntity> page = await userReadRepository
-            .GetPagedAsync(filter, cancellationToken);
+        filter.CursorPagination = new CursorPaginationParameters()
+        {
+            Cursor = request.Cursor,
+            Limit = request.PageSize
+        };
+
+        PaginatedResult<UserEntity> page = await userReadRepository
+            .GetCursorPagedAsync(filter, cancellationToken);
 
         GetUserPagedQueryResponse response =
             mapper.Map<GetUserPagedQueryResponse>(page);

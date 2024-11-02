@@ -20,4 +20,7 @@ public sealed record GetUserPagedQuery() :
 
     [FromQuery(Name = "status")]
     public UserStatus? Status { get; init; }
+
+    [FromQuery(Name = "cursor")]
+    public string? Cursor { get; init; }
 }

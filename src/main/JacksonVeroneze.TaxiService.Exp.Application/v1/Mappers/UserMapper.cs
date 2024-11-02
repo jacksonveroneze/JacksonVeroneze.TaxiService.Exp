@@ -1,8 +1,8 @@
-using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.User;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 using JacksonVeroneze.TaxiService.Exp.Domain.Filters;
+using JacksonVeroneze.TaxiService.Exp.Domain.Results;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Mappers;
 
@@ -24,14 +24,16 @@ public class UserMapper : Profile
         CreateMap<UserEntity, CreateUserCommandResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
 
-        CreateMap<Page<UserEntity>, GetUserPagedQueryResponse>()
-            .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src.Data))
-            .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src.Pagination));
-
         // Query -> Filter
         CreateMap<GetUserPagedQuery, UserPagedFilter>()
             .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name))
             .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status))
-            .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src));
+            .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src))
+            .ForMember(dest => dest.CursorPagination, opts => opts.Ignore());
+
+        CreateMap<PaginatedResult<UserEntity>, GetUserPagedQueryResponse>()
+            .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src.Data))
+            .ForPath(dest => dest.Pagination!.Cursor, opts => opts.MapFrom(src => src.Cursor))
+            .ForPath(dest => dest.Pagination!.HasMore, opts => opts.MapFrom(src => src.HasMore));
     }
 }

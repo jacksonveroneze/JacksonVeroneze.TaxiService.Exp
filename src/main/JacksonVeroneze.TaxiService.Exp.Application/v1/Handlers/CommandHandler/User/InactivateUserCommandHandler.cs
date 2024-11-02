@@ -64,7 +64,7 @@ public sealed class InactivateUserCommandHandler(
 
     private Result Inactivate(UserEntity entity)
     {
-        Result result = entity.Activate(dateTime.UtcNow);
+        Result result = entity.Inactivate(dateTime.UtcNow);
 
         if (result.IsFailure)
         {
