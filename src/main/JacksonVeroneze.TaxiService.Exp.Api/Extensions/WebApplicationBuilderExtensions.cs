@@ -50,6 +50,7 @@ public static class WebApplicationBuilderExtensions
             .AddCultureConfiguration()
             .AddHttpContextAccessor()
             .AddFluentValidationAutoValidation()
+            .AddAppVersioning()
             .AddProblemDetails()
             .AddExceptionHandler<GlobalExceptionHandler>()
             .AddRouting(options =>

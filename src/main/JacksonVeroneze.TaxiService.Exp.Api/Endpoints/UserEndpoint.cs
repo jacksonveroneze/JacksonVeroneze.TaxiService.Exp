@@ -1,3 +1,4 @@
+using Asp.Versioning.Builder;
 using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Api.Models;
@@ -18,9 +19,13 @@ public static class UserEndpoint
     public static WebApplication AddUserEndpoints(
         this WebApplication app)
     {
+        ApiVersionSet apiVersionSet = app.ApiVersion();
+
         RouteGroupBuilder builder =
-            app.MapGroup("/api/v1/users")
+            app.MapGroup("/api/v{version:apiVersion}/users")
                 .WithTags("users")
+                .WithApiVersionSet(apiVersionSet)
+                .MapToApiVersion(1)
                 .AddFluentValidationAutoValidation();
 
         builder.MapGet(string.Empty, async (

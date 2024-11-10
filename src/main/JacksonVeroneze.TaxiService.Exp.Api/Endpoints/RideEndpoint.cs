@@ -1,3 +1,4 @@
+using Asp.Versioning.Builder;
 using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Ride;
@@ -14,9 +15,13 @@ public static class RideEndpoint
     public static WebApplication AddRideEndpoints(
         this WebApplication app)
     {
+        ApiVersionSet apiVersionSet = app.ApiVersion();
+
         RouteGroupBuilder builder =
-            app.MapGroup("/api/v1/rides")
+            app.MapGroup("/api/v{version:apiVersion}/rides")
                 .WithTags("rides")
+                .WithApiVersionSet(apiVersionSet)
+                .MapToApiVersion(1)
                 .AddFluentValidationAutoValidation();
 
         builder.MapGet(string.Empty, async (

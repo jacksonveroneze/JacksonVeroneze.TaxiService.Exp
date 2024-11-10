@@ -1,3 +1,4 @@
+using Asp.Versioning.Builder;
 using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Position;
@@ -12,9 +13,13 @@ public static class PositionEndpoint
     public static WebApplication AddPositionEndpoints(
         this WebApplication app)
     {
+        ApiVersionSet apiVersionSet = app.ApiVersion();
+
         RouteGroupBuilder builder =
-            app.MapGroup("/api/v1/positions")
+            app.MapGroup("/api/v{version:apiVersion}/positions")
                 .WithTags("positions")
+                .WithApiVersionSet(apiVersionSet)
+                .MapToApiVersion(1)
                 .AddFluentValidationAutoValidation();
 
         builder.MapPost(string.Empty, async (
