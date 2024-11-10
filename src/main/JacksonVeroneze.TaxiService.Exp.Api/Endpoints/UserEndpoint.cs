@@ -1,5 +1,6 @@
 using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.Extensions;
+using JacksonVeroneze.TaxiService.Exp.Api.Models;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User.Email;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User;
@@ -24,9 +25,22 @@ public static class UserEndpoint
 
         builder.MapGet(string.Empty, async (
                 [FromServices] IMediator mediator,
-                [AsParameters] GetUserPagedQuery query,
+                [AsParameters] GetUserPagedQueryRequest queryRequest,
                 CancellationToken cancellationToken) =>
             {
+                // FilterDto?[] listFilters =
+                //     GenericFilterParser.Parse(filters);
+                //
+                // OrderDto?[] listOrders =
+                //     GenericOrderParser.Parse(orders);
+                //
+                // Console.WriteLine(listFilters!.Length!);
+                // Console.WriteLine(listOrders!.Length!);
+
+                GetUserPagedQuery query = new()
+                {
+                };
+
                 Result<GetUserPagedQueryResponse> response =
                     await mediator.Send(query, cancellationToken);
 

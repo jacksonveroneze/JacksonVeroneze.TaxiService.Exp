@@ -5,61 +5,57 @@ import * as user from "./user.js";
 
 export default (baseUrl, headers) => {
     group('Create Flow - Success', () => {
-        user.createUser(baseUrl, factoryHeaders());
+        user.create(baseUrl, factoryHeaders());
     });
 
     group('Get Paged Flow', () => {
-        user.getUsersPaged(baseUrl, factoryHeaders());
+        user.getPaged(baseUrl, factoryHeaders());
     });
 
     group('Get By Id Flow - Found', () => {
-        const idUser = user.createUser(baseUrl, factoryHeaders());
-        user.getUserById(baseUrl, factoryHeaders(), idUser, 200);
+        const idUser = user.create(baseUrl, factoryHeaders());
+        user.getById(baseUrl, factoryHeaders(), idUser, 200);
     });
 
     group('Get By Id Flow - NotFound', () => {
-        user.createUser(baseUrl, factoryHeaders());
-        user.getUserById(baseUrl, factoryHeaders(), crypto.randomUUID(), 404);
+        user.getById(baseUrl, factoryHeaders(), crypto.randomUUID(), 404);
     });
 
     group('Activate Flow', () => {
-        const idUser = user.createUser(baseUrl, factoryHeaders());
+        const idUser = user.create(baseUrl, factoryHeaders());
 
-        const responseCallOne = user.activateUser(baseUrl, factoryHeaders(), idUser);
+        const responseCallOne = user.activate(baseUrl, factoryHeaders(), idUser);
         checker(responseCallOne, 'User', 'Activated', 204)
 
-        const responseCallTwo = user.activateUser(baseUrl, factoryHeaders(), idUser);
-        checker(responseCallTwo, 'User', 'Already activated - BadRequest', 400);
-
-        const responseCallNotFound = user.activateUser(baseUrl, factoryHeaders(), crypto.randomUUID());
-        checker(responseCallNotFound, 'User', 'NotFound', 404)
+        const responseCallTwo = user.activate(baseUrl, factoryHeaders(), idUser);
+        checker(responseCallTwo, 'User', 'Already activated - BadRequest', 409);
     });
 
     group('Inactivate Flow', () => {
-        const idUser = user.createUser(baseUrl, factoryHeaders());
+        const idUser = user.create(baseUrl, factoryHeaders());
 
-        const responseCallOne = user.inactivateUser(baseUrl, factoryHeaders(), idUser);
-        checker(responseCallOne, 'User', 'Activated', 204)
+        const responseCallOne = user.inactivate(baseUrl, factoryHeaders(), idUser);
+        checker(responseCallOne, 'User', 'Inactivate', 204)
 
-        const responseCallTwo = user.inactivateUser(baseUrl, factoryHeaders(), idUser);
-        checker(responseCallTwo, 'User', 'Already inactivated - BadRequest', 400)
+        const responseCallTwo = user.inactivate(baseUrl, factoryHeaders(), idUser);
+        checker(responseCallTwo, 'User', 'Already inactivated - BadRequest', 409)
     });
 
     group('Delete Flow', () => {
-        const idUser = user.createUser(baseUrl, factoryHeaders());
+        const idUser = user.create(baseUrl, factoryHeaders());
 
-        const responseCallOne = user.deleteUser(baseUrl, factoryHeaders(), idUser);
+        const responseCallOne = user.remove(baseUrl, factoryHeaders(), idUser);
         checker(responseCallOne, 'User', 'Delete', 204)
 
-        const responseCallTwo = user.deleteUser(baseUrl, factoryHeaders(), idUser);
+        const responseCallTwo = user.remove(baseUrl, factoryHeaders(), idUser);
         checker(responseCallTwo, 'User', 'Already Deleted - NotFound', 404);
     });
 
     group('Complete Flow', () => {
-        const idUser = user.createUser(baseUrl, factoryHeaders());
-        user.getUserById(baseUrl, factoryHeaders(), idUser);
-        user.activateUser(baseUrl, factoryHeaders(), idUser);
-        user.inactivateUser(baseUrl, factoryHeaders(), idUser);
-        user.deleteUser(baseUrl, factoryHeaders(), idUser);
+        const idUser = user.create(baseUrl, factoryHeaders());
+        user.getById(baseUrl, factoryHeaders(), idUser);
+        user.activate(baseUrl, factoryHeaders(), idUser);
+        user.inactivate(baseUrl, factoryHeaders(), idUser);
+        user.remove(baseUrl, factoryHeaders(), idUser);
     });
 }

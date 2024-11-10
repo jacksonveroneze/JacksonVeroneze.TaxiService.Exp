@@ -17,7 +17,7 @@ public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
         RuleFor(request => request)
             .NotNull();
 
-        RuleFor(request => request.Name)
+        RuleFor(request => request.FullName)
             .Cascade(CascadeMode.Stop)
             .NotEmpty()
             .WithError(ValidationErrors.User.NameIsRequired)

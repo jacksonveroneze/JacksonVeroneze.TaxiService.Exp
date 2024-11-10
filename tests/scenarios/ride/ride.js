@@ -1,19 +1,24 @@
 import http from 'k6/http';
 import {checker} from '../util.js';
 
-export function createRider(baseUrl, headers, idUser) {
+export function create(baseUrl, headers, idUser) {
     const body = JSON.stringify({
-        user_id: idUser,
-        latitude_from: 27.4153974,
-        longitude_from: -51.5536425,
-        latitude_to: 27.4153974,
-        longitude_to: -51.5536425,
+        userId: idUser,
+        latitudeFrom: 27.4153974,
+        longitudeFrom: -51.5536425,
+        latitudeTo: 27.4153974,
+        longitudeTo: -51.5536425,
     });
 
     const response = http.post(`${baseUrl}/rides`, body, headers);
     checker(response, 'Ride', 'Created', 201)
 
     return JSON.parse(response.body).data.id;
+}
+
+export function getPaged(baseUrl, headers) {
+    const response = http.get(`${baseUrl}/rides`, headers);
+    checker(response, 'Ride', 'GetPaged', 200)
 }
 
 export function getById(baseUrl, headers, idRide) {

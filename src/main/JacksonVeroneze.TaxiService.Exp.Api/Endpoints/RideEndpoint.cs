@@ -2,7 +2,6 @@ using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Ride;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Ride;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.Ride;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -58,7 +57,7 @@ public static class RideEndpoint
 
                 return response.MatchPost();
             })
-            .Produces<CreateUserCommandResponse>()
+            .Produces<RequestRideCommandResponse>()
             .AddDefaultResponseEndpoints();
 
         builder.MapPut("{id:guid:required}/accept", async (

@@ -10,7 +10,7 @@ public sealed record GetEmailsByUserIdPagedQuery(Guid UserId) :
     PagedQuery(DefaultOrderBy, DefaultOrder),
     IRequest<Result<GetEmailsByUserIdQueryResponse>>
 {
-    private const string DefaultOrderBy = nameof(UserResponse.Name);
+    private const string DefaultOrderBy = nameof(UserResponse.FullName);
 
     private const SortDirection DefaultOrder = SortDirection.Ascending;
 }

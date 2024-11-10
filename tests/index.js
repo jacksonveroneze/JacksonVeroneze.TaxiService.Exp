@@ -36,12 +36,12 @@ export const optionsDuration = {
     ]
 };
 
-export const options = optionsOneIteration;
+export const options = optionsIterations;
 
-// const baseUrl = 'http://localhost:7000/api/v1';
+ const baseUrl = 'http://localhost:7000/api/v1';
 // const baseUrl = 'http://localhost:8080';
 // const baseUrl = 'http://localhost:8085/api/v1';
-const baseUrl = 'http://0.0.0.0:9095';
+//const baseUrl = 'http://0.0.0.0:9095';
 
 export default () => {
     let headers = {
@@ -54,12 +54,12 @@ export default () => {
     group('Endpoint User', () => {
         user(baseUrl, headers);
     });
-
-    group('Endpoint Mail', () => {
-        mail(baseUrl, headers);
-    });
-
-    group('Endpoint Ride', () => {
-        ride(baseUrl, headers);
-    });
+    //
+    // group('Endpoint Mail', () => {
+    //     mail(baseUrl, headers);
+    // });
+    //
+    // group('Endpoint Ride', () => {
+    //     ride(baseUrl, headers);
+    // });
 }

@@ -13,7 +13,7 @@ public class UserMapper : Profile
         // Entity -> Response
         CreateMap<UserEntity, UserResponse>()
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
-            .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name!.Value))
+            .ForMember(dest => dest.FullName, opts => opts.MapFrom(src => src.Name!.Value))
             .ForMember(dest => dest.Birthday, opts => opts.MapFrom(src => src.Birthday))
             .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender))
             .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status));
@@ -24,16 +24,16 @@ public class UserMapper : Profile
         CreateMap<UserEntity, CreateUserCommandResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
 
+        CreateMap<PaginatedResult<UserEntity>, GetUserPagedQueryResponse>()
+            .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src.Data))
+            .ForPath(dest => dest.Pagination!.Next, opts => opts.MapFrom(src => src.Cursor))
+            .ForPath(dest => dest.Pagination!.HasMore, opts => opts.MapFrom(src => src.HasMore));
+
         // Query -> Filter
         CreateMap<GetUserPagedQuery, UserPagedFilter>()
             .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name))
             .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status))
             .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src))
             .ForMember(dest => dest.CursorPagination, opts => opts.Ignore());
-
-        CreateMap<PaginatedResult<UserEntity>, GetUserPagedQueryResponse>()
-            .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src.Data))
-            .ForPath(dest => dest.Pagination!.Cursor, opts => opts.MapFrom(src => src.Cursor))
-            .ForPath(dest => dest.Pagination!.HasMore, opts => opts.MapFrom(src => src.HasMore));
     }
 }

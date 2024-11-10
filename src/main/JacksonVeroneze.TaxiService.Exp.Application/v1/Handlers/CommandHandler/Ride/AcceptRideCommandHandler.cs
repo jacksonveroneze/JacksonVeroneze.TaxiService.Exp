@@ -3,7 +3,6 @@ using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Ride;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Ride;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Base;
 using JacksonVeroneze.TaxiService.Exp.Domain.Core.Errors;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 using RedLockNet;
@@ -40,7 +39,7 @@ public sealed class AcceptRideCommandHandler(
 
         if (distributedLock is null)
         {
-            return Result<VoidResponse>.WithError(
+            return Result.WithError(
                 new Error("Lock", "Lock não adquirido"));
         }
 

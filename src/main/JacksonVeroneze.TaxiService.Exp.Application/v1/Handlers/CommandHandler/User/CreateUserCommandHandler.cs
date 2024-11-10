@@ -87,7 +87,7 @@ public sealed class CreateUserCommandHandler(
         CreateUserCommand request)
     {
         Result<UserEntity> entity = UserEntity.Create(
-            request.Name, request.Birthday!.Value,
+            request.FullName, request.Birthday!.Value,
             request.Gender!.Value, request.Document);
 
         if (entity.IsSuccess)

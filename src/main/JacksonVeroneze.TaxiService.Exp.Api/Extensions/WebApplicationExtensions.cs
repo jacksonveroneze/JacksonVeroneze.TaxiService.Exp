@@ -21,12 +21,6 @@ public static class WebApplicationExtensions
         app.Lifetime.ApplicationStopped.Register(() =>
             Log.Information("ApplicationStopped"));
 
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
-
         app.UseCorrelationId();
         app.UseRouting();
         app.UseHttpMetrics();

@@ -4,6 +4,7 @@ using JacksonVeroneze.NET.Pagination;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Ride;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 using JacksonVeroneze.TaxiService.Exp.Domain.Filters;
+using JacksonVeroneze.TaxiService.Exp.Domain.Results;
 using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Base.Predicate;
 using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Ride;
 
@@ -57,5 +58,40 @@ public class RideReadRepository(
             spec,
             order => order.Id,
             cancellationToken);
+    }
+
+    public async Task<PaginatedResult<RideEntity>> GetCursorPagedAsync(
+        RidePagedFilter filter,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(filter);
+
+        Guid? id = !string.IsNullOrEmpty(filter.CursorPagination?.Cursor)
+            ? Guid.Parse(filter.CursorPagination!.Cursor)
+            : null;
+
+        RideByCursorSpecification specByCursor = new(id);
+        RideByStatusSpecification specByStatus = new(filter.Status);
+        RideByUserIdSpecification specByUserId = new(filter.UserId);
+
+        Expression<Func<RideEntity, bool>> spec =
+            specByCursor.ToExpression()
+                .And(specByStatus.ToExpression()
+                    .And(specByUserId));
+
+        int paginationLimit = filter.CursorPagination!.Limit!.Value;
+        int databaselimit = paginationLimit + 1;
+
+        ICollection<RideEntity> result = await service.GetAllAsync(
+            spec,
+            order => order.Status,
+            databaselimit,
+            cancellationToken: cancellationToken);
+
+        ICollection<RideEntity> data = result.Take(paginationLimit).ToArray();
+        bool hasMore = result.Count > paginationLimit;
+        string? cursor = hasMore ? data.LastOrDefault()?.Id.ToString() : null;
+
+        return new PaginatedResult<RideEntity>(data, hasMore, cursor);
     }
 }

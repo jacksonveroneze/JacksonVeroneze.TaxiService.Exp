@@ -48,23 +48,24 @@ public class UserReadRepository(
     {
         ArgumentNullException.ThrowIfNull(filter);
 
-        Guid? id = !string.IsNullOrEmpty(filter.CursorPagination!.Cursor)
+        Guid? id = !string.IsNullOrEmpty(filter.CursorPagination?.Cursor)
             ? Guid.Parse(filter.CursorPagination!.Cursor)
             : null;
 
         Expression<Func<UserEntity, bool>> spec =
             spec => !id.HasValue || spec.Id > id;
 
-        int limit = filter.CursorPagination.Limit!.Value + 1;
+        int paginationLimit = filter.CursorPagination!.Limit!.Value;
+        int databaselimit = paginationLimit + 1;
 
         ICollection<UserEntity> result = await service.GetAllAsync(
             spec,
             order => order.Name.Value,
-            limit,
+            databaselimit,
             cancellationToken: cancellationToken);
 
-        ICollection<UserEntity> data = result.Take(limit - 1).ToArray();
-        bool hasMore = result.Count > limit - 1;
+        ICollection<UserEntity> data = result.Take(paginationLimit).ToArray();
+        bool hasMore = result.Count > paginationLimit;
         string cursor = data.LastOrDefault()?.Id.ToString() ?? string.Empty;
 
         return new PaginatedResult<UserEntity>(data, hasMore, cursor);

@@ -1,5 +1,4 @@
 ﻿using JacksonVeroneze.NET.Pagination;
-using Microsoft.AspNetCore.Mvc;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.Base;
 
@@ -26,28 +25,24 @@ public abstract record PagedQuery
     private readonly string? _orderBy;
     private readonly SortDirection? _order;
 
-    [FromQuery(Name = "page")]
     public int? Page
     {
         get => _page;
         init => _page = value ?? DefaultPage;
     }
 
-    [FromQuery(Name = "page_size")]
     public int? PageSize
     {
         get => _pageSize;
         init => _pageSize = value ?? DefaulPageSize;
     }
 
-    [FromQuery(Name = "order_by")]
     public string? OrderBy
     {
         get => _orderBy;
         init => _orderBy = value ?? _orderBy;
     }
 
-    [FromQuery(Name = "order")]
     public SortDirection? Order
     {
         get => _order;

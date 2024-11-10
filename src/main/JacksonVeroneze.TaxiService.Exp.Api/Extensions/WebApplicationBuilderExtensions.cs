@@ -34,8 +34,7 @@ public static class WebApplicationBuilderExtensions
         if (!builder.Environment.IsProduction())
         {
             builder.Services
-                .AddEndpointsApiExplorer()
-                .AddSwaggerGen();
+                .AddEndpointsApiExplorer();
         }
 
         builder.Services
