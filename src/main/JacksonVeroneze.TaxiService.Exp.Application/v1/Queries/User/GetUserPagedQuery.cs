@@ -7,7 +7,7 @@ using JacksonVeroneze.TaxiService.Exp.Domain.Enums;
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.User;
 
 public sealed record GetUserPagedQuery() :
-    PagedQuery(DefaultOrderBy, DefaultOrder),
+    PagedCursorQuery(DefaultOrderBy, DefaultOrder),
     IRequest<Result<GetUserPagedQueryResponse>>
 {
     private const string DefaultOrderBy = nameof(UserResponse.FullName);
@@ -17,6 +17,4 @@ public sealed record GetUserPagedQuery() :
     public string? Name { get; init; }
 
     public UserStatus? Status { get; init; }
-
-    public string? Cursor { get; init; }
 }

@@ -11,7 +11,7 @@ public class GetUserPagedQueryValidator : AbstractValidator<GetUserPagedQuery>
     public GetUserPagedQueryValidator()
     {
         RuleFor(request => request)
-            .SetValidator(new PagedRequestValidator());
+            .SetValidator(new PagedCursorRequestValidator());
 
         When(request => !string.IsNullOrEmpty(request.Name), () =>
         {

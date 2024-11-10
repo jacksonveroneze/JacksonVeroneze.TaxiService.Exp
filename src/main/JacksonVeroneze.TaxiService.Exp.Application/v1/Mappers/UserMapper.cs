@@ -33,7 +33,10 @@ public class UserMapper : Profile
         CreateMap<GetUserPagedQuery, UserPagedFilter>()
             .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name))
             .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status))
-            .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src))
-            .ForMember(dest => dest.CursorPagination, opts => opts.Ignore());
+            .ForMember(dest => dest.Pagination, opts => opts.Ignore())
+            .ForPath(dest => dest.CursorPagination!.Cursor,
+                opts => opts.MapFrom(src => src.Cursor))
+            .ForPath(dest => dest.CursorPagination!.Limit,
+                opts => opts.MapFrom(src => src.PageSize));
     }
 }

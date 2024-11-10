@@ -66,7 +66,7 @@ public class UserReadRepository(
 
         ICollection<UserEntity> data = result.Take(paginationLimit).ToArray();
         bool hasMore = result.Count > paginationLimit;
-        string cursor = data.LastOrDefault()?.Id.ToString() ?? string.Empty;
+        string cursor = result.LastOrDefault()?.Id.ToString() ?? string.Empty;
 
         return new PaginatedResult<UserEntity>(data, hasMore, cursor);
     }

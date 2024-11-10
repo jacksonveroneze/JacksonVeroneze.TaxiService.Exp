@@ -22,12 +22,6 @@ public sealed class GetUserPagedQueryHandler(
         UserPagedFilter filter = mapper
             .Map<UserPagedFilter>(request);
 
-        filter.CursorPagination = new CursorPaginationParameters()
-        {
-            Cursor = request.Cursor,
-            Limit = request.PageSize
-        };
-
         PaginatedResult<UserEntity> page = await userReadRepository
             .GetCursorPagedAsync(filter, cancellationToken);
 

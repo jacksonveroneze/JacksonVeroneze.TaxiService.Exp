@@ -9,7 +9,7 @@ public class GetRidePagedQueryValidator : AbstractValidator<GetRidePagedQuery>
     public GetRidePagedQueryValidator()
     {
         RuleFor(request => request)
-            .SetValidator(new PagedRequestValidator());
+            .SetValidator(new PagedCursorRequestValidator());
 
         When(request => request.Status != null, () =>
         {

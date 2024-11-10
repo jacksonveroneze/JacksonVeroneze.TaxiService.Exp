@@ -1,8 +1,8 @@
 namespace JacksonVeroneze.TaxiService.Exp.Domain.Results;
 
-public class CursorPaginationParameters
+public record CursorPaginationParameters
 {
-    public string? Cursor { get; set; }
+    public string? Cursor { get; init; }
 
-    public int? Limit { get; set; }
+    public int? Limit { get; init; }
 }
