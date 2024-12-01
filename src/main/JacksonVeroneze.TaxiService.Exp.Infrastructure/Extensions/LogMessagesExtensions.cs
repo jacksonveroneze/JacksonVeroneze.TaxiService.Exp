@@ -2,7 +2,7 @@ using Microsoft.Extensions.Logging;
 
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
 
-public static partial class LogMessagesExtensions
+internal static partial class LogMessagesExtensions
 {
     #region Common
 
@@ -10,7 +10,7 @@ public static partial class LogMessagesExtensions
         EventId = 1001,
         Level = LogLevel.Warning,
         Message = "{className} - {methodName} - NotFound - Id: '{id}' - Message: '{message}'")]
-    public static partial void LogNotFound(this ILogger logger,
+    internal static partial void LogNotFound(this ILogger logger,
         string className, string methodName, Guid id, string message);
 
     [LoggerMessage(
@@ -19,7 +19,7 @@ public static partial class LogMessagesExtensions
         Message = "{className} - {methodName} - Info - " +
                   "Page: '{page}' - PageSize: '{pageSize}' - " +
                   "TotalElements: '{totalElements}'")]
-    public static partial void LogGetPaged(this ILogger logger,
+    internal static partial void LogGetPaged(this ILogger logger,
         string className, string methodName,
         int page, int pageSize, int totalElements);
 

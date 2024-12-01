@@ -1,6 +1,6 @@
 namespace JacksonVeroneze.TaxiService.Exp.Application.Extensions;
 
-public static partial class LogMessagesExtensions
+internal static partial class LogMessagesExtensions
 {
     #region CommonError
 
@@ -8,14 +8,14 @@ public static partial class LogMessagesExtensions
         EventId = 1000,
         Level = LogLevel.Error,
         Message = "{className} - {methodName} - Error - Message: '{message}'")]
-    public static partial void LogGenericError(this ILogger logger,
+    internal static partial void LogGenericError(this ILogger logger,
         string className, string methodName, string message);
 
     [LoggerMessage(
         EventId = 1001,
         Level = LogLevel.Error,
         Message = "{className} - {methodName} - Error - Count: '{count}'")]
-    public static partial void LogGenericError(this ILogger logger,
+    internal static partial void LogGenericError(this ILogger logger,
         string className, string methodName, int count);
 
     [LoggerMessage(
@@ -23,7 +23,7 @@ public static partial class LogMessagesExtensions
         Level = LogLevel.Error,
         Message = "{className} - {methodName} - Error - " +
                   "Identifier: '{identifier}' - Message: '{message}'")]
-    public static partial void LogGenericError(this ILogger logger,
+    internal static partial void LogGenericError(this ILogger logger,
         string className, string methodName, Guid identifier, string message);
 
     #endregion
@@ -34,7 +34,7 @@ public static partial class LogMessagesExtensions
         EventId = 1010,
         Level = LogLevel.Warning,
         Message = "{className} - {methodName} - Exists - Message: '{message}'")]
-    public static partial void LogAlreadyExists(this ILogger logger,
+    internal static partial void LogAlreadyExists(this ILogger logger,
         string className, string methodName, string message);
 
     [LoggerMessage(
@@ -42,7 +42,7 @@ public static partial class LogMessagesExtensions
         Level = LogLevel.Warning,
         Message = "{className} - {methodName} - Exists - " +
                   "Identifier: '{identifier}' - Message: '{message}'")]
-    public static partial void LogAlreadyExists(this ILogger logger,
+    internal static partial void LogAlreadyExists(this ILogger logger,
         string className, string methodName, Guid identifier, string message);
 
     [LoggerMessage(
@@ -50,7 +50,7 @@ public static partial class LogMessagesExtensions
         Level = LogLevel.Warning,
         Message = "{className} - {methodName} - Exists - " +
                   "Identifier: '{identifier}' - Message: '{message}'")]
-    public static partial void LogAlreadyExists(this ILogger logger,
+    internal static partial void LogAlreadyExists(this ILogger logger,
         string className, string methodName, string identifier, string message);
 
     #endregion
@@ -62,7 +62,7 @@ public static partial class LogMessagesExtensions
         Level = LogLevel.Warning,
         Message = "{className} - {methodName} - NotFound - " +
                   "Identifier: '{identifier}' - Message: '{message}'")]
-    public static partial void LogNotFound(this ILogger logger,
+    internal static partial void LogNotFound(this ILogger logger,
         string className, string methodName, Guid identifier, string message);
 
     #endregion
@@ -74,7 +74,7 @@ public static partial class LogMessagesExtensions
         Level = LogLevel.Information,
         Message = "{className} - {methodName} - Processed Success - " +
                   "Identifier: '{identifier}'")]
-    public static partial void LogProcessed(this ILogger logger,
+    internal static partial void LogProcessed(this ILogger logger,
         string className, string methodName, Guid identifier);
 
     [LoggerMessage(
@@ -82,7 +82,7 @@ public static partial class LogMessagesExtensions
         Level = LogLevel.Warning,
         Message = "{className} - {methodName} - AlreadyProcessed - " +
                   "Identifier: '{identifier}' - Message: '{message}'")]
-    public static partial void LogAlreadyProcessed(this ILogger logger,
+    internal static partial void LogAlreadyProcessed(this ILogger logger,
         string className, string methodName, Guid identifier, string message);
 
     #endregion
@@ -95,7 +95,7 @@ public static partial class LogMessagesExtensions
         Message = "{className} - {methodName} - Info - " +
                   "Page: '{page}' - PageSize: '{pageSize}' - " +
                   "TotalElements: '{totalElements}'")]
-    public static partial void LogGetPaged(this ILogger logger,
+    internal static partial void LogGetPaged(this ILogger logger,
         string className, string methodName,
         int page, int pageSize, int totalElements);
 
@@ -104,7 +104,7 @@ public static partial class LogMessagesExtensions
         Level = LogLevel.Information,
         Message = "{className} - {methodName} - Info - " +
                   "Identifier: '{identifier}'")]
-    public static partial void LogGetById(this ILogger logger,
+    internal static partial void LogGetById(this ILogger logger,
         string className, string methodName, Guid? identifier);
 
     #endregion
@@ -116,7 +116,7 @@ public static partial class LogMessagesExtensions
         Level = LogLevel.Information,
         Message = "{className} - {methodName} - Created - " +
                   "Identifier: '{identifier}'")]
-    public static partial void LogCreated(this ILogger logger,
+    internal static partial void LogCreated(this ILogger logger,
         string className, string methodName, Guid identifier);
 
     #endregion
@@ -128,7 +128,7 @@ public static partial class LogMessagesExtensions
         Level = LogLevel.Information,
         Message = "{className} - {methodName} - Updated - " +
                   "Identifier: '{identifier}'")]
-    public static partial void LogUpdated(this ILogger logger,
+    internal static partial void LogUpdated(this ILogger logger,
         string className, string methodName, Guid identifier);
 
     #endregion
@@ -140,7 +140,7 @@ public static partial class LogMessagesExtensions
         Level = LogLevel.Information,
         Message = "{className} - {methodName} - Deleted - " +
                   "Identifier: '{identifier}'")]
-    public static partial void LogDeleted(this ILogger logger,
+    internal static partial void LogDeleted(this ILogger logger,
         string className, string methodName, Guid identifier);
 
     #endregion
@@ -151,14 +151,14 @@ public static partial class LogMessagesExtensions
         EventId = 5000,
         Level = LogLevel.Information,
         Message = "{className} - {methodName} - Info - Not contain validators")]
-    public static partial void LogNoContainValidators(this ILogger logger,
+    internal static partial void LogNoContainValidators(this ILogger logger,
         string className, string methodName);
 
     [LoggerMessage(
         EventId = 5001,
         Level = LogLevel.Information,
         Message = "{className} - {methodName} - Info - Total violations: '{count}'")]
-    public static partial void LogTotalViolations(this ILogger logger,
+    internal static partial void LogTotalViolations(this ILogger logger,
         string className, string methodName, int count);
 
     #endregion
