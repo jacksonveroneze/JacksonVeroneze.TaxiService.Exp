@@ -13,7 +13,8 @@ public static class MapperExtensions
         MapperConfiguration configuration = new(cfg =>
         {
             cfg.AddProfile<CommonMapper>();
-            cfg.AddProfile<PaginationMapper>();
+            cfg.AddProfile<PaginationCursorMapper>();
+            cfg.AddProfile<PaginationOffsetMapper>();
             cfg.AddProfile<UserMapper>();
             cfg.AddProfile<EmailMapper>();
             cfg.AddProfile<RideMapper>();

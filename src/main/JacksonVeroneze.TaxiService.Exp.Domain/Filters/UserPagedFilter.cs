@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using JacksonVeroneze.NET.Pagination;
+using JacksonVeroneze.NET.Pagination.Cursor;
 using JacksonVeroneze.TaxiService.Exp.Domain.Enums;
-using JacksonVeroneze.TaxiService.Exp.Domain.Results;
 
 namespace JacksonVeroneze.TaxiService.Exp.Domain.Filters;
 
@@ -13,6 +12,4 @@ public record UserPagedFilter
     public UserStatus? Status { get; init; }
 
     public PaginationParameters? Pagination { get; init; }
-
-    public CursorPaginationParameters? CursorPagination { get; set; }
 }

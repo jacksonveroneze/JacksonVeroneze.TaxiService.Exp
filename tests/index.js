@@ -36,7 +36,7 @@ export const optionsDuration = {
     ]
 };
 
-export const options = optionsIterations;
+export const options = optionsOneIteration;
 
  const baseUrl = 'http://localhost:7000/api/v1';
 // const baseUrl = 'http://localhost:8080';

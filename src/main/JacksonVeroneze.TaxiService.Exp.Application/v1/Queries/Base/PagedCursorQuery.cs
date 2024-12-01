@@ -1,4 +1,4 @@
-﻿using JacksonVeroneze.NET.Pagination;
+﻿using JacksonVeroneze.NET.Pagination.Common;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.Base;
 

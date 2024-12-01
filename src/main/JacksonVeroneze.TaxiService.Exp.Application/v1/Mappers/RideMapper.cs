@@ -1,8 +1,8 @@
+using JacksonVeroneze.NET.Pagination.Cursor;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Ride;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.Ride;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 using JacksonVeroneze.TaxiService.Exp.Domain.Filters;
-using JacksonVeroneze.TaxiService.Exp.Domain.Results;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Mappers;
 
@@ -27,19 +27,14 @@ public class RideMapper : Profile
         CreateMap<RideEntity, RequestRideCommandResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
 
-        CreateMap<PaginatedResult<RideEntity>, GetRidePagedQueryResponse>()
+        CreateMap<Page<RideEntity>, GetRidePagedQueryResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src.Data))
-            .ForPath(dest => dest.Pagination!.Next, opts => opts.MapFrom(src => src.Cursor))
-            .ForPath(dest => dest.Pagination!.HasMore, opts => opts.MapFrom(src => src.HasMore));
+            .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src.PageInfo));
 
         // Query -> Filter
         CreateMap<GetRidePagedQuery, RidePagedFilter>()
             .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status))
             .ForMember(dest => dest.UserId, opts => opts.MapFrom(src => src.UserId))
-            .ForMember(dest => dest.Pagination, opts => opts.Ignore())
-            .ForPath(dest => dest.CursorPagination!.Cursor,
-                opts => opts.MapFrom(src => src.Cursor))
-            .ForPath(dest => dest.CursorPagination!.Limit,
-                opts => opts.MapFrom(src => src.PageSize));
+            .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src));
     }
 }

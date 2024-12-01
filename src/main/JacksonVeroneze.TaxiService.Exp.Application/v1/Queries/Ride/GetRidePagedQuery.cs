@@ -1,4 +1,4 @@
-using JacksonVeroneze.NET.Pagination;
+using JacksonVeroneze.NET.Pagination.Common;
 using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Ride;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.Base;

@@ -4,5 +4,5 @@ public record PagedCursorResponse<TType> : BaseResponse
 {
     public ICollection<TType>? Data { get; init; }
 
-    public PageInfoCursorResponse? Pagination { get; set; }
+    public PageInfoCursorResponse? Pagination { get; init; }
 }
