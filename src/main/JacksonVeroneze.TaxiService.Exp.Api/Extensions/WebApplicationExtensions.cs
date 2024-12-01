@@ -5,7 +5,7 @@ using Serilog;
 
 namespace JacksonVeroneze.TaxiService.Exp.Api.Extensions;
 
-public static class WebApplicationExtensions
+internal static class WebApplicationExtensions
 {
     public static WebApplication Configure(
         this WebApplication app)

@@ -23,9 +23,7 @@ public class MoneyValueObject : ValueObject
 
     private static bool IsValid(decimal? value)
     {
-        ArgumentNullException.ThrowIfNull(value);
-
-        return true;
+        return !value.HasValue;
     }
 
     public override string ToString()

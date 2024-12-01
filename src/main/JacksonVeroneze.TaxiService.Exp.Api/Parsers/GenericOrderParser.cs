@@ -2,7 +2,7 @@ using JacksonVeroneze.TaxiService.Exp.Application.v1.Models;
 
 namespace JacksonVeroneze.TaxiService.Exp.Api.Parsers;
 
-public static class GenericOrderParser
+internal static class GenericOrderParser
 {
     public static OrderDto?[] Parse(
         ICollection<string> items)

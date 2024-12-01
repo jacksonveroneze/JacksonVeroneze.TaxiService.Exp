@@ -3,7 +3,7 @@ using Asp.Versioning.Builder;
 
 namespace JacksonVeroneze.TaxiService.Exp.Api.Endpoints.Extensions;
 
-public static class ApiVersionExtensions
+internal static class ApiVersionExtensions
 {
     public static ApiVersionSet ApiVersion(
         this WebApplication app,

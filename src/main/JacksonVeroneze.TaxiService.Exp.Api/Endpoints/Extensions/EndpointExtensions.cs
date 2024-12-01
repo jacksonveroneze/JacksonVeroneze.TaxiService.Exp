@@ -1,6 +1,6 @@
 namespace JacksonVeroneze.TaxiService.Exp.Api.Endpoints.Extensions;
 
-public static class EndpointExtensions
+internal static class EndpointExtensions
 {
     public static RouteHandlerBuilder AddDefaultResponseEndpoints(
         this RouteHandlerBuilder builder)

@@ -25,7 +25,6 @@ public class OutboxMessageEntity : BaseEntityAggregateRoot
     {
         ArgumentException.ThrowIfNullOrEmpty(type);
         ArgumentException.ThrowIfNullOrEmpty(content);
-        ArgumentNullException.ThrowIfNull(occurredOnUtc);
 
         Id = Guid.NewGuid();
         Type = type;

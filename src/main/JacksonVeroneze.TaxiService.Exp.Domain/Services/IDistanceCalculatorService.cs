@@ -4,5 +4,5 @@ namespace JacksonVeroneze.TaxiService.Exp.Domain.Services;
 
 public interface IDistanceCalculatorService
 {
-    double Calculate(IList<CoordinateValueObject> positions);
+    public double Calculate(IList<CoordinateValueObject> positions);
 }

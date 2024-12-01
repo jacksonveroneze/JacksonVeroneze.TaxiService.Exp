@@ -5,15 +5,15 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories
 
 public interface IEmailReadRepository
 {
-    Task<bool> ExistsAsync(
+    public Task<bool> ExistsAsync(
         string email,
         CancellationToken cancellationToken = default);
 
-    Task<EmailEntity?> GetByIdAsync(
+    public Task<EmailEntity?> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken = default);
 
-    Task<ICollection<EmailEntity>> GetPagedAsync(
+    public Task<ICollection<EmailEntity>> GetPagedAsync(
         EmailPagedFilter filter,
         CancellationToken cancellationToken = default);
 }

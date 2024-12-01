@@ -35,7 +35,6 @@ public class RideEntity : BaseEntityAggregateRoot
         CoordinateValueObject coordinateFrom,
         CoordinateValueObject coordinateTo)
     {
-        ArgumentNullException.ThrowIfNull(userId);
         ArgumentNullException.ThrowIfNull(coordinateFrom);
         ArgumentNullException.ThrowIfNull(coordinateTo);
 
@@ -53,10 +52,8 @@ public class RideEntity : BaseEntityAggregateRoot
 
     #region Status
 
-    public Result Accept(Guid driverId)
+    public Result Accept(Guid? driverId)
     {
-        ArgumentNullException.ThrowIfNull(driverId);
-
         if (IsAccepted)
         {
             return Result.FromInvalid(

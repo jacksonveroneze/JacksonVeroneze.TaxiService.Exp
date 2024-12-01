@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JacksonVeroneze.TaxiService.Exp.Api.Models;
 
-public sealed record GetUserPagedQueryRequest
+internal sealed record GetUserPagedQueryRequest
 {
     [FromQuery(Name = "name")]
     public string? Name { get; init; }

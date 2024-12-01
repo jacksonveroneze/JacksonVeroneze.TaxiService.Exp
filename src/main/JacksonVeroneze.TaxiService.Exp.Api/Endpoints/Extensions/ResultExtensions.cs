@@ -3,7 +3,7 @@ using JacksonVeroneze.NET.Result;
 
 namespace JacksonVeroneze.TaxiService.Exp.Api.Endpoints.Extensions;
 
-public static class ResultExtensions
+internal static class ResultExtensions
 {
     #region PROBLEM_DETAILS
 

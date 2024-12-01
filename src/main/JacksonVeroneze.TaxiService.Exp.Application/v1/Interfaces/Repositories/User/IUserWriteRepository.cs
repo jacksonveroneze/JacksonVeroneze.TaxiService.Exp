@@ -4,15 +4,15 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories
 
 public interface IUserWriteRepository
 {
-    Task CreateAsync(
+    public Task CreateAsync(
         UserEntity entity,
         CancellationToken cancellationToken = default);
 
-    Task DeleteAsync(
+    public Task DeleteAsync(
         UserEntity entity,
         CancellationToken cancellationToken = default);
 
-    Task UpdateAsync(
+    public Task UpdateAsync(
         UserEntity entity,
         CancellationToken cancellationToken = default);
 }

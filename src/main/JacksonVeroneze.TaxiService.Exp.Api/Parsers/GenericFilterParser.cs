@@ -2,7 +2,7 @@ using JacksonVeroneze.TaxiService.Exp.Application.v1.Models;
 
 namespace JacksonVeroneze.TaxiService.Exp.Api.Parsers;
 
-public static class GenericFilterParser
+internal static class GenericFilterParser
 {
     public static FilterDto?[] Parse(
         ICollection<string> items)

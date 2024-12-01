@@ -4,11 +4,11 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories
 
 public interface IRideWriteRepository
 {
-    Task CreateAsync(
+    public Task CreateAsync(
         RideEntity entity,
         CancellationToken cancellationToken = default);
 
-    Task UpdateAsync(
+    public Task UpdateAsync(
         RideEntity entity,
         CancellationToken cancellationToken = default);
 }

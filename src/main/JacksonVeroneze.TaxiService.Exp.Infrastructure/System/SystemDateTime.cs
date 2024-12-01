@@ -28,22 +28,20 @@ internal sealed class SystemDateTime : IDateTime
 
     private static TimeZoneInfo GetTimeZoneInfo()
     {
-        string timeZoneId;
+        return TimeZoneInfo
+            .FindSystemTimeZoneById(GetTimeZoneId());
+    }
 
+    private static string GetTimeZoneId()
+    {
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
-            timeZoneId = WindowsBrTimeZone;
-        }
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
-                 || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-        {
-            timeZoneId = LinuxBrTimeZone;
-        }
-        else
-        {
-            throw new InvalidOperationException("Invalid plataform");
+            return WindowsBrTimeZone;
         }
 
-        return TimeZoneInfo.FindSystemTimeZoneById(timeZoneId);
+        return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+               || RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
+            ? LinuxBrTimeZone
+            : throw new InvalidOperationException("Invalid plataform");
     }
 }

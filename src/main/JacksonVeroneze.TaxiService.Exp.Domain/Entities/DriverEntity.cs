@@ -36,8 +36,6 @@ public class DriverEntity : BaseEntityAggregateRoot, IAggregateRoot
         CpfValueObject cpf)
     {
         ArgumentNullException.ThrowIfNull(name);
-        ArgumentNullException.ThrowIfNull(birthday);
-        ArgumentNullException.ThrowIfNull(gender);
         ArgumentNullException.ThrowIfNull(cpf);
 
         Id = Guid.NewGuid();

@@ -4,7 +4,7 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories
 
 public interface IPositionWriteRepository
 {
-    Task CreateAsync(
+    public Task CreateAsync(
         PositionEntity entity,
         CancellationToken cancellationToken = default);
 }

@@ -4,5 +4,5 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.Interfaces.Identity;
 
 public interface IIdentityService
 {
-    Task<UserIdentity> GetAsync();
+    public Task<UserIdentity> GetAsync();
 }

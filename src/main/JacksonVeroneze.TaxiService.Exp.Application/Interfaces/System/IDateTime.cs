@@ -2,11 +2,11 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.Interfaces.System;
 
 public interface IDateTime
 {
-    DateTime UtcNow { get; }
+    public DateTime UtcNow { get; }
 
-    DateTime Now { get; }
+    public DateTime Now { get; }
 
-    DateOnly DateNow { get; }
+    public DateOnly DateNow { get; }
 
-    TimeOnly TimeNow { get; }
+    public TimeOnly TimeNow { get; }
 }

@@ -1,4 +1,5 @@
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.Configurations;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using OpenTelemetry;
 using OpenTelemetry.Instrumentation.AspNetCore;
@@ -27,8 +28,8 @@ public static class OpenTelemetryExtensions
 
         services.Configure<AspNetCoreTraceInstrumentationOptions>(options =>
         {
-            options.Filter = ctx => ctx.Request.Path != "/metrics" &&
-                                    ctx.Request.Path != "/health";
+            options.Filter = new Func<HttpContext, bool>(ctx => ctx.Request.Path != "/metrics" &&
+                                                                ctx.Request.Path != "/health");
         });
 
         services.AddOpenTelemetry()
@@ -38,10 +39,13 @@ public static class OpenTelemetryExtensions
 
         return services;
 
-        void ConfigureResource(ResourceBuilder r) => r.AddService(
-            appConfiguration.AppName,
-            serviceVersion: appConfiguration.AppVersion.ToString(),
-            serviceInstanceId: Environment.MachineName);
+        void ConfigureResource(ResourceBuilder r)
+        {
+            r.AddService(
+                appConfiguration.AppName,
+                serviceVersion: appConfiguration.AppVersion.ToString(),
+                serviceInstanceId: Environment.MachineName);
+        }
     }
 
     private static IOpenTelemetryBuilder AddMetrics(

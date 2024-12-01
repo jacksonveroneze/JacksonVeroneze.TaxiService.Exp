@@ -4,11 +4,11 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories
 
 public interface IEmailWriteRepository
 {
-    Task CreateAsync(
+    public Task CreateAsync(
         EmailEntity entity,
         CancellationToken cancellationToken = default);
 
-    Task DeleteAsync(
+    public Task DeleteAsync(
         EmailEntity entity,
         CancellationToken cancellationToken = default);
 }

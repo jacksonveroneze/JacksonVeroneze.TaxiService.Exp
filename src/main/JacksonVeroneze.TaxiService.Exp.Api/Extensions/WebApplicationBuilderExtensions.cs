@@ -6,7 +6,7 @@ using SharpGrip.FluentValidation.AutoValidation.Endpoints.Extensions;
 
 namespace JacksonVeroneze.TaxiService.Exp.Api.Extensions;
 
-public static class WebApplicationBuilderExtensions
+internal static class WebApplicationBuilderExtensions
 {
     public static WebApplicationBuilder Configure(
         this WebApplicationBuilder builder)

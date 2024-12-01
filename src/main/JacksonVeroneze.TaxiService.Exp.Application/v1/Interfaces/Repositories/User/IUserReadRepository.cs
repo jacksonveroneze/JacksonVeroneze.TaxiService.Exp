@@ -7,15 +7,15 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories
 
 public interface IUserReadRepository
 {
-    Task<UserEntity?> GetByIdAsync(
+    public Task<UserEntity?> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken = default);
 
-    Task<Page<UserEntity>> GetPagedAsync(
+    public Task<Page<UserEntity>> GetPagedAsync(
         UserPagedFilter filter,
         CancellationToken cancellationToken = default);
 
-    Task<PaginatedResult<UserEntity>> GetCursorPagedAsync(
+    public Task<PaginatedResult<UserEntity>> GetCursorPagedAsync(
         UserPagedFilter filter,
         CancellationToken cancellationToken = default);
 }

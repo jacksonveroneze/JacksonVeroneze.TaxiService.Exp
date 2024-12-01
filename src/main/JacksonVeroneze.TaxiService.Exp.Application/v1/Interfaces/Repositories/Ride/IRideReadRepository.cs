@@ -7,19 +7,19 @@ namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories
 
 public interface IRideReadRepository
 {
-    Task<bool> ExistsActiveByUserIdAsync(
+    public Task<bool> ExistsActiveByUserIdAsync(
         Guid userId,
         CancellationToken cancellationToken = default);
 
-    Task<RideEntity?> GetByIdAsync(
+    public Task<RideEntity?> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken = default);
 
-    Task<Page<RideEntity>> GetPagedAsync(
+    public Task<Page<RideEntity>> GetPagedAsync(
         RidePagedFilter filter,
         CancellationToken cancellationToken = default);
 
-    Task<PaginatedResult<RideEntity>> GetCursorPagedAsync(
+    public Task<PaginatedResult<RideEntity>> GetCursorPagedAsync(
         RidePagedFilter filter,
         CancellationToken cancellationToken = default);
 }

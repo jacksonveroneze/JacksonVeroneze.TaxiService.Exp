@@ -8,7 +8,7 @@ using SharpGrip.FluentValidation.AutoValidation.Endpoints.Extensions;
 
 namespace JacksonVeroneze.TaxiService.Exp.Api.Endpoints;
 
-public static class PositionEndpoint
+internal static class PositionEndpoint
 {
     public static WebApplication AddPositionEndpoints(
         this WebApplication app)
