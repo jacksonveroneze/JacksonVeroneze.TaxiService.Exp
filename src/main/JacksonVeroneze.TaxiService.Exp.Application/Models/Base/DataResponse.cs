@@ -1,4 +1,4 @@
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Base;
+namespace JacksonVeroneze.TaxiService.Exp.Application.Models.Base;
 
 public abstract record DataResponse<TType> : BaseResponse
 {

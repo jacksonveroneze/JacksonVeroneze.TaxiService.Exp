@@ -1,14 +1,14 @@
 using JacksonVeroneze.NET.Pagination.Offset;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Base.Pagination.OffsetBased;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.Base;
+using JacksonVeroneze.TaxiService.Exp.Application.Models.Base.Pagination.Offset;
+using JacksonVeroneze.TaxiService.Exp.Application.Queries.Base;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Mappers;
+namespace JacksonVeroneze.TaxiService.Exp.Application.Mappers;
 
 public class PaginationOffsetMapper : Profile
 {
     public PaginationOffsetMapper()
     {
-        CreateMap<PagedQuery, PaginationParameters>()
+        CreateMap<PagedOffsetQuery, PaginationParameters>()
             .ConstructUsing(src =>
                 new PaginationParameters(src.Page!.Value,
                     src.PageSize!.Value, src.OrderBy, src.Order));

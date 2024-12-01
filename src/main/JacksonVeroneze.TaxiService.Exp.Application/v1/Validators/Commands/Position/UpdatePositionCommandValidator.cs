@@ -1,5 +1,6 @@
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Position;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Validators.Base;
+using JacksonVeroneze.TaxiService.Exp.Application.v1.Validators.Queries;
+using JacksonVeroneze.TaxiService.Exp.Application.Validators.Base;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Validators.Commands.Position;
 

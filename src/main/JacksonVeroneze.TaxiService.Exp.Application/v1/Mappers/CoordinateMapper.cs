@@ -1,11 +1,11 @@
-﻿using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Base;
+using JacksonVeroneze.TaxiService.Exp.Application.v1.Models;
 using JacksonVeroneze.TaxiService.Exp.Domain.ValueObjects;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Mappers;
 
-public class CommonMapper : Profile
+public class CoordinateMapper : Profile
 {
-    public CommonMapper()
+    public CoordinateMapper()
     {
         // ValueObject -> Response
         CreateMap<CoordinateValueObject, CoordinateResponse>()

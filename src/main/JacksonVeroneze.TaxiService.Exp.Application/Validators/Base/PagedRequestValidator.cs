@@ -1,10 +1,10 @@
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.Base;
+using JacksonVeroneze.TaxiService.Exp.Application.Queries.Base;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Validators.Base;
+namespace JacksonVeroneze.TaxiService.Exp.Application.Validators.Base;
 
-public class PagedRequestValidator : AbstractValidator<PagedQuery>
+public class PagedOffsetRequestValidator : AbstractValidator<PagedOffsetQuery>
 {
-    public PagedRequestValidator()
+    public PagedOffsetRequestValidator()
     {
         RuleFor(request => request)
             .NotNull();

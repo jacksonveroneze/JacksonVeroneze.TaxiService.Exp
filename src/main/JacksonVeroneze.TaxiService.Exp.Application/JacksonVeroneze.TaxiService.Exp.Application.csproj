@@ -20,4 +20,10 @@
     <ProjectReference Include="..\JacksonVeroneze.TaxiService.Exp.Domain\JacksonVeroneze.TaxiService.Exp.Domain.csproj"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="Queries\" />
+    <Folder Include="Validators\" />
+  </ItemGroup>
+
 </Project>

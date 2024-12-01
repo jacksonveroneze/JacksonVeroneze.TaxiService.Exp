@@ -1,4 +1,4 @@
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Validators.Base;
+namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Validators.Queries;
 
 public class CoordinateValidator : AbstractValidator<float>
 {

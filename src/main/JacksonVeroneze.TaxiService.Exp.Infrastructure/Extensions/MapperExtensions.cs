@@ -1,4 +1,5 @@
 using AutoMapper;
+using JacksonVeroneze.TaxiService.Exp.Application.Mappers;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Mappers;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,6 +16,7 @@ public static class MapperExtensions
             cfg.AddProfile<CommonMapper>();
             cfg.AddProfile<PaginationCursorMapper>();
             cfg.AddProfile<PaginationOffsetMapper>();
+            cfg.AddProfile<CoordinateMapper>();
             cfg.AddProfile<UserMapper>();
             cfg.AddProfile<EmailMapper>();
             cfg.AddProfile<RideMapper>();

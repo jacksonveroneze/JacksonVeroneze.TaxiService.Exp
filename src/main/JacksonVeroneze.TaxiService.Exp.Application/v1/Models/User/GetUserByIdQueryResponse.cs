@@ -1,4 +1,4 @@
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Base;
+using JacksonVeroneze.TaxiService.Exp.Application.Models.Base;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User;
 

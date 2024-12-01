@@ -1,5 +1,5 @@
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.Ride;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Validators.Base;
+using JacksonVeroneze.TaxiService.Exp.Application.Validators.Base;
 using JacksonVeroneze.TaxiService.Exp.Domain.Enums;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Validators.Queries.Ride;

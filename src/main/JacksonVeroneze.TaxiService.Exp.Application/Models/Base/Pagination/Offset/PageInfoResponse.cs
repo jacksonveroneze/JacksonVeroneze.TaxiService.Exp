@@ -1,4 +1,4 @@
-﻿namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Base.Pagination.OffsetBased;
+﻿namespace JacksonVeroneze.TaxiService.Exp.Application.Models.Base.Pagination.Offset;
 
 public sealed record PageInfoResponse
 {

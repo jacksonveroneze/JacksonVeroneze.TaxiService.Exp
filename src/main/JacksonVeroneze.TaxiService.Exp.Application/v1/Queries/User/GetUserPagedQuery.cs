@@ -1,7 +1,7 @@
 using JacksonVeroneze.NET.Pagination.Common;
 using JacksonVeroneze.NET.Result;
+using JacksonVeroneze.TaxiService.Exp.Application.Queries.Base;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.Base;
 using JacksonVeroneze.TaxiService.Exp.Domain.Enums;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.User;

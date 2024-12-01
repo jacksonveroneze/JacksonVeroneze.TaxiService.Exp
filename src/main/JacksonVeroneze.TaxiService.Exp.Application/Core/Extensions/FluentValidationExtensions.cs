@@ -2,7 +2,7 @@ using JacksonVeroneze.NET.Result;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.Core.Extensions;
 
-public static class FluentValidationExtensions
+internal static class FluentValidationExtensions
 {
     public static IRuleBuilderOptions<T, TProperty> WithError<T, TProperty>(
         this IRuleBuilderOptions<T, TProperty> rule, Error error)

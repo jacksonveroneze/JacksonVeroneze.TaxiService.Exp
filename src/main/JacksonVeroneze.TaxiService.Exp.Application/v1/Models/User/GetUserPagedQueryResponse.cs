@@ -1,6 +1,6 @@
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Base.Pagination.CursorBased;
+using JacksonVeroneze.TaxiService.Exp.Application.Models.Base.Pagination.Cursor;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User;
 
 public sealed record GetUserPagedQueryResponse
-    : PagedCursorResponse<UserResponse>;
+    : PagedResponse<UserResponse>;

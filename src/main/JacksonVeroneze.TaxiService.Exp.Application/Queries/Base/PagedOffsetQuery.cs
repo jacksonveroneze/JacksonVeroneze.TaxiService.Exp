@@ -1,12 +1,14 @@
 ﻿using JacksonVeroneze.NET.Pagination.Common;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.Base;
+namespace JacksonVeroneze.TaxiService.Exp.Application.Queries.Base;
 
-public abstract record PagedCursorQuery
+public abstract record PagedOffsetQuery
 {
+    private const int DefaultPage = 1;
+
     private const int DefaulPageSize = 20;
 
-    protected PagedCursorQuery(string defaultOrderBy, SortDirection defaultOrder)
+    protected PagedOffsetQuery(string defaultOrderBy, SortDirection defaultOrder)
     {
         ArgumentException.ThrowIfNullOrEmpty(nameof(defaultOrderBy));
         ArgumentException.ThrowIfNullOrEmpty(nameof(defaultOrder));
@@ -14,14 +16,20 @@ public abstract record PagedCursorQuery
         _orderBy = defaultOrderBy;
         _order = defaultOrder;
 
+        _page = DefaultPage;
         _pageSize = DefaulPageSize;
     }
 
+    private readonly int _page;
     private readonly int _pageSize;
     private readonly string? _orderBy;
     private readonly SortDirection? _order;
 
-    public string? Cursor { get; init; }
+    public int? Page
+    {
+        get => _page;
+        init => _page = value ?? DefaultPage;
+    }
 
     public int? PageSize
     {
