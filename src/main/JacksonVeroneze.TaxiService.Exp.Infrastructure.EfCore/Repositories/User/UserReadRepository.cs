@@ -40,7 +40,7 @@ public class UserReadRepository(
 
         if (id.HasValue)
         {
-            UserByIdSpecification specById = new(id!.Value);
+            UserCursorSpecification specById = new(id!.Value);
 
             spec = spec.And(specById);
         }

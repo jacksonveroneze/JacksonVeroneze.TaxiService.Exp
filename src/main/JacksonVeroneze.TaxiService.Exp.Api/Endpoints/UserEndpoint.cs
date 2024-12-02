@@ -9,7 +9,6 @@ using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.User.Email;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using SharpGrip.FluentValidation.AutoValidation.Endpoints.Extensions;
 
 namespace JacksonVeroneze.TaxiService.Exp.Api.Endpoints;
 
@@ -24,8 +23,7 @@ internal static class UserEndpoint
             app.MapGroup("/api/v{version:apiVersion}/users")
                 .WithTags("users")
                 .WithApiVersionSet(apiVersionSet)
-                .MapToApiVersion(1)
-                .AddFluentValidationAutoValidation();
+                .MapToApiVersion(1);
 
         builder.MapGet(string.Empty, async (
                 [FromServices] IMediator mediator,

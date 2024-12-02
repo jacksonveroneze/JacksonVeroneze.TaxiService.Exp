@@ -8,6 +8,8 @@ public sealed record UserResponse
 
     public string? FullName { get; init; }
 
+    public string? Document { get; init; }
+
     public DateOnly? Birthday { get; init; }
 
     public GenderType? Gender { get; init; }
