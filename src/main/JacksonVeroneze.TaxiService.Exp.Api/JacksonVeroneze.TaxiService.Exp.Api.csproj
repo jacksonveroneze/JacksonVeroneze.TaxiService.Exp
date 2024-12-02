@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="HotChocolate" Version="14.1.0"/>
+    <PackageReference Include="HotChocolate.AspNetCore" Version="14.1.0"/>
+    <PackageReference Include="HotChocolate.Types" Version="14.1.0"/>
+
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0"/>
+    <PackageReference Include="Scalar.AspNetCore" Version="1.2.45"/>
+
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

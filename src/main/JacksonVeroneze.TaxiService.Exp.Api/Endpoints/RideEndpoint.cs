@@ -1,5 +1,5 @@
 using Asp.Versioning.Builder;
-using JacksonVeroneze.NET.Result;
+using Result = JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Ride;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Ride;
@@ -29,7 +29,7 @@ internal static class RideEndpoint
                 [AsParameters] GetRidePagedQuery query,
                 CancellationToken cancellationToken) =>
             {
-                Result<GetRidePagedQueryResponse> response =
+                Result.Result<GetRidePagedQueryResponse> response =
                     await mediator.Send(query, cancellationToken);
 
                 return response.MatchGet();
@@ -44,7 +44,7 @@ internal static class RideEndpoint
             {
                 GetRideByIdQuery query = new(id);
 
-                Result<GetRideByIdQueryResponse> response =
+                Result.Result<GetRideByIdQueryResponse> response =
                     await mediator.Send(query, cancellationToken);
 
                 return response.MatchGetById();
@@ -57,7 +57,7 @@ internal static class RideEndpoint
                 [FromBody] RequestRideCommand command,
                 CancellationToken cancellationToken) =>
             {
-                Result<RequestRideCommandResponse> response =
+                Result.Result<RequestRideCommandResponse> response =
                     await mediator.Send(command, cancellationToken);
 
                 return response.MatchPost();
@@ -70,7 +70,7 @@ internal static class RideEndpoint
                 [AsParameters] AcceptRideCommand command,
                 CancellationToken cancellationToken) =>
             {
-                Result response = await mediator
+                Result.Result response = await mediator
                     .Send(command, cancellationToken);
 
                 return response.MatchPut();
@@ -85,7 +85,7 @@ internal static class RideEndpoint
             {
                 StartRideCommand command = new(id);
 
-                Result response = await mediator
+                Result.Result response = await mediator
                     .Send(command, cancellationToken);
 
                 return response.MatchPut();
@@ -100,7 +100,7 @@ internal static class RideEndpoint
             {
                 FinishRideCommand command = new(id);
 
-                Result response = await mediator
+                Result.Result response = await mediator
                     .Send(command, cancellationToken);
 
                 return response.MatchPut();
@@ -115,7 +115,7 @@ internal static class RideEndpoint
             {
                 CancelRideCommand command = new(id);
 
-                Result response =
+                Result.Result response =
                     await mediator.Send(command, cancellationToken);
 
                 return response.MatchPut();

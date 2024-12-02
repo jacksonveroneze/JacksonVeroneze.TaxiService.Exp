@@ -1,6 +1,7 @@
 using CorrelationId;
 using JacksonVeroneze.TaxiService.Exp.Api.Endpoints;
 using Prometheus;
+using Scalar.AspNetCore;
 using Serilog;
 
 namespace JacksonVeroneze.TaxiService.Exp.Api.Extensions;
@@ -21,6 +22,12 @@ internal static class WebApplicationExtensions
         app.Lifetime.ApplicationStopped.Register(() =>
             Log.Information("ApplicationStopped"));
 
+        if (app.Environment.IsDevelopment())
+        {
+            app.MapOpenApi();
+            app.MapScalarApiReference();
+        }
+
         app.UseCorrelationId();
         app.UseRouting();
         app.UseHttpMetrics();
@@ -28,6 +35,8 @@ internal static class WebApplicationExtensions
         app.UseExceptionHandler();
 
         app.UseHealthChecks("/health");
+
+        app.MapGraphQL();
 
         app.AddUserEndpoints();
         app.AddRideEndpoints();

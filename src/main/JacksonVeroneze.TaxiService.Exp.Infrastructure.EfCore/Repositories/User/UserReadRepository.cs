@@ -4,6 +4,7 @@ using JacksonVeroneze.NET.Pagination.Cursor;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 using JacksonVeroneze.TaxiService.Exp.Domain.Filters;
+using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Base.Predicate;
 using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.User;
 
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.User;
@@ -31,8 +32,18 @@ public class UserReadRepository(
             ? Guid.Parse(filter.Pagination!.Cursor)
             : null;
 
+        UserByNameSpecification specByName = new(filter.Name);
+        UserByStatusSpecification specByStatus = new(filter.Status);
+
         Expression<Func<UserEntity, bool>> spec =
-            spec => !id.HasValue || spec.Id > id;
+            specByName.ToExpression().And(specByStatus);
+
+        if (id.HasValue)
+        {
+            UserByIdSpecification specById = new(id!.Value);
+
+            spec = spec.And(specById);
+        }
 
         int paginationLimit = filter.Pagination!.Limit!.Value;
         int databaselimit = paginationLimit + 1;

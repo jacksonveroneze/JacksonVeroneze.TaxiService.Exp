@@ -1,5 +1,5 @@
 using System.Net;
-using JacksonVeroneze.NET.Result;
+using Result = JacksonVeroneze.NET.Result;
 
 namespace JacksonVeroneze.TaxiService.Exp.Api.Endpoints.Extensions;
 
@@ -8,7 +8,7 @@ internal static class ResultExtensions
     #region PROBLEM_DETAILS
 
     private static IResult ToValidationProblem(
-        this Result result,
+        this Result.Result result,
         HttpStatusCode statusCode)
     {
         string message = statusCode switch
@@ -45,27 +45,27 @@ internal static class ResultExtensions
 
     #region GET
 
-    public static IResult MatchGet<T>(this Result<T> result) where T : class
+    public static IResult MatchGet<T>(this Result.Result<T> result) where T : class
     {
         ArgumentNullException.ThrowIfNull(result);
 
         return result.Type switch
         {
-            ResultType.Success => result.ToOkEntity(),
-            ResultType.Error => result.ToBadRequestEntity(),
+            Result.ResultType.Success => result.ToOkEntity(),
+            Result.ResultType.Error => result.ToBadRequestEntity(),
             _ => throw new ArgumentException(nameof(result.Type))
         };
     }
 
-    public static IResult MatchGetById<T>(this Result<T> result) where T : class
+    public static IResult MatchGetById<T>(this Result.Result<T> result) where T : class
     {
         ArgumentNullException.ThrowIfNull(result);
 
         return result.Type switch
         {
-            ResultType.Success => result.ToOkEntity(),
-            ResultType.Error => result.ToBadRequestEntity(),
-            ResultType.NotFound => result.ToNotFoundEntity(),
+            Result.ResultType.Success => result.ToOkEntity(),
+            Result.ResultType.Error => result.ToBadRequestEntity(),
+            Result.ResultType.NotFound => result.ToNotFoundEntity(),
             _ => throw new ArgumentException(nameof(result.Type))
         };
     }
@@ -74,16 +74,16 @@ internal static class ResultExtensions
 
     #region DELETE
 
-    public static IResult MatchDelete(this Result result)
+    public static IResult MatchDelete(this Result.Result result)
     {
         ArgumentNullException.ThrowIfNull(result);
 
         return result.Type switch
         {
-            ResultType.Success => Results.NoContent(),
-            ResultType.Error or ResultType.Invalid =>
+            Result.ResultType.Success => Results.NoContent(),
+            Result.ResultType.Error or Result.ResultType.Invalid =>
                 Results.BadRequest(result.ToValidationProblem(HttpStatusCode.BadRequest)),
-            ResultType.NotFound => Results.NotFound(
+            Result.ResultType.NotFound => Results.NotFound(
                 result.ToValidationProblem(HttpStatusCode.NotFound)),
             _ => throw new ArgumentException(nameof(result.Type))
         };
@@ -93,16 +93,16 @@ internal static class ResultExtensions
 
     #region PUT
 
-    public static IResult MatchPut(this Result result)
+    public static IResult MatchPut(this Result.Result result)
     {
         ArgumentNullException.ThrowIfNull(result);
 
         return result.Type switch
         {
-            ResultType.Success => ToNoContentEntity(),
-            ResultType.Invalid => result.ToConflictEntity(),
-            ResultType.Error => result.ToBadRequestEntity(),
-            ResultType.NotFound => result.ToNotFoundEntity(),
+            Result.ResultType.Success => ToNoContentEntity(),
+            Result.ResultType.Invalid => result.ToConflictEntity(),
+            Result.ResultType.Error => result.ToBadRequestEntity(),
+            Result.ResultType.NotFound => result.ToNotFoundEntity(),
             _ => throw new ArgumentException(nameof(result.Type))
         };
     }
@@ -111,40 +111,40 @@ internal static class ResultExtensions
 
     #region POST
 
-    public static IResult MatchPost(this Result result)
+    public static IResult MatchPost(this Result.Result result)
     {
         ArgumentNullException.ThrowIfNull(result);
 
         return result.Type switch
         {
-            ResultType.Success => ToCreatedEntity(),
-            ResultType.Invalid => result.ToConflictEntity(),
-            ResultType.Error => result.ToBadRequestEntity(),
+            Result.ResultType.Success => ToCreatedEntity(),
+            Result.ResultType.Invalid => result.ToConflictEntity(),
+            Result.ResultType.Error => result.ToBadRequestEntity(),
             _ => throw new ArgumentException(nameof(result.Type))
         };
     }
 
-    public static IResult MatchPost<T>(this Result<T> result) where T : class
+    public static IResult MatchPost<T>(this Result.Result<T> result) where T : class
     {
         ArgumentNullException.ThrowIfNull(result);
 
         return result.Type switch
         {
-            ResultType.Success => result.ToCreatedEntity(),
-            ResultType.Invalid => result.ToConflictEntity(),
-            ResultType.Error => result.ToBadRequestEntity(),
+            Result.ResultType.Success => result.ToCreatedEntity(),
+            Result.ResultType.Invalid => result.ToConflictEntity(),
+            Result.ResultType.Error => result.ToBadRequestEntity(),
             _ => throw new ArgumentException(nameof(result.Type))
         };
     }
 
     #endregion
 
-    private static IResult ToOkEntity<T>(this Result<T> result)
+    private static IResult ToOkEntity<T>(this Result.Result<T> result)
     {
         return Results.Ok(result.Value);
     }
 
-    private static IResult ToCreatedEntity<T>(this Result<T> result)
+    private static IResult ToCreatedEntity<T>(this Result.Result<T> result)
     {
         return Results.Json(result.Value,
             statusCode: (int)HttpStatusCode.Created);
@@ -160,13 +160,13 @@ internal static class ResultExtensions
         return Results.NoContent();
     }
 
-    private static IResult ToNotFoundEntity(this Result result)
+    private static IResult ToNotFoundEntity(this Result.Result result)
     {
         return result.ToValidationProblem(
             HttpStatusCode.NotFound);
     }
 
-    private static IResult ToConflictEntity(this Result result)
+    private static IResult ToConflictEntity(this Result.Result result)
     {
         return result.ToValidationProblem(
             HttpStatusCode.Conflict);
@@ -178,7 +178,7 @@ internal static class ResultExtensions
     //         HttpStatusCode.UnprocessableEntity);
     // }
 
-    private static IResult ToBadRequestEntity(this Result result)
+    private static IResult ToBadRequestEntity(this Result.Result result)
     {
         return result.ToValidationProblem(
             HttpStatusCode.BadRequest);

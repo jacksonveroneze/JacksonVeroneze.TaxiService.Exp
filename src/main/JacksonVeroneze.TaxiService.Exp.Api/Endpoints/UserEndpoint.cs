@@ -1,7 +1,6 @@
 using Asp.Versioning.Builder;
-using JacksonVeroneze.NET.Result;
+using Result = JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.Extensions;
-using JacksonVeroneze.TaxiService.Exp.Api.Models;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User.Email;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User;
@@ -30,23 +29,10 @@ internal static class UserEndpoint
 
         builder.MapGet(string.Empty, async (
                 [FromServices] IMediator mediator,
-                [AsParameters] GetUserPagedQueryRequest queryRequest,
+                [AsParameters] GetUserPagedQuery query,
                 CancellationToken cancellationToken) =>
             {
-                // FilterDto?[] listFilters =
-                //     GenericFilterParser.Parse(filters);
-                //
-                // OrderDto?[] listOrders =
-                //     GenericOrderParser.Parse(orders);
-                //
-                // Console.WriteLine(listFilters!.Length!);
-                // Console.WriteLine(listOrders!.Length!);
-
-                GetUserPagedQuery query = new()
-                {
-                };
-
-                Result<GetUserPagedQueryResponse> response =
+                Result.Result<GetUserPagedQueryResponse> response =
                     await mediator.Send(query, cancellationToken);
 
                 return response.MatchGet();
@@ -61,7 +47,7 @@ internal static class UserEndpoint
             {
                 GetUserByIdQuery query = new(id);
 
-                Result<GetUserByIdQueryResponse> response =
+                Result.Result<GetUserByIdQueryResponse> response =
                     await mediator.Send(query, cancellationToken);
 
                 return response.MatchGetById();
@@ -74,7 +60,7 @@ internal static class UserEndpoint
                 [FromBody] CreateUserCommand command,
                 CancellationToken cancellationToken) =>
             {
-                Result<CreateUserCommandResponse> response =
+                Result.Result<CreateUserCommandResponse> response =
                     await mediator.Send(command, cancellationToken);
 
                 return response.MatchPost();
@@ -89,7 +75,7 @@ internal static class UserEndpoint
             {
                 DeleteUserCommand command = new(id);
 
-                Result response =
+                Result.Result response =
                     await mediator.Send(command, cancellationToken);
 
                 return response.MatchDelete();
@@ -104,7 +90,7 @@ internal static class UserEndpoint
             {
                 ActivateUserCommand command = new(id);
 
-                Result response =
+                Result.Result response =
                     await mediator.Send(command, cancellationToken);
 
                 return response.MatchPut();
@@ -119,7 +105,7 @@ internal static class UserEndpoint
             {
                 InactivateUserCommand command = new(id);
 
-                Result response =
+                Result.Result response =
                     await mediator.Send(command, cancellationToken);
 
                 return response.MatchPut();
@@ -136,7 +122,7 @@ internal static class UserEndpoint
             {
                 GetEmailsByUserIdPagedQuery pagedQuery = new(id);
 
-                Result<GetEmailsByUserIdQueryResponse> response =
+                Result.Result<GetEmailsByUserIdQueryResponse> response =
                     await mediator.Send(pagedQuery, cancellationToken);
 
                 return response.MatchGet();
@@ -149,7 +135,7 @@ internal static class UserEndpoint
                 [AsParameters] CreateEmailCommand command,
                 CancellationToken cancellationToken) =>
             {
-                Result<CreateEmailCommandResponse> response =
+                Result.Result<CreateEmailCommandResponse> response =
                     await mediator.Send(command, cancellationToken);
 
                 return response.MatchPost();
@@ -165,7 +151,7 @@ internal static class UserEndpoint
             {
                 DeleteEmailCommand command = new(id, emailId);
 
-                Result response =
+                Result.Result response =
                     await mediator.Send(command, cancellationToken);
 
                 return response.MatchPut();

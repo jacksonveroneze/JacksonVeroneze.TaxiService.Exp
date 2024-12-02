@@ -1,3 +1,5 @@
+using JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Queries;
+using JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Types;
 using JacksonVeroneze.TaxiService.Exp.Api.Middlewares;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.Configurations;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
@@ -34,7 +36,7 @@ internal static class WebApplicationBuilderExtensions
         if (!builder.Environment.IsProduction())
         {
             builder.Services
-                .AddEndpointsApiExplorer();
+                .AddOpenApi();
         }
 
         builder.Services
@@ -66,6 +68,11 @@ internal static class WebApplicationBuilderExtensions
             .AddCached(appConfiguration)
             .AddDatabaseEfCore(appConfiguration)
             .AddRabbitMq();
+
+        builder.Services
+            .AddGraphQLServer()
+            .AddQueryType<UserQuery>()
+            .AddType<UserType>();
 
         return builder;
     }
