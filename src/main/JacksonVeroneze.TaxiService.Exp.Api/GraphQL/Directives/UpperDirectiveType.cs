@@ -1,6 +1,6 @@
 namespace JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Directives;
 
-public class UpperDirectiveType : DirectiveType
+internal class UpperDirectiveType : DirectiveType
 {
     private const string DirectiveName = "upper";
 

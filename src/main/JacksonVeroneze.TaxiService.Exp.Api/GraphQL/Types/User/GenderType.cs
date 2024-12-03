@@ -2,7 +2,7 @@ using JacksonVeroneze.TaxiService.Exp.Domain.Enums;
 
 namespace JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Types.User;
 
-public class GenderType
+internal class GenderType
     : EnumType<Gender>
 {
     protected override void Configure(

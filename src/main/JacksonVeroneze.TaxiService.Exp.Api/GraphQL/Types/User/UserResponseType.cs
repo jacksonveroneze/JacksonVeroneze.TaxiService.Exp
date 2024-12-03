@@ -2,7 +2,7 @@ using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User;
 
 namespace JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Types.User;
 
-public class UserResponseType : ObjectType<UserResponse>
+internal class UserResponseType : ObjectType<UserResponse>
 {
     protected override void Configure(
         IObjectTypeDescriptor<UserResponse> descriptor)

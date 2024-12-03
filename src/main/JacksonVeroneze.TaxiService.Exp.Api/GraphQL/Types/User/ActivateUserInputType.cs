@@ -2,7 +2,7 @@ using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User;
 
 namespace JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Types.User;
 
-public class ActivateUserInputType
+internal class ActivateUserInputType
     : InputObjectType<ActivateUserCommand>
 {
     protected override void Configure(

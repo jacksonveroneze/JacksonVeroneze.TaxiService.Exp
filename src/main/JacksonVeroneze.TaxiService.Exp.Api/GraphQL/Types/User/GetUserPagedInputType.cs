@@ -2,7 +2,7 @@ using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.User;
 
 namespace JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Types.User;
 
-public class GetUserPagedInputType
+internal class GetUserPagedInputType
     : InputObjectType<GetUserPagedQuery>
 {
     protected override void Configure(

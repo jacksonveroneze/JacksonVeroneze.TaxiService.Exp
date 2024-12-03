@@ -1,6 +1,6 @@
 namespace JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Directives;
 
-public class LowerDirectiveType : DirectiveType
+internal class LowerDirectiveType : DirectiveType
 {
     private const string DirectiveName = "lower";
 

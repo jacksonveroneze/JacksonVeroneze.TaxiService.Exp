@@ -1,6 +1,6 @@
 namespace JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Directives;
 
-public class FormatCpfDirectiveType : DirectiveType
+internal class FormatCpfDirectiveType : DirectiveType
 {
     private const string DirectiveName = "formatcpf";
 
