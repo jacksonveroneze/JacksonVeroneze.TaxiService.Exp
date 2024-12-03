@@ -10,6 +10,7 @@ public class LowerDirectiveType : DirectiveType
         ArgumentNullException.ThrowIfNull(descriptor);
 
         descriptor.Name(DirectiveName);
+
         descriptor.Location(
             DirectiveLocation.FieldDefinition |
             DirectiveLocation.Field);

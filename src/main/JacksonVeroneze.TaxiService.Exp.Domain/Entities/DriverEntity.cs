@@ -15,7 +15,7 @@ public class DriverEntity : BaseEntityAggregateRoot, IAggregateRoot
 
     public DateOnly Birthday { get; private set; }
 
-    public GenderType Gender { get; private set; }
+    public Gender Gender { get; private set; }
 
     public CpfValueObject Cpf { get; private set; } = null!;
 
@@ -32,7 +32,7 @@ public class DriverEntity : BaseEntityAggregateRoot, IAggregateRoot
     }
 
     private DriverEntity(NameValueObject name,
-        DateOnly birthday, GenderType gender,
+        DateOnly birthday, Gender gender,
         CpfValueObject cpf)
     {
         ArgumentNullException.ThrowIfNull(name);
@@ -91,7 +91,7 @@ public class DriverEntity : BaseEntityAggregateRoot, IAggregateRoot
 
     // Factory Method
     public static Result<DriverEntity> Create(string? name,
-        DateOnly birthday, GenderType genderType, string? cpf)
+        DateOnly birthday, Gender gender, string? cpf)
     {
         Result<NameValueObject> nameVo = NameValueObject.Create(name);
         Result<CpfValueObject> cpfVo = CpfValueObject.Create(cpf);
@@ -105,7 +105,7 @@ public class DriverEntity : BaseEntityAggregateRoot, IAggregateRoot
         }
 
         DriverEntity entity = new(nameVo.Value!, birthday,
-            genderType, cpfVo.Value!);
+            gender, cpfVo.Value!);
 
         return Result<DriverEntity>.WithSuccess(entity);
     }

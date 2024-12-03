@@ -16,7 +16,7 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
 
     public DateOnly Birthday { get; private set; }
 
-    public GenderType Gender { get; private set; }
+    public Gender Gender { get; private set; }
 
     public CpfValueObject Cpf { get; private set; } = null!;
 
@@ -33,7 +33,7 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
     }
 
     private UserEntity(NameValueObject name,
-        DateOnly birthday, GenderType gender,
+        DateOnly birthday, Gender gender,
         CpfValueObject cpf)
     {
         ArgumentNullException.ThrowIfNull(name);
@@ -98,7 +98,7 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
 
     // Factory Method
     public static Result<UserEntity> Create(string? name,
-        DateOnly birthday, GenderType genderType, string? cpf)
+        DateOnly birthday, Gender gender, string? cpf)
     {
         Result<NameValueObject> nameVo = NameValueObject.Create(name);
         Result<CpfValueObject> cpfVo = CpfValueObject.Create(cpf);
@@ -112,7 +112,7 @@ public class UserEntity : BaseEntityAggregateRoot, IAggregateRoot
         }
 
         UserEntity entity = new(nameVo.Value!, birthday,
-            genderType, cpfVo.Value!);
+            gender, cpfVo.Value!);
 
         return Result<UserEntity>.WithSuccess(entity);
     }

@@ -11,7 +11,7 @@ public sealed record CreateUserCommand :
 
     public DateOnly? Birthday { get; init; }
 
-    public GenderType? Gender { get; init; }
+    public Gender? Gender { get; init; }
 
     public string? Document { get; init; }
 

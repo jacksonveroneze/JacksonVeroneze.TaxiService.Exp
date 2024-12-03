@@ -12,7 +12,7 @@ public sealed record UserResponse
 
     public DateOnly? Birthday { get; init; }
 
-    public GenderType? Gender { get; init; }
+    public Gender? Gender { get; init; }
 
     public UserStatus? Status { get; init; }
 }

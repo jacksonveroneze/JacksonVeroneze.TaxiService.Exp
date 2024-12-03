@@ -1,8 +1,10 @@
 namespace JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Directives;
 
-public class CpfDirectiveType : DirectiveType
+public class FormatCpfDirectiveType : DirectiveType
 {
-    private const string DirectiveName = "cpf";
+    private const string DirectiveName = "formatcpf";
+
+    private const string Mask = @"000\.000\.000\-00";
 
     protected override void Configure(
         IDirectiveTypeDescriptor descriptor)
@@ -10,6 +12,7 @@ public class CpfDirectiveType : DirectiveType
         ArgumentNullException.ThrowIfNull(descriptor);
 
         descriptor.Name(DirectiveName);
+
         descriptor.Location(
             DirectiveLocation.FieldDefinition |
             DirectiveLocation.Field);
@@ -20,8 +23,8 @@ public class CpfDirectiveType : DirectiveType
 
             if (context.Result is string result)
             {
-                context.Result = context.Result = Convert.ToUInt64(result)
-                    .ToString(@"000\.000\.000\-00");
+                context.Result = context.Result =
+                    Convert.ToUInt64(result).ToString(Mask);
             }
         });
     }

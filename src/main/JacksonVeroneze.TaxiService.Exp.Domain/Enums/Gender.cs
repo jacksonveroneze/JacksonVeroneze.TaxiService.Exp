@@ -1,6 +1,6 @@
 namespace JacksonVeroneze.TaxiService.Exp.Domain.Enums;
 
-public enum GenderType
+public enum Gender
 {
     None,
     Male,

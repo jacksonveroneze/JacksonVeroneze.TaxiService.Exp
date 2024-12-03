@@ -9,7 +9,7 @@ public class UserResponseType : ObjectType<UserResponse>
     {
         ArgumentNullException.ThrowIfNull(descriptor);
 
-        descriptor.Name(nameof(UserResponse));
+        descriptor.Name(nameof(UserResponseType));
 
         descriptor
             .Field(field => field.Id)
@@ -33,6 +33,6 @@ public class UserResponseType : ObjectType<UserResponse>
 
         descriptor
             .Field(field => field.Status)
-            .Type<NonNullType<UserStatus>>();
+            .Type<NonNullType<UserStatusType>>();
     }
 }

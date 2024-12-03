@@ -2,15 +2,16 @@ using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User;
 
 namespace JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Types.User;
 
-public class CreateUserCommandType : ObjectType<CreateUserCommand>
+public class CreateUserInputType
+    : InputObjectType<CreateUserCommand>
 {
     protected override void Configure(
-        IObjectTypeDescriptor<CreateUserCommand> descriptor)
+        IInputObjectTypeDescriptor<CreateUserCommand> descriptor)
     {
         ArgumentNullException.ThrowIfNull(descriptor);
 
         descriptor
-            .Name(nameof(CreateUserCommand));
+            .Name(nameof(CreateUserInputType));
 
         descriptor
             .Field(field => field.FullName)
@@ -23,6 +24,10 @@ public class CreateUserCommandType : ObjectType<CreateUserCommand>
         descriptor
             .Field(field => field.Gender)
             .Type<NonNullType<GenderType>>();
+
+        descriptor
+            .Field(field => field.Document)
+            .Type<NonNullType<StringType>>();
 
         descriptor
             .Field(field => field.Email)

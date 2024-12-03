@@ -1,6 +1,6 @@
 using JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Directives;
-using JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Mutations.User;
-using JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Queries.User;
+using JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Mutations;
+using JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Queries;
 using JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Types.User;
 using JacksonVeroneze.TaxiService.Exp.Api.Middlewares;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.Configurations;
@@ -73,13 +73,20 @@ internal static class WebApplicationBuilderExtensions
 
         builder.Services
             .AddGraphQLServer()
-            .AddQueryType<UserQueryType>()
-            .AddMutationType<UserMutation>()
+            .ModifyOptions(options =>
+            {
+                options.DefaultBindingBehavior = BindingBehavior.Explicit;
+            })
+            .AddQueryType<QueryType>()
+            .AddMutationType<MutationType>()
             .AddType<UserResponseType>()
-            .AddType<GetUserByIdQueryInputType>()
+            .AddType<GetUserByIdInputType>()
+            .AddType<ActivateUserInputType>()
+            .AddType<GenderType>()
+            .AddType<UserStatusType>()
             .AddDirectiveType<UpperDirectiveType>()
             .AddDirectiveType<LowerDirectiveType>()
-            .AddDirectiveType<CpfDirectiveType>();
+            .AddDirectiveType<FormatCpfDirectiveType>();
 
         return builder;
     }
