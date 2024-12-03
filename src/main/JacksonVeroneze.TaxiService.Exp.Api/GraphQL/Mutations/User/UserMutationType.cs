@@ -28,10 +28,12 @@ internal static class UserMutationType
                 CreateUserCommand command = context
                     .ArgumentValue<CreateUserCommand>(Constants.INPUT);
 
-                NET.Result.Result<CreateUserCommandResponse> response =
+                NET.Result.Result<CreateUserCommandResponse> result =
                     await mediator.Send(command, context.RequestAborted);
 
-                return response!.Value!.Data;
+                return result.Match(
+                    () => result.Value!.Data,
+                    () => null, context);
             });
 
         descriptor
@@ -49,7 +51,9 @@ internal static class UserMutationType
                 NET.Result.Result result = await mediator
                     .Send(command, context.RequestAborted);
 
-                return result.IsSuccess;
+                return result.Match(
+                    () => result.IsSuccess,
+                    () => result.IsSuccess, context);
             });
 
         return descriptor;

@@ -71,8 +71,15 @@ internal static class WebApplicationBuilderExtensions
         builder.Services
             .AddGraphQLServer()
             .DisableIntrospection(builder.Environment.IsProduction())
+            .AddMaxExecutionDepthRule(5)
             .ModifyOptions(options =>
-                options.DefaultBindingBehavior = BindingBehavior.Explicit)
+            {
+                options.DefaultBindingBehavior = BindingBehavior.Explicit;
+            })
+            .ModifyRequestOptions(options =>
+            {
+                options.ExecutionTimeout = TimeSpan.FromSeconds(15);
+            })
             .AddResources();
 
         return builder;
