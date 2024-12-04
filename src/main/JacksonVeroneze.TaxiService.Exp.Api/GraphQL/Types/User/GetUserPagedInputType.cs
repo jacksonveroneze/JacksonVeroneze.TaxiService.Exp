@@ -19,5 +19,17 @@ internal class GetUserPagedInputType
         descriptor
             .Field(field => field.Status)
             .Type<UserStatusType>();
+
+        descriptor
+            .Field(field => field.Cursor)
+            .Type<StringType>();
+
+        descriptor
+            .Field(field => field.OrderBy)
+            .Type<StringType>();
+
+        descriptor
+            .Field(field => field.Order)
+            .Type<SortDirectionType>();
     }
 }

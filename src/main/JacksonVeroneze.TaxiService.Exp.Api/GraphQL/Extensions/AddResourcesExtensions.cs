@@ -29,6 +29,7 @@ internal static class AddResourcesExtensions
             .AddType<GetUserPagedInputType>()
             .AddType<CreateUserInputType>()
             .AddType<ActivateUserInputType>()
+            .AddType<InactivateUserInputType>()
             .AddType<GenderType>()
             .AddType<UserStatusType>();
 

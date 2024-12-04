@@ -8,8 +8,8 @@ namespace JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Queries.User;
 
 internal static class UserQueryType
 {
-    private const string PagedName = "paged";
-    private const string ByIdName = "byId";
+    private const string PagedName = "userPaged";
+    private const string ByIdName = "userById";
 
     public static IObjectTypeDescriptor AddUserQueries(
         this IObjectTypeDescriptor descriptor)
