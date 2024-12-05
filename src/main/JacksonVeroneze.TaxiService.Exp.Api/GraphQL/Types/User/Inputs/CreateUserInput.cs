@@ -1,17 +1,19 @@
+using JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Types.User.Enums;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User;
 
-namespace JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Types.User;
+namespace JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Types.User.Inputs;
 
-internal class CreateUserInputType
+internal class CreateUserInput
     : InputObjectType<CreateUserCommand>
 {
+    private const string ItemName = "CreateUserInput";
+
     protected override void Configure(
         IInputObjectTypeDescriptor<CreateUserCommand> descriptor)
     {
         ArgumentNullException.ThrowIfNull(descriptor);
 
-        descriptor
-            .Name(nameof(CreateUserInputType));
+        descriptor.Name(ItemName);
 
         descriptor
             .Field(field => field.FullName)

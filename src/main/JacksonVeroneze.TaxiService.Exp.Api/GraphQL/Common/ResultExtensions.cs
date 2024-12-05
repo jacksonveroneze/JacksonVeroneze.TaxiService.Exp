@@ -3,7 +3,7 @@ using JacksonVeroneze.NET.Result;
 
 namespace JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Common;
 
-public static class ResultExtensions
+internal static class ResultExtensions
 {
     public static T? Match<T>(
         this Result result,
@@ -11,6 +11,10 @@ public static class ResultExtensions
         Func<T?> onFailure,
         IResolverContext c)
     {
+        ArgumentNullException.ThrowIfNull(result);
+        ArgumentNullException.ThrowIfNull(onSuccess);
+        ArgumentNullException.ThrowIfNull(onFailure);
+
         if (result.IsSuccess)
         {
             return onSuccess();

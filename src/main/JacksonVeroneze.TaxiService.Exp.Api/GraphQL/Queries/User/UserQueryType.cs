@@ -1,5 +1,5 @@
 using JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Common;
-using JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Types.User;
+using JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Types.User.Inputs;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.User;
 using MediatR;
@@ -8,8 +8,8 @@ namespace JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Queries.User;
 
 internal static class UserQueryType
 {
-    private const string PagedName = "userPaged";
-    private const string ByIdName = "userById";
+    private const string PagedName = "getUsersPaged";
+    private const string ByIdName = "getUserById";
 
     public static IObjectTypeDescriptor AddUserQueries(
         this IObjectTypeDescriptor descriptor)
@@ -18,8 +18,8 @@ internal static class UserQueryType
 
         descriptor
             .Field(PagedName)
-            .Argument(Constants.INPUT, input => input.Type<GetUserPagedInputType>())
-            .Type<NonNullType<ListType<NonNullType<UserResponseType>>>>()
+            .Argument(Constants.INPUT, input => input.Type<GetUserPagedInput>())
+            .Type<NonNullType<ListType<NonNullType<Types.User.User>>>>()
             .Resolve(async context =>
             {
                 ISender mediator = context.RequestServices
@@ -36,8 +36,8 @@ internal static class UserQueryType
 
         descriptor
             .Field(ByIdName)
-            .Argument(Constants.INPUT, input => input.Type<GetUserByIdInputType>())
-            .Type<NonNullType<NonNullType<UserResponseType>>>()
+            .Argument(Constants.INPUT, input => input.Type<GetUserByIdInput>())
+            .Type<NonNullType<NonNullType<Types.User.User>>>()
             .Resolve(async context =>
             {
                 ISender mediator = context.RequestServices

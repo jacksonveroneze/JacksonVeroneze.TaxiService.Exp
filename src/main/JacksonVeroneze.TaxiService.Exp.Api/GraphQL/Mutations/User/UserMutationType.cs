@@ -1,5 +1,5 @@
 using JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Common;
-using JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Types.User;
+using JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Types.User.Inputs;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User;
 using MediatR;
@@ -19,8 +19,8 @@ internal static class UserMutationType
 
         descriptor
             .Field(createName)
-            .Argument(Constants.INPUT, arg => arg.Type<NonNullType<CreateUserInputType>>())
-            .Type<NonNullType<UserResponseType>>()
+            .Argument(Constants.INPUT, arg => arg.Type<NonNullType<CreateUserInput>>())
+            .Type<NonNullType<Types.User.User>>()
             .Resolve(async context =>
             {
                 ISender mediator = context.RequestServices
@@ -39,7 +39,7 @@ internal static class UserMutationType
 
         descriptor
             .Field(activateName)
-            .Argument(Constants.INPUT, arg => arg.Type<NonNullType<ActivateUserInputType>>())
+            .Argument(Constants.INPUT, arg => arg.Type<NonNullType<ActivateUserInput>>())
             .Type<NonNullType<BooleanType>>()
             .Resolve(async context =>
             {
@@ -59,7 +59,7 @@ internal static class UserMutationType
 
         descriptor
             .Field(inactivateName)
-            .Argument(Constants.INPUT, arg => arg.Type<NonNullType<InactivateUserInputType>>())
+            .Argument(Constants.INPUT, arg => arg.Type<NonNullType<InactivateUserInput>>())
             .Type<NonNullType<BooleanType>>()
             .Resolve(async context =>
             {

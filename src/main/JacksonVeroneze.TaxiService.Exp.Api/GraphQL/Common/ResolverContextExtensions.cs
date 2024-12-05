@@ -4,12 +4,15 @@ using Error = JacksonVeroneze.NET.Result.Error;
 
 namespace JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Common;
 
-public static class ResolverContextExtensions
+internal static class ResolverContextExtensions
 {
     public static IResolverContext AddErrosFromResult(
         this IResolverContext context,
         Result result)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(result);
+
         IEnumerable<Error> erros = result.Errors
                                    ?? [result.Error!];
 

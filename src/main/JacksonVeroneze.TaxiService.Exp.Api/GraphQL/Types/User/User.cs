@@ -1,15 +1,18 @@
+using JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Types.User.Enums;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User;
 
 namespace JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Types.User;
 
-internal class UserResponseType : ObjectType<UserResponse>
+internal class User : ObjectType<UserResponse>
 {
+    private const string ItemName = "User";
+
     protected override void Configure(
         IObjectTypeDescriptor<UserResponse> descriptor)
     {
         ArgumentNullException.ThrowIfNull(descriptor);
 
-        descriptor.Name(nameof(UserResponseType));
+        descriptor.Name(ItemName);
 
         descriptor
             .Field(field => field.Id)
@@ -33,6 +36,6 @@ internal class UserResponseType : ObjectType<UserResponse>
 
         descriptor
             .Field(field => field.Status)
-            .Type<NonNullType<UserStatusType>>();
+            .Type<NonNullType<UserStatus>>();
     }
 }

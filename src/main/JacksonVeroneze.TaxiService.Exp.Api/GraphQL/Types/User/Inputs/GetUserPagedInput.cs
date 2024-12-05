@@ -1,16 +1,19 @@
+using JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Types.User.Enums;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.User;
 
-namespace JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Types.User;
+namespace JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Types.User.Inputs;
 
-internal class GetUserPagedInputType
+internal class GetUserPagedInput
     : InputObjectType<GetUserPagedQuery>
 {
+    private const string ItemName = "GetUserPagedInput";
+
     protected override void Configure(
         IInputObjectTypeDescriptor<GetUserPagedQuery> descriptor)
     {
         ArgumentNullException.ThrowIfNull(descriptor);
 
-        descriptor.Name(nameof(GetUserPagedInputType));
+        descriptor.Name(ItemName);
 
         descriptor
             .Field(field => field.Name)
@@ -18,7 +21,7 @@ internal class GetUserPagedInputType
 
         descriptor
             .Field(field => field.Status)
-            .Type<UserStatusType>();
+            .Type<UserStatus>();
 
         descriptor
             .Field(field => field.Cursor)
@@ -30,6 +33,6 @@ internal class GetUserPagedInputType
 
         descriptor
             .Field(field => field.Order)
-            .Type<SortDirectionType>();
+            .Type<SortDirection>();
     }
 }

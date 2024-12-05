@@ -3,6 +3,8 @@ using JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Directives;
 using JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Mutations;
 using JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Queries;
 using JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Types.User;
+using JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Types.User.Enums;
+using JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Types.User.Inputs;
 
 namespace JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Extensions;
 
@@ -24,14 +26,14 @@ internal static class AddResourcesExtensions
         this IRequestExecutorBuilder builder)
     {
         builder
-            .AddType<UserResponseType>()
-            .AddType<GetUserByIdInputType>()
-            .AddType<GetUserPagedInputType>()
-            .AddType<CreateUserInputType>()
-            .AddType<ActivateUserInputType>()
-            .AddType<InactivateUserInputType>()
+            .AddType<User>()
+            .AddType<GetUserByIdInput>()
+            .AddType<GetUserPagedInput>()
+            .AddType<CreateUserInput>()
+            .AddType<ActivateUserInput>()
+            .AddType<InactivateUserInput>()
             .AddType<GenderType>()
-            .AddType<UserStatusType>();
+            .AddType<UserStatus>();
 
         return builder;
     }
@@ -40,9 +42,9 @@ internal static class AddResourcesExtensions
         this IRequestExecutorBuilder builder)
     {
         builder
-            .AddDirectiveType<FormatCpfDirectiveType>()
-            .AddDirectiveType<LowerDirectiveType>()
-            .AddDirectiveType<UpperDirectiveType>();
+            .AddDirectiveType<FormatCpfDirective>()
+            .AddDirectiveType<LowerDirective>()
+            .AddDirectiveType<UpperDirective>();
 
         return builder;
     }

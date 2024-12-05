@@ -1,8 +1,10 @@
 namespace JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Directives;
 
-internal class LowerDirectiveType : DirectiveType
+internal class FormatCpfDirective : DirectiveType
 {
-    private const string DirectiveName = "lower";
+    private const string DirectiveName = "formatcpf";
+
+    private const string Mask = @"000\.000\.000\-00";
 
     protected override void Configure(
         IDirectiveTypeDescriptor descriptor)
@@ -21,7 +23,8 @@ internal class LowerDirectiveType : DirectiveType
 
             if (context.Result is string result)
             {
-                context.Result = result.ToLowerInvariant();
+                context.Result = context.Result =
+                    Convert.ToUInt64(result).ToString(Mask);
             }
         });
     }

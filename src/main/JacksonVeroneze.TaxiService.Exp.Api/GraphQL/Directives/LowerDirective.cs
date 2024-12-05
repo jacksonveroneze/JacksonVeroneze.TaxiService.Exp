@@ -1,8 +1,8 @@
 namespace JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Directives;
 
-internal class UpperDirectiveType : DirectiveType
+internal class LowerDirective : DirectiveType
 {
-    private const string DirectiveName = "upper";
+    private const string DirectiveName = "lower";
 
     protected override void Configure(
         IDirectiveTypeDescriptor descriptor)
@@ -21,7 +21,7 @@ internal class UpperDirectiveType : DirectiveType
 
             if (context.Result is string result)
             {
-                context.Result = result.ToUpperInvariant();
+                context.Result = result.ToLowerInvariant();
             }
         });
     }

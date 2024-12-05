@@ -1,10 +1,8 @@
 namespace JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Directives;
 
-internal class FormatCpfDirectiveType : DirectiveType
+internal class UpperDirective : DirectiveType
 {
-    private const string DirectiveName = "formatcpf";
-
-    private const string Mask = @"000\.000\.000\-00";
+    private const string DirectiveName = "upper";
 
     protected override void Configure(
         IDirectiveTypeDescriptor descriptor)
@@ -23,8 +21,7 @@ internal class FormatCpfDirectiveType : DirectiveType
 
             if (context.Result is string result)
             {
-                context.Result = context.Result =
-                    Convert.ToUInt64(result).ToString(Mask);
+                context.Result = result.ToUpperInvariant();
             }
         });
     }
