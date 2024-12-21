@@ -12,7 +12,7 @@ public sealed class InactivateUserCommandHandler(
     ILogger<InactivateUserCommandHandler> logger,
     IUserReadRepository userReadRepository,
     IUserWriteRepository userWriteRepository,
-    IDateTime dateTime)
+    IDateTimeProvider dateTime)
     : IRequestHandler<InactivateUserCommand, Result>
 {
     public async Task<Result> Handle(

@@ -2,7 +2,8 @@ using JacksonVeroneze.NET.Result;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Position;
 
-public sealed record AddPositionCommand : IRequest<Result>
+public sealed record AddPositionCommand
+    : IRequest<Result>
 {
     public Guid RideId { get; init; }
 

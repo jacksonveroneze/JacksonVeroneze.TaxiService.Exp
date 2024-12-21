@@ -20,6 +20,8 @@ public class AppConfiguration
 
     public BusConfiguration? Bus { get; init; }
 
+    public AuthConfiguration? Auth { get; init; }
+
     public string AppName =>
         Application!.Name!;
 

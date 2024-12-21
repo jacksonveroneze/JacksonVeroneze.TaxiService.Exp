@@ -4,8 +4,8 @@ using JacksonVeroneze.TaxiService.Exp.Domain.Enums;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User;
 
-public sealed record CreateUserCommand :
-    IRequest<Result<CreateUserCommandResponse>>
+public sealed record CreateUserCommand
+    : IRequest<Result<CreateUserCommandResponse>>
 {
     public string? FullName { get; init; }
 

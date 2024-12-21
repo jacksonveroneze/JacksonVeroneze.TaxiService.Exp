@@ -25,8 +25,14 @@ public sealed class GetUserByIdQueryHandler(
 
         if (entity is null)
         {
+            Error error = DomainErrors.UserError.NotFound;
+
+            logger.LogNotFound(
+                nameof(GetUserByIdQueryHandler),
+                nameof(Handle), request.Id, error);
+
             return Result<GetUserByIdQueryResponse>
-                .FromNotFound(DomainErrors.UserError.NotFound);
+                .FromNotFound(error);
         }
 
         GetUserByIdQueryResponse response =

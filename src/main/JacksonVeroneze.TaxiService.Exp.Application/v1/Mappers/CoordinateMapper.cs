@@ -1,4 +1,4 @@
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models;
+using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Common;
 using JacksonVeroneze.TaxiService.Exp.Domain.ValueObjects;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Mappers;

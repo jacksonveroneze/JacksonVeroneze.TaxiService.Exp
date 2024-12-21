@@ -1,5 +1,5 @@
 using JacksonVeroneze.NET.EntityFramework.Extensions;
-using JacksonVeroneze.TaxiService.Exp.Application.Interfaces;
+using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.UnitOfWork;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +15,8 @@ public static class DatabaseExtensions
         this IServiceCollection services,
         AppConfiguration appConfiguration)
     {
+        ArgumentNullException.ThrowIfNull(appConfiguration);
+
         services.AddUnitOfWork()
             .AddRepository();
 

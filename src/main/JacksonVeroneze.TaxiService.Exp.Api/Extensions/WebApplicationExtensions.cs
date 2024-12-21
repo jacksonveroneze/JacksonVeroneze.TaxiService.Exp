@@ -1,5 +1,8 @@
 using CorrelationId;
-using JacksonVeroneze.TaxiService.Exp.Api.Endpoints;
+using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.v1.Emails;
+using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.v1.Positions;
+using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.v1.Rides;
+using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.v1.Users;
 using Prometheus;
 using Scalar.AspNetCore;
 using Serilog;
@@ -28,8 +31,10 @@ internal static class WebApplicationExtensions
             app.MapScalarApiReference();
         }
 
-        app.UseCorrelationId();
         app.UseRouting();
+        app.UseAuthentication();
+        app.UseAuthorization();
+        app.UseCorrelationId();
         app.UseHttpMetrics();
         app.MapMetrics();
         app.UseExceptionHandler();
@@ -39,6 +44,7 @@ internal static class WebApplicationExtensions
         app.MapGraphQL();
 
         app.AddUserEndpoints();
+        app.AddEmailEndpoints();
         app.AddRideEndpoints();
         app.AddPositionEndpoints();
 

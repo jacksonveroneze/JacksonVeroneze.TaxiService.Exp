@@ -1,3 +1,4 @@
+using JacksonVeroneze.NET.Pagination.Offset;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 using JacksonVeroneze.TaxiService.Exp.Domain.Filters;
 
@@ -13,7 +14,7 @@ public interface IEmailReadRepository
         Guid id,
         CancellationToken cancellationToken = default);
 
-    public Task<ICollection<EmailEntity>> GetPagedAsync(
+    public Task<Page<EmailEntity>> GetPagedAsync(
         EmailPagedFilter filter,
         CancellationToken cancellationToken = default);
 }

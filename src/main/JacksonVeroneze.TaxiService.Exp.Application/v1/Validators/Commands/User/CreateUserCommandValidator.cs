@@ -12,7 +12,7 @@ public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
     private const int MinLengthName = 2;
     private const int MaxLengthName = 100;
 
-    public CreateUserCommandValidator(IDateTime dateTime)
+    public CreateUserCommandValidator(IDateTimeProvider dateTime)
     {
         RuleFor(request => request)
             .NotNull();

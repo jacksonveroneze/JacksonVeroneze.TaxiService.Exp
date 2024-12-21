@@ -12,8 +12,10 @@ public static class JsonOptionsExtensions
     {
         services.ConfigureHttpJsonOptions(options =>
         {
-            options.SerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-            options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+            options.SerializerOptions.DefaultIgnoreCondition =
+                JsonIgnoreCondition.WhenWritingNull;
+            options.SerializerOptions.PropertyNamingPolicy =
+                JsonNamingPolicy.CamelCase;
             options.SerializerOptions.WriteIndented = false;
             options.SerializerOptions.PropertyNameCaseInsensitive = false;
             options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());

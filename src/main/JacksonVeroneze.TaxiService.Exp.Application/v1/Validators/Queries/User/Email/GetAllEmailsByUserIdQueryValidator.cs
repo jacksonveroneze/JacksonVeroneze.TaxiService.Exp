@@ -3,7 +3,7 @@ using JacksonVeroneze.TaxiService.Exp.Application.Validators.Base;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Validators.Queries.User.Email;
 
-public class GetAllEmailsByUserIdQueryValidator : AbstractValidator<GetEmailsByUserIdPagedQuery>
+public class GetAllEmailsByUserIdQueryValidator : AbstractValidator<GetEmailPagedQuery>
 {
     public GetAllEmailsByUserIdQueryValidator()
     {

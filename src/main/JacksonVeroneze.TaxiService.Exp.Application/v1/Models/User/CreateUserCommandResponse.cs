@@ -2,4 +2,5 @@ using JacksonVeroneze.TaxiService.Exp.Application.Models.Base;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User;
 
-public sealed record CreateUserCommandResponse : DataResponse<UserResponse>;
+public sealed record CreateUserCommandResponse
+    : DataResponse<UserResponse>;

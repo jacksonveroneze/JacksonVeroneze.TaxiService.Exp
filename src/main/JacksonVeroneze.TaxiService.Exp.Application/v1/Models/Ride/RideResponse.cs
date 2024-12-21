@@ -1,3 +1,4 @@
+using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Common;
 using JacksonVeroneze.TaxiService.Exp.Domain.Enums;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Ride;

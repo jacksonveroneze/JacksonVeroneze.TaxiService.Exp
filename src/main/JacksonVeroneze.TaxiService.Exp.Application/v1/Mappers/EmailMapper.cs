@@ -1,4 +1,5 @@
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User.Email;
+using JacksonVeroneze.NET.Pagination.Offset;
+using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Email;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.User.Email;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 using JacksonVeroneze.TaxiService.Exp.Domain.Filters;
@@ -17,11 +18,12 @@ public class EmailMapper : Profile
         CreateMap<EmailEntity, CreateEmailCommandResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
 
-        CreateMap<ICollection<EmailEntity>, GetEmailsByUserIdQueryResponse>()
-            .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
+        CreateMap<Page<EmailEntity>, GetEmailPagedQueryResponse>()
+            .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src.Data))
+            .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src.PageInfo));
 
         // Query -> Filter
-        CreateMap<GetEmailsByUserIdPagedQuery, EmailPagedFilter>()
+        CreateMap<GetEmailPagedQuery, EmailPagedFilter>()
             .ForMember(dest => dest.UserId, opts => opts.MapFrom(src => src.UserId))
             .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src));
     }

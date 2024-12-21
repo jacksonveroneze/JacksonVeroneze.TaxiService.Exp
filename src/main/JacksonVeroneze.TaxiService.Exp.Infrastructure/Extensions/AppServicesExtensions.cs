@@ -15,9 +15,7 @@ public static class AppServicesExtensions
     {
         #region Common
 
-        services.AddScoped<IDateTime, SystemDateTime>();
-        //services.AddScoped<IIdentityService, IdentityService>();
-        //services.AddScoped<ITenantService, TenantService>();
+        services.AddScoped<IDateTimeProvider, DateTimeProvider>();
         services.AddScoped<IIntegrationEventPublisher, RabbitMqEventPublisher>();
 
         #endregion

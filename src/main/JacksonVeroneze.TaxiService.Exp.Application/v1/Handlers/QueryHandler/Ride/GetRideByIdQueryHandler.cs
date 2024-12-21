@@ -25,8 +25,14 @@ public sealed class GetRideByIdQueryHandler(
 
         if (entity is null)
         {
+            Error error = DomainErrors.RideError.NotFound;
+
+            logger.LogNotFound(
+                nameof(GetRideByIdQueryHandler),
+                nameof(Handle), request.Id, error);
+
             return Result<GetRideByIdQueryResponse>
-                .FromNotFound(DomainErrors.RideError.NotFound);
+                .FromNotFound(error);
         }
 
         GetRideByIdQueryResponse response =

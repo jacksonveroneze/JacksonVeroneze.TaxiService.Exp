@@ -3,7 +3,8 @@ using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Ride;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Ride;
 
-public sealed record RequestRideCommand : IRequest<Result<RequestRideCommandResponse>>
+public sealed record RequestRideCommand
+    : IRequest<Result<RequestRideCommandResponse>>
 {
     public Guid UserId { get; init; }
 

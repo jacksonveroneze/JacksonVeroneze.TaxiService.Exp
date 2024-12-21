@@ -1,4 +1,4 @@
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User.Email;
+using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Email;
 using JacksonVeroneze.TaxiService.Exp.Application.Validators.Base;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Validators.Commands.User.Email;

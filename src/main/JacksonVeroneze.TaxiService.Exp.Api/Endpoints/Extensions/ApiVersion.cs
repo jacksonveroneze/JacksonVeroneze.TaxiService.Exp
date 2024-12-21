@@ -5,7 +5,7 @@ namespace JacksonVeroneze.TaxiService.Exp.Api.Endpoints.Extensions;
 
 internal static class ApiVersionExtensions
 {
-    public static ApiVersionSet ApiVersion(
+    public static ApiVersionSet AddVersion(
         this WebApplication app,
         params int[]? versions)
     {

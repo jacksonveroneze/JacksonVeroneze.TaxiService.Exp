@@ -95,14 +95,26 @@ internal static partial class LogMessagesExtensions
         Message = "{className} - {methodName} - Info - " +
                   "Page: '{page}' - PageSize: '{pageSize}' - " +
                   "TotalElements: '{totalElements}'")]
-    internal static partial void LogGetPaged(this ILogger logger,
+    internal static partial void LogGetPagedWithOffset(this ILogger logger,
         string className, string methodName,
         int page, int pageSize, int totalElements);
 
     [LoggerMessage(
-        EventId = 1041,
+        EventId = 1040,
         Level = LogLevel.Information,
         Message = "{className} - {methodName} - Info - " +
+                  "PageSize: '{pageSize}' - " +
+                  "TotalElements: '{totalElements}' - " +
+                  "HasMore: '{hasMore}'")]
+    internal static partial void LogGetPagedWithCursor(this ILogger logger,
+        string className, string methodName,
+        int pageSize, int totalElements,
+        bool hasMore);
+
+    [LoggerMessage(
+        EventId = 1041,
+        Level = LogLevel.Information,
+        Message = "{className} - {methodName} - Found - " +
                   "Identifier: '{identifier}'")]
     internal static partial void LogGetById(this ILogger logger,
         string className, string methodName, Guid? identifier);

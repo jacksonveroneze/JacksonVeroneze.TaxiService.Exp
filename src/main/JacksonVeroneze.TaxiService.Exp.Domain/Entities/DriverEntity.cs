@@ -89,7 +89,6 @@ public class DriverEntity : BaseEntityAggregateRoot, IAggregateRoot
 
     #region Factory
 
-    // Factory Method
     public static Result<DriverEntity> Create(string? name,
         DateOnly birthday, Gender gender, string? cpf)
     {

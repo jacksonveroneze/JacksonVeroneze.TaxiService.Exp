@@ -1,4 +1,5 @@
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
+using JacksonVeroneze.NET.Pagination.Offset;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Email;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 using JacksonVeroneze.TaxiService.Exp.Domain.Filters;
@@ -30,16 +31,12 @@ public class EmailReadRepository(
             cancellationToken);
     }
 
-    public Task<ICollection<EmailEntity>> GetPagedAsync(
+    public Task<Page<EmailEntity>> GetPagedAsync(
         EmailPagedFilter filter,
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(filter);
 
-        EmailByUserIdSpecification specByUserId = new(filter.UserId);
-
-        return service.GetAllAsync(
-            specByUserId,
-            cancellationToken);
+        throw new NotImplementedException();
     }
 }
