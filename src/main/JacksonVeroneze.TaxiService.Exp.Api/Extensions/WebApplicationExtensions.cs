@@ -1,5 +1,4 @@
 using CorrelationId;
-using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.v1.Emails;
 using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.v1.Positions;
 using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.v1.Rides;
 using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.v1.Users;
@@ -44,7 +43,6 @@ internal static class WebApplicationExtensions
         app.MapGraphQL();
 
         app.AddUserEndpoints();
-        app.AddEmailEndpoints();
         app.AddRideEndpoints();
         app.AddPositionEndpoints();
 

@@ -3,20 +3,20 @@ using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Email;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace JacksonVeroneze.TaxiService.Exp.Api.Endpoints.v1.Emails;
+namespace JacksonVeroneze.TaxiService.Exp.Api.Endpoints.v1.Users.Emails;
 
 internal static class DeleteEndpoint
 {
-    public static RouteGroupBuilder AddDelete(
+    public static RouteGroupBuilder AddEmailDelete(
         this RouteGroupBuilder builder)
     {
-        builder.MapDelete("{id:guid:required}", async (
+        builder.MapDelete("{userId:guid:required}/emails/{emailId:guid:required}", async (
                 [FromServices] IMediator mediator,
-                [FromRoute] Guid id,
+                [FromRoute] Guid userId,
                 [FromRoute] Guid emailId,
                 CancellationToken cancellationToken) =>
             {
-                DeleteEmailCommand command = new(id, emailId);
+                DeleteEmailCommand command = new(userId, emailId);
 
                 NET.Result.Result response =
                     await mediator.Send(command, cancellationToken);

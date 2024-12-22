@@ -5,6 +5,7 @@ using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Use
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.User;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
+using JacksonVeroneze.TaxiService.Exp.Domain.Enums;
 using JacksonVeroneze.TaxiService.Exp.Domain.Filters;
 
 namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.QueryHandler.User;
@@ -23,6 +24,9 @@ public sealed class GetUserPagedQueryHandler(
 
         UserPagedFilter filter = mapper
             .Map<UserPagedFilter>(request);
+
+        filter.NameFilter = new StringFilter(request.Name, StringOperator.Contains);
+        filter.StatusFilter = new EnumFilter<UserStatus>(request.Status, EnumOperator.Equals);
 
         Page<UserEntity> page = await userReadRepository
             .GetPagedAsync(filter, cancellationToken);

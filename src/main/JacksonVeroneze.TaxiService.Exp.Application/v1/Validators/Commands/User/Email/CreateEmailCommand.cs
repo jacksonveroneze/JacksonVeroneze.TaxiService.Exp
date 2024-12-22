@@ -12,7 +12,7 @@ public class CreateEmailCommandValidator : AbstractValidator<CreateEmailCommand>
         RuleFor(request => request)
             .NotNull();
 
-        RuleFor(request => request.Id)
+        RuleFor(request => request.UserId)
             .SetValidator(new IdGuidValidator());
 
         RuleFor(request => request.Body)

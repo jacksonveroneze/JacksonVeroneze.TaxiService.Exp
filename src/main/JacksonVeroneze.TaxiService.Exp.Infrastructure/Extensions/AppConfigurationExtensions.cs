@@ -16,7 +16,8 @@ public static class AppConfigurationExtensions
         ArgumentNullException.ThrowIfNull(configuration);
 
         services.AddConfiguration<AppConfiguration>(configuration)
-            .AddConfiguration<UserParameters>(configuration, UserParameters.Name);
+            .AddConfiguration<UserParameters>(configuration,
+                UserParameters.Name);
 
         using ServiceProvider provider =
             services.BuildServiceProvider();
@@ -38,7 +39,8 @@ public static class AppConfigurationExtensions
         services.Configure<TParameterType>(section);
 
         services.AddScoped(conf =>
-            conf.GetService<IOptionsMonitor<TParameterType>>()?.CurrentValue!);
+            conf.GetService<IOptionsMonitor<TParameterType>>()?
+                .CurrentValue!);
 
         return services;
     }

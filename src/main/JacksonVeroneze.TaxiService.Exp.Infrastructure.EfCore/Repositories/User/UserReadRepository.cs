@@ -1,11 +1,10 @@
-using System.Linq.Expressions;
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
 using JacksonVeroneze.NET.Pagination.Cursor;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 using JacksonVeroneze.TaxiService.Exp.Domain.Filters;
-using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Base.Predicate;
-using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.User;
+using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Util;
+using LinqKit;
 
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.User;
 
@@ -16,10 +15,12 @@ public class UserReadRepository(
     public Task<UserEntity?> GetByIdAsync(
         Guid id, CancellationToken cancellationToken = default)
     {
-        UserByIdSpecification specByUserId = new(id);
+        ExpressionStarter<UserEntity> predicate =
+            new SpecificationBuilder<UserEntity>()
+                .AddGuidFilter(u => u.Id, new GuidFilter(id, GuidOperator.Equals))
+                .Build();
 
-        return service.GetByIdAsync(specByUserId.ToExpression(),
-            cancellationToken);
+        return service.GetByIdAsync(predicate, cancellationToken);
     }
 
     public async Task<Page<UserEntity>> GetPagedAsync(
@@ -28,28 +29,19 @@ public class UserReadRepository(
     {
         ArgumentNullException.ThrowIfNull(filter);
 
-        Guid? id = !string.IsNullOrEmpty(filter.Pagination?.Cursor)
-            ? Guid.Parse(filter.Pagination!.Cursor)
-            : null;
-
-        UserByNameSpecification specByName = new(filter.Name);
-        UserByStatusSpecification specByStatus = new(filter.Status);
-
-        Expression<Func<UserEntity, bool>> spec =
-            specByName.ToExpression().And(specByStatus);
-
-        if (id.HasValue)
-        {
-            UserCursorSpecification specById = new(id!.Value);
-
-            spec = spec.And(specById);
-        }
+        ExpressionStarter<UserEntity> predicate =
+            new SpecificationBuilder<UserEntity>()
+                .AddGuidFilter(u => u.Id!,
+                    new GuidFilter(Guid.Parse(filter!.Pagination!.Cursor!), GuidOperator.Equals))
+                .AddStringFilter(u => u.Name.Value!, filter.NameFilter)
+                .AddEnumFilter(u => u.Status, filter.StatusFilter)
+                .Build();
 
         int paginationLimit = filter.Pagination!.Limit!.Value;
         int databaselimit = paginationLimit + 1;
 
         ICollection<UserEntity> result = await service.GetAllAsync(
-            spec,
+            predicate,
             order => order.Name.Value,
             databaselimit,
             cancellationToken: cancellationToken);

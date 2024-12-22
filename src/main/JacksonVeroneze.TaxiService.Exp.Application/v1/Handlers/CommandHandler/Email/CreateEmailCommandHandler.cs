@@ -26,7 +26,7 @@ public sealed class CreateEmailCommandHandler(
         ArgumentNullException.ThrowIfNull(request);
 
         Result<UserEntity> resultUser = await GetUserByIdAsync(
-            request.Id, cancellationToken);
+            request.UserId, cancellationToken);
 
         if (resultUser.IsFailure)
         {
@@ -111,7 +111,7 @@ public sealed class CreateEmailCommandHandler(
 
         logger.LogGenericError(
             nameof(CreateEmailCommandHandler),
-            nameof(Handle), request.Id, error);
+            nameof(Handle), request.UserId, error);
 
         return Result<CreateEmailCommandResponse>
             .FromInvalid(error);

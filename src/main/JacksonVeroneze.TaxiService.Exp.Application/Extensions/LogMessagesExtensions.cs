@@ -93,6 +93,14 @@ internal static partial class LogMessagesExtensions
         EventId = 1040,
         Level = LogLevel.Information,
         Message = "{className} - {methodName} - Info - " +
+                  "TotalElements: '{totalElements}'")]
+    internal static partial void LogGetAll(this ILogger logger,
+        string className, string methodName, int totalElements);
+
+    [LoggerMessage(
+        EventId = 1040,
+        Level = LogLevel.Information,
+        Message = "{className} - {methodName} - Info - " +
                   "Page: '{page}' - PageSize: '{pageSize}' - " +
                   "TotalElements: '{totalElements}'")]
     internal static partial void LogGetPagedWithOffset(this ILogger logger,

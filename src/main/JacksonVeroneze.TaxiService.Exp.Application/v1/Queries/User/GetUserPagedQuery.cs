@@ -18,3 +18,10 @@ public sealed record GetUserPagedQuery() :
 
     public UserStatus? Status { get; init; }
 }
+
+public class DynamicFilter
+{
+    public string? Field { get; set; }
+    public string? Operator { get; set; }
+    public string? Value { get; set; }
+}

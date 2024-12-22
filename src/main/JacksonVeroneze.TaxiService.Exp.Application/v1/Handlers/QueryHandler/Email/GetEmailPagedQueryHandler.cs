@@ -1,4 +1,3 @@
-using JacksonVeroneze.NET.Pagination.Offset;
 using JacksonVeroneze.NET.Result;
 using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Email;
@@ -24,17 +23,15 @@ public sealed class GetEmailPagedQueryHandler(
         EmailPagedFilter filter = mapper
             .Map<EmailPagedFilter>(request);
 
-        Page<EmailEntity> page = await emailReadRepository
-            .GetPagedAsync(filter, cancellationToken);
+        ICollection<EmailEntity> all = await emailReadRepository
+            .GetAllAsync(filter, cancellationToken);
 
         GetEmailPagedQueryResponse response =
-            mapper.Map<GetEmailPagedQueryResponse>(page);
+            mapper.Map<GetEmailPagedQueryResponse>(all);
 
-        logger.LogGetPagedWithOffset(
+        logger.LogGetAll(
             nameof(GetEmailPagedQueryHandler),
-            nameof(Handle), request.Page!.Value,
-            request.PageSize!.Value,
-            page.PageInfo.TotalElements);
+            nameof(Handle), all.Count);
 
         return Result<GetEmailPagedQueryResponse>
             .WithSuccess(response);

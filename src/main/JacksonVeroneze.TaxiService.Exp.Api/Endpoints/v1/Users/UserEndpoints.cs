@@ -1,5 +1,6 @@
 using Asp.Versioning.Builder;
 using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.Extensions;
+using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.v1.Users.Emails;
 
 namespace JacksonVeroneze.TaxiService.Exp.Api.Endpoints.v1.Users;
 
@@ -21,7 +22,10 @@ internal static class UserEndpoints
             .AddCreate()
             .AddDelete()
             .AddActivate()
-            .AddInactivate();
+            .AddInactivate()
+            .AddEmailCreate()
+            .AddEmailDelete()
+            .AddGetEmailsByUserId();
 
         return app;
     }
