@@ -17,32 +17,28 @@ public class UserReadRepository(
     public Task<UserEntity?> GetByIdAsync(
         Guid id, CancellationToken cancellationToken = default)
     {
-        ExpressionStarter<UserEntity> predicate =
-            new ExpressionBuilder<UserEntity>()
-                .AddFilter(u => u.Id, GuidFilter.Create(id))
-                .Build();
-
-        return service.GetByIdAsync(predicate, cancellationToken);
+        return service.GetByIdAsync(
+            query => query.Id == id, cancellationToken);
     }
 
     public async Task<Page<UserEntity>> GetPagedAsync(
-        UserPagedFilter filter,
+        UserPagedQuery query,
         CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(filter);
+        ArgumentNullException.ThrowIfNull(query);
 
-        Guid cursorId = Guid.Parse(filter!.Pagination!.Cursor!);
+        Guid cursorId = Guid.Parse(query.Pagination!.Cursor!);
 
         ExpressionStarter<UserEntity> predicate =
             new ExpressionBuilder<UserEntity>()
-                .AddFilter(u => u.Id, GuidFilter.Create(cursorId, GuidOperator.Gte))
-                .AddFilter(u => u.Name.Value!, filter.NameFilter)
-                .AddFilter(u => u.Status, filter.StatusFilter)
-                .AddFilter(u => u.Birthday, filter.StartBirthdayFilter)
-                .AddFilter(u => u.Birthday, filter.EndBirthdayFilter)
+                .AddFilter(u => u.Id, GuidFilter.Create(cursorId, FilterOperator.Gte))
+                .AddFilter(u => u.Name.Value!, query.Filter!.NameFilter)
+                .AddFilter(u => u.Status, query.Filter!.StatusFilter!)
+                .AddFilter(u => u.Birthday, query.Filter!.StartBirthdayFilter!)
+                .AddFilter(u => u.Birthday, query.Filter!.EndBirthdayFilter!)
                 .Build();
 
-        int paginationLimit = filter.Pagination!.Limit!.Value;
+        int paginationLimit = query.Pagination!.Limit!.Value;
         int databaselimit = paginationLimit + 1;
 
         ICollection<UserEntity> result = await service.GetAllAsync(

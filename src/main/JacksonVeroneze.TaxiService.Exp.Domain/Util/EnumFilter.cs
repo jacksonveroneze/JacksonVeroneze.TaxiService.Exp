@@ -3,20 +3,20 @@ using JacksonVeroneze.TaxiService.Exp.Domain.Util.Operators;
 namespace JacksonVeroneze.TaxiService.Exp.Domain.Util;
 
 public sealed class EnumFilter<TEnum>
-    : BaseFilter<TEnum?, EnumOperator>
+    : BaseFilter<TEnum?>
     where TEnum : struct, Enum
 {
-    private const EnumOperator _defaultOperator
-        = EnumOperator.Equals;
+    private const FilterOperator _defaultOperator
+        = FilterOperator.Eq;
 
     private EnumFilter(
-        TEnum? value, EnumOperator op)
+        TEnum? value, FilterOperator op)
     {
         Value = value;
-        Op = op;
+        Operator = op;
     }
 
     public static EnumFilter<TEnum> Create(
-        TEnum? value, EnumOperator op = _defaultOperator)
+        TEnum? value, FilterOperator op = _defaultOperator)
         => new(value, op);
 }

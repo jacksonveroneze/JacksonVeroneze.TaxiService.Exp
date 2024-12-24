@@ -30,11 +30,8 @@ public class UserMapper : Profile
             .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src.PageInfo));
 
         // Query -> Filter
-        CreateMap<GetUserPagedQuery, UserPagedFilter>()
-            .ForMember(dest => dest.NameFilter, opts => opts.Ignore())
-            .ForMember(dest => dest.StatusFilter, opts => opts.Ignore())
-            .ForMember(dest => dest.StartBirthdayFilter, opts => opts.Ignore())
-            .ForMember(dest => dest.EndBirthdayFilter, opts => opts.Ignore())
+        CreateMap<GetUserPagedQuery, UserPagedQuery>()
+            .ForMember(dest => dest.Filter, opts => opts.Ignore())
             .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src));
     }
 }

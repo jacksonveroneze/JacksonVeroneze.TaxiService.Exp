@@ -1,9 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
-using JacksonVeroneze.NET.Pagination.Cursor;
 using JacksonVeroneze.TaxiService.Exp.Domain.Enums;
+using JacksonVeroneze.TaxiService.Exp.Domain.Filters.Base;
 using JacksonVeroneze.TaxiService.Exp.Domain.Util;
 
 namespace JacksonVeroneze.TaxiService.Exp.Domain.Filters;
+
+[ExcludeFromCodeCoverage]
+public record UserPagedQuery : BaseQuery<UserPagedFilter>;
 
 [ExcludeFromCodeCoverage]
 public record UserPagedFilter
@@ -15,6 +18,4 @@ public record UserPagedFilter
     public DateOnlyFilter? EndBirthdayFilter { get; set; }
 
     public EnumFilter<UserStatus>? StatusFilter { get; set; }
-
-    public PaginationParameters? Pagination { get; init; }
 }

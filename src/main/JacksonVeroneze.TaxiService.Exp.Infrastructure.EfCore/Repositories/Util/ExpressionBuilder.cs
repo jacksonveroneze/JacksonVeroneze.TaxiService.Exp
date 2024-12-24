@@ -11,7 +11,7 @@ public class ExpressionBuilder<T>
 
     public ExpressionBuilder<T> AddFilter(
         Expression<Func<T, Guid>> propertyExpression,
-        GuidFilter? filter)
+        BaseFilter<Guid>? filter)
     {
         if (filter?.Value is null)
         {
@@ -19,7 +19,7 @@ public class ExpressionBuilder<T>
         }
 
         Expression<Func<T, bool>> expression =
-            ExpressionsBuilders.BuildGuidExpression(
+            ExpressionsBuilders.BuildExpression(
                 propertyExpression, filter);
 
         _predicate.And(expression);
@@ -29,7 +29,7 @@ public class ExpressionBuilder<T>
 
     public ExpressionBuilder<T> AddFilter(
         Expression<Func<T, string>> propertyExpression,
-        StringFilter? filter)
+        BaseFilter<string>? filter)
     {
         if (filter?.Value is null)
         {
@@ -37,7 +37,7 @@ public class ExpressionBuilder<T>
         }
 
         Expression<Func<T, bool>> expression =
-            ExpressionsBuilders.BuildStringExpression(
+            ExpressionsBuilders.BuildExpression(
                 propertyExpression, filter);
 
         _predicate.And(expression);
@@ -47,7 +47,7 @@ public class ExpressionBuilder<T>
 
     public ExpressionBuilder<T> AddFilter(
         Expression<Func<T, DateOnly>> propertyExpression,
-        DateOnlyFilter? filter)
+        BaseFilter<DateOnly>? filter)
     {
         if (filter?.Value is null)
         {
@@ -55,7 +55,7 @@ public class ExpressionBuilder<T>
         }
 
         Expression<Func<T, bool>> expression =
-            ExpressionsBuilders.BuildDateOnlyExpression(
+            ExpressionsBuilders.BuildExpression(
                 propertyExpression, filter);
 
         _predicate.And(expression);
@@ -65,15 +65,15 @@ public class ExpressionBuilder<T>
 
     public ExpressionBuilder<T> AddFilter<TEnum>(
         Expression<Func<T, TEnum>> propertyExpression,
-        EnumFilter<TEnum>? filter) where TEnum : struct, Enum
+        BaseFilter<TEnum> filter)
     {
-        if (filter?.Value is null)
+        if (filter.Value is null)
         {
             return this;
         }
 
         Expression<Func<T, bool>> expression =
-            ExpressionsBuilders.BuildEnumExpression(
+            ExpressionsBuilders.BuildExpression(
                 propertyExpression, filter);
 
         _predicate.And(expression);

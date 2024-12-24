@@ -3,19 +3,19 @@ using JacksonVeroneze.TaxiService.Exp.Domain.Util.Operators;
 namespace JacksonVeroneze.TaxiService.Exp.Domain.Util;
 
 public sealed class DateOnlyFilter
-    : BaseFilter<DateOnly?, DateOnlyOperator>
+    : BaseFilter<DateOnly?>
 {
-    private const DateOnlyOperator _defaultOperator
-        = DateOnlyOperator.Equals;
+    private const FilterOperator _defaultOperator
+        = FilterOperator.Eq;
 
     private DateOnlyFilter(
-        DateOnly? value, DateOnlyOperator op)
+        DateOnly? value, FilterOperator op)
     {
         Value = value;
-        Op = op;
+        Operator = op;
     }
 
     public static DateOnlyFilter Create(
-        DateOnly? value, DateOnlyOperator op = _defaultOperator)
+        DateOnly? value, FilterOperator op = _defaultOperator)
         => new(value, op);
 }

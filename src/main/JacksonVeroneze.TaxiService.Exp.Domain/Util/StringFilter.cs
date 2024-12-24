@@ -3,19 +3,19 @@ using JacksonVeroneze.TaxiService.Exp.Domain.Util.Operators;
 namespace JacksonVeroneze.TaxiService.Exp.Domain.Util;
 
 public sealed class StringFilter
-    : BaseFilter<string, StringOperator>
+    : BaseFilter<string>
 {
-    private const StringOperator _defaultOperator
-        = StringOperator.Equals;
+    private const FilterOperator _defaultOperator
+        = FilterOperator.Eq;
 
     private StringFilter(
-        string? value, StringOperator op)
+        string? value, FilterOperator op)
     {
         Value = value;
-        Op = op;
+        Operator = op;
     }
 
     public static StringFilter Create(
-        string? value, StringOperator op = _defaultOperator)
+        string? value, FilterOperator op = _defaultOperator)
         => new(value, op);
 }

@@ -3,19 +3,19 @@ using JacksonVeroneze.TaxiService.Exp.Domain.Util.Operators;
 namespace JacksonVeroneze.TaxiService.Exp.Domain.Util;
 
 public sealed class GuidFilter
-    : BaseFilter<Guid, GuidOperator>
+    : BaseFilter<Guid>
 {
-    private const GuidOperator _defaultOperator
-        = GuidOperator.Equals;
+    private const FilterOperator _defaultOperator
+        = FilterOperator.Eq;
 
     private GuidFilter(
-        Guid value, GuidOperator op)
+        Guid value, FilterOperator op)
     {
         Value = value;
-        Op = op;
+        Operator = op;
     }
 
     public static GuidFilter Create(
-        Guid value, GuidOperator op = _defaultOperator)
+        Guid value, FilterOperator op = _defaultOperator)
         => new(value, op);
 }

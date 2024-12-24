@@ -11,6 +11,6 @@ public interface IUserReadRepository
         CancellationToken cancellationToken = default);
 
     public Task<Page<UserEntity>> GetPagedAsync(
-        UserPagedFilter filter,
+        UserPagedQuery query,
         CancellationToken cancellationToken = default);
 }

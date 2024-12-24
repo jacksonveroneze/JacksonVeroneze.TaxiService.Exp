@@ -24,7 +24,7 @@ public sealed class GetUserPagedQueryHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        UserPagedFilter filter = FactoryFilter(request);
+        UserPagedQuery filter = FactoryFilter(request);
 
         Page<UserEntity> page = await userReadRepository
             .GetPagedAsync(filter, cancellationToken);
@@ -41,23 +41,22 @@ public sealed class GetUserPagedQueryHandler(
             .WithSuccess(response);
     }
 
-    private UserPagedFilter FactoryFilter(
+    private UserPagedQuery FactoryFilter(
         GetUserPagedQuery request)
     {
         PaginationParameters pagination = mapper
             .Map<PaginationParameters>(request);
 
-        UserPagedFilter filter = new()
+        UserPagedQuery filter = new()
         {
             Pagination = pagination,
-            NameFilter = request.NameFilter,
-            StatusFilter = EnumFilter<UserStatus>.Create(request.Status),
-            StartBirthdayFilter =
-                DateOnlyFilter.Create(DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-20)),
-                    DateOnlyOperator.Lt),
-            EndBirthdayFilter =
-                DateOnlyFilter.Create(DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-1)),
-                    DateOnlyOperator.Gte)
+            Filter = new UserPagedFilter()
+            {
+                NameFilter = StringFilter.Create(request.Name, FilterOperator.StartsWith),
+                StatusFilter = EnumFilter<UserStatus>.Create(request.Status),
+                StartBirthdayFilter = DateOnlyFilter.Create(request.StartBirthday),
+                EndBirthdayFilter = DateOnlyFilter.Create(request.EndBirthday),
+            },
         };
 
         return filter;
