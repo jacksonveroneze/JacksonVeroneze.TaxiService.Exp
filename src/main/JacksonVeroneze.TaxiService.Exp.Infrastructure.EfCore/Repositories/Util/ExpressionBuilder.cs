@@ -1,15 +1,15 @@
 using System.Linq.Expressions;
-using JacksonVeroneze.TaxiService.Exp.Domain.Filters;
+using JacksonVeroneze.TaxiService.Exp.Domain.Util;
 using LinqKit;
 
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Util;
 
-public class SpecificationBuilder<T>
+public class ExpressionBuilder<T>
 {
     private readonly ExpressionStarter<T> _predicate =
         PredicateBuilder.New<T>(true);
 
-    public SpecificationBuilder<T> AddGuidFilter(
+    public ExpressionBuilder<T> AddFilter(
         Expression<Func<T, Guid>> propertyExpression,
         GuidFilter? filter)
     {
@@ -27,7 +27,7 @@ public class SpecificationBuilder<T>
         return this;
     }
 
-    public SpecificationBuilder<T> AddStringFilter(
+    public ExpressionBuilder<T> AddFilter(
         Expression<Func<T, string>> propertyExpression,
         StringFilter? filter)
     {
@@ -45,7 +45,25 @@ public class SpecificationBuilder<T>
         return this;
     }
 
-    public SpecificationBuilder<T> AddEnumFilter<TEnum>(
+    public ExpressionBuilder<T> AddFilter(
+        Expression<Func<T, DateOnly>> propertyExpression,
+        DateOnlyFilter? filter)
+    {
+        if (filter?.Value is null)
+        {
+            return this;
+        }
+
+        Expression<Func<T, bool>> expression =
+            ExpressionsBuilders.BuildDateOnlyExpression(
+                propertyExpression, filter);
+
+        _predicate.And(expression);
+
+        return this;
+    }
+
+    public ExpressionBuilder<T> AddFilter<TEnum>(
         Expression<Func<T, TEnum>> propertyExpression,
         EnumFilter<TEnum>? filter) where TEnum : struct, Enum
     {

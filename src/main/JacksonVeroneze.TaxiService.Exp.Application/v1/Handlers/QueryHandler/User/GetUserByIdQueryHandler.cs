@@ -20,28 +20,43 @@ public sealed class GetUserByIdQueryHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        UserEntity? entity = await userReadRepository
-            .GetByIdAsync(request.Id, cancellationToken);
+        (UserEntity? Entity, Error? Error) userResult =
+            await GetUserByIdAsync(request.Id, cancellationToken);
 
-        if (entity is null)
+        if (userResult.Entity is null)
         {
-            Error error = DomainErrors.UserError.NotFound;
-
-            logger.LogNotFound(
-                nameof(GetUserByIdQueryHandler),
-                nameof(Handle), request.Id, error);
-
             return Result<GetUserByIdQueryResponse>
-                .FromNotFound(error);
+                .FromNotFound(userResult.Error!);
         }
 
         GetUserByIdQueryResponse response =
-            mapper.Map<GetUserByIdQueryResponse>(entity);
+            mapper.Map<GetUserByIdQueryResponse>(userResult.Entity);
 
         logger.LogGetById(nameof(GetUserByIdQueryHandler),
             nameof(Handle), request.Id);
 
         return Result<GetUserByIdQueryResponse>
             .WithSuccess(response);
+    }
+
+    private async Task<(UserEntity?, Error?)> GetUserByIdAsync(
+        Guid id,
+        CancellationToken cancellationToken)
+    {
+        UserEntity? entity = await userReadRepository
+            .GetByIdAsync(id, cancellationToken);
+
+        if (entity is not null)
+        {
+            return (entity, null);
+        }
+
+        Error error = DomainErrors.UserError.NotFound;
+
+        logger.LogNotFound(
+            nameof(GetUserByIdQueryHandler),
+            nameof(GetUserByIdAsync), id, error);
+
+        return (null, error);
     }
 }

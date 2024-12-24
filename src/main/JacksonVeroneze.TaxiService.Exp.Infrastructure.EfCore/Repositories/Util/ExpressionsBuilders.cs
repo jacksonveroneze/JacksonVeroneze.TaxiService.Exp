@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
-using JacksonVeroneze.TaxiService.Exp.Domain.Filters;
+using JacksonVeroneze.TaxiService.Exp.Domain.Util;
+using JacksonVeroneze.TaxiService.Exp.Domain.Util.Operators;
 
 namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Util;
 
@@ -17,6 +18,7 @@ public static class ExpressionsBuilders
         {
             GuidOperator.Equals => Expression.Equal(propertyAccess, constant),
             GuidOperator.NotEquals => Expression.NotEqual(propertyAccess, constant),
+            GuidOperator.Gte => Expression.GreaterThanOrEqual(propertyAccess, constant),
             _ => throw new NotImplementedException()
         };
 
@@ -54,7 +56,7 @@ public static class ExpressionsBuilders
         Expression propertyAccess = property.Body;
         ConstantExpression constant = Expression.Constant(filter.Value, typeof(TEnum));
 
-        Expression comparison = filter.Operator switch
+        Expression comparison = filter.Op switch
         {
             EnumOperator.Equals => Expression.Equal(propertyAccess, constant),
             EnumOperator.NotEquals => Expression.NotEqual(propertyAccess, constant),
@@ -64,22 +66,24 @@ public static class ExpressionsBuilders
         return Expression.Lambda<Func<T, bool>>(comparison, parameter);
     }
 
-    // public Expression<Func<T, bool>> BuildNumericExpression<T>(
-    //     Expression<Func<T, int>> property,
-    //     NumericFilter filter)
-    // {
-    //     ParameterExpression parameter = property.Parameters[0];
-    //     Expression propertyAccess = property.Body;
-    //     ConstantExpression constant = Expression.Constant(filter.Value!.Value);
-    //
-    //     Expression comparison = filter.Operator switch
-    //     {
-    //         NumericOperator.GreaterThan => Expression.GreaterThan(propertyAccess, constant),
-    //         NumericOperator.LessThan => Expression.LessThan(propertyAccess, constant),
-    //         NumericOperator.Equals => Expression.Equal(propertyAccess, constant),
-    //         _ => throw new NotImplementedException()
-    //     };
-    //
-    //     return Expression.Lambda<Func<T, bool>>(comparison, parameter);
-    // }
+    public static Expression<Func<T, bool>> BuildDateOnlyExpression<T>(
+        Expression<Func<T, DateOnly>> property,
+        DateOnlyFilter filter)
+    {
+        ParameterExpression parameter = property.Parameters[0];
+        Expression propertyAccess = property.Body;
+        ConstantExpression constant = Expression.Constant(filter.Value);
+
+        Expression comparison = filter.Op switch
+        {
+            DateOnlyOperator.Equals => Expression.Equal(propertyAccess, constant),
+            DateOnlyOperator.Lt => Expression.LessThan(propertyAccess, constant),
+            DateOnlyOperator.Lte => Expression.LessThanOrEqual(propertyAccess, constant),
+            DateOnlyOperator.Gt => Expression.GreaterThan(propertyAccess, constant),
+            DateOnlyOperator.Gte => Expression.GreaterThanOrEqual(propertyAccess, constant),
+            _ => throw new NotImplementedException()
+        };
+
+        return Expression.Lambda<Func<T, bool>>(comparison, parameter);
+    }
 }

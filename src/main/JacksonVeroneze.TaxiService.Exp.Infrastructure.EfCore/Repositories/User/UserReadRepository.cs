@@ -3,6 +3,8 @@ using JacksonVeroneze.NET.Pagination.Cursor;
 using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
 using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
 using JacksonVeroneze.TaxiService.Exp.Domain.Filters;
+using JacksonVeroneze.TaxiService.Exp.Domain.Util;
+using JacksonVeroneze.TaxiService.Exp.Domain.Util.Operators;
 using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Util;
 using LinqKit;
 
@@ -16,8 +18,8 @@ public class UserReadRepository(
         Guid id, CancellationToken cancellationToken = default)
     {
         ExpressionStarter<UserEntity> predicate =
-            new SpecificationBuilder<UserEntity>()
-                .AddGuidFilter(u => u.Id, new GuidFilter(id, GuidOperator.Equals))
+            new ExpressionBuilder<UserEntity>()
+                .AddFilter(u => u.Id, GuidFilter.Create(id))
                 .Build();
 
         return service.GetByIdAsync(predicate, cancellationToken);
@@ -29,12 +31,15 @@ public class UserReadRepository(
     {
         ArgumentNullException.ThrowIfNull(filter);
 
+        Guid cursorId = Guid.Parse(filter!.Pagination!.Cursor!);
+
         ExpressionStarter<UserEntity> predicate =
-            new SpecificationBuilder<UserEntity>()
-                .AddGuidFilter(u => u.Id!,
-                    new GuidFilter(Guid.Parse(filter!.Pagination!.Cursor!), GuidOperator.Equals))
-                .AddStringFilter(u => u.Name.Value!, filter.NameFilter)
-                .AddEnumFilter(u => u.Status, filter.StatusFilter)
+            new ExpressionBuilder<UserEntity>()
+                .AddFilter(u => u.Id, GuidFilter.Create(cursorId, GuidOperator.Gte))
+                .AddFilter(u => u.Name.Value!, filter.NameFilter)
+                .AddFilter(u => u.Status, filter.StatusFilter)
+                .AddFilter(u => u.Birthday, filter.StartBirthdayFilter)
+                .AddFilter(u => u.Birthday, filter.EndBirthdayFilter)
                 .Build();
 
         int paginationLimit = filter.Pagination!.Limit!.Value;
