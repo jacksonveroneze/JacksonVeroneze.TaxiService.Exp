@@ -52,10 +52,10 @@ public sealed class GetUserPagedQueryHandler(
             Pagination = pagination,
             Filter = new UserPagedFilter()
             {
-                NameFilter = StringFilter.Create(request.Name, FilterOperator.StartsWith),
-                StatusFilter = EnumFilter<UserStatus>.Create(request.Status),
-                StartBirthdayFilter = DateOnlyFilter.Create(request.StartBirthday),
-                EndBirthdayFilter = DateOnlyFilter.Create(request.EndBirthday),
+                NameFilter = StringFilter.Create(request.Name, FilterOperator.Contains),
+                StatusFilter = EnumFilter<UserStatus>.Create(request.Status, FilterOperator.Neq),
+                StartBirthdayFilter = DateOnlyFilter.Create(request.StartBirthday, FilterOperator.Lte),
+                EndBirthdayFilter = DateOnlyFilter.Create(request.EndBirthday, FilterOperator.Gt),
             },
         };
 

@@ -20,17 +20,17 @@ public sealed class GetUserByIdQueryHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        (UserEntity? Entity, Error? Error) userResult =
-            await GetUserByIdAsync(request.Id, cancellationToken);
+        Result<UserEntity> resultEntity = await GetUserByIdAsync(
+            request.Id, cancellationToken);
 
-        if (userResult.Entity is null)
+        if (resultEntity.IsFailure)
         {
             return Result<GetUserByIdQueryResponse>
-                .FromNotFound(userResult.Error!);
+                .FromNotFound(resultEntity.Error!);
         }
 
         GetUserByIdQueryResponse response =
-            mapper.Map<GetUserByIdQueryResponse>(userResult.Entity);
+            mapper.Map<GetUserByIdQueryResponse>(resultEntity.Value);
 
         logger.LogGetById(nameof(GetUserByIdQueryHandler),
             nameof(Handle), request.Id);
@@ -39,7 +39,7 @@ public sealed class GetUserByIdQueryHandler(
             .WithSuccess(response);
     }
 
-    private async Task<(UserEntity?, Error?)> GetUserByIdAsync(
+    private async Task<Result<UserEntity>> GetUserByIdAsync(
         Guid id,
         CancellationToken cancellationToken)
     {
@@ -48,7 +48,7 @@ public sealed class GetUserByIdQueryHandler(
 
         if (entity is not null)
         {
-            return (entity, null);
+            return Result<UserEntity>.WithSuccess(entity);
         }
 
         Error error = DomainErrors.UserError.NotFound;
@@ -57,6 +57,6 @@ public sealed class GetUserByIdQueryHandler(
             nameof(GetUserByIdQueryHandler),
             nameof(GetUserByIdAsync), id, error);
 
-        return (null, error);
+        return Result<UserEntity>.FromNotFound(error);
     }
 }

@@ -21,28 +21,27 @@ public sealed class ActivateUserCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        (UserEntity? Entity, Error? Error) userResult =
-            await GetUserByIdAsync(request.Id, cancellationToken);
+        Result<UserEntity> resultEntity = await GetUserByIdAsync(
+            request.Id, cancellationToken);
 
-        if (userResult.Entity is null)
+        if (resultEntity.IsFailure)
         {
-            return Result<ActivateUserCommandHandler>
-                .FromNotFound(userResult.Error!);
+            return resultEntity;
         }
 
-        Result resultAction = Activate(userResult.Entity!);
+        Result resultAction = Activate(resultEntity.Value!);
 
         if (resultAction.IsFailure)
         {
             return resultAction;
         }
 
-        await UpdateAsync(userResult.Entity!, cancellationToken);
+        await UpdateAsync(resultEntity.Value!, cancellationToken);
 
         return Result.WithSuccess();
     }
 
-    private async Task<(UserEntity?, Error?)> GetUserByIdAsync(
+    private async Task<Result<UserEntity>> GetUserByIdAsync(
         Guid id,
         CancellationToken cancellationToken)
     {
@@ -51,16 +50,16 @@ public sealed class ActivateUserCommandHandler(
 
         if (entity is not null)
         {
-            return (entity, null);
+            return Result<UserEntity>.WithSuccess(entity);
         }
 
         Error error = DomainErrors.UserError.NotFound;
 
         logger.LogNotFound(
-            nameof(ActivateUserCommandHandler),
+            nameof(InactivateUserCommandHandler),
             nameof(GetUserByIdAsync), id, error);
 
-        return (null, error);
+        return Result<UserEntity>.FromNotFound(error);
     }
 
     private Result Activate(UserEntity entity)

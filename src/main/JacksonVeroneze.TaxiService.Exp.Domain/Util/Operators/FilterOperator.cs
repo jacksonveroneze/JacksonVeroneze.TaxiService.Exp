@@ -4,7 +4,7 @@ public enum FilterOperator
 {
     None = 0,
     Eq = 1,
-    NotEq = 2,
+    Neq = 2,
     Gt = 3,
     Gte = 4,
     Lt = 5,
