@@ -1,5 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup>
+    <RootNamespace>TaxiService.Modules.Passengers.Application</RootNamespace>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="RedLock.net" Version="2.3.2"/>
     <PackageReference Include="AutoMapper" Version="13.0.1"/>
@@ -17,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JacksonVeroneze.TaxiService.Exp.Domain\JacksonVeroneze.TaxiService.Exp.Domain.csproj"/>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

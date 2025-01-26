@@ -1,5 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup>
+    <RootNamespace>JacksonVeroneze.TaxiService.Exp.Infrastructure</RootNamespace>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Asp.Versioning.Http" Version="8.1.0" />
     <PackageReference Include="CorrelationId" Version="3.0.1"/>
@@ -41,8 +45,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JacksonVeroneze.TaxiService.Exp.Application\JacksonVeroneze.TaxiService.Exp.Application.csproj"/>
-    <ProjectReference Include="..\JacksonVeroneze.TaxiService.Exp.Domain\JacksonVeroneze.TaxiService.Exp.Domain.csproj"/>
+    <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
 </Project>

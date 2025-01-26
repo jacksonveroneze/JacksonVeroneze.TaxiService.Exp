@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TaxiService.Exp.Api", "main\Modules\Passengers\JacksonVeroneze.TaxiService.Exp.Api\JacksonVeroneze.TaxiService.Exp.Api.csproj", "{7E75DDC3-1A7D-4806-9DA6-B6BC687D9A51}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "main\Modules\Passengers\Api\Api.csproj", "{7E75DDC3-1A7D-4806-9DA6-B6BC687D9A51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TaxiService.Exp.Application", "main\Modules\Passengers\JacksonVeroneze.TaxiService.Exp.Application\JacksonVeroneze.TaxiService.Exp.Application.csproj", "{B33871D2-0A58-41DE-A7FB-E7E58E0C6107}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "main\Modules\Passengers\Application\Application.csproj", "{B33871D2-0A58-41DE-A7FB-E7E58E0C6107}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TaxiService.Exp.Domain", "main\Modules\Passengers\JacksonVeroneze.TaxiService.Exp.Domain\JacksonVeroneze.TaxiService.Exp.Domain.csproj", "{2AB98847-BB76-44EF-9184-2C6E38138E7B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "main\Modules\Passengers\Domain\Domain.csproj", "{2AB98847-BB76-44EF-9184-2C6E38138E7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TaxiService.Exp.Infrastructure", "main\Modules\Passengers\JacksonVeroneze.TaxiService.Exp.Infrastructure\JacksonVeroneze.TaxiService.Exp.Infrastructure.csproj", "{5DD8DA6C-CFC9-4AF0-8AAD-FFB3C4E6B951}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "main\Modules\Passengers\Infrastructure\Infrastructure.csproj", "{5DD8DA6C-CFC9-4AF0-8AAD-FFB3C4E6B951}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore", "main\Modules\Passengers\JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore\JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.csproj", "{3D156DDB-924F-4AE3-B41D-D30A8B0B67E8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.EfCore", "main\Modules\Passengers\Infrastructure.EfCore\Infrastructure.EfCore.csproj", "{3D156DDB-924F-4AE3-B41D-D30A8B0B67E8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{2FB36637-D019-47A7-8E00-B11FB572D0D8}"
 	ProjectSection(SolutionItems) = preProject
