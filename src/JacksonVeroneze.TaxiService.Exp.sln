@@ -112,7 +112,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "main\Modules\Rides\A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{D9C33A23-4982-4948-BC6F-A757824808F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "main\Common\Application\Application.csproj", "{42F56021-9AC5-4D5F-943B-BA1E30B2DE59}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseApplication", "main\Common\BaseApplication\BaseApplication.csproj", "{42F56021-9AC5-4D5F-943B-BA1E30B2DE59}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseDomain", "main\Common\BaseDomain\BaseDomain.csproj", "{6A581834-48B2-42BC-B340-8EAF5CB54D8C}"
 EndProject

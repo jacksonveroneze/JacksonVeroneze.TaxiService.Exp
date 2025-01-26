@@ -1,4 +1,7 @@
-using System.Runtime.InteropServices.JavaScript;
+using AutoMapper;
+using JacksonVeroneze.NET.Result;
+using Microsoft.Extensions.Logging;
+using TaxiService.Common.Application.Extensions;
 using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.User;
 using TaxiService.Modules.Passengers.Domain.Core.Errors;
 using TaxiService.Modules.Passengers.Domain.Entities;
@@ -12,7 +15,7 @@ public class UserService(
     IMapper mapper,
     IUserReadRepository userReadRepository) : IUserService
 {
-    public async Task<Result<UserResponse>?> GetByIdAsync(
+    public async Task<Result<UserResponse?>> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken = default)
     {
@@ -21,15 +24,17 @@ public class UserService(
 
         if (entity is not null)
         {
-            return Result<UserResponse>.WithSuccess(entity);
+            UserResponse? response = mapper.Map<UserResponse>(entity);
+
+            return Result<UserResponse?>.WithSuccess(response);
         }
 
-        Error.Error error = DomainErrors.UserError.NotFound;
+        Error error = DomainErrors.UserError.NotFound;
 
         logger.LogNotFound(
             nameof(UserService),
             nameof(GetByIdAsync), id, error);
 
-        return Result<UserResponse>.FromNotFound(error);
+        return Result<UserResponse?>.FromNotFound(error);
     }
 }

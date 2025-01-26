@@ -10,15 +10,15 @@
     <PackageReference Include="JacksonVeroneze.NET.Result" Version="0.0.6"/>
   </ItemGroup>
 
-  <ItemGroup>
-    <Using Include="AutoMapper"/>
-    <Using Include="MediatR"/>
-    <Using Include="Microsoft.Extensions.Logging"/>
-  </ItemGroup>
+  <!--  <ItemGroup>-->
+  <!--    <Using Include="AutoMapper"/>-->
+  <!--    <Using Include="MediatR"/>-->
+  <!--    <Using Include="Microsoft.Extensions.Logging"/>-->
+  <!--  </ItemGroup>-->
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\Application\Application.csproj"/>
-    <ProjectReference Include="..\Application\Application.csproj" />
+        <ProjectReference Include="..\..\..\Common\BaseApplication\BaseApplication.csproj" />
+    <ProjectReference Include="..\Application\Application.csproj"/>
     <ProjectReference Include="..\Domain\Domain.csproj"/>
   </ItemGroup>
 

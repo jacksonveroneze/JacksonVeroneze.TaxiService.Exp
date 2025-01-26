@@ -1,4 +1,5 @@
 ﻿
+using JacksonVeroneze.NET.Result;
 using TaxiService.Modules.Passengers.PublicApi.Services;
 
 namespace TaxiService.Modules.Passengers.PublicApi.Interfaces;
