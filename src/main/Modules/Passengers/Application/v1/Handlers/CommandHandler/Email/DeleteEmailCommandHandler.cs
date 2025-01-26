@@ -1,11 +1,11 @@
 using JacksonVeroneze.NET.Result;
-using TaxiService.Modules.Passengers.Application.Extensions;
+using TaxiService.Common.Application.Extensions;
 using TaxiService.Modules.Passengers.Application.v1.Commands.Email;
 using TaxiService.Modules.Passengers.Application.v1.Handlers.CommandHandler.User;
 using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Email;
 using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.User;
+using TaxiService.Modules.Passengers.Domain.Core.Errors;
 using TaxiService.Modules.Passengers.Domain.Entities;
-using TaxiService.Modules.Rides.Application.Core.Errors;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Handlers.CommandHandler.Email;
 

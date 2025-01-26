@@ -1,5 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
-using TaxiService.Modules.Rides.Domain.DomainEvents.Base;
+using TaxiService.Common.Domain.DomainEvents.Base;
 
 namespace TaxiService.Modules.Rides.Domain.DomainEvents.Ride;
 

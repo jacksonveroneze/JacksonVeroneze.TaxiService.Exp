@@ -1,4 +1,5 @@
 using JacksonVeroneze.NET.Result;
+using TaxiService.Common.Domain.Core.Errors;
 
 namespace TaxiService.Modules.Rides.Domain.Core.Errors;
 
@@ -8,7 +9,7 @@ public static partial class DomainErrors
     {
         public static Error NotFound =>
             new("Ride.NotFound",
-                string.Format(null, TemplateNotFound, "ride id"));
+                string.Format(null, CommonDomainErrors.TemplateNotFound, "ride id"));
 
         public static Error StatusAlreadyDefined =>
             new("Ride.StatusAlreadyDefined", "Corrida já está no status informado");

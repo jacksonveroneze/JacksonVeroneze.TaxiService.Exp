@@ -1,12 +1,12 @@
 using JacksonVeroneze.NET.Result;
-using TaxiService.Modules.Rides.Application.Extensions;
+using TaxiService.Common.Application.Extensions;
+using TaxiService.Common.Domain.ValueObjects;
 using TaxiService.Modules.Rides.Application.v1.Commands.Ride;
 using TaxiService.Modules.Rides.Application.v1.Interfaces.Repositories.Position;
 using TaxiService.Modules.Rides.Application.v1.Interfaces.Repositories.Ride;
 using TaxiService.Modules.Rides.Domain.Core.Errors;
 using TaxiService.Modules.Rides.Domain.Entities;
 using TaxiService.Modules.Rides.Domain.Services;
-using TaxiService.Modules.Rides.Domain.ValueObjects;
 
 namespace TaxiService.Modules.Rides.Application.v1.Handlers.CommandHandler.Ride;
 

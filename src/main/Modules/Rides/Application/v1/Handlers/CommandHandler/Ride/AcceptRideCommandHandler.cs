@@ -1,9 +1,11 @@
 using JacksonVeroneze.NET.Result;
 using RedLockNet;
-using TaxiService.Modules.Rides.Application.Extensions;
+using TaxiService.Common.Application.Extensions;
+using TaxiService.Modules.Passengers.PublicApi;
+using TaxiService.Modules.Passengers.PublicApi.Interfaces;
+using TaxiService.Modules.Passengers.PublicApi.Services;
 using TaxiService.Modules.Rides.Application.v1.Commands.Ride;
 using TaxiService.Modules.Rides.Application.v1.Interfaces.Repositories.Ride;
-using TaxiService.Modules.Rides.Application.v1.Interfaces.Repositories.User;
 using TaxiService.Modules.Rides.Domain.Core.Errors;
 using TaxiService.Modules.Rides.Domain.Entities;
 
@@ -11,7 +13,7 @@ namespace TaxiService.Modules.Rides.Application.v1.Handlers.CommandHandler.Ride;
 
 public sealed class AcceptRideCommandHandler(
     ILogger<AcceptRideCommandHandler> logger,
-    IUserReadRepository userReadRepository,
+    IUserService userService,
     IRideReadRepository rideReadRepository,
     IRideWriteRepository rideWriteRepository,
     IDistributedLockFactory distributedLockFactory)
@@ -51,7 +53,7 @@ public sealed class AcceptRideCommandHandler(
             return resultEntity;
         }
 
-        Result<UserEntity> resultDriver = await GetDriverByIdAsync(
+        Result<UserResponse> resultDriver = await GetDriverByIdAsync(
             request.Body!.DriverId, cancellationToken);
 
         if (resultDriver.IsFailure)
@@ -107,7 +109,7 @@ public sealed class AcceptRideCommandHandler(
         Guid id,
         CancellationToken cancellationToken)
     {
-        UserEntity? entity = await userReadRepository
+        UserEntity? entity = await userService
             .GetByIdAsync(id, cancellationToken);
 
         if (entity is not null)

@@ -1,7 +1,7 @@
-using TaxiService.Modules.Passengers.Application.Core.Errors;
-using TaxiService.Modules.Passengers.Application.Core.Extensions;
-using TaxiService.Modules.Passengers.Application.Interfaces.System;
+using TaxiService.Common.Application.Core.Extensions;
+using TaxiService.Common.Application.Interfaces.System;
 using TaxiService.Modules.Passengers.Application.v1.Commands.User;
+using TaxiService.Modules.Passengers.Application.v1.Errors;
 using TaxiService.Modules.Passengers.Domain.Enums;
 using TaxiService.Modules.Passengers.Domain.Validators;
 

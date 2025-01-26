@@ -1,4 +1,4 @@
-using TaxiService.Modules.Passengers.Application.Models.Base;
+using TaxiService.Common.Application.Models.Base;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Models.User;
 

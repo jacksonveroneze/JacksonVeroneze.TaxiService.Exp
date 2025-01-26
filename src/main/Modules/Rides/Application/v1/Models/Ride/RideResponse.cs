@@ -1,4 +1,4 @@
-using TaxiService.Modules.Rides.Application.v1.Models.Common;
+using TaxiService.Common.Application.Models.Models.Common;
 using TaxiService.Modules.Rides.Domain.Enums;
 
 namespace TaxiService.Modules.Rides.Application.v1.Models.Ride;

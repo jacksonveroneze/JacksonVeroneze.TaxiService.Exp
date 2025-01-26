@@ -1,5 +1,5 @@
 using TaxiService.Modules.Rides.Application.v1.Commands.Ride;
-using TaxiService.Modules.Rides.Application.Validators.Base;
+using TaxiService.Common.Application.Validators.Base;
 
 namespace TaxiService.Modules.Rides.Application.v1.Validators.Commands.Ride;
 

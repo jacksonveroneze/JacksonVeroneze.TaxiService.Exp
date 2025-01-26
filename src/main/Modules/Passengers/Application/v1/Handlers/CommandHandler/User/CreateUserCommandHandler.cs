@@ -1,14 +1,12 @@
-using System.Text.Json;
 using JacksonVeroneze.NET.Result;
-using TaxiService.Modules.Passengers.Application.Extensions;
-using TaxiService.Modules.Passengers.Application.Interfaces.Repositories.Outbox;
-using TaxiService.Modules.Passengers.Application.Interfaces.UnitOfWork;
+using TaxiService.Common.Application.Extensions;
+using TaxiService.Common.Application.Interfaces.UnitOfWork;
 using TaxiService.Modules.Passengers.Application.v1.Commands.User;
 using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Email;
 using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.User;
 using TaxiService.Modules.Passengers.Application.v1.Models.User;
+using TaxiService.Modules.Passengers.Domain.Core.Errors;
 using TaxiService.Modules.Passengers.Domain.Entities;
-using TaxiService.Modules.Rides.Application.Core.Errors;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Handlers.CommandHandler.User;
 
@@ -18,7 +16,7 @@ public sealed class CreateUserCommandHandler(
     IUserWriteRepository userWriteRepository,
     IEmailReadRepository emailReadRepository,
     IEmailWriteRepository emailWriteRepository,
-    IOutboxWriteRepository outboxWriteRepository,
+    // IOutboxWriteRepository outboxWriteRepository,
     IUnitOfWork unitOfWork)
     : IRequestHandler<CreateUserCommand, Result<CreateUserCommandResponse>>
 {
@@ -54,8 +52,8 @@ public sealed class CreateUserCommandHandler(
                 .FromInvalid(userEntity.Errors!);
         }
 
-        await CreateAsync(userEntity.Value!,
-            emailEntity.Value!, cancellationToken);
+        // await CreateAsync(userEntity.Value!,
+        //     emailEntity.Value!, cancellationToken);
 
         CreateUserCommandResponse response =
             mapper.Map<CreateUserCommandResponse>(userEntity.Value);
@@ -122,55 +120,55 @@ public sealed class CreateUserCommandHandler(
             .FromInvalid(entity.Errors!);
     }
 
-    private static OutboxMessageEntity FactoryOutboxMessageEntity(
-        UserEntity user, EmailEntity email)
-    {
-        var content = new
-        {
-            UserId = user.Id,
-            Email = email.Email.Value
-        };
-
-        string jsonContent = JsonSerializer.Serialize(content);
-
-        OutboxMessageEntity entity = OutboxMessageEntity
-            .Create(nameof(UserEntity), jsonContent);
-
-        return entity;
-    }
-
-    private async Task CreateAsync(
-        UserEntity userEntity,
-        EmailEntity emailEntity,
-        CancellationToken cancellationToken)
-    {
-        OutboxMessageEntity message =
-            FactoryOutboxMessageEntity(userEntity, emailEntity);
-
-        try
-        {
-            await userWriteRepository.CreateAsync(
-                userEntity, cancellationToken);
-
-            await emailWriteRepository.CreateAsync(
-                emailEntity, cancellationToken);
-
-            await outboxWriteRepository
-                .CreateAsync(message, cancellationToken);
-
-            await unitOfWork.CommitAsync(
-                cancellationToken);
-
-            logger.LogCreated(nameof(CreateUserCommandHandler),
-                nameof(CreateAsync), userEntity!.Id);
-        }
-        catch (Exception ex)
-        {
-            logger.LogGenericError(
-                nameof(CreateUserCommandHandler),
-                nameof(CreateAsync), ex.Message);
-
-            throw;
-        }
-    }
+    // private static OutboxMessageEntity FactoryOutboxMessageEntity(
+    //     UserEntity user, EmailEntity email)
+    // {
+    //     var content = new
+    //     {
+    //         UserId = user.Id,
+    //         Email = email.Email.Value
+    //     };
+    //
+    //     string jsonContent = JsonSerializer.Serialize(content);
+    //
+    //     OutboxMessageEntity entity = OutboxMessageEntity
+    //         .Create(nameof(UserEntity), jsonContent);
+    //
+    //     return entity;
+    // }
+    //
+    // private async Task CreateAsync(
+    //     UserEntity userEntity,
+    //     EmailEntity emailEntity,
+    //     CancellationToken cancellationToken)
+    // {
+    //     OutboxMessageEntity message =
+    //         FactoryOutboxMessageEntity(userEntity, emailEntity);
+    //
+    //     try
+    //     {
+    //         await userWriteRepository.CreateAsync(
+    //             userEntity, cancellationToken);
+    //
+    //         await emailWriteRepository.CreateAsync(
+    //             emailEntity, cancellationToken);
+    //
+    //         await outboxWriteRepository
+    //             .CreateAsync(message, cancellationToken);
+    //
+    //         await unitOfWork.CommitAsync(
+    //             cancellationToken);
+    //
+    //         logger.LogCreated(nameof(CreateUserCommandHandler),
+    //             nameof(CreateAsync), userEntity!.Id);
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         logger.LogGenericError(
+    //             nameof(CreateUserCommandHandler),
+    //             nameof(CreateAsync), ex.Message);
+    //
+    //         throw;
+    //     }
+    // }
 }

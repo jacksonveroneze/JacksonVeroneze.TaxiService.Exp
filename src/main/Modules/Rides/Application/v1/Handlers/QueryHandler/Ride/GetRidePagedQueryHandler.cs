@@ -1,6 +1,6 @@
 using JacksonVeroneze.NET.Pagination.Cursor;
 using JacksonVeroneze.NET.Result;
-using TaxiService.Modules.Rides.Application.Extensions;
+using TaxiService.Common.Application.Extensions;
 using TaxiService.Modules.Rides.Application.v1.Interfaces.Repositories.Ride;
 using TaxiService.Modules.Rides.Application.v1.Models.Ride;
 using TaxiService.Modules.Rides.Application.v1.Queries.Ride;

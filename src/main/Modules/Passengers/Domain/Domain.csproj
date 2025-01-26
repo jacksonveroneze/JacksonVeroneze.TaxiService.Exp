@@ -9,4 +9,8 @@
     <PackageReference Include="JacksonVeroneze.NET.Pagination" Version="1.1.7"/>
     <PackageReference Include="JacksonVeroneze.NET.Result" Version="0.0.6"/>
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\BaseDomain\BaseDomain.csproj" />
+  </ItemGroup>
 </Project>

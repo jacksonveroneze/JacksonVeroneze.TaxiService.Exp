@@ -1,6 +1,6 @@
 using JacksonVeroneze.NET.Pagination.Common;
 using JacksonVeroneze.NET.Result;
-using TaxiService.Modules.Passengers.Application.Queries.Base;
+using TaxiService.Common.Application.Queries.Base;
 using TaxiService.Modules.Passengers.Application.v1.Models.Email;
 using TaxiService.Modules.Passengers.Application.v1.Models.User;
 

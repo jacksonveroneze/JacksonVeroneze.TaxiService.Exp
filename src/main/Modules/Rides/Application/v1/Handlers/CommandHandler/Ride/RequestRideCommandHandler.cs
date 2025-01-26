@@ -1,8 +1,10 @@
 using JacksonVeroneze.NET.Result;
-using TaxiService.Modules.Rides.Application.Extensions;
+using TaxiService.Common.Application.Extensions;
+using TaxiService.Modules.Passengers.PublicApi;
+using TaxiService.Modules.Passengers.PublicApi.Interfaces;
+using TaxiService.Modules.Passengers.PublicApi.Services;
 using TaxiService.Modules.Rides.Application.v1.Commands.Ride;
 using TaxiService.Modules.Rides.Application.v1.Interfaces.Repositories.Ride;
-using TaxiService.Modules.Rides.Application.v1.Interfaces.Repositories.User;
 using TaxiService.Modules.Rides.Application.v1.Models.Ride;
 using TaxiService.Modules.Rides.Domain.Core.Errors;
 using TaxiService.Modules.Rides.Domain.Entities;
@@ -12,7 +14,7 @@ namespace TaxiService.Modules.Rides.Application.v1.Handlers.CommandHandler.Ride;
 public sealed class RequestRideCommandHandler(
     ILogger<RequestRideCommandHandler> logger,
     IMapper mapper,
-    IUserReadRepository userReadRepository,
+    IUserService userService,
     IRideReadRepository rideReadRepository,
     IRideWriteRepository rideWriteRepository)
     : IRequestHandler<RequestRideCommand, Result<RequestRideCommandResponse>>
@@ -23,7 +25,7 @@ public sealed class RequestRideCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<UserEntity> resultUser = await GetUserByIdAsync(
+        Result<UserResponse> resultUser = await GetUserByIdAsync(
             request.UserId, cancellationToken);
 
         if (resultUser.IsFailure)
@@ -79,16 +81,16 @@ public sealed class RequestRideCommandHandler(
             .FromInvalid(entity.Errors!);
     }
 
-    private async Task<Result<UserEntity>> GetUserByIdAsync(
+    private async Task<Result<UserResponse>> GetUserByIdAsync(
         Guid id,
         CancellationToken cancellationToken)
     {
-        UserEntity? entity = await userReadRepository
+        Result<UserResponse?> entity = await userService
             .GetByIdAsync(id, cancellationToken);
 
         if (entity is not null)
         {
-            return Result<UserEntity>.WithSuccess(entity);
+            return Result<UserResponse>.WithSuccess(entity);
         }
 
         Error error = DomainErrors.UserError.NotFound;

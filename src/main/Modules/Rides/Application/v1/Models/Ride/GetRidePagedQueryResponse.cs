@@ -1,4 +1,4 @@
-using TaxiService.Modules.Rides.Application.Models.Base.Pagination.Cursor;
+using TaxiService.Common.Application.Models.Base.Pagination.Cursor;
 
 namespace TaxiService.Modules.Rides.Application.v1.Models.Ride;
 

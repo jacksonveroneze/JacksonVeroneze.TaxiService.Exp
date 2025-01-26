@@ -1,7 +1,7 @@
-using TaxiService.Modules.Passengers.Application.Core.Errors;
-using TaxiService.Modules.Passengers.Application.Core.Extensions;
+using TaxiService.Common.Application.Core.Extensions;
+using TaxiService.Common.Application.Validators.Base;
 using TaxiService.Modules.Passengers.Application.v1.Commands.Email;
-using TaxiService.Modules.Passengers.Application.Validators.Base;
+using TaxiService.Modules.Passengers.Application.v1.Errors;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Validators.Commands.User.Email;
 

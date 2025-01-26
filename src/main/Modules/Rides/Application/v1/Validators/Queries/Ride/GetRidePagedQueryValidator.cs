@@ -1,5 +1,5 @@
 using TaxiService.Modules.Rides.Application.v1.Queries.Ride;
-using TaxiService.Modules.Rides.Application.Validators.Base;
+using TaxiService.Common.Application.Validators.Base;
 using TaxiService.Modules.Rides.Domain.Enums;
 
 namespace TaxiService.Modules.Rides.Application.v1.Validators.Queries.Ride;

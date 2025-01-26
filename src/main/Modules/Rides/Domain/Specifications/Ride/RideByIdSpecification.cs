@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using TaxiService.Modules.Rides.Domain.Entities;
-using TaxiService.Modules.Rides.Domain.Specifications.Base;
+using TaxiService.Common.Domain.Specifications.Base;
 
 namespace TaxiService.Modules.Rides.Domain.Specifications.Ride;
 

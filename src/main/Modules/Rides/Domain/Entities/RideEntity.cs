@@ -1,9 +1,9 @@
 using JacksonVeroneze.NET.Result;
+using TaxiService.Common.Domain.Entities.Base;
+using TaxiService.Common.Domain.ValueObjects;
 using TaxiService.Modules.Rides.Domain.Core.Errors;
 using TaxiService.Modules.Rides.Domain.DomainEvents.Ride;
-using TaxiService.Modules.Rides.Domain.Entities.Base;
 using TaxiService.Modules.Rides.Domain.Enums;
-using TaxiService.Modules.Rides.Domain.ValueObjects;
 
 namespace TaxiService.Modules.Rides.Domain.Entities;
 

@@ -1,0 +1,8 @@
+namespace TaxiService.Common.Application.Models.Models.Common;
+
+public record CoordinateResponse
+{
+    public float? Latitude { get; init; }
+
+    public float? Longitude { get; init; }
+}

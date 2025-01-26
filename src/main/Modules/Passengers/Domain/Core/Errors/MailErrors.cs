@@ -1,4 +1,5 @@
 using JacksonVeroneze.NET.Result;
+using TaxiService.Common.Domain.Core.Errors;
 
 namespace TaxiService.Modules.Passengers.Domain.Core.Errors;
 
@@ -8,14 +9,14 @@ public static partial class DomainErrors
     {
         public static Error NotFound =>
             new("Email.NotFound",
-                string.Format(null, TemplateNotFound, "e-mail"));
+                string.Format(null, CommonDomainErrors.TemplateNotFound, "e-mail"));
 
         public static Error DuplicateEmail =>
             new("Email.DuplicateEmail",
-                string.Format(null, TemplateDataInUse, "e-mail"));
+                string.Format(null, CommonDomainErrors.TemplateDataInUse, "e-mail"));
 
         public static Error InvalidEmail =>
             new("Email.InvalidEmail",
-                string.Format(null, TemplateDataInvalid, "e-mail"));
+                string.Format(null, CommonDomainErrors.TemplateDataInvalid, "e-mail"));
     }
 }

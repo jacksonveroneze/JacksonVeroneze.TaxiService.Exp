@@ -1,4 +1,4 @@
-using TaxiService.Modules.Rides.Domain.ValueObjects;
+using TaxiService.Common.Domain.ValueObjects;
 
 namespace TaxiService.Modules.Rides.Domain.Services;
 
