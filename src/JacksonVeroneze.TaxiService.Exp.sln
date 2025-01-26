@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TaxiService.Exp.Api", "main\JacksonVeroneze.TaxiService.Exp.Api\JacksonVeroneze.TaxiService.Exp.Api.csproj", "{7E75DDC3-1A7D-4806-9DA6-B6BC687D9A51}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TaxiService.Exp.Api", "main\Modules\Passengers\JacksonVeroneze.TaxiService.Exp.Api\JacksonVeroneze.TaxiService.Exp.Api.csproj", "{7E75DDC3-1A7D-4806-9DA6-B6BC687D9A51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TaxiService.Exp.Application", "main\JacksonVeroneze.TaxiService.Exp.Application\JacksonVeroneze.TaxiService.Exp.Application.csproj", "{B33871D2-0A58-41DE-A7FB-E7E58E0C6107}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TaxiService.Exp.Application", "main\Modules\Passengers\JacksonVeroneze.TaxiService.Exp.Application\JacksonVeroneze.TaxiService.Exp.Application.csproj", "{B33871D2-0A58-41DE-A7FB-E7E58E0C6107}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TaxiService.Exp.Domain", "main\JacksonVeroneze.TaxiService.Exp.Domain\JacksonVeroneze.TaxiService.Exp.Domain.csproj", "{2AB98847-BB76-44EF-9184-2C6E38138E7B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TaxiService.Exp.Domain", "main\Modules\Passengers\JacksonVeroneze.TaxiService.Exp.Domain\JacksonVeroneze.TaxiService.Exp.Domain.csproj", "{2AB98847-BB76-44EF-9184-2C6E38138E7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TaxiService.Exp.Infrastructure", "main\JacksonVeroneze.TaxiService.Exp.Infrastructure\JacksonVeroneze.TaxiService.Exp.Infrastructure.csproj", "{5DD8DA6C-CFC9-4AF0-8AAD-FFB3C4E6B951}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TaxiService.Exp.Infrastructure", "main\Modules\Passengers\JacksonVeroneze.TaxiService.Exp.Infrastructure\JacksonVeroneze.TaxiService.Exp.Infrastructure.csproj", "{5DD8DA6C-CFC9-4AF0-8AAD-FFB3C4E6B951}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore", "main\Modules\Passengers\JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore\JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.csproj", "{3D156DDB-924F-4AE3-B41D-D30A8B0B67E8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{2FB36637-D019-47A7-8E00-B11FB572D0D8}"
 	ProjectSection(SolutionItems) = preProject
@@ -83,7 +85,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{46125835-ECA6-499D-9012-763C19E6BD34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore", "main\JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore\JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.csproj", "{3D156DDB-924F-4AE3-B41D-D30A8B0B67E8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{B43AE3CE-8269-4986-8C63-A0349E3A3686}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Drivers", "Drivers", "{C4B531AA-1008-4178-A276-376D44C177BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Passengers", "Passengers", "{DE57CCC7-E6AC-468A-A5BE-EC8AF0A7871D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payments", "Payments", "{523A48F3-2AF2-45ED-AAFE-3BBEAC2534CF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Rides", "Rides", "{37806C3F-1A1A-4DA1-AD62-E23169FDAB9A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -125,13 +135,18 @@ Global
 		{072A7146-CC76-4DBC-9020-2DA1F6613D71} = {C29D5355-B5A2-4621-86AE-57766C544BDB}
 		{FCF116CF-D7A0-479B-B9EA-471FC20BF90B} = {C29D5355-B5A2-4621-86AE-57766C544BDB}
 		{22503280-B856-43B3-8174-60F081C35E9A} = {2E06D1F1-951E-43B4-9706-4A931EB38244}
-		{B441BFF7-2F22-4EC1-BB3C-1D7BCE4AAF7B} = {781F0984-F5A6-4051-9B5F-525135392A5A}
-		{46ECF193-2850-4E43-AA58-FAB42F9B9F1A} = {781F0984-F5A6-4051-9B5F-525135392A5A}
-		{46125835-ECA6-499D-9012-763C19E6BD34} = {781F0984-F5A6-4051-9B5F-525135392A5A}
 		{B33871D2-0A58-41DE-A7FB-E7E58E0C6107} = {B441BFF7-2F22-4EC1-BB3C-1D7BCE4AAF7B}
 		{2AB98847-BB76-44EF-9184-2C6E38138E7B} = {B441BFF7-2F22-4EC1-BB3C-1D7BCE4AAF7B}
 		{5DD8DA6C-CFC9-4AF0-8AAD-FFB3C4E6B951} = {46ECF193-2850-4E43-AA58-FAB42F9B9F1A}
 		{7E75DDC3-1A7D-4806-9DA6-B6BC687D9A51} = {46125835-ECA6-499D-9012-763C19E6BD34}
 		{3D156DDB-924F-4AE3-B41D-D30A8B0B67E8} = {46ECF193-2850-4E43-AA58-FAB42F9B9F1A}
+		{B43AE3CE-8269-4986-8C63-A0349E3A3686} = {781F0984-F5A6-4051-9B5F-525135392A5A}
+		{C4B531AA-1008-4178-A276-376D44C177BE} = {B43AE3CE-8269-4986-8C63-A0349E3A3686}
+		{DE57CCC7-E6AC-468A-A5BE-EC8AF0A7871D} = {B43AE3CE-8269-4986-8C63-A0349E3A3686}
+		{523A48F3-2AF2-45ED-AAFE-3BBEAC2534CF} = {B43AE3CE-8269-4986-8C63-A0349E3A3686}
+		{37806C3F-1A1A-4DA1-AD62-E23169FDAB9A} = {B43AE3CE-8269-4986-8C63-A0349E3A3686}
+		{B441BFF7-2F22-4EC1-BB3C-1D7BCE4AAF7B} = {DE57CCC7-E6AC-468A-A5BE-EC8AF0A7871D}
+		{46ECF193-2850-4E43-AA58-FAB42F9B9F1A} = {DE57CCC7-E6AC-468A-A5BE-EC8AF0A7871D}
+		{46125835-ECA6-499D-9012-763C19E6BD34} = {DE57CCC7-E6AC-468A-A5BE-EC8AF0A7871D}
 	EndGlobalSection
 EndGlobal
