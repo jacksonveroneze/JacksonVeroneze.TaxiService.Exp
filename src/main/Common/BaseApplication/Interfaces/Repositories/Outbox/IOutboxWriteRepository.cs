@@ -1,4 +1,4 @@
-namespace TaxiService.Common.Application.Interfaces.Repositories.Outbox;
+namespace TaxiService.Common.BaseApplication.Interfaces.Repositories.Outbox;
 
 // public interface IOutboxWriteRepository
 // {

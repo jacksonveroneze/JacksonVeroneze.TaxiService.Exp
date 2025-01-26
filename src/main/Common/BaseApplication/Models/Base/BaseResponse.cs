@@ -1,3 +1,3 @@
-namespace TaxiService.Common.Application.Models.Base;
+namespace TaxiService.Common.BaseApplication.Models.Base;
 
 public abstract record BaseResponse;

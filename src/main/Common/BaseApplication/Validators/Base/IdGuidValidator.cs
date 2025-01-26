@@ -1,7 +1,7 @@
-using TaxiService.Common.Application.Core.Errors;
-using TaxiService.Common.Application.Core.Extensions;
+using TaxiService.Common.BaseApplication.Core.Errors;
+using TaxiService.Common.BaseApplication.Core.Extensions;
 
-namespace TaxiService.Common.Application.Validators.Base;
+namespace TaxiService.Common.BaseApplication.Validators.Base;
 
 public class IdGuidValidator : AbstractValidator<Guid>
 {

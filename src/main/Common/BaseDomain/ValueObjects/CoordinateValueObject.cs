@@ -1,8 +1,8 @@
 using JacksonVeroneze.NET.DomainObjects.ValueObjects;
 using JacksonVeroneze.NET.Result;
-using TaxiService.Common.Domain.Core.Errors;
+using TaxiService.Common.BaseDomain.Core.Errors;
 
-namespace TaxiService.Common.Domain.ValueObjects;
+namespace TaxiService.Common.BaseDomain.ValueObjects;
 
 public class CoordinateValueObject : ValueObject
 {

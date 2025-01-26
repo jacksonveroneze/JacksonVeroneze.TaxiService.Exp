@@ -1,6 +1,6 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using AssemblyReferenceApp = TaxiService.Modules.Rides.Application.AssemblyReference;
+using TaxiService.Modules.Rides.Application;
 
 namespace TaxiService.Modules.Rides.Infrastructure.Extensions;
 
@@ -10,7 +10,7 @@ public static class FluentValidationExtensions
     public static IServiceCollection AddFluentValidation(
         this IServiceCollection services)
     {
-        services.AddValidatorsFromAssemblyContaining<AssemblyReferenceApp>();
+        services.AddValidatorsFromAssemblyContaining<AssemblyReference>();
 
         return services;
     }

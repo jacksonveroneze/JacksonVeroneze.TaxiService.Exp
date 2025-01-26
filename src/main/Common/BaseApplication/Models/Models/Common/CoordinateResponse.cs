@@ -1,4 +1,4 @@
-namespace TaxiService.Common.Application.Models.Models.Common;
+namespace TaxiService.Common.BaseApplication.Models.Models.Common;
 
 public record CoordinateResponse
 {

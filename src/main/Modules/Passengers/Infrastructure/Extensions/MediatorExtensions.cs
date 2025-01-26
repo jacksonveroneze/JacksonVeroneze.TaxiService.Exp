@@ -1,6 +1,5 @@
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using TaxiService.Modules.Passengers.Application.Behaviors;
+using TaxiService.Modules.Passengers.Application;
 
 namespace TaxiService.Modules.Passengers.Infrastructure.Extensions;
 
@@ -11,10 +10,7 @@ public static class MediatorExtensions
         this IServiceCollection services)
     {
         services.AddMediatR(conf =>
-            conf.RegisterServicesFromAssemblyContaining<global::TaxiService.Modules.Passengers.Application.AssemblyReference>());
-
-        services.AddTransient(typeof(IPipelineBehavior<,>),
-            typeof(ValidationBehavior<,>));
+            conf.RegisterServicesFromAssemblyContaining<AssemblyReference>());
 
         return services;
     }

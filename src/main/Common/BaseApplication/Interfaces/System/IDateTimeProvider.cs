@@ -1,4 +1,4 @@
-namespace TaxiService.Common.Application.Interfaces.System;
+namespace TaxiService.Common.BaseApplication.Interfaces.System;
 
 public interface IDateTimeProvider
 {

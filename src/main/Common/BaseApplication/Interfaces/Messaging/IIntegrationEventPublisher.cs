@@ -1,6 +1,6 @@
 using JacksonVeroneze.NET.DomainObjects.Messaging;
 
-namespace TaxiService.Common.Application.Interfaces.Messaging;
+namespace TaxiService.Common.BaseApplication.Interfaces.Messaging;
 
 public interface IIntegrationEventPublisher
 {

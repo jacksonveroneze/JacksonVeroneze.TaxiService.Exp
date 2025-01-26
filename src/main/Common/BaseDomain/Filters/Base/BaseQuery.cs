@@ -1,6 +1,6 @@
 using JacksonVeroneze.NET.Pagination.Cursor;
 
-namespace TaxiService.Common.Domain.Filters.Base;
+namespace TaxiService.Common.BaseDomain.Filters.Base;
 
 public record BaseQuery<T>
 {

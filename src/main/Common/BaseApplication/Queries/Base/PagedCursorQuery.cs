@@ -1,6 +1,6 @@
 ﻿using JacksonVeroneze.NET.Pagination.Common;
 
-namespace TaxiService.Common.Application.Queries.Base;
+namespace TaxiService.Common.BaseApplication.Queries.Base;
 
 public abstract record PagedCursorQuery
 {

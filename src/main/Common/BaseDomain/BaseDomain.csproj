@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>TaxiService.Common.Domain</RootNamespace>
+    <RootNamespace>TaxiService.Common.BaseDomain</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

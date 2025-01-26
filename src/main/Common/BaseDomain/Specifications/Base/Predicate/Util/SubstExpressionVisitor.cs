@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 
-namespace TaxiService.Common.Domain.Specifications.Base.Predicate.Util;
+namespace TaxiService.Common.BaseDomain.Specifications.Base.Predicate.Util;
 
 [ExcludeFromCodeCoverage]
 public class SubstExpressionVisitor : ExpressionVisitor

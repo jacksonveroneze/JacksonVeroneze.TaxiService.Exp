@@ -1,0 +1,29 @@
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using TaxiService.Common.BaseApi.Endpoints.Extensions;
+using TaxiService.Modules.Passengers.Application.v1.Commands.User;
+using TaxiService.Modules.Passengers.Application.v1.Models.User;
+
+namespace TaxiService.Modules.Passengers.Api.Endpoints.v1.Users;
+
+internal static class CreateEndpoint
+{
+    public static RouteGroupBuilder AddCreate(
+        this RouteGroupBuilder builder)
+    {
+        builder.MapPost(string.Empty, async (
+                [FromServices] IMediator mediator,
+                [FromBody] CreateUserCommand command,
+                CancellationToken cancellationToken) =>
+            {
+                JacksonVeroneze.NET.Result.Result<CreateUserCommandResponse> response =
+                    await mediator.Send(command, cancellationToken);
+
+                return response.MatchPost();
+            })
+            .Produces<CreateUserCommandResponse>()
+            .AddDefaultResponseEndpoints();
+
+        return builder;
+    }
+}

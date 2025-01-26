@@ -1,4 +1,4 @@
-namespace TaxiService.Common.Application.Extensions;
+namespace TaxiService.Common.BaseApplication.Extensions;
 
 public static partial class LogMessagesExtensions
 {

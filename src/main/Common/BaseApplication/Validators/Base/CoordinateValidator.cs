@@ -1,4 +1,4 @@
-namespace TaxiService.Common.Application.Validators.Base;
+namespace TaxiService.Common.BaseApplication.Validators.Base;
 
 public class CoordinateValidator : AbstractValidator<float>
 {

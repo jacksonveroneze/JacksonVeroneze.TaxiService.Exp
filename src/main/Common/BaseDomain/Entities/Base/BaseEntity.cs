@@ -1,6 +1,6 @@
 using JacksonVeroneze.NET.DomainObjects.Domain;
 
-namespace TaxiService.Common.Domain.Entities.Base;
+namespace TaxiService.Common.BaseDomain.Entities.Base;
 
 public abstract class BaseEntity : Entity
 {

@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
-using TaxiService.Common.Domain.Specifications.Base.Predicate.Util;
+using TaxiService.Common.BaseDomain.Specifications.Base.Predicate.Util;
 
-namespace TaxiService.Common.Domain.Specifications.Base.Predicate;
+namespace TaxiService.Common.BaseDomain.Specifications.Base.Predicate;
 
 [ExcludeFromCodeCoverage]
 public static class PredicateExtensions

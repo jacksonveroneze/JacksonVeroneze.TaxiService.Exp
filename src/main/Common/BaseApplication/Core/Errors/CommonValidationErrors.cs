@@ -2,7 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using JacksonVeroneze.NET.Result;
 
-namespace TaxiService.Common.Application.Core.Errors;
+namespace TaxiService.Common.BaseApplication.Core.Errors;
 
 [ExcludeFromCodeCoverage]
 public static class CommonValidationErrors

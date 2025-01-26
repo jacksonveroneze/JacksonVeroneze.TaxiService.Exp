@@ -1,4 +1,4 @@
-namespace TaxiService.Common.Application.Interfaces.Tenant;
+namespace TaxiService.Common.BaseApplication.Interfaces.Tenant;
 
 public interface ITenantService
 {

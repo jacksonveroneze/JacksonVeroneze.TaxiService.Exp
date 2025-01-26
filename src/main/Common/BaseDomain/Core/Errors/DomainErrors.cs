@@ -2,7 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using JacksonVeroneze.NET.Result;
 
-namespace TaxiService.Common.Domain.Core.Errors;
+namespace TaxiService.Common.BaseDomain.Core.Errors;
 
 [ExcludeFromCodeCoverage]
 public static partial class CommonDomainErrors

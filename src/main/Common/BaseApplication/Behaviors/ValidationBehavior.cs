@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentValidation.Results;
-using TaxiService.Common.Application.Extensions;
+using TaxiService.Common.BaseApplication.Extensions;
 
-namespace TaxiService.Common.Application.Behaviors;
+namespace TaxiService.Common.BaseApplication.Behaviors;
 
 [ExcludeFromCodeCoverage]
 public sealed class ValidationBehavior<TRequest, TResponse>(

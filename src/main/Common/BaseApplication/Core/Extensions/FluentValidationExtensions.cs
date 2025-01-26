@@ -1,6 +1,6 @@
 using JacksonVeroneze.NET.Result;
 
-namespace TaxiService.Common.Application.Core.Extensions;
+namespace TaxiService.Common.BaseApplication.Core.Extensions;
 
 public static class FluentValidationExtensions
 {

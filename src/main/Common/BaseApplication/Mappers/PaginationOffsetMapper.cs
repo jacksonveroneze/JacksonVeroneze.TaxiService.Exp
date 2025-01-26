@@ -1,8 +1,8 @@
 using JacksonVeroneze.NET.Pagination.Offset;
-using TaxiService.Common.Application.Models.Base.Pagination.Offset;
-using TaxiService.Common.Application.Queries.Base;
+using TaxiService.Common.BaseApplication.Models.Base.Pagination.Offset;
+using TaxiService.Common.BaseApplication.Queries.Base;
 
-namespace TaxiService.Common.Application.Mappers;
+namespace TaxiService.Common.BaseApplication.Mappers;
 
 public class PaginationOffsetMapper : Profile
 {

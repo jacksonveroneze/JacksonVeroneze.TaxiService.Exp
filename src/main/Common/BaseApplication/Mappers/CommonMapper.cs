@@ -1,4 +1,4 @@
-﻿namespace TaxiService.Common.Application.Mappers;
+﻿namespace TaxiService.Common.BaseApplication.Mappers;
 
 public class CommonMapper : Profile
 {
