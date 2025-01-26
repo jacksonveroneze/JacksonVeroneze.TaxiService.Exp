@@ -1,5 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
-using JacksonVeroneze.NET.Pagination.Offset;
+using JacksonVeroneze.NET.Pagination.Cursor;
 
 namespace TaxiService.Modules.Passengers.Domain.Filters;
 

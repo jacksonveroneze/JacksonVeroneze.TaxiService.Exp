@@ -1,10 +1,9 @@
 using JacksonVeroneze.NET.EntityFramework.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using TaxiService.Modules.Passengers.Application.Interfaces.UnitOfWork;
-using TaxiService.Modules.Passengers.Infrastructure.Configurations;
-using ApplicationDbContext =
-    TaxiService.Modules.Passengers.Infrastructure.EfCore.Contexts.ApplicationDbContext;
+using TaxiService.Common.BaseApplication.Interfaces.UnitOfWork;
+using TaxiService.Common.BaseInfrastructure.Configurations;
+using TaxiService.Modules.Passengers.Infrastructure.EfCore.Contexts;
 
 namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.Extensions;
 
@@ -27,8 +26,6 @@ public static class DatabaseExtensions
                         .MaxBatchSize(15))
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
                 .ConfigureOptionsDatabase(appConfiguration));
-
-        services.AddTransient<IUnitOfWork, UnitOfWork>();
 
         return services;
     }

@@ -2,10 +2,10 @@ using System.Linq.Expressions;
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
 using JacksonVeroneze.NET.Pagination.Cursor;
 using JacksonVeroneze.NET.Pagination.Cursor.Extensions;
+using TaxiService.Common.BaseDomain.Specifications.Base.Predicate;
 using TaxiService.Modules.Rides.Application.v1.Interfaces.Repositories.Ride;
 using TaxiService.Modules.Rides.Domain.Entities;
 using TaxiService.Modules.Rides.Domain.Filters;
-using TaxiService.Modules.Rides.Domain.Specifications.Base.Predicate;
 using TaxiService.Modules.Rides.Domain.Specifications.Ride;
 
 namespace TaxiService.Modules.Rides.Infrastructure.EfCore.Repositories.Ride;

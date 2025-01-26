@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TaxiService.Modules.Passengers.Domain.Entities.Base;
+using TaxiService.Common.BaseDomain.Entities.Base;
 
 namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.Mappings.Extensions;
 

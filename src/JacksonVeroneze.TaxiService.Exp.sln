@@ -92,7 +92,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxiService.Api", "main\Api
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Passengers.Application", "main\Modules\Passengers\Passengers.Application\Passengers.Application.csproj", "{E505461B-E142-4932-A2BA-C655F48C326A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Passengers.Infrastructure", "main\Modules\Passengers\Infrastructure\Infrastructure.csproj", "{9C931650-5C19-41DB-9347-8EDD80CC6892}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Passengers.Infrastructure", "main\Modules\Passengers\Passengers.Infrastructure\Passengers.Infrastructure.csproj", "{9C931650-5C19-41DB-9347-8EDD80CC6892}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Passengers.Infrastructure.EfCore", "main\Modules\Passengers\Infrastructure.EfCore\Infrastructure.EfCore.csproj", "{5F0B7063-8EED-4B30-A9AB-0DA992936352}"
 EndProject
@@ -106,7 +106,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rides.Domain", "main\Module
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rides.Application", "main\Modules\Rides\Rides.Application\Rides.Application.csproj", "{66B2F21B-EA28-4486-BBA7-3A1D6C29F1AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rides.RidesInfrastructure", "main\Modules\Rides\Infrastructure\Infrastructure.csproj", "{781D4A1A-886C-455B-96B4-FA788660E41F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rides.Infrastructure", "main\Modules\Rides\Rides.Infrastructure\Rides.Infrastructure.csproj", "{781D4A1A-886C-455B-96B4-FA788660E41F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rides.RidesInfrastructure.EfCore", "main\Modules\Rides\Infrastructure.EfCore\Infrastructure.EfCore.csproj", "{52C4F591-5F19-433E-B0B2-088D9E44A72F}"
 EndProject
@@ -114,6 +114,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rides.Api", "main\Modules\R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseApi", "main\Common\BaseApi\BaseApi.csproj", "{7785CAC5-F2EA-4C8B-896E-029B8194F294}"
 EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

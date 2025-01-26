@@ -2,7 +2,6 @@ using JacksonVeroneze.NET.DomainObjects.Domain;
 using JacksonVeroneze.NET.DomainObjects.Messaging;
 using Microsoft.EntityFrameworkCore;
 using TaxiService.Modules.Rides.Domain.Entities;
-using TaxiService.Modules.Rides.Domain.ValueObjects;
 
 namespace TaxiService.Modules.Rides.Infrastructure.EfCore.Contexts;
 
@@ -28,12 +27,8 @@ public class ApplicationDbContext(
     private static void ApplyQueryFilter(
         ModelBuilder modelBuilder)
     {
-        ApplySoftDeleteQueryFilter<DriverEntity>(modelBuilder);
-        ApplySoftDeleteQueryFilter<EmailEntity>(modelBuilder);
         ApplySoftDeleteQueryFilter<PositionEntity>(modelBuilder);
         ApplySoftDeleteQueryFilter<RideEntity>(modelBuilder);
-        ApplySoftDeleteQueryFilter<TransactionEntity>(modelBuilder);
-        ApplySoftDeleteQueryFilter<UserEntity>(modelBuilder);
     }
 
     private static void ApplySoftDeleteQueryFilter<TEntity>(
@@ -48,6 +43,5 @@ public class ApplicationDbContext(
     {
         modelBuilder.Ignore<Event>();
         modelBuilder.Ignore<DomainEvent>();
-        modelBuilder.Ignore<EmailValueObject>();
     }
 }

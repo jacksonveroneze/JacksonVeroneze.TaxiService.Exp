@@ -1,16 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
-using TaxiService.Modules.Rides.Application.Interfaces.Repositories.Outbox;
-using TaxiService.Modules.Rides.Application.v1.Interfaces.Repositories.Email;
 using TaxiService.Modules.Rides.Application.v1.Interfaces.Repositories.Position;
 using TaxiService.Modules.Rides.Application.v1.Interfaces.Repositories.Ride;
-using TaxiService.Modules.Rides.Application.v1.Interfaces.Repositories.Transaction;
-using TaxiService.Modules.Rides.Application.v1.Interfaces.Repositories.User;
-using TaxiService.Modules.Rides.Infrastructure.EfCore.Repositories.Email;
-using TaxiService.Modules.Rides.Infrastructure.EfCore.Repositories.Outbox;
 using TaxiService.Modules.Rides.Infrastructure.EfCore.Repositories.Position;
 using TaxiService.Modules.Rides.Infrastructure.EfCore.Repositories.Ride;
-using TaxiService.Modules.Rides.Infrastructure.EfCore.Repositories.Transaction;
-using TaxiService.Modules.Rides.Infrastructure.EfCore.Repositories.User;
 
 namespace TaxiService.Modules.Rides.Infrastructure.EfCore.Extensions;
 
@@ -20,22 +12,6 @@ public static class AppServicesExtensions
     public static IServiceCollection AddEfCoreServices(
         this IServiceCollection services)
     {
-        #region User
-
-        // Repositories
-        services.AddScoped<IUserReadRepository, UserReadRepository>();
-        services.AddScoped<IUserWriteRepository, UserWriteRepository>();
-
-        #endregion
-
-        #region Email
-
-        // Repositories
-        services.AddScoped<IEmailReadRepository, EmailReadRepository>();
-        services.AddScoped<IEmailWriteRepository, EmailWriteRepository>();
-
-        #endregion
-
         #region Ride
 
         // Repositories
@@ -49,21 +25,6 @@ public static class AppServicesExtensions
         // Repositories
         services.AddScoped<IPositionReadRepository, PositionReadRepository>();
         services.AddScoped<IPositionWriteRepository, PositionWriteRepository>();
-
-        #endregion
-
-        #region Transaction
-
-        // Repositories
-        services.AddScoped<ITransactionReadRepository, TransactionReadRepository>();
-        services.AddScoped<ITransactionWriteRepository, TransactionWriteRepository>();
-
-        #endregion
-
-        #region Outbox
-
-        // Repositories
-        services.AddScoped<IOutboxWriteRepository, OutboxWriteWriteRepository>();
 
         #endregion
 

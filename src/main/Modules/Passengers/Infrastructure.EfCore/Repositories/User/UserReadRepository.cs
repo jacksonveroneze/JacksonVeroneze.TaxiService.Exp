@@ -1,13 +1,10 @@
+using System.Linq.Expressions;
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
 using JacksonVeroneze.NET.Pagination.Cursor;
-using JacksonVeroneze.NET.Pagination.Cursor.Extensions;
-using LinqKit;
 using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.User;
 using TaxiService.Modules.Passengers.Domain.Entities;
 using TaxiService.Modules.Passengers.Domain.Filters;
-using TaxiService.Modules.Passengers.Domain.Util;
-using TaxiService.Modules.Passengers.Domain.Util.Operators;
-using TaxiService.Modules.Passengers.Infrastructure.EfCore.Repositories.Util;
+using TaxiService.Modules.Passengers.Domain.Specifications.User;
 
 namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.Repositories.User;
 
@@ -18,54 +15,40 @@ public class UserReadRepository(
     public Task<UserEntity?> GetByIdAsync(
         Guid id, CancellationToken cancellationToken = default)
     {
-        return service.GetByIdAsync(
-            query => query.Id == id, cancellationToken);
+        UserByIdSpecification specByUserId = new(id);
+
+        return service.GetByIdAsync(specByUserId.ToExpression(),
+            cancellationToken);
     }
 
     public async Task<Page<UserEntity>> GetPagedAsync(
-        UserPagedQuery query,
+        UserPagedFilter filter,
         CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(query);
+        ArgumentNullException.ThrowIfNull(filter);
 
-        ExpressionStarter<UserEntity> predicate =
-            FactoryFilterPage(query);
-
-        (UserEntity[] Data, bool HasMore, UserEntity? Last) result =
-            await service.GetPagedCursorAsync(
-                query.Pagination!,
-                predicate,
-                order => order.Name.Value,
-                cancellationToken);
-
-        string? cursor = result.HasMore
-            ? result.Last?.Id.ToString()
+        Guid? id = !string.IsNullOrEmpty(filter.Pagination?.Cursor)
+            ? Guid.Parse(filter.Pagination!.Cursor)
             : null;
 
-        return result.Data.ToPage(result.HasMore, cursor);
-    }
+        Expression<Func<UserEntity, bool>> spec =
+            spec => !id.HasValue || spec.Id > id;
 
-    private static ExpressionStarter<UserEntity> FactoryFilterPage(
-        UserPagedQuery query)
-    {
-        ExpressionsBuilder<UserEntity> predicate = new();
+        int paginationLimit = filter.Pagination!.Limit!.Value;
+        int databaselimit = paginationLimit + 1;
 
-        if (query.Pagination!.Cursor is not null)
-        {
-            Guid cursorId = Guid.Parse(query.Pagination!.Cursor!);
+        ICollection<UserEntity> result = await service.GetAllAsync(
+            spec,
+            order => order.Name.Value,
+            databaselimit,
+            cancellationToken: cancellationToken);
 
-            predicate.AddFilter(u => u.Id,
-                GuidFilter.Create(cursorId, FilterOperator.Gte));
-        }
+        IList<UserEntity> data = result.Take(paginationLimit).ToList();
+        bool hasMore = result.Count > paginationLimit;
+        string cursor = result.LastOrDefault()?.Id.ToString() ?? string.Empty;
 
-        UserPagedFilter filter = query.Filter!;
+        PageInfo pageInfo = new(hasMore, cursor);
 
-        predicate
-            .AddFilter(u => u.Name.Value!, filter.NameFilter)
-            .AddFilter(u => u.Status, filter.StatusFilter)
-            .AddFilter(u => u.Birthday, filter.StartBirthdayFilter)
-            .AddFilter(u => u.Birthday, filter.EndBirthdayFilter);
-
-        return predicate.Build();
+        return new Page<UserEntity>(data, pageInfo);
     }
 }

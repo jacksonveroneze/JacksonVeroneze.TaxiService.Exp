@@ -1,4 +1,4 @@
-using TaxiService.Modules.Rides.Application.Interfaces.UnitOfWork;
+using TaxiService.Common.BaseApplication.Interfaces.UnitOfWork;
 using EfCoreUnitOfWork = JacksonVeroneze.NET.EntityFramework.Interfaces.IUnitOfWork;
 
 namespace TaxiService.Modules.Rides.Infrastructure.EfCore;

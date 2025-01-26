@@ -28,11 +28,7 @@ public class ApplicationDbContext(
     private static void ApplyQueryFilter(
         ModelBuilder modelBuilder)
     {
-        ApplySoftDeleteQueryFilter<DriverEntity>(modelBuilder);
         ApplySoftDeleteQueryFilter<EmailEntity>(modelBuilder);
-        ApplySoftDeleteQueryFilter<PositionEntity>(modelBuilder);
-        ApplySoftDeleteQueryFilter<RideEntity>(modelBuilder);
-        ApplySoftDeleteQueryFilter<TransactionEntity>(modelBuilder);
         ApplySoftDeleteQueryFilter<UserEntity>(modelBuilder);
     }
 
