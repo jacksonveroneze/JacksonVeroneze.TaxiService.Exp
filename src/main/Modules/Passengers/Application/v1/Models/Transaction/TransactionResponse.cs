@@ -1,4 +1,4 @@
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Transaction;
+namespace TaxiService.Modules.Passengers.Application.v1.Models.Transaction;
 
 public sealed record TransactionResponse
 {

@@ -1,8 +1,8 @@
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
-using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.Repositories.Outbox;
-using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
+using TaxiService.Modules.Passengers.Application.Interfaces.Repositories.Outbox;
+using TaxiService.Modules.Passengers.Domain.Entities;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Outbox;
+namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.Repositories.Outbox;
 
 [ExcludeFromCodeCoverage]
 public class OutboxWriteWriteRepository(

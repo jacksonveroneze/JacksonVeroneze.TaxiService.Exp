@@ -1,4 +1,4 @@
-namespace JacksonVeroneze.TaxiService.Exp.Domain.Util.Operators;
+namespace TaxiService.Modules.Passengers.Domain.Util.Operators;
 
 public enum FilterOperator
 {

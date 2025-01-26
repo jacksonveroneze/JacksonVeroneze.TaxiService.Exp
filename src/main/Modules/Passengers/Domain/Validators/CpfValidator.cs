@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace JacksonVeroneze.TaxiService.Exp.Domain.Validators;
+namespace TaxiService.Modules.Passengers.Domain.Validators;
 
 public static class CpfValidator
 {

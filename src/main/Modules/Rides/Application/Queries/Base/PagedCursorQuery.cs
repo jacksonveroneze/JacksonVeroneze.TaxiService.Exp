@@ -1,0 +1,43 @@
+﻿using JacksonVeroneze.NET.Pagination.Common;
+
+namespace TaxiService.Modules.Rides.Application.Queries.Base;
+
+public abstract record PagedCursorQuery
+{
+    private const int DefaulPageSize = 20;
+
+    protected PagedCursorQuery(string defaultOrderBy, SortDirection defaultOrder)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(nameof(defaultOrderBy));
+        ArgumentException.ThrowIfNullOrEmpty(nameof(defaultOrder));
+
+        _orderBy = defaultOrderBy;
+        _order = defaultOrder;
+
+        _pageSize = DefaulPageSize;
+    }
+
+    private readonly int _pageSize;
+    private readonly string? _orderBy;
+    private readonly SortDirection? _order;
+
+    public string? Cursor { get; init; }
+
+    public int? PageSize
+    {
+        get => _pageSize;
+        init => _pageSize = value ?? DefaulPageSize;
+    }
+
+    public string? OrderBy
+    {
+        get => _orderBy;
+        init => _orderBy = value ?? _orderBy;
+    }
+
+    public SortDirection? Order
+    {
+        get => _order;
+        init => _order = value ?? _order;
+    }
+}

@@ -1,9 +1,9 @@
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.Authentication;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.Configurations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
+using TaxiService.Modules.Passengers.Infrastructure.Authentication;
+using TaxiService.Modules.Passengers.Infrastructure.Configurations;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
+namespace TaxiService.Modules.Passengers.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class AuthorizationExtensions

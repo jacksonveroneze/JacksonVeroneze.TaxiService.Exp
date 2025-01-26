@@ -1,13 +1,13 @@
 using JacksonVeroneze.NET.Result;
-using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Email;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.CommandHandler.User;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Email;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
-using JacksonVeroneze.TaxiService.Exp.Domain.Core.Errors;
-using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
+using TaxiService.Modules.Passengers.Application.Extensions;
+using TaxiService.Modules.Passengers.Application.v1.Commands.Email;
+using TaxiService.Modules.Passengers.Application.v1.Handlers.CommandHandler.User;
+using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Email;
+using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.User;
+using TaxiService.Modules.Passengers.Domain.Entities;
+using TaxiService.Modules.Rides.Application.Core.Errors;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.CommandHandler.Email;
+namespace TaxiService.Modules.Passengers.Application.v1.Handlers.CommandHandler.Email;
 
 public sealed class DeleteEmailCommandHandler(
     ILogger<DeleteEmailCommandHandler> logger,

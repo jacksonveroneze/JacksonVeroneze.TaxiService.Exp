@@ -1,4 +1,4 @@
-namespace JacksonVeroneze.TaxiService.Exp.Domain.Parameters;
+namespace TaxiService.Modules.Passengers.Domain.Parameters;
 
 public class UserParameters
 {

@@ -1,9 +1,9 @@
 using System.Globalization;
 using JacksonVeroneze.NET.DomainObjects.ValueObjects;
 using JacksonVeroneze.NET.Result;
-using JacksonVeroneze.TaxiService.Exp.Domain.Core.Errors;
+using TaxiService.Modules.Passengers.Domain.Core.Errors;
 
-namespace JacksonVeroneze.TaxiService.Exp.Domain.ValueObjects;
+namespace TaxiService.Modules.Passengers.Domain.ValueObjects;
 
 public class MoneyValueObject : ValueObject
 {

@@ -1,7 +1,7 @@
 using System.Runtime.InteropServices;
-using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.System;
+using TaxiService.Modules.Passengers.Application.Interfaces.System;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.System;
+namespace TaxiService.Modules.Passengers.Infrastructure.System;
 
 [ExcludeFromCodeCoverage]
 internal sealed class DateTimeProvider : IDateTimeProvider

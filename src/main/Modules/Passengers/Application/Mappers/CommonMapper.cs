@@ -1,4 +1,4 @@
-﻿namespace JacksonVeroneze.TaxiService.Exp.Application.Mappers;
+﻿namespace TaxiService.Modules.Passengers.Application.Mappers;
 
 public class CommonMapper : Profile
 {

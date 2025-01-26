@@ -1,12 +1,12 @@
-using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.Extensions;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.User;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TaxiService.Modules.Passengers.Api.Endpoints.Extensions;
+using TaxiService.Modules.Passengers.Application.v1.Models.User;
+using TaxiService.Modules.Passengers.Application.v1.Queries.User;
+using TaxiService.Modules.Passengers.Infrastructure.Extensions;
 using Result = JacksonVeroneze.NET.Result;
 
-namespace JacksonVeroneze.TaxiService.Exp.Api.Endpoints.v1.Users;
+namespace TaxiService.Modules.Passengers.Api.Endpoints.v1.Users;
 
 internal static class GetPagedEndpoint
 {

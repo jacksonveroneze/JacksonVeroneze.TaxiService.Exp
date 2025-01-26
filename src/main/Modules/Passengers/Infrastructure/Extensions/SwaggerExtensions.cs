@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
+namespace TaxiService.Modules.Passengers.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class SwaggerExtensions

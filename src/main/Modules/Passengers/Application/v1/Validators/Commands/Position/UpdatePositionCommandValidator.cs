@@ -1,8 +1,8 @@
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Position;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Validators.Queries;
-using JacksonVeroneze.TaxiService.Exp.Application.Validators.Base;
+using TaxiService.Modules.Passengers.Application.v1.Commands.Position;
+using TaxiService.Modules.Passengers.Application.v1.Validators.Queries;
+using TaxiService.Modules.Passengers.Application.Validators.Base;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Validators.Commands.Position;
+namespace TaxiService.Modules.Passengers.Application.v1.Validators.Commands.Position;
 
 public class UpdatePositionCommandValidator : AbstractValidator<AddPositionCommand>
 {

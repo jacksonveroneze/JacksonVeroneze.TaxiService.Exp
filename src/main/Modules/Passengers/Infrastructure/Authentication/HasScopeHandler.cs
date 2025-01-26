@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Authentication;
+namespace TaxiService.Modules.Passengers.Infrastructure.Authentication;
 
 public class HasScopeHandler : AuthorizationHandler<HasScopeRequirement>
 {

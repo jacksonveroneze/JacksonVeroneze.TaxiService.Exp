@@ -1,4 +1,4 @@
-namespace JacksonVeroneze.TaxiService.Exp.Domain.Enums;
+namespace TaxiService.Modules.Passengers.Domain.Enums;
 
 public enum TransactionStatus
 {

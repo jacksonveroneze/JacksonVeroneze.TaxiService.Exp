@@ -1,8 +1,8 @@
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.Ride;
-using JacksonVeroneze.TaxiService.Exp.Application.Validators.Base;
-using JacksonVeroneze.TaxiService.Exp.Domain.Enums;
+using TaxiService.Modules.Passengers.Application.v1.Queries.Ride;
+using TaxiService.Modules.Passengers.Application.Validators.Base;
+using TaxiService.Modules.Passengers.Domain.Enums;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Validators.Queries.Ride;
+namespace TaxiService.Modules.Passengers.Application.v1.Validators.Queries.Ride;
 
 public class GetRidePagedQueryValidator : AbstractValidator<GetRidePagedQuery>
 {

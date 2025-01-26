@@ -1,4 +1,4 @@
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Configurations;
+namespace TaxiService.Modules.Passengers.Infrastructure.Configurations;
 
 [ExcludeFromCodeCoverage]
 public class AuthConfiguration

@@ -1,9 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
-using JacksonVeroneze.TaxiService.Exp.Domain.Enums;
-using JacksonVeroneze.TaxiService.Exp.Domain.Filters.Base;
-using JacksonVeroneze.TaxiService.Exp.Domain.Util;
+using TaxiService.Modules.Passengers.Domain.Enums;
+using TaxiService.Modules.Passengers.Domain.Filters.Base;
+using TaxiService.Modules.Passengers.Domain.Util;
 
-namespace JacksonVeroneze.TaxiService.Exp.Domain.Filters;
+namespace TaxiService.Modules.Passengers.Domain.Filters;
 
 [ExcludeFromCodeCoverage]
 public record UserPagedQuery : BaseQuery<UserPagedFilter>;

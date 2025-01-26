@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
+namespace TaxiService.Modules.Passengers.Infrastructure.Extensions;
 
 internal static partial class LogMessagesExtensions
 {

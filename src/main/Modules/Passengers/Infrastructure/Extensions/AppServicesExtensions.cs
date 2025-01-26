@@ -1,11 +1,11 @@
-using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.Messaging;
-using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.System;
-using JacksonVeroneze.TaxiService.Exp.Domain.Services;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.Messaging;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.System;
 using Microsoft.Extensions.DependencyInjection;
+using TaxiService.Modules.Passengers.Application.Interfaces.Messaging;
+using TaxiService.Modules.Passengers.Application.Interfaces.System;
+using TaxiService.Modules.Passengers.Domain.Services;
+using TaxiService.Modules.Passengers.Infrastructure.Messaging;
+using TaxiService.Modules.Passengers.Infrastructure.System;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
+namespace TaxiService.Modules.Passengers.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class AppServicesExtensions

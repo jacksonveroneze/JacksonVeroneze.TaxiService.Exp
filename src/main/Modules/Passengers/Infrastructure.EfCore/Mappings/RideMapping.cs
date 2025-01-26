@@ -1,9 +1,9 @@
-using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Mappings.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using TaxiService.Modules.Passengers.Domain.Entities;
+using TaxiService.Modules.Passengers.Infrastructure.EfCore.Mappings.Extensions;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Mappings;
+namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.Mappings;
 
 [ExcludeFromCodeCoverage]
 public class RideMapping : IEntityTypeConfiguration<RideEntity>

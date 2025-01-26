@@ -1,8 +1,8 @@
 using JacksonVeroneze.NET.Result;
-using JacksonVeroneze.TaxiService.Exp.Domain.Entities.Base;
-using JacksonVeroneze.TaxiService.Exp.Domain.ValueObjects;
+using TaxiService.Modules.Passengers.Domain.Entities.Base;
+using TaxiService.Modules.Passengers.Domain.ValueObjects;
 
-namespace JacksonVeroneze.TaxiService.Exp.Domain.Entities;
+namespace TaxiService.Modules.Passengers.Domain.Entities;
 
 public class PositionEntity : BaseEntityAggregateRoot
 {

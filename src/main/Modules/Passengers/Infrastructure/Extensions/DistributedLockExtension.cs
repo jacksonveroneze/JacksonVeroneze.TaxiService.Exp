@@ -1,11 +1,11 @@
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.Configurations;
 using Microsoft.Extensions.DependencyInjection;
 using RedLockNet;
 using RedLockNet.SERedis;
 using RedLockNet.SERedis.Configuration;
 using StackExchange.Redis;
+using TaxiService.Modules.Passengers.Infrastructure.Configurations;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
+namespace TaxiService.Modules.Passengers.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class DistributedLockExtension

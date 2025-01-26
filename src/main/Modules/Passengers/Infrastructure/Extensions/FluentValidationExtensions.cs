@@ -1,8 +1,8 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using AssemblyReferenceApp = JacksonVeroneze.TaxiService.Exp.Application.AssemblyReference;
+using AssemblyReferenceApp = TaxiService.Modules.Passengers.Application.AssemblyReference;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
+namespace TaxiService.Modules.Passengers.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class FluentValidationExtensions

@@ -1,6 +1,6 @@
-using JacksonVeroneze.TaxiService.Exp.Application.Models.Base;
+using TaxiService.Modules.Passengers.Application.Models.Base;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Transaction;
+namespace TaxiService.Modules.Passengers.Application.v1.Models.Transaction;
 
 public sealed record GetByRideIdQueryResponse :
     DataResponse<TransactionResponse>;

@@ -1,7 +1,7 @@
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Common;
-using JacksonVeroneze.TaxiService.Exp.Domain.Enums;
+using TaxiService.Modules.Passengers.Application.v1.Models.Common;
+using TaxiService.Modules.Passengers.Domain.Enums;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Ride;
+namespace TaxiService.Modules.Passengers.Application.v1.Models.Ride;
 
 public sealed record RideResponse
 {

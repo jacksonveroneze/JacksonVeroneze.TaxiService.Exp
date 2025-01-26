@@ -1,6 +1,6 @@
-using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
+using TaxiService.Modules.Passengers.Domain.Entities;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.Interfaces.Repositories.Outbox;
+namespace TaxiService.Modules.Passengers.Application.Interfaces.Repositories.Outbox;
 
 public interface IOutboxWriteRepository
 {

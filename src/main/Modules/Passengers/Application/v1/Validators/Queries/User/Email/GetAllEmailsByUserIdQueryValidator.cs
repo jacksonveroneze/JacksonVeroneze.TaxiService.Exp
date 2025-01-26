@@ -1,7 +1,7 @@
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.User.Email;
-using JacksonVeroneze.TaxiService.Exp.Application.Validators.Base;
+using TaxiService.Modules.Passengers.Application.v1.Queries.User.Email;
+using TaxiService.Modules.Passengers.Application.Validators.Base;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Validators.Queries.User.Email;
+namespace TaxiService.Modules.Passengers.Application.v1.Validators.Queries.User.Email;
 
 public class GetAllEmailsByUserIdQueryValidator : AbstractValidator<GetEmailPagedQuery>
 {

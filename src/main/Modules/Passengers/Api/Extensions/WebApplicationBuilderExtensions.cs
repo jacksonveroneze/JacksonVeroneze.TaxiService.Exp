@@ -1,11 +1,10 @@
-using JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Extensions;
-using JacksonVeroneze.TaxiService.Exp.Api.Middlewares;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.Configurations;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Extensions;
 using SharpGrip.FluentValidation.AutoValidation.Endpoints.Extensions;
+using TaxiService.Modules.Passengers.Api.Middlewares;
+using TaxiService.Modules.Passengers.Infrastructure.Configurations;
+using TaxiService.Modules.Passengers.Infrastructure.EfCore.Extensions;
+using TaxiService.Modules.Passengers.Infrastructure.Extensions;
 
-namespace JacksonVeroneze.TaxiService.Exp.Api.Extensions;
+namespace TaxiService.Modules.Passengers.Api.Extensions;
 
 internal static class WebApplicationBuilderExtensions
 {
@@ -66,20 +65,6 @@ internal static class WebApplicationBuilderExtensions
             .AddCached(appConfiguration)
             .AddDatabaseEfCore(appConfiguration)
             .AddRabbitMq();
-
-        builder.Services
-            .AddGraphQLServer()
-            .DisableIntrospection(builder.Environment.IsProduction())
-            .AddMaxExecutionDepthRule(5)
-            .ModifyOptions(options =>
-            {
-                options.DefaultBindingBehavior = BindingBehavior.Explicit;
-            })
-            .ModifyRequestOptions(options =>
-            {
-                options.ExecutionTimeout = TimeSpan.FromSeconds(15);
-            })
-            .AddResources();
 
         return builder;
     }

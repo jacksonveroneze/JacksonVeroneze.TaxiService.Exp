@@ -1,6 +1,6 @@
-using JacksonVeroneze.TaxiService.Exp.Domain.Util.Operators;
+using TaxiService.Modules.Passengers.Domain.Util.Operators;
 
-namespace JacksonVeroneze.TaxiService.Exp.Domain.Util;
+namespace TaxiService.Modules.Passengers.Domain.Util;
 
 public sealed class GuidFilter
     : BaseFilter<Guid>

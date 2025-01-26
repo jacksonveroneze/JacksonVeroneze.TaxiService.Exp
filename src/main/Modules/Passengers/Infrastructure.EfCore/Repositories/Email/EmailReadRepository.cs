@@ -1,10 +1,10 @@
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Email;
-using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
-using JacksonVeroneze.TaxiService.Exp.Domain.Filters;
-using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Email;
+using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Email;
+using TaxiService.Modules.Passengers.Domain.Entities;
+using TaxiService.Modules.Passengers.Domain.Filters;
+using TaxiService.Modules.Passengers.Domain.Specifications.Email;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Email;
+namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.Repositories.Email;
 
 [ExcludeFromCodeCoverage]
 public class EmailReadRepository(

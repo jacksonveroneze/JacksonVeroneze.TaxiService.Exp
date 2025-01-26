@@ -1,3 +1,3 @@
-namespace JacksonVeroneze.TaxiService.Exp.Api;
+namespace TaxiService.Modules.Passengers.Api;
 
 internal sealed record AssemblyReference;

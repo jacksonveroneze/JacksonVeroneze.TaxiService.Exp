@@ -1,18 +1,18 @@
-using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.Repositories.Outbox;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Email;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Position;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Ride;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Transaction;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Email;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Outbox;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Position;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Ride;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Transaction;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.User;
 using Microsoft.Extensions.DependencyInjection;
+using TaxiService.Modules.Passengers.Application.Interfaces.Repositories.Outbox;
+using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Email;
+using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Position;
+using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Ride;
+using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Transaction;
+using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.User;
+using TaxiService.Modules.Passengers.Infrastructure.EfCore.Repositories.Email;
+using TaxiService.Modules.Passengers.Infrastructure.EfCore.Repositories.Outbox;
+using TaxiService.Modules.Passengers.Infrastructure.EfCore.Repositories.Position;
+using TaxiService.Modules.Passengers.Infrastructure.EfCore.Repositories.Ride;
+using TaxiService.Modules.Passengers.Infrastructure.EfCore.Repositories.Transaction;
+using TaxiService.Modules.Passengers.Infrastructure.EfCore.Repositories.User;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Extensions;
+namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class AppServicesExtensions

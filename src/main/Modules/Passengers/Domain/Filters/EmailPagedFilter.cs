@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using JacksonVeroneze.NET.Pagination.Offset;
 
-namespace JacksonVeroneze.TaxiService.Exp.Domain.Filters;
+namespace TaxiService.Modules.Passengers.Domain.Filters;
 
 [ExcludeFromCodeCoverage]
 public record EmailPagedFilter

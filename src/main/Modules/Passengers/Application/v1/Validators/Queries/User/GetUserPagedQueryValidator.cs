@@ -1,8 +1,8 @@
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.User;
-using JacksonVeroneze.TaxiService.Exp.Application.Validators.Base;
-using JacksonVeroneze.TaxiService.Exp.Domain.Enums;
+using TaxiService.Modules.Passengers.Application.v1.Queries.User;
+using TaxiService.Modules.Passengers.Application.Validators.Base;
+using TaxiService.Modules.Passengers.Domain.Enums;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Validators.Queries.User;
+namespace TaxiService.Modules.Passengers.Application.v1.Validators.Queries.User;
 
 public class GetUserPagedQueryValidator : AbstractValidator<GetUserPagedQuery>
 {

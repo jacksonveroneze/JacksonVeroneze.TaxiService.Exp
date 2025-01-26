@@ -1,4 +1,4 @@
-namespace JacksonVeroneze.TaxiService.Exp.Application.Interfaces.System;
+namespace TaxiService.Modules.Passengers.Application.Interfaces.System;
 
 public interface IDateTimeProvider
 {

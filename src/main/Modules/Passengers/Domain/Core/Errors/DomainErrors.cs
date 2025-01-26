@@ -2,7 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using JacksonVeroneze.NET.Result;
 
-namespace JacksonVeroneze.TaxiService.Exp.Domain.Core.Errors;
+namespace TaxiService.Modules.Passengers.Domain.Core.Errors;
 
 [ExcludeFromCodeCoverage]
 public static partial class DomainErrors

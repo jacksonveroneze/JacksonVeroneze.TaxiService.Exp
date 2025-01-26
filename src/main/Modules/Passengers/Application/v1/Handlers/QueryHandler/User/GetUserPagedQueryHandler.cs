@@ -1,16 +1,16 @@
 using JacksonVeroneze.NET.Pagination.Cursor;
 using JacksonVeroneze.NET.Result;
-using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.User;
-using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
-using JacksonVeroneze.TaxiService.Exp.Domain.Enums;
-using JacksonVeroneze.TaxiService.Exp.Domain.Filters;
-using JacksonVeroneze.TaxiService.Exp.Domain.Util;
-using JacksonVeroneze.TaxiService.Exp.Domain.Util.Operators;
+using TaxiService.Modules.Passengers.Application.Extensions;
+using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.User;
+using TaxiService.Modules.Passengers.Application.v1.Models.User;
+using TaxiService.Modules.Passengers.Application.v1.Queries.User;
+using TaxiService.Modules.Passengers.Domain.Entities;
+using TaxiService.Modules.Passengers.Domain.Enums;
+using TaxiService.Modules.Passengers.Domain.Filters;
+using TaxiService.Modules.Passengers.Domain.Util;
+using TaxiService.Modules.Passengers.Domain.Util.Operators;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.QueryHandler.User;
+namespace TaxiService.Modules.Passengers.Application.v1.Handlers.QueryHandler.User;
 
 public sealed class GetUserPagedQueryHandler(
     ILogger<GetUserPagedQueryHandler> logger,

@@ -1,10 +1,10 @@
-using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.Extensions;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Ride;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.Ride;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TaxiService.Modules.Passengers.Api.Endpoints.Extensions;
+using TaxiService.Modules.Passengers.Application.v1.Models.Ride;
+using TaxiService.Modules.Passengers.Application.v1.Queries.Ride;
 
-namespace JacksonVeroneze.TaxiService.Exp.Api.Endpoints.v1.Rides;
+namespace TaxiService.Modules.Passengers.Api.Endpoints.v1.Rides;
 
 internal static class GetByIdEndpoint
 {
@@ -18,7 +18,7 @@ internal static class GetByIdEndpoint
             {
                 GetRideByIdQuery query = new(id);
 
-                NET.Result.Result<GetRideByIdQueryResponse> response =
+                JacksonVeroneze.NET.Result.Result<GetRideByIdQueryResponse> response =
                     await mediator.Send(query, cancellationToken);
 
                 return response.MatchGetById();

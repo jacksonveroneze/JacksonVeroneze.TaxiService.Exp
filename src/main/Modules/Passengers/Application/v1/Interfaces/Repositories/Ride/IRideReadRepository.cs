@@ -1,8 +1,8 @@
 using JacksonVeroneze.NET.Pagination.Cursor;
-using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
-using JacksonVeroneze.TaxiService.Exp.Domain.Filters;
+using TaxiService.Modules.Passengers.Domain.Entities;
+using TaxiService.Modules.Passengers.Domain.Filters;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Ride;
+namespace TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Ride;
 
 public interface IRideReadRepository
 {

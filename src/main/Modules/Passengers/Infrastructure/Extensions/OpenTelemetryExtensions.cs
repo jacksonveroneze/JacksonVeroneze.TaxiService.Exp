@@ -1,4 +1,3 @@
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.Configurations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using OpenTelemetry;
@@ -6,8 +5,9 @@ using OpenTelemetry.Instrumentation.AspNetCore;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using TaxiService.Modules.Passengers.Infrastructure.Configurations;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
+namespace TaxiService.Modules.Passengers.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class OpenTelemetryExtensions

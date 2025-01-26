@@ -1,8 +1,8 @@
-using JacksonVeroneze.TaxiService.Exp.Domain.Entities.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using TaxiService.Modules.Passengers.Domain.Entities.Base;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Mappings.Extensions;
+namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.Mappings.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class EntityTypeBuilderExtensions

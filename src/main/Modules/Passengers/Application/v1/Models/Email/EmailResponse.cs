@@ -1,4 +1,4 @@
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Email;
+namespace TaxiService.Modules.Passengers.Application.v1.Models.Email;
 
 public sealed record EmailResponse
 {

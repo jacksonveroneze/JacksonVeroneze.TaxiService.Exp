@@ -1,13 +1,13 @@
 using JacksonVeroneze.NET.Pagination.Cursor;
 using JacksonVeroneze.NET.Result;
-using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Ride;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Ride;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.Ride;
-using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
-using JacksonVeroneze.TaxiService.Exp.Domain.Filters;
+using TaxiService.Modules.Passengers.Application.Extensions;
+using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Ride;
+using TaxiService.Modules.Passengers.Application.v1.Models.Ride;
+using TaxiService.Modules.Passengers.Application.v1.Queries.Ride;
+using TaxiService.Modules.Passengers.Domain.Entities;
+using TaxiService.Modules.Passengers.Domain.Filters;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.QueryHandler.Ride;
+namespace TaxiService.Modules.Passengers.Application.v1.Handlers.QueryHandler.Ride;
 
 public sealed class GetRidePagedQueryHandler(
     ILogger<GetRidePagedQueryHandler> logger,

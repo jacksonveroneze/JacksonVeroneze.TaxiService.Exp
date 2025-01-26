@@ -1,11 +1,11 @@
-using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.Extensions;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TaxiService.Modules.Passengers.Api.Endpoints.Extensions;
+using TaxiService.Modules.Passengers.Application.v1.Commands.User;
+using TaxiService.Modules.Passengers.Application.v1.Models.User;
+using TaxiService.Modules.Passengers.Infrastructure.Extensions;
 
-namespace JacksonVeroneze.TaxiService.Exp.Api.Endpoints.v1.Users;
+namespace TaxiService.Modules.Passengers.Api.Endpoints.v1.Users;
 
 internal static class CreateEndpoint
 {
@@ -17,7 +17,7 @@ internal static class CreateEndpoint
                 [FromBody] CreateUserCommand command,
                 CancellationToken cancellationToken) =>
             {
-                NET.Result.Result<CreateUserCommandResponse> response =
+                JacksonVeroneze.NET.Result.Result<CreateUserCommandResponse> response =
                     await mediator.Send(command, cancellationToken);
 
                 return response.MatchPost();

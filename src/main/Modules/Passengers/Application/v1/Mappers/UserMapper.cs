@@ -1,10 +1,10 @@
 using JacksonVeroneze.NET.Pagination.Cursor;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.User;
-using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
-using JacksonVeroneze.TaxiService.Exp.Domain.Filters;
+using TaxiService.Modules.Passengers.Application.v1.Models.User;
+using TaxiService.Modules.Passengers.Application.v1.Queries.User;
+using TaxiService.Modules.Passengers.Domain.Entities;
+using TaxiService.Modules.Passengers.Domain.Filters;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Mappers;
+namespace TaxiService.Modules.Passengers.Application.v1.Mappers;
 
 public class UserMapper : Profile
 {

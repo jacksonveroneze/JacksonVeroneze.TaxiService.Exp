@@ -1,8 +1,8 @@
 using Asp.Versioning.Builder;
-using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.Extensions;
-using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.v1.Users.Emails;
+using TaxiService.Modules.Passengers.Api.Endpoints.Extensions;
+using TaxiService.Modules.Passengers.Api.Endpoints.v1.Users.Emails;
 
-namespace JacksonVeroneze.TaxiService.Exp.Api.Endpoints.v1.Users;
+namespace TaxiService.Modules.Passengers.Api.Endpoints.v1.Users;
 
 internal static class UserEndpoints
 {

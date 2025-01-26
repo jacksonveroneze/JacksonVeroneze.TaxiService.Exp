@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Util;
+namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.Repositories.Util;
 
 public static class ExpressionHelper
 {

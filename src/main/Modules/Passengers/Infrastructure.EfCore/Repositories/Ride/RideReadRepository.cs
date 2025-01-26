@@ -2,13 +2,13 @@ using System.Linq.Expressions;
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
 using JacksonVeroneze.NET.Pagination.Cursor;
 using JacksonVeroneze.NET.Pagination.Cursor.Extensions;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Ride;
-using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
-using JacksonVeroneze.TaxiService.Exp.Domain.Filters;
-using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Base.Predicate;
-using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Ride;
+using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Ride;
+using TaxiService.Modules.Passengers.Domain.Entities;
+using TaxiService.Modules.Passengers.Domain.Filters;
+using TaxiService.Modules.Passengers.Domain.Specifications.Base.Predicate;
+using TaxiService.Modules.Passengers.Domain.Specifications.Ride;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Ride;
+namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.Repositories.Ride;
 
 [ExcludeFromCodeCoverage]
 public class RideReadRepository(

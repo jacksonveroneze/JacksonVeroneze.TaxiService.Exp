@@ -1,11 +1,11 @@
-using JacksonVeroneze.TaxiService.Exp.Application.Core.Errors;
-using JacksonVeroneze.TaxiService.Exp.Application.Core.Extensions;
-using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.System;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User;
-using JacksonVeroneze.TaxiService.Exp.Domain.Enums;
-using JacksonVeroneze.TaxiService.Exp.Domain.Validators;
+using TaxiService.Modules.Passengers.Application.Core.Errors;
+using TaxiService.Modules.Passengers.Application.Core.Extensions;
+using TaxiService.Modules.Passengers.Application.Interfaces.System;
+using TaxiService.Modules.Passengers.Application.v1.Commands.User;
+using TaxiService.Modules.Passengers.Domain.Enums;
+using TaxiService.Modules.Passengers.Domain.Validators;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Validators.Commands.User;
+namespace TaxiService.Modules.Passengers.Application.v1.Validators.Commands.User;
 
 public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
 {

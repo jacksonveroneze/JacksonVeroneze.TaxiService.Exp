@@ -1,8 +1,8 @@
 using JacksonVeroneze.NET.Result;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User;
-using JacksonVeroneze.TaxiService.Exp.Domain.Enums;
+using TaxiService.Modules.Passengers.Application.v1.Models.User;
+using TaxiService.Modules.Passengers.Domain.Enums;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User;
+namespace TaxiService.Modules.Passengers.Application.v1.Commands.User;
 
 public sealed record CreateUserCommand
     : IRequest<Result<CreateUserCommandResponse>>

@@ -1,7 +1,7 @@
-using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.UnitOfWork;
+using TaxiService.Modules.Passengers.Application.Interfaces.UnitOfWork;
 using EfCoreUnitOfWork = JacksonVeroneze.NET.EntityFramework.Interfaces.IUnitOfWork;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore;
+namespace TaxiService.Modules.Passengers.Infrastructure.EfCore;
 
 public class UnitOfWork(EfCoreUnitOfWork unitOfWork)
     : IUnitOfWork

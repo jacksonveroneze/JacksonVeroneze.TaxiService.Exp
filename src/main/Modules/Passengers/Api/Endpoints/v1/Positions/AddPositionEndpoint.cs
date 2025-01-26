@@ -1,10 +1,10 @@
 using JacksonVeroneze.NET.Result;
-using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.Extensions;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Position;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TaxiService.Modules.Passengers.Api.Endpoints.Extensions;
+using TaxiService.Modules.Passengers.Application.v1.Commands.Position;
 
-namespace JacksonVeroneze.TaxiService.Exp.Api.Endpoints.v1.Positions;
+namespace TaxiService.Modules.Passengers.Api.Endpoints.v1.Positions;
 
 internal static class AddPositionEndpoint
 {

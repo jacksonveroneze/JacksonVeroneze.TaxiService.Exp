@@ -1,9 +1,9 @@
 using JacksonVeroneze.NET.DistributedCache.Extensions;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.Configurations;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
+using TaxiService.Modules.Passengers.Infrastructure.Configurations;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
+namespace TaxiService.Modules.Passengers.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class CacheServicesExtensions

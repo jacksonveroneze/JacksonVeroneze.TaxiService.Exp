@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using JacksonVeroneze.NET.Pagination.Cursor;
-using JacksonVeroneze.TaxiService.Exp.Domain.Enums;
+using TaxiService.Modules.Passengers.Domain.Enums;
 
-namespace JacksonVeroneze.TaxiService.Exp.Domain.Filters;
+namespace TaxiService.Modules.Passengers.Domain.Filters;
 
 [ExcludeFromCodeCoverage]
 public record RidePagedFilter

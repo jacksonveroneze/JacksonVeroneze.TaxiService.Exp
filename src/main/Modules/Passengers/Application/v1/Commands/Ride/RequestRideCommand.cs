@@ -1,7 +1,7 @@
 using JacksonVeroneze.NET.Result;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Ride;
+using TaxiService.Modules.Passengers.Application.v1.Models.Ride;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Ride;
+namespace TaxiService.Modules.Passengers.Application.v1.Commands.Ride;
 
 public sealed record RequestRideCommand
     : IRequest<Result<RequestRideCommandResponse>>

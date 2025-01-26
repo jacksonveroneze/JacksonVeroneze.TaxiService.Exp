@@ -1,7 +1,7 @@
 using JacksonVeroneze.NET.Result;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Ride;
+using TaxiService.Modules.Passengers.Application.v1.Models.Ride;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.Ride;
+namespace TaxiService.Modules.Passengers.Application.v1.Queries.Ride;
 
 public sealed record GetRideByIdQuery(Guid Id) :
     IRequest<Result<GetRideByIdQueryResponse>>;

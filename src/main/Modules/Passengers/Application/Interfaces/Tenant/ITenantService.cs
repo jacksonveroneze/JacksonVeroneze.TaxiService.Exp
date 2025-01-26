@@ -1,4 +1,4 @@
-namespace JacksonVeroneze.TaxiService.Exp.Application.Interfaces.Tenant;
+namespace TaxiService.Modules.Passengers.Application.Interfaces.Tenant;
 
 public interface ITenantService
 {

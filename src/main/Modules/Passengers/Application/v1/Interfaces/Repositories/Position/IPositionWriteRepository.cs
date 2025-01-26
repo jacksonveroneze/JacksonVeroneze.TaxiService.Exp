@@ -1,6 +1,6 @@
-using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
+using TaxiService.Modules.Passengers.Domain.Entities;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Position;
+namespace TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Position;
 
 public interface IPositionWriteRepository
 {

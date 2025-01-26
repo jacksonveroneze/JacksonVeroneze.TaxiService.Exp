@@ -1,15 +1,15 @@
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
 using JacksonVeroneze.NET.Pagination.Cursor;
 using JacksonVeroneze.NET.Pagination.Cursor.Extensions;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
-using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
-using JacksonVeroneze.TaxiService.Exp.Domain.Filters;
-using JacksonVeroneze.TaxiService.Exp.Domain.Util;
-using JacksonVeroneze.TaxiService.Exp.Domain.Util.Operators;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Util;
 using LinqKit;
+using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.User;
+using TaxiService.Modules.Passengers.Domain.Entities;
+using TaxiService.Modules.Passengers.Domain.Filters;
+using TaxiService.Modules.Passengers.Domain.Util;
+using TaxiService.Modules.Passengers.Domain.Util.Operators;
+using TaxiService.Modules.Passengers.Infrastructure.EfCore.Repositories.Util;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.User;
+namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.Repositories.User;
 
 [ExcludeFromCodeCoverage]
 public class UserReadRepository(

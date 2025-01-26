@@ -1,8 +1,8 @@
 using System.Linq.Expressions;
-using JacksonVeroneze.TaxiService.Exp.Domain.Util;
-using JacksonVeroneze.TaxiService.Exp.Domain.Util.Operators;
+using TaxiService.Modules.Passengers.Domain.Util;
+using TaxiService.Modules.Passengers.Domain.Util.Operators;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Util;
+namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.Repositories.Util;
 
 public static class ExpressionFactory
 {

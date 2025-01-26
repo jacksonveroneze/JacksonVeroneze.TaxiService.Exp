@@ -1,9 +1,9 @@
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Position;
-using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
-using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Position;
+using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Position;
+using TaxiService.Modules.Passengers.Domain.Entities;
+using TaxiService.Modules.Passengers.Domain.Specifications.Position;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Position;
+namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.Repositories.Position;
 
 [ExcludeFromCodeCoverage]
 public class PositionReadRepository(

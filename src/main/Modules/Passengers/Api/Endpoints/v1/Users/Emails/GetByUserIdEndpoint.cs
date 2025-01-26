@@ -1,10 +1,10 @@
-using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.Extensions;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Email;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.User.Email;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TaxiService.Modules.Passengers.Api.Endpoints.Extensions;
+using TaxiService.Modules.Passengers.Application.v1.Models.Email;
+using TaxiService.Modules.Passengers.Application.v1.Queries.User.Email;
 
-namespace JacksonVeroneze.TaxiService.Exp.Api.Endpoints.v1.Users.Emails;
+namespace TaxiService.Modules.Passengers.Api.Endpoints.v1.Users.Emails;
 
 internal static class GetByUserIdEndpoint
 {
@@ -18,7 +18,7 @@ internal static class GetByUserIdEndpoint
             {
                 GetEmailPagedQuery pagedQuery = new(userId);
 
-                NET.Result.Result<GetEmailPagedQueryResponse> response =
+                JacksonVeroneze.NET.Result.Result<GetEmailPagedQueryResponse> response =
                     await mediator.Send(pagedQuery, cancellationToken);
 
                 return response.MatchGet();

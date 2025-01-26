@@ -1,8 +1,8 @@
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
-using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
+using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.User;
+using TaxiService.Modules.Passengers.Domain.Entities;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.User;
+namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.Repositories.User;
 
 [ExcludeFromCodeCoverage]
 public class UserWriteRepository(

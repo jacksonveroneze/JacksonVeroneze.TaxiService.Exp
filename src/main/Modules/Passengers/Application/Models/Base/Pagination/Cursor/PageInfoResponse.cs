@@ -1,4 +1,4 @@
-namespace JacksonVeroneze.TaxiService.Exp.Application.Models.Base.Pagination.Cursor;
+namespace TaxiService.Modules.Passengers.Application.Models.Base.Pagination.Cursor;
 
 public sealed record PageInfoResponse
 {

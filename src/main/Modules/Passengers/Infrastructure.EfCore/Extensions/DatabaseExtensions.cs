@@ -1,12 +1,12 @@
 using JacksonVeroneze.NET.EntityFramework.Extensions;
-using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.UnitOfWork;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using TaxiService.Modules.Passengers.Application.Interfaces.UnitOfWork;
+using TaxiService.Modules.Passengers.Infrastructure.Configurations;
 using ApplicationDbContext =
-    JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Contexts.ApplicationDbContext;
+    TaxiService.Modules.Passengers.Infrastructure.EfCore.Contexts.ApplicationDbContext;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Extensions;
+namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class DatabaseExtensions

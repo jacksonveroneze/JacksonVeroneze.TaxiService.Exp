@@ -1,16 +1,16 @@
 using System.Text.Json;
 using JacksonVeroneze.NET.Result;
-using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
-using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.Repositories.Outbox;
-using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.UnitOfWork;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Email;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.User;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User;
-using JacksonVeroneze.TaxiService.Exp.Domain.Core.Errors;
-using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
+using TaxiService.Modules.Passengers.Application.Extensions;
+using TaxiService.Modules.Passengers.Application.Interfaces.Repositories.Outbox;
+using TaxiService.Modules.Passengers.Application.Interfaces.UnitOfWork;
+using TaxiService.Modules.Passengers.Application.v1.Commands.User;
+using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Email;
+using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.User;
+using TaxiService.Modules.Passengers.Application.v1.Models.User;
+using TaxiService.Modules.Passengers.Domain.Entities;
+using TaxiService.Modules.Rides.Application.Core.Errors;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.CommandHandler.User;
+namespace TaxiService.Modules.Passengers.Application.v1.Handlers.CommandHandler.User;
 
 public sealed class CreateUserCommandHandler(
     ILogger<CreateUserCommandHandler> logger,

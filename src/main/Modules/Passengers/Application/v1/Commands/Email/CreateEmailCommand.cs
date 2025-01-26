@@ -1,7 +1,7 @@
 using JacksonVeroneze.NET.Result;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Email;
+using TaxiService.Modules.Passengers.Application.v1.Models.Email;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Email;
+namespace TaxiService.Modules.Passengers.Application.v1.Commands.Email;
 
 public sealed record CreateEmailCommand
     : IRequest<Result<CreateEmailCommandResponse>>

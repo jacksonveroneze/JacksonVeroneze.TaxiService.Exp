@@ -1,3 +1,3 @@
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure;
+namespace TaxiService.Modules.Passengers.Infrastructure;
 
 public sealed record AssemblyReference;

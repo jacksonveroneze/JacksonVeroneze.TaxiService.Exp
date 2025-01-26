@@ -1,6 +1,6 @@
-using JacksonVeroneze.TaxiService.Exp.Application.Models.Base.Pagination.Offset;
+using TaxiService.Modules.Passengers.Application.Models.Base.Pagination.Offset;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Email;
+namespace TaxiService.Modules.Passengers.Application.v1.Models.Email;
 
 public sealed record GetEmailPagedQueryResponse
     : PagedResponse<EmailResponse>;

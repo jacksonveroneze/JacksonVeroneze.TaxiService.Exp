@@ -1,7 +1,7 @@
 using Asp.Versioning;
 using Asp.Versioning.Builder;
 
-namespace JacksonVeroneze.TaxiService.Exp.Api.Endpoints.Extensions;
+namespace TaxiService.Modules.Passengers.Api.Endpoints.Extensions;
 
 internal static class ApiVersionExtensions
 {

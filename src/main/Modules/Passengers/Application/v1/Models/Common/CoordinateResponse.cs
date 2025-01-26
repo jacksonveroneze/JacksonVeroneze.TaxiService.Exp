@@ -1,4 +1,4 @@
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Common;
+namespace TaxiService.Modules.Passengers.Application.v1.Models.Common;
 
 public record CoordinateResponse
 {

@@ -1,11 +1,11 @@
 using JacksonVeroneze.NET.Result;
-using JacksonVeroneze.TaxiService.Exp.Domain.Core.Errors;
-using JacksonVeroneze.TaxiService.Exp.Domain.DomainEvents.Ride;
-using JacksonVeroneze.TaxiService.Exp.Domain.Entities.Base;
-using JacksonVeroneze.TaxiService.Exp.Domain.Enums;
-using JacksonVeroneze.TaxiService.Exp.Domain.ValueObjects;
+using TaxiService.Modules.Passengers.Domain.Core.Errors;
+using TaxiService.Modules.Passengers.Domain.DomainEvents.Ride;
+using TaxiService.Modules.Passengers.Domain.Entities.Base;
+using TaxiService.Modules.Passengers.Domain.Enums;
+using TaxiService.Modules.Passengers.Domain.ValueObjects;
 
-namespace JacksonVeroneze.TaxiService.Exp.Domain.Entities;
+namespace TaxiService.Modules.Passengers.Domain.Entities;
 
 public class RideEntity : BaseEntityAggregateRoot
 {

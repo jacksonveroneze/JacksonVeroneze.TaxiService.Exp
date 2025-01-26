@@ -1,7 +1,7 @@
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.User;
-using JacksonVeroneze.TaxiService.Exp.Application.Validators.Base;
+using TaxiService.Modules.Passengers.Application.v1.Commands.User;
+using TaxiService.Modules.Passengers.Application.Validators.Base;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Validators.Commands.User;
+namespace TaxiService.Modules.Passengers.Application.v1.Validators.Commands.User;
 
 public class DeleteUserCommandValidator : AbstractValidator<DeleteUserCommand>
 {

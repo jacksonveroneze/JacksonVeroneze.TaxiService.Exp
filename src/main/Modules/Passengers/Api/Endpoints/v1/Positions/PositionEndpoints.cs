@@ -1,8 +1,8 @@
 using Asp.Versioning.Builder;
-using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.Extensions;
 using SharpGrip.FluentValidation.AutoValidation.Endpoints.Extensions;
+using TaxiService.Modules.Passengers.Api.Endpoints.Extensions;
 
-namespace JacksonVeroneze.TaxiService.Exp.Api.Endpoints.v1.Positions;
+namespace TaxiService.Modules.Passengers.Api.Endpoints.v1.Positions;
 
 internal static class PositionEndpoints
 {

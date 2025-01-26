@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>JacksonVeroneze.TaxiService.Exp.Domain</RootNamespace>
+    <RootNamespace>TaxiService.Modules.Passengers.Domain</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,7 +1,7 @@
-using JacksonVeroneze.TaxiService.Exp.Application.Interfaces.Tenant;
 using Microsoft.AspNetCore.Http;
+using TaxiService.Modules.Passengers.Application.Interfaces.Tenant;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Tenant;
+namespace TaxiService.Modules.Passengers.Infrastructure.Tenant;
 
 [ExcludeFromCodeCoverage]
 public class TenantService(

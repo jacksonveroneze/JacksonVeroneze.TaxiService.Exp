@@ -1,7 +1,7 @@
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Common;
-using JacksonVeroneze.TaxiService.Exp.Domain.ValueObjects;
+using TaxiService.Modules.Passengers.Application.v1.Models.Common;
+using TaxiService.Modules.Passengers.Domain.ValueObjects;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Mappers;
+namespace TaxiService.Modules.Passengers.Application.v1.Mappers;
 
 public class CoordinateMapper : Profile
 {

@@ -1,7 +1,7 @@
 using Asp.Versioning;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
+namespace TaxiService.Modules.Passengers.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class AppVersioningExtensions

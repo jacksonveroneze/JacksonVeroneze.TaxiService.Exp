@@ -1,9 +1,9 @@
 using AutoMapper;
-using JacksonVeroneze.TaxiService.Exp.Application.Mappers;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Mappers;
 using Microsoft.Extensions.DependencyInjection;
+using TaxiService.Modules.Passengers.Application.Mappers;
+using TaxiService.Modules.Passengers.Application.v1.Mappers;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
+namespace TaxiService.Modules.Passengers.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class MapperExtensions

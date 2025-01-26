@@ -1,8 +1,8 @@
 using System.Linq.Expressions;
-using JacksonVeroneze.TaxiService.Exp.Domain.Util;
 using LinqKit;
+using TaxiService.Modules.Passengers.Domain.Util;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Util;
+namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.Repositories.Util;
 
 public class ExpressionsBuilder<T>
 {

@@ -1,6 +1,6 @@
-using JacksonVeroneze.TaxiService.Exp.Domain.Enums;
+using TaxiService.Modules.Passengers.Domain.Enums;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Models.User;
+namespace TaxiService.Modules.Passengers.Application.v1.Models.User;
 
 public sealed record UserResponse
 {

@@ -1,12 +1,12 @@
 using JacksonVeroneze.NET.Result;
-using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Ride;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Ride;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.Ride;
-using JacksonVeroneze.TaxiService.Exp.Domain.Core.Errors;
-using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
+using TaxiService.Modules.Passengers.Application.Extensions;
+using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Ride;
+using TaxiService.Modules.Passengers.Application.v1.Models.Ride;
+using TaxiService.Modules.Passengers.Application.v1.Queries.Ride;
+using TaxiService.Modules.Passengers.Domain.Entities;
+using TaxiService.Modules.Rides.Application.Core.Errors;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.QueryHandler.Ride;
+namespace TaxiService.Modules.Passengers.Application.v1.Handlers.QueryHandler.Ride;
 
 public sealed class GetRideByIdQueryHandler(
     ILogger<GetRideByIdQueryHandler> logger,

@@ -1,8 +1,8 @@
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Email;
-using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
+using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Email;
+using TaxiService.Modules.Passengers.Domain.Entities;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Email;
+namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.Repositories.Email;
 
 [ExcludeFromCodeCoverage]
 public class EmailWriteRepository(

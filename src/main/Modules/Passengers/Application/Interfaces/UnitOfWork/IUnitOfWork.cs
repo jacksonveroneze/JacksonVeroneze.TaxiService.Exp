@@ -1,4 +1,4 @@
-namespace JacksonVeroneze.TaxiService.Exp.Application.Interfaces.UnitOfWork;
+namespace TaxiService.Modules.Passengers.Application.Interfaces.UnitOfWork;
 
 public interface IUnitOfWork
 {

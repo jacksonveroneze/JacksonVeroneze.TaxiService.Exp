@@ -1,6 +1,6 @@
 ﻿using JacksonVeroneze.NET.Pagination.Common;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.Queries.Base;
+namespace TaxiService.Modules.Passengers.Application.Queries.Base;
 
 public abstract record PagedOffsetQuery
 {

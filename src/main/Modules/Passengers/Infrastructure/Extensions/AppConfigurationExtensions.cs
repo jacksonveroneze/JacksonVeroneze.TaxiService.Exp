@@ -1,10 +1,10 @@
-using JacksonVeroneze.TaxiService.Exp.Domain.Parameters;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.Configurations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using TaxiService.Modules.Passengers.Domain.Parameters;
+using TaxiService.Modules.Passengers.Infrastructure.Configurations;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
+namespace TaxiService.Modules.Passengers.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class AppConfigurationExtensions

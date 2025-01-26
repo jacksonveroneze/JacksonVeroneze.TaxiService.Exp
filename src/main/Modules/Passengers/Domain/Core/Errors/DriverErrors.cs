@@ -1,6 +1,6 @@
 using JacksonVeroneze.NET.Result;
 
-namespace JacksonVeroneze.TaxiService.Exp.Domain.Core.Errors;
+namespace TaxiService.Modules.Passengers.Domain.Core.Errors;
 
 public static partial class DomainErrors
 {

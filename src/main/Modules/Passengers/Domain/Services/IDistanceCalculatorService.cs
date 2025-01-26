@@ -1,6 +1,6 @@
-using JacksonVeroneze.TaxiService.Exp.Domain.ValueObjects;
+using TaxiService.Modules.Passengers.Domain.ValueObjects;
 
-namespace JacksonVeroneze.TaxiService.Exp.Domain.Services;
+namespace TaxiService.Modules.Passengers.Domain.Services;
 
 public interface IDistanceCalculatorService
 {

@@ -1,10 +1,10 @@
 using JacksonVeroneze.NET.Pagination.Common;
 using JacksonVeroneze.NET.Result;
-using JacksonVeroneze.TaxiService.Exp.Application.Queries.Base;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Ride;
-using JacksonVeroneze.TaxiService.Exp.Domain.Enums;
+using TaxiService.Modules.Passengers.Application.Queries.Base;
+using TaxiService.Modules.Passengers.Application.v1.Models.Ride;
+using TaxiService.Modules.Passengers.Domain.Enums;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.Ride;
+namespace TaxiService.Modules.Passengers.Application.v1.Queries.Ride;
 
 public sealed record GetRidePagedQuery() :
     PagedCursorQuery(DefaultOrderBy, DefaultOrder),

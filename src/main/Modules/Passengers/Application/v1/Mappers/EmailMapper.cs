@@ -1,10 +1,10 @@
 using JacksonVeroneze.NET.Pagination.Offset;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Email;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.User.Email;
-using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
-using JacksonVeroneze.TaxiService.Exp.Domain.Filters;
+using TaxiService.Modules.Passengers.Application.v1.Models.Email;
+using TaxiService.Modules.Passengers.Application.v1.Queries.User.Email;
+using TaxiService.Modules.Passengers.Domain.Entities;
+using TaxiService.Modules.Passengers.Domain.Filters;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Mappers;
+namespace TaxiService.Modules.Passengers.Application.v1.Mappers;
 
 public class EmailMapper : Profile
 {

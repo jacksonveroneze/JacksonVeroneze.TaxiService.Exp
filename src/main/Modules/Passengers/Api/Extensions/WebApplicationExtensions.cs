@@ -1,12 +1,12 @@
 using CorrelationId;
-using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.v1.Positions;
-using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.v1.Rides;
-using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.v1.Users;
 using Prometheus;
 using Scalar.AspNetCore;
 using Serilog;
+using TaxiService.Modules.Passengers.Api.Endpoints.v1.Positions;
+using TaxiService.Modules.Passengers.Api.Endpoints.v1.Rides;
+using TaxiService.Modules.Passengers.Api.Endpoints.v1.Users;
 
-namespace JacksonVeroneze.TaxiService.Exp.Api.Extensions;
+namespace TaxiService.Modules.Passengers.Api.Extensions;
 
 internal static class WebApplicationExtensions
 {

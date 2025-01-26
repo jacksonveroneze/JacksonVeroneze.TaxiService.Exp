@@ -1,4 +1,4 @@
-namespace JacksonVeroneze.TaxiService.Exp.Application.Extensions;
+namespace TaxiService.Modules.Passengers.Application.Extensions;
 
 internal static partial class LogMessagesExtensions
 {

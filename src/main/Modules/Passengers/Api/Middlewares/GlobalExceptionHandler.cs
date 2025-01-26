@@ -1,7 +1,7 @@
 using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
 
-namespace JacksonVeroneze.TaxiService.Exp.Api.Middlewares;
+namespace TaxiService.Modules.Passengers.Api.Middlewares;
 
 internal sealed class GlobalExceptionHandler(
     IProblemDetailsService problemDetailsService)

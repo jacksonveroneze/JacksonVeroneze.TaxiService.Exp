@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-using JacksonVeroneze.TaxiService.Exp.Domain.DomainEvents.Base;
+using TaxiService.Modules.Passengers.Domain.DomainEvents.Base;
 
-namespace JacksonVeroneze.TaxiService.Exp.Domain.DomainEvents.User;
+namespace TaxiService.Modules.Passengers.Domain.DomainEvents.User;
 
 [ExcludeFromCodeCoverage]
 public class UserCreatedDomainEvent(Guid aggregateId)

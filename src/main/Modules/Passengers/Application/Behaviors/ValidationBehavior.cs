@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentValidation.Results;
-using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
+using TaxiService.Modules.Passengers.Application.Extensions;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.Behaviors;
+namespace TaxiService.Modules.Passengers.Application.Behaviors;
 
 [ExcludeFromCodeCoverage]
 public sealed class ValidationBehavior<TRequest, TResponse>(

@@ -1,8 +1,8 @@
-using JacksonVeroneze.TaxiService.Exp.Application.Behaviors;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using TaxiService.Modules.Passengers.Application.Behaviors;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
+namespace TaxiService.Modules.Passengers.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class MediatorExtensions
@@ -11,7 +11,7 @@ public static class MediatorExtensions
         this IServiceCollection services)
     {
         services.AddMediatR(conf =>
-            conf.RegisterServicesFromAssemblyContaining<Application.AssemblyReference>());
+            conf.RegisterServicesFromAssemblyContaining<global::TaxiService.Modules.Passengers.Application.AssemblyReference>());
 
         services.AddTransient(typeof(IPipelineBehavior<,>),
             typeof(ValidationBehavior<,>));

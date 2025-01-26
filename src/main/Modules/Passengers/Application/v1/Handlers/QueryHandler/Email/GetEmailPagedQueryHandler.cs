@@ -1,12 +1,12 @@
 using JacksonVeroneze.NET.Result;
-using JacksonVeroneze.TaxiService.Exp.Application.Extensions;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Email;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Email;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Queries.User.Email;
-using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
-using JacksonVeroneze.TaxiService.Exp.Domain.Filters;
+using TaxiService.Modules.Passengers.Application.Extensions;
+using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Email;
+using TaxiService.Modules.Passengers.Application.v1.Models.Email;
+using TaxiService.Modules.Passengers.Application.v1.Queries.User.Email;
+using TaxiService.Modules.Passengers.Domain.Entities;
+using TaxiService.Modules.Passengers.Domain.Filters;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.v1.Handlers.QueryHandler.Email;
+namespace TaxiService.Modules.Passengers.Application.v1.Handlers.QueryHandler.Email;
 
 public sealed class GetEmailPagedQueryHandler(
     ILogger<GetEmailPagedQueryHandler> logger,

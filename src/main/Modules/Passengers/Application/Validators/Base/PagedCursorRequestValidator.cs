@@ -1,6 +1,6 @@
-using JacksonVeroneze.TaxiService.Exp.Application.Queries.Base;
+using TaxiService.Modules.Passengers.Application.Queries.Base;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.Validators.Base;
+namespace TaxiService.Modules.Passengers.Application.Validators.Base;
 
 public class PagedCursorRequestValidator : AbstractValidator<PagedCursorQuery>
 {

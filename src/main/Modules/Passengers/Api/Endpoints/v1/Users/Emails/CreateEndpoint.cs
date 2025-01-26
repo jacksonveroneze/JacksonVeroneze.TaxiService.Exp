@@ -1,10 +1,10 @@
-using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.Extensions;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Email;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Email;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TaxiService.Modules.Passengers.Api.Endpoints.Extensions;
+using TaxiService.Modules.Passengers.Application.v1.Commands.Email;
+using TaxiService.Modules.Passengers.Application.v1.Models.Email;
 
-namespace JacksonVeroneze.TaxiService.Exp.Api.Endpoints.v1.Users.Emails;
+namespace TaxiService.Modules.Passengers.Api.Endpoints.v1.Users.Emails;
 
 internal static class CreateEndpoint
 {
@@ -16,7 +16,7 @@ internal static class CreateEndpoint
                 [AsParameters] CreateEmailCommand command,
                 CancellationToken cancellationToken) =>
             {
-                NET.Result.Result<CreateEmailCommandResponse> response =
+                JacksonVeroneze.NET.Result.Result<CreateEmailCommandResponse> response =
                     await mediator.Send(command, cancellationToken);
 
                 return response.MatchPost();

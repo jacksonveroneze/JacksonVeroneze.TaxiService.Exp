@@ -1,9 +1,9 @@
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Interfaces.Repositories.Transaction;
-using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
-using JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Transaction;
+using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Transaction;
+using TaxiService.Modules.Passengers.Domain.Entities;
+using TaxiService.Modules.Passengers.Domain.Specifications.Transaction;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Repositories.Transaction;
+namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.Repositories.Transaction;
 
 [ExcludeFromCodeCoverage]
 public class TransactionReadRepository(

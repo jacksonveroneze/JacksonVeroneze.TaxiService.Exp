@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 
-namespace JacksonVeroneze.TaxiService.Exp.Domain.Specifications.Base;
+namespace TaxiService.Modules.Passengers.Domain.Specifications.Base;
 
 [ExcludeFromCodeCoverage]
 public abstract class BaseSpecification<TEntity> where TEntity : class

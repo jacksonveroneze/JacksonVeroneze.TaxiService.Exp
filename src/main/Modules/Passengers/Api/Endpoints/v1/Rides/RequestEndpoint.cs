@@ -1,10 +1,10 @@
-using JacksonVeroneze.TaxiService.Exp.Api.Endpoints.Extensions;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Commands.Ride;
-using JacksonVeroneze.TaxiService.Exp.Application.v1.Models.Ride;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TaxiService.Modules.Passengers.Api.Endpoints.Extensions;
+using TaxiService.Modules.Passengers.Application.v1.Commands.Ride;
+using TaxiService.Modules.Passengers.Application.v1.Models.Ride;
 
-namespace JacksonVeroneze.TaxiService.Exp.Api.Endpoints.v1.Rides;
+namespace TaxiService.Modules.Passengers.Api.Endpoints.v1.Rides;
 
 internal static class RequestEndpoint
 {
@@ -16,7 +16,7 @@ internal static class RequestEndpoint
                 [FromBody] RequestRideCommand command,
                 CancellationToken cancellationToken) =>
             {
-                NET.Result.Result<RequestRideCommandResponse> response =
+                JacksonVeroneze.NET.Result.Result<RequestRideCommandResponse> response =
                     await mediator.Send(command, cancellationToken);
 
                 return response.MatchPost();

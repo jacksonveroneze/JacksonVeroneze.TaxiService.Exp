@@ -1,10 +1,10 @@
 using JacksonVeroneze.NET.DomainObjects.Domain;
 using JacksonVeroneze.NET.DomainObjects.Messaging;
-using JacksonVeroneze.TaxiService.Exp.Domain.Entities;
-using JacksonVeroneze.TaxiService.Exp.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
+using TaxiService.Modules.Passengers.Domain.Entities;
+using TaxiService.Modules.Passengers.Domain.ValueObjects;
 
-namespace JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Contexts;
+namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.Contexts;
 
 [ExcludeFromCodeCoverage]
 public class ApplicationDbContext(

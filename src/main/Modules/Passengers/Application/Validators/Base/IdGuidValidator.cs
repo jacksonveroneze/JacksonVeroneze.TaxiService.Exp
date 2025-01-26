@@ -1,7 +1,7 @@
-using JacksonVeroneze.TaxiService.Exp.Application.Core.Errors;
-using JacksonVeroneze.TaxiService.Exp.Application.Core.Extensions;
+using TaxiService.Modules.Passengers.Application.Core.Errors;
+using TaxiService.Modules.Passengers.Application.Core.Extensions;
 
-namespace JacksonVeroneze.TaxiService.Exp.Application.Validators.Base;
+namespace TaxiService.Modules.Passengers.Application.Validators.Base;
 
 public class IdGuidValidator : AbstractValidator<Guid>
 {
