@@ -55,13 +55,14 @@ internal static class WebApplicationBuilderExtensions
         configuration.AssertConfigurationIsValid();
 
         builder.Services.AddSingleton(configuration.CreateMapper());
-        builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         builder.Services.AddMediatR(conf =>
         {
             conf.AddPassengersMediatrHandlers();
             conf.AddRidesMediatrHandlers();
         });
+
+        builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         builder.Services
             .AddMediatr()
