@@ -4,7 +4,7 @@ using TaxiService.Modules.Rides.Domain.Services;
 namespace TaxiService.Modules.Rides.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class AppServicesExtensions
+internal static class AppServicesExtensions
 {
     public static IServiceCollection AddAppServices(
         this IServiceCollection services)

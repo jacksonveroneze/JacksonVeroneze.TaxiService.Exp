@@ -6,12 +6,11 @@ namespace TaxiService.Modules.Passengers.Infrastructure.Extensions;
 [ExcludeFromCodeCoverage]
 public static class MediatorExtensions
 {
-    public static IServiceCollection AddMediatr(
-        this IServiceCollection services)
+    public static MediatRServiceConfiguration AddPassengersMediatrHandlers(
+        this MediatRServiceConfiguration conf)
     {
-        services.AddMediatR(conf =>
-            conf.RegisterServicesFromAssemblyContaining<AssemblyReference>());
+        conf.RegisterServicesFromAssemblyContaining<AssemblyReference>();
 
-        return services;
+        return conf;
     }
 }

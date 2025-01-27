@@ -1,6 +1,3 @@
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using TaxiService.Common.BaseApi.Endpoints.Extensions;
 using TaxiService.Modules.Passengers.Application.v1.Models.User;
 using TaxiService.Modules.Passengers.Application.v1.Queries.User;
 
@@ -12,7 +9,7 @@ internal static class GetByIdEndpoint
         this RouteGroupBuilder builder)
     {
         builder.MapGet("{id:guid:required}", async (
-                [FromServices] IMediator mediator,
+                [FromServices] ISender mediator,
                 [FromRoute] Guid id,
                 CancellationToken cancellationToken) =>
             {

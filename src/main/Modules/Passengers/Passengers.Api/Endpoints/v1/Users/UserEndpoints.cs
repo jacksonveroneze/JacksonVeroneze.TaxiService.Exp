@@ -1,10 +1,8 @@
-using Asp.Versioning.Builder;
-using TaxiService.Common.BaseApi.Endpoints.Extensions;
 using TaxiService.Modules.Passengers.Api.Endpoints.v1.Users.Emails;
 
 namespace TaxiService.Modules.Passengers.Api.Endpoints.v1.Users;
 
-internal static class UserEndpoints
+public static class UserEndpoints
 {
     public static WebApplication AddUserEndpoints(
         this WebApplication app)

@@ -1,6 +1,3 @@
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using TaxiService.Common.BaseApi.Endpoints.Extensions;
 using TaxiService.Modules.Passengers.Application.v1.Commands.Email;
 
 namespace TaxiService.Modules.Passengers.Api.Endpoints.v1.Users.Emails;
@@ -11,7 +8,7 @@ internal static class DeleteEndpoint
         this RouteGroupBuilder builder)
     {
         builder.MapDelete("{userId:guid:required}/emails/{emailId:guid:required}", async (
-                [FromServices] IMediator mediator,
+                [FromServices] ISender mediator,
                 [FromRoute] Guid userId,
                 [FromRoute] Guid emailId,
                 CancellationToken cancellationToken) =>

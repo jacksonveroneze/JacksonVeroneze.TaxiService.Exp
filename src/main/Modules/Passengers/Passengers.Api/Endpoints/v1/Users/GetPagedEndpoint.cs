@@ -1,6 +1,3 @@
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using TaxiService.Common.BaseApi.Endpoints.Extensions;
 using TaxiService.Modules.Passengers.Application.v1.Models.User;
 using TaxiService.Modules.Passengers.Application.v1.Queries.User;
 using Result = JacksonVeroneze.NET.Result;
@@ -13,7 +10,7 @@ internal static class GetPagedEndpoint
         this RouteGroupBuilder builder)
     {
         builder.MapGet(string.Empty, async (
-                [FromServices] IMediator mediator,
+                [FromServices] ISender mediator,
                 [AsParameters] GetUserPagedQuery query,
                 CancellationToken cancellationToken) =>
             {

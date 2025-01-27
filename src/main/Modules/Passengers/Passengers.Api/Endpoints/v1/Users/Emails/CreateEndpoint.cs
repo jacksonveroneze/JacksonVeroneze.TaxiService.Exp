@@ -1,6 +1,3 @@
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using TaxiService.Common.BaseApi.Endpoints.Extensions;
 using TaxiService.Modules.Passengers.Application.v1.Commands.Email;
 using TaxiService.Modules.Passengers.Application.v1.Models.Email;
 
@@ -12,7 +9,7 @@ internal static class CreateEndpoint
         this RouteGroupBuilder builder)
     {
         builder.MapPost("{userId:guid:required}/emails", async (
-                [FromServices] IMediator mediator,
+                [FromServices] ISender mediator,
                 [AsParameters] CreateEmailCommand command,
                 CancellationToken cancellationToken) =>
             {

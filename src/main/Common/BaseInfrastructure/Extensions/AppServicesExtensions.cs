@@ -9,7 +9,7 @@ namespace TaxiService.Common.BaseInfrastructure.Extensions;
 [ExcludeFromCodeCoverage]
 public static class AppServicesExtensions
 {
-    public static IServiceCollection AddAppServices(
+    public static IServiceCollection AddCommonInfraAppServices(
         this IServiceCollection services)
     {
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();

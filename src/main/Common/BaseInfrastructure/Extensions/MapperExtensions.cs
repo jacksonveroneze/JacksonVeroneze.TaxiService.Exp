@@ -7,21 +7,13 @@ namespace TaxiService.Common.BaseInfrastructure.Extensions;
 [ExcludeFromCodeCoverage]
 public static class MapperExtensions
 {
-    public static IServiceCollection AddAutoMapper(
-        this IServiceCollection services)
+    public static IMapperConfigurationExpression AddCommonMapper(
+        this IMapperConfigurationExpression cfg)
     {
-        MapperConfiguration configuration = new(cfg =>
-        {
-            cfg.AddProfile<CommonMapper>();
-            cfg.AddProfile<PaginationCursorMapper>();
-            cfg.AddProfile<PaginationOffsetMapper>();
-            cfg.AllowNullCollections = true;
-        });
+        cfg.AddProfile<CommonMapper>();
+        cfg.AddProfile<PaginationCursorMapper>();
+        cfg.AddProfile<PaginationOffsetMapper>();
 
-        configuration.AssertConfigurationIsValid();
-
-        services.AddSingleton(configuration.CreateMapper());
-
-        return services;
+        return cfg;
     }
 }

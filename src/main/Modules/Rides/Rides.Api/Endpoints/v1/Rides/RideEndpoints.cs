@@ -1,9 +1,6 @@
-using Asp.Versioning.Builder;
-using TaxiService.Common.BaseApi.Endpoints.Extensions;
-
 namespace TaxiService.Modules.Rides.Api.Endpoints.v1.Rides;
 
-internal static class RideEndpoints
+public static class RideEndpoints
 {
     public static WebApplication AddRideEndpoints(
         this WebApplication app)
@@ -12,7 +9,6 @@ internal static class RideEndpoints
 
         RouteGroupBuilder builder =
             app.MapGroup("/api/v{version:apiVersion}/rides")
-                .RequireAuthorization()
                 .WithTags("rides")
                 .WithApiVersionSet(apiVersionSet)
                 .MapToApiVersion(1);

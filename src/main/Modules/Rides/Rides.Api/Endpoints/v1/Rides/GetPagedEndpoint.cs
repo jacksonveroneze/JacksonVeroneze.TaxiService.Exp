@@ -1,6 +1,3 @@
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using TaxiService.Common.BaseApi.Endpoints.Extensions;
 using TaxiService.Modules.Rides.Application.v1.Models.Ride;
 using TaxiService.Modules.Rides.Application.v1.Queries.Ride;
 
@@ -12,7 +9,7 @@ internal static class GetPagedEndpoint
         this RouteGroupBuilder builder)
     {
         builder.MapGet(string.Empty, async (
-                [FromServices] IMediator mediator,
+                [FromServices] ISender mediator,
                 [AsParameters] GetRidePagedQuery query,
                 CancellationToken cancellationToken) =>
             {

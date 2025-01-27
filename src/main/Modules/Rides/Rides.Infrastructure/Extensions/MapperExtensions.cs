@@ -1,25 +1,17 @@
 using AutoMapper;
-using Microsoft.Extensions.DependencyInjection;
 using TaxiService.Modules.Rides.Application.v1.Mappers;
 
 namespace TaxiService.Modules.Rides.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class MapperExtensions
+public static class RidesMapperExtensions
 {
-    public static IServiceCollection AddAutoMapper(
-        this IServiceCollection services)
+    public static IMapperConfigurationExpression AddRidesMapper(
+        this IMapperConfigurationExpression cfg)
     {
-        MapperConfiguration configuration = new(cfg =>
-        {
-            cfg.AddProfile<CoordinateMapper>();
-            cfg.AddProfile<RideMapper>();
-        });
+        cfg.AddProfile<CoordinateMapper>();
+        cfg.AddProfile<RideMapper>();
 
-        configuration.AssertConfigurationIsValid();
-
-        services.AddSingleton(configuration.CreateMapper());
-
-        return services;
+        return cfg;
     }
 }

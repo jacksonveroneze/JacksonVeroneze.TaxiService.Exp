@@ -1,6 +1,3 @@
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using TaxiService.Common.BaseApi.Endpoints.Extensions;
 using TaxiService.Modules.Rides.Application.v1.Commands.Ride;
 
 namespace TaxiService.Modules.Rides.Api.Endpoints.v1.Rides;
@@ -11,7 +8,7 @@ internal static class CancelEndpoint
         this RouteGroupBuilder builder)
     {
         builder.MapPut("{id:guid:required}/cancel", async (
-                [FromServices] IMediator mediator,
+                [FromServices] ISender mediator,
                 [FromRoute] Guid id,
                 CancellationToken cancellationToken) =>
             {

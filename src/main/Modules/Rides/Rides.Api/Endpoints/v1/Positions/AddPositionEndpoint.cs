@@ -1,7 +1,4 @@
 using JacksonVeroneze.NET.Result;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using TaxiService.Common.BaseApi.Endpoints.Extensions;
 using TaxiService.Modules.Rides.Application.v1.Commands.Position;
 
 namespace TaxiService.Modules.Rides.Api.Endpoints.v1.Positions;
@@ -12,7 +9,7 @@ internal static class AddPositionEndpoint
         this RouteGroupBuilder builder)
     {
         builder.MapPost(string.Empty, async (
-                [FromServices] IMediator mediator,
+                [FromServices] ISender mediator,
                 [FromBody] AddPositionCommand command,
                 CancellationToken cancellationToken) =>
             {

@@ -1,6 +1,3 @@
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using TaxiService.Common.BaseApi.Endpoints.Extensions;
 using TaxiService.Modules.Passengers.Application.v1.Commands.User;
 
 namespace TaxiService.Modules.Passengers.Api.Endpoints.v1.Users;
@@ -11,7 +8,7 @@ internal static class InactivateEndpoint
         this RouteGroupBuilder builder)
     {
         builder.MapPut("{id:guid:required}/inactivate", async (
-                [FromServices] IMediator mediator,
+                [FromServices] ISender mediator,
                 [FromRoute] Guid id,
                 CancellationToken cancellationToken) =>
             {

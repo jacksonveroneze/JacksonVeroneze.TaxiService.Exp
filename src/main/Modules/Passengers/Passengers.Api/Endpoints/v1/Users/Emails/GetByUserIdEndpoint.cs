@@ -1,6 +1,3 @@
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using TaxiService.Common.BaseApi.Endpoints.Extensions;
 using TaxiService.Modules.Passengers.Application.v1.Models.Email;
 using TaxiService.Modules.Passengers.Application.v1.Queries.User.Email;
 
@@ -12,7 +9,7 @@ internal static class GetByUserIdEndpoint
         this RouteGroupBuilder builder)
     {
         builder.MapGet("{userId:guid:required}/emails", async (
-                [FromServices] IMediator mediator,
+                [FromServices] ISender mediator,
                 [FromRoute] Guid userId,
                 CancellationToken cancellationToken) =>
             {

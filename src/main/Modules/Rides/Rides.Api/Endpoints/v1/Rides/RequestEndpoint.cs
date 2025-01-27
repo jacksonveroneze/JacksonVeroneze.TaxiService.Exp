@@ -1,6 +1,3 @@
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using TaxiService.Common.BaseApi.Endpoints.Extensions;
 using TaxiService.Modules.Rides.Application.v1.Commands.Ride;
 using TaxiService.Modules.Rides.Application.v1.Models.Ride;
 
@@ -12,7 +9,7 @@ internal static class RequestEndpoint
         this RouteGroupBuilder builder)
     {
         builder.MapPost(string.Empty, async (
-                [FromServices] IMediator mediator,
+                [FromServices] ISender mediator,
                 [FromBody] RequestRideCommand command,
                 CancellationToken cancellationToken) =>
             {

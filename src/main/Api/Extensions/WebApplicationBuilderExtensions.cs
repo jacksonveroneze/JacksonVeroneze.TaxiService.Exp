@@ -1,11 +1,17 @@
-using JacksonVeroneze.TaxiService.Exp.Api.GraphQL.Extensions;
+using AutoMapper;
 using JacksonVeroneze.TaxiService.Exp.Api.Middlewares;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.Configurations;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.Extensions;
-using JacksonVeroneze.TaxiService.Exp.Infrastructure.EfCore.Extensions;
-using SharpGrip.FluentValidation.AutoValidation.Endpoints.Extensions;
+using TaxiService.Common.BaseApplication.Interfaces.UnitOfWork;
+using TaxiService.Common.BaseApplication.Mappers;
+using TaxiService.Common.BaseInfrastructure;
+using TaxiService.Common.BaseInfrastructure.Configurations;
+using TaxiService.Common.BaseInfrastructure.Extensions;
+using TaxiService.Modules.Passengers.Infrastructure.EfCore.Extensions;
+using TaxiService.Modules.Passengers.Infrastructure.Extensions;
+using TaxiService.Modules.Passengers.PublicApi;
+using TaxiService.Modules.Rides.Infrastructure.EfCore.Extensions;
+using TaxiService.Modules.Rides.Infrastructure.Extensions;
 
-namespace JacksonVeroneze.TaxiService.Exp.Api.Extensions;
+namespace TaxiService.Api.Extensions;
 
 internal static class WebApplicationBuilderExtensions
 {
@@ -22,34 +28,52 @@ internal static class WebApplicationBuilderExtensions
             builder.Services.AddAppConfigs(builder.Configuration);
 
         builder.AddLogger(appConfiguration);
-        builder.ConfigureServices(appConfiguration);
+
+        builder.ConfigureDefaultServices(appConfiguration);
+        builder.ConfigureInfraCommonModule(appConfiguration);
+        builder.ConfigurePassengerModule(appConfiguration);
+        builder.ConfigureRideModule(appConfiguration);
+
+        // TODO
+        builder.Services.AddPassangerPublicApi();
 
         return builder;
     }
 
-    private static WebApplicationBuilder ConfigureServices(
+    private static WebApplicationBuilder ConfigureDefaultServices(
         this WebApplicationBuilder builder,
         AppConfiguration appConfiguration)
     {
-        if (!builder.Environment.IsProduction())
+        MapperConfiguration configuration = new(cfg =>
         {
-            builder.Services
-                .AddOpenApi();
-        }
+            cfg.AddCommonMapper();
+            cfg.AddPassengersMapper();
+            cfg.AddRidesMapper();
+            cfg.AllowNullCollections = true;
+        });
+
+        configuration.AssertConfigurationIsValid();
+
+        builder.Services.AddSingleton(configuration.CreateMapper());
+        builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        builder.Services.AddMediatR(conf =>
+        {
+            conf.AddPassengersMediatrHandlers();
+            conf.AddRidesMediatrHandlers();
+        });
 
         builder.Services
-            .AddJsonOptionsSerialize()
-            .AddAutoMapper()
-            .AddCorrelation()
             .AddMediatr()
-            .AddFluentValidation()
+            .AddJsonOptionsSerialize()
+            .AddCorrelation()
             .AddDistributedLock(appConfiguration)
             .AddAuthentication(appConfiguration)
             .AddAuthorization(appConfiguration)
             .AddOpenTelemetry(appConfiguration)
+            .AddCached(appConfiguration)
             .AddCultureConfiguration()
             .AddHttpContextAccessor()
-            .AddFluentValidationAutoValidation()
             .AddAppVersioning()
             .AddProblemDetails()
             .AddExceptionHandler<GlobalExceptionHandler>()
@@ -60,11 +84,43 @@ internal static class WebApplicationBuilderExtensions
             })
             .AddHealthChecks();
 
+        if (!builder.Environment.IsProduction())
+        {
+            builder.Services
+                .AddOpenApi();
+        }
+
+        return builder;
+    }
+
+    private static WebApplicationBuilder ConfigureInfraCommonModule(
+        this WebApplicationBuilder builder,
+        AppConfiguration appConfiguration)
+    {
         builder.Services
-            .AddAppServices()
-            .AddEfCoreServices()
-            .AddCached(appConfiguration)
-            .AddDatabaseEfCore(appConfiguration);
+            .AddCommonInfraAppServices();
+
+        return builder;
+    }
+
+    private static WebApplicationBuilder ConfigurePassengerModule(
+        this WebApplicationBuilder builder,
+        AppConfiguration appConfiguration)
+    {
+        builder.Services
+            .AddPassangerInfra()
+            .AddPassangerInfraDatabase(appConfiguration);
+
+        return builder;
+    }
+
+    private static WebApplicationBuilder ConfigureRideModule(
+        this WebApplicationBuilder builder,
+        AppConfiguration appConfiguration)
+    {
+        builder.Services
+            .AddRideInfra()
+            .AddRideInfraDatabase(appConfiguration);
 
         return builder;
     }

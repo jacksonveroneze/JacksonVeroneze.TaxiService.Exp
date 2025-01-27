@@ -5,7 +5,7 @@ using TaxiService.Modules.Passengers.Application;
 namespace TaxiService.Modules.Passengers.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class FluentValidationExtensions
+internal static class FluentValidationExtensions
 {
     public static IServiceCollection AddFluentValidation(
         this IServiceCollection services)

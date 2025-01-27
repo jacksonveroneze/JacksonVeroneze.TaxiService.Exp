@@ -94,7 +94,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Passengers.Application", "m
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Passengers.Infrastructure", "main\Modules\Passengers\Passengers.Infrastructure\Passengers.Infrastructure.csproj", "{9C931650-5C19-41DB-9347-8EDD80CC6892}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Passengers.Infrastructure.EfCore", "main\Modules\Passengers\Infrastructure.EfCore\Infrastructure.EfCore.csproj", "{5F0B7063-8EED-4B30-A9AB-0DA992936352}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Passengers.Infrastructure.EfCore", "main\Modules\Passengers\Passengers.Infrastructure.EfCore\Passengers.Infrastructure.EfCore.csproj", "{5F0B7063-8EED-4B30-A9AB-0DA992936352}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Passengers.Domain", "main\Modules\Passengers\Passengers.Domain\Passengers.Domain.csproj", "{964BB934-8FD2-4D05-B4B2-D8CC1C0BAECB}"
 EndProject
@@ -108,7 +108,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rides.Application", "main\M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rides.Infrastructure", "main\Modules\Rides\Rides.Infrastructure\Rides.Infrastructure.csproj", "{781D4A1A-886C-455B-96B4-FA788660E41F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rides.RidesInfrastructure.EfCore", "main\Modules\Rides\Infrastructure.EfCore\Infrastructure.EfCore.csproj", "{52C4F591-5F19-433E-B0B2-088D9E44A72F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rides.Infrastructure.EfCore", "main\Modules\Rides\Rides.Infrastructure.EfCore\Rides.Infrastructure.EfCore.csproj", "{52C4F591-5F19-433E-B0B2-088D9E44A72F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rides.Api", "main\Modules\Rides\Rides.Api\Rides.Api.csproj", "{D121614A-D67C-4551-AB7B-CDF21E159FE5}"
 EndProject
