@@ -1,17 +1,21 @@
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
 using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.User;
 using TaxiService.Modules.Passengers.Domain.Entities;
+using TaxiService.Modules.Passengers.Infrastructure.EfCore.Contexts;
 
 namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.Repositories.User;
 
 [ExcludeFromCodeCoverage]
 public class UserWriteRepository(
-    IEfCoreRepository<UserEntity> service) : IUserWriteRepository
+    IEfCoreRepository<UserEntity, PassengersDbContext> service) : IUserWriteRepository
 {
     public async Task CreateAsync(UserEntity entity,
         CancellationToken cancellationToken = default)
     {
         await service.CreateAsync(entity, cancellationToken);
+
+        await service.UnitOfWork
+            .CommitAsync(cancellationToken);
     }
 
     public Task DeleteAsync(UserEntity entity,
@@ -19,7 +23,8 @@ public class UserWriteRepository(
     {
         service.Delete(entity);
 
-        return service.UnitOfWork.CommitAsync(cancellationToken);
+        return service.UnitOfWork
+            .CommitAsync(cancellationToken);
     }
 
     public Task UpdateAsync(UserEntity entity,
@@ -27,6 +32,7 @@ public class UserWriteRepository(
     {
         service.Update(entity);
 
-        return service.UnitOfWork.CommitAsync(cancellationToken);
+        return service.UnitOfWork
+            .CommitAsync(cancellationToken);
     }
 }

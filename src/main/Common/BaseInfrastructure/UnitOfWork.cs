@@ -1,10 +1,12 @@
+using Microsoft.EntityFrameworkCore;
 using TaxiService.Common.BaseApplication.Interfaces.UnitOfWork;
-using EfCoreUnitOfWork = JacksonVeroneze.NET.EntityFramework.Interfaces.IUnitOfWork;
 
 namespace TaxiService.Common.BaseInfrastructure;
 
-public class UnitOfWork(EfCoreUnitOfWork unitOfWork)
+public class UnitOfWork<TDbContext>(
+    JacksonVeroneze.NET.EntityFramework.Interfaces.IUnitOfWork<TDbContext> unitOfWork)
     : IUnitOfWork
+    where TDbContext : DbContext
 {
     public async Task<bool> CommitAsync(
         CancellationToken cancellationToken)

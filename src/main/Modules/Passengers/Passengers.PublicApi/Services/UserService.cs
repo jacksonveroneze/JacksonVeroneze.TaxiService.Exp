@@ -6,7 +6,6 @@ using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.User
 using TaxiService.Modules.Passengers.Domain.Core.Errors;
 using TaxiService.Modules.Passengers.Domain.Entities;
 using TaxiService.Modules.Passengers.PublicApi.Interfaces;
-using TaxiService.Modules.Passengers.PublicApi.Models;
 
 namespace TaxiService.Modules.Passengers.PublicApi.Services;
 
@@ -15,7 +14,7 @@ public class UserService(
     IMapper mapper,
     IUserReadRepository userReadRepository) : IUserService
 {
-    public async Task<Result<UserResponse>> GetByIdAsync(
+    public async Task<Result<bool>> ExistsByIdAsync(
         Guid id,
         CancellationToken cancellationToken = default)
     {
@@ -24,17 +23,15 @@ public class UserService(
 
         if (entity is not null)
         {
-            UserResponse? response = mapper.Map<UserResponse>(entity);
-
-            return Result<UserResponse>.WithSuccess(response);
+            return Result<bool>.WithSuccess(true);
         }
 
         Error error = DomainErrors.UserError.NotFound;
 
         logger.LogNotFound(
             nameof(UserService),
-            nameof(GetByIdAsync), id, error);
+            nameof(ExistsByIdAsync), id, error);
 
-        return Result<UserResponse>.FromNotFound(error);
+        return Result<bool>.FromNotFound(error);
     }
 }

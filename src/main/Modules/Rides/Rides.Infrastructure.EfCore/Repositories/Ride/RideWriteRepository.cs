@@ -1,12 +1,13 @@
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
 using TaxiService.Modules.Rides.Application.v1.Interfaces.Repositories.Ride;
 using TaxiService.Modules.Rides.Domain.Entities;
+using TaxiService.Modules.Rides.Infrastructure.EfCore.Contexts;
 
 namespace TaxiService.Modules.Rides.Infrastructure.EfCore.Repositories.Ride;
 
 [ExcludeFromCodeCoverage]
 public class RideWriteRepository(
-    IEfCoreRepository<RideEntity> service) : IRideWriteRepository
+    IEfCoreRepository<RideEntity, RidesDbContext> service) : IRideWriteRepository
 {
     public async Task CreateAsync(RideEntity entity,
         CancellationToken cancellationToken = default)

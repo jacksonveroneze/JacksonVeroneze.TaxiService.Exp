@@ -44,30 +44,11 @@ internal static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder,
         AppConfiguration appConfiguration)
     {
-        MapperConfiguration configuration = new(cfg =>
-        {
-            cfg.AddCommonMapper();
-            cfg.AddPassengersMapper();
-            cfg.AddRidesMapper();
-            cfg.AllowNullCollections = true;
-        });
-
-        configuration.AssertConfigurationIsValid();
-
-        builder.Services.AddSingleton(configuration.CreateMapper());
-
-        builder.Services.AddMediatR(conf =>
-        {
-            conf.AddPassengersMediatrHandlers();
-            conf.AddRidesMediatrHandlers();
-        });
-
-        builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-
         builder.Services
-            .AddMediatr()
+            .AddBehavior()
             .AddJsonOptionsSerialize()
             .AddCorrelation()
+            .AddCommonMapper()
             .AddDistributedLock(appConfiguration)
             .AddAuthentication(appConfiguration)
             .AddAuthorization(appConfiguration)

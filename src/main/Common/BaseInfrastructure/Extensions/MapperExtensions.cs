@@ -1,19 +1,24 @@
-using AutoMapper;
+using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using TaxiService.Common.BaseApplication.Mappers;
 
 namespace TaxiService.Common.BaseInfrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class MapperExtensions
+public static class PassengersMapperExtensions
 {
-    public static IMapperConfigurationExpression AddCommonMapper(
-        this IMapperConfigurationExpression cfg)
+    public static IServiceCollection AddCommonMapper(
+        this IServiceCollection services)
     {
-        cfg.AddProfile<CommonMapper>();
-        cfg.AddProfile<PaginationCursorMapper>();
-        cfg.AddProfile<PaginationOffsetMapper>();
+        services.AddAutoMapper(typeof(BaseApplication.AssemblyReference));
 
-        return cfg;
+        return services;
+    }
+
+    public static IServiceCollection AddCommonMapper(
+        this IServiceCollection services, Assembly assembly)
+    {
+        services.AddAutoMapper(assembly);
+
+        return services;
     }
 }

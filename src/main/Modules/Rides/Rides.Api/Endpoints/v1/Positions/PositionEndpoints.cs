@@ -9,7 +9,6 @@ public static class PositionEndpoints
 
         RouteGroupBuilder builder =
             app.MapGroup("/api/v{version:apiVersion}/positions")
-                .RequireAuthorization()
                 .WithTags("positions")
                 .WithApiVersionSet(apiVersionSet)
                 .MapToApiVersion(1);

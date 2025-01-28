@@ -2,7 +2,6 @@ using JacksonVeroneze.NET.Result;
 using RedLockNet;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Modules.Passengers.PublicApi.Interfaces;
-using TaxiService.Modules.Passengers.PublicApi.Models;
 using TaxiService.Modules.Rides.Application.v1.Commands.Ride;
 using TaxiService.Modules.Rides.Application.v1.Interfaces.Repositories.Ride;
 using TaxiService.Modules.Rides.Domain.Core.Errors;
@@ -52,7 +51,7 @@ public sealed class AcceptRideCommandHandler(
             return resultEntity;
         }
 
-        Result<UserResponse> resultDriver = await GetDriverByIdAsync(
+        Result<bool> resultDriver = await GetDriverByIdAsync(
             request.Body!.DriverId, cancellationToken);
 
         if (resultDriver.IsFailure)
@@ -61,7 +60,7 @@ public sealed class AcceptRideCommandHandler(
         }
 
         Result resultAction = Accept(resultEntity.Value!,
-            resultDriver.Value!);
+            request.Body!.DriverId);
 
         if (resultAction.IsFailure)
         {
@@ -104,19 +103,19 @@ public sealed class AcceptRideCommandHandler(
         return Result<RideEntity>.FromNotFound(error);
     }
 
-    private async Task<Result<UserResponse>> GetDriverByIdAsync(
+    private async Task<Result<bool>> GetDriverByIdAsync(
         Guid id,
         CancellationToken cancellationToken)
     {
-        Result<UserResponse>? entity = await userService
-            .GetByIdAsync(id, cancellationToken);
+        Result<bool>? entity = await userService
+            .ExistsByIdAsync(id, cancellationToken);
 
         return entity;
     }
 
-    private Result Accept(RideEntity entity, UserResponse driver)
+    private Result Accept(RideEntity entity, Guid driverId)
     {
-        Result result = entity.Accept(driver.Id);
+        Result result = entity.Accept(driverId);
 
         if (result.IsFailure)
         {

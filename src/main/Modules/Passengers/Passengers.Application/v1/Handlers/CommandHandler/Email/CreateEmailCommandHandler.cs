@@ -15,8 +15,7 @@ public sealed class CreateEmailCommandHandler(
     IMapper mapper,
     IUserReadRepository userReadRepository,
     IEmailReadRepository emailReadRepository,
-    IEmailWriteRepository emailWriteRepository,
-    IUnitOfWork unitOfWork)
+    IEmailWriteRepository emailWriteRepository)
     : IRequestHandler<CreateEmailCommand, Result<CreateEmailCommandResponse>>
 {
     public async Task<Result<CreateEmailCommandResponse>> Handle(
@@ -123,8 +122,6 @@ public sealed class CreateEmailCommandHandler(
     {
         await emailWriteRepository.CreateAsync(
             email, cancellationToken);
-
-        await unitOfWork.CommitAsync(cancellationToken);
 
         logger.LogProcessed(
             nameof(CreateEmailCommandHandler),

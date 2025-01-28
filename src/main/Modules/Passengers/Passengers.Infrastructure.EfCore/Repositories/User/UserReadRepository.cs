@@ -5,12 +5,13 @@ using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.User
 using TaxiService.Modules.Passengers.Domain.Entities;
 using TaxiService.Modules.Passengers.Domain.Filters;
 using TaxiService.Modules.Passengers.Domain.Specifications.User;
+using TaxiService.Modules.Passengers.Infrastructure.EfCore.Contexts;
 
 namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.Repositories.User;
 
 [ExcludeFromCodeCoverage]
 public class UserReadRepository(
-    IEfCoreRepository<UserEntity> service) : IUserReadRepository
+    IEfCoreRepository<UserEntity, PassengersDbContext> service) : IUserReadRepository
 {
     public Task<UserEntity?> GetByIdAsync(
         Guid id, CancellationToken cancellationToken = default)

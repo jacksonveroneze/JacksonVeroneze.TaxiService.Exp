@@ -1,7 +1,6 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Modules.Passengers.PublicApi.Interfaces;
-using TaxiService.Modules.Passengers.PublicApi.Models;
 using TaxiService.Modules.Rides.Application.v1.Commands.Ride;
 using TaxiService.Modules.Rides.Application.v1.Interfaces.Repositories.Ride;
 using TaxiService.Modules.Rides.Application.v1.Models.Ride;
@@ -24,7 +23,7 @@ public sealed class RequestRideCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<UserResponse> resultUser = await GetUserByIdAsync(
+        Result<bool> resultUser = await GetUserByIdAsync(
             request.UserId, cancellationToken);
 
         if (resultUser.IsFailure)
@@ -43,7 +42,7 @@ public sealed class RequestRideCommandHandler(
         }
 
         Result<RideEntity> entity = FactoryEntity(
-            request, resultUser.Value!);
+            request, request.UserId);
 
         if (entity.IsFailure)
         {
@@ -60,10 +59,10 @@ public sealed class RequestRideCommandHandler(
     }
 
     private Result<RideEntity> FactoryEntity(
-        RequestRideCommand request, UserResponse user)
+        RequestRideCommand request, Guid userId)
     {
         Result<RideEntity> entity = RideEntity.Create(
-            user.Id,
+            userId,
             request.LatitudeFrom, request.LatitudeTo,
             request.LongitudeFrom, request.LongitudeTo);
 
@@ -80,12 +79,12 @@ public sealed class RequestRideCommandHandler(
             .FromInvalid(entity.Errors!);
     }
 
-    private async Task<Result<UserResponse>> GetUserByIdAsync(
+    private async Task<Result<bool>> GetUserByIdAsync(
         Guid id,
         CancellationToken cancellationToken)
     {
-        Result<UserResponse> entity = await userService
-            .GetByIdAsync(id, cancellationToken);
+        Result<bool> entity = await userService
+            .ExistsByIdAsync(id, cancellationToken);
 
         return entity;
     }

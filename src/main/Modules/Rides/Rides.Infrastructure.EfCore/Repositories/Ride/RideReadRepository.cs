@@ -2,7 +2,6 @@ using System.Linq.Expressions;
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
 using JacksonVeroneze.NET.Pagination.Cursor;
 using JacksonVeroneze.NET.Pagination.Cursor.Extensions;
-using Microsoft.EntityFrameworkCore;
 using TaxiService.Common.BaseDomain.Specifications.Base.Predicate;
 using TaxiService.Modules.Rides.Application.v1.Interfaces.Repositories.Ride;
 using TaxiService.Modules.Rides.Domain.Entities;
@@ -14,7 +13,7 @@ namespace TaxiService.Modules.Rides.Infrastructure.EfCore.Repositories.Ride;
 
 [ExcludeFromCodeCoverage]
 public class RideReadRepository(
-    RidesDbContext context) : IRideReadRepository
+    IEfCoreRepository<RideEntity, RidesDbContext> service) : IRideReadRepository
 {
     public async Task<bool> ExistsActiveByUserIdAsync(
         Guid userId,
@@ -26,21 +25,20 @@ public class RideReadRepository(
         Expression<Func<RideEntity, bool>> spec =
             specByUserId.ToExpression().And(specActivePerUserRequested.ToExpression());
 
-        // bool exists = await service.AnyAsync(spec,
-        //     cancellationToken);
+        bool exists = await service.AnyAsync(spec,
+            cancellationToken);
 
-        return true;
+        return exists;
     }
 
-    public async Task<RideEntity?> GetByIdAsync(
+    public Task<RideEntity?> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken = default)
     {
         RideByIdSpecification specByUserId = new(id);
 
-        RideEntity? ride = await context.Set<RideEntity>().FirstOrDefaultAsync(specByUserId);
-
-        return ride;
+        return service.GetByIdAsync(specByUserId.ToExpression(),
+            cancellationToken);
     }
 
     public async Task<Page<RideEntity>> GetPagedAsync(
@@ -49,31 +47,29 @@ public class RideReadRepository(
     {
         ArgumentNullException.ThrowIfNull(filter);
 
-        // Guid? id = !string.IsNullOrEmpty(filter.Pagination?.Cursor)
-        //     ? Guid.Parse(filter.Pagination!.Cursor)
-        //     : null;
-        //
-        // RideByCursorSpecification specByCursor = new(id);
-        // RideByStatusSpecification specByStatus = new(filter.Status);
-        // RideByUserIdSpecification specByUserId = new(filter.UserId);
-        //
-        // Expression<Func<RideEntity, bool>> spec =
-        //     PredicateExtensions.And(specByCursor.ToExpression(),
-        //         PredicateExtensions.And(specByStatus.ToExpression(), specByUserId));
-        //
-        // (RideEntity[] Data, bool HasMore, RideEntity? Last) result =
-        //     await service.GetPagedCursorAsync(
-        //         filter.Pagination!,
-        //         spec,
-        //         order => order.Id,
-        //         cancellationToken);
-        //
-        // string? cursor = result.HasMore
-        //     ? result.Last?.Id.ToString()
-        //     : null;
+        Guid? id = !string.IsNullOrEmpty(filter.Pagination?.Cursor)
+            ? Guid.Parse(filter.Pagination!.Cursor)
+            : null;
 
-        // return result.Data.ToPage(result.HasMore, cursor);
+        RideByCursorSpecification specByCursor = new(id);
+        RideByStatusSpecification specByStatus = new(filter.Status);
+        RideByUserIdSpecification specByUserId = new(filter.UserId);
 
-        throw new NotImplementedException();
+        Expression<Func<RideEntity, bool>> spec =
+            PredicateExtensions.And(specByCursor.ToExpression(),
+                PredicateExtensions.And(specByStatus.ToExpression(), specByUserId));
+
+        (RideEntity[] Data, bool HasMore, RideEntity? Last) result =
+            await service.GetPagedCursorAsync(
+                filter.Pagination!,
+                spec,
+                order => order.Id,
+                cancellationToken);
+
+        string? cursor = result.HasMore
+            ? result.Last?.Id.ToString()
+            : null;
+
+        return result.Data.ToPage(result.HasMore, cursor);
     }
 }

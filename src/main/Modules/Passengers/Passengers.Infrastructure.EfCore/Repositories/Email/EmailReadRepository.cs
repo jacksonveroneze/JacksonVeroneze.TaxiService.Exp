@@ -3,12 +3,13 @@ using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Emai
 using TaxiService.Modules.Passengers.Domain.Entities;
 using TaxiService.Modules.Passengers.Domain.Filters;
 using TaxiService.Modules.Passengers.Domain.Specifications.Email;
+using TaxiService.Modules.Passengers.Infrastructure.EfCore.Contexts;
 
 namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.Repositories.Email;
 
 [ExcludeFromCodeCoverage]
 public class EmailReadRepository(
-    IEfCoreRepository<EmailEntity> service)
+    IEfCoreRepository<EmailEntity, PassengersDbContext> service)
     : IEmailReadRepository
 {
     public async Task<bool> ExistsAsync(string email,

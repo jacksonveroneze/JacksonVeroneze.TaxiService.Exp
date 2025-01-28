@@ -15,9 +15,7 @@ public sealed class CreateUserCommandHandler(
     IMapper mapper,
     IUserWriteRepository userWriteRepository,
     IEmailReadRepository emailReadRepository,
-    IEmailWriteRepository emailWriteRepository,
-    // IOutboxWriteRepository outboxWriteRepository,
-    IUnitOfWork unitOfWork)
+    IEmailWriteRepository emailWriteRepository)
     : IRequestHandler<CreateUserCommand, Result<CreateUserCommandResponse>>
 {
     public async Task<Result<CreateUserCommandResponse>> Handle(
@@ -52,8 +50,8 @@ public sealed class CreateUserCommandHandler(
                 .FromInvalid(userEntity.Errors!);
         }
 
-        // await CreateAsync(userEntity.Value!,
-        //     emailEntity.Value!, cancellationToken);
+        await CreateAsync(userEntity.Value!,
+            emailEntity.Value!, cancellationToken);
 
         CreateUserCommandResponse response =
             mapper.Map<CreateUserCommandResponse>(userEntity.Value);
@@ -136,39 +134,39 @@ public sealed class CreateUserCommandHandler(
     //
     //     return entity;
     // }
-    //
-    // private async Task CreateAsync(
-    //     UserEntity userEntity,
-    //     EmailEntity emailEntity,
-    //     CancellationToken cancellationToken)
-    // {
-    //     OutboxMessageEntity message =
-    //         FactoryOutboxMessageEntity(userEntity, emailEntity);
-    //
-    //     try
-    //     {
-    //         await userWriteRepository.CreateAsync(
-    //             userEntity, cancellationToken);
-    //
-    //         await emailWriteRepository.CreateAsync(
-    //             emailEntity, cancellationToken);
-    //
-    //         await outboxWriteRepository
-    //             .CreateAsync(message, cancellationToken);
-    //
-    //         await unitOfWork.CommitAsync(
-    //             cancellationToken);
-    //
-    //         logger.LogCreated(nameof(CreateUserCommandHandler),
-    //             nameof(CreateAsync), userEntity!.Id);
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         logger.LogGenericError(
-    //             nameof(CreateUserCommandHandler),
-    //             nameof(CreateAsync), ex.Message);
-    //
-    //         throw;
-    //     }
-    // }
+
+    private async Task CreateAsync(
+        UserEntity userEntity,
+        EmailEntity emailEntity,
+        CancellationToken cancellationToken)
+    {
+        // OutboxMessageEntity message =
+        //     FactoryOutboxMessageEntity(userEntity, emailEntity);
+
+        try
+        {
+            await userWriteRepository.CreateAsync(
+                userEntity, cancellationToken);
+
+            await emailWriteRepository.CreateAsync(
+                emailEntity, cancellationToken);
+
+            // await outboxWriteRepository
+            //     .CreateAsync(message, cancellationToken);
+            //
+            // await unitOfWork.CommitAsync(
+            //     cancellationToken);
+
+            logger.LogCreated(nameof(CreateUserCommandHandler),
+                nameof(CreateAsync), userEntity!.Id);
+        }
+        catch (Exception ex)
+        {
+            logger.LogGenericError(
+                nameof(CreateUserCommandHandler),
+                nameof(CreateAsync), ex.Message);
+
+            throw;
+        }
+    }
 }
