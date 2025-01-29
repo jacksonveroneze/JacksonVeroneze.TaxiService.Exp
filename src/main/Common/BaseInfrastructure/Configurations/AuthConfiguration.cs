@@ -1,7 +1,7 @@
 namespace TaxiService.Common.BaseInfrastructure.Configurations;
 
 [ExcludeFromCodeCoverage]
-public class AuthConfiguration
+public record AuthConfiguration
 {
     public string? Authority { get; init; }
 

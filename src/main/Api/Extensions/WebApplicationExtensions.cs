@@ -30,13 +30,13 @@ internal static class WebApplicationExtensions
             app.MapScalarApiReference();
         }
 
+        app.UseExceptionHandler();
         app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
         app.UseCorrelationId();
         app.UseHttpMetrics();
         app.MapMetrics();
-        app.UseExceptionHandler();
 
         app.UseHealthChecks("/health");
 

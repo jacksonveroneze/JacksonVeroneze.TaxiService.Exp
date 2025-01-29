@@ -22,8 +22,16 @@ public static class CacheServicesExtensions
         }
         else
         {
+            IConnectionMultiplexer connection =
+                ConnectionMultiplexer.Connect(appConfiguration.Cache!.Endpoint!);
+
+            services.AddSingleton<IConnectionMultiplexer>(_ => connection);
+
             services.AddStackExchangeRedisCache(options =>
             {
+                options.ConnectionMultiplexerFactory = () =>
+                    Task.FromResult(connection);
+
                 options.InstanceName =
                     $"{appConfiguration.AppName}-" +
                     $"{appConfiguration.AppVersion}";

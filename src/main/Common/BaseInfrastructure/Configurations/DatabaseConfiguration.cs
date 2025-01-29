@@ -1,7 +1,7 @@
 namespace TaxiService.Common.BaseInfrastructure.Configurations;
 
 [ExcludeFromCodeCoverage]
-public class DatabaseConfiguration
+public record DatabaseConfiguration
 {
     public string? ReadConnectionString { get; init; }
 }

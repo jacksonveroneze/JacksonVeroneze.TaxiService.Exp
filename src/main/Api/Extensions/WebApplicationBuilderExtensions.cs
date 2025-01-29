@@ -42,11 +42,11 @@ internal static class WebApplicationBuilderExtensions
         builder.Services
             .AddJsonOptionsSerialize()
             .AddCorrelation()
+            .AddCached(appConfiguration)
             .AddDistributedLock(appConfiguration)
             .AddAuthentication(appConfiguration)
             .AddAuthorization(appConfiguration)
             .AddOpenTelemetry(appConfiguration)
-            .AddCached(appConfiguration)
             .AddCultureConfiguration()
             .AddHttpContextAccessor()
             .AddAppVersioning()

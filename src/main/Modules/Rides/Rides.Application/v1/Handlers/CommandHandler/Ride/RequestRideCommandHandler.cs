@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Modules.Passengers.PublicApi.Interfaces;
@@ -17,11 +18,19 @@ public sealed class RequestRideCommandHandler(
     IRideWriteRepository rideWriteRepository)
     : IRequestHandler<RequestRideCommand, Result<RequestRideCommandResponse>>
 {
+    private static readonly ActivitySource ActivitySource =
+        new("TaxiService");
+
     public async Task<Result<RequestRideCommandResponse>> Handle(
         RequestRideCommand request,
         CancellationToken cancellationToken)
     {
+        using Activity? activity = ActivitySource.StartActivity();
+
         ArgumentNullException.ThrowIfNull(request);
+
+        Task<Result> existsRideByUserTask = ExistsActiveRideByUserIdAsync(
+            request.UserId, cancellationToken);
 
         Result<bool> resultUser = await GetUserByIdAsync(
             request.UserId, cancellationToken);
@@ -32,8 +41,7 @@ public sealed class RequestRideCommandHandler(
                 .WithError(resultUser.Error!);
         }
 
-        Result existsRideByUser = await ExistsActiveRideByUserIdAsync(
-            request.UserId, cancellationToken);
+        Result existsRideByUser = await existsRideByUserTask;
 
         if (existsRideByUser.IsFailure)
         {
@@ -61,6 +69,8 @@ public sealed class RequestRideCommandHandler(
     private Result<RideEntity> FactoryEntity(
         RequestRideCommand request, Guid userId)
     {
+        using Activity? activity = ActivitySource.StartActivity();
+
         Result<RideEntity> entity = RideEntity.Create(
             userId,
             request.LatitudeFrom, request.LatitudeTo,
@@ -83,6 +93,8 @@ public sealed class RequestRideCommandHandler(
         Guid id,
         CancellationToken cancellationToken)
     {
+        using Activity? activity = ActivitySource.StartActivity();
+
         Result<bool> entity = await userService
             .ExistsByIdAsync(id, cancellationToken);
 
@@ -93,6 +105,8 @@ public sealed class RequestRideCommandHandler(
         Guid id,
         CancellationToken cancellationToken)
     {
+        using Activity? activity = ActivitySource.StartActivity();
+
         bool existsRideByUser = await rideReadRepository
             .ExistsActiveByUserIdAsync(id, cancellationToken);
 
@@ -114,6 +128,8 @@ public sealed class RequestRideCommandHandler(
         RideEntity entity,
         CancellationToken cancellationToken)
     {
+        using Activity? activity = ActivitySource.StartActivity();
+
         await rideWriteRepository.CreateAsync(
             entity, cancellationToken);
 

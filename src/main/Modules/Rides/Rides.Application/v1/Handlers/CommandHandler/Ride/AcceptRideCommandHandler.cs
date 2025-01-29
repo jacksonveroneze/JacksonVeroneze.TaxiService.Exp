@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using JacksonVeroneze.NET.Result;
 using RedLockNet;
 using TaxiService.Common.BaseApplication.Extensions;
@@ -28,10 +29,15 @@ public sealed class AcceptRideCommandHandler(
     // Intervalo de 2 segundos entre tentativas
     private readonly TimeSpan _retryDelay = TimeSpan.FromSeconds(1);
 
+    private static readonly ActivitySource ActivitySource =
+        new("TaxiService");
+
     public async Task<Result> Handle(
         AcceptRideCommand request,
         CancellationToken cancellationToken)
     {
+        using Activity? activity = ActivitySource.StartActivity();
+
         ArgumentNullException.ThrowIfNull(request);
 
         await using IRedLock? distributedLock =
@@ -43,6 +49,9 @@ public sealed class AcceptRideCommandHandler(
                 new Error("Lock", "Lock não adquirido"));
         }
 
+        Task<Result<bool>> resultDriverTask = GetDriverByIdAsync(
+            request.Body!.DriverId, cancellationToken);
+
         Result<RideEntity> resultEntity = await GetRideByIdAsync(
             request.Id, cancellationToken);
 
@@ -51,8 +60,7 @@ public sealed class AcceptRideCommandHandler(
             return resultEntity;
         }
 
-        Result<bool> resultDriver = await GetDriverByIdAsync(
-            request.Body!.DriverId, cancellationToken);
+        Result<bool> resultDriver = await resultDriverTask;
 
         if (resultDriver.IsFailure)
         {
@@ -74,6 +82,8 @@ public sealed class AcceptRideCommandHandler(
 
     private async Task<IRedLock?> AcquireLockAsync(Guid rideId)
     {
+        using Activity? activity = ActivitySource.StartActivity();
+
         string lockKey = $"{PrefixLockKey}{rideId}";
 
         IRedLock? distributedLock = await distributedLockFactory
@@ -86,6 +96,8 @@ public sealed class AcceptRideCommandHandler(
         Guid id,
         CancellationToken cancellationToken)
     {
+        using Activity? activity = ActivitySource.StartActivity();
+
         RideEntity? entity = await rideReadRepository
             .GetByIdAsync(id, cancellationToken);
 
@@ -107,7 +119,9 @@ public sealed class AcceptRideCommandHandler(
         Guid id,
         CancellationToken cancellationToken)
     {
-        Result<bool>? entity = await userService
+        using Activity? activity = ActivitySource.StartActivity();
+
+        Result<bool> entity = await userService
             .ExistsByIdAsync(id, cancellationToken);
 
         return entity;
@@ -115,6 +129,8 @@ public sealed class AcceptRideCommandHandler(
 
     private Result Accept(RideEntity entity, Guid driverId)
     {
+        using Activity? activity = ActivitySource.StartActivity();
+
         Result result = entity.Accept(driverId);
 
         if (result.IsFailure)
@@ -131,6 +147,8 @@ public sealed class AcceptRideCommandHandler(
         RideEntity entity,
         CancellationToken cancellationToken)
     {
+        using Activity? activity = ActivitySource.StartActivity();
+
         await rideWriteRepository.UpdateAsync(
             entity, cancellationToken);
 

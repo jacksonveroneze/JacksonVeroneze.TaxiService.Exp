@@ -1,7 +1,7 @@
 namespace TaxiService.Common.BaseInfrastructure.Configurations;
 
 [ExcludeFromCodeCoverage]
-public class DistributedTracingConfiguration
+public record DistributedTracingConfiguration
 {
     public bool IsEnabled { get; init; }
 
@@ -9,7 +9,7 @@ public class DistributedTracingConfiguration
 }
 
 [ExcludeFromCodeCoverage]
-public class DistributedTracingToolConfiguration
+public record DistributedTracingToolConfiguration
 {
     public string? Host { get; init; }
 

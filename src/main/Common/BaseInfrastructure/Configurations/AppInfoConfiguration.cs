@@ -1,7 +1,7 @@
 namespace TaxiService.Common.BaseInfrastructure.Configurations;
 
 [ExcludeFromCodeCoverage]
-public class AppInfoConfiguration
+public record AppInfoConfiguration
 {
     public string? Name { get; init; }
 

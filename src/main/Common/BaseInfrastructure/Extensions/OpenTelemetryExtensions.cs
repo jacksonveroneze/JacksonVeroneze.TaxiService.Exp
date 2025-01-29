@@ -28,8 +28,8 @@ public static class OpenTelemetryExtensions
 
         services.Configure<AspNetCoreTraceInstrumentationOptions>(options =>
         {
-            options.Filter = new Func<HttpContext, bool>(ctx => ctx.Request.Path != "/metrics" &&
-                                                                ctx.Request.Path != "/health");
+            options.Filter = ctx => (!ctx.Request.Path.Value?.StartsWith("/metrics", StringComparison.OrdinalIgnoreCase) ?? false) &&
+                                    ctx.Request.Path != "/health";
         });
 
         services.AddOpenTelemetry()
@@ -65,6 +65,9 @@ public static class OpenTelemetryExtensions
         this IOpenTelemetryBuilder builder,
         AppConfiguration appConfiguration)
     {
+        DistributedTracingToolConfiguration configuration =
+            appConfiguration.DistributedTracing!.Jaeger!;
+
         builder.WithTracing(conf =>
         {
             conf.AddAspNetCoreInstrumentation(options =>
@@ -78,14 +81,14 @@ public static class OpenTelemetryExtensions
                 })
                 .AddHttpClientInstrumentation()
                 .AddRedisInstrumentation()
+                .AddSource("TaxiService")
                 .AddJaegerExporter(options =>
                 {
-                    DistributedTracingToolConfiguration configuration =
-                        appConfiguration.DistributedTracing!.Jaeger!;
-
                     options.AgentHost = configuration.Host;
                     options.AgentPort = configuration.Port!.Value;
                 });
+
+            conf.AddOtlpExporter(conf => conf.Endpoint = new Uri("http://127.0.0.1:4317"));
         });
 
         return builder;

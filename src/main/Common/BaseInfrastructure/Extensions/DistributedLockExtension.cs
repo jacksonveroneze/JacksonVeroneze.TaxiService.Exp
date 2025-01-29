@@ -16,9 +16,11 @@ public static class DistributedLockExtension
     {
         ArgumentNullException.ThrowIfNull(appConfiguration);
 
+        IConnectionMultiplexer conn = services.BuildServiceProvider().GetRequiredService<IConnectionMultiplexer>();
+
         List<RedLockMultiplexer> multiplexer =
         [
-            ConnectionMultiplexer.Connect(appConfiguration.Cache!.Endpoint!)
+            (ConnectionMultiplexer)conn
         ];
 
         // ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
