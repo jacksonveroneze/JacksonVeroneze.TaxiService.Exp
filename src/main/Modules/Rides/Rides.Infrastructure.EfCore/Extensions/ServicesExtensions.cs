@@ -7,9 +7,9 @@ using TaxiService.Modules.Rides.Infrastructure.EfCore.Repositories.Ride;
 namespace TaxiService.Modules.Rides.Infrastructure.EfCore.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class AppServicesExtensions
+public static class ServicesExtensions
 {
-    public static IServiceCollection AddAppServices(
+    public static IServiceCollection AddServices(
         this IServiceCollection services)
     {
         #region Ride

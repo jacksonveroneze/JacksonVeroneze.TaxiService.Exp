@@ -13,7 +13,7 @@ public static class ModuleExtensions
     {
         Assembly assembly = typeof(AssemblyReference).Assembly;
 
-        services.AddAppServices()
+        services.AddServices()
             .AddHandlers(assembly)
             .AddCommonMapper(assembly)
             .AddFluentValidation(assembly);

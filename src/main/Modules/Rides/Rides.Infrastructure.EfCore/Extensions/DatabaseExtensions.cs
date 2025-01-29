@@ -1,4 +1,3 @@
-using JacksonVeroneze.NET.EntityFramework.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using TaxiService.Common.BaseInfrastructure;
 using TaxiService.Common.BaseInfrastructure.Configurations;
@@ -17,9 +16,6 @@ public static class DatabaseExtensions
 
         services.AddDatabase<RidesDbContext>(
             appConfiguration, appConfiguration.Database!);
-
-        services.AddUnitOfWork()
-            .AddRepository();
 
         return services;
     }

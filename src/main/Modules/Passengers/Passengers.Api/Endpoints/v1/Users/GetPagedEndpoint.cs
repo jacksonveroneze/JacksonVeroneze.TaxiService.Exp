@@ -1,6 +1,6 @@
+using JacksonVeroneze.NET.Result;
 using TaxiService.Modules.Passengers.Application.v1.Models.User;
 using TaxiService.Modules.Passengers.Application.v1.Queries.User;
-using Result = JacksonVeroneze.NET.Result;
 
 namespace TaxiService.Modules.Passengers.Api.Endpoints.v1.Users;
 
@@ -14,7 +14,7 @@ internal static class GetPagedEndpoint
                 [AsParameters] GetUserPagedQuery query,
                 CancellationToken cancellationToken) =>
             {
-                Result.Result<GetUserPagedQueryResponse> response =
+                Result<GetUserPagedQueryResponse> response =
                     await mediator.Send(query, cancellationToken);
 
                 return response.MatchGet();

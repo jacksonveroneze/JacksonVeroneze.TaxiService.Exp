@@ -1,3 +1,4 @@
+using JacksonVeroneze.NET.Result;
 using TaxiService.Modules.Passengers.Application.v1.Commands.Email;
 using TaxiService.Modules.Passengers.Application.v1.Models.Email;
 
@@ -13,7 +14,7 @@ internal static class CreateEndpoint
                 [AsParameters] CreateEmailCommand command,
                 CancellationToken cancellationToken) =>
             {
-                JacksonVeroneze.NET.Result.Result<CreateEmailCommandResponse> response =
+                Result<CreateEmailCommandResponse> response =
                     await mediator.Send(command, cancellationToken);
 
                 return response.MatchPost();

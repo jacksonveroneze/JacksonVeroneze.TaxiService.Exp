@@ -1,3 +1,4 @@
+using JacksonVeroneze.NET.Result;
 using TaxiService.Modules.Passengers.Application.v1.Models.Email;
 using TaxiService.Modules.Passengers.Application.v1.Queries.User.Email;
 
@@ -15,7 +16,7 @@ internal static class GetByUserIdEndpoint
             {
                 GetEmailPagedQuery pagedQuery = new(userId);
 
-                JacksonVeroneze.NET.Result.Result<GetEmailPagedQueryResponse> response =
+                Result<GetEmailPagedQueryResponse> response =
                     await mediator.Send(pagedQuery, cancellationToken);
 
                 return response.MatchGet();

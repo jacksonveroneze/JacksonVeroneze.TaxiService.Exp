@@ -10,7 +10,7 @@ public static class ModuleExtensions
         this IServiceCollection services,
         AppConfiguration appConfiguration)
     {
-        services.AddAppServices()
+        services.AddServices()
             .AddDatabase(appConfiguration);
 
         return services;

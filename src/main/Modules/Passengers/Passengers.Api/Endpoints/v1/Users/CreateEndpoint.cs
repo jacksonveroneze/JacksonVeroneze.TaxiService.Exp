@@ -1,3 +1,4 @@
+using JacksonVeroneze.NET.Result;
 using TaxiService.Modules.Passengers.Application.v1.Commands.User;
 using TaxiService.Modules.Passengers.Application.v1.Models.User;
 
@@ -13,7 +14,7 @@ internal static class CreateEndpoint
                 [FromBody] CreateUserCommand command,
                 CancellationToken cancellationToken) =>
             {
-                JacksonVeroneze.NET.Result.Result<CreateUserCommandResponse> response =
+                Result<CreateUserCommandResponse> response =
                     await mediator.Send(command, cancellationToken);
 
                 return response.MatchPost();

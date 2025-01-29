@@ -1,3 +1,4 @@
+using JacksonVeroneze.NET.Result;
 using TaxiService.Modules.Rides.Application.v1.Commands.Ride;
 using TaxiService.Modules.Rides.Application.v1.Models.Ride;
 
@@ -13,7 +14,7 @@ internal static class RequestEndpoint
                 [FromBody] RequestRideCommand command,
                 CancellationToken cancellationToken) =>
             {
-                JacksonVeroneze.NET.Result.Result<RequestRideCommandResponse> response =
+                Result<RequestRideCommandResponse> response =
                     await mediator.Send(command, cancellationToken);
 
                 return response.MatchPost();

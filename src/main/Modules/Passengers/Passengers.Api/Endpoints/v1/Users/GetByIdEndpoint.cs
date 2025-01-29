@@ -1,3 +1,4 @@
+using JacksonVeroneze.NET.Result;
 using TaxiService.Modules.Passengers.Application.v1.Models.User;
 using TaxiService.Modules.Passengers.Application.v1.Queries.User;
 
@@ -15,7 +16,7 @@ internal static class GetByIdEndpoint
             {
                 GetUserByIdQuery query = new(id);
 
-                JacksonVeroneze.NET.Result.Result<GetUserByIdQueryResponse> response =
+                Result<GetUserByIdQueryResponse> response =
                     await mediator.Send(query, cancellationToken);
 
                 return response.MatchGetById();

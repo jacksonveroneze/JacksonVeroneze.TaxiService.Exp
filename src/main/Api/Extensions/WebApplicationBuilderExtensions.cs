@@ -1,8 +1,4 @@
-using AutoMapper;
 using JacksonVeroneze.TaxiService.Exp.Api.Middlewares;
-using TaxiService.Common.BaseApplication.Interfaces.UnitOfWork;
-using TaxiService.Common.BaseApplication.Mappers;
-using TaxiService.Common.BaseInfrastructure;
 using TaxiService.Common.BaseInfrastructure.Configurations;
 using TaxiService.Common.BaseInfrastructure.Extensions;
 using TaxiService.Modules.Passengers.Infrastructure.EfCore.Extensions;
@@ -34,7 +30,6 @@ internal static class WebApplicationBuilderExtensions
         builder.ConfigurePassengerModule(appConfiguration);
         builder.ConfigureRideModule(appConfiguration);
 
-        // TODO
         builder.Services.AddPassangerPublicApi();
 
         return builder;
@@ -45,10 +40,8 @@ internal static class WebApplicationBuilderExtensions
         AppConfiguration appConfiguration)
     {
         builder.Services
-            .AddBehavior()
             .AddJsonOptionsSerialize()
             .AddCorrelation()
-            .AddCommonMapper()
             .AddDistributedLock(appConfiguration)
             .AddAuthentication(appConfiguration)
             .AddAuthorization(appConfiguration)
@@ -80,6 +73,8 @@ internal static class WebApplicationBuilderExtensions
         AppConfiguration appConfiguration)
     {
         builder.Services
+            .AddBehavior()
+            .AddCommonMapper()
             .AddCommonInfraAppServices();
 
         return builder;

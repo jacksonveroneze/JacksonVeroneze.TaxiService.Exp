@@ -44,6 +44,5 @@ public class PassengersDbContext(
     {
         modelBuilder.Ignore<Event>();
         modelBuilder.Ignore<DomainEvent>();
-        modelBuilder.Ignore<EmailValueObject>();
     }
 }

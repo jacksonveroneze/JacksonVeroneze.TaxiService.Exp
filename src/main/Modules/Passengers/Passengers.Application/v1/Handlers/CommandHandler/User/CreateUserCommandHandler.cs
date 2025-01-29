@@ -1,6 +1,5 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
-using TaxiService.Common.BaseApplication.Interfaces.UnitOfWork;
 using TaxiService.Modules.Passengers.Application.v1.Commands.User;
 using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Email;
 using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.User;

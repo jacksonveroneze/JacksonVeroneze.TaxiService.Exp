@@ -1,3 +1,4 @@
+using JacksonVeroneze.NET.Result;
 using TaxiService.Modules.Passengers.Application.v1.Commands.User;
 
 namespace TaxiService.Modules.Passengers.Api.Endpoints.v1.Users;
@@ -14,7 +15,7 @@ internal static class InactivateEndpoint
             {
                 InactivateUserCommand command = new(id);
 
-                JacksonVeroneze.NET.Result.Result response =
+                Result response =
                     await mediator.Send(command, cancellationToken);
 
                 return response.MatchPut();

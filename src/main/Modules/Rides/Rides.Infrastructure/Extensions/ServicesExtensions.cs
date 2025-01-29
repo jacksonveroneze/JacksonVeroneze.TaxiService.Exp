@@ -4,9 +4,9 @@ using TaxiService.Modules.Rides.Domain.Services;
 namespace TaxiService.Modules.Rides.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
-internal static class AppServicesExtensions
+internal static class ServicesExtensions
 {
-    public static IServiceCollection AddAppServices(
+    public static IServiceCollection AddServices(
         this IServiceCollection services)
     {
         services.AddScoped<IDistanceCalculatorService, DistanceCalculatorService>();
