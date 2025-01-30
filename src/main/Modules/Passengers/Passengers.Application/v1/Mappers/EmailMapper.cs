@@ -18,9 +18,8 @@ public class EmailMapper : Profile
         CreateMap<EmailEntity, CreateEmailCommandResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
 
-        CreateMap<Page<EmailEntity>, GetEmailPagedQueryResponse>()
-            .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src.Data))
-            .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src.PageInfo));
+        CreateMap<ICollection<EmailEntity>, GetEmailPagedQueryResponse>()
+            .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
 
         // Query -> Filter
         CreateMap<GetEmailPagedQuery, EmailPagedFilter>()

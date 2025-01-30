@@ -13,9 +13,10 @@ export let optionsRamp = {
         {duration: '300s', target: 100},
         {duration: '300s', target: 50},
         {duration: '300s', target: 25},
-        {duration: '300s', target: 5},
+        {duration: '100s', target: 5},
         {duration: '300s', target: 100},
-        {duration: '30s', target: 5}
+        {duration: '30s', target: 5},
+        {duration: '300s', target: 5}
     ]
 };
 
@@ -32,11 +33,11 @@ export const optionsIterations = {
 export const optionsDuration = {
     stages: [
         {duration: '10s', target: 10},
-        {duration: '20s', target: 250}
+        {duration: '60s', target: 200}
     ]
 };
 
-export const options = optionsOneIteration;
+export const options = optionsRamp;
 
  const baseUrl = 'http://localhost:7000/api/v1';
 // const baseUrl = 'http://localhost:8080';
@@ -54,12 +55,12 @@ export default () => {
     group('Endpoint User', () => {
         user(baseUrl, headers);
     });
-    //
-    // group('Endpoint Mail', () => {
-    //     mail(baseUrl, headers);
-    // });
-    //
-    // group('Endpoint Ride', () => {
-    //     ride(baseUrl, headers);
-    // });
+
+    group('Endpoint Mail', () => {
+        mail(baseUrl, headers);
+    });
+
+    group('Endpoint Ride', () => {
+        ride(baseUrl, headers);
+    });
 }
