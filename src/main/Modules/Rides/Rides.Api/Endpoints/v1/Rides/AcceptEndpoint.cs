@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using JacksonVeroneze.NET.Result;
 using TaxiService.Modules.Rides.Application.v1.Commands.Ride;
 
@@ -5,6 +6,9 @@ namespace TaxiService.Modules.Rides.Api.Endpoints.v1.Rides;
 
 internal static class AcceptEndpoint
 {
+    private static readonly ActivitySource ActivitySource =
+        new("TaxiService");
+
     public static RouteGroupBuilder AddAccept(
         this RouteGroupBuilder builder)
     {
@@ -13,8 +17,12 @@ internal static class AcceptEndpoint
                 [AsParameters] AcceptRideCommand command,
                 CancellationToken cancellationToken) =>
             {
+                using Activity? activity = ActivitySource.StartActivity();
+
                 Result response = await mediator
                     .Send(command, cancellationToken);
+
+                using Activity? activity1 = ActivitySource.StartActivity("MatchPut");
 
                 return response.MatchPut();
             })

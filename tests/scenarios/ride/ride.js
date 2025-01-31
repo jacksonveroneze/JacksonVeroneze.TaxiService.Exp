@@ -28,7 +28,7 @@ export function getById(baseUrl, headers, idRide) {
 
 export function accept(baseUrl, headers, rideId, driveId) {
     const bodyAcceptRide = JSON.stringify({
-        driver_id: driveId
+        driverId: driveId
     });
 
     const response = http.put(`${baseUrl}/rides/${rideId}/accept`, bodyAcceptRide, headers);

@@ -13,26 +13,21 @@ public class UserWriteRepository(
         CancellationToken cancellationToken = default)
     {
         await service.CreateAsync(entity, cancellationToken);
-
-        await service.UnitOfWork
-            .CommitAsync(cancellationToken);
     }
 
-    public Task DeleteAsync(UserEntity entity,
+    public async Task DeleteAsync(UserEntity entity,
         CancellationToken cancellationToken = default)
     {
         service.Delete(entity);
 
-        return service.UnitOfWork
-            .CommitAsync(cancellationToken);
+        await service.DbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public Task UpdateAsync(UserEntity entity,
+    public async Task UpdateAsync(UserEntity entity,
         CancellationToken cancellationToken = default)
     {
         service.Update(entity);
 
-        return service.UnitOfWork
-            .CommitAsync(cancellationToken);
+        await service.DbContext.SaveChangesAsync(cancellationToken);
     }
 }

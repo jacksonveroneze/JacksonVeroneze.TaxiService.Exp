@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using JacksonVeroneze.NET.Result;
 using TaxiService.Modules.Passengers.Application.v1.Commands.User;
 using TaxiService.Modules.Passengers.Application.v1.Models.User;
@@ -6,6 +7,9 @@ namespace TaxiService.Modules.Passengers.Api.Endpoints.v1.Users;
 
 internal static class CreateEndpoint
 {
+    private static readonly ActivitySource ActivitySource =
+        new("TaxiService");
+
     public static RouteGroupBuilder AddCreate(
         this RouteGroupBuilder builder)
     {
@@ -14,6 +18,8 @@ internal static class CreateEndpoint
                 [FromBody] CreateUserCommand command,
                 CancellationToken cancellationToken) =>
             {
+                using Activity? activity = ActivitySource.StartActivity();
+
                 Result<CreateUserCommandResponse> response =
                     await mediator.Send(command, cancellationToken);
 

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using FluentValidation.Results;
 using TaxiService.Common.BaseApplication.Extensions;
@@ -12,11 +13,16 @@ public sealed class ValidationBehavior<TRequest, TResponse>(
     where TRequest : class, IRequest<TResponse>
     where TResponse : class
 {
+    private static readonly ActivitySource ActivitySource =
+        new("TaxiService");
+
     public async Task<TResponse> Handle(
         TRequest request,
         RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
+        using Activity? activity = ActivitySource.StartActivity("ValidationBehavior");
+
         ArgumentNullException.ThrowIfNull(request);
         ArgumentNullException.ThrowIfNull(next);
 

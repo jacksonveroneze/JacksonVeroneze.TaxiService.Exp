@@ -11,12 +11,12 @@ public static class DatabaseExtensions
     public static IServiceCollection AddDatabase<TContext>(
         this IServiceCollection services,
         AppConfiguration appConfiguration,
-        DatabaseConfiguration databaseConfiguration) where TContext : DbContext
+        DatabaseConfiguration databaseConfiguration)
+        where TContext : DbContext
     {
         ArgumentNullException.ThrowIfNull(databaseConfiguration);
 
-        services.AddUnitOfWork()
-            .AddRepository();
+        services.AddRepository();
 
         services.AddDbContext<TContext>((_, options) =>
             options.UseNpgsql(databaseConfiguration.ReadConnectionString, conf =>

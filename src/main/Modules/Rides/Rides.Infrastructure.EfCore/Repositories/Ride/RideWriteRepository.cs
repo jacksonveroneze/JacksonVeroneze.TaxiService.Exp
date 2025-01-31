@@ -14,7 +14,7 @@ public class RideWriteRepository(
     {
         await service.CreateAsync(entity, cancellationToken);
 
-        await service.UnitOfWork.CommitAsync(cancellationToken);
+        await service.DbContext.SaveChangesAsync(cancellationToken);
     }
 
     public async Task UpdateAsync(RideEntity entity,
@@ -23,6 +23,6 @@ public class RideWriteRepository(
         // entity.MarkAsUpdated();
         service.Update(entity);
 
-        await service.UnitOfWork.CommitAsync(cancellationToken);
+        await service.DbContext.SaveChangesAsync(cancellationToken);
     }
 }

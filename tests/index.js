@@ -6,7 +6,7 @@ import ride from "./scenarios/ride/ride.scenario.js";
 
 export let optionsRamp = {
     stages: [
-        {duration: '120s', target: 5},
+        {duration: '10s', target: 1},
         {duration: '120s', target: 25},
         {duration: '300s', target: 100},
         {duration: '300s', target: 250},

@@ -16,8 +16,7 @@ public class EmailWriteRepository(
         await service.CreateAsync(
             entity, cancellationToken);
 
-        await service.UnitOfWork
-            .CommitAsync(cancellationToken);
+        await service.DbContext.SaveChangesAsync(cancellationToken);
     }
 
     public async Task DeleteAsync(EmailEntity entity,
@@ -25,7 +24,6 @@ public class EmailWriteRepository(
     {
         service.Delete(entity);
 
-        await service.UnitOfWork.CommitAsync(
-            cancellationToken);
+        await service.DbContext.SaveChangesAsync(cancellationToken);
     }
 }

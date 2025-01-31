@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using TaxiService.Common.BaseInfrastructure;
 using TaxiService.Common.BaseInfrastructure.Configurations;
+using TaxiService.Modules.Passengers.Application.v1.Interfaces;
 using TaxiService.Modules.Passengers.Infrastructure.EfCore.Contexts;
 
 

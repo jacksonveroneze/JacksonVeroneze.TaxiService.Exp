@@ -15,6 +15,6 @@ public class PositionWriteRepository(
     {
         await service.CreateAsync(entity, cancellationToken);
 
-        await service.UnitOfWork.CommitAsync(cancellationToken);
+        await service.DbContext.SaveChangesAsync(cancellationToken);
     }
 }

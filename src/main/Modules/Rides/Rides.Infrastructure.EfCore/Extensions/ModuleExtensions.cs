@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using TaxiService.Common.BaseInfrastructure.Configurations;
+using TaxiService.Modules.Rides.Application.v1;
 
 namespace TaxiService.Modules.Rides.Infrastructure.EfCore.Extensions;
 
@@ -12,6 +13,8 @@ public static class ModuleExtensions
     {
         services.AddServices()
             .AddDatabase(appConfiguration);
+
+        services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
 
         return services;
     }

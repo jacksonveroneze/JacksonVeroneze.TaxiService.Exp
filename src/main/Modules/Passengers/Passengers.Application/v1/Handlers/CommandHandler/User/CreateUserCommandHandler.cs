@@ -1,6 +1,9 @@
+using System.Diagnostics;
+using System.Text.Json;
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Modules.Passengers.Application.v1.Commands.User;
+using TaxiService.Modules.Passengers.Application.v1.Interfaces;
 using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Email;
 using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.User;
 using TaxiService.Modules.Passengers.Application.v1.Models.User;
@@ -14,13 +17,20 @@ public sealed class CreateUserCommandHandler(
     IMapper mapper,
     IUserWriteRepository userWriteRepository,
     IEmailReadRepository emailReadRepository,
-    IEmailWriteRepository emailWriteRepository)
+    IEmailWriteRepository emailWriteRepository,
+    IOutboxWriteRepository outboxWriteRepository,
+    IUnitOfWork unitOfWork)
     : IRequestHandler<CreateUserCommand, Result<CreateUserCommandResponse>>
 {
+    private static readonly ActivitySource ActivitySource =
+        new("TaxiService");
+
     public async Task<Result<CreateUserCommandResponse>> Handle(
         CreateUserCommand request,
         CancellationToken cancellationToken)
     {
+        using Activity? activity = ActivitySource.StartActivity();
+
         ArgumentNullException.ThrowIfNull(request);
 
         Result resultVerifyEmail = await ExistEmailAsync(
@@ -62,6 +72,8 @@ public sealed class CreateUserCommandHandler(
         string email,
         CancellationToken cancellationToken)
     {
+        using Activity? activity = ActivitySource.StartActivity();
+
         bool existsEmail = await emailReadRepository
             .ExistsAsync(email, cancellationToken);
 
@@ -81,6 +93,8 @@ public sealed class CreateUserCommandHandler(
     private Result<UserEntity> FactoryEntity(
         CreateUserCommand request)
     {
+        using Activity? activity = ActivitySource.StartActivity();
+
         Result<UserEntity> entity = UserEntity.Create(
             request.FullName, request.Birthday!.Value,
             request.Gender!.Value, request.Document);
@@ -101,6 +115,8 @@ public sealed class CreateUserCommandHandler(
     private Result<EmailEntity> FactoryEmailEntity(
         CreateUserCommand request, UserEntity user)
     {
+        using Activity? activity = ActivitySource.StartActivity();
+
         Result<EmailEntity> entity = EmailEntity
             .Create(user.Id, request.Email);
 
@@ -117,30 +133,34 @@ public sealed class CreateUserCommandHandler(
             .FromInvalid(entity.Errors!);
     }
 
-    // private static OutboxMessageEntity FactoryOutboxMessageEntity(
-    //     UserEntity user, EmailEntity email)
-    // {
-    //     var content = new
-    //     {
-    //         UserId = user.Id,
-    //         Email = email.Email.Value
-    //     };
-    //
-    //     string jsonContent = JsonSerializer.Serialize(content);
-    //
-    //     OutboxMessageEntity entity = OutboxMessageEntity
-    //         .Create(nameof(UserEntity), jsonContent);
-    //
-    //     return entity;
-    // }
+    private static OutboxMessageEntity FactoryOutboxMessageEntity(
+        UserEntity user, EmailEntity email)
+    {
+        using Activity? activity = ActivitySource.StartActivity();
+
+        var content = new
+        {
+            UserId = user.Id,
+            Email = email.Email.Value
+        };
+
+        string jsonContent = JsonSerializer.Serialize(content);
+
+        OutboxMessageEntity entity = OutboxMessageEntity
+            .Create(nameof(UserEntity), jsonContent);
+
+        return entity;
+    }
 
     private async Task CreateAsync(
         UserEntity userEntity,
         EmailEntity emailEntity,
         CancellationToken cancellationToken)
     {
-        // OutboxMessageEntity message =
-        //     FactoryOutboxMessageEntity(userEntity, emailEntity);
+        using Activity? activity = ActivitySource.StartActivity();
+
+        OutboxMessageEntity message =
+            FactoryOutboxMessageEntity(userEntity, emailEntity);
 
         try
         {
@@ -150,11 +170,11 @@ public sealed class CreateUserCommandHandler(
             await emailWriteRepository.CreateAsync(
                 emailEntity, cancellationToken);
 
-            // await outboxWriteRepository
-            //     .CreateAsync(message, cancellationToken);
-            //
-            // await unitOfWork.CommitAsync(
-            //     cancellationToken);
+            await outboxWriteRepository
+                .CreateAsync(message, cancellationToken);
+
+            await unitOfWork.CommitAsync(
+                cancellationToken);
 
             logger.LogCreated(nameof(CreateUserCommandHandler),
                 nameof(CreateAsync), userEntity!.Id);
