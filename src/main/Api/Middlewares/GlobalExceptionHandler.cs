@@ -1,9 +1,8 @@
-using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
 
-namespace JacksonVeroneze.TaxiService.Exp.Api.Middlewares;
+namespace TaxiService.Api.Middlewares;
 
-internal sealed class GlobalExceptionHandler(
+internal sealed class CustomExceptionHandler(
     IProblemDetailsService problemDetailsService)
     : IExceptionHandler
 {
@@ -12,18 +11,26 @@ internal sealed class GlobalExceptionHandler(
         Exception exception,
         CancellationToken cancellationToken)
     {
-        httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+        const int defaultStatus = StatusCodes.Status500InternalServerError;
 
-        return problemDetailsService.TryWriteAsync(new ProblemDetailsContext
+        var problemDetailsCtx = new ProblemDetailsContext
         {
+            Exception = exception,
             HttpContext = httpContext,
             ProblemDetails =
             {
                 Title = "An error occurred",
                 Detail = exception.Message,
                 Type = exception.GetType().Name,
+                Status = exception switch
+                {
+                    ArgumentException => StatusCodes.Status400BadRequest,
+                    _ => defaultStatus
+                },
             },
-            Exception = exception
-        });
+        };
+
+        return problemDetailsService
+            .TryWriteAsync(problemDetailsCtx);
     }
 }

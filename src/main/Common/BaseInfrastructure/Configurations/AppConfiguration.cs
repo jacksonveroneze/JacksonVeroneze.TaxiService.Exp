@@ -1,7 +1,7 @@
 namespace TaxiService.Common.BaseInfrastructure.Configurations;
 
 [ExcludeFromCodeCoverage]
-public record AppConfiguration
+public sealed record AppConfiguration
 {
     private const string EnviromentDevelopment = "Development";
     private const string EnviromentProduction = "Production";

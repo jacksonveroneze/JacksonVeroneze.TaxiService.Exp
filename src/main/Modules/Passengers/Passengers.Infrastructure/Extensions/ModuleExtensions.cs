@@ -15,7 +15,7 @@ public static class ModuleExtensions
 
         services.AddServices()
             .AddHandlers(assembly)
-            .AddCommonMapper(assembly)
+            .AddMapper(assembly)
             .AddFluentValidation(assembly);
 
         return services;

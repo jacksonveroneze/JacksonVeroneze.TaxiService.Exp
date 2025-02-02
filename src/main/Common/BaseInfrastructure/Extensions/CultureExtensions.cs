@@ -13,8 +13,13 @@ public static class CultureExtensions
     public static IServiceCollection AddCultureConfiguration(
         this IServiceCollection services)
     {
-        CultureInfo[] supportedCultures = [new(DefaultCulture), new("br")];
+        CultureInfo defaultCulture = new(DefaultCulture);
 
+        CultureInfo.DefaultThreadCurrentCulture = defaultCulture;
+        CultureInfo.DefaultThreadCurrentUICulture = defaultCulture;
+
+        CultureInfo[] supportedCultures = [new(DefaultCulture)];
+        
         services.Configure<RequestLocalizationOptions>(options =>
         {
             options.DefaultRequestCulture = new RequestCulture(DefaultCulture);

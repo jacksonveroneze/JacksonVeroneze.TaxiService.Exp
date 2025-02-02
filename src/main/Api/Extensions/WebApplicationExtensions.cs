@@ -15,14 +15,10 @@ internal static class WebApplicationExtensions
     {
         ArgumentNullException.ThrowIfNull(app);
 
-        app.Lifetime.ApplicationStarted.Register(() =>
-            Log.Information("ApplicationStarted"));
+        app.UseRequestLocalization();
 
-        app.Lifetime.ApplicationStopping.Register(() =>
-            Log.Information("ApplicationStopping"));
-
-        app.Lifetime.ApplicationStopped.Register(() =>
-            Log.Information("ApplicationStopped"));
+        app.UseExceptionHandler();
+        app.UseStatusCodePages();
 
         if (app.Environment.IsDevelopment())
         {
@@ -30,19 +26,28 @@ internal static class WebApplicationExtensions
             app.MapScalarApiReference();
         }
 
-        app.UseExceptionHandler();
         app.UseRouting();
-        app.UseAuthentication();
-        app.UseAuthorization();
+
         app.UseCorrelationId();
         app.UseHttpMetrics();
-        app.MapMetrics();
 
         app.UseHealthChecks("/health");
 
         app.AddUserEndpoints();
         app.AddRideEndpoints();
         app.AddPositionEndpoints();
+
+        app.Lifetime.ApplicationStarted.Register(() =>
+            Log.Information(nameof(IHostApplicationLifetime
+                .ApplicationStarted)));
+
+        app.Lifetime.ApplicationStopping.Register(() =>
+            Log.Information(nameof(IHostApplicationLifetime
+                .ApplicationStopping)));
+
+        app.Lifetime.ApplicationStopped.Register(() =>
+            Log.Information(nameof(IHostApplicationLifetime
+                .ApplicationStopped)));
 
         return app;
     }

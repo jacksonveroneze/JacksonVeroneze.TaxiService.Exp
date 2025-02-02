@@ -1,7 +1,7 @@
 namespace TaxiService.Common.BaseInfrastructure.Configurations;
 
 [ExcludeFromCodeCoverage]
-public record BusConfiguration
+public sealed record BusConfiguration
 {
     public string? Address { get; init; }
 

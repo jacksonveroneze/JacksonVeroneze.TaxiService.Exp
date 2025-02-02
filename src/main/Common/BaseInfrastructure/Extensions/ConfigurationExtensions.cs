@@ -10,7 +10,8 @@ public static class ConfigurationExtensions
     public static IServiceCollection AddConfiguration<TParameterType>(
         this IServiceCollection services,
         IConfiguration configuration,
-        string? sectionName = null) where TParameterType : class
+        string? sectionName = null)
+        where TParameterType : class
     {
         IConfiguration section =
             string.IsNullOrEmpty(sectionName)

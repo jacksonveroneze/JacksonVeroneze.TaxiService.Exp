@@ -1,7 +1,7 @@
 namespace TaxiService.Common.BaseInfrastructure.Configurations;
 
 [ExcludeFromCodeCoverage]
-public record CacheConfiguration
+public sealed record CacheConfiguration
 {
     public CacheType Type { get; init; }
 

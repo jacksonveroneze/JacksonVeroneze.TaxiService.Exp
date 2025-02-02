@@ -1,4 +1,3 @@
-using AutoMapper;
 using JacksonVeroneze.NET.Result;
 using Microsoft.Extensions.Logging;
 using TaxiService.Common.BaseApplication.Extensions;
@@ -11,7 +10,6 @@ namespace TaxiService.Modules.Passengers.PublicApi.Services;
 
 public class UserService(
     ILogger<UserService> logger,
-    IMapper mapper,
     IUserReadRepository userReadRepository) : IUserService
 {
     public async Task<Result<bool>> ExistsByIdAsync(

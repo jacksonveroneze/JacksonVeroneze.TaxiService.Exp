@@ -28,8 +28,10 @@ public static class OpenTelemetryExtensions
 
         services.Configure<AspNetCoreTraceInstrumentationOptions>(options =>
         {
-            options.Filter = ctx => (!ctx.Request.Path.Value?.StartsWith("/metrics", StringComparison.OrdinalIgnoreCase) ?? false) &&
-                                    ctx.Request.Path != "/health";
+            options.Filter = ctx =>
+                (!ctx.Request.Path.Value?.StartsWith("/metrics",
+                    StringComparison.OrdinalIgnoreCase) ?? false) &&
+                ctx.Request.Path != "/health";
         });
 
         services.AddOpenTelemetry()
@@ -88,7 +90,8 @@ public static class OpenTelemetryExtensions
                     options.AgentPort = configuration.Port!.Value;
                 });
 
-            conf.AddOtlpExporter(conf => conf.Endpoint = new Uri("http://127.0.0.1:4317"));
+            conf.AddOtlpExporter(config => config.Endpoint =
+                new Uri($"http://{configuration.Host}:{configuration.Port}"));
         });
 
         return builder;

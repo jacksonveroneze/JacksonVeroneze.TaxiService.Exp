@@ -14,7 +14,7 @@ public static class PassengersMapperExtensions
         return services;
     }
 
-    public static IServiceCollection AddCommonMapper(
+    public static IServiceCollection AddMapper(
         this IServiceCollection services, Assembly assembly)
     {
         services.AddAutoMapper(assembly);

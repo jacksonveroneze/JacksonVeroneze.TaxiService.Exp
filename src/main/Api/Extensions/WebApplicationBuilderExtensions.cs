@@ -1,4 +1,4 @@
-using JacksonVeroneze.TaxiService.Exp.Api.Middlewares;
+using TaxiService.Api.Middlewares;
 using TaxiService.Common.BaseInfrastructure.Configurations;
 using TaxiService.Common.BaseInfrastructure.Extensions;
 using TaxiService.Modules.Passengers.Infrastructure.EfCore.Extensions;
@@ -26,7 +26,7 @@ internal static class WebApplicationBuilderExtensions
         builder.AddLogger(appConfiguration);
 
         builder.ConfigureDefaultServices(appConfiguration);
-        builder.ConfigureInfraCommonModule(appConfiguration);
+        builder.ConfigureInfraCommonModule();
         builder.ConfigurePassengerModule(appConfiguration);
         builder.ConfigureRideModule(appConfiguration);
 
@@ -40,6 +40,8 @@ internal static class WebApplicationBuilderExtensions
         AppConfiguration appConfiguration)
     {
         builder.Services
+            .AddProblemDetails()
+            .AddExceptionHandler<CustomExceptionHandler>()
             .AddJsonOptionsSerialize()
             .AddCorrelation()
             .AddCached(appConfiguration)
@@ -47,11 +49,9 @@ internal static class WebApplicationBuilderExtensions
             .AddAuthentication(appConfiguration)
             .AddAuthorization(appConfiguration)
             .AddOpenTelemetry(appConfiguration)
-            .AddCultureConfiguration()
             .AddHttpContextAccessor()
+            .AddCultureConfiguration()
             .AddAppVersioning()
-            .AddProblemDetails()
-            .AddExceptionHandler<GlobalExceptionHandler>()
             .AddRouting(options =>
             {
                 options.LowercaseUrls = true;
@@ -69,8 +69,7 @@ internal static class WebApplicationBuilderExtensions
     }
 
     private static WebApplicationBuilder ConfigureInfraCommonModule(
-        this WebApplicationBuilder builder,
-        AppConfiguration appConfiguration)
+        this WebApplicationBuilder builder)
     {
         builder.Services
             .AddBehavior()

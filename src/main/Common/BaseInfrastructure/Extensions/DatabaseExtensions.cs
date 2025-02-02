@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using TaxiService.Common.BaseInfrastructure.Configurations;
 
-namespace TaxiService.Common.BaseInfrastructure;
+namespace TaxiService.Common.BaseInfrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class DatabaseExtensions

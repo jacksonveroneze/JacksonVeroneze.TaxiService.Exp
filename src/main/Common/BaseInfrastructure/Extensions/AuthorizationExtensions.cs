@@ -8,8 +8,8 @@ namespace TaxiService.Common.BaseInfrastructure.Extensions;
 [ExcludeFromCodeCoverage]
 public static class AuthorizationExtensions
 {
-    public const string UserRead = "user:read";
-    public const string UserWrite = "user:write";
+    private const string UserRead = "user:read";
+    private const string UserWrite = "user:write";
 
     public static IServiceCollection AddAuthorization(
         this IServiceCollection services,
