@@ -4,6 +4,8 @@ using TaxiService.Common.BaseInfrastructure.Extensions;
 using TaxiService.Modules.Passengers.Infrastructure.EfCore.Extensions;
 using TaxiService.Modules.Passengers.Infrastructure.Extensions;
 using TaxiService.Modules.Passengers.PublicApi;
+using TaxiService.Modules.Payments.Infrastructure.EfCore.Extensions;
+using TaxiService.Modules.Payments.Infrastructure.Extensions;
 using TaxiService.Modules.Rides.Infrastructure.EfCore.Extensions;
 using TaxiService.Modules.Rides.Infrastructure.Extensions;
 
