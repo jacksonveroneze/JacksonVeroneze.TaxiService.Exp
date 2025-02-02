@@ -27,6 +27,9 @@ RUN dotnet publish /build/main/Api/TaxiService.Api.csproj \
 FROM jacksonveroneze/aspnet:9.0-debian-latest
 
 COPY --from=build-env /build/out /home/app
+
+ENV ASSEMBLY_NAME=TaxiService.Api.dll
+
 #
 #USER root
 #
