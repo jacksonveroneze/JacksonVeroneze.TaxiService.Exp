@@ -100,4 +100,15 @@ internal static class WebApplicationBuilderExtensions
 
         return builder;
     }
+    
+    private static WebApplicationBuilder ConfigurePaymentModule(
+        this WebApplicationBuilder builder,
+        AppConfiguration appConfiguration)
+    {
+        builder.Services
+            .AddPaymentInfra()
+            .AddPaymentInfraDatabase(appConfiguration);
+
+        return builder;
+    }
 }

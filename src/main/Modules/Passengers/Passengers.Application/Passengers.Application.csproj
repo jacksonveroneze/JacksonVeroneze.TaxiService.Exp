@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <RootNamespace>TaxiService.Modules.Passengers.Application</RootNamespace>
-    <AssemblyName>TaxiService.Modules.Passengers.Application</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
