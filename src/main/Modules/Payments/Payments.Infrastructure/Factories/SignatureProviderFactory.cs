@@ -69,8 +69,11 @@ internal sealed class PaymentProviderFactory(
 
         return providerType switch
         {
-            PaymentProviderType.AdobeSign =>
-                CreateProviderInternal<AdobeSignProvider>(),
+            PaymentProviderType.MercadoPago =>
+                CreateProviderInternal<MercadoPagoProvider>(),
+
+            PaymentProviderType.Stripe =>
+                CreateProviderInternal<StripeProvider>(),
 
             _ => throw new ArgumentException(
                 $"Unknown provider type '{providerType}'",

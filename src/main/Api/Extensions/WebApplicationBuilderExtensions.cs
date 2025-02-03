@@ -108,7 +108,7 @@ internal static class WebApplicationBuilderExtensions
         AppConfiguration appConfiguration)
     {
         builder.Services
-            .AddPaymentInfra()
+            .AddPaymentInfra(appConfiguration)
             .AddPaymentInfraDatabase(appConfiguration);
 
         return builder;

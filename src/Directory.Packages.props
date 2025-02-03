@@ -30,6 +30,7 @@
         <PackageVersion Include="Microsoft.Extensions.Http.Polly" Version="9.0.1"/>
         <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="9.1.0"/>
         <PackageVersion Include="MongoDB.EntityFrameworkCore" Version="8.2.1" />
+
         <!-- ANALYZER-->
         <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.4.0.108396"/>
         <PackageVersion Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.4"/>

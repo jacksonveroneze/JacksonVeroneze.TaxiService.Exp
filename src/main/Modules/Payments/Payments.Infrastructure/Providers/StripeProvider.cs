@@ -10,13 +10,13 @@ using TaxiService.Modules.Payments.Infrastructure.Extensions;
 
 namespace TaxiService.Modules.Payments.Infrastructure.Providers;
 
-internal sealed class AdobeSignProvider(
-    ILogger<AdobeSignProvider> logger,
-    IAdobeClient client,
-    AdobeSignTranslator translator) : IPaymentProvider
+internal sealed class StripeProvider(
+    ILogger<StripeProvider> logger,
+    IStripe client,
+    StripeTranslator translator) : IPaymentProvider
 {
     public PaymentProviderType Identifier
-        => PaymentProviderType.AdobeSign;
+        => PaymentProviderType.MercadoPago;
 
     public async Task<PaymentResult> PayAsync(
         PaymentEntity payment,
@@ -35,14 +35,14 @@ internal sealed class AdobeSignProvider(
         }
         catch (ApiException ex)
         {
-            logger.LogGenericHttpError(nameof(AdobeSignProvider),
+            logger.LogGenericHttpError(nameof(StripeProvider),
                 nameof(PayAsync), ex.StatusCode, ex);
 
             return PaymentResult.WithError(ex.Message);
         }
         catch (Exception ex)
         {
-            logger.LogGenericError(nameof(AdobeSignProvider),
+            logger.LogGenericError(nameof(StripeProvider),
                 nameof(PayAsync), ex);
 
             return PaymentResult.WithError(ex.Message);

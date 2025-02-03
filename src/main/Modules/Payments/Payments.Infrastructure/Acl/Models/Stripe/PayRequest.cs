@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 
-namespace TaxiService.Modules.Payments.Infrastructure.Acl.Models.Adobe;
+namespace TaxiService.Modules.Payments.Infrastructure.Acl.Models.Stripe;
 
-public record SignRequest
+public record PayRequest
 {
     [JsonPropertyName("file_name")]
     public string? FileName { get; init; }

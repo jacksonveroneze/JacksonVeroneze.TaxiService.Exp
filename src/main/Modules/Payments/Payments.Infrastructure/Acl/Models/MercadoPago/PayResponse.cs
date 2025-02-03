@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 
-namespace TaxiService.Modules.Payments.Infrastructure.Acl.Models.Adobe;
+namespace TaxiService.Modules.Payments.Infrastructure.Acl.Models.MercadoPago;
 
-public record SignResponse
+public record PayResponse
 {
     [JsonPropertyName("status")]
     public string? Status { get; init; }
