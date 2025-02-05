@@ -1,6 +1,9 @@
 using TaxiService.Api.Middlewares;
 using TaxiService.Common.BaseInfrastructure.Configurations;
 using TaxiService.Common.BaseInfrastructure.Extensions;
+using TaxiService.Modules.Drivers.Infrastructure.EfCore.Extensions;
+using TaxiService.Modules.Drivers.Infrastructure.Extensions;
+using TaxiService.Modules.Drivers.PublicApi;
 using TaxiService.Modules.Passengers.Infrastructure.EfCore.Extensions;
 using TaxiService.Modules.Passengers.Infrastructure.Extensions;
 using TaxiService.Modules.Passengers.PublicApi;
@@ -29,10 +32,11 @@ internal static class WebApplicationBuilderExtensions
 
         builder.ConfigureDefaultServices(appConfiguration);
         builder.ConfigureInfraCommonModule();
+
+        builder.ConfigureDriverModule(appConfiguration);
+        builder.ConfigurePaymentModule(appConfiguration);
         builder.ConfigurePassengerModule(appConfiguration);
         builder.ConfigureRideModule(appConfiguration);
-
-        builder.Services.AddPassangerPublicApi();
 
         return builder;
     }
@@ -86,6 +90,7 @@ internal static class WebApplicationBuilderExtensions
         AppConfiguration appConfiguration)
     {
         builder.Services
+            .AddPassangerPublicApi()
             .AddPassangerInfra()
             .AddPassangerInfraDatabase(appConfiguration);
 
@@ -102,7 +107,7 @@ internal static class WebApplicationBuilderExtensions
 
         return builder;
     }
-    
+
     private static WebApplicationBuilder ConfigurePaymentModule(
         this WebApplicationBuilder builder,
         AppConfiguration appConfiguration)
@@ -110,6 +115,18 @@ internal static class WebApplicationBuilderExtensions
         builder.Services
             .AddPaymentInfra(appConfiguration)
             .AddPaymentInfraDatabase(appConfiguration);
+
+        return builder;
+    }
+
+    private static WebApplicationBuilder ConfigureDriverModule(
+        this WebApplicationBuilder builder,
+        AppConfiguration appConfiguration)
+    {
+        builder.Services
+            .AddDriverPublicApi()
+            .AddDriverInfra()
+            .AddDriverInfraDatabase(appConfiguration);
 
         return builder;
     }

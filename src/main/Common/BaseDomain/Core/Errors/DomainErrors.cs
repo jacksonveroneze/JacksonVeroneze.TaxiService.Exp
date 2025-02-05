@@ -23,6 +23,28 @@ public static partial class CommonDomainErrors
                 string.Format(null, TemplateNotFound, "resource"));
     }
 
+    public static class CpfError
+    {
+        public static Error InvalidCpf =>
+            new("Cpf.InvalidCpf",
+                string.Format(null, TemplateDataInvalid, "cpf"));
+    }
+    
+    public static class NameError
+    {
+        public static Error InvalidName =>
+            new("Name.InvalidName",
+                string.Format(null, TemplateDataInvalid, "name"));
+    }
+    
+    public static class EmailError
+    {
+        public static Error InvalidEmail =>
+            new("Email.InvalidEmail",
+                string.Format(null, TemplateDataInvalid, "e-mail"));
+    }
+
+    
     public static class CoordinateError
     {
         public static Error InvalidCoordinate =>

@@ -20,7 +20,7 @@ public static class HttpClientExtension
             nameof(PaymentProviderType.MercadoPago));
 
         services.AddClient<IStripe>(appConfiguration,
-            nameof(PaymentProviderType.MercadoPago));
+            nameof(PaymentProviderType.Stripe));
 
         return services;
     }

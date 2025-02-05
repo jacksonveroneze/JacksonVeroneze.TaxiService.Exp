@@ -1,14 +1,14 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using TaxiService.Common.BaseInfrastructure.Extensions;
-using TaxiService.Modules.Passengers.Application;
+using TaxiService.Modules.Drivers.Application;
 
-namespace TaxiService.Modules.Passengers.Infrastructure.Extensions;
+namespace TaxiService.Modules.Drivers.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class ModuleExtensions
 {
-    public static IServiceCollection AddPassangerInfra(
+    public static IServiceCollection AddDriverInfra(
         this IServiceCollection services)
     {
         Assembly assembly = typeof(AssemblyReference).Assembly;

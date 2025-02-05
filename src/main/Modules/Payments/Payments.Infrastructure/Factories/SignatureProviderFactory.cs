@@ -14,7 +14,7 @@ namespace TaxiService.Modules.Payments.Infrastructure.Factories;
 internal sealed class PaymentProviderFactory(
     ILogger<PaymentProviderFactory> logger,
     IServiceProvider serviceProvider,
-    IProviderCacheRepository providerRepository)
+    IProviderReadRepository providerRepository)
     : IPaymentProviderFactory
 {
     public async Task<IReadOnlyCollection<Lazy<IPaymentProvider>>> GetProvidersAsync(

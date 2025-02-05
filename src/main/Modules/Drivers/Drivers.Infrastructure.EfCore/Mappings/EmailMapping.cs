@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TaxiService.Common.BaseInfrastructure;
-using TaxiService.Modules.Passengers.Domain.Entities;
+using TaxiService.Modules.Drivers.Domain.Entities;
 
-namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.Mappings;
+namespace TaxiService.Modules.Drivers.Infrastructure.EfCore.Mappings;
 
 [ExcludeFromCodeCoverage]
 public class EmailMapping : IEntityTypeConfiguration<EmailEntity>
@@ -18,14 +18,14 @@ public class EmailMapping : IEntityTypeConfiguration<EmailEntity>
         builder.HasKey(c => c.Id);
 
         // Indexes
-        builder.HasIndex(c => c.UserId);
+        builder.HasIndex(c => c.DriverId);
         // builder.HasIndex(c => c.Email);
 
         // Properties
         builder.Property(c => c.Id)
             .ValueGeneratedNever();
 
-        builder.Property(c => c.UserId)
+        builder.Property(c => c.DriverId)
             .IsRequired();
 
         builder.ComplexProperty(conf => conf.Email, conf =>

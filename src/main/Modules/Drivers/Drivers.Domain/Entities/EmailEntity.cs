@@ -1,8 +1,8 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseDomain.Entities.Base;
-using TaxiService.Modules.Passengers.Domain.ValueObjects;
+using TaxiService.Common.BaseDomain.ValueObjects;
 
-namespace TaxiService.Modules.Passengers.Domain.Entities;
+namespace TaxiService.Modules.Drivers.Domain.Entities;
 
 public class EmailEntity : BaseEntityAggregateRoot
 {
@@ -10,7 +10,7 @@ public class EmailEntity : BaseEntityAggregateRoot
 
     public EmailValueObject Email { get; private set; } = null!;
 
-    public Guid UserId { get; private set; }
+    public Guid DriverId { get; private set; }
 
     #region ctor
 
@@ -19,13 +19,13 @@ public class EmailEntity : BaseEntityAggregateRoot
     }
 
     private EmailEntity(
-        Guid userId,
+        Guid driverId,
         EmailValueObject email)
     {
         ArgumentNullException.ThrowIfNull(email);
 
         Id = Guid.NewGuid();
-        UserId = userId;
+        DriverId = driverId;
         Email = email;
     }
 
@@ -33,7 +33,7 @@ public class EmailEntity : BaseEntityAggregateRoot
 
     #region Factory
 
-    public static Result<EmailEntity> Create(Guid userId,
+    public static Result<EmailEntity> Create(Guid driverId,
         string? value)
     {
         Result<EmailValueObject> emailVo = EmailValueObject.Create(value);
@@ -44,7 +44,7 @@ public class EmailEntity : BaseEntityAggregateRoot
                 .FromInvalid(emailVo.Error!);
         }
 
-        EmailEntity entity = new(userId, emailVo.Value!);
+        EmailEntity entity = new(driverId, emailVo.Value!);
 
         return Result<EmailEntity>.WithSuccess(entity);
     }

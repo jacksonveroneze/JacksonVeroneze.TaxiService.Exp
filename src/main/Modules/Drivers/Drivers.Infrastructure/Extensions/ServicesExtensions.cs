@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace TaxiService.Modules.Passengers.Infrastructure.Extensions;
+namespace TaxiService.Modules.Drivers.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
 internal static class ServicesExtensions

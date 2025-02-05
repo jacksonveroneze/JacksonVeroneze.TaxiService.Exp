@@ -1,17 +1,17 @@
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
-using TaxiService.Modules.Passengers.PublicApi.Interfaces;
-using TaxiService.Modules.Passengers.PublicApi.Services;
+using TaxiService.Modules.Drivers.PublicApi.Interfaces;
+using TaxiService.Modules.Drivers.PublicApi.Services;
 
-namespace TaxiService.Modules.Passengers.PublicApi;
+namespace TaxiService.Modules.Drivers.PublicApi;
 
 [ExcludeFromCodeCoverage]
 public static class ModuleExtensions
 {
-    public static IServiceCollection AddPassangerPublicApi(
+    public static IServiceCollection AddDriverPublicApi(
         this IServiceCollection services)
     {
-        services.AddTransient<IUserService, UserService>();
+        services.AddTransient<IDriverService, DriverService>();
 
         return services;
     }

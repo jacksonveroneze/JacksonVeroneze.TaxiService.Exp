@@ -1,12 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
-using TaxiService.Common.BaseInfrastructure;
 using TaxiService.Common.BaseInfrastructure.Configurations;
 using TaxiService.Common.BaseInfrastructure.Extensions;
-using TaxiService.Modules.Passengers.Application.v1.Interfaces;
-using TaxiService.Modules.Passengers.Infrastructure.EfCore.Contexts;
+using TaxiService.Modules.Drivers.Infrastructure.EfCore.Contexts;
 
-
-namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.Extensions;
+namespace TaxiService.Modules.Drivers.Infrastructure.EfCore.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class DatabaseExtensions
@@ -17,7 +14,7 @@ public static class DatabaseExtensions
     {
         ArgumentNullException.ThrowIfNull(appConfiguration);
 
-        services.AddDatabase<PassengersDbContext>(
+        services.AddDatabase<DriversDbContext>(
             appConfiguration, appConfiguration.Database!);
 
         return services;

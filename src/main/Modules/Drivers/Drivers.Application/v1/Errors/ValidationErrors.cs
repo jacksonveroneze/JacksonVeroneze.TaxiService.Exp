@@ -2,7 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using JacksonVeroneze.NET.Result;
 
-namespace TaxiService.Modules.Passengers.Application.v1.Errors;
+namespace TaxiService.Modules.Drivers.Application.v1.Errors;
 
 [ExcludeFromCodeCoverage]
 internal static class ValidationErrors

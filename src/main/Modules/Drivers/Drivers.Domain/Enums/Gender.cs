@@ -1,4 +1,4 @@
-namespace TaxiService.Modules.Passengers.Domain.Enums;
+namespace TaxiService.Modules.Drivers.Domain.Enums;
 
 public enum Gender
 {

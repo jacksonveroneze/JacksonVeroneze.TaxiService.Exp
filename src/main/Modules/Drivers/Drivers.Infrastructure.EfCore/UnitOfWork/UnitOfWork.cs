@@ -1,10 +1,10 @@
-using TaxiService.Modules.Passengers.Application.v1.Interfaces;
-using TaxiService.Modules.Passengers.Infrastructure.EfCore.Contexts;
+using TaxiService.Modules.Drivers.Application.v1.Interfaces;
+using TaxiService.Modules.Drivers.Infrastructure.EfCore.Contexts;
 
-namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.UnitOfWork;
+namespace TaxiService.Modules.Drivers.Infrastructure.EfCore.UnitOfWork;
 
 public class UnitOfWork(
-    PassengersDbContext context) : IUnitOfWork
+    DriversDbContext context) : IUnitOfWork
 {
     public async Task<bool> CommitAsync(
         CancellationToken cancellationToken)

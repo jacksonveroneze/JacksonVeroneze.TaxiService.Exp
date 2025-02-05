@@ -1,13 +1,13 @@
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
-using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Email;
-using TaxiService.Modules.Passengers.Domain.Entities;
-using TaxiService.Modules.Passengers.Infrastructure.EfCore.Contexts;
+using TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.Email;
+using TaxiService.Modules.Drivers.Domain.Entities;
+using TaxiService.Modules.Drivers.Infrastructure.EfCore.Contexts;
 
-namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.Repositories.Email;
+namespace TaxiService.Modules.Drivers.Infrastructure.EfCore.Repositories.Email;
 
 [ExcludeFromCodeCoverage]
 public class EmailWriteRepository(
-    IEfCoreRepository<EmailEntity, PassengersDbContext> service)
+    IEfCoreRepository<EmailEntity, DriversDbContext> service)
     : IEmailWriteRepository
 {
     public async Task CreateAsync(EmailEntity entity,

@@ -1,13 +1,13 @@
 using Microsoft.Extensions.DependencyInjection;
 using TaxiService.Common.BaseInfrastructure.Configurations;
-using TaxiService.Modules.Passengers.Application.v1.Interfaces;
+using TaxiService.Modules.Drivers.Application.v1.Interfaces;
 
-namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.Extensions;
+namespace TaxiService.Modules.Drivers.Infrastructure.EfCore.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class ModuleExtensions
 {
-    public static IServiceCollection AddPassangerInfraDatabase(
+    public static IServiceCollection AddDriverInfraDatabase(
         this IServiceCollection services,
         AppConfiguration appConfiguration)
     {
