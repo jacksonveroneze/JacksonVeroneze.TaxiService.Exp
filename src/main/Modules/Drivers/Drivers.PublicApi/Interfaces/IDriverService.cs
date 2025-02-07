@@ -6,5 +6,5 @@ public interface IDriverService
 {
     Task<Result<bool>> ExistsByIdAsync(
         Guid id,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken);
 }

@@ -8,13 +8,13 @@ public interface IRideReadRepository
 {
     public Task<bool> ExistsActiveByUserIdAsync(
         Guid userId,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken);
 
     public Task<RideEntity?> GetByIdAsync(
         Guid id,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken);
 
     public Task<Page<RideEntity>> GetPagedAsync(
         RidePagedFilter filter,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken);
 }

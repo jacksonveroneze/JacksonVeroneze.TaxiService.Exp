@@ -4,16 +4,16 @@ namespace TaxiService.Common.BaseApplication.Interfaces.Repositories.Outbox;
 // {
 //     public Task CreateAsync(
 //         OutboxMessageEntity entity,
-//         CancellationToken cancellationToken = default);
+//         CancellationToken cancellationToken);
 //
 //     public Task UpdateAsync(
 //         OutboxMessageEntity entity,
-//         CancellationToken cancellationToken = default);
+//         CancellationToken cancellationToken);
 //
 //     public Task<ICollection<OutboxMessageEntity>> GetAllAsync(
-//         CancellationToken cancellationToken = default);
+//         CancellationToken cancellationToken);
 //
 //     public Task<OutboxMessageEntity?> GetByIdAsync(
 //         Guid id,
-//         CancellationToken cancellationToken = default);
+//         CancellationToken cancellationToken);
 // }

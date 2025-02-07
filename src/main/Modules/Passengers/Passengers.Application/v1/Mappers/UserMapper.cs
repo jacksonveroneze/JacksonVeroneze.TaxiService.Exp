@@ -19,18 +19,18 @@ public class UserMapper : Profile
             .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender))
             .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status));
 
-        CreateMap<UserEntity, GetUserByIdQueryResponse>()
+        CreateMap<UserEntity, GetByIdQueryResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
 
-        CreateMap<UserEntity, CreateUserCommandResponse>()
+        CreateMap<UserEntity, CreateCommandResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
 
-        CreateMap<Page<UserEntity>, GetUserPagedQueryResponse>()
+        CreateMap<Page<UserEntity>, GetPagedQueryResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src.Data))
             .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src.PageInfo));
 
         // Query -> Filter
-        CreateMap<GetUserPagedQuery, UserPagedFilter>()
+        CreateMap<GetPagedQuery, UserPagedFilter>()
             .ForMember(dest => dest.UserId, opts => opts.Ignore())
             .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src));
     }

@@ -1,10 +1,10 @@
 using JacksonVeroneze.NET.DomainObjects.Domain;
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseDomain.Entities.Base;
+using TaxiService.Common.BaseDomain.ValueObjects;
 using TaxiService.Modules.Passengers.Domain.Core.Errors;
 using TaxiService.Modules.Passengers.Domain.DomainEvents.User;
 using TaxiService.Modules.Passengers.Domain.Enums;
-using TaxiService.Modules.Passengers.Domain.ValueObjects;
 
 namespace TaxiService.Modules.Passengers.Domain.Entities;
 

@@ -7,7 +7,7 @@ namespace TaxiService.Modules.Passengers.Infrastructure.EfCore.Extensions;
 [ExcludeFromCodeCoverage]
 public static class ModuleExtensions
 {
-    public static IServiceCollection AddPassangerInfraDatabase(
+    public static IServiceCollection AddPassengerInfraDatabase(
         this IServiceCollection services,
         AppConfiguration appConfiguration)
     {

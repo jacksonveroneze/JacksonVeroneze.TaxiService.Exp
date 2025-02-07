@@ -4,5 +4,5 @@ public interface IEmailReadRepository
 {
     public Task<bool> ExistsAsync(
         string email,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken);
 }

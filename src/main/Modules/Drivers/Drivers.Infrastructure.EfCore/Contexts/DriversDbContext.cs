@@ -1,6 +1,5 @@
-using JacksonVeroneze.NET.DomainObjects.Domain;
-using JacksonVeroneze.NET.DomainObjects.Messaging;
 using Microsoft.EntityFrameworkCore;
+using TaxiService.Common.BaseInfrastructure.Extensions;
 using TaxiService.Modules.Drivers.Domain.Entities;
 
 namespace TaxiService.Modules.Drivers.Infrastructure.EfCore.Contexts;
@@ -18,30 +17,11 @@ public class DriversDbContext(
         modelBuilder.ApplyConfigurationsFromAssembly(
             typeof(DriversDbContext).Assembly);
 
-        ApplyQueryFilter(modelBuilder);
-        IgnoreClass(modelBuilder);
+        modelBuilder.ApplySoftDeleteQueryFilter<EmailEntity>();
+        modelBuilder.ApplySoftDeleteQueryFilter<DriverEntity>();
 
-        modelBuilder.HasDefaultSchema("public");
-    }
+        modelBuilder.IgnoreClass();
 
-    private static void ApplyQueryFilter(
-        ModelBuilder modelBuilder)
-    {
-        ApplySoftDeleteQueryFilter<EmailEntity>(modelBuilder);
-        ApplySoftDeleteQueryFilter<DriverEntity>(modelBuilder);
-    }
-
-    private static void ApplySoftDeleteQueryFilter<TEntity>(
-        ModelBuilder modelBuilder) where TEntity : Entity
-    {
-        modelBuilder.Entity<TEntity>()
-            .HasQueryFilter(field => field.DeletedAt == null);
-    }
-
-    private static void IgnoreClass(
-        ModelBuilder modelBuilder)
-    {
-        modelBuilder.Ignore<Event>();
-        modelBuilder.Ignore<DomainEvent>();
+        modelBuilder.HasDefaultSchema("driver");
     }
 }

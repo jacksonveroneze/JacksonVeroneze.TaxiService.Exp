@@ -6,5 +6,5 @@ public interface IEmailWriteRepository
 {
     public Task CreateAsync(
         EmailEntity entity,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken);
 }

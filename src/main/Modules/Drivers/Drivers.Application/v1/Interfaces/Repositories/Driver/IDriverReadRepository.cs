@@ -6,5 +6,5 @@ public interface IDriverReadRepository
 {
     public Task<DriverEntity?> GetByIdAsync(
         Guid id,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken);
 }

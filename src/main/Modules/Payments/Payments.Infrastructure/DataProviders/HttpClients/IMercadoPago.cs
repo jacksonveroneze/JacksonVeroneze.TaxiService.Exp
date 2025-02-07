@@ -8,5 +8,5 @@ public interface IMercadoPago
     [Post("/api/v1/mercadopago-pay")]
     Task<PayResponse> SignAsync(
         [Body] PayRequest request,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken);
 }

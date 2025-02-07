@@ -10,13 +10,13 @@ public class UserWriteRepository(
     IEfCoreRepository<UserEntity, PassengersDbContext> service) : IUserWriteRepository
 {
     public async Task CreateAsync(UserEntity entity,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         await service.CreateAsync(entity, cancellationToken);
     }
 
     public async Task DeleteAsync(UserEntity entity,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         service.Delete(entity);
 
@@ -24,7 +24,7 @@ public class UserWriteRepository(
     }
 
     public async Task UpdateAsync(UserEntity entity,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         service.Update(entity);
 

@@ -6,9 +6,9 @@ public interface IRideWriteRepository
 {
     public Task CreateAsync(
         RideEntity entity,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken);
 
     public Task UpdateAsync(
         RideEntity entity,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken);
 }

@@ -14,7 +14,7 @@ internal static class DeleteEndpoint
                 [FromRoute] Guid emailId,
                 CancellationToken cancellationToken) =>
             {
-                DeleteEmailCommand command = new(userId, emailId);
+                DeleteCommand command = new(userId, emailId);
 
                 Result response =
                     await mediator.Send(command, cancellationToken);

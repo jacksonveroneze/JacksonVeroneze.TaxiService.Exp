@@ -6,9 +6,9 @@ public interface IDriverWriteRepository
 {
     public Task CreateAsync(
         DriverEntity entity,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken);
 
     public Task UpdateAsync(
         DriverEntity entity,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken);
 }

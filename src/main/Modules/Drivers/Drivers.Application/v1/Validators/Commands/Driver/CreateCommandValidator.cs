@@ -1,9 +1,9 @@
 using TaxiService.Common.BaseApplication.Core.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.System;
+using TaxiService.Common.BaseDomain.Enums;
 using TaxiService.Common.BaseDomain.Validators;
 using TaxiService.Modules.Drivers.Application.v1.Commands.Driver;
 using TaxiService.Modules.Drivers.Application.v1.Errors;
-using TaxiService.Modules.Drivers.Domain.Enums;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Validators.Commands.Driver;
 

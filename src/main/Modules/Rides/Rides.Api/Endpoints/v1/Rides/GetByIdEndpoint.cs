@@ -14,14 +14,14 @@ internal static class GetByIdEndpoint
                 [FromRoute] Guid id,
                 CancellationToken cancellationToken) =>
             {
-                GetRideByIdQuery query = new(id);
+                GetByIdQuery query = new(id);
 
-                Result<GetRideByIdQueryResponse> response =
+                Result<GetByIdQueryResponse> response =
                     await mediator.Send(query, cancellationToken);
 
                 return response.MatchGetById();
             })
-            .Produces<GetRideByIdQueryResponse>()
+            .Produces<GetByIdQueryResponse>()
             .AddDefaultResponseEndpoints();
 
         return builder;

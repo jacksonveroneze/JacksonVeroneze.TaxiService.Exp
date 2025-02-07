@@ -14,7 +14,7 @@ public class UserService(
 {
     public async Task<Result<bool>> ExistsByIdAsync(
         Guid id,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         UserEntity? entity = await userReadRepository
             .GetByIdAsync(id, cancellationToken);

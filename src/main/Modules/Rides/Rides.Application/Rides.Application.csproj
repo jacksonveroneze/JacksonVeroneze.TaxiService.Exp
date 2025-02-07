@@ -26,13 +26,8 @@
 
     <ProjectReference Include="..\Rides.Domain\Rides.Domain.csproj" />
 
+    <ProjectReference Include="..\..\Drivers\Drivers.PublicApi\Drivers.PublicApi.csproj" />
     <ProjectReference Include="..\..\Passengers\Passengers.PublicApi\Passengers.PublicApi.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Microsoft.Extensions.Caching.Abstractions">
-      <HintPath>..\..\..\..\..\..\..\.nuget\packages\microsoft.extensions.caching.abstractions\9.0.1\lib\net9.0\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

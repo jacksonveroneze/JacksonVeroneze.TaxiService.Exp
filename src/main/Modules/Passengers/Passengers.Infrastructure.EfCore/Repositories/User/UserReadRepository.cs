@@ -14,7 +14,7 @@ public class UserReadRepository(
     IEfCoreRepository<UserEntity, PassengersDbContext> service) : IUserReadRepository
 {
     public Task<UserEntity?> GetByIdAsync(
-        Guid id, CancellationToken cancellationToken = default)
+        Guid id, CancellationToken cancellationToken)
     {
         UserByIdSpecification specByUserId = new(id);
 
@@ -24,7 +24,7 @@ public class UserReadRepository(
 
     public async Task<Page<UserEntity>> GetPagedAsync(
         UserPagedFilter filter,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(filter);
 

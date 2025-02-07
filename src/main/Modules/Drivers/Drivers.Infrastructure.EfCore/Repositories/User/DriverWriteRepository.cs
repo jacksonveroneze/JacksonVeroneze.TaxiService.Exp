@@ -10,13 +10,13 @@ public class DriverWriteRepository(
     IEfCoreRepository<DriverEntity, DriversDbContext> service) : IDriverWriteRepository
 {
     public async Task CreateAsync(DriverEntity entity,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         await service.CreateAsync(entity, cancellationToken);
     }
 
     public async Task UpdateAsync(DriverEntity entity,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         service.Update(entity);
 

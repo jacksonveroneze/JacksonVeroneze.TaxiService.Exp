@@ -3,9 +3,9 @@ using TaxiService.Modules.Passengers.Application.v1.Commands.Email;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Validators.Commands.User.Email;
 
-public class DeleteEmailCommandValidator : AbstractValidator<DeleteEmailCommand>
+public class DeleteCommandValidator : AbstractValidator<DeleteCommand>
 {
-    public DeleteEmailCommandValidator()
+    public DeleteCommandValidator()
     {
         RuleFor(request => request)
             .NotNull();

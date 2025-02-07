@@ -17,7 +17,7 @@ public class RideReadRepository(
 {
     public async Task<bool> ExistsActiveByUserIdAsync(
         Guid userId,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         RideByUserIdSpecification specByUserId = new(userId);
         RideActivePerUserSpecification specActivePerUserRequested = new();
@@ -33,7 +33,7 @@ public class RideReadRepository(
 
     public Task<RideEntity?> GetByIdAsync(
         Guid id,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         RideByIdSpecification specByUserId = new(id);
 
@@ -43,7 +43,7 @@ public class RideReadRepository(
 
     public async Task<Page<RideEntity>> GetPagedAsync(
         RidePagedFilter filter,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(filter);
 

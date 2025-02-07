@@ -7,13 +7,13 @@ public interface IEmailReadRepository
 {
     public Task<bool> ExistsAsync(
         string email,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken);
 
     public Task<EmailEntity?> GetByIdAsync(
         Guid id,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken);
 
     public Task<ICollection<EmailEntity>> GetAllAsync(
         EmailPagedFilter filter,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken);
 }

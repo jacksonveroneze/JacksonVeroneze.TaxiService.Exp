@@ -13,7 +13,7 @@ internal static class StartEndpoint
                 [FromRoute] Guid id,
                 CancellationToken cancellationToken) =>
             {
-                StartRideCommand command = new(id);
+                StartCommand command = new(id);
 
                 Result response = await mediator
                     .Send(command, cancellationToken);

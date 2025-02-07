@@ -6,5 +6,5 @@ public interface IPaymentReadRepository
 {
     public Task<ICollection<PaymentEntity>> GetByRideIdAsync(
         Guid rideId,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken);
 }

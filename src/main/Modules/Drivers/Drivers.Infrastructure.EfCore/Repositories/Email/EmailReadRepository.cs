@@ -11,7 +11,7 @@ public class EmailReadRepository(
     : IEmailReadRepository
 {
     public async Task<bool> ExistsAsync(string email,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         bool exists = await service.AnyAsync(conf =>
                 string.Equals(conf.Email.Value, email.ToLower()),

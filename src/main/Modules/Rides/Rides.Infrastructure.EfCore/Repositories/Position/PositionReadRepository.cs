@@ -13,7 +13,7 @@ public class PositionReadRepository(
 {
     public async Task<ICollection<PositionEntity>> GetByRideIdAsync(
         Guid rideId,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         PositionByRideIdSpecification spec = new(rideId);
 

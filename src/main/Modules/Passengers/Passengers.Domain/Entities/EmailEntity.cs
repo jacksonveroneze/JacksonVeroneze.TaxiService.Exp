@@ -1,6 +1,6 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseDomain.Entities.Base;
-using TaxiService.Modules.Passengers.Domain.ValueObjects;
+using TaxiService.Common.BaseDomain.ValueObjects;
 
 namespace TaxiService.Modules.Passengers.Domain.Entities;
 

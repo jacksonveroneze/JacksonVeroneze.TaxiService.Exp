@@ -8,9 +8,9 @@ public interface IUserReadRepository
 {
     public Task<UserEntity?> GetByIdAsync(
         Guid id,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken);
 
     public Task<Page<UserEntity>> GetPagedAsync(
         UserPagedFilter filter,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken);
 }

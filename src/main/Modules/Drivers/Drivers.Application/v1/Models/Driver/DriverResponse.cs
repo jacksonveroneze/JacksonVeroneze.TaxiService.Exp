@@ -1,3 +1,4 @@
+using TaxiService.Common.BaseDomain.Enums;
 using TaxiService.Modules.Drivers.Domain.Enums;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Models.Driver;

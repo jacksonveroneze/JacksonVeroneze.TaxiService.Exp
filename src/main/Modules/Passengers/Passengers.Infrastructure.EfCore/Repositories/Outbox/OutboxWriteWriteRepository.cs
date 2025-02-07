@@ -11,7 +11,7 @@ public class OutboxWriteWriteRepository(
     : IOutboxWriteRepository
 {
     public async Task CreateAsync(OutboxMessageEntity entity,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         await service.CreateAsync(entity, cancellationToken);
     }

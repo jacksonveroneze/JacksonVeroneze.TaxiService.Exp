@@ -8,6 +8,6 @@ public static partial class DomainErrors
     {
         public static Error Unavailable =>
             new("Providers.Unavailable",
-                "No signature providers are available.");
+                "No payments providers are available.");
     }
 }

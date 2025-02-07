@@ -2,7 +2,6 @@ using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseDomain.Entities.Base;
 using TaxiService.Common.BaseDomain.ValueObjects;
 using TaxiService.Modules.Rides.Domain.Core.Errors;
-using TaxiService.Modules.Rides.Domain.DomainEvents.Ride;
 using TaxiService.Modules.Rides.Domain.Enums;
 
 namespace TaxiService.Modules.Rides.Domain.Entities;
@@ -44,8 +43,6 @@ public class RideEntity : BaseEntityAggregateRoot
         CoordinateTo = coordinateTo;
 
         Status = RideStatus.Requested;
-
-        AddEvent(new RideRequestedDomainEvent(Id));
     }
 
     #endregion
@@ -75,8 +72,6 @@ public class RideEntity : BaseEntityAggregateRoot
         DriverId = driverId;
         Status = RideStatus.Accepted;
 
-        AddEvent(new RideAcceptedDomainEvent(Id));
-
         return Result.WithSuccess();
     }
 
@@ -95,8 +90,6 @@ public class RideEntity : BaseEntityAggregateRoot
         }
 
         Status = RideStatus.InProgress;
-
-        AddEvent(new RideStartedDomainEvent(Id));
 
         return Result.WithSuccess();
     }
@@ -120,8 +113,6 @@ public class RideEntity : BaseEntityAggregateRoot
 
         Status = RideStatus.Completed;
 
-        AddEvent(new RideFinishedDomainEvent(Id));
-
         return Result.WithSuccess();
     }
 
@@ -140,8 +131,6 @@ public class RideEntity : BaseEntityAggregateRoot
         }
 
         Status = RideStatus.Canceled;
-
-        AddEvent(new RideCanceledDomainEvent(Id));
 
         return Result.WithSuccess();
     }

@@ -10,7 +10,7 @@ internal static class AddPositionEndpoint
     {
         builder.MapPost(string.Empty, async (
                 [FromServices] ISender mediator,
-                [FromBody] AddPositionCommand command,
+                [FromBody] AddCommand command,
                 CancellationToken cancellationToken) =>
             {
                 Result response = await mediator

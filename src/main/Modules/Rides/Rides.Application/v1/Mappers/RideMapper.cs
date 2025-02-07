@@ -21,18 +21,18 @@ public class RideMapper : Profile
             .ForMember(dest => dest.To, opts => opts.MapFrom(src => src.CoordinateTo))
             .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status));
 
-        CreateMap<RideEntity, GetRideByIdQueryResponse>()
+        CreateMap<RideEntity, GetByIdQueryResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
 
-        CreateMap<RideEntity, RequestRideCommandResponse>()
+        CreateMap<RideEntity, RequestCommandResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
 
-        CreateMap<Page<RideEntity>, GetRidePagedQueryResponse>()
+        CreateMap<Page<RideEntity>, GetPagedQueryResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src.Data))
             .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src.PageInfo));
 
         // Query -> Filter
-        CreateMap<GetRidePagedQuery, RidePagedFilter>()
+        CreateMap<GetPagedQuery, RidePagedFilter>()
             .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status))
             .ForMember(dest => dest.UserId, opts => opts.MapFrom(src => src.UserId))
             .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src));

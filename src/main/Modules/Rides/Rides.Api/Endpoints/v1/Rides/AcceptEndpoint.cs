@@ -14,7 +14,7 @@ internal static class AcceptEndpoint
     {
         builder.MapPut("{id:guid:required}/accept", async (
                 [FromServices] ISender mediator,
-                [AsParameters] AcceptRideCommand command,
+                [AsParameters] AcceptCommand command,
                 CancellationToken cancellationToken) =>
             {
                 using Activity? activity = ActivitySource.StartActivity();

@@ -1,4 +1,3 @@
-using JacksonVeroneze.NET.DomainObjects.Domain;
 using TaxiService.Common.BaseDomain.Entities.Base;
 using TaxiService.Modules.Payments.Domain.Enums;
 

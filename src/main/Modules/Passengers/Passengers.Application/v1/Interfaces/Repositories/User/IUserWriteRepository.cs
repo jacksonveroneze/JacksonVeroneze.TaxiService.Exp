@@ -6,13 +6,13 @@ public interface IUserWriteRepository
 {
     public Task CreateAsync(
         UserEntity entity,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken);
 
     public Task DeleteAsync(
         UserEntity entity,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken);
 
     public Task UpdateAsync(
         UserEntity entity,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken);
 }

@@ -13,7 +13,7 @@ public class EmailReadRepository(
     : IEmailReadRepository
 {
     public async Task<bool> ExistsAsync(string email,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         bool exists = await service.AnyAsync(conf =>
                 string.Equals(conf.Email.Value, email.ToLower()),
@@ -23,7 +23,7 @@ public class EmailReadRepository(
     }
 
     public Task<EmailEntity?> GetByIdAsync(Guid id,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         EmailByIdSpecification specByUserId = new(id);
 
@@ -33,7 +33,7 @@ public class EmailReadRepository(
 
     public Task<ICollection<EmailEntity>> GetAllAsync(
         EmailPagedFilter filter,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(filter);
 

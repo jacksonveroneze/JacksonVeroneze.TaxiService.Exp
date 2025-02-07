@@ -11,7 +11,7 @@ public class PaymentWriteRepository(
     : IPaymentWriteRepository
 {
     public async Task CreateAsync(PaymentEntity entity,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         await service.CreateAsync(entity, cancellationToken);
 
@@ -19,7 +19,7 @@ public class PaymentWriteRepository(
     }
 
     public Task UpdateAsync(PaymentEntity entity, 
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

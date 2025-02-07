@@ -3,7 +3,7 @@ using TaxiService.Common.BaseDomain.Core.Errors;
 
 namespace TaxiService.Modules.Rides.Domain.Core.Errors;
 
-public static partial class DomainErrors
+public static class DomainErrors
 {
     public static class RideError
     {

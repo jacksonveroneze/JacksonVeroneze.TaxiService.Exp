@@ -14,7 +14,7 @@ public class DriverService(
 {
     public async Task<Result<bool>> ExistsByIdAsync(
         Guid id,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         DriverEntity? entity = await driverReadRepository
             .GetByIdAsync(id, cancellationToken);

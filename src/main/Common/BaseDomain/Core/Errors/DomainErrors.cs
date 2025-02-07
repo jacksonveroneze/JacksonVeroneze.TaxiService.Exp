@@ -5,7 +5,7 @@ using JacksonVeroneze.NET.Result;
 namespace TaxiService.Common.BaseDomain.Core.Errors;
 
 [ExcludeFromCodeCoverage]
-public static partial class CommonDomainErrors
+public static class CommonDomainErrors
 {
     public static readonly CompositeFormat TemplateNotFound =
         CompositeFormat.Parse("The {0} with the specified identifier was not found.");

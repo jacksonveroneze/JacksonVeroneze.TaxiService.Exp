@@ -9,7 +9,7 @@ public class PaymentReadRepository()
 {
     public Task<ICollection<PaymentEntity>> GetByRideIdAsync(
         Guid rideId,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

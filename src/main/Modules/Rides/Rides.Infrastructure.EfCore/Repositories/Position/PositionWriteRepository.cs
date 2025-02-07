@@ -11,7 +11,7 @@ public class PositionWriteRepository(
     : IPositionWriteRepository
 {
     public async Task CreateAsync(PositionEntity entity,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         await service.CreateAsync(entity, cancellationToken);
 

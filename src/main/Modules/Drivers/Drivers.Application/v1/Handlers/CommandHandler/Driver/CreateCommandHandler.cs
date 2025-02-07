@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.Text.Json;
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Modules.Drivers.Application.v1.Commands.Driver;

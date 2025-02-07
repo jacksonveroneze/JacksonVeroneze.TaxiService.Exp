@@ -5,9 +5,9 @@ using TaxiService.Modules.Passengers.Application.v1.Errors;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Validators.Commands.User.Email;
 
-public class CreateEmailCommandValidator : AbstractValidator<CreateEmailCommand>
+public class CreateCommandValidator : AbstractValidator<CreateCommand>
 {
-    public CreateEmailCommandValidator()
+    public CreateCommandValidator()
     {
         RuleFor(request => request)
             .NotNull();

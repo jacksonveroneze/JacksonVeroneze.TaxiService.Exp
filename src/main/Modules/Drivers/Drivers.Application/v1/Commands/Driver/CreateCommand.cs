@@ -1,6 +1,6 @@
 using JacksonVeroneze.NET.Result;
+using TaxiService.Common.BaseDomain.Enums;
 using TaxiService.Modules.Drivers.Application.v1.Models.Driver;
-using TaxiService.Modules.Drivers.Domain.Enums;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Commands.Driver;
 

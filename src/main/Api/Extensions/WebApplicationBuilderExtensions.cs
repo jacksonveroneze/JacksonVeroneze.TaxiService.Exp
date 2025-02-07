@@ -92,7 +92,7 @@ internal static class WebApplicationBuilderExtensions
         builder.Services
             .AddPassangerPublicApi()
             .AddPassangerInfra()
-            .AddPassangerInfraDatabase(appConfiguration);
+            .AddPassengerInfraDatabase(appConfiguration);
 
         return builder;
     }

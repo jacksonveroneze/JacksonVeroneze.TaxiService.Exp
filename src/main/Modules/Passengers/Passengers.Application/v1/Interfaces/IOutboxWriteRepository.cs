@@ -6,5 +6,5 @@ public interface IOutboxWriteRepository
 {
     public Task CreateAsync(
         OutboxMessageEntity entity,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken);
 }

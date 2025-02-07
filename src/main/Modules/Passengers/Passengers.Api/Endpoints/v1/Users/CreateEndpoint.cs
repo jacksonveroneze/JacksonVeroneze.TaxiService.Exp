@@ -15,17 +15,17 @@ internal static class CreateEndpoint
     {
         builder.MapPost(string.Empty, async (
                 [FromServices] ISender mediator,
-                [FromBody] CreateUserCommand command,
+                [FromBody] CreateCommand command,
                 CancellationToken cancellationToken) =>
             {
                 using Activity? activity = ActivitySource.StartActivity();
 
-                Result<CreateUserCommandResponse> response =
+                Result<CreateCommandResponse> response =
                     await mediator.Send(command, cancellationToken);
 
                 return response.MatchPost();
             })
-            .Produces<CreateUserCommandResponse>()
+            .Produces<CreateCommandResponse>()
             .AddDefaultResponseEndpoints();
 
         return builder;

@@ -10,7 +10,7 @@ public class RideWriteRepository(
     IEfCoreRepository<RideEntity, RidesDbContext> service) : IRideWriteRepository
 {
     public async Task CreateAsync(RideEntity entity,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         await service.CreateAsync(entity, cancellationToken);
 
@@ -18,7 +18,7 @@ public class RideWriteRepository(
     }
 
     public async Task UpdateAsync(RideEntity entity,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         // entity.MarkAsUpdated();
         service.Update(entity);
