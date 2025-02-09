@@ -1,3 +1,8 @@
+using System.Reflection;
+
 namespace TaxiService.Modules.Passengers.Application;
 
-public sealed record AssemblyReference;
+public sealed class AssemblyReference
+{
+    public static readonly Assembly Assembly = typeof(AssemblyReference).Assembly;
+}

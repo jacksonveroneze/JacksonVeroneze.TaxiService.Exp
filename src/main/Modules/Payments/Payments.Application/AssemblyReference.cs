@@ -1,3 +1,3 @@
-namespace TaxiService.Modules.Rides.Application;
+namespace TaxiService.Modules.Payments.Application;
 
 public sealed record AssemblyReference;

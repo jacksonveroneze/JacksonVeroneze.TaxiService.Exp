@@ -9,6 +9,7 @@ using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.User
 using TaxiService.Modules.Passengers.Application.v1.Models.User;
 using TaxiService.Modules.Passengers.Domain.Core.Errors;
 using TaxiService.Modules.Passengers.Domain.Entities;
+using EmailEntity = TaxiService.Modules.Passengers.Domain.Entities.EmailEntity;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Handlers.CommandHandler.User;
 
@@ -88,6 +89,28 @@ public sealed class CreateCommandHandler(
             nameof(ExistEmailAsync), email, error);
 
         return Result.FromInvalid(error);
+    }
+    
+    private async Task<bool> ExistEmail2Async(
+        string email,
+        CancellationToken cancellationToken)
+    {
+        using Activity? activity = ActivitySource.StartActivity();
+
+        bool existsEmail = await emailReadRepository
+            .ExistsAsync(email, cancellationToken);
+
+        if (!existsEmail)
+        {
+            return true;
+        }
+
+        Error error = DomainErrors.UserError.DuplicateEmail;
+
+        logger.LogAlreadyExists(nameof(CreateCommandHandler),
+            nameof(ExistEmailAsync), email, error);
+
+        return false;
     }
 
     private Result<UserEntity> FactoryEntity(

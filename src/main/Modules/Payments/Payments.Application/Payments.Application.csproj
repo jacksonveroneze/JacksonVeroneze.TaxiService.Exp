@@ -23,9 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\BaseApplication\BaseApplication.csproj" />
-
     <ProjectReference Include="..\Payments.Domain\Payments.Domain.csproj" />
-
     <ProjectReference Include="..\..\Passengers\Passengers.PublicApi\Passengers.PublicApi.csproj" />
   </ItemGroup>
 

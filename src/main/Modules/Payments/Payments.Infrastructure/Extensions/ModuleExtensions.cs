@@ -2,7 +2,8 @@ using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using TaxiService.Common.BaseInfrastructure.Configurations;
 using TaxiService.Common.BaseInfrastructure.Extensions;
-using TaxiService.Modules.Rides.Application;
+using TaxiService.Modules.Payments.Application;
+using TaxiService.Modules.Payments.Application.v1;
 
 namespace TaxiService.Modules.Payments.Infrastructure.Extensions;
 
@@ -20,6 +21,11 @@ public static class ModuleExtensions
             .AddMapper(assembly)
             .AddFluentValidation(assembly)
             .AddHttpClients(appConfiguration);
+        
+        services.AddServices()
+            .AddDatabase(appConfiguration);
+
+        services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
 
         return services;
     }

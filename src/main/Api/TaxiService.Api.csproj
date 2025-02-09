@@ -8,20 +8,15 @@
         <ProjectReference Include="..\Common\BaseInfrastructure\BaseInfrastructure.csproj"/>
 
         <ProjectReference Include="..\Modules\Passengers\Passengers.Api\Passengers.Api.csproj"/>
-        <ProjectReference Include="..\Modules\Passengers\Passengers.Infrastructure\Passengers.Infrastructure.csproj"/>
-        <ProjectReference Include="..\Modules\Passengers\Passengers.Infrastructure.EfCore\Passengers.Infrastructure.EfCore.csproj"/>
+        <ProjectReference Include="..\Modules\Passengers\Passengers.Infrastructure\Passengers.Infrastructure.csproj" />
 
         <ProjectReference Include="..\Modules\Rides\Rides.Api\Rides.Api.csproj"/>
-        <ProjectReference Include="..\Modules\Rides\Rides.Infrastructure\Rides.Infrastructure.csproj"/>
-        <ProjectReference Include="..\Modules\Rides\Rides.Infrastructure.EfCore\Rides.Infrastructure.EfCore.csproj"/>
+        <ProjectReference Include="..\Modules\Rides\Rides.Infrastructure\Rides.Infrastructure.csproj" />
 
         <ProjectReference Include="..\Modules\Drivers\Drivers.Api\Drivers.Api.csproj"/>
-        <ProjectReference Include="..\Modules\Drivers\Drivers.Infrastructure\Drivers.Infrastructure.csproj"/>
-        <ProjectReference Include="..\Modules\Drivers\Drivers.Infrastructure.EfCore\Drivers.Infrastructure.EfCore.csproj"/>
+        <ProjectReference Include="..\Modules\Drivers\Drivers.Infrastructure\Drivers.Infrastructure.csproj" />
         <ProjectReference Include="..\Modules\Drivers\Drivers.PublicApi\Drivers.PublicApi.csproj" />
-        
-        <ProjectReference Include="..\Modules\Payments\Payments.Infrastructure\Payments.Infrastructure.csproj"/>
-        <ProjectReference Include="..\Modules\Payments\Payments.Infrastructure.EfCore\Payments.Infrastructure.EfCore.csproj"/>
+        <ProjectReference Include="..\Modules\Payments\Payments.Infrastructure\Payments.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

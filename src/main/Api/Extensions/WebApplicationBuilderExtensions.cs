@@ -1,15 +1,11 @@
 using TaxiService.Api.Middlewares;
 using TaxiService.Common.BaseInfrastructure.Configurations;
 using TaxiService.Common.BaseInfrastructure.Extensions;
-using TaxiService.Modules.Drivers.Infrastructure.EfCore.Extensions;
 using TaxiService.Modules.Drivers.Infrastructure.Extensions;
 using TaxiService.Modules.Drivers.PublicApi;
-using TaxiService.Modules.Passengers.Infrastructure.EfCore.Extensions;
 using TaxiService.Modules.Passengers.Infrastructure.Extensions;
 using TaxiService.Modules.Passengers.PublicApi;
-using TaxiService.Modules.Payments.Infrastructure.EfCore.Extensions;
 using TaxiService.Modules.Payments.Infrastructure.Extensions;
-using TaxiService.Modules.Rides.Infrastructure.EfCore.Extensions;
 using TaxiService.Modules.Rides.Infrastructure.Extensions;
 
 namespace TaxiService.Api.Extensions;
@@ -91,8 +87,7 @@ internal static class WebApplicationBuilderExtensions
     {
         builder.Services
             .AddPassangerPublicApi()
-            .AddPassangerInfra()
-            .AddPassengerInfraDatabase(appConfiguration);
+            .AddPassengerInfra(appConfiguration);
 
         return builder;
     }
@@ -102,8 +97,7 @@ internal static class WebApplicationBuilderExtensions
         AppConfiguration appConfiguration)
     {
         builder.Services
-            .AddRideInfra()
-            .AddRideInfraDatabase(appConfiguration);
+            .AddRideInfra(appConfiguration);
 
         return builder;
     }
@@ -113,8 +107,7 @@ internal static class WebApplicationBuilderExtensions
         AppConfiguration appConfiguration)
     {
         builder.Services
-            .AddPaymentInfra(appConfiguration)
-            .AddPaymentInfraDatabase(appConfiguration);
+            .AddPaymentInfra(appConfiguration);
 
         return builder;
     }
@@ -125,8 +118,7 @@ internal static class WebApplicationBuilderExtensions
     {
         builder.Services
             .AddDriverPublicApi()
-            .AddDriverInfra()
-            .AddDriverInfraDatabase(appConfiguration);
+            .AddDriverInfra(appConfiguration);
 
         return builder;
     }
