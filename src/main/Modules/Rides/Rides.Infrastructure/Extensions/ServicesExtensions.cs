@@ -29,8 +29,12 @@ public static class ServicesExtensions
 
         #endregion
 
+        #region Services
+
         services.AddScoped<IDistanceCalculatorService, DistanceCalculatorService>();
-        
+
+        #endregion
+
         return services;
     }
 }

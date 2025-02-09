@@ -1,22 +1,24 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-    <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.1"/>
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
+  </ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\Common\BaseInfrastructure\BaseInfrastructure.csproj"/>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\BaseInfrastructure\BaseInfrastructure.csproj"/>
 
-        <ProjectReference Include="..\Modules\Passengers\Passengers.Api\Passengers.Api.csproj"/>
-        <ProjectReference Include="..\Modules\Passengers\Passengers.Infrastructure\Passengers.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\Drivers\Drivers.Api\Drivers.Api.csproj"/>
+    <ProjectReference Include="..\Modules\Drivers\Drivers.Infrastructure\Drivers.Infrastructure.csproj"/>
+    <ProjectReference Include="..\Modules\Drivers\Drivers.PublicApi\Drivers.PublicApi.csproj"/>
 
-        <ProjectReference Include="..\Modules\Rides\Rides.Api\Rides.Api.csproj"/>
-        <ProjectReference Include="..\Modules\Rides\Rides.Infrastructure\Rides.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\Passengers\Passengers.Api\Passengers.Api.csproj"/>
+    <ProjectReference Include="..\Modules\Passengers\Passengers.Infrastructure\Passengers.Infrastructure.csproj"/>
+    <ProjectReference Include="..\Modules\Passengers\Passengers.PublicApi\Passengers.PublicApi.csproj"/>
 
-        <ProjectReference Include="..\Modules\Drivers\Drivers.Api\Drivers.Api.csproj"/>
-        <ProjectReference Include="..\Modules\Drivers\Drivers.Infrastructure\Drivers.Infrastructure.csproj" />
-        <ProjectReference Include="..\Modules\Drivers\Drivers.PublicApi\Drivers.PublicApi.csproj" />
-        <ProjectReference Include="..\Modules\Payments\Payments.Infrastructure\Payments.Infrastructure.csproj" />
-    </ItemGroup>
+    <ProjectReference Include="..\Modules\Payments\Payments.Infrastructure\Payments.Infrastructure.csproj"/>
+
+    <ProjectReference Include="..\Modules\Rides\Rides.Api\Rides.Api.csproj"/>
+    <ProjectReference Include="..\Modules\Rides\Rides.Infrastructure\Rides.Infrastructure.csproj"/>
+  </ItemGroup>
 
 </Project>

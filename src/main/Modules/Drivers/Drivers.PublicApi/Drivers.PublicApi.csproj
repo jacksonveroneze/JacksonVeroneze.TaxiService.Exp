@@ -1,22 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-<PropertyGroup>
-  <RootNamespace>TaxiService.Modules.Drivers.PublicApi</RootNamespace>
-</PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>TaxiService.Modules.Drivers.PublicApi</RootNamespace>
+  </PropertyGroup>
 
-<ItemGroup>
-  <PackageReference Include="RedLock.net" Version="2.3.2"/>
-  <PackageReference Include="AutoMapper" Version="13.0.1"/>
-  <PackageReference Include="FluentValidation" Version="11.11.0" />
-  <PackageReference Include="MediatR" Version="12.4.1" />
-  <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.1" />
-  <PackageReference Include="JacksonVeroneze.NET.Result" Version="0.0.6"/>
-</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions"/>
+    <PackageReference Include="JacksonVeroneze.NET.Result"/>
+  </ItemGroup>
 
-<ItemGroup>
-  <ProjectReference Include="..\..\..\Common\BaseApplication\BaseApplication.csproj" />
-  <ProjectReference Include="..\Drivers.Application\Drivers.Application.csproj" />
-  <ProjectReference Include="..\Drivers.Domain\Drivers.Domain.csproj" />
-</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Drivers.Application\Drivers.Application.csproj"/>
+    <ProjectReference Include="..\Drivers.Domain\Drivers.Domain.csproj"/>
+  </ItemGroup>
 
 </Project>

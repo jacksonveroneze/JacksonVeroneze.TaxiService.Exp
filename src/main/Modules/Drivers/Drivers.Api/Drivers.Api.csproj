@@ -13,9 +13,9 @@
     <Using Include="Microsoft.AspNetCore.Routing"/>
     <Using Include="TaxiService.Common.BaseApi.Endpoints.Extensions"/>
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\BaseApi\BaseApi.csproj"/>
-    <ProjectReference Include="..\Drivers.Application\Drivers.Application.csproj" />
+    <ProjectReference Include="..\Drivers.Application\Drivers.Application.csproj"/>
   </ItemGroup>
 </Project>

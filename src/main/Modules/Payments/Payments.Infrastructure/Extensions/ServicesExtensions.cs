@@ -23,22 +23,26 @@ public static class ServicesExtensions
         services.AddScoped<IPaymentWriteRepository, PaymentWriteRepository>();
 
         #endregion
-        
-        #region Payment
 
-        // Repositories
-        services.AddScoped<IProviderReadRepository, ProviderReadRepository>();
-
-        #endregion
-
-        services.AddScoped<MercadoPagoTranslator>();
-        services.AddScoped<StripeTranslator>();
+        #region Provider
 
         services.AddScoped<MercadoPagoProvider>();
         services.AddScoped<StripeProvider>();
 
+        // Repositories
+        services.AddScoped<IProviderReadRepository, ProviderReadRepository>();
+
         services.AddScoped<IPaymentProviderFactory, PaymentProviderFactory>();
-        
+
+        #endregion
+
+        #region Translator
+
+        services.AddScoped<MercadoPagoTranslator>();
+        services.AddScoped<StripeTranslator>();
+
+        #endregion
+
         return services;
     }
 }

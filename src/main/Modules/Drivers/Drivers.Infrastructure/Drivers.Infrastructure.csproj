@@ -1,17 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <RootNamespace>TaxiService.Modules.Drivers.Infrastructure</RootNamespace>
-    </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>TaxiService.Modules.Drivers.Infrastructure</RootNamespace>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <Using Include="System.ComponentModel.DataAnnotations"/>
-        <Using Include="System.Diagnostics.CodeAnalysis"/>
-    </ItemGroup>
+  <ItemGroup>
+    <Using Include="System.ComponentModel.DataAnnotations"/>
+    <Using Include="System.Diagnostics.CodeAnalysis"/>
+  </ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\..\..\Common\BaseInfrastructure\BaseInfrastructure.csproj"/>
-        <ProjectReference Include="..\Drivers.Application\Drivers.Application.csproj"/>
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\BaseInfrastructure\BaseInfrastructure.csproj"/>
+    <ProjectReference Include="..\Drivers.Application\Drivers.Application.csproj"/>
+  </ItemGroup>
 
 </Project>

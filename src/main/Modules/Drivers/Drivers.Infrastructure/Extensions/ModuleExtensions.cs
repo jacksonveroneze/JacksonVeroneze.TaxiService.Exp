@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using TaxiService.Common.BaseInfrastructure.Configurations;
 using TaxiService.Common.BaseInfrastructure.Extensions;
 using TaxiService.Modules.Drivers.Application;
-using TaxiService.Modules.Drivers.Application.v1.Interfaces;
 
 namespace TaxiService.Modules.Drivers.Infrastructure.Extensions;
 
@@ -19,12 +18,8 @@ public static class ModuleExtensions
         services.AddServices()
             .AddHandlers(assembly)
             .AddMapper(assembly)
-            .AddFluentValidation(assembly);
-        
-        services.AddServices()
+            .AddFluentValidation(assembly)
             .AddDatabase(appConfiguration);
-
-        services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
 
         return services;
     }
