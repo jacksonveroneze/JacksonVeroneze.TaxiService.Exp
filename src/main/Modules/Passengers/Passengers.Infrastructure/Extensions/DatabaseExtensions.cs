@@ -2,21 +2,22 @@ using Microsoft.Extensions.DependencyInjection;
 using TaxiService.Common.BaseInfrastructure.Configurations;
 using TaxiService.Common.BaseInfrastructure.Extensions;
 using TaxiService.Modules.Passengers.Application.v1.Interfaces;
+using TaxiService.Modules.Passengers.Infrastructure.Configurations;
 using TaxiService.Modules.Passengers.Infrastructure.Contexts;
 
 namespace TaxiService.Modules.Passengers.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class DatabaseExtensions
+internal static class DatabaseExtensions
 {
-    public static IServiceCollection AddDatabase(
+    internal static IServiceCollection AddDatabase(
         this IServiceCollection services,
-        AppConfiguration appConfiguration)
+        ModuleConfiguration moduleConfiguration)
     {
-        ArgumentNullException.ThrowIfNull(appConfiguration);
+        ArgumentNullException.ThrowIfNull(moduleConfiguration);
 
         services.AddDatabase<PassengersDbContext>(
-            appConfiguration, appConfiguration.Database!);
+            moduleConfiguration.Database!);
 
         services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
         

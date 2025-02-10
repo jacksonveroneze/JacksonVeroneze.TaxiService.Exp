@@ -10,7 +10,6 @@ public static class DatabaseExtensions
 {
     public static IServiceCollection AddDatabase<TContext>(
         this IServiceCollection services,
-        AppConfiguration appConfiguration,
         DatabaseConfiguration databaseConfiguration)
         where TContext : DbContext
     {
@@ -24,18 +23,17 @@ public static class DatabaseExtensions
                         .CommandTimeout(15)
                         .MaxBatchSize(15))
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
-                .ConfigureOptionsDatabase(appConfiguration));
+                .ConfigureOptionsDatabase());
 
         return services;
     }
 
     private static void ConfigureOptionsDatabase(
-        this DbContextOptionsBuilder optionsBuilder,
-        AppConfiguration appConfiguration)
+        this DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder
             .EnableDetailedErrors(false)
-            .EnableSensitiveDataLogging(appConfiguration.IsDevelopment)
+            .EnableSensitiveDataLogging(false)
             .EnableThreadSafetyChecks()
             .UseSnakeCaseNamingConvention();
     }

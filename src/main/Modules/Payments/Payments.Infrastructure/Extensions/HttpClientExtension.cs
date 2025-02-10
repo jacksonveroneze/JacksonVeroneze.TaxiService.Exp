@@ -3,23 +3,24 @@ using Microsoft.Extensions.DependencyInjection;
 using TaxiService.Common.BaseInfrastructure.Configurations;
 using TaxiService.Common.BaseInfrastructure.Extensions;
 using TaxiService.Modules.Payments.Domain.Enums;
+using TaxiService.Modules.Payments.Infrastructure.Configurations;
 using TaxiService.Modules.Payments.Infrastructure.DataProviders.HttpClients;
 
 namespace TaxiService.Modules.Payments.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class HttpClientExtension
+internal static class HttpClientExtension
 {
-    public static IServiceCollection AddHttpClients(
+    internal static IServiceCollection AddHttpClients(
         this IServiceCollection services,
-        AppConfiguration appConfiguration)
+        ModuleConfiguration moduleConfiguration)
     {
-        ArgumentNullException.ThrowIfNull(appConfiguration);
+        ArgumentNullException.ThrowIfNull(moduleConfiguration);
 
-        services.AddClient<IMercadoPago>(appConfiguration,
+        services.AddClient<IMercadoPago>(moduleConfiguration,
             nameof(PaymentProviderType.MercadoPago));
 
-        services.AddClient<IStripe>(appConfiguration,
+        services.AddClient<IStripe>(moduleConfiguration,
             nameof(PaymentProviderType.Stripe));
 
         return services;
@@ -27,11 +28,11 @@ public static class HttpClientExtension
 
     private static IServiceCollection AddClient<TClient>(
         this IServiceCollection services,
-        AppConfiguration appConfiguration,
+        ModuleConfiguration moduleConfiguration,
         string name) where TClient : class
     {
         HttpClientConfiguration config =
-            appConfiguration.HttpClients!.Single(
+            moduleConfiguration.HttpClients!.Single(
                 client => client.Name!.Equals(name,
                     StringComparison.OrdinalIgnoreCase));
 

@@ -40,7 +40,7 @@ internal static partial class LogMessagesExtensions
         Message = $"{nameof(PaymentProviderFactory)} - " +
                   $"{nameof(PaymentProviderFactory.GetProvidersAsync)} - " +
                   $"Loading provider configurations.")]
-    public static partial void LogLoadProviders(this ILogger logger);
+    internal static partial void LogLoadProviders(this ILogger logger);
 
     [LoggerMessage(
         EventId = 1012,
@@ -48,7 +48,7 @@ internal static partial class LogMessagesExtensions
         Message = $"{nameof(PaymentProviderFactory)} - " +
                   $"{nameof(PaymentProviderFactory.GetProvidersAsync)} - " +
                   $"No provider configurations found.")]
-    public static partial void LogNoProvidersFound(this ILogger logger);
+    internal static partial void LogNoProvidersFound(this ILogger logger);
 
     [LoggerMessage(
         EventId = 1013,
@@ -56,7 +56,7 @@ internal static partial class LogMessagesExtensions
         Message = $"{nameof(PaymentProviderFactory)} - " +
                   $"{nameof(PaymentProviderFactory.GetProvidersAsync)} - " +
                   "Loaded provider configurations - Count: '{count}' - Providers enabled: '{names}'")]
-    public static partial void LogProvidersFounded(this ILogger logger,
+    internal static partial void LogProvidersFounded(this ILogger logger,
         int count, PaymentProviderType[] names);
 
     [LoggerMessage(
@@ -65,6 +65,6 @@ internal static partial class LogMessagesExtensions
         Message = $"{nameof(PaymentProviderFactory)} - " +
                   $"{nameof(PaymentProviderFactory.GetProvidersAsync)} - " +
                   "Start create provider - Provider: '{provider}'")]
-    public static partial void LogStartCreateProvider(this ILogger logger,
+    internal static partial void LogStartCreateProvider(this ILogger logger,
         PaymentProviderType provider);
 }

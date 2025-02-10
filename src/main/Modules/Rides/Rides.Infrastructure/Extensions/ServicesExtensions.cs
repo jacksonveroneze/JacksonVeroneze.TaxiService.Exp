@@ -8,9 +8,9 @@ using TaxiService.Modules.Rides.Infrastructure.Repositories.Ride;
 namespace TaxiService.Modules.Rides.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class ServicesExtensions
+internal static class ServicesExtensions
 {
-    public static IServiceCollection AddServices(
+    internal static IServiceCollection AddServices(
         this IServiceCollection services)
     {
         #region Ride

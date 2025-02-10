@@ -7,9 +7,9 @@ using TaxiService.Modules.Drivers.Infrastructure.Repositories.User;
 namespace TaxiService.Modules.Drivers.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class ServicesExtensions
+internal static class ServicesExtensions
 {
-    public static IServiceCollection AddServices(
+    internal static IServiceCollection AddServices(
         this IServiceCollection services)
     {
         #region User

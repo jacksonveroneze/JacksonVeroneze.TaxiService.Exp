@@ -12,6 +12,9 @@ namespace TaxiService.Api.Extensions;
 
 internal static class WebApplicationBuilderExtensions
 {
+    private static readonly string[] Modules =
+        ["Drivers", "Passengers", "Payments", "Rides"];
+
     public static WebApplicationBuilder Configure(
         this WebApplicationBuilder builder)
     {
@@ -19,7 +22,8 @@ internal static class WebApplicationBuilderExtensions
             options.ShutdownTimeout = TimeSpan.FromSeconds(2));
 
         builder.Configuration
-            .AddEnvironmentVariables("APP_CONFIG_");
+            .AddEnvironmentVariables("APP_CONFIG_")
+            .AddModuleConfiguration(Modules);
 
         AppConfiguration appConfiguration =
             builder.Services.AddAppConfigs(builder.Configuration);
@@ -29,10 +33,10 @@ internal static class WebApplicationBuilderExtensions
         builder.ConfigureDefaultServices(appConfiguration);
         builder.ConfigureInfraCommonModule();
 
-        builder.ConfigureDriverModule(appConfiguration);
-        builder.ConfigurePaymentModule(appConfiguration);
-        builder.ConfigurePassengerModule(appConfiguration);
-        builder.ConfigureRideModule(appConfiguration);
+        builder.ConfigureDriverModule();
+        builder.ConfigurePaymentModule();
+        builder.ConfigurePassengerModule();
+        builder.ConfigureRideModule();
 
         return builder;
     }
@@ -82,43 +86,39 @@ internal static class WebApplicationBuilderExtensions
     }
 
     private static WebApplicationBuilder ConfigurePassengerModule(
-        this WebApplicationBuilder builder,
-        AppConfiguration appConfiguration)
+        this WebApplicationBuilder builder)
     {
         builder.Services
             .AddPassangerPublicApi()
-            .AddPassengerInfra(appConfiguration);
+            .AddPassengerInfra(builder.Configuration);
 
         return builder;
     }
 
     private static WebApplicationBuilder ConfigureRideModule(
-        this WebApplicationBuilder builder,
-        AppConfiguration appConfiguration)
+        this WebApplicationBuilder builder)
     {
         builder.Services
-            .AddRideInfra(appConfiguration);
+            .AddRideInfra(builder.Configuration);
 
         return builder;
     }
 
     private static WebApplicationBuilder ConfigurePaymentModule(
-        this WebApplicationBuilder builder,
-        AppConfiguration appConfiguration)
+        this WebApplicationBuilder builder)
     {
         builder.Services
-            .AddPaymentInfra(appConfiguration);
+            .AddPaymentInfra(builder.Configuration);
 
         return builder;
     }
 
     private static WebApplicationBuilder ConfigureDriverModule(
-        this WebApplicationBuilder builder,
-        AppConfiguration appConfiguration)
+        this WebApplicationBuilder builder)
     {
         builder.Services
             .AddDriverPublicApi()
-            .AddDriverInfra(appConfiguration);
+            .AddDriverInfra(builder.Configuration);
 
         return builder;
     }

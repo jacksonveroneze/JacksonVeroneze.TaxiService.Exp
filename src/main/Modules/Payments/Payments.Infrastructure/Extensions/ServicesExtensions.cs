@@ -11,9 +11,9 @@ using TaxiService.Modules.Payments.Infrastructure.Repositories.Provider;
 namespace TaxiService.Modules.Payments.Infrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class ServicesExtensions
+internal static class ServicesExtensions
 {
-    public static IServiceCollection AddServices(
+    internal static IServiceCollection AddServices(
         this IServiceCollection services)
     {
         #region Payment

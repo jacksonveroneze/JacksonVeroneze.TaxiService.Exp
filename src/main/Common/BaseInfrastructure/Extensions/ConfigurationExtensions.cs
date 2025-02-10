@@ -21,6 +21,26 @@ public static class ConfigurationExtensions
         services.Configure<TParameterType>(section);
 
         services.AddScoped(conf =>
+            conf.GetService<IOptions<TParameterType>>()?
+                .Value!);
+
+        return services;
+    }
+    
+    public static IServiceCollection AddConfigurationReloaded<TParameterType>(
+        this IServiceCollection services,
+        IConfiguration configuration,
+        string? sectionName = null)
+        where TParameterType : class
+    {
+        IConfiguration section =
+            string.IsNullOrEmpty(sectionName)
+                ? configuration
+                : configuration.GetSection(sectionName);
+
+        services.Configure<TParameterType>(section);
+
+        services.AddScoped(conf =>
             conf.GetService<IOptionsMonitor<TParameterType>>()?
                 .CurrentValue!);
 
