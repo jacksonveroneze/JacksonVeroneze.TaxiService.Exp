@@ -1,11 +1,9 @@
-﻿using System.Reflection;
-using FluentAssertions;
-using JacksonVeroneze.TaxiService.Exp.ArchitectureTests.Abstractions;
+﻿using JacksonVeroneze.TaxiService.Exp.ArchitectureTests.Abstractions;
 using NetArchTest.Rules;
 using TaxiService.Modules.Passengers.Api.Endpoints.v1.Users;
 using TaxiService.Modules.Passengers.Application;
+using TaxiService.Modules.Passengers.Application.v1.Commands.User;
 using TaxiService.Modules.Passengers.Domain.Entities;
-using TaxiService.Modules.Passengers.Infrastructure;
 using TaxiService.Modules.Passengers.Infrastructure.Repositories.User;
 using TaxiService.Modules.Passengers.PublicApi.Services;
 
@@ -13,29 +11,6 @@ namespace JacksonVeroneze.TaxiService.Exp.ArchitectureTests.Layers;
 
 public class ModuleTests : BaseTest
 {
-    // [Fact]
-    // public void Passengers_ShouldNotHaveDependencyOn_AnyOtherModule()
-    // {
-    //     string[] otherModules =
-    //     [
-    //         DriversNamespace,
-    //         PaymentsNamespace,
-    //         RidesNamespace
-    //     ];
-    //
-    //     List<Assembly> passangersAssemblies =
-    //     [
-    //         typeof(UserEntity).Assembly,
-    //         typeof(AssemblyReference).Assembly,
-    //     ];
-    //
-    //     Types.InAssemblies(passangersAssemblies)
-    //         .Should()
-    //         .NotHaveDependencyOnAny(otherModules)
-    //         .GetResult()
-    //         .ShouldBeSuccessful();
-    // }
-
     private readonly string _domainAssembly = $"{PassangersNamespace}.Passangers.Domain";
     private readonly string _applicationAssembly = $"{PassangersNamespace}.Application";
     private readonly string _infrastructureAssembly = $"{PassangersNamespace}.Infrastructure";
@@ -76,29 +51,14 @@ public class ModuleTests : BaseTest
             .GetResult()
             .ShouldBeSuccessful();
     }
-    
+
     [Fact]
     public void Infrastructure_Should_Not_HaveDependencyOnOtherLayers()
     {
         string[] otherProjects =
         [
-            _apiAssembly,
-            _publicApiAssembly
-        ];
-
-        // Types.InAssembly(typeof(InfraAssemblyReference).Assembly)
-        //     .ShouldNot()
-        //     .HaveDependencyOnAny(otherProjects)
-        //     .GetResult()
-        //     .ShouldBeSuccessful();
-    }
-    
-    [Fact]
-    public void InfrastructureEfCore_Should_Not_HaveDependencyOnOtherLayers()
-    {
-        string[] otherProjects =
-        [
-            _infrastructureAssembly,
+            _applicationAssembly,
+            _domainAssembly,
             _apiAssembly,
             _publicApiAssembly
         ];
@@ -109,7 +69,7 @@ public class ModuleTests : BaseTest
             .GetResult()
             .ShouldBeSuccessful();
     }
-    
+
     [Fact]
     public void Api_Should_Not_HaveDependencyOnOtherLayers()
     {
@@ -126,7 +86,7 @@ public class ModuleTests : BaseTest
             .GetResult()
             .ShouldBeSuccessful();
     }
-    
+
     [Fact]
     public void PublicApi_Should_Not_HaveDependencyOnOtherLayers()
     {
