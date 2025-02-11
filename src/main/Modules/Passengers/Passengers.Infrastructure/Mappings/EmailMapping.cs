@@ -18,14 +18,14 @@ public class EmailMapping : IEntityTypeConfiguration<EmailEntity>
         builder.HasKey(c => c.Id);
 
         // Indexes
-        builder.HasIndex(c => c.UserId);
+        builder.HasIndex(c => c.PassangerId);
         // builder.HasIndex(c => c.Email);
 
         // Properties
         builder.Property(c => c.Id)
             .ValueGeneratedNever();
 
-        builder.Property(c => c.UserId)
+        builder.Property(c => c.PassangerId)
             .IsRequired();
 
         builder.ComplexProperty(conf => conf.Email, conf =>

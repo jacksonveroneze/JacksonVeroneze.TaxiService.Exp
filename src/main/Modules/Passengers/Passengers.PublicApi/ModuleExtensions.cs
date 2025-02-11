@@ -11,7 +11,7 @@ public static class ModuleExtensions
     public static IServiceCollection AddPassangerPublicApi(
         this IServiceCollection services)
     {
-        services.AddTransient<IUserService, UserService>();
+        services.AddTransient<IPassangerService, PassangerService>();
 
         return services;
     }

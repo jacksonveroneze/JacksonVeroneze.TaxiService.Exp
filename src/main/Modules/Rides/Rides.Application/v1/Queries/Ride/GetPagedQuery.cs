@@ -16,5 +16,5 @@ public sealed record GetPagedQuery() :
 
     public RideStatus? Status { get; init; }
 
-    public Guid? UserId { get; init; }
+    public Guid? PassangerId { get; init; }
 }

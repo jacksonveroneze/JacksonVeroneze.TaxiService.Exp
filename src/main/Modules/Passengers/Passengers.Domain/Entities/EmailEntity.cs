@@ -10,7 +10,7 @@ public class EmailEntity : BaseEntityAggregateRoot
 
     public EmailValueObject Email { get; private set; } = null!;
 
-    public Guid UserId { get; private set; }
+    public Guid PassangerId { get; private set; }
 
     #region ctor
 
@@ -19,13 +19,13 @@ public class EmailEntity : BaseEntityAggregateRoot
     }
 
     private EmailEntity(
-        Guid userId,
+        Guid passangerId,
         EmailValueObject email)
     {
         ArgumentNullException.ThrowIfNull(email);
 
         Id = Guid.NewGuid();
-        UserId = userId;
+        PassangerId = passangerId;
         Email = email;
     }
 
@@ -33,7 +33,7 @@ public class EmailEntity : BaseEntityAggregateRoot
 
     #region Factory
 
-    public static Result<EmailEntity> Create(Guid userId,
+    public static Result<EmailEntity> Create(Guid passangerId,
         string? value)
     {
         Result<EmailValueObject> emailVo = EmailValueObject.Create(value);
@@ -44,7 +44,7 @@ public class EmailEntity : BaseEntityAggregateRoot
                 .FromInvalid(emailVo.Error!);
         }
 
-        EmailEntity entity = new(userId, emailVo.Value!);
+        EmailEntity entity = new(passangerId, emailVo.Value!);
 
         return Result<EmailEntity>.WithSuccess(entity);
     }

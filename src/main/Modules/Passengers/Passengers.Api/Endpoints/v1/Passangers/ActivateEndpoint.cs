@@ -1,0 +1,28 @@
+using JacksonVeroneze.NET.Result;
+using TaxiService.Modules.Passengers.Application.v1.Commands.Passanger;
+
+namespace TaxiService.Modules.Passengers.Api.Endpoints.v1.Passangers;
+
+internal static class ActivateEndpoint
+{
+    public static RouteGroupBuilder AddActivate(
+        this RouteGroupBuilder builder)
+    {
+        builder.MapPut("{id:guid:required}/activate", async (
+                [FromServices] ISender mediator,
+                [FromRoute] Guid id,
+                CancellationToken cancellationToken) =>
+            {
+                ActivateCommand command = new(id);
+
+                Result response =
+                    await mediator.Send(command, cancellationToken);
+
+                return response.MatchPut();
+            })
+            .Produces(StatusCodes.Status204NoContent)
+            .AddDefaultResponseEndpoints();
+
+        return builder;
+    }
+}

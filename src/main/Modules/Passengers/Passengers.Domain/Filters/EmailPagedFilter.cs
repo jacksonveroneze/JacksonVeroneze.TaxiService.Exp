@@ -6,7 +6,7 @@ namespace TaxiService.Modules.Passengers.Domain.Filters;
 [ExcludeFromCodeCoverage]
 public record EmailPagedFilter
 {
-    public Guid? UserId { get; init; }
+    public Guid? PassangerId { get; init; }
 
     public PaginationParameters? Pagination { get; init; }
 }

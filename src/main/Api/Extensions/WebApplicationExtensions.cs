@@ -3,7 +3,7 @@ using Prometheus;
 using Scalar.AspNetCore;
 using Serilog;
 using TaxiService.Modules.Drivers.Api.Endpoints.v1.Drivers;
-using TaxiService.Modules.Passengers.Api.Endpoints.v1.Users;
+using TaxiService.Modules.Passengers.Api.Endpoints.v1.Passangers;
 using TaxiService.Modules.Rides.Api.Endpoints.v1.Positions;
 using TaxiService.Modules.Rides.Api.Endpoints.v1.Rides;
 
@@ -37,7 +37,7 @@ internal static class WebApplicationExtensions
         app.AddDriverEndpoints();
         app.AddPositionEndpoints();
         app.AddRideEndpoints();
-        app.AddUserEndpoints();
+        app.AddPassangerEndpoints();
 
         app.Lifetime.ApplicationStarted.Register(() =>
             Log.Information(nameof(IHostApplicationLifetime

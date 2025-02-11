@@ -6,11 +6,11 @@ using TaxiService.Modules.Passengers.Domain.Entities;
 namespace TaxiService.Modules.Passengers.Domain.Specifications.Email;
 
 [ExcludeFromCodeCoverage]
-public class EmailByUserIdSpecification(Guid? userId) :
+public class EmailByPassangerIdSpecification(Guid? passangerId) :
     BaseSpecification<EmailEntity>
 {
     public override Expression<Func<EmailEntity, bool>> ToExpression()
     {
-        return userId.HasValue ? spec => spec.UserId == userId! : DefaultExpression;
+        return passangerId.HasValue ? spec => spec.PassangerId == passangerId! : DefaultExpression;
     }
 }

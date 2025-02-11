@@ -7,7 +7,7 @@ public sealed record RideResponse
 {
     public Guid? Id { get; init; }
 
-    public Guid? UserId { get; init; }
+    public Guid? PassangerId { get; init; }
 
     public Guid? DriverId { get; init; }
 

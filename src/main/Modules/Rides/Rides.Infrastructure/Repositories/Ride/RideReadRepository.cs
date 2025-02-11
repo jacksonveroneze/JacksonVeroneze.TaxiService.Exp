@@ -15,15 +15,15 @@ namespace TaxiService.Modules.Rides.Infrastructure.Repositories.Ride;
 public class RideReadRepository(
     IEfCoreRepository<RideEntity, RidesDbContext> service) : IRideReadRepository
 {
-    public async Task<bool> ExistsActiveByUserIdAsync(
-        Guid userId,
+    public async Task<bool> ExistsActiveByPassangerIdAsync(
+        Guid passangerId,
         CancellationToken cancellationToken)
     {
-        RideByUserIdSpecification specByUserId = new(userId);
-        RideActivePerUserSpecification specActivePerUserRequested = new();
+        RideByPassangerIdSpecification specByPassangerId = new(passangerId);
+        RideActivePerPassangerSpecification specActivePerPassangerRequested = new();
 
         Expression<Func<RideEntity, bool>> spec =
-            specByUserId.ToExpression().And(specActivePerUserRequested.ToExpression());
+            specByPassangerId.ToExpression().And(specActivePerPassangerRequested.ToExpression());
 
         bool exists = await service.AnyAsync(spec,
             cancellationToken);
@@ -35,9 +35,9 @@ public class RideReadRepository(
         Guid id,
         CancellationToken cancellationToken)
     {
-        RideByIdSpecification specByUserId = new(id);
+        RideByIdSpecification specByPassangerId = new(id);
 
-        return service.GetByIdAsync(specByUserId.ToExpression(),
+        return service.GetByIdAsync(specByPassangerId.ToExpression(),
             cancellationToken);
     }
 
@@ -53,11 +53,11 @@ public class RideReadRepository(
 
         RideByCursorSpecification specByCursor = new(id);
         RideByStatusSpecification specByStatus = new(filter.Status);
-        RideByUserIdSpecification specByUserId = new(filter.UserId);
+        RideByPassangerIdSpecification specByPassangerId = new(filter.PassangerId);
 
         Expression<Func<RideEntity, bool>> spec =
             PredicateExtensions.And(specByCursor.ToExpression(),
-                PredicateExtensions.And(specByStatus.ToExpression(), specByUserId));
+                PredicateExtensions.And(specByStatus.ToExpression(), specByPassangerId));
 
         (RideEntity[] Data, bool HasMore, RideEntity? Last) result =
             await service.GetPagedCursorAsync(

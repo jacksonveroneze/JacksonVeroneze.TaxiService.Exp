@@ -6,7 +6,7 @@ namespace TaxiService.Modules.Rides.Application.v1.Commands.Ride;
 public sealed record RequestCommand
     : IRequest<Result<RequestCommandResponse>>
 {
-    public Guid UserId { get; init; }
+    public Guid PassangerId { get; init; }
 
     public float LatitudeFrom { get; init; }
 

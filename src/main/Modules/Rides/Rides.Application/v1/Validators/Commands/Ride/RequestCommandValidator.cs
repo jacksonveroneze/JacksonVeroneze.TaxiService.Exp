@@ -10,7 +10,7 @@ public class RequestCommandValidator : AbstractValidator<RequestCommand>
         RuleFor(request => request)
             .NotNull();
 
-        RuleFor(request => request.UserId)
+        RuleFor(request => request.PassangerId)
             .SetValidator(new IdGuidValidator());
 
         RuleFor(request => request.LatitudeFrom)

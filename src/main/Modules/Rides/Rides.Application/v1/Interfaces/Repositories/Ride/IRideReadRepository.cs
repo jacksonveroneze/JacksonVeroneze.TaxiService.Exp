@@ -6,8 +6,8 @@ namespace TaxiService.Modules.Rides.Application.v1.Interfaces.Repositories.Ride;
 
 public interface IRideReadRepository
 {
-    public Task<bool> ExistsActiveByUserIdAsync(
-        Guid userId,
+    public Task<bool> ExistsActiveByPassangerIdAsync(
+        Guid passangerId,
         CancellationToken cancellationToken);
 
     public Task<RideEntity?> GetByIdAsync(

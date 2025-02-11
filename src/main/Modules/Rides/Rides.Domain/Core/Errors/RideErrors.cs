@@ -29,8 +29,8 @@ public static class DomainErrors
         public static Error DriverAlready =>
             new("Ride.DriverAlready", "Motorista já informado");
 
-        public static Error AlreadyByUser =>
-            new("Ride.AlreadyByUser", "Usuário já tem corrida ativa");
+        public static Error AlreadyByPassanger =>
+            new("Ride.AlreadyByPassanger", "Passageiro já tem corrida ativa");
 
         public static Error InvalidStatusAddPosition =>
             new("Ride.InvalidStatusAddPosition",

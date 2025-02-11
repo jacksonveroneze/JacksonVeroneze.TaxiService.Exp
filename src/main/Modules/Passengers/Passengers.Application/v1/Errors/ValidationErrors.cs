@@ -10,38 +10,38 @@ internal static class ValidationErrors
     private static readonly CompositeFormat TemplateIsRequired =
         CompositeFormat.Parse("The {0} is required.");
 
-    internal static class User
+    internal static class Passanger
     {
         internal static Error IdIsRequired =>
-            new("User.IdIsRequired",
+            new("Passanger.IdIsRequired",
                 string.Format(null, TemplateIsRequired, "id"));
 
         internal static Error NameIsRequired =>
-            new("User.NameIsRequired",
+            new("Passanger.NameIsRequired",
                 string.Format(null, TemplateIsRequired, "name"));
 
         internal static Error BirthdayIsRequired =>
-            new("User.BirthdayIsRequired",
+            new("Passanger.BirthdayIsRequired",
                 string.Format(null, TemplateIsRequired, "birthday"));
 
         internal static Error GenderIsRequired =>
-            new("User.GenderIsRequired",
+            new("Passanger.GenderIsRequired",
                 string.Format(null, TemplateIsRequired, "gender"));
 
         internal static Error EmailIsRequired =>
-            new("User.EmailIsRequired",
+            new("Passanger.EmailIsRequired",
                 string.Format(null, TemplateIsRequired, "e-mail"));
 
         internal static Error DocumentIsRequired =>
-            new("User.DocumentIsRequired",
+            new("Passanger.DocumentIsRequired",
                 string.Format(null, TemplateIsRequired, "document"));
 
         internal static Error EmailIsInvalid =>
-            new("User.EmailIsInvalid",
+            new("Passanger.EmailIsInvalid",
                 "The e-mail is invalid.");
 
         internal static Error DocumentIsInvalid =>
-            new("User.DocumentIsInvalid",
+            new("Passanger.DocumentIsInvalid",
                 "The document is invalid.");
     }
 }

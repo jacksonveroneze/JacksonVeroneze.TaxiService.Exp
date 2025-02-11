@@ -5,30 +5,30 @@ namespace TaxiService.Modules.Passengers.Domain.Core.Errors;
 
 public static partial class DomainErrors
 {
-    public static class UserError
+    public static class PassangerError
     {
         public static Error NotFound =>
-            new("User.NotFound",
-                string.Format(null, CommonDomainErrors.TemplateNotFound, "user id"));
+            new("Passanger.NotFound",
+                string.Format(null, CommonDomainErrors.TemplateNotFound, "passanger id"));
 
         public static Error InvalidName =>
-            new("User.InvalidName",
+            new("Passanger.InvalidName",
                 string.Format(null, CommonDomainErrors.TemplateDataInvalid, "name"));
 
         public static Error InvalidCpf =>
-            new("User.InvalidCpf",
+            new("Passanger.InvalidCpf",
                 string.Format(null, CommonDomainErrors.TemplateDataInvalid, "cpf"));
 
         public static Error DuplicateEmail =>
-            new("User.DuplicateEmail",
+            new("Passanger.DuplicateEmail",
                 string.Format(null, CommonDomainErrors.TemplateDataInUse, "e-mail"));
 
         public static Error AlreadyActivated =>
-            new("User.AlreadyActivated",
-                "The user has already been activated.");
+            new("Passanger.AlreadyActivated",
+                "The passanger has already been activated.");
 
         public static Error AlreadyInactivated =>
-            new("User.AlreadyInactivated",
-                "The user has already been inactivated.");
+            new("Passanger.AlreadyInactivated",
+                "The passanger has already been inactivated.");
     }
 }

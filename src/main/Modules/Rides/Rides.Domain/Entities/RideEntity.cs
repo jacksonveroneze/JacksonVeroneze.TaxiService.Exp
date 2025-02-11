@@ -10,7 +10,7 @@ public class RideEntity : BaseEntityAggregateRoot
 {
     public Guid Id { get; private set; }
 
-    public Guid? UserId { get; private set; }
+    public Guid? PassangerId { get; private set; }
 
     public Guid? DriverId { get; private set; }
 
@@ -30,7 +30,7 @@ public class RideEntity : BaseEntityAggregateRoot
     {
     }
 
-    private RideEntity(Guid userId,
+    private RideEntity(Guid passangerId,
         CoordinateValueObject coordinateFrom,
         CoordinateValueObject coordinateTo)
     {
@@ -38,7 +38,7 @@ public class RideEntity : BaseEntityAggregateRoot
         ArgumentNullException.ThrowIfNull(coordinateTo);
 
         Id = Guid.NewGuid();
-        UserId = userId;
+        PassangerId = passangerId;
         CoordinateFrom = coordinateFrom;
         CoordinateTo = coordinateTo;
 
@@ -145,7 +145,7 @@ public class RideEntity : BaseEntityAggregateRoot
 
     #region Factory
 
-    public static Result<RideEntity> Create(Guid userId,
+    public static Result<RideEntity> Create(Guid passangerId,
         float latitudeFrom, float longitudeFrom,
         float latitudeTo, float longitudeTo)
     {
@@ -164,7 +164,7 @@ public class RideEntity : BaseEntityAggregateRoot
                 .FromInvalid(resultValidate.Errors!);
         }
 
-        RideEntity entity = new(userId,
+        RideEntity entity = new(passangerId,
             coordinatefrom.Value!, coordinateTo.Value!);
 
         return Result<RideEntity>.WithSuccess(entity);

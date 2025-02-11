@@ -2,7 +2,7 @@ using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Modules.Passengers.Application.v1.Commands.Email;
 using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Email;
-using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.User;
+using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Passanger;
 using TaxiService.Modules.Passengers.Application.v1.Models.Email;
 using TaxiService.Modules.Passengers.Domain.Core.Errors;
 using TaxiService.Modules.Passengers.Domain.Entities;
@@ -12,7 +12,7 @@ namespace TaxiService.Modules.Passengers.Application.v1.Handlers.CommandHandler.
 public sealed class CreateCommandHandler(
     ILogger<CreateCommandHandler> logger,
     IMapper mapper,
-    IUserReadRepository userReadRepository,
+    IPassangerReadRepository passangerReadRepository,
     IEmailReadRepository emailReadRepository,
     IEmailWriteRepository emailWriteRepository)
     : IRequestHandler<CreateCommand, Result<CreateCommandResponse>>
@@ -23,13 +23,13 @@ public sealed class CreateCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<UserEntity> resultUser = await GetUserByIdAsync(
-            request.UserId, cancellationToken);
+        Result<PassangerEntity> resultPassanger = await GetPassangerByIdAsync(
+            request.PassangerId, cancellationToken);
 
-        if (resultUser.IsFailure)
+        if (resultPassanger.IsFailure)
         {
             return Result<CreateCommandResponse>.FromNotFound(
-                resultUser.Error!);
+                resultPassanger.Error!);
         }
 
         Result existsEmail = await ExistsEmailAsync(
@@ -42,7 +42,7 @@ public sealed class CreateCommandHandler(
         }
 
         Result<EmailEntity> entity = FactoryEntity(
-            request, resultUser.Value!);
+            request, resultPassanger.Value!);
 
         if (entity.IsFailure)
         {
@@ -59,10 +59,10 @@ public sealed class CreateCommandHandler(
     }
 
     private Result<EmailEntity> FactoryEntity(
-        CreateCommand request, UserEntity user)
+        CreateCommand request, PassangerEntity passanger)
     {
         Result<EmailEntity> entity = EmailEntity
-            .Create(user.Id, request.Body!.Email);
+            .Create(passanger.Id, request.Body!.Email);
 
         if (!entity.IsFailure)
         {
@@ -77,20 +77,20 @@ public sealed class CreateCommandHandler(
             .FromInvalid(entity.Errors!);
     }
 
-    private async Task<Result<UserEntity>> GetUserByIdAsync(
+    private async Task<Result<PassangerEntity>> GetPassangerByIdAsync(
         Guid id,
         CancellationToken cancellationToken)
     {
-        UserEntity? user = await userReadRepository
+        PassangerEntity? passanger = await passangerReadRepository
             .GetByIdAsync(id, cancellationToken);
 
-        if (user is null)
+        if (passanger is null)
         {
-            return Result<UserEntity>.FromNotFound(
-                DomainErrors.UserError.NotFound);
+            return Result<PassangerEntity>.FromNotFound(
+                DomainErrors.PassangerError.NotFound);
         }
 
-        return Result<UserEntity>.WithSuccess(user);
+        return Result<PassangerEntity>.WithSuccess(passanger);
     }
 
     private async Task<Result> ExistsEmailAsync(
@@ -109,7 +109,7 @@ public sealed class CreateCommandHandler(
 
         logger.LogGenericError(
             nameof(CreateCommandHandler),
-            nameof(Handle), request.UserId, error);
+            nameof(Handle), request.PassangerId, error);
 
         return Result<CreateCommandResponse>
             .FromInvalid(error);
