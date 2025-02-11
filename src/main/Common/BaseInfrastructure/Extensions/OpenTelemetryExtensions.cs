@@ -56,8 +56,7 @@ public static class OpenTelemetryExtensions
             .AddProcessInstrumentation()
             .AddAspNetCoreInstrumentation()
             .AddHttpClientInstrumentation()
-            .AddRuntimeInstrumentation()
-            .AddPrometheusExporter());
+            .AddRuntimeInstrumentation());
 
         return builder;
     }

@@ -5,47 +5,43 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Asp.Versioning.Http" Version="8.1.0"/>
-        <PackageReference Include="CorrelationId" Version="3.0.1"/>
-        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0"/>
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.1"/>
-        <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="9.0.1"/>
-        <PackageReference Include="Serilog.Settings.Configuration" Version="9.0.0"/>
-        <PackageReference Include="SharpGrip.FluentValidation.AutoValidation.Endpoints" Version="1.5.0"/>
+        <PackageReference Include="Asp.Versioning.Http"/>
+        <PackageReference Include="CorrelationId"/>
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions"/>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis"/>
+        <PackageReference Include="Serilog.Settings.Configuration"/>
+        <PackageReference Include="SharpGrip.FluentValidation.AutoValidation.Endpoints"/>
 
-        <PackageReference Include="RabbitMQ.Client" Version="7.0.0"/>
-        <PackageReference Include="Serilog.Sinks.Seq" Version="9.0.0"/>
-        <PackageReference Include="Ben.BlockingDetector" Version="0.0.4"/>
-        <PackageReference Include="RedLock.net" Version="2.3.2"/>
+        <PackageReference Include="RabbitMQ.Client"/>
+        <PackageReference Include="Serilog.Sinks.Seq"/>
+        <PackageReference Include="Ben.BlockingDetector"/>
+        <PackageReference Include="RedLock.net"/>
 
-        <PackageReference Include="prometheus-net.AspNetCore" Version="8.2.1"/>
-        <PackageReference Include="prometheus-net.DotNetRuntime" Version="4.4.1"/>
+        <PackageReference Include="prometheus-net.AspNetCore"/>
+        <PackageReference Include="prometheus-net.DotNetRuntime"/>
 
-        <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.11.1"/>
-        <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.11.0"/>
-        <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.11.0"/>
-        <PackageReference Include="OpenTelemetry.Instrumentation.Runtime" Version="1.11.0"/>
-        <PackageReference Include="OpenTelemetry.Instrumentation.Process" Version="0.5.0-beta.3"/>
-        <PackageReference Include="OpenTelemetry.Instrumentation.EntityFrameworkCore" Version="1.0.0-beta.8"/>
-        <PackageReference Include="OpenTelemetry.Instrumentation.StackExchangeRedis" Version="1.0.0-rc9.12"/>
-        <PackageReference Include="OpenTelemetry.Exporter.Jaeger" Version="1.5.1"/>
-        <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.11.1"/>
-        <PackageReference Include="OpenTelemetry.Exporter.Prometheus.AspNetCore" Version="1.7.0-rc.1"/>
+        <PackageReference Include="OpenTelemetry.Extensions.Hosting"/>
+        <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore"/>
+        <PackageReference Include="OpenTelemetry.Instrumentation.Http"/>
+        <PackageReference Include="OpenTelemetry.Instrumentation.Runtime"/>
+        <PackageReference Include="OpenTelemetry.Instrumentation.Process"/>
+        <PackageReference Include="OpenTelemetry.Instrumentation.EntityFrameworkCore"/>
+        <PackageReference Include="OpenTelemetry.Instrumentation.StackExchangeRedis"/>
+        <PackageReference Include="OpenTelemetry.Exporter.Jaeger"/>
+        <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol"/>
 
-        <PackageReference Include="JacksonVeroneze.NET.DistributedCache" Version="1.0.15"/>
-        <PackageReference Include="JacksonVeroneze.NET.Logging" Version="1.0.5"/>
-        <PackageReference Include="JacksonVeroneze.NET.Swagger" Version="1.0.1"/>
-        <PackageReference Include="Serilog.Sinks.Splunk" Version="5.1.0"/>
-        <PackageReference Include="System.Text.Encodings.Web" Version="9.0.1"/>
+        <PackageReference Include="JacksonVeroneze.NET.DistributedCache"/>
+        <PackageReference Include="JacksonVeroneze.NET.Logging"/>
+        <PackageReference Include="System.Text.Encodings.Web"/>
 
-        <PackageReference Include="JacksonVeroneze.NET.EntityFramework" Version="1.4.0"/>
+        <PackageReference Include="JacksonVeroneze.NET.EntityFramework"/>
         <PackageReference Include="Microsoft.Extensions.Http.Polly"/>
         <PackageReference Include="Microsoft.Extensions.Http.Resilience"/>
         <PackageReference Include="JacksonVeroneze.NET.HttpClient"/>
 
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="9.0.1"/>
-        <PackageReference Include="EFCore.NamingConventions" Version="9.0.0"/>
-        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.3"/>
+        <PackageReference Include="EFCore.NamingConventions"/>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL"/>
     </ItemGroup>
 
     <ItemGroup>

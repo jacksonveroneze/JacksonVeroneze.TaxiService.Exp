@@ -8,7 +8,6 @@
     <PackageReference Include="AutoMapper"/>
     <PackageReference Include="FluentValidation"/>
     <PackageReference Include="MediatR"/>
-    <PackageReference Include="JacksonVeroneze.NET.Result"/>
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions"/>
   </ItemGroup>
 
@@ -21,9 +20,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\BaseApplication\BaseApplication.csproj"/>
-    <ProjectReference Include="..\Payments.Domain\Payments.Domain.csproj" />
-    
-    <ProjectReference Include="..\..\Passengers\Passengers.PublicApi\Passengers.PublicApi.csproj" />
+    <ProjectReference Include="..\Payments.Domain\Payments.Domain.csproj"/>
+
+    <ProjectReference Include="..\..\Passengers\Passengers.PublicApi\Passengers.PublicApi.csproj"/>
   </ItemGroup>
 
 
