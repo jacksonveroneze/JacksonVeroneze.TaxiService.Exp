@@ -1,8 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.Driver;
 using TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.Email;
+using TaxiService.Modules.Drivers.Infrastructure.Repositories.Driver;
 using TaxiService.Modules.Drivers.Infrastructure.Repositories.Email;
-using TaxiService.Modules.Drivers.Infrastructure.Repositories.User;
 
 namespace TaxiService.Modules.Drivers.Infrastructure.Extensions;
 

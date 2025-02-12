@@ -2,7 +2,7 @@ namespace TaxiService.Api.Extensions;
 
 internal static class ModuleConfigurationsExtensions
 {
-    internal static void AddModuleConfiguration(
+    internal static IConfigurationBuilder AddModuleConfiguration(
         this IConfigurationBuilder configurationBuilder,
         string[] modules)
     {
@@ -14,5 +14,7 @@ internal static class ModuleConfigurationsExtensions
             configurationBuilder.AddJsonFile(
                 $"appsettings.{module}.Production.json", false, true);
         }
+
+        return configurationBuilder;
     }
 }

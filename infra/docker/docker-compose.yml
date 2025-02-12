@@ -26,16 +26,18 @@ services:
     deploy:
       resources:
         reservations:
-          cpus: '1'
-          memory: '512M'
+          cpus: '2'
+          memory: '1024M'
         limits:
-          cpus: '1'
-          memory: '512M'
+          cpus: '2'
+          memory: '1024M'
   
   bouncer:
     image: bitnami/pgbouncer:latest
     restart: always
     tty: true
+    env_file:
+      - .env
     logging:
       driver: "json-file"
       options:

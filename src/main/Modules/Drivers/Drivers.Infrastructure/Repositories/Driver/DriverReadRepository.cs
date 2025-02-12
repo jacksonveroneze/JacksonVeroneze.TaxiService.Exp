@@ -4,7 +4,7 @@ using TaxiService.Modules.Drivers.Domain.Entities;
 using TaxiService.Modules.Drivers.Domain.Specifications.Driver;
 using TaxiService.Modules.Drivers.Infrastructure.Contexts;
 
-namespace TaxiService.Modules.Drivers.Infrastructure.Repositories.User;
+namespace TaxiService.Modules.Drivers.Infrastructure.Repositories.Driver;
 
 [ExcludeFromCodeCoverage]
 public class DriverReadRepository(

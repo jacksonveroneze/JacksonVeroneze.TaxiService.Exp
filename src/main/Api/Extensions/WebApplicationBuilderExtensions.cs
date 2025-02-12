@@ -22,8 +22,8 @@ internal static class WebApplicationBuilderExtensions
             options.ShutdownTimeout = TimeSpan.FromSeconds(2));
 
         builder.Configuration
-            .AddEnvironmentVariables("APP_CONFIG_")
-            .AddModuleConfiguration(Modules);
+            .AddModuleConfiguration(Modules)
+            .AddEnvironmentVariables("APP_CONFIG_");
 
         AppConfiguration appConfiguration =
             builder.Services.AddAppConfigs(builder.Configuration);

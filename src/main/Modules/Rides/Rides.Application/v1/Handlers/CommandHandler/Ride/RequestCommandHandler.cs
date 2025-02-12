@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
+using TaxiService.Modules.Passengers.Application.v1.Models.Passanger;
+using TaxiService.Modules.Passengers.Domain.Enums;
 using TaxiService.Modules.Passengers.PublicApi.Interfaces;
 using TaxiService.Modules.Rides.Application.v1.Commands.Ride;
 using TaxiService.Modules.Rides.Application.v1.Interfaces.Repositories.Ride;
@@ -29,10 +31,11 @@ public sealed class RequestCommandHandler(
 
         ArgumentNullException.ThrowIfNull(request);
 
-        Task<Result> existsRideByPassangerTask = ExistsActiveRideByPassangerIdAsync(
-            request.PassangerId, cancellationToken);
+        Task<Result> existsRideByPassangerTask =
+            ExistsActiveRideByPassangerIdAsync(
+                request.PassangerId, cancellationToken);
 
-        Result<bool> resultPassanger = await GetPassangerByIdAsync(
+        Result<bool> resultPassanger = await ValidatePassangerByIdAsync(
             request.PassangerId, cancellationToken);
 
         if (resultPassanger.IsFailure)
@@ -89,16 +92,28 @@ public sealed class RequestCommandHandler(
             .FromInvalid(entity.Errors!);
     }
 
-    private async Task<Result<bool>> GetPassangerByIdAsync(
+    private async Task<Result<bool>> ValidatePassangerByIdAsync(
         Guid id,
         CancellationToken cancellationToken)
     {
         using Activity? activity = ActivitySource.StartActivity();
 
-        Result<bool> entity = await passangerService
-            .ExistsByIdAsync(id, cancellationToken);
+        Result<PassangerResponse> entity = await passangerService
+            .GetByIdAsync(id, cancellationToken);
 
-        return entity;
+        if (!entity.IsSuccess)
+        {
+            return Result<bool>
+                .WithError(entity.Error!);
+        }
+
+        if (entity.Value!.Status != PassangerStatus.Active)
+        {
+            return Result<bool>
+                .WithError(entity.Error!);
+        }
+
+        return Result<bool>.WithSuccess();
     }
 
     private async Task<Result> ExistsActiveRideByPassangerIdAsync(

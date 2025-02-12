@@ -81,12 +81,7 @@ public static class OpenTelemetryExtensions
                 })
                 .AddHttpClientInstrumentation()
                 .AddRedisInstrumentation()
-                .AddSource("TaxiService")
-                .AddJaegerExporter(options =>
-                {
-                    options.AgentHost = configuration.Host;
-                    options.AgentPort = configuration.Port!.Value;
-                });
+                .AddSource("TaxiService");
 
             conf.AddOtlpExporter(config => config.Endpoint =
                 new Uri($"http://{configuration.Host}:{configuration.Port}"));
