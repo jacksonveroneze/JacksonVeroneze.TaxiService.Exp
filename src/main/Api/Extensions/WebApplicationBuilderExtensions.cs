@@ -30,6 +30,8 @@ internal static class WebApplicationBuilderExtensions
 
         builder.AddLogger(appConfiguration);
 
+        MetricsExtensions.AddMetrics();
+        
         builder.ConfigureDefaultServices(appConfiguration);
         builder.ConfigureInfraCommonModule();
 

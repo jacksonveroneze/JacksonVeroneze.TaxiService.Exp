@@ -18,6 +18,7 @@ internal static class ServicesExtensions
         // Repositories
         services.AddScoped<IRideReadRepository, RideReadRepository>();
         services.AddScoped<IRideWriteRepository, RideWriteRepository>();
+        services.AddScoped<IRideDistributedLockRepository, RideDistributedLockRepository>();
 
         #endregion
 

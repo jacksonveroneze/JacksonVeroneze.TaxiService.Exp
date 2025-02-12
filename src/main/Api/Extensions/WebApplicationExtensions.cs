@@ -33,6 +33,7 @@ internal static class WebApplicationExtensions
         app.UseHttpMetrics();
 
         app.UseHealthChecks("/health");
+        app.UseMetricServer();
 
         app.AddDriverEndpoints();
         app.AddPositionEndpoints();

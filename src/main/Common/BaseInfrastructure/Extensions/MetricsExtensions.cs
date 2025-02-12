@@ -6,8 +6,7 @@ namespace TaxiService.Common.BaseInfrastructure.Extensions;
 [ExcludeFromCodeCoverage]
 public static class MetricsExtensions
 {
-    public static IDisposable? AddMetrics(
-        AppConfiguration? appConfiguration)
+    public static IDisposable? AddMetrics()
     {
         return DotNetRuntimeStatsBuilder
             .Customize()

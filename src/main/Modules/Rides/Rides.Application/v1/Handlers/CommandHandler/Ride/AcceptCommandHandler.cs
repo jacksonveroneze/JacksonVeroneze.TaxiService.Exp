@@ -15,20 +15,9 @@ public sealed class AcceptCommandHandler(
     IDriverService driverService,
     IRideReadRepository rideReadRepository,
     IRideWriteRepository rideWriteRepository,
-    IDistributedLockFactory distributedLockFactory)
+    IRideDistributedLockRepository distributedLockRepository)
     : IRequestHandler<AcceptCommand, Result>
 {
-    private const string PrefixLockKey = "_lock_ride_action_accept_";
-
-    // Lock expira após 5 segundos
-    private readonly TimeSpan _expiryTime = TimeSpan.FromSeconds(10);
-
-    // Tempo máximo de espera para adquirir o lock
-    private readonly TimeSpan _waitTime = TimeSpan.FromSeconds(5);
-
-    // Intervalo de 2 segundos entre tentativas
-    private readonly TimeSpan _retryDelay = TimeSpan.FromSeconds(1);
-
     private static readonly ActivitySource ActivitySource =
         new("TaxiService");
 
@@ -41,9 +30,10 @@ public sealed class AcceptCommandHandler(
         ArgumentNullException.ThrowIfNull(request);
 
         await using IRedLock? distributedLock =
-            await AcquireLockAsync(request.Id);
+            await distributedLockRepository.AcquireLockAsync(
+                request.Id, cancellationToken);
 
-        if (distributedLock is null)
+        if (distributedLock?.IsAcquired is not true)
         {
             return Result.WithError(
                 new Error("Lock", "Lock não adquirido"));
@@ -78,18 +68,6 @@ public sealed class AcceptCommandHandler(
         await UpdateAsync(resultEntity.Value!, cancellationToken);
 
         return Result.WithSuccess();
-    }
-
-    private async Task<IRedLock?> AcquireLockAsync(Guid rideId)
-    {
-        using Activity? activity = ActivitySource.StartActivity();
-
-        string lockKey = $"{PrefixLockKey}{rideId}";
-
-        IRedLock? distributedLock = await distributedLockFactory
-            .CreateLockAsync(lockKey, _expiryTime, _waitTime, _retryDelay);
-
-        return distributedLock.IsAcquired ? distributedLock : null;
     }
 
     private async Task<Result<RideEntity>> GetRideByIdAsync(
