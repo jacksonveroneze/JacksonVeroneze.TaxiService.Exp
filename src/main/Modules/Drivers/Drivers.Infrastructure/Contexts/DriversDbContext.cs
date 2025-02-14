@@ -17,8 +17,9 @@ public class DriversDbContext(
         modelBuilder.ApplyConfigurationsFromAssembly(
             typeof(DriversDbContext).Assembly);
 
-        modelBuilder.ApplySoftDeleteQueryFilter<EmailEntity>();
+        modelBuilder.ApplySoftDeleteQueryFilter<DriverAvailabilityEntity>();
         modelBuilder.ApplySoftDeleteQueryFilter<DriverEntity>();
+        modelBuilder.ApplySoftDeleteQueryFilter<VehicleEntity>();
 
         modelBuilder.IgnoreClass();
 

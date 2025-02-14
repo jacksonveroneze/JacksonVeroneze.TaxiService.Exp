@@ -26,7 +26,7 @@ public class DriverMapping : IEntityTypeConfiguration<DriverEntity>
 
         builder.ComplexProperty(conf => conf.Name, conf =>
         {
-            conf.Property(prop => prop!.Value)
+            conf.Property(prop => prop.Value)
                 .HasColumnName("name")
                 .HasMaxLength(100)
                 .IsRequired();
@@ -40,7 +40,7 @@ public class DriverMapping : IEntityTypeConfiguration<DriverEntity>
 
         builder.ComplexProperty(conf => conf.Cpf, conf =>
         {
-            conf.Property(prop => prop!.Value)
+            conf.Property(prop => prop.Value)
                 .HasMaxLength(11)
                 .HasColumnName("cpf")
                 .IsRequired();

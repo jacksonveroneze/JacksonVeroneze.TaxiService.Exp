@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Text.Json;
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
+using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Passengers.Application.v1.Commands.Passanger;
 using TaxiService.Modules.Passengers.Application.v1.Interfaces;
 using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Email;
@@ -15,7 +16,7 @@ namespace TaxiService.Modules.Passengers.Application.v1.Handlers.CommandHandler.
 
 public sealed class CreateCommandHandler(
     ILogger<CreateCommandHandler> logger,
-    IMapper mapper,
+    IDataMapper mapper,
     IPassangerWriteRepository passangerWriteRepository,
     IEmailReadRepository emailReadRepository,
     IEmailWriteRepository emailWriteRepository,
@@ -30,7 +31,8 @@ public sealed class CreateCommandHandler(
         CreateCommand request,
         CancellationToken cancellationToken)
     {
-        using Activity? activity = ActivitySource.StartActivity();
+        using var activity = OpenTelemetryExtensions
+            .ActivitySource.StartActivity()!;
 
         ArgumentNullException.ThrowIfNull(request);
 
@@ -90,28 +92,6 @@ public sealed class CreateCommandHandler(
 
         return Result.FromInvalid(error);
     }
-    
-    private async Task<bool> ExistEmail2Async(
-        string email,
-        CancellationToken cancellationToken)
-    {
-        using Activity? activity = ActivitySource.StartActivity();
-
-        bool existsEmail = await emailReadRepository
-            .ExistsAsync(email, cancellationToken);
-
-        if (!existsEmail)
-        {
-            return true;
-        }
-
-        Error error = DomainErrors.PassangerError.DuplicateEmail;
-
-        logger.LogAlreadyExists(nameof(CreateCommandHandler),
-            nameof(ExistEmailAsync), email, error);
-
-        return false;
-    }
 
     private Result<PassangerEntity> FactoryEntity(
         CreateCommand request)
@@ -161,11 +141,7 @@ public sealed class CreateCommandHandler(
     {
         using Activity? activity = ActivitySource.StartActivity();
 
-        var content = new
-        {
-            PassangerId = passanger.Id,
-            Email = email.Email.Value
-        };
+        var content = new { PassangerId = passanger.Id, Email = email.Email.Value };
 
         string jsonContent = JsonSerializer.Serialize(content);
 
@@ -210,5 +186,19 @@ public sealed class CreateCommandHandler(
 
             throw;
         }
+    }
+}
+
+public static class OpenTelemetryExtensions
+{
+    public static string ServiceName { get; }
+    public static string ServiceVersion { get; }
+    public static ActivitySource ActivitySource { get; }
+
+    static OpenTelemetryExtensions()
+    {
+        ServiceName = "APIContagemPostgreSQL";
+        ServiceVersion = typeof(OpenTelemetryExtensions).Assembly.GetName().Version!.ToString();
+        ActivitySource = new ActivitySource(ServiceName, ServiceVersion);
     }
 }

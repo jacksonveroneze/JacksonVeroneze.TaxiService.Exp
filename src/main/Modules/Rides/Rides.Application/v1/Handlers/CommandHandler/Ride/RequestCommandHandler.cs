@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
+using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Passengers.Application.v1.Models.Passanger;
 using TaxiService.Modules.Passengers.Domain.Enums;
 using TaxiService.Modules.Passengers.PublicApi.Interfaces;
@@ -14,7 +15,7 @@ namespace TaxiService.Modules.Rides.Application.v1.Handlers.CommandHandler.Ride;
 
 public sealed class RequestCommandHandler(
     ILogger<RequestCommandHandler> logger,
-    IMapper mapper,
+    IDataMapper mapper,
     IPassangerService passangerService,
     IRideReadRepository rideReadRepository,
     IRideWriteRepository rideWriteRepository)

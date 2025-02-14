@@ -6,20 +6,19 @@ using TaxiService.Modules.Drivers.Domain.Entities;
 namespace TaxiService.Modules.Drivers.Infrastructure.Mappings;
 
 [ExcludeFromCodeCoverage]
-public class EmailMapping : IEntityTypeConfiguration<EmailEntity>
+public class VehicleEntityMapping : IEntityTypeConfiguration<VehicleEntity>
 {
-    public void Configure(EntityTypeBuilder<EmailEntity> builder)
+    public void Configure(EntityTypeBuilder<VehicleEntity> builder)
     {
         ArgumentNullException.ThrowIfNull(builder);
 
-        builder.ToTable("email");
+        builder.ToTable("vehicle");
 
         // Keys
         builder.HasKey(c => c.Id);
 
         // Indexes
         builder.HasIndex(c => c.DriverId);
-        // builder.HasIndex(c => c.Email);
 
         // Properties
         builder.Property(c => c.Id)
@@ -28,12 +27,20 @@ public class EmailMapping : IEntityTypeConfiguration<EmailEntity>
         builder.Property(c => c.DriverId)
             .IsRequired();
 
-        builder.ComplexProperty(conf => conf.Email, conf =>
-        {
-            conf.Property(prop => prop.Value)
-                .HasColumnName("value")
-                .HasMaxLength(100);
-        });
+        builder.Property(c => c.Model)
+            .IsRequired();
+
+        builder.Property(c => c.Brand)
+            .IsRequired();
+
+        builder.Property(c => c.Plate)
+            .IsRequired();
+
+        builder.Property(c => c.Color)
+            .IsRequired();
+
+        builder.Property(c => c.Year)
+            .IsRequired();
 
         builder.ConfigureDefaultFieldsMapping();
     }

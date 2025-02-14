@@ -37,6 +37,13 @@ public static class CommonDomainErrors
                 string.Format(null, TemplateDataInvalid, "name"));
     }
     
+    public static class PhoneError
+    {
+        public static Error InvalidPhone =>
+            new("Phone.InvalidPhone",
+                string.Format(null, TemplateDataInvalid, "phone"));
+    }
+    
     public static class EmailError
     {
         public static Error InvalidEmail =>

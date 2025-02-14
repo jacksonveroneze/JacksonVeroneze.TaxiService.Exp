@@ -4,6 +4,10 @@ namespace TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.Dri
 
 public interface IDriverReadRepository
 {
+    public Task<bool> ExistsByAsync(
+        string email,
+        CancellationToken cancellationToken);
+    
     public Task<DriverEntity?> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken);

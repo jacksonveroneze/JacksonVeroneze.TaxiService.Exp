@@ -1,4 +1,3 @@
-using JacksonVeroneze.NET.DomainObjects.Domain;
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseDomain.Entities.Base;
 using TaxiService.Common.BaseDomain.Enums;
@@ -8,17 +7,22 @@ using TaxiService.Modules.Drivers.Domain.Enums;
 
 namespace TaxiService.Modules.Drivers.Domain.Entities;
 
-public class DriverEntity : BaseEntityAggregateRoot, IAggregateRoot
+public class DriverEntity : BaseEntityAggregateRoot
 {
     public Guid Id { get; private set; }
 
     public NameValueObject Name { get; private set; } = null!;
 
+
     public DateOnly Birthday { get; private set; }
+
+    public PhoneValueObject Phone { get; private set; } = null!;
+
+    public CpfValueObject Cpf { get; private set; } = null!;
 
     public Gender Gender { get; private set; }
 
-    public CpfValueObject Cpf { get; private set; } = null!;
+    public EmailValueObject Email { get; private set; } = null!; 
 
     public DriverStatus Status { get; private set; }
 
@@ -33,17 +37,20 @@ public class DriverEntity : BaseEntityAggregateRoot, IAggregateRoot
     }
 
     private DriverEntity(NameValueObject name,
-        DateOnly birthday, Gender gender,
-        CpfValueObject cpf)
+        DateOnly birthday, PhoneValueObject phone,
+        CpfValueObject cpf,
+        Gender gender,
+        EmailValueObject email)
     {
         ArgumentNullException.ThrowIfNull(name);
         ArgumentNullException.ThrowIfNull(cpf);
 
-        Id = Guid.NewGuid();
         Name = name;
         Birthday = birthday;
-        Gender = gender;
+        Phone = phone;
         Cpf = cpf;
+        Gender = gender;
+        Email = email;
 
         Status = DriverStatus.PendingActivation;
     }
@@ -91,13 +98,18 @@ public class DriverEntity : BaseEntityAggregateRoot, IAggregateRoot
     #region Factory
 
     // Factory Method
-    public static Result<DriverEntity> Create(string? name,
-        DateOnly birthday, Gender gender, string? cpf)
+    public static Result<DriverEntity> Create(
+        string? name, DateOnly birthday,
+        string phone, string? cpf,
+        Gender gender, string email)
     {
         Result<NameValueObject> nameVo = NameValueObject.Create(name);
+        Result<PhoneValueObject> phoneVo = PhoneValueObject.Create(phone);
         Result<CpfValueObject> cpfVo = CpfValueObject.Create(cpf);
+        Result<EmailValueObject> emailVo = EmailValueObject.Create(email);
 
-        Result resultValidate = Result.FailuresOrSuccess(nameVo, cpfVo);
+        Result resultValidate = Result.FailuresOrSuccess(
+            nameVo, phoneVo, cpfVo, emailVo);
 
         if (resultValidate.IsFailure)
         {
@@ -105,8 +117,9 @@ public class DriverEntity : BaseEntityAggregateRoot, IAggregateRoot
                 .FromInvalid(resultValidate.Errors!);
         }
 
-        DriverEntity entity = new(nameVo.Value!, birthday,
-            gender, cpfVo.Value!);
+        DriverEntity entity = new(nameVo.Value!,
+            birthday, phoneVo.Value!, cpfVo.Value!,
+            gender, emailVo.Value!);
 
         return Result<DriverEntity>.WithSuccess(entity);
     }

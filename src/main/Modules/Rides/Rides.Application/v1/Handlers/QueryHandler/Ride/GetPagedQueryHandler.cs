@@ -1,6 +1,7 @@
 using JacksonVeroneze.NET.Pagination.Cursor;
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
+using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Rides.Application.v1.Interfaces.Repositories.Ride;
 using TaxiService.Modules.Rides.Application.v1.Models.Ride;
 using TaxiService.Modules.Rides.Application.v1.Queries.Ride;
@@ -11,7 +12,7 @@ namespace TaxiService.Modules.Rides.Application.v1.Handlers.QueryHandler.Ride;
 
 public sealed class GetPagedQueryHandler(
     ILogger<GetPagedQueryHandler> logger,
-    IMapper mapper,
+    IDataMapper mapper,
     IRideReadRepository rideReadRepository)
     : IRequestHandler<GetPagedQuery, Result<GetPagedQueryResponse>>
 {

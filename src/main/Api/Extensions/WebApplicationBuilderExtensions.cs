@@ -22,12 +22,17 @@ internal static class WebApplicationBuilderExtensions
             options.ShutdownTimeout = TimeSpan.FromSeconds(2));
 
         builder.Configuration
-            .AddModuleConfiguration(Modules)
+            .AddModuleConfiguration(builder.Environment, Modules)
             .AddEnvironmentVariables("APP_CONFIG_");
 
-        AppConfiguration appConfiguration =
-            builder.Services.AddAppConfigs(builder.Configuration);
-
+        builder.Services.AddAppConfigs(builder.Configuration);
+        
+        ServiceProvider serviceProvider = builder.Services
+            .BuildServiceProvider();
+            
+        AppConfiguration appConfiguration = serviceProvider
+            .GetRequiredService<AppConfiguration>();
+        
         builder.AddLogger(appConfiguration);
 
         MetricsExtensions.AddMetrics();

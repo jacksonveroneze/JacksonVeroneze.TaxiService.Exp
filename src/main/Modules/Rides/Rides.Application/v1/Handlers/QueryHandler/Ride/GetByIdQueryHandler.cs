@@ -1,5 +1,6 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
+using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Rides.Application.v1.Interfaces.Repositories.Ride;
 using TaxiService.Modules.Rides.Application.v1.Models.Ride;
 using TaxiService.Modules.Rides.Application.v1.Queries.Ride;
@@ -10,7 +11,7 @@ namespace TaxiService.Modules.Rides.Application.v1.Handlers.QueryHandler.Ride;
 
 public sealed class GetByIdQueryHandler(
     ILogger<GetByIdQueryHandler> logger,
-    IMapper mapper,
+    IDataMapper mapper,
     IRideReadRepository rideReadRepository)
     : IRequestHandler<GetByIdQuery, Result<GetByIdQueryResponse>>
 {

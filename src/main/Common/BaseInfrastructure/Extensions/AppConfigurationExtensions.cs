@@ -7,7 +7,7 @@ namespace TaxiService.Common.BaseInfrastructure.Extensions;
 [ExcludeFromCodeCoverage]
 public static class AppConfigurationExtensions
 {
-    public static AppConfiguration AddAppConfigs(
+    public static IServiceCollection AddAppConfigs(
         this IServiceCollection services,
         IConfiguration configuration)
     {
@@ -15,10 +15,6 @@ public static class AppConfigurationExtensions
 
         services.AddConfiguration<AppConfiguration>(configuration);
 
-        using ServiceProvider provider =
-            services.BuildServiceProvider();
-
-        return provider
-            .GetRequiredService<AppConfiguration>();
+        return services;
     }
 }

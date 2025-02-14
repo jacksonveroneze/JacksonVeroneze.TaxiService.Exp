@@ -1,5 +1,6 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
+using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Email;
 using TaxiService.Modules.Passengers.Application.v1.Models.Email;
 using TaxiService.Modules.Passengers.Application.v1.Queries.Passanger.Email;
@@ -10,7 +11,7 @@ namespace TaxiService.Modules.Passengers.Application.v1.Handlers.QueryHandler.Em
 
 public sealed class GetPagedQueryHandler(
     ILogger<GetPagedQueryHandler> logger,
-    IMapper mapper,
+    IDataMapper mapper,
     IEmailReadRepository emailReadRepository)
     : IRequestHandler<GetPagedQuery, Result<GetPagedQueryResponse>>
 {

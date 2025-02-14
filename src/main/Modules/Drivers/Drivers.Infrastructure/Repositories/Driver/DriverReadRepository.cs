@@ -8,14 +8,24 @@ namespace TaxiService.Modules.Drivers.Infrastructure.Repositories.Driver;
 
 [ExcludeFromCodeCoverage]
 public class DriverReadRepository(
-    IEfCoreRepository<DriverEntity, DriversDbContext> service) : IDriverReadRepository
+    IEfCoreRepository<DriverEntity, DriversDbContext> service)
+    : IDriverReadRepository
 {
+    public Task<bool> ExistsByAsync(
+        string email,
+        CancellationToken cancellationToken)
+    {
+        return service.AnyAsync(conf => conf.Email == email,
+            cancellationToken);
+    }
+
     public Task<DriverEntity?> GetByIdAsync(
         Guid id, CancellationToken cancellationToken)
     {
         DriverByIdSpecification specByDriverId = new(id);
 
-        return service.GetByIdAsync(specByDriverId.ToExpression(),
+        return service.GetByIdAsync(specByDriverId
+                .ToExpression(),
             cancellationToken);
     }
 }
