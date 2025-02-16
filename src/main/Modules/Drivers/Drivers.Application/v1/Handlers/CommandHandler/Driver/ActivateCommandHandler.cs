@@ -53,7 +53,7 @@ public sealed class ActivateCommandHandler(
             return Result<DriverEntity>.WithSuccess(entity);
         }
 
-        Error error = DomainErrors.DriverError.NotFound;
+        Error error = DomainErrors.DriverErrors.NotFound;
 
         logger.LogNotFound(
             nameof(ActivateCommandHandler),

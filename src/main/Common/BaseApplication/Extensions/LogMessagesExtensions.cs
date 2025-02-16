@@ -1,3 +1,5 @@
+using JacksonVeroneze.NET.Result;
+
 namespace TaxiService.Common.BaseApplication.Extensions;
 
 public static partial class LogMessagesExtensions
@@ -25,6 +27,17 @@ public static partial class LogMessagesExtensions
                   "Identifier: '{identifier}' - Message: '{message}'")]
     public static partial void LogGenericError(this ILogger logger,
         string className, string methodName, Guid identifier, string message);
+
+    #endregion
+
+    #region CommonValidation
+
+    [LoggerMessage(
+        EventId = 1002,
+        Level = LogLevel.Warning,
+        Message = "{className} - {methodName} - Error: '{error}'")]
+    public static partial void LogGenericValidationError(this ILogger logger,
+        string className, string methodName, Error error);
 
     #endregion
 

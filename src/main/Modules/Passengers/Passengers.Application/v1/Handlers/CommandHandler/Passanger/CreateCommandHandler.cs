@@ -176,7 +176,7 @@ public sealed class CreateCommandHandler(
                 cancellationToken);
 
             logger.LogCreated(nameof(CreateCommandHandler),
-                nameof(CreateAsync), passangerEntity!.Id);
+                nameof(CreateAsync), passangerEntity.Id);
         }
         catch (Exception ex)
         {

@@ -70,7 +70,7 @@ public sealed class CreateCommandHandler(
             return Result.WithSuccess();
         }
 
-        Error error = DomainErrors.DriverError.DuplicateEmail;
+        Error error = DomainErrors.DriverErrors.DuplicateEmail;
 
         logger.LogAlreadyExists(nameof(CreateCommandHandler),
             nameof(ExistEmailAsync), email, error);
@@ -117,7 +117,7 @@ public sealed class CreateCommandHandler(
                 cancellationToken);
 
             logger.LogCreated(nameof(CreateCommandHandler),
-                nameof(CreateAsync), driverEntity!.Id);
+                nameof(CreateAsync), driverEntity.Id);
         }
         catch (Exception ex)
         {

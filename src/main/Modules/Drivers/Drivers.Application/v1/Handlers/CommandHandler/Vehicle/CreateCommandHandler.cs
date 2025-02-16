@@ -4,16 +4,19 @@ using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Drivers.Application.v1.Commands.Vehicle;
 using TaxiService.Modules.Drivers.Application.v1.Interfaces;
+using TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.Driver;
 using TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.Vehicle;
 using TaxiService.Modules.Drivers.Application.v1.Models.Vehicle;
 using TaxiService.Modules.Drivers.Domain.Core.Errors;
 using TaxiService.Modules.Drivers.Domain.Entities;
+using TaxiService.Modules.Drivers.Domain.Enums;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Handlers.CommandHandler.Vehicle;
 
 public sealed class CreateCommandHandler(
     ILogger<CreateCommandHandler> logger,
     IDataMapper mapper,
+    IDriverReadRepository driverReadRepository,
     IVehicleReadRepository vehicleReadRepository,
     IVehicleWriteRepository vehicleWriteRepository,
     IUnitOfWork unitOfWork)
@@ -30,33 +33,54 @@ public sealed class CreateCommandHandler(
 
         ArgumentNullException.ThrowIfNull(request);
 
-        Result resultVerifyEmail = await ExistVehicleAsync(
-            request.Plate!, cancellationToken);
+        Result validationResult = await ValidateRequestAsync(
+            request, cancellationToken);
 
-        if (resultVerifyEmail.IsFailure)
+        if (validationResult.IsFailure)
         {
             return Result<CreateCommandResponse>
-                .WithError(resultVerifyEmail.Error!);
+                .WithError(validationResult.Errors!);
         }
 
-        Result<VehicleEntity> userEntity = FactoryEntity(request);
+        Result<VehicleEntity> vehicleEntity = FactoryEntity(request);
 
-        if (userEntity.IsFailure)
+        if (vehicleEntity.IsFailure)
         {
             return Result<CreateCommandResponse>
-                .FromInvalid(userEntity.Errors!);
+                .FromInvalid(vehicleEntity.Errors!);
         }
 
-        await CreateAsync(userEntity.Value!,
+        await CreateAsync(vehicleEntity.Value!,
             cancellationToken);
 
         CreateCommandResponse response =
-            mapper.Map<CreateCommandResponse>(userEntity.Value);
+            mapper.Map<CreateCommandResponse>(vehicleEntity.Value);
 
         return Result<CreateCommandResponse>.WithSuccess(response);
     }
 
-    private async Task<Result> ExistVehicleAsync(
+    private async Task<Result> ValidateRequestAsync(
+        CreateCommand request,
+        CancellationToken cancellationToken)
+    {
+        using Activity? activity = ActivitySource.StartActivity();
+
+        Result plateResult = await ValidateVehiclePlateAsync(
+            request.Plate!, cancellationToken);
+
+        Result driverResult = await ValidateDriverVehicleAsync(
+            request.DriverId, cancellationToken);
+
+        Result driverVehicleResult = await ValidateDriverAsync(
+            request.DriverId, cancellationToken);
+
+        return Result.FailuresOrSuccess(
+            plateResult,
+            driverResult,
+            driverVehicleResult);
+    }
+
+    private async Task<Result> ValidateVehiclePlateAsync(
         string email,
         CancellationToken cancellationToken)
     {
@@ -73,9 +97,63 @@ public sealed class CreateCommandHandler(
         Error error = DomainErrors.VehicleErrors.DuplicatePlate;
 
         logger.LogAlreadyExists(nameof(CreateCommandHandler),
-            nameof(ExistVehicleAsync), email, error);
+            nameof(ValidateVehiclePlateAsync), email, error);
 
         return Result.FromInvalid(error);
+    }
+
+    private async Task<Result> ValidateDriverVehicleAsync(
+        Guid driverId,
+        CancellationToken cancellationToken)
+    {
+        using Activity? activity = ActivitySource.StartActivity();
+
+        bool exists = await vehicleReadRepository
+            .ExistVehicleByDriverAsync(driverId, cancellationToken);
+
+        if (!exists)
+        {
+            return Result.WithSuccess();
+        }
+
+        Error error = DomainErrors.VehicleErrors.DuplicateDriverId;
+
+        logger.LogAlreadyExists(nameof(CreateCommandHandler),
+            nameof(ValidateVehiclePlateAsync), driverId, error);
+
+        return Result.FromInvalid(error);
+    }
+
+    private async Task<Result> ValidateDriverAsync(
+        Guid driverId,
+        CancellationToken cancellationToken)
+    {
+        using Activity? activity = ActivitySource.StartActivity();
+
+        DriverEntity? driverEntity = await driverReadRepository
+            .GetByIdAsync(driverId, cancellationToken);
+
+        if (driverEntity is null)
+        {
+            Error errorNotFound = DomainErrors.DriverErrors.NotFound;
+
+            logger.LogNotFound(nameof(CreateCommandHandler),
+                nameof(ValidateVehiclePlateAsync), driverId, errorNotFound);
+
+            return Result.FromInvalid(errorNotFound);
+        }
+
+        if (driverEntity.Status is DriverStatus.Active)
+        {
+            return Result.WithSuccess();
+        }
+
+        Error errorInvalidState = DomainErrors.DriverErrors.NotActivated;
+
+        logger.LogGenericValidationError(nameof(CreateCommandHandler),
+            nameof(ValidateVehiclePlateAsync), errorInvalidState);
+
+        return Result.FromInvalid(errorInvalidState);
     }
 
     private Result<VehicleEntity> FactoryEntity(
@@ -107,24 +185,13 @@ public sealed class CreateCommandHandler(
     {
         using Activity? activity = ActivitySource.StartActivity();
 
-        try
-        {
-            await vehicleWriteRepository.CreateAsync(
-                vehicleEntity, cancellationToken);
+        await vehicleWriteRepository.CreateAsync(
+            vehicleEntity, cancellationToken);
 
-            await unitOfWork.CommitAsync(
-                cancellationToken);
+        await unitOfWork.CommitAsync(
+            cancellationToken);
 
-            logger.LogCreated(nameof(CreateCommandHandler),
-                nameof(CreateAsync), vehicleEntity!.Id);
-        }
-        catch (Exception ex)
-        {
-            logger.LogGenericError(
-                nameof(CreateCommandHandler),
-                nameof(CreateAsync), ex.Message);
-
-            throw;
-        }
+        logger.LogCreated(nameof(CreateCommandHandler),
+            nameof(CreateAsync), vehicleEntity.Id);
     }
 }

@@ -43,6 +43,7 @@ public class VehicleEntity : BaseEntityAggregateRoot
         ArgumentNullException.ThrowIfNull(color);
         ArgumentNullException.ThrowIfNull(year);
 
+        Id = Guid.NewGuid();
         DriverId = driverId;
         Model = model;
         Brand = brand;
@@ -66,7 +67,7 @@ public class VehicleEntity : BaseEntityAggregateRoot
         }
 
         Status = VehicleStatus.Active;
-        MarkAsUpdated();
+        //MarkAsUpdated();
 
         return Result.WithSuccess();
     }
@@ -80,7 +81,7 @@ public class VehicleEntity : BaseEntityAggregateRoot
         }
 
         Status = VehicleStatus.Inactive;
-        MarkAsUpdated();
+        //MarkAsUpdated();
 
         return Result.WithSuccess();
     }
@@ -94,7 +95,7 @@ public class VehicleEntity : BaseEntityAggregateRoot
         }
 
         Status = VehicleStatus.Rejected;
-        MarkAsUpdated();
+        //MarkAsUpdated();
 
         return Result.WithSuccess();
     }

@@ -2,6 +2,8 @@ using Microsoft.Extensions.DependencyInjection;
 using TaxiService.Modules.Passengers.Application.v1.Interfaces;
 using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Email;
 using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Passanger;
+using TaxiService.Modules.Passengers.Application.v1.Interfaces.Validators;
+using TaxiService.Modules.Passengers.Application.v1.Services;
 using TaxiService.Modules.Passengers.Infrastructure.Repositories.Email;
 using TaxiService.Modules.Passengers.Infrastructure.Repositories.Outbox;
 using TaxiService.Modules.Passengers.Infrastructure.Repositories.Passanger;
@@ -16,6 +18,9 @@ internal static class ServicesExtensions
     {
         #region Passanger
 
+        // Services
+        services.AddScoped<IPassengerValidator, PassengerValidator>();
+        
         // Repositories
         services.AddScoped<IPassangerReadRepository, PassangerReadRepository>();
         services.AddScoped<IPassangerWriteRepository, PassangerWriteRepository>();

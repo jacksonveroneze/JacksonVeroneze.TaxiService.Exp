@@ -1,5 +1,6 @@
 import {group, sleep} from 'k6';
 import {crypto} from "k6/experimental/webcrypto";
+import driver from "./scenarios/driver/driver.scenario.js";
 import user from "./scenarios/user/user.scenario.js";
 import mail from "./scenarios/mail/mail.scenario.js";
 import ride from "./scenarios/ride/ride.scenario.js";
@@ -27,7 +28,7 @@ export const optionsOneIteration = {
 
 export const optionsIterations = {
     iterations: 1000,
-    vus: 200
+    vus: 25
 };
 
 export const optionsDuration = {
@@ -37,7 +38,7 @@ export const optionsDuration = {
     ]
 };
 
-export const options = optionsRamp;
+export const options = optionsOneIteration;
 
  const baseUrl = 'http://localhost:7000/api/v1';
 // const baseUrl = 'http://localhost:8080';
@@ -52,15 +53,19 @@ export default () => {
         }
     };
 
-    group('Endpoint User', () => {
-        user(baseUrl, headers);
+    group('Endpoint Driver', () => {
+        driver(baseUrl, headers);
     });
-
-    group('Endpoint Mail', () => {
-        mail(baseUrl, headers);
-    });
-
-    group('Endpoint Ride', () => {
-        ride(baseUrl, headers);
-    });
+    
+    // group('Endpoint User', () => {
+    //     user(baseUrl, headers);
+    // });
+    //
+    // group('Endpoint Mail', () => {
+    //     mail(baseUrl, headers);
+    // });
+    //
+    // group('Endpoint Ride', () => {
+    //     ride(baseUrl, headers);
+    // });
 }

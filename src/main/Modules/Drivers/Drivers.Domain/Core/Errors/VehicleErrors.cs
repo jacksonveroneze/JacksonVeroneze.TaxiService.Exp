@@ -8,8 +8,12 @@ public static partial class DomainErrors
     {
         public static Error DuplicatePlate =>
             new("Vehicle.DuplicatePlate",
-                "Somente veículos pendentes podem ser ativados.");
-        
+                "Veículo com a placa informada já cadastrado.");
+
+        public static Error DuplicateDriverId =>
+            new("Vehicle.DuplicateDriverId",
+                "O motorista informado já possui veículo cadastrado.");
+
         public static Error NotActive =>
             new("Vehicle.NotActive",
                 "Somente veículos pendentes podem ser ativados.");

@@ -24,7 +24,7 @@ public class DriverService(
             return Result<bool>.WithSuccess(true);
         }
 
-        Error error = DomainErrors.DriverError.NotFound;
+        Error error = DomainErrors.DriverErrors.NotFound;
 
         logger.LogNotFound(
             nameof(DriverService),

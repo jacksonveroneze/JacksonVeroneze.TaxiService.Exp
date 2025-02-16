@@ -6,8 +6,8 @@ namespace TaxiService.Common.BaseDomain.ValueObjects;
 
 public class PhoneValueObject : ValueObject
 {
-    private const int MinLength = 11;
-    private const int MaxLength = 11;
+    private const int MinLength = 10;
+    private const int MaxLength = 15;
 
     public string? Value { get; }
 

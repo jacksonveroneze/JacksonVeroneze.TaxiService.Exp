@@ -31,6 +31,7 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
         ArgumentNullException.ThrowIfNull(status);
         ArgumentNullException.ThrowIfNull(location);
 
+        Id = Guid.NewGuid();
         DriverId = driverId;
         Status = DriverAvailability.Offline;
     }
@@ -59,7 +60,7 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
         
         Status = DriverAvailability.Online;
         Location = coordinateVo.Value!;
-        MarkAsUpdated();
+        //MarkAsUpdated();
 
         return Result.WithSuccess();
     }
@@ -74,7 +75,7 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
         }
 
         Status = DriverAvailability.Offline;
-        MarkAsUpdated();
+        //MarkAsUpdated();
 
         return Result.WithSuccess();
     }
@@ -89,7 +90,7 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
         }
 
         Status = DriverAvailability.InRide;
-        MarkAsUpdated();
+        //MarkAsUpdated();
 
         return Result.WithSuccess();
     }
@@ -107,7 +108,7 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
         }
 
         Location = coordinateVo.Value!;
-        MarkAsUpdated();
+        //MarkAsUpdated();
 
         return Result.WithSuccess();
     }

@@ -72,7 +72,7 @@ public sealed class FinishCommandHandler(
 
         CoordinateValueObject[] positionsCood = positions
             .Select(pos => CoordinateValueObject.Create(
-                pos.Position!.Latitude, pos.Position!.Longitude).Value!)
+                pos.Position.Latitude, pos.Position.Longitude).Value!)
             .ToArray();
 
         return distanceCalculatorService

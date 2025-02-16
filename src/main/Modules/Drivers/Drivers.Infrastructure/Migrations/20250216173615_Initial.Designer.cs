@@ -13,7 +13,7 @@ using TaxiService.Modules.Drivers.Infrastructure.Contexts;
 namespace TaxiService.Modules.Drivers.Infrastructure.Migrations
 {
     [DbContext(typeof(DriversDbContext))]
-    [Migration("20250211224240_Initial")]
+    [Migration("20250216173615_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -22,10 +22,74 @@ namespace TaxiService.Modules.Drivers.Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("driver")
-                .HasAnnotation("ProductVersion", "9.0.1")
+                .HasAnnotation("ProductVersion", "9.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("TaxiService.Modules.Drivers.Domain.Entities.DriverAvailabilityEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("deleted_at");
+
+                    b.Property<Guid>("DriverId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("driver_id");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("tenant_id");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.Property<int>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(1)
+                        .HasColumnName("version");
+
+                    b.ComplexProperty<Dictionary<string, object>>("Location", "TaxiService.Modules.Drivers.Domain.Entities.DriverAvailabilityEntity.Location#CoordinateValueObject", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<double>("Latitude")
+                                .HasColumnType("double precision")
+                                .HasColumnName("latitude");
+
+                            b1.Property<double>("Longitude")
+                                .HasColumnType("double precision")
+                                .HasColumnName("longitude");
+                        });
+
+                    b.HasKey("Id")
+                        .HasName("pk_driver_availability");
+
+                    b.HasIndex("DriverId")
+                        .HasDatabaseName("ix_driver_availability_driver_id");
+
+                    b.HasIndex("TenantId")
+                        .HasDatabaseName("ix_driver_availability_tenant_id");
+
+                    b.ToTable("driver_availability", "driver");
+                });
 
             modelBuilder.Entity("TaxiService.Modules.Drivers.Domain.Entities.DriverEntity", b =>
                 {
@@ -89,6 +153,17 @@ namespace TaxiService.Modules.Drivers.Infrastructure.Migrations
                                 .HasColumnName("cpf");
                         });
 
+                    b.ComplexProperty<Dictionary<string, object>>("Email", "TaxiService.Modules.Drivers.Domain.Entities.DriverEntity.Email#EmailValueObject", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("email");
+                        });
+
                     b.ComplexProperty<Dictionary<string, object>>("Name", "TaxiService.Modules.Drivers.Domain.Entities.DriverEntity.Name#NameValueObject", b1 =>
                         {
                             b1.IsRequired();
@@ -98,6 +173,17 @@ namespace TaxiService.Modules.Drivers.Infrastructure.Migrations
                                 .HasMaxLength(100)
                                 .HasColumnType("character varying(100)")
                                 .HasColumnName("name");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("Phone", "TaxiService.Modules.Drivers.Domain.Entities.DriverEntity.Phone#PhoneValueObject", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(15)
+                                .HasColumnType("character varying(15)")
+                                .HasColumnName("phone");
                         });
 
                     b.HasKey("Id")
@@ -112,11 +198,21 @@ namespace TaxiService.Modules.Drivers.Infrastructure.Migrations
                     b.ToTable("driver", "driver");
                 });
 
-            modelBuilder.Entity("TaxiService.Modules.Drivers.Domain.Entities.EmailEntity", b =>
+            modelBuilder.Entity("TaxiService.Modules.Drivers.Domain.Entities.VehicleEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid")
                         .HasColumnName("id");
+
+                    b.Property<string>("Brand")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("brand");
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("color");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -131,6 +227,20 @@ namespace TaxiService.Modules.Drivers.Infrastructure.Migrations
                     b.Property<Guid>("DriverId")
                         .HasColumnType("uuid")
                         .HasColumnName("driver_id");
+
+                    b.Property<string>("Model")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("model");
+
+                    b.Property<string>("Plate")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("plate");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
 
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uuid")
@@ -147,26 +257,20 @@ namespace TaxiService.Modules.Drivers.Infrastructure.Migrations
                         .HasDefaultValue(1)
                         .HasColumnName("version");
 
-                    b.ComplexProperty<Dictionary<string, object>>("Email", "TaxiService.Modules.Drivers.Domain.Entities.EmailEntity.Email#EmailValueObject", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<string>("Value")
-                                .HasMaxLength(100)
-                                .HasColumnType("character varying(100)")
-                                .HasColumnName("value");
-                        });
+                    b.Property<int>("Year")
+                        .HasColumnType("integer")
+                        .HasColumnName("year");
 
                     b.HasKey("Id")
-                        .HasName("pk_email");
+                        .HasName("pk_vehicle");
 
                     b.HasIndex("DriverId")
-                        .HasDatabaseName("ix_email_driver_id");
+                        .HasDatabaseName("ix_vehicle_driver_id");
 
                     b.HasIndex("TenantId")
-                        .HasDatabaseName("ix_email_tenant_id");
+                        .HasDatabaseName("ix_vehicle_tenant_id");
 
-                    b.ToTable("email", "driver");
+                    b.ToTable("vehicle", "driver");
                 });
 #pragma warning restore 612, 618
         }

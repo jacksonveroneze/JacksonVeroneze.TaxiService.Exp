@@ -133,6 +133,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drivers.PublicApi", "main\M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TaxiService.Exp.ArchitectureTests", "test\JacksonVeroneze.TaxiService.Exp.ArchitectureTests\JacksonVeroneze.TaxiService.Exp.ArchitectureTests.csproj", "{D528FE94-A8A5-4427-985A-ACE8968DC64C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "driver", "driver", "{61955D56-C868-4646-8319-97ABC46FD35A}"
+	ProjectSection(SolutionItems) = preProject
+		..\tests\scenarios\driver\driver.js = ..\tests\scenarios\driver\driver.js
+		..\tests\scenarios\driver\driver.scenario.js = ..\tests\scenarios\driver\driver.scenario.js
+	EndProjectSection
+EndProject
 
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -278,5 +284,6 @@ Global
 		{5D990AA7-8716-4ADE-A67D-D85FABAEF5D9} = {C4B531AA-1008-4178-A276-376D44C177BE}
 		{490944E0-915C-4BEF-97C1-F2D58F86B6B4} = {C4B531AA-1008-4178-A276-376D44C177BE}
 		{D528FE94-A8A5-4427-985A-ACE8968DC64C} = {911C6EDB-84B3-4A91-B837-74EB587665CF}
+		{61955D56-C868-4646-8319-97ABC46FD35A} = {C29D5355-B5A2-4621-86AE-57766C544BDB}
 	EndGlobalSection
 EndGlobal

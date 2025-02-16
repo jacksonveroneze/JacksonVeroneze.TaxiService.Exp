@@ -3,14 +3,14 @@ using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.System;
 using TaxiService.Modules.Passengers.Application.v1.Commands.Passanger;
 using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Passanger;
-using TaxiService.Modules.Passengers.Domain.Core.Errors;
+using TaxiService.Modules.Passengers.Application.v1.Interfaces.Validators;
 using TaxiService.Modules.Passengers.Domain.Entities;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Handlers.CommandHandler.Passanger;
 
 public sealed class ActivateCommandHandler(
     ILogger<ActivateCommandHandler> logger,
-    IPassangerReadRepository passangerReadRepository,
+    IPassengerValidator passengerValidator,
     IPassangerWriteRepository passangerWriteRepository,
     IDateTimeProvider dateTime)
     : IRequestHandler<ActivateCommand, Result>
@@ -21,45 +21,24 @@ public sealed class ActivateCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<PassangerEntity> resultEntity = await GetByIdAsync(
-            request.Id, cancellationToken);
+        Result<PassangerEntity> entity = await passengerValidator
+            .ValidateAndGetAsync(request.Id, cancellationToken);
 
-        if (resultEntity.IsFailure)
+        if (entity.IsFailure)
         {
-            return resultEntity;
+            return entity;
         }
 
-        Result resultAction = Activate(resultEntity.Value!);
+        Result resultAction = Activate(entity.Value!);
 
         if (resultAction.IsFailure)
         {
             return resultAction;
         }
 
-        await UpdateAsync(resultEntity.Value!, cancellationToken);
+        await UpdateAsync(entity.Value!, cancellationToken);
 
         return Result.WithSuccess();
-    }
-
-    private async Task<Result<PassangerEntity>> GetByIdAsync(
-        Guid id,
-        CancellationToken cancellationToken)
-    {
-        PassangerEntity? entity = await passangerReadRepository
-            .GetByIdAsync(id, cancellationToken);
-
-        if (entity is not null)
-        {
-            return Result<PassangerEntity>.WithSuccess(entity);
-        }
-
-        Error error = DomainErrors.PassangerError.NotFound;
-
-        logger.LogNotFound(
-            nameof(InactivateCommandHandler),
-            nameof(GetByIdAsync), id, error);
-
-        return Result<PassangerEntity>.FromNotFound(error);
     }
 
     private Result Activate(PassangerEntity entity)

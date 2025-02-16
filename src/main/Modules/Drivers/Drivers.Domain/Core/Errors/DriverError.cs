@@ -5,7 +5,7 @@ namespace TaxiService.Modules.Drivers.Domain.Core.Errors;
 
 public static partial class DomainErrors
 {
-    public static class DriverError
+    public static class DriverErrors
     {
         public static Error NotFound =>
             new("Driver.NotFound",
@@ -39,6 +39,9 @@ public static partial class DomainErrors
 
         public static Error AlreadyActive =>
             new("Driver.AlreadyActive", "The Driver is already active.");
+        
+        public static Error NotActivated =>
+            new("Driver.NotActivated", "The Driver is not activated.");
 
         #endregion
     }

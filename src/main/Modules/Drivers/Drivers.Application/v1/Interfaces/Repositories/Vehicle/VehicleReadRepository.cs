@@ -8,6 +8,10 @@ public interface IVehicleReadRepository
         string plate,
         CancellationToken cancellationToken);
 
+    public Task<bool> ExistVehicleByDriverAsync(
+        Guid driverId,
+        CancellationToken cancellationToken);
+
     public Task<VehicleEntity?> GetByDriverIdAsync(
         Guid driverId,
         CancellationToken cancellationToken);
