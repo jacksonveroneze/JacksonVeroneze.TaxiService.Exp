@@ -22,9 +22,12 @@ RUN dotnet publish /build/main/Api/TaxiService.Api.csproj \
     /p:EnableCompressionInSingleFile=false \
     /p:IncludeAllLocalesForSelfContained=false \
     /p:Optimize=true \
-    /p:PublishCrossgen2=true
+    /p:PublishCrossgen2=true \
+    /p:PublishContainer
 
 FROM jacksonveroneze/aspnet:9.0-debian-latest
+
+ENV CORECLR_ENABLE_PROFILING=0
 
 COPY --from=build-env /build/out /home/app
 

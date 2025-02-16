@@ -1,6 +1,5 @@
 import http from 'k6/http';
 import {check} from 'k6';
-import {checker} from '../util.js';
 
 import {randomIntBetween, randomItem, randomString} from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
@@ -29,4 +28,25 @@ export function activate(baseUrl, headers, id) {
     check(response, {'[Driver] - Activated - status is 204': (r) => r.status === 204});
     
     return response;
+}
+
+
+export function createVehicle(baseUrl, headers, driverId) {
+    const genders = ['Male', 'Female'];
+
+    const body = JSON.stringify({
+        driverId: driverId,
+        model: `${randomString(8)}`,
+        brand: `${randomString(8)}`,
+        plate: `${randomString(8)}`,
+        color: `${randomString(8)}`,
+        year: randomIntBetween(2010, 2025)
+    });
+
+    const response = http.post(`${baseUrl}/vehicles`, body, headers);
+    check(response, {'[Vehicle] - Created - status is 201': (r) => r.status === 201});
+
+    const content = JSON.parse(response.body);
+
+    return content.data.id;
 }
