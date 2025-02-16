@@ -27,10 +27,10 @@ public class DriverAvailabilityMapping : IEntityTypeConfiguration<DriverAvailabi
         builder.Property(c => c.DriverId)
             .IsRequired();
 
-        builder.Property(c => c.Availability)
+        builder.Property(c => c.Status)
             .IsRequired();
 
-        builder.ComplexProperty(conf => conf.Position, conf =>
+        builder.ComplexProperty(conf => conf.Location, conf =>
         {
             conf.Property(prop => prop.Latitude)
                 .HasColumnName("latitude")

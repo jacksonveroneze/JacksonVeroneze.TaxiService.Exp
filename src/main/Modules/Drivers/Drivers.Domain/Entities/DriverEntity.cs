@@ -4,6 +4,7 @@ using TaxiService.Common.BaseDomain.Enums;
 using TaxiService.Common.BaseDomain.ValueObjects;
 using TaxiService.Modules.Drivers.Domain.Core.Errors;
 using TaxiService.Modules.Drivers.Domain.Enums;
+using TaxiService.Modules.Drivers.Domain.Events.Driver;
 
 namespace TaxiService.Modules.Drivers.Domain.Entities;
 
@@ -13,16 +14,15 @@ public class DriverEntity : BaseEntityAggregateRoot
 
     public NameValueObject Name { get; private set; } = null!;
 
-
     public DateOnly Birthday { get; private set; }
+
+    public EmailValueObject Email { get; private set; } = null!;
 
     public PhoneValueObject Phone { get; private set; } = null!;
 
     public CpfValueObject Cpf { get; private set; } = null!;
 
     public Gender Gender { get; private set; }
-
-    public EmailValueObject Email { get; private set; } = null!; 
 
     public DriverStatus Status { get; private set; }
 
@@ -37,22 +37,26 @@ public class DriverEntity : BaseEntityAggregateRoot
     }
 
     private DriverEntity(NameValueObject name,
-        DateOnly birthday, PhoneValueObject phone,
-        CpfValueObject cpf,
-        Gender gender,
-        EmailValueObject email)
+        DateOnly birthday, EmailValueObject email,
+        PhoneValueObject phone, CpfValueObject cpf,
+        Gender gender)
     {
         ArgumentNullException.ThrowIfNull(name);
+        ArgumentNullException.ThrowIfNull(birthday);
+        ArgumentNullException.ThrowIfNull(email);
+        ArgumentNullException.ThrowIfNull(phone);
         ArgumentNullException.ThrowIfNull(cpf);
+        ArgumentNullException.ThrowIfNull(gender);
 
         Name = name;
         Birthday = birthday;
+        Email = email;
         Phone = phone;
         Cpf = cpf;
         Gender = gender;
-        Email = email;
-
         Status = DriverStatus.PendingActivation;
+        
+        AddEvent(new DriverCreatedEvent(Id));
     }
 
     #endregion
@@ -61,21 +65,28 @@ public class DriverEntity : BaseEntityAggregateRoot
 
     public Result Activate(DateTime utcNow)
     {
-        if (IsActive)
+        if (!IsPendingActivation)
         {
             return Result.FromInvalid(
-                DomainErrors.DriverError.AlreadyActivated);
+                DomainErrors.DriverError.NotPendingApproval);
         }
 
         Status = DriverStatus.Active;
-
         ActivedOnUtc = utcNow;
-
+        MarkAsUpdated(utcNow);
+        AddEvent(new DriverActivatedEvent(Id));
+        
         return Result.WithSuccess();
     }
 
     public Result Inactivate(DateTime utcNow)
     {
+        if (IsBlockedPermanent)
+        {
+            return Result.FromInvalid(
+                DomainErrors.DriverError.CannotBlockPermanently);
+        }
+        
         if (IsInactive)
         {
             return Result.FromInvalid(
@@ -83,15 +94,85 @@ public class DriverEntity : BaseEntityAggregateRoot
         }
 
         Status = DriverStatus.Inactive;
-
         InactivedOnUtc = utcNow;
+        MarkAsUpdated(utcNow);
+        AddEvent(new DriverInactivedEvent(Id));
+
+        return Result.WithSuccess();
+    }
+    
+    public Result Reactivate(DateTime utcNow)
+    {
+        if (IsBlockedPermanent)
+        {
+            return Result.FromInvalid(
+                DomainErrors.DriverError.CannotBlockPermanently);
+        }
+        
+        if (IsActive)
+        {
+            return Result.FromInvalid(
+                DomainErrors.DriverError.AlreadyActive);
+        }
+
+        Status = DriverStatus.Active;
+        ActivedOnUtc = utcNow;
+        MarkAsUpdated(utcNow);
+        AddEvent(new DriverReactivatedEvent(Id));
 
         return Result.WithSuccess();
     }
 
-    public bool IsActive => Status is DriverStatus.Active;
-    public bool IsInactive => Status is DriverStatus.Inactive;
-    public bool IsPendingActivation => Status is DriverStatus.PendingActivation;
+    public Result BlockTemporarily(DateTime utcNow)
+    {
+        if (IsBlockedPermanent)
+        {
+            return Result.FromInvalid(
+                DomainErrors.DriverError.CannotBlockPermanently);
+        }
+
+        if (IsBlockedTemporarily)
+        {
+            return Result.FromInvalid(
+                DomainErrors.DriverError.AlreadyBlockedTemporarily);
+        }
+
+        Status = DriverStatus.BlockedTemporarily;
+        MarkAsUpdated(utcNow);
+        AddEvent(new DriverBlockedTemporarilyEvent(Id));
+
+        return Result.WithSuccess();
+    }
+
+    public Result BlockPermanently(DateTime utcNow)
+    {
+        if (IsBlockedPermanent)
+        {
+            return Result.FromInvalid(
+                DomainErrors.DriverError.CannotBlockPermanently);
+        }
+
+        Status = DriverStatus.BlockedPermanent;
+        MarkAsUpdated(utcNow);
+        AddEvent(new DriverBlockedPermanentEvent(Id));
+
+        return Result.WithSuccess();
+    }
+
+    public bool IsPendingActivation => 
+        Status is DriverStatus.PendingActivation;
+    
+    public bool IsActive => 
+        Status is DriverStatus.Active;
+    
+    public bool IsInactive => 
+        Status is DriverStatus.Inactive;
+    
+    public bool IsBlockedTemporarily => 
+        Status is DriverStatus.BlockedTemporarily;
+    
+    public bool IsBlockedPermanent => 
+        Status is DriverStatus.BlockedPermanent;
 
     #endregion
 
@@ -100,13 +181,13 @@ public class DriverEntity : BaseEntityAggregateRoot
     // Factory Method
     public static Result<DriverEntity> Create(
         string? name, DateOnly birthday,
-        string phone, string? cpf,
-        Gender gender, string email)
+        string email, string phone,
+        string? cpf, Gender gender)
     {
         Result<NameValueObject> nameVo = NameValueObject.Create(name);
+        Result<EmailValueObject> emailVo = EmailValueObject.Create(email);
         Result<PhoneValueObject> phoneVo = PhoneValueObject.Create(phone);
         Result<CpfValueObject> cpfVo = CpfValueObject.Create(cpf);
-        Result<EmailValueObject> emailVo = EmailValueObject.Create(email);
 
         Result resultValidate = Result.FailuresOrSuccess(
             nameVo, phoneVo, cpfVo, emailVo);
@@ -118,8 +199,8 @@ public class DriverEntity : BaseEntityAggregateRoot
         }
 
         DriverEntity entity = new(nameVo.Value!,
-            birthday, phoneVo.Value!, cpfVo.Value!,
-            gender, emailVo.Value!);
+            birthday, emailVo.Value!, phoneVo.Value!,
+            cpfVo.Value!, gender);
 
         return Result<DriverEntity>.WithSuccess(entity);
     }

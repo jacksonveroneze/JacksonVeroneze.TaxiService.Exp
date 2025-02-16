@@ -23,6 +23,8 @@ public class VehicleEntity : BaseEntityAggregateRoot
 
     public int? Year { get; private set; }
 
+    public VehicleStatus? Status { get; private set; }
+
     #region ctor
 
     public VehicleEntity()
@@ -47,6 +49,54 @@ public class VehicleEntity : BaseEntityAggregateRoot
         Plate = plate;
         Color = color;
         Year = year;
+
+        Status = VehicleStatus.PendingActivation;
+    }
+
+    #endregion
+
+    #region Status
+
+    public Result Activate()
+    {
+        if (Status != VehicleStatus.PendingActivation)
+        {
+            return Result.FromInvalid(
+                DomainErrors.VehicleErrors.NotPendingApproval);
+        }
+
+        Status = VehicleStatus.Active;
+        MarkAsUpdated();
+
+        return Result.WithSuccess();
+    }
+
+    public Result Inactivate()
+    {
+        if (Status != VehicleStatus.Active)
+        {
+            return Result.FromInvalid(
+                DomainErrors.VehicleErrors.NotActive);
+        }
+
+        Status = VehicleStatus.Inactive;
+        MarkAsUpdated();
+
+        return Result.WithSuccess();
+    }
+
+    public Result Reject()
+    {
+        if (Status != VehicleStatus.PendingActivation)
+        {
+            return Result.FromInvalid(
+                DomainErrors.VehicleErrors.NotPendingApproval);
+        }
+
+        Status = VehicleStatus.Rejected;
+        MarkAsUpdated();
+
+        return Result.WithSuccess();
     }
 
     #endregion

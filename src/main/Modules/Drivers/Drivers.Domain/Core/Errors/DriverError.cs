@@ -23,12 +23,53 @@ public static partial class DomainErrors
             new("Driver.DuplicateEmail",
                 string.Format(null, CommonDomainErrors.TemplateDataInUse, "e-mail"));
 
-        public static Error AlreadyActivated =>
-            new("Driver.AlreadyActivated",
-                "The Driver has already been activated.");
+        #region Status
+
+        public static Error NotPendingApproval =>
+            new("Driver.NotPendingApproval", "Only pending Drivers can be approved.");
+
+        public static Error CannotBlockPermanently =>
+            new("Driver.CannotBlockPermanently", "The Driver is already permanently blocked.");
+
+        public static Error AlreadyBlockedTemporarily =>
+            new("Driver.AlreadyBlockedTemporarily", "The Driver is already temporarily blocked.");
 
         public static Error AlreadyInactivated =>
-            new("Driver.AlreadyInactivated",
-                "The Driver has already been inactivated.");
+            new("Driver.AlreadyInactivated", "The Driver has already been inactivated.");
+
+        public static Error AlreadyActive =>
+            new("Driver.AlreadyActive", "The Driver is already active.");
+
+        #endregion
+    }
+
+    public static class DriverAvailabilityError
+    {
+        public static Error CannotGoOnlineDuringRide =>
+            new("DriverAvailability.CannotGoOnlineDuringRide",
+                "O motorista não pode ficar online durante uma corrida.");
+
+        public static Error CannotGoOfflineDuringRide =>
+            new("DriverAvailability.CannotGoOfflineDuringRide",
+                "O motorista não pode ficar offline durante uma corrida em andamento.");
+
+        public static Error CannotStartRideWhileOffline =>
+            new("DriverAvailability.CannotStartRideWhileOffline",
+                "O motorista não pode iniciar uma corrida enquanto estiver offline.");
+    }
+
+    public static class VehicleErrors
+    {
+        public static Error NotActive =>
+            new("Vehicle.NotActive",
+                "Somente veículos pendentes podem ser ativados.");
+        
+        public static Error NotPendingApproval =>
+            new("Vehicle.NotPendingApproval",
+                "Somente veículos pendentes podem ser aprovados ou rejeitados.");
+
+        public static Error CannotUpdateRejectedVehicle =>
+            new("Vehicle.CannotUpdateRejectedVehicle",
+                "Não é possível atualizar um veículo rejeitado.");
     }
 }
