@@ -15,7 +15,7 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
 
     public DriverAvailability? Status { get; private set; }
 
-    public CoordinateValueObject? Location { get; private set; }
+    public CoordinateValueObject Location { get; private set; } = null!;
 
     #region ctor
 
@@ -58,7 +58,7 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
         }
         
         Status = DriverAvailability.Online;
-        Location = coordinateVo.Value;
+        Location = coordinateVo.Value!;
         MarkAsUpdated();
 
         return Result.WithSuccess();
@@ -74,7 +74,6 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
         }
 
         Status = DriverAvailability.Offline;
-        Location = null;
         MarkAsUpdated();
 
         return Result.WithSuccess();
@@ -107,7 +106,7 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
                 .FromInvalid(coordinateVo.Error!);
         }
 
-        Location = coordinateVo.Value;
+        Location = coordinateVo.Value!;
         MarkAsUpdated();
 
         return Result.WithSuccess();

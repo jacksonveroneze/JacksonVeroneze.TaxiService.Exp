@@ -42,6 +42,9 @@ public class VehicleEntityMapping : IEntityTypeConfiguration<VehicleEntity>
         builder.Property(c => c.Year)
             .IsRequired();
 
+        builder.Property(c => c.Status)
+            .IsRequired();
+
         builder.ConfigureDefaultFieldsMapping();
     }
 }

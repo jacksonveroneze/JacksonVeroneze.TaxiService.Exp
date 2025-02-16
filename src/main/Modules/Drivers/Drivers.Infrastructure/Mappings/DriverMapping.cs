@@ -35,8 +35,21 @@ public class DriverMapping : IEntityTypeConfiguration<DriverEntity>
         builder.Property(c => c.Birthday)
             .IsRequired();
 
-        builder.Property(c => c.Gender)
-            .IsRequired();
+        builder.ComplexProperty(conf => conf.Email, conf =>
+        {
+            conf.Property(prop => prop.Value)
+                .HasMaxLength(100)
+                .HasColumnName("email")
+                .IsRequired();
+        });
+
+        builder.ComplexProperty(conf => conf.Phone, conf =>
+        {
+            conf.Property(prop => prop.Value)
+                .HasMaxLength(15)
+                .HasColumnName("phone")
+                .IsRequired();
+        });
 
         builder.ComplexProperty(conf => conf.Cpf, conf =>
         {
@@ -45,6 +58,9 @@ public class DriverMapping : IEntityTypeConfiguration<DriverEntity>
                 .HasColumnName("cpf")
                 .IsRequired();
         });
+
+        builder.Property(c => c.Gender)
+            .IsRequired();
 
         builder.Property(c => c.Status)
             .IsRequired();

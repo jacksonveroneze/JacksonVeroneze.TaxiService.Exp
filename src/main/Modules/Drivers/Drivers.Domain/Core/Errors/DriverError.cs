@@ -42,34 +42,4 @@ public static partial class DomainErrors
 
         #endregion
     }
-
-    public static class DriverAvailabilityError
-    {
-        public static Error CannotGoOnlineDuringRide =>
-            new("DriverAvailability.CannotGoOnlineDuringRide",
-                "O motorista não pode ficar online durante uma corrida.");
-
-        public static Error CannotGoOfflineDuringRide =>
-            new("DriverAvailability.CannotGoOfflineDuringRide",
-                "O motorista não pode ficar offline durante uma corrida em andamento.");
-
-        public static Error CannotStartRideWhileOffline =>
-            new("DriverAvailability.CannotStartRideWhileOffline",
-                "O motorista não pode iniciar uma corrida enquanto estiver offline.");
-    }
-
-    public static class VehicleErrors
-    {
-        public static Error NotActive =>
-            new("Vehicle.NotActive",
-                "Somente veículos pendentes podem ser ativados.");
-        
-        public static Error NotPendingApproval =>
-            new("Vehicle.NotPendingApproval",
-                "Somente veículos pendentes podem ser aprovados ou rejeitados.");
-
-        public static Error CannotUpdateRejectedVehicle =>
-            new("Vehicle.CannotUpdateRejectedVehicle",
-                "Não é possível atualizar um veículo rejeitado.");
-    }
 }

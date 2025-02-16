@@ -23,4 +23,8 @@
     <ProjectReference Include="..\Drivers.Domain\Drivers.Domain.csproj"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="v1\Handlers\CommandHandler\DriverAvailability\" />
+  </ItemGroup>
+
 </Project>

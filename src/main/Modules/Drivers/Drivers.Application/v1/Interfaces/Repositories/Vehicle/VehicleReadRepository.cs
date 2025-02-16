@@ -4,6 +4,10 @@ namespace TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.Veh
 
 public interface IVehicleReadRepository
 {
+    public Task<bool> ExistsByPlateAsync(
+        string plate,
+        CancellationToken cancellationToken);
+
     public Task<VehicleEntity?> GetByDriverIdAsync(
         Guid driverId,
         CancellationToken cancellationToken);

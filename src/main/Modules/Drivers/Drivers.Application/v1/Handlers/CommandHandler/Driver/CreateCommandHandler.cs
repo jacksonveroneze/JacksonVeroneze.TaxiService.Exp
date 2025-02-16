@@ -85,8 +85,8 @@ public sealed class CreateCommandHandler(
 
         Result<DriverEntity> entity = DriverEntity.Create(
             request.FullName, request.Birthday!.Value,
-            request.Phone!, request.Document,
-            request.Gender!.Value, request.Email!);
+            request.Email!, request.Phone!, 
+            request.Document, request.Gender!.Value);
 
         if (entity.IsSuccess)
         {

@@ -2,9 +2,9 @@
   <ItemGroup>
     <!--WEB-->
     <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2" />
-    <PackageVersion Include="Scalar.AspNetCore" Version="2.0.12" />
+    <PackageVersion Include="Scalar.AspNetCore" Version="2.0.14" />
     <!--APP-->
-    <PackageVersion Include="AutoMapper" Version="13.0.1" />
+    <PackageVersion Include="AutoMapper" Version="14.0.0" />
     <PackageVersion Include="FluentValidation" Version="11.11.0" />
     <PackageVersion Include="MediatR" Version="12.4.1" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.2" />

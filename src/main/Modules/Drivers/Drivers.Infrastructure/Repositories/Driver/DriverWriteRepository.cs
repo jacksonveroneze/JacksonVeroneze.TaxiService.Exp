@@ -7,7 +7,8 @@ namespace TaxiService.Modules.Drivers.Infrastructure.Repositories.Driver;
 
 [ExcludeFromCodeCoverage]
 public class DriverWriteRepository(
-    IEfCoreRepository<DriverEntity, DriversDbContext> service) : IDriverWriteRepository
+    IEfCoreRepository<DriverEntity, DriversDbContext> service) 
+    : IDriverWriteRepository
 {
     public async Task CreateAsync(DriverEntity entity,
         CancellationToken cancellationToken)
