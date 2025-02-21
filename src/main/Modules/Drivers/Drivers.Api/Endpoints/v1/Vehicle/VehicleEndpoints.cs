@@ -13,7 +13,8 @@ public static class VehicleEndpoints
                 .WithApiVersionSet(apiVersionSet)
                 .MapToApiVersion(1);
 
-        builder.AddCreate();
+        builder.AddCreate()
+            .AddGetById();
 
         return app;
     }

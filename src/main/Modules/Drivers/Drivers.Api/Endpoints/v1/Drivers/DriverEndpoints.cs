@@ -14,7 +14,8 @@ public static class DriverEndpoints
                 .MapToApiVersion(1);
 
         builder.AddCreate()
-            .AddActivate();
+            .AddActivate()
+            .AddGetById();
 
         return app;
     }

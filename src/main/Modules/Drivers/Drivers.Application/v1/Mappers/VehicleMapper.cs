@@ -22,5 +22,8 @@ public class VehicleMapper : Profile
 
         CreateMap<VehicleEntity, CreateCommandResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
+        
+        CreateMap<VehicleEntity, GetByIdQueryResponse>()
+            .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
     }
 }

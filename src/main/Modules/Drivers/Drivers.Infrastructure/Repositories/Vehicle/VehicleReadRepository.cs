@@ -20,7 +20,7 @@ public class VehicleReadRepository(
     }
 
     public Task<bool> ExistVehicleByDriverAsync(
-        Guid driverId, 
+        Guid driverId,
         CancellationToken cancellationToken)
     {
         return service.AnyAsync(conf => conf.DriverId == driverId,
@@ -33,6 +33,15 @@ public class VehicleReadRepository(
     {
         return service.GetSingleOrDefaultAsync(
             conf => conf.DriverId == driverId,
+            cancellationToken);
+    }
+
+    public Task<VehicleEntity?> GetByIdAsync(
+        Guid id,
+        CancellationToken cancellationToken)
+    {
+        return service.GetByIdAsync(
+            conf => conf.Id == id,
             cancellationToken);
     }
 }

@@ -15,4 +15,8 @@ public interface IVehicleReadRepository
     public Task<VehicleEntity?> GetByDriverIdAsync(
         Guid driverId,
         CancellationToken cancellationToken);
+    
+    public Task<VehicleEntity?> GetByIdAsync(
+        Guid id,
+        CancellationToken cancellationToken);
 }

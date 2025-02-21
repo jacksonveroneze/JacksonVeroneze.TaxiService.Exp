@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <PublishAot>false</PublishAot>
-    <InvariantGlobalization>true</InvariantGlobalization>
+<!--    <InvariantGlobalization>true</InvariantGlobalization>-->
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
 
     <AnalysisLevel>latest</AnalysisLevel>
