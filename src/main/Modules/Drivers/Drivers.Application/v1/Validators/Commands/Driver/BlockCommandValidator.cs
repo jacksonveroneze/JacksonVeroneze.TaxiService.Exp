@@ -12,5 +12,11 @@ public class BlockCommandValidator : AbstractValidator<BlockCommand>
 
         RuleFor(request => request.Id)
             .SetValidator(new IdGuidValidator());
+
+        RuleFor(request => request.Type)
+            .Cascade(CascadeMode.Stop)
+            .NotNull()
+            .NotEqual(BlockCommand.BlockEnum.None)
+            .IsInEnum();
     }
 }

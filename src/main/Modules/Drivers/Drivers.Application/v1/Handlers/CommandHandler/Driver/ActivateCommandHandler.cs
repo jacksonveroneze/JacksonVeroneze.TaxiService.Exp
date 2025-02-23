@@ -3,6 +3,7 @@ using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.System;
 using TaxiService.Modules.Drivers.Application.v1.Commands.Driver;
 using TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.Driver;
+using TaxiService.Modules.Drivers.Application.v1.Interfaces.Services;
 using TaxiService.Modules.Drivers.Domain.Core.Errors;
 using TaxiService.Modules.Drivers.Domain.Entities;
 
@@ -10,7 +11,7 @@ namespace TaxiService.Modules.Drivers.Application.v1.Handlers.CommandHandler.Dri
 
 public sealed class ActivateCommandHandler(
     ILogger<ActivateCommandHandler> logger,
-    IDriverReadRepository driverReadRepository,
+    IDriverService driverService,
     IDriverWriteRepository driverWriteRepository,
     IDateTimeProvider dateTime)
     : IRequestHandler<ActivateCommand, Result>
@@ -21,7 +22,8 @@ public sealed class ActivateCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<DriverEntity> resultEntity = await GetDriverByIdAsync(
+        Result<DriverEntity> resultEntity = 
+            await driverService.GetByIdAsync(
             request.Id, cancellationToken);
 
         if (resultEntity.IsFailure)
@@ -39,27 +41,6 @@ public sealed class ActivateCommandHandler(
         await UpdateAsync(resultEntity.Value!, cancellationToken);
 
         return Result.WithSuccess();
-    }
-
-    private async Task<Result<DriverEntity>> GetDriverByIdAsync(
-        Guid id,
-        CancellationToken cancellationToken)
-    {
-        DriverEntity? entity = await driverReadRepository
-            .GetByIdAsync(id, cancellationToken);
-
-        if (entity is not null)
-        {
-            return Result<DriverEntity>.WithSuccess(entity);
-        }
-
-        Error error = DomainErrors.DriverErrors.NotFound;
-
-        logger.LogNotFound(
-            nameof(ActivateCommandHandler),
-            nameof(GetDriverByIdAsync), id, error);
-
-        return Result<DriverEntity>.FromNotFound(error);
     }
 
     private Result Activate(DriverEntity entity)

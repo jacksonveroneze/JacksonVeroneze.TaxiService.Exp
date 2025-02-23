@@ -2,6 +2,8 @@ using Microsoft.Extensions.DependencyInjection;
 using TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.Driver;
 using TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.DriverAvailability;
 using TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.Vehicle;
+using TaxiService.Modules.Drivers.Application.v1.Interfaces.Services;
+using TaxiService.Modules.Drivers.Application.v1.Services;
 using TaxiService.Modules.Drivers.Infrastructure.Repositories.Driver;
 using TaxiService.Modules.Drivers.Infrastructure.Repositories.DriverAvailability;
 using TaxiService.Modules.Drivers.Infrastructure.Repositories.Vehicle;
@@ -15,6 +17,9 @@ internal static class ServicesExtensions
         this IServiceCollection services)
     {
         #region Driver
+
+        // Services
+        services.AddScoped<IDriverService, DriverService>();
 
         // Repositories
         services.AddScoped<IDriverReadRepository, DriverReadRepository>();

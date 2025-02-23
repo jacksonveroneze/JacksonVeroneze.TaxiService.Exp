@@ -21,7 +21,7 @@ export default (baseUrl, headers) => {
         const idDriver1 = driver.create(baseUrl, factoryHeaders());
         driver.getById(baseUrl, factoryHeaders(), idDriver1);
         driver.activate(baseUrl, factoryHeaders(), idDriver1);
-        driver.block(baseUrl, factoryHeaders(), idDriver1);
+        driver.block(baseUrl, factoryHeaders(), idDriver1, 'TemporaryBlock');
 
         const idDriver2 = driver.create(baseUrl, factoryHeaders());
         driver.getById(baseUrl, factoryHeaders(), idDriver2);

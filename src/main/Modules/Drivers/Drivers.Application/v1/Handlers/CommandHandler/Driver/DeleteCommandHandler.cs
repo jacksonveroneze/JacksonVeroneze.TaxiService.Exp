@@ -4,6 +4,7 @@ using TaxiService.Common.BaseApplication.Interfaces.System;
 using TaxiService.Modules.Drivers.Application.v1.Commands.Driver;
 using TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.Driver;
 using TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.DriverAvailability;
+using TaxiService.Modules.Drivers.Application.v1.Interfaces.Services;
 using TaxiService.Modules.Drivers.Domain.Core.Errors;
 using TaxiService.Modules.Drivers.Domain.Entities;
 using TaxiService.Modules.Drivers.Domain.Enums;
@@ -13,7 +14,7 @@ namespace TaxiService.Modules.Drivers.Application.v1.Handlers.CommandHandler.Dri
 public sealed class DeleteCommandHandler(
     ILogger<DeleteCommandHandler> logger,
     IDriverAvailabilityReadRepository driverAvailabilityReadRepository,
-    IDriverReadRepository driverReadRepository,
+    IDriverService driverService,
     IDriverWriteRepository driverWriteRepository)
     : IRequestHandler<DeleteCommand, Result>
 {
@@ -23,8 +24,9 @@ public sealed class DeleteCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<DriverEntity> resultEntity = await GetDriverByIdAsync(
-            request.Id, cancellationToken);
+        Result<DriverEntity> resultEntity = 
+            await driverService.GetByIdAsync(
+                request.Id, cancellationToken);
 
         if (resultEntity.IsFailure)
         {
@@ -40,7 +42,7 @@ public sealed class DeleteCommandHandler(
 
             logger.LogGenericValidationError(
                 nameof(DeleteCommandHandler),
-                nameof(GetDriverByIdAsync), error);
+                nameof(Handle), error);
 
             return Result<DriverEntity>.WithError(error);
         }
@@ -55,27 +57,6 @@ public sealed class DeleteCommandHandler(
         await DeleteAsync(resultEntity.Value!, cancellationToken);
 
         return Result.WithSuccess();
-    }
-
-    private async Task<Result<DriverEntity>> GetDriverByIdAsync(
-        Guid id,
-        CancellationToken cancellationToken)
-    {
-        DriverEntity? entity = await driverReadRepository
-            .GetByIdAsync(id, cancellationToken);
-
-        if (entity is not null)
-        {
-            return Result<DriverEntity>.WithSuccess(entity);
-        }
-
-        Error error = DomainErrors.DriverErrors.NotFound;
-
-        logger.LogNotFound(
-            nameof(DeleteCommandHandler),
-            nameof(GetDriverByIdAsync), id, error);
-
-        return Result<DriverEntity>.FromNotFound(error);
     }
 
     private Result Remove(DriverEntity entity)

@@ -3,6 +3,7 @@ using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.System;
 using TaxiService.Modules.Drivers.Application.v1.Commands.Driver;
 using TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.Driver;
+using TaxiService.Modules.Drivers.Application.v1.Interfaces.Services;
 using TaxiService.Modules.Drivers.Domain.Core.Errors;
 using TaxiService.Modules.Drivers.Domain.Entities;
 
@@ -10,7 +11,7 @@ namespace TaxiService.Modules.Drivers.Application.v1.Handlers.CommandHandler.Dri
 
 public sealed class BlockCommandHandler(
     ILogger<BlockCommandHandler> logger,
-    IDriverReadRepository driverReadRepository,
+    IDriverService driverService,
     IDriverWriteRepository driverWriteRepository,
     IDateTimeProvider dateTime)
     : IRequestHandler<BlockCommand, Result>
@@ -21,15 +22,16 @@ public sealed class BlockCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<DriverEntity> resultEntity = await GetDriverByIdAsync(
-            request.Id, cancellationToken);
+        Result<DriverEntity> resultEntity =
+            await driverService.GetByIdAsync(
+                request.Id, cancellationToken);
 
         if (resultEntity.IsFailure)
         {
             return resultEntity;
         }
 
-        Result resultAction = Block(resultEntity.Value!);
+        Result resultAction = Block(resultEntity.Value!, request);
 
         if (resultAction.IsFailure)
         {
@@ -41,30 +43,17 @@ public sealed class BlockCommandHandler(
         return Result.WithSuccess();
     }
 
-    private async Task<Result<DriverEntity>> GetDriverByIdAsync(
-        Guid id,
-        CancellationToken cancellationToken)
+    private Result Block(DriverEntity entity, BlockCommand request)
     {
-        DriverEntity? entity = await driverReadRepository
-            .GetByIdAsync(id, cancellationToken);
-
-        if (entity is not null)
+        var result = request.Type switch
         {
-            return Result<DriverEntity>.WithSuccess(entity);
-        }
+            BlockCommand.BlockEnum.TemporaryBlock =>
+                entity.BlockTemporarily(dateTime.UtcNow),
 
-        Error error = DomainErrors.DriverErrors.NotFound;
-
-        logger.LogNotFound(
-            nameof(BlockCommandHandler),
-            nameof(GetDriverByIdAsync), id, error);
-
-        return Result<DriverEntity>.FromNotFound(error);
-    }
-
-    private Result Block(DriverEntity entity)
-    {
-        Result result = entity.BlockTemporarily(dateTime.UtcNow);
+            BlockCommand.BlockEnum.PermanentBlock =>
+                entity.BlockPermanently(dateTime.UtcNow),
+            _ => throw new ArgumentOutOfRangeException()
+        };
 
         if (result.IsFailure)
         {

@@ -9,7 +9,7 @@ export function create(baseUrl, headers) {
 
     const body = JSON.stringify({
         fullName: `${randomString(8)} ${randomString(8)}`,
-        birthday: `2000-${randomIntBetween(10, 12)}-${randomIntBetween(10, 25)}`,
+        birthday: `${randomIntBetween(1987, 2000)}-${randomIntBetween(10, 12)}-${randomIntBetween(10, 25)}`,
         gender: `${randomItem(genders)}`,
         document: "06399214939",
         email: `${randomString(10)}@mail.com`,
@@ -37,7 +37,7 @@ export function getById(baseUrl, headers, id, statusCodeDefault = null) {
 export function activate(baseUrl, headers, id) {
     const response = http.put(`${baseUrl}/drivers/${id}/activate`, {}, headers);
     check(response, {'[Driver] - Activated - status is 204': (r) => r.status === 204});
-    
+
     return response;
 }
 
@@ -48,8 +48,12 @@ export function inactivate(baseUrl, headers, id) {
     return response;
 }
 
-export function block(baseUrl, headers, id) {
-    const response = http.put(`${baseUrl}/drivers/${id}/block`, {}, headers);
+export function block(baseUrl, headers, id, type) {
+    const body = JSON.stringify({
+        type: type
+    });
+    
+    const response = http.put(`${baseUrl}/drivers/${id}/block`, body, headers);
     check(response, {'[Driver] - Blocked - status is 204': (r) => r.status === 204});
 
     return response;
