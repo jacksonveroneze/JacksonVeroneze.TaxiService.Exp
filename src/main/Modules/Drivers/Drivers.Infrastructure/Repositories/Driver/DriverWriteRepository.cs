@@ -16,6 +16,16 @@ public class DriverWriteRepository(
         await service.CreateAsync(entity, cancellationToken);
     }
 
+    public Task DeleteAsync(DriverEntity entity, 
+        CancellationToken cancellationToken)
+    {
+        entity.MarkAsDeleted();
+        
+        service.SoftDelete(entity);
+
+        return service.DbContext.SaveChangesAsync(cancellationToken);
+    }
+
     public async Task UpdateAsync(DriverEntity entity,
         CancellationToken cancellationToken)
     {

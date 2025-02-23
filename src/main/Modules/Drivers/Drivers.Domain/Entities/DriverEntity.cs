@@ -74,7 +74,6 @@ public class DriverEntity : BaseEntityAggregateRoot
 
         Status = DriverStatus.Active;
         ActivedOnUtc = utcNow;
-        //MarkAsUpdated(utcNow);
         AddEvent(new DriverActivatedEvent(Id));
         
         return Result.WithSuccess();
@@ -96,7 +95,6 @@ public class DriverEntity : BaseEntityAggregateRoot
 
         Status = DriverStatus.Inactive;
         InactivedOnUtc = utcNow;
-        //MarkAsUpdated(utcNow);
         AddEvent(new DriverInactivedEvent(Id));
 
         return Result.WithSuccess();
@@ -118,7 +116,6 @@ public class DriverEntity : BaseEntityAggregateRoot
 
         Status = DriverStatus.Active;
         ActivedOnUtc = utcNow;
-        //MarkAsUpdated(utcNow);
         AddEvent(new DriverReactivatedEvent(Id));
 
         return Result.WithSuccess();
@@ -139,7 +136,6 @@ public class DriverEntity : BaseEntityAggregateRoot
         }
 
         Status = DriverStatus.BlockedTemporarily;
-        //MarkAsUpdated(utcNow);
         AddEvent(new DriverBlockedTemporarilyEvent(Id));
 
         return Result.WithSuccess();
@@ -154,8 +150,26 @@ public class DriverEntity : BaseEntityAggregateRoot
         }
 
         Status = DriverStatus.BlockedPermanent;
-        //MarkAsUpdated(utcNow);
         AddEvent(new DriverBlockedPermanentEvent(Id));
+
+        return Result.WithSuccess();
+    }
+    
+    public Result Remove()
+    {
+        if (IsBlockedPermanent)
+        {
+            return Result.FromInvalid(
+                DomainErrors.DriverErrors.CannotBlockPermanently);
+        }
+        
+        if (IsBlockedTemporarily)
+        {
+            return Result.FromInvalid(
+                DomainErrors.DriverErrors.AlreadyBlockedTemporarily);
+        }
+
+        AddEvent(new DriverRemovedEvent(Id));
 
         return Result.WithSuccess();
     }

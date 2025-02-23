@@ -30,13 +30,13 @@ public sealed class CreateCommandHandler(
 
         ArgumentNullException.ThrowIfNull(request);
 
-        Result resultVerifyEmail = await ExistEmailAsync(
-            request.Email!, cancellationToken);
+        Result resultVerifyEmailOrDocument = await ExistByEmailOrDocumentAsync(
+            request.Email!, request.Document!, cancellationToken);
 
-        if (resultVerifyEmail.IsFailure)
+        if (resultVerifyEmailOrDocument.IsFailure)
         {
             return Result<CreateCommandResponse>
-                .WithError(resultVerifyEmail.Error!);
+                .WithError(resultVerifyEmailOrDocument.Error!);
         }
 
         Result<DriverEntity> userEntity = FactoryEntity(request);
@@ -56,24 +56,24 @@ public sealed class CreateCommandHandler(
         return Result<CreateCommandResponse>.WithSuccess(response);
     }
 
-    private async Task<Result> ExistEmailAsync(
-        string email,
+    private async Task<Result> ExistByEmailOrDocumentAsync(
+        string email, string document,
         CancellationToken cancellationToken)
     {
         using Activity? activity = ActivitySource.StartActivity();
 
         bool existsEmail = await driverReadRepository
-            .ExistsByAsync(email, cancellationToken);
+            .ExistsByAsync(email, document, cancellationToken);
 
         if (!existsEmail)
         {
             return Result.WithSuccess();
         }
 
-        Error error = DomainErrors.DriverErrors.DuplicateEmail;
+        Error error = DomainErrors.DriverErrors.DuplicateEmailOrDocument;
 
         logger.LogAlreadyExists(nameof(CreateCommandHandler),
-            nameof(ExistEmailAsync), email, error);
+            nameof(ExistByEmailOrDocumentAsync), email, error);
 
         return Result.FromInvalid(error);
     }
@@ -85,7 +85,7 @@ public sealed class CreateCommandHandler(
 
         Result<DriverEntity> entity = DriverEntity.Create(
             request.FullName, request.Birthday!.Value,
-            request.Email!, request.Phone!, 
+            request.Email!, request.Phone!,
             request.Document, request.Gender!.Value);
 
         if (entity.IsSuccess)
@@ -106,7 +106,6 @@ public sealed class CreateCommandHandler(
         CancellationToken cancellationToken)
     {
         using Activity? activity = ActivitySource.StartActivity();
-
 
         try
         {

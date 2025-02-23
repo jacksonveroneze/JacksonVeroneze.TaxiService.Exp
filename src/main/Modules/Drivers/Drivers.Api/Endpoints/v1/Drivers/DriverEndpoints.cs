@@ -15,6 +15,9 @@ public static class DriverEndpoints
 
         builder.AddCreate()
             .AddActivate()
+            .AddInactivate()
+            .AddBlock()
+            .AddDelete()
             .AddGetById();
 
         return app;

@@ -27,8 +27,8 @@ export const optionsOneIteration = {
 };
 
 export const optionsIterations = {
-    iterations: 10000,
-    vus: 25
+    iterations: 100000,
+    vus: 500
 };
 
 export const optionsDuration = {
@@ -38,7 +38,7 @@ export const optionsDuration = {
     ]
 };
 
-export const options = optionsIterations;
+export const options = optionsOneIteration;
 
  const baseUrl = 'http://localhost:7000/api/v1';
 // const baseUrl = 'http://localhost:8080';
@@ -68,4 +68,6 @@ export default () => {
     // group('Endpoint Ride', () => {
     //     ride(baseUrl, headers);
     // });
+    
+    // sleep(1);
 }

@@ -8,6 +8,10 @@ public interface IDriverWriteRepository
         DriverEntity entity,
         CancellationToken cancellationToken);
 
+    public Task DeleteAsync(
+        DriverEntity entity,
+        CancellationToken cancellationToken);
+    
     public Task UpdateAsync(
         DriverEntity entity,
         CancellationToken cancellationToken);

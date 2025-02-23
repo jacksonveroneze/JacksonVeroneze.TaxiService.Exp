@@ -13,9 +13,11 @@ public class DriverReadRepository(
 {
     public Task<bool> ExistsByAsync(
         string email,
+        string document,
         CancellationToken cancellationToken)
     {
-        return service.AnyAsync(conf => conf.Email.Value == email,
+        return service.AnyAsync(
+            conf => conf.Email.Value == email,
             cancellationToken);
     }
 

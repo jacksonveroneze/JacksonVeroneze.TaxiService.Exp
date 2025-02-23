@@ -23,6 +23,10 @@ public static partial class DomainErrors
             new("Driver.DuplicateEmail",
                 string.Format(null, CommonDomainErrors.TemplateDataInUse, "e-mail"));
 
+        public static Error DuplicateEmailOrDocument =>
+            new("Driver.DuplicateEmailOrDocument",
+                string.Format(null, CommonDomainErrors.TemplateDataInUse, "e-mail or document"));
+
         #region Status
 
         public static Error NotPendingApproval =>
@@ -39,9 +43,13 @@ public static partial class DomainErrors
 
         public static Error AlreadyActive =>
             new("Driver.AlreadyActive", "The Driver is already active.");
-        
+
         public static Error NotActivated =>
             new("Driver.NotActivated", "The Driver is not activated.");
+
+        public static Error DriverHasActiveRide =>
+            new("Driver.HasActiveRide",
+                "O motorista não pode executar esta ação pois está com uma corrida ativa.");
 
         #endregion
     }

@@ -10,7 +10,7 @@ internal static class ValidationErrors
     private static readonly CompositeFormat TemplateIsRequired =
         CompositeFormat.Parse("The {0} is required.");
 
-    internal static class User
+    internal static class Drivers
     {
         internal static Error IdIsRequired =>
             new("User.IdIsRequired",

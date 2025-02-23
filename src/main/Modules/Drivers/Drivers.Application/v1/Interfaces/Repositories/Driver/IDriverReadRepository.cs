@@ -6,6 +6,7 @@ public interface IDriverReadRepository
 {
     public Task<bool> ExistsByAsync(
         string email,
+        string document,
         CancellationToken cancellationToken);
     
     public Task<DriverEntity?> GetByIdAsync(
