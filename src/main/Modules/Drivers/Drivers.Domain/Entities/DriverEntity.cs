@@ -121,7 +121,7 @@ public class DriverEntity : BaseEntityAggregateRoot
         return Result.WithSuccess();
     }
 
-    public Result BlockTemporarily(DateTime utcNow)
+    public Result BlockTemporarily()
     {
         if (IsBlockedPermanent)
         {
@@ -141,7 +141,7 @@ public class DriverEntity : BaseEntityAggregateRoot
         return Result.WithSuccess();
     }
 
-    public Result BlockPermanently(DateTime utcNow)
+    public Result BlockPermanently()
     {
         if (IsBlockedPermanent)
         {

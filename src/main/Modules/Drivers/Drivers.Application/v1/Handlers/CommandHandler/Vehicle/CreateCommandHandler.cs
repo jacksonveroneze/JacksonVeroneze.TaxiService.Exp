@@ -33,7 +33,7 @@ public sealed class CreateCommandHandler(
 
         ArgumentNullException.ThrowIfNull(request);
 
-        Result validationResult = await ValidateRequestAsync(
+        Result validationResult = await ValidateBussinesRulesAsync(
             request, cancellationToken);
 
         if (validationResult.IsFailure)
@@ -59,7 +59,7 @@ public sealed class CreateCommandHandler(
         return Result<CreateCommandResponse>.WithSuccess(response);
     }
 
-    private async Task<Result> ValidateRequestAsync(
+    private async Task<Result> ValidateBussinesRulesAsync(
         CreateCommand request,
         CancellationToken cancellationToken)
     {

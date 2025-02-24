@@ -13,7 +13,7 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
 
     public Guid DriverId { get; private set; }
 
-    public DriverAvailability? Status { get; private set; }
+    public DriverAvailabilityStatus? Status { get; private set; }
 
     public CoordinateValueObject Location { get; private set; } = null!;
 
@@ -24,7 +24,7 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
     }
 
     public DriverAvailabilityEntity(Guid driverId,
-        DriverAvailability? status,
+        DriverAvailabilityStatus? status,
         CoordinateValueObject? location)
     {
         ArgumentNullException.ThrowIfNull(driverId);
@@ -33,7 +33,7 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
 
         Id = Guid.NewGuid();
         DriverId = driverId;
-        Status = DriverAvailability.Offline;
+        Status = DriverAvailabilityStatus.Offline;
     }
 
     #endregion
@@ -42,7 +42,7 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
 
     public Result SetOnline(double latitude, double longitude)
     {
-        if (Status is DriverAvailability.InRide)
+        if (Status is DriverAvailabilityStatus.InRide)
         {
             return Result.FromInvalid(
                 DomainErrors.DriverAvailabilityError
@@ -58,39 +58,36 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
                 .FromInvalid(coordinateVo.Error!);
         }
         
-        Status = DriverAvailability.Online;
+        Status = DriverAvailabilityStatus.Online;
         Location = coordinateVo.Value!;
-        //MarkAsUpdated();
 
         return Result.WithSuccess();
     }
     
     public Result SetOffline()
     {
-        if (Status is DriverAvailability.InRide)
+        if (Status is DriverAvailabilityStatus.InRide)
         {
             return Result.FromInvalid(
                 DomainErrors.DriverAvailabilityError
                     .CannotGoOfflineDuringRide);
         }
 
-        Status = DriverAvailability.Offline;
-        //MarkAsUpdated();
+        Status = DriverAvailabilityStatus.Offline;
 
         return Result.WithSuccess();
     }
     
     public Result SetInRide()
     {
-        if (Status is DriverAvailability.Offline)
+        if (Status is DriverAvailabilityStatus.Offline)
         {
             return Result.FromInvalid(
                 DomainErrors.DriverAvailabilityError
                     .CannotStartRideWhileOffline);
         }
 
-        Status = DriverAvailability.InRide;
-        //MarkAsUpdated();
+        Status = DriverAvailabilityStatus.InRide;
 
         return Result.WithSuccess();
     }
@@ -108,7 +105,6 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
         }
 
         Location = coordinateVo.Value!;
-        //MarkAsUpdated();
 
         return Result.WithSuccess();
     }
@@ -120,7 +116,7 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
     // Factory Method
     public static Result<DriverAvailabilityEntity> Create(
         Guid driverId,
-        DriverAvailability? availability,
+        DriverAvailabilityStatus? availability,
         float latitude, float longitude)
     {
         Result<CoordinateValueObject> coordinateVo =

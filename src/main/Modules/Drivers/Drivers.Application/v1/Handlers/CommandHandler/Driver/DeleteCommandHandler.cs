@@ -24,7 +24,7 @@ public sealed class DeleteCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<DriverEntity> resultEntity = 
+        Result<DriverEntity> resultEntity =
             await driverService.GetByIdAsync(
                 request.Id, cancellationToken);
 
@@ -32,19 +32,13 @@ public sealed class DeleteCommandHandler(
         {
             return resultEntity;
         }
+        
+        Result validationResult = await ValidateBussinesRulesAsync(
+            request, cancellationToken);
 
-        DriverAvailabilityEntity? result = await driverAvailabilityReadRepository
-            .GetByDriverIdAsync(request.Id, cancellationToken);
-
-        if (result?.Status == DriverAvailability.InRide)
+        if (validationResult.IsFailure)
         {
-            Error error = DomainErrors.DriverErrors.DriverHasActiveRide;
-
-            logger.LogGenericValidationError(
-                nameof(DeleteCommandHandler),
-                nameof(Handle), error);
-
-            return Result<DriverEntity>.WithError(error);
+            return validationResult;
         }
 
         Result resultAction = Remove(resultEntity.Value!);
@@ -58,6 +52,27 @@ public sealed class DeleteCommandHandler(
 
         return Result.WithSuccess();
     }
+    
+    private async Task<Result> ValidateBussinesRulesAsync(
+        DeleteCommand request,
+        CancellationToken cancellationToken)
+    {
+        DriverAvailabilityEntity? result = await driverAvailabilityReadRepository
+            .GetByDriverIdAsync(request.Id, cancellationToken);
+
+        if (result?.Status != DriverAvailabilityStatus.InRide)
+        {
+            return Result.WithSuccess();
+        }
+
+        Error error = DomainErrors.DriverErrors.DriverHasActiveRide;
+
+        logger.LogGenericValidationError(
+            nameof(DeleteCommandHandler),
+            nameof(Handle), error);
+
+        return Result.WithError(error);
+    }
 
     private Result Remove(DriverEntity entity)
     {
@@ -65,7 +80,7 @@ public sealed class DeleteCommandHandler(
 
         if (result.IsFailure)
         {
-            logger.LogAlreadyProcessed(
+            logger.LogGenericValidationError(
                 nameof(ActivateCommandHandler),
                 nameof(Remove), entity.Id, result.Error!);
         }

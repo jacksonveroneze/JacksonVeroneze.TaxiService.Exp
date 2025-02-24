@@ -1,3 +1,5 @@
+using TaxiService.Modules.Drivers.Api.Endpoints.v1.Drivers.DriverAvailability;
+
 namespace TaxiService.Modules.Drivers.Api.Endpoints.v1.Drivers;
 
 public static class DriverEndpoints
@@ -18,7 +20,9 @@ public static class DriverEndpoints
             .AddInactivate()
             .AddBlock()
             .AddDelete()
-            .AddGetById();
+            .AddGetById()
+            .AddUpdateAvailability()
+            .AddUpdateLocationCommand();
 
         return app;
     }

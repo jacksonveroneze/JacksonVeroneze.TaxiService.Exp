@@ -1,6 +1,6 @@
 namespace TaxiService.Modules.Drivers.Domain.Enums;
 
-public enum DriverAvailability
+public enum DriverAvailabilityStatus
 {
     None,
     Online,

@@ -12,8 +12,7 @@ namespace TaxiService.Modules.Drivers.Application.v1.Handlers.CommandHandler.Dri
 public sealed class BlockCommandHandler(
     ILogger<BlockCommandHandler> logger,
     IDriverService driverService,
-    IDriverWriteRepository driverWriteRepository,
-    IDateTimeProvider dateTime)
+    IDriverWriteRepository driverWriteRepository)
     : IRequestHandler<BlockCommand, Result>
 {
     public async Task<Result> Handle(
@@ -48,16 +47,16 @@ public sealed class BlockCommandHandler(
         var result = request.Type switch
         {
             BlockCommand.BlockEnum.TemporaryBlock =>
-                entity.BlockTemporarily(dateTime.UtcNow),
+                entity.BlockTemporarily(),
 
             BlockCommand.BlockEnum.PermanentBlock =>
-                entity.BlockPermanently(dateTime.UtcNow),
+                entity.BlockPermanently(),
             _ => throw new ArgumentOutOfRangeException()
         };
 
         if (result.IsFailure)
         {
-            logger.LogAlreadyProcessed(
+            logger.LogGenericValidationError(
                 nameof(BlockCommandHandler),
                 nameof(Block), entity.Id, result.Error!);
         }

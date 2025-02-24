@@ -67,7 +67,6 @@ public class VehicleEntity : BaseEntityAggregateRoot
         }
 
         Status = VehicleStatus.Active;
-        //MarkAsUpdated();
 
         return Result.WithSuccess();
     }
@@ -81,7 +80,6 @@ public class VehicleEntity : BaseEntityAggregateRoot
         }
 
         Status = VehicleStatus.Inactive;
-        //MarkAsUpdated();
 
         return Result.WithSuccess();
     }
@@ -95,7 +93,6 @@ public class VehicleEntity : BaseEntityAggregateRoot
         }
 
         Status = VehicleStatus.Rejected;
-        //MarkAsUpdated();
 
         return Result.WithSuccess();
     }

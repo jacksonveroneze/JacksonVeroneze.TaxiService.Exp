@@ -38,6 +38,15 @@ public static partial class LogMessagesExtensions
         Message = "{className} - {methodName} - Error: '{error}'")]
     public static partial void LogGenericValidationError(this ILogger logger,
         string className, string methodName, Error error);
+    
+    [LoggerMessage(
+        EventId = 1003,
+        Level = LogLevel.Warning,
+        Message = "{className} - {methodName} - " +
+                  "Identifier: '{identifier}' - " +
+                  "Error: '{error}'")]
+    public static partial void LogGenericValidationError(this ILogger logger,
+        string className, string methodName, Guid identifier, Error error);
 
     #endregion
 

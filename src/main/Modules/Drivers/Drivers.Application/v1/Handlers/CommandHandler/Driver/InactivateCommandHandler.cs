@@ -22,7 +22,7 @@ public sealed class InactivateCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<DriverEntity> resultEntity = 
+        Result<DriverEntity> resultEntity =
             await driverService.GetByIdAsync(
                 request.Id, cancellationToken);
 
@@ -49,7 +49,7 @@ public sealed class InactivateCommandHandler(
 
         if (result.IsFailure)
         {
-            logger.LogAlreadyProcessed(
+            logger.LogGenericValidationError(
                 nameof(InactivateCommandHandler),
                 nameof(Inactivate), entity.Id, result.Error!);
         }

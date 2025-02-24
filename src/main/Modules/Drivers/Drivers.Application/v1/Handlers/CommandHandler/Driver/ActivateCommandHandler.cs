@@ -22,9 +22,9 @@ public sealed class ActivateCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<DriverEntity> resultEntity = 
+        Result<DriverEntity> resultEntity =
             await driverService.GetByIdAsync(
-            request.Id, cancellationToken);
+                request.Id, cancellationToken);
 
         if (resultEntity.IsFailure)
         {
@@ -49,7 +49,7 @@ public sealed class ActivateCommandHandler(
 
         if (result.IsFailure)
         {
-            logger.LogAlreadyProcessed(
+            logger.LogGenericValidationError(
                 nameof(ActivateCommandHandler),
                 nameof(Activate), entity.Id, result.Error!);
         }
