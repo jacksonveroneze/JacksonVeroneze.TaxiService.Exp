@@ -58,7 +58,7 @@ public sealed class DeleteCommandHandler(
         CancellationToken cancellationToken)
     {
         DriverAvailabilityEntity? result = await driverAvailabilityReadRepository
-            .GetByDriverIdAsync(request.Id, cancellationToken);
+            .GetLastByDriverIdAsync(request.Id, cancellationToken);
 
         if (result?.Status != DriverAvailabilityStatus.InRide)
         {

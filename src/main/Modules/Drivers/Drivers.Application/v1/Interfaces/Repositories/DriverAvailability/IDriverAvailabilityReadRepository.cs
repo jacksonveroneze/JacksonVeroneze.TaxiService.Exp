@@ -4,7 +4,7 @@ namespace TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.Dri
 
 public interface IDriverAvailabilityReadRepository
 {
-    public Task<DriverAvailabilityEntity?> GetByDriverIdAsync(
+    public Task<DriverAvailabilityEntity?> GetLastByDriverIdAsync(
         Guid driverId,
         CancellationToken cancellationToken);
 }

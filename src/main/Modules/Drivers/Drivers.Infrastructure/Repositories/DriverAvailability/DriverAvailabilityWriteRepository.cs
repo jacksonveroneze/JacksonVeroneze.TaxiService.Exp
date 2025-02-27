@@ -15,6 +15,8 @@ public class DriverAvailabilityWriteRepository(
         CancellationToken cancellationToken)
     {
         await service.CreateAsync(entity, cancellationToken);
+        
+        await service.DbContext.SaveChangesAsync(cancellationToken);
     }
 
     public async Task UpdateAsync(

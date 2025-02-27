@@ -1,11 +1,13 @@
 using Microsoft.Extensions.DependencyInjection;
 using TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.Driver;
 using TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.DriverAvailability;
+using TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.DriverLocation;
 using TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.Vehicle;
 using TaxiService.Modules.Drivers.Application.v1.Interfaces.Services;
 using TaxiService.Modules.Drivers.Application.v1.Services;
 using TaxiService.Modules.Drivers.Infrastructure.Repositories.Driver;
 using TaxiService.Modules.Drivers.Infrastructure.Repositories.DriverAvailability;
+using TaxiService.Modules.Drivers.Infrastructure.Repositories.DriverLocation;
 using TaxiService.Modules.Drivers.Infrastructure.Repositories.Vehicle;
 
 namespace TaxiService.Modules.Drivers.Infrastructure.Extensions;
@@ -40,6 +42,14 @@ internal static class ServicesExtensions
         // Repositories
         services.AddScoped<IDriverAvailabilityReadRepository, DriverAvailabilityReadRepository>();
         services.AddScoped<IDriverAvailabilityWriteRepository, DriverAvailabilityWriteRepository>();
+
+        #endregion
+
+        #region DriverLocation
+
+        // Repositories
+        services.AddScoped<IDriverLocationReadRepository, DriverLocationReadRepository>();
+        services.AddScoped<IDriverLocationWriteRepository, DriverLocationWriteRepository>();
 
         #endregion
 

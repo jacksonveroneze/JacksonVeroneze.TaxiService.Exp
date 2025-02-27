@@ -20,11 +20,5 @@ public class UpdateAvailabilityCommandValidator
             .NotNull()
             .NotEqual(DriverAvailabilityStatus.None)
             .IsInEnum();
-
-        RuleFor(request => request.Latitude)
-            .SetValidator(new CoordinateValidator());
-
-        RuleFor(request => request.Longitude)
-            .SetValidator(new CoordinateValidator());
     }
 }

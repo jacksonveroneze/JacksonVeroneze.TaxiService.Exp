@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using JacksonVeroneze.NET.Result;
 using TaxiService.Modules.Drivers.Application.v1.Commands.DriverAvailability;
+using TaxiService.Modules.Drivers.Domain.Enums;
 
 namespace TaxiService.Modules.Drivers.Api.Endpoints.v1.Drivers.DriverAvailability;
 
@@ -14,10 +15,13 @@ internal static class UpdateAvailabilityEndpoint
     {
         builder.MapPut("{id:guid:required}/availability", async (
                 [FromServices] ISender mediator,
-                [FromBody] UpdateAvailabilityCommand command,
+                [FromRoute] Guid id,
+                [FromBody] Request request,
                 CancellationToken cancellationToken) =>
             {
                 using Activity? activity = ActivitySource.StartActivity();
+
+                UpdateAvailabilityCommand command = new(id, request.Status);
 
                 Result response = await mediator
                     .Send(command, cancellationToken);
@@ -28,4 +32,6 @@ internal static class UpdateAvailabilityEndpoint
 
         return builder;
     }
+
+    private record Request(DriverAvailabilityStatus Status);
 }

@@ -15,7 +15,14 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
 
     public DriverAvailabilityStatus? Status { get; private set; }
 
-    public CoordinateValueObject Location { get; private set; } = null!;
+    public bool IsInRide =>
+        Status is DriverAvailabilityStatus.InRide;
+
+    public bool IsOnline =>
+        Status is DriverAvailabilityStatus.Online;
+
+    public bool IsOffline =>
+        Status is DriverAvailabilityStatus.Offline;
 
     #region ctor
 
@@ -23,50 +30,38 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
     {
     }
 
-    public DriverAvailabilityEntity(Guid driverId,
-        DriverAvailabilityStatus? status,
-        CoordinateValueObject? location)
+    protected DriverAvailabilityEntity(Guid driverId,
+        DriverAvailabilityStatus? status)
     {
         ArgumentNullException.ThrowIfNull(driverId);
         ArgumentNullException.ThrowIfNull(status);
-        ArgumentNullException.ThrowIfNull(location);
 
         Id = Guid.NewGuid();
         DriverId = driverId;
-        Status = DriverAvailabilityStatus.Offline;
+        Status = status;
     }
 
     #endregion
 
     #region Status
 
-    public Result SetOnline(double latitude, double longitude)
+    public Result SetOnline()
     {
-        if (Status is DriverAvailabilityStatus.InRide)
+        if (IsInRide)
         {
             return Result.FromInvalid(
                 DomainErrors.DriverAvailabilityError
                     .CannotGoOnlineDuringRide);
         }
-        
-        Result<CoordinateValueObject> coordinateVo =
-            CoordinateValueObject.Create(latitude, longitude);
 
-        if (coordinateVo.IsFailure)
-        {
-            return Result<DriverAvailabilityEntity>
-                .FromInvalid(coordinateVo.Error!);
-        }
-        
         Status = DriverAvailabilityStatus.Online;
-        Location = coordinateVo.Value!;
 
         return Result.WithSuccess();
     }
-    
+
     public Result SetOffline()
     {
-        if (Status is DriverAvailabilityStatus.InRide)
+        if (IsInRide)
         {
             return Result.FromInvalid(
                 DomainErrors.DriverAvailabilityError
@@ -77,10 +72,10 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
 
         return Result.WithSuccess();
     }
-    
+
     public Result SetInRide()
     {
-        if (Status is DriverAvailabilityStatus.Offline)
+        if (IsOffline)
         {
             return Result.FromInvalid(
                 DomainErrors.DriverAvailabilityError
@@ -92,23 +87,6 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
         return Result.WithSuccess();
     }
 
-    public Result UpdateLocation(
-        double latitude, double longitude)
-    {
-        Result<CoordinateValueObject> coordinateVo =
-            CoordinateValueObject.Create(latitude, longitude);
-
-        if (coordinateVo.IsFailure)
-        {
-            return Result<DriverAvailabilityEntity>
-                .FromInvalid(coordinateVo.Error!);
-        }
-
-        Location = coordinateVo.Value!;
-
-        return Result.WithSuccess();
-    }
-
     #endregion
 
     #region Factory
@@ -116,20 +94,10 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
     // Factory Method
     public static Result<DriverAvailabilityEntity> Create(
         Guid driverId,
-        DriverAvailabilityStatus? availability,
-        float latitude, float longitude)
+        DriverAvailabilityStatus? availability)
     {
-        Result<CoordinateValueObject> coordinateVo =
-            CoordinateValueObject.Create(latitude, longitude);
-
-        if (coordinateVo.IsFailure)
-        {
-            return Result<DriverAvailabilityEntity>
-                .FromInvalid(coordinateVo.Error!);
-        }
-
-        DriverAvailabilityEntity entity = new(driverId,
-            availability, coordinateVo.Value);
+        DriverAvailabilityEntity entity = new(
+            driverId, availability);
 
         return Result<DriverAvailabilityEntity>.WithSuccess(entity);
     }

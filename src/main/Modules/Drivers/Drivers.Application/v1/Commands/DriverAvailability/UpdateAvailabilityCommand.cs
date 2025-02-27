@@ -5,6 +5,4 @@ namespace TaxiService.Modules.Drivers.Application.v1.Commands.DriverAvailability
 
 public sealed record UpdateAvailabilityCommand(
     Guid Id,
-    DriverAvailabilityStatus Status,
-    float Latitude,
-    float Longitude) : IRequest<Result>;
+    DriverAvailabilityStatus Status) : IRequest<Result>;

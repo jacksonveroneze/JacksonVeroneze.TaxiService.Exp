@@ -14,13 +14,17 @@ internal static class UpdateLocationEndpoint
     {
         builder.MapPut("{id:guid:required}/location", async (
                 [FromServices] ISender mediator,
-                [FromBody] UpdateLocationCommand command,
+                [FromRoute] Guid id,
+                [FromBody] Request request,
                 CancellationToken cancellationToken) =>
             {
                 using Activity? activity = ActivitySource.StartActivity();
 
-                Result response = await mediator.Send
-                    (command, cancellationToken);
+                UpdateLocationCommand command = new(
+                    id, request.Latitude, request.Longitude);
+
+                Result response = await mediator
+                    .Send(command, cancellationToken);
 
                 return response.MatchPut();
             })
@@ -28,4 +32,6 @@ internal static class UpdateLocationEndpoint
 
         return builder;
     }
+
+    private record Request(float Latitude, float Longitude);
 }

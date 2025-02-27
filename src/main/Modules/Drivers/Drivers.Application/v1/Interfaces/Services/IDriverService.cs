@@ -8,7 +8,7 @@ public interface IDriverService
     Task<Result<bool>> ExistsAsync(
         Guid id,
         CancellationToken cancellationToken);
-
+    
     Task<Result<DriverEntity>> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken);
