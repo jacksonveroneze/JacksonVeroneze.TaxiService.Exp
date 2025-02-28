@@ -1,6 +1,7 @@
 import {group} from 'k6';
 import * as driver from "./driver.js";
 import {checker, factoryHeaders} from "../util.js";
+import {updateAvailability, updateLocation} from "./driver.js";
 
 export default (baseUrl, headers) => {
     // group('Create Flow - Success', () => {
@@ -22,6 +23,7 @@ export default (baseUrl, headers) => {
         driver.getById(baseUrl, factoryHeaders(), idDriver1);
         driver.activate(baseUrl, factoryHeaders(), idDriver1);
         driver.block(baseUrl, factoryHeaders(), idDriver1, 'TemporaryBlock');
+        driver.reactivate(baseUrl, factoryHeaders(), idDriver1);
 
         const idDriver2 = driver.create(baseUrl, factoryHeaders());
         driver.getById(baseUrl, factoryHeaders(), idDriver2);
@@ -31,6 +33,8 @@ export default (baseUrl, headers) => {
         const idDriver3 = driver.create(baseUrl, factoryHeaders());
         driver.getById(baseUrl, factoryHeaders(), idDriver3);
         driver.activate(baseUrl, factoryHeaders(), idDriver3);
+        driver.updateAvailability(baseUrl, factoryHeaders(), idDriver3);
+        driver.updateLocation(baseUrl, factoryHeaders(), idDriver3);
         
         const vehicleId = driver.createVehicle(baseUrl, factoryHeaders(), idDriver3);
         driver.getVehicleById(baseUrl, factoryHeaders(), vehicleId);

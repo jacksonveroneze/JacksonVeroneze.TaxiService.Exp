@@ -59,6 +59,17 @@ export function block(baseUrl, headers, id, type) {
     return response;
 }
 
+export function reactivate(baseUrl, headers, id, type) {
+    const body = JSON.stringify({
+        type: type
+    });
+
+    const response = http.put(`${baseUrl}/drivers/${id}/reactivate`, body, headers);
+    check(response, {'[Driver] - Blocked - status is 204': (r) => r.status === 204});
+
+    return response;
+}
+
 export function remove(baseUrl, headers, id) {
     const response = http.del(`${baseUrl}/drivers/${id}`, {}, headers);
     check(response, {'[Driver] - Deleted - status is 204': (r) => r.status === 204});
@@ -66,6 +77,24 @@ export function remove(baseUrl, headers, id) {
     return response;
 }
 
+export function updateAvailability(baseUrl, headers, id) {
+    const body = JSON.stringify({
+        status: "Online",
+    });
+
+    const response = http.put(`${baseUrl}/drivers/${id}/availability`, body, headers);
+    check(response, {'[availability] - Created - status is 204': (r) => r.status === 204});
+}
+
+export function updateLocation(baseUrl, headers, id) {
+    const body = JSON.stringify({
+        "latitude":"3.6823",
+        "longitude": "51.9175",
+    });
+    
+    const response = http.put(`${baseUrl}/drivers/${id}/location`, body, headers);
+    check(response, {'[location] - Created - status is 204': (r) => r.status === 204});
+}
 
 export function createVehicle(baseUrl, headers, driverId) {
     const genders = ['Male', 'Female'];

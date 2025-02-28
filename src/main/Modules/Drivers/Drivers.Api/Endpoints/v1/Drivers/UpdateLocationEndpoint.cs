@@ -2,7 +2,7 @@ using System.Diagnostics;
 using JacksonVeroneze.NET.Result;
 using TaxiService.Modules.Drivers.Application.v1.Commands.DriverAvailability;
 
-namespace TaxiService.Modules.Drivers.Api.Endpoints.v1.Drivers.DriverAvailability;
+namespace TaxiService.Modules.Drivers.Api.Endpoints.v1.Drivers;
 
 internal static class UpdateLocationEndpoint
 {
