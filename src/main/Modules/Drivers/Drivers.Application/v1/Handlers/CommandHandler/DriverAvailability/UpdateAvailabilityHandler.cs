@@ -22,6 +22,32 @@ public sealed class UpdateAvailabilityHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
+        Result validationResult = await ValidateBussinesRulesAsync(
+            request, cancellationToken);
+
+        if (validationResult.IsFailure)
+        {
+            return validationResult;
+        }
+        
+        Result<DriverAvailabilityEntity> driverAvailability = 
+            FactoryEntity(request);
+
+        if (driverAvailability.IsFailure)
+        {
+            return Result<UpdateAvailabilityHandler>
+                .FromInvalid(driverAvailability.Errors!);
+        }
+
+        await CreateAsync(driverAvailability.Value!, cancellationToken);
+
+        return Result.WithSuccess();
+    }
+
+    private async Task<Result> ValidateBussinesRulesAsync(
+        UpdateAvailabilityCommand request,
+        CancellationToken cancellationToken)
+    {
         Result<DriverEntity> resultEntity =
             await driverService.GetByIdAsync(
                 request.Id, cancellationToken);
@@ -41,21 +67,15 @@ public sealed class UpdateAvailabilityHandler(
         DriverAvailabilityEntity? lastAvailability =
             await driverAvailabilityReadRepository
                 .GetLastByDriverIdAsync(request.Id, cancellationToken);
-        
-        Result<DriverAvailabilityEntity> driverAvailability = 
-            FactoryEntity(request);
 
-        if (driverAvailability.IsFailure)
+        if (lastAvailability is not null)
         {
-            return Result<UpdateAvailabilityHandler>
-                .FromInvalid(driverAvailability.Errors!);
+            // Validar regras aqui.
         }
-
-        await CreateAsync(driverAvailability.Value!, cancellationToken);
-
+        
         return Result.WithSuccess();
     }
-
+    
     private Result ValidateDriverStatus(
         DriverEntity entity)
     {

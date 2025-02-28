@@ -51,6 +51,7 @@ public sealed class BlockCommandHandler(
 
             BlockCommand.BlockEnum.PermanentBlock =>
                 entity.BlockPermanently(),
+            
             _ => throw new ArgumentOutOfRangeException()
         };
 

@@ -10,9 +10,13 @@ public class DriverLocationEntity : BaseEntityAggregateRoot
 
     public Guid DriverId { get; private set; }
 
-    public CoordinateValueObject? Location { get; private set; } = null!;
+    public CoordinateValueObject Location { get; private set; } = null!;
 
     #region ctor
+
+    protected DriverLocationEntity()
+    {
+    }
 
     public DriverLocationEntity(Guid driverId,
         CoordinateValueObject? location)
@@ -48,5 +52,6 @@ public class DriverLocationEntity : BaseEntityAggregateRoot
 
         return Result<DriverLocationEntity>.WithSuccess(entity);
     }
+
     #endregion
 }

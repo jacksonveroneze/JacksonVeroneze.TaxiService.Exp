@@ -48,6 +48,24 @@ namespace TaxiService.Modules.Drivers.Infrastructure.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     driver_id = table.Column<Guid>(type: "uuid", nullable: false),
                     status = table.Column<int>(type: "integer", nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
+                    updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    deleted_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    version = table.Column<int>(type: "integer", nullable: false, defaultValue: 1),
+                    tenant_id = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_driver_availability", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "driver_location",
+                schema: "driver",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    driver_id = table.Column<Guid>(type: "uuid", nullable: false),
                     latitude = table.Column<double>(type: "double precision", nullable: false),
                     longitude = table.Column<double>(type: "double precision", nullable: false),
                     created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
@@ -58,7 +76,7 @@ namespace TaxiService.Modules.Drivers.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_driver_availability", x => x.id);
+                    table.PrimaryKey("pk_driver_location", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -110,6 +128,18 @@ namespace TaxiService.Modules.Drivers.Infrastructure.Migrations
                 column: "tenant_id");
 
             migrationBuilder.CreateIndex(
+                name: "ix_driver_location_driver_id",
+                schema: "driver",
+                table: "driver_location",
+                column: "driver_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_driver_location_tenant_id",
+                schema: "driver",
+                table: "driver_location",
+                column: "tenant_id");
+
+            migrationBuilder.CreateIndex(
                 name: "ix_vehicle_driver_id",
                 schema: "driver",
                 table: "vehicle",
@@ -131,6 +161,10 @@ namespace TaxiService.Modules.Drivers.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "driver_availability",
+                schema: "driver");
+
+            migrationBuilder.DropTable(
+                name: "driver_location",
                 schema: "driver");
 
             migrationBuilder.DropTable(

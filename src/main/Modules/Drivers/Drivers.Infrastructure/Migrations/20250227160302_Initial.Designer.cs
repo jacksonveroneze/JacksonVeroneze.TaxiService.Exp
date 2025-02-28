@@ -13,7 +13,7 @@ using TaxiService.Modules.Drivers.Infrastructure.Contexts;
 namespace TaxiService.Modules.Drivers.Infrastructure.Migrations
 {
     [DbContext(typeof(DriversDbContext))]
-    [Migration("20250216173615_Initial")]
+    [Migration("20250227160302_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -65,19 +65,6 @@ namespace TaxiService.Modules.Drivers.Infrastructure.Migrations
                         .HasColumnType("integer")
                         .HasDefaultValue(1)
                         .HasColumnName("version");
-
-                    b.ComplexProperty<Dictionary<string, object>>("Location", "TaxiService.Modules.Drivers.Domain.Entities.DriverAvailabilityEntity.Location#CoordinateValueObject", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<double>("Latitude")
-                                .HasColumnType("double precision")
-                                .HasColumnName("latitude");
-
-                            b1.Property<double>("Longitude")
-                                .HasColumnType("double precision")
-                                .HasColumnName("longitude");
-                        });
 
                     b.HasKey("Id")
                         .HasName("pk_driver_availability");
@@ -196,6 +183,66 @@ namespace TaxiService.Modules.Drivers.Infrastructure.Migrations
                         .HasDatabaseName("ix_driver_tenant_id");
 
                     b.ToTable("driver", "driver");
+                });
+
+            modelBuilder.Entity("TaxiService.Modules.Drivers.Domain.Entities.DriverLocationEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("deleted_at");
+
+                    b.Property<Guid>("DriverId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("driver_id");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("tenant_id");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.Property<int>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(1)
+                        .HasColumnName("version");
+
+                    b.ComplexProperty<Dictionary<string, object>>("Location", "TaxiService.Modules.Drivers.Domain.Entities.DriverLocationEntity.Location#CoordinateValueObject", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<double>("Latitude")
+                                .HasColumnType("double precision")
+                                .HasColumnName("latitude");
+
+                            b1.Property<double>("Longitude")
+                                .HasColumnType("double precision")
+                                .HasColumnName("longitude");
+                        });
+
+                    b.HasKey("Id")
+                        .HasName("pk_driver_location");
+
+                    b.HasIndex("DriverId")
+                        .HasDatabaseName("ix_driver_location_driver_id");
+
+                    b.HasIndex("TenantId")
+                        .HasDatabaseName("ix_driver_location_tenant_id");
+
+                    b.ToTable("driver_location", "driver");
                 });
 
             modelBuilder.Entity("TaxiService.Modules.Drivers.Domain.Entities.VehicleEntity", b =>

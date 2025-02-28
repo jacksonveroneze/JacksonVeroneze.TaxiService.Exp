@@ -100,7 +100,7 @@ public class DriverEntity : BaseEntityAggregateRoot
         return Result.WithSuccess();
     }
     
-    public Result Reactivate(DateTime utcNow)
+    public Result Reactivate()
     {
         if (IsBlockedPermanent)
         {
@@ -113,9 +113,14 @@ public class DriverEntity : BaseEntityAggregateRoot
             return Result.FromInvalid(
                 DomainErrors.DriverErrors.AlreadyActive);
         }
+        
+        if (!IsBlockedTemporarily)
+        {
+            return Result.FromInvalid(
+                DomainErrors.DriverErrors.NotActivated);
+        }
 
         Status = DriverStatus.Active;
-        ActivedOnUtc = utcNow;
         AddEvent(new DriverReactivatedEvent(Id));
 
         return Result.WithSuccess();
