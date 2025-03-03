@@ -3,6 +3,7 @@ using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Drivers.Application.v1.Commands.Vehicle;
+using TaxiService.Modules.Drivers.Application.v1.DTOs;
 using TaxiService.Modules.Drivers.Application.v1.Interfaces;
 using TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.Driver;
 using TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.Vehicle;
@@ -130,10 +131,10 @@ public sealed class CreateCommandHandler(
     {
         using Activity? activity = ActivitySource.StartActivity();
 
-        DriverEntity? driverEntity = await driverReadRepository
+        DriverDto? driver = await driverReadRepository
             .GetByIdAsync(driverId, cancellationToken);
 
-        if (driverEntity is null)
+        if (driver is null)
         {
             Error errorNotFound = DomainErrors.DriverErrors.NotFound;
 
@@ -143,7 +144,7 @@ public sealed class CreateCommandHandler(
             return Result.FromInvalid(errorNotFound);
         }
 
-        if (driverEntity.Status is DriverStatus.Active)
+        if (driver.Status is DriverStatus.Active)
         {
             return Result.WithSuccess();
         }

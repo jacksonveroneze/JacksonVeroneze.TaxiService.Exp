@@ -15,7 +15,7 @@ public sealed class DeleteCommandHandler(
     ILogger<DeleteCommandHandler> logger,
     IDriverAvailabilityReadRepository driverAvailabilityReadRepository,
     IDriverService driverService,
-    IDriverWriteRepository driverWriteRepository)
+    IDriverRepository driverRepository)
     : IRequestHandler<DeleteCommand, Result>
 {
     public async Task<Result> Handle(
@@ -92,7 +92,7 @@ public sealed class DeleteCommandHandler(
         DriverEntity driver,
         CancellationToken cancellationToken)
     {
-        await driverWriteRepository.DeleteAsync(
+        await driverRepository.DeleteAsync(
             driver, cancellationToken);
 
         logger.LogDeleted(nameof(DeleteCommandHandler),

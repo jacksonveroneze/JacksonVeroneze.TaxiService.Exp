@@ -1,4 +1,5 @@
 using JacksonVeroneze.NET.Result;
+using TaxiService.Common.BaseDomain;
 using TaxiService.Common.BaseDomain.Entities.Base;
 using TaxiService.Common.BaseDomain.ValueObjects;
 
@@ -22,7 +23,7 @@ public class PositionEntity : BaseEntityAggregateRoot
         Guid rideId,
         CoordinateValueObject position)
     {
-        Id = Guid.NewGuid();
+        Id = GuidGenerator.Generate();
         RideId = rideId;
         Position = position;
     }

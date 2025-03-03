@@ -2,8 +2,12 @@ using TaxiService.Modules.Drivers.Domain.Entities;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.Driver;
 
-public interface IDriverWriteRepository
+public interface IDriverRepository
 {
+    public Task<DriverEntity?> GetByIdAsync(
+        Guid id,
+        CancellationToken cancellationToken);
+    
     public Task CreateAsync(
         DriverEntity entity,
         CancellationToken cancellationToken);

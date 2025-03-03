@@ -12,7 +12,7 @@ namespace TaxiService.Modules.Drivers.Application.v1.Handlers.CommandHandler.Dri
 public sealed class BlockCommandHandler(
     ILogger<BlockCommandHandler> logger,
     IDriverService driverService,
-    IDriverWriteRepository driverWriteRepository)
+    IDriverRepository driverRepository)
     : IRequestHandler<BlockCommand, Result>
 {
     public async Task<Result> Handle(
@@ -69,7 +69,7 @@ public sealed class BlockCommandHandler(
         DriverEntity entity,
         CancellationToken cancellationToken)
     {
-        await driverWriteRepository.UpdateAsync(
+        await driverRepository.UpdateAsync(
             entity, cancellationToken);
 
         logger.LogProcessed(

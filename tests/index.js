@@ -28,7 +28,7 @@ export const optionsOneIteration = {
 
 export const optionsIterations = {
     iterations: 2000,
-    vus: 50
+    vus: 100
 };
 
 export const optionsDuration = {

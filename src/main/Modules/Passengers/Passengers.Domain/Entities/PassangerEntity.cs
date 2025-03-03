@@ -1,5 +1,6 @@
 using JacksonVeroneze.NET.DomainObjects.Domain;
 using JacksonVeroneze.NET.Result;
+using TaxiService.Common.BaseDomain;
 using TaxiService.Common.BaseDomain.Entities.Base;
 using TaxiService.Common.BaseDomain.ValueObjects;
 using TaxiService.Modules.Passengers.Domain.Core.Errors;
@@ -39,7 +40,7 @@ public class PassangerEntity : BaseEntityAggregateRoot, IAggregateRoot
         ArgumentNullException.ThrowIfNull(name);
         ArgumentNullException.ThrowIfNull(cpf);
 
-        Id = Guid.NewGuid();
+        Id = GuidGenerator.Generate();
         Name = name;
         Birthday = birthday;
         Gender = gender;

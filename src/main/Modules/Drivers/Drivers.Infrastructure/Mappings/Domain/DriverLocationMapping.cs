@@ -3,16 +3,16 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TaxiService.Common.BaseInfrastructure;
 using TaxiService.Modules.Drivers.Domain.Entities;
 
-namespace TaxiService.Modules.Drivers.Infrastructure.Mappings;
+namespace TaxiService.Modules.Drivers.Infrastructure.Mappings.Domain;
 
 [ExcludeFromCodeCoverage]
-public class DriverAvailabilityMapping : IEntityTypeConfiguration<DriverAvailabilityEntity>
+public class DriverLocationMapping : IEntityTypeConfiguration<DriverLocationEntity>
 {
-    public void Configure(EntityTypeBuilder<DriverAvailabilityEntity> builder)
+    public void Configure(EntityTypeBuilder<DriverLocationEntity> builder)
     {
         ArgumentNullException.ThrowIfNull(builder);
 
-        builder.ToTable("driver_availability");
+        builder.ToTable("driver_location");
 
         // Keys
         builder.HasKey(c => c.Id);
@@ -27,8 +27,16 @@ public class DriverAvailabilityMapping : IEntityTypeConfiguration<DriverAvailabi
         builder.Property(c => c.DriverId)
             .IsRequired();
 
-        builder.Property(c => c.Status)
-            .IsRequired();
+        builder.ComplexProperty(conf => conf.Location, conf =>
+        {
+            conf.Property(prop => prop.Latitude)
+                .HasColumnName("latitude")
+                .IsRequired();
+
+            conf.Property(prop => prop.Longitude)
+                .HasColumnName("longitude")
+                .IsRequired();
+        });
 
         builder.ConfigureDefaultFieldsMapping();
     }

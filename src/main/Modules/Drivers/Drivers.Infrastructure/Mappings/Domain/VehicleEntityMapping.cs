@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TaxiService.Common.BaseInfrastructure;
 using TaxiService.Modules.Drivers.Domain.Entities;
 
-namespace TaxiService.Modules.Drivers.Infrastructure.Mappings;
+namespace TaxiService.Modules.Drivers.Infrastructure.Mappings.Domain;
 
 [ExcludeFromCodeCoverage]
 public class VehicleEntityMapping : IEntityTypeConfiguration<VehicleEntity>

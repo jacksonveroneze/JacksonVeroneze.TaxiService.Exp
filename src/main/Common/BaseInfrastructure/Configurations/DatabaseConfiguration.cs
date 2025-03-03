@@ -4,4 +4,6 @@ namespace TaxiService.Common.BaseInfrastructure.Configurations;
 public sealed record DatabaseConfiguration
 {
     public string? ReadConnectionString { get; init; }
+
+    public string? WriteConnectionString { get; init; }
 }

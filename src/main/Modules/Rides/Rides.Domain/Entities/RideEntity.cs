@@ -1,4 +1,5 @@
 using JacksonVeroneze.NET.Result;
+using TaxiService.Common.BaseDomain;
 using TaxiService.Common.BaseDomain.Entities.Base;
 using TaxiService.Common.BaseDomain.ValueObjects;
 using TaxiService.Modules.Rides.Domain.Core.Errors;
@@ -37,7 +38,7 @@ public class RideEntity : BaseEntityAggregateRoot
         ArgumentNullException.ThrowIfNull(coordinateFrom);
         ArgumentNullException.ThrowIfNull(coordinateTo);
 
-        Id = Guid.NewGuid();
+        Id = GuidGenerator.Generate();
         PassangerId = passangerId;
         CoordinateFrom = coordinateFrom;
         CoordinateTo = coordinateTo;

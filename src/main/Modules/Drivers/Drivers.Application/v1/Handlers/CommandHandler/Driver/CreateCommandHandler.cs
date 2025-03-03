@@ -15,7 +15,7 @@ public sealed class CreateCommandHandler(
     ILogger<CreateCommandHandler> logger,
     IDataMapper mapper,
     IDriverReadRepository driverReadRepository,
-    IDriverWriteRepository driverWriteRepository,
+    IDriverRepository driverRepository,
     IUnitOfWork unitOfWork)
     : IRequestHandler<CreateCommand, Result<CreateCommandResponse>>
 {
@@ -63,7 +63,7 @@ public sealed class CreateCommandHandler(
         using Activity? activity = ActivitySource.StartActivity();
 
         bool existsEmail = await driverReadRepository
-            .ExistsByAsync(email, document, cancellationToken);
+            .ExistsByEmailAndDocumentAsync(email, document, cancellationToken);
 
         if (!existsEmail)
         {
@@ -109,7 +109,7 @@ public sealed class CreateCommandHandler(
 
         try
         {
-            await driverWriteRepository.CreateAsync(
+            await driverRepository.CreateAsync(
                 driverEntity, cancellationToken);
 
             await unitOfWork.CommitAsync(

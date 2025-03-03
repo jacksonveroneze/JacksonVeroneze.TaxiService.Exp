@@ -10,7 +10,7 @@ namespace TaxiService.Modules.Drivers.Application.v1.Services;
 
 public class DriverService(
     ILogger<InactivateCommandHandler> logger,
-    IDriverReadRepository driverReadRepository)
+    IDriverRepository driverRepository)
     : IDriverService
 {
     public async Task<Result<DriverEntity>> GetByIdAsync(
@@ -44,7 +44,7 @@ public class DriverService(
         Guid id,
         CancellationToken cancellationToken)
     {
-        DriverEntity? entity = await driverReadRepository
+        DriverEntity? entity = await driverRepository
             .GetByIdAsync(id, cancellationToken);
 
         if (entity is not null)

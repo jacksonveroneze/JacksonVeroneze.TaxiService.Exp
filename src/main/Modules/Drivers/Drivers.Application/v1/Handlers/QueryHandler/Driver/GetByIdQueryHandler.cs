@@ -1,6 +1,7 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
+using TaxiService.Modules.Drivers.Application.v1.DTOs;
 using TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.Driver;
 using TaxiService.Modules.Drivers.Application.v1.Models.Driver;
 using TaxiService.Modules.Drivers.Application.v1.Queries.Driver;
@@ -12,7 +13,7 @@ namespace TaxiService.Modules.Drivers.Application.v1.Handlers.QueryHandler.Drive
 public sealed class GetByIdQueryHandler(
     ILogger<GetByIdQueryHandler> logger,
     IDataMapper mapper,
-    IDriverReadRepository driverReadRepository)
+    IDriverReadCacheRepository driverReadRepository)
     : IRequestHandler<GetByIdQuery, Result<GetByIdQueryResponse>>
 {
     public async Task<Result<GetByIdQueryResponse>> Handle(
@@ -21,7 +22,7 @@ public sealed class GetByIdQueryHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<DriverEntity> resultEntity = await GetByIdAsync(
+        Result<DriverDto> resultEntity = await GetByIdAsync(
             request.Id, cancellationToken);
 
         if (resultEntity.IsFailure)
@@ -40,16 +41,16 @@ public sealed class GetByIdQueryHandler(
             .WithSuccess(response);
     }
 
-    private async Task<Result<DriverEntity>> GetByIdAsync(
+    private async Task<Result<DriverDto>> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken)
     {
-        DriverEntity? entity = await driverReadRepository
+        DriverDto? driver = await driverReadRepository
             .GetByIdAsync(id, cancellationToken);
 
-        if (entity is not null)
+        if (driver is not null)
         {
-            return Result<DriverEntity>.WithSuccess(entity);
+            return Result<DriverDto>.WithSuccess(driver);
         }
 
         Error error = DomainErrors.DriverErrors.NotFound;
@@ -58,6 +59,6 @@ public sealed class GetByIdQueryHandler(
             nameof(GetByIdQueryHandler),
             nameof(GetByIdAsync), id, error);
 
-        return Result<DriverEntity>.FromNotFound(error);
+        return Result<DriverDto>.FromNotFound(error);
     }
 }

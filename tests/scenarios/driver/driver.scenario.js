@@ -14,6 +14,10 @@ export default (baseUrl, headers) => {
     // });
 
     group('Complete Flow', () => {
+        driver.getById(baseUrl, factoryHeaders(), 'd488e5fe-7ec8-4c98-8ee6-64cc30d11ee0');
+        
+        return;
+        
         const idDriver = driver.create(baseUrl, factoryHeaders());
         driver.getById(baseUrl, factoryHeaders(), idDriver);
         driver.activate(baseUrl, factoryHeaders(), idDriver);

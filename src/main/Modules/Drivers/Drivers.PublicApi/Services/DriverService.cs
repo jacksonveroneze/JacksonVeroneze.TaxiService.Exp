@@ -1,6 +1,7 @@
 using JacksonVeroneze.NET.Result;
 using Microsoft.Extensions.Logging;
 using TaxiService.Common.BaseApplication.Extensions;
+using TaxiService.Modules.Drivers.Application.v1.DTOs;
 using TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.Driver;
 using TaxiService.Modules.Drivers.Domain.Core.Errors;
 using TaxiService.Modules.Drivers.Domain.Entities;
@@ -16,10 +17,10 @@ public class DriverService(
         Guid id,
         CancellationToken cancellationToken)
     {
-        DriverEntity? entity = await driverReadRepository
-            .GetByIdAsync(id, cancellationToken);
+        bool entity = await driverReadRepository
+            .ExistsByIdAsync(id, cancellationToken);
 
-        if (entity is not null)
+        if (entity)
         {
             return Result<bool>.WithSuccess(true);
         }

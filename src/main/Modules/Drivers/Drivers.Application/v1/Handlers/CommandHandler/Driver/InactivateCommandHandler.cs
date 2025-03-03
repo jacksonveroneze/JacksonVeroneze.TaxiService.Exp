@@ -12,7 +12,7 @@ namespace TaxiService.Modules.Drivers.Application.v1.Handlers.CommandHandler.Dri
 public sealed class InactivateCommandHandler(
     ILogger<InactivateCommandHandler> logger,
     IDriverService driverService,
-    IDriverWriteRepository driverWriteRepository,
+    IDriverRepository driverRepository,
     IDateTimeProvider dateTime)
     : IRequestHandler<InactivateCommand, Result>
 {
@@ -61,7 +61,7 @@ public sealed class InactivateCommandHandler(
         DriverEntity entity,
         CancellationToken cancellationToken)
     {
-        await driverWriteRepository.UpdateAsync(
+        await driverRepository.UpdateAsync(
             entity, cancellationToken);
 
         logger.LogProcessed(

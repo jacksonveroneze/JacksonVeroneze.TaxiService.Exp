@@ -1,3 +1,4 @@
+using TaxiService.Common.BaseDomain;
 using TaxiService.Common.BaseDomain.Entities.Base;
 
 namespace TaxiService.Modules.Passengers.Domain.Entities;
@@ -26,7 +27,7 @@ public class OutboxMessageEntity : BaseEntityAggregateRoot
         ArgumentException.ThrowIfNullOrEmpty(type);
         ArgumentException.ThrowIfNullOrEmpty(content);
 
-        Id = Guid.NewGuid();
+        Id = GuidGenerator.Generate();
         Type = type;
         Content = content;
         OccurredOnUtc = occurredOnUtc;

@@ -1,3 +1,4 @@
+using TaxiService.Modules.Drivers.Application.v1.DTOs;
 using TaxiService.Modules.Drivers.Application.v1.Models.Driver;
 using TaxiService.Modules.Drivers.Domain.Entities;
 
@@ -15,11 +16,22 @@ public class DriverMapper : Profile
             .ForMember(dest => dest.Birthday, opts => opts.MapFrom(src => src.Birthday))
             .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender))
             .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status));
+        
+        CreateMap<DriverDto, DriverResponse>()
+            .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
+            .ForMember(dest => dest.FullName, opts => opts.MapFrom(src => src.FullName))
+            .ForMember(dest => dest.Document, opts => opts.MapFrom(src => src.Document))
+            .ForMember(dest => dest.Birthday, opts => opts.MapFrom(src => src.Birthday))
+            .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender))
+            .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status));
 
         CreateMap<DriverEntity, CreateCommandResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
         
         CreateMap<DriverEntity, GetByIdQueryResponse>()
+            .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
+        
+        CreateMap<DriverDto, GetByIdQueryResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
     }
 }

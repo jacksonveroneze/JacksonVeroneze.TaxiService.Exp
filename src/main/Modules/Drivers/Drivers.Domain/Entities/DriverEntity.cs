@@ -1,4 +1,5 @@
 using JacksonVeroneze.NET.Result;
+using TaxiService.Common.BaseDomain;
 using TaxiService.Common.BaseDomain.Entities.Base;
 using TaxiService.Common.BaseDomain.Enums;
 using TaxiService.Common.BaseDomain.ValueObjects;
@@ -48,7 +49,7 @@ public class DriverEntity : BaseEntityAggregateRoot
         ArgumentNullException.ThrowIfNull(cpf);
         ArgumentNullException.ThrowIfNull(gender);
 
-        Id = Guid.NewGuid();
+        Id = GuidGenerator.Generate();
         Name = name;
         Birthday = birthday;
         Email = email;

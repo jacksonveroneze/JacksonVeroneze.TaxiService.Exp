@@ -1,4 +1,5 @@
 using JacksonVeroneze.NET.Result;
+using TaxiService.Common.BaseDomain;
 using TaxiService.Common.BaseDomain.Entities.Base;
 using TaxiService.Common.BaseDomain.Enums;
 using TaxiService.Common.BaseDomain.ValueObjects;
@@ -43,7 +44,7 @@ public class VehicleEntity : BaseEntityAggregateRoot
         ArgumentNullException.ThrowIfNull(color);
         ArgumentNullException.ThrowIfNull(year);
 
-        Id = Guid.NewGuid();
+        Id = GuidGenerator.Generate();
         DriverId = driverId;
         Model = model;
         Brand = brand;

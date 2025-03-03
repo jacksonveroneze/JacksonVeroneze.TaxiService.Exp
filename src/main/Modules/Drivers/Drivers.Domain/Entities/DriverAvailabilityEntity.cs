@@ -1,4 +1,5 @@
 using JacksonVeroneze.NET.Result;
+using TaxiService.Common.BaseDomain;
 using TaxiService.Common.BaseDomain.Entities.Base;
 using TaxiService.Common.BaseDomain.Enums;
 using TaxiService.Common.BaseDomain.ValueObjects;
@@ -36,7 +37,7 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
         ArgumentNullException.ThrowIfNull(driverId);
         ArgumentNullException.ThrowIfNull(status);
 
-        Id = Guid.NewGuid();
+        Id = GuidGenerator.Generate();
         DriverId = driverId;
         Status = status;
     }

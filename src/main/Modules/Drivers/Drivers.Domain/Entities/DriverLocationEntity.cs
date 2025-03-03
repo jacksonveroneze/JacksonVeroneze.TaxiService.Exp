@@ -1,4 +1,5 @@
 using JacksonVeroneze.NET.Result;
+using TaxiService.Common.BaseDomain;
 using TaxiService.Common.BaseDomain.Entities.Base;
 using TaxiService.Common.BaseDomain.ValueObjects;
 
@@ -24,7 +25,7 @@ public class DriverLocationEntity : BaseEntityAggregateRoot
         ArgumentNullException.ThrowIfNull(driverId);
         ArgumentNullException.ThrowIfNull(location);
 
-        Id = Guid.NewGuid();
+        Id = GuidGenerator.Generate();
         DriverId = driverId;
         Location = location;
     }

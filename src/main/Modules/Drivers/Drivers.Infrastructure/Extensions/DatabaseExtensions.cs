@@ -18,6 +18,9 @@ internal static class DatabaseExtensions
 
         services.AddDatabase<DriversDbContext>(
             moduleConfiguration.Database!);
+        
+        services.AddReadDatabase<DriversReadDbContext>(
+            moduleConfiguration.Database!);
 
         services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
         
