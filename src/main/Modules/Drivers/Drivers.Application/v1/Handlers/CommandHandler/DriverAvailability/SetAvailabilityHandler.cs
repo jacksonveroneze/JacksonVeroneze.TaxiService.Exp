@@ -49,7 +49,7 @@ public sealed class SetAvailabilityHandler(
         CancellationToken cancellationToken)
     {
         Result<bool> resultValidateDriver = await driverService
-            .ExistsAndIsActiveAsync(request.Id, 
+            .ExistsAndIsActiveAsync(request.Id,
                 cancellationToken);
 
         if (resultValidateDriver.IsFailure)
@@ -63,8 +63,17 @@ public sealed class SetAvailabilityHandler(
 
         if (lastAvailability is null)
         {
+            if (request.Status is DriverAvailabilityStatus.Online)
+            {
+                return Result<DriverAvailabilityEntity>
+                    .WithSuccess();
+            }
+
+            Error error = DomainErrors.DriverAvailabilityError
+                .InvalidStatus;
+
             return Result<DriverAvailabilityEntity>
-                .WithSuccess();
+                .FromInvalid(error);
         }
 
         var result = request.Status switch
@@ -83,23 +92,6 @@ public sealed class SetAvailabilityHandler(
 
         return Result<DriverAvailabilityEntity>
             .WithSuccess();
-    }
-
-    private Result ValidateDriverStatus(
-        DriverEntity entity)
-    {
-        if (entity.IsActive)
-        {
-            return Result.WithSuccess();
-        }
-
-        Error error = DomainErrors.DriverErrors.NotActivated;
-
-        logger.LogGenericValidationError(
-            nameof(SetAvailabilityHandler),
-            nameof(ValidateDriverStatus), error);
-
-        return Result<DriverEntity>.WithError(error);
     }
 
     private Result<DriverAvailabilityEntity> FactoryEntity(
