@@ -20,8 +20,8 @@ public static class DriverEndpoints
             .AddBlock()
             .AddDelete()
             .AddGetById()
-            .AddUpdateAvailability()
-            .AddUpdateLocationCommand();
+            .SetAvailability()
+            .SetLocationCommand();
 
         return app;
     }

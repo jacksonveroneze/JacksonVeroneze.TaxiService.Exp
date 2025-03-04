@@ -1,19 +1,18 @@
 using System.Diagnostics;
 using JacksonVeroneze.NET.Result;
 using TaxiService.Modules.Drivers.Application.v1.Commands.DriverAvailability;
-using TaxiService.Modules.Drivers.Domain.Enums;
 
 namespace TaxiService.Modules.Drivers.Api.Endpoints.v1.Drivers;
 
-internal static class UpdateAvailabilityEndpoint
+internal static class SetLocationEndpoint
 {
     private static readonly ActivitySource ActivitySource =
         new("TaxiService");
 
-    public static RouteGroupBuilder AddUpdateAvailability(
+    public static RouteGroupBuilder SetLocationCommand(
         this RouteGroupBuilder builder)
     {
-        builder.MapPut("{id:guid:required}/availability", async (
+        builder.MapPost("{id:guid:required}/location", async (
                 [FromServices] ISender mediator,
                 [FromRoute] Guid id,
                 [FromBody] Request request,
@@ -21,17 +20,18 @@ internal static class UpdateAvailabilityEndpoint
             {
                 using Activity? activity = ActivitySource.StartActivity();
 
-                UpdateAvailabilityCommand command = new(id, request.Status);
+                SetLocationCommand command = new(
+                    id, request.Latitude, request.Longitude);
 
                 Result response = await mediator
                     .Send(command, cancellationToken);
 
-                return response.MatchPut();
+                return response.MatchPost();
             })
             .AddDefaultResponseEndpoints();
 
         return builder;
     }
 
-    private record Request(DriverAvailabilityStatus Status);
+    private record Request(float Latitude, float Longitude);
 }

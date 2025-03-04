@@ -5,7 +5,7 @@ using TaxiService.Modules.Drivers.Domain.Enums;
 namespace TaxiService.Modules.Drivers.Application.v1.Validators.Commands.DriverAvailability;
 
 public class UpdateAvailabilityCommandValidator
-    : AbstractValidator<UpdateAvailabilityCommand>
+    : AbstractValidator<SetAvailabilityCommand>
 {
     public UpdateAvailabilityCommandValidator()
     {

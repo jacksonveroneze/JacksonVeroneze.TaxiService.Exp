@@ -97,10 +97,10 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
         Guid driverId,
         DriverAvailabilityStatus? availability)
     {
-        DriverAvailabilityEntity entity = new(
+        DriverAvailabilityEntity entity1 = new(
             driverId, availability);
 
-        return Result<DriverAvailabilityEntity>.WithSuccess(entity);
+        return Result<DriverAvailabilityEntity>.WithSuccess(entity1);
     }
 
     #endregion

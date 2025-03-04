@@ -8,40 +8,33 @@ using TaxiService.Modules.Drivers.Domain.Entities;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Handlers.CommandHandler.DriverLocation;
 
-public sealed class UpdateLocationHandler(
-    ILogger<UpdateLocationHandler> logger,
+public sealed class SetLocationHandler(
+    ILogger<SetLocationHandler> logger,
     IDriverService driverService,
     IDriverLocationWriteRepository driverLocationWriteRepository)
-    : IRequestHandler<UpdateLocationCommand, Result>
+    : IRequestHandler<SetLocationCommand, Result>
 {
     public async Task<Result> Handle(
-        UpdateLocationCommand request,
+        SetLocationCommand request,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<DriverEntity> resultEntity =
-            await driverService.GetByIdAsync(
-                request.Id, cancellationToken);
+        Result<bool> result = await driverService
+            .ExistsAndIsActiveAsync(request.Id, 
+                cancellationToken);
 
-        if (resultEntity.IsFailure)
+        if (result.IsFailure)
         {
-            return resultEntity;
+            return result;
         }
 
-        var resultValidation = ValidateDriverStatus(resultEntity.Value!);
-
-        if (resultValidation.IsFailure)
-        {
-            return resultValidation;
-        }
-
-        Result<DriverLocationEntity> driverLocation = 
+        Result<DriverLocationEntity> driverLocation =
             FactoryEntity(request);
 
         if (driverLocation.IsFailure)
         {
-            return Result<UpdateLocationHandler>
+            return Result<SetLocationHandler>
                 .FromInvalid(driverLocation.Errors!);
         }
 
@@ -50,25 +43,8 @@ public sealed class UpdateLocationHandler(
         return Result.WithSuccess();
     }
 
-    private Result ValidateDriverStatus(
-        DriverEntity entity)
-    {
-        if (entity.IsActive)
-        {
-            return Result.WithSuccess();
-        }
-
-        Error error = DomainErrors.DriverErrors.NotActivated;
-
-        logger.LogGenericValidationError(
-            nameof(UpdateLocationHandler),
-            nameof(ValidateDriverStatus), error);
-
-        return Result<DriverEntity>.WithError(error);
-    }
-
     private Result<DriverLocationEntity> FactoryEntity(
-        UpdateLocationCommand request)
+        SetLocationCommand request)
     {
         Result<DriverLocationEntity> entity =
             DriverLocationEntity.Create(
@@ -80,7 +56,7 @@ public sealed class UpdateLocationHandler(
         }
 
         logger.LogGenericError(
-            nameof(UpdateLocationHandler),
+            nameof(SetLocationHandler),
             nameof(FactoryEntity), entity.Errors!.Count());
 
         return Result<DriverLocationEntity>
@@ -94,7 +70,7 @@ public sealed class UpdateLocationHandler(
         await driverLocationWriteRepository.CreateAsync(
             entity, cancellationToken);
 
-        logger.LogCreated(nameof(UpdateLocationHandler),
+        logger.LogCreated(nameof(SetLocationHandler),
             nameof(CreateAsync), entity.Id);
     }
 }

@@ -4,7 +4,7 @@ using TaxiService.Modules.Drivers.Application.v1.Commands.DriverAvailability;
 namespace TaxiService.Modules.Drivers.Application.v1.Validators.Commands.DriverAvailability;
 
 public class UpdateLocationCommandValidator
-    : AbstractValidator<UpdateLocationCommand>
+    : AbstractValidator<SetLocationCommand>
 {
     public UpdateLocationCommandValidator()
     {

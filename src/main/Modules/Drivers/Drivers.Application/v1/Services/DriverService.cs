@@ -13,6 +13,34 @@ public class DriverService(
     IDriverRepository driverRepository)
     : IDriverService
 {
+    public async Task<Result<bool>> ExistsAndIsActiveAsync(
+        Guid id,
+        CancellationToken cancellationToken)
+    {
+        DriverEntity? entity = await InternalGetByIdAsync(
+            id, cancellationToken);
+
+        if (entity is null)
+        {
+            Error error = DomainErrors.DriverErrors.NotFound;
+
+            return Result<bool>.FromNotFound(error);
+        }
+
+        if (entity.IsActive)
+        {
+            return Result<bool>.WithSuccess();
+        }
+
+        Error errorNotActivated = DomainErrors.DriverErrors.NotActivated;
+
+        logger.LogGenericValidationError(
+            nameof(DriverService),
+            nameof(ExistsAndIsActiveAsync), errorNotActivated);
+
+        return Result<bool>.WithError(errorNotActivated);
+    }
+
     public async Task<Result<DriverEntity>> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken)
@@ -49,6 +77,10 @@ public class DriverService(
 
         if (entity is not null)
         {
+            logger.LogGetById(
+                nameof(DriverService),
+                nameof(InternalGetByIdAsync), id);
+            
             return entity;
         }
 
