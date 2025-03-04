@@ -2,14 +2,14 @@
   <ItemGroup>
     <!--WEB-->
     <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2" />
-    <PackageVersion Include="Scalar.AspNetCore" Version="2.0.14" />
+    <PackageVersion Include="Scalar.AspNetCore" Version="2.0.22" />
     <!--APP-->
     <PackageVersion Include="AutoMapper" Version="14.0.0" />
     <PackageVersion Include="FluentValidation" Version="11.11.0" />
     <PackageVersion Include="MediatR" Version="12.4.1" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.2" />
     <!--DOMAIN-->
-    <PackageVersion Include="JacksonVeroneze.NET.DomainObjects" Version="0.0.5" />
+    <PackageVersion Include="JacksonVeroneze.NET.DomainObjects" Version="0.0.6" />
     <PackageVersion Include="JacksonVeroneze.NET.Pagination" Version="1.1.7" />
     <PackageVersion Include="JacksonVeroneze.NET.Result" Version="0.0.6" />
     <!-- INFRA-->
@@ -19,7 +19,7 @@
     <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.2" />
     <PackageVersion Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="9.0.2" />
     <PackageVersion Include="SharpGrip.FluentValidation.AutoValidation.Endpoints" Version="1.5.0" />
-    <PackageVersion Include="RabbitMQ.Client" Version="7.0.0" />
+    <PackageVersion Include="RabbitMQ.Client" Version="7.1.1" />
     <PackageVersion Include="Serilog.Sinks.Seq" Version="9.0.0" />
     <PackageVersion Include="Ben.BlockingDetector" Version="0.0.4" />
     <PackageVersion Include="prometheus-net.AspNetCore" Version="8.2.1" />
@@ -41,7 +41,7 @@
     <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="9.2.0" />
     <PackageVersion Include="JacksonVeroneze.NET.HttpClient" Version="1.1.0" />
     <PackageVersion Include="EFCore.NamingConventions" Version="9.0.0" />
-    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.3" />
+    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
     <PackageVersion Include="Serilog.Settings.Configuration" Version="9.0.0" />
     <PackageVersion Include="Serilog.Formatting.Compact" Version="3.0.0" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.2">
