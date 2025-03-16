@@ -42,7 +42,7 @@ FROM jacksonveroneze/aspnet:9.0-debian-latest AS runtime
 ENV CORECLR_ENABLE_PROFILING=0
 ENV ASSEMBLY_NAME=TaxiService.Api.dll
 
-HEALTHCHECK --interval=10s --timeout=3s --start-period=3s --retries=3 \
-  CMD curl --silent --fail http://localhost:8080/health?source=docker || exit 1
+HEALTHCHECK --interval=10s --timeout=3s --start-period=10s --retries=3 \
+  CMD curl --silent --fail http://localhost:8080/health?source=docker-inner || exit 1
 
 COPY --from=publish /publish .

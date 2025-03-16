@@ -2,27 +2,26 @@ services:
   api:
     image: jacksonveroneze/taxi-service-exp:latest
     restart: unless-stopped
-    tty: true
     build:
       context: ../../src
       dockerfile: ./Dockerfile
     env_file:
       - .env
-#    healthcheck:
-#      test: curl --silent --fail http://localhost:8080/health?source=docker || exit 1
-#      interval: 30s
-#      timeout: 3s
-#      retries: 3
-#      start_period: 3s
+    healthcheck:
+      test: [ "CMD", "curl", "--silent", "--fail", "http://localhost:8080/health?source=docker-compose" ]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
     ports:
       - "8085:8080"
     networks:
       - taxi-service
     logging:
-      driver: "json-file"
+      driver: gelf
       options:
-        max-file: 2
-        max-size: 1m
+        gelf-address: "udp://10.0.0.150:12202"
+        tag: "taxi-service.api"
     deploy:
       resources:
         reservations:
@@ -35,7 +34,6 @@ services:
   bouncer:
     image: bitnami/pgbouncer:latest
     restart: unless-stopped
-    tty: true
     env_file:
       - .env
     logging:
@@ -55,7 +53,7 @@ services:
         reservations:
           cpus: '2'
           memory: 1024M
-          
+
 networks:
   taxi-service:
     driver: bridge
