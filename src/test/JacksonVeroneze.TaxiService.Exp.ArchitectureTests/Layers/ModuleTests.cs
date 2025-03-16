@@ -1,10 +1,9 @@
 ﻿using JacksonVeroneze.TaxiService.Exp.ArchitectureTests.Abstractions;
 using NetArchTest.Rules;
-using TaxiService.Modules.Passengers.Api.Endpoints.v1.Users;
+using TaxiService.Modules.Passengers.Api.Endpoints.v1.Passangers;
 using TaxiService.Modules.Passengers.Application;
-using TaxiService.Modules.Passengers.Application.v1.Commands.User;
 using TaxiService.Modules.Passengers.Domain.Entities;
-using TaxiService.Modules.Passengers.Infrastructure.Repositories.User;
+using TaxiService.Modules.Passengers.Infrastructure.Repositories.Passanger;
 using TaxiService.Modules.Passengers.PublicApi.Services;
 
 namespace JacksonVeroneze.TaxiService.Exp.ArchitectureTests.Layers;
@@ -28,7 +27,7 @@ public class ModuleTests : BaseTest
             _publicApiAssembly
         ];
 
-        Types.InAssembly(typeof(UserEntity).Assembly)
+        Types.InAssembly(typeof(PassangerEntity).Assembly)
             .ShouldNot()
             .HaveDependencyOnAny(otherProjects)
             .GetResult()
@@ -63,7 +62,7 @@ public class ModuleTests : BaseTest
             _publicApiAssembly
         ];
 
-        Types.InAssembly(typeof(UserReadRepository).Assembly)
+        Types.InAssembly(typeof(PassangerReadRepository).Assembly)
             .ShouldNot()
             .HaveDependencyOnAny(otherProjects)
             .GetResult()
@@ -80,7 +79,7 @@ public class ModuleTests : BaseTest
             _publicApiAssembly
         ];
 
-        Types.InAssembly(typeof(UserEndpoints).Assembly)
+        Types.InAssembly(typeof(PassangerEndpoints).Assembly)
             .ShouldNot()
             .HaveDependencyOnAny(otherProjects)
             .GetResult()
@@ -96,7 +95,7 @@ public class ModuleTests : BaseTest
             _apiAssembly
         ];
 
-        Types.InAssembly(typeof(UserService).Assembly)
+        Types.InAssembly(typeof(PassangerService).Assembly)
             .ShouldNot()
             .HaveDependencyOnAny(otherProjects)
             .GetResult()

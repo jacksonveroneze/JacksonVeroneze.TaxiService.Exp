@@ -27,7 +27,7 @@ public class DriverReadRepository(
         CancellationToken cancellationToken)
     {
         return service.AnyAsync(
-            conf => conf.Email == email,
+            conf => conf.Email == email || conf.Document == document,
             cancellationToken);
     }
 

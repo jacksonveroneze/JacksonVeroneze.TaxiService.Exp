@@ -1,15 +1,24 @@
-# Build
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build-env
+# =====================================================
+# Etapa 1: Build
+# =====================================================
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 
-ADD . /build
+WORKDIR /src
 
-RUN dotnet restore /build/main/Api/TaxiService.Api.csproj \
+COPY . .
+
+RUN dotnet restore ./main/Api/TaxiService.Api.csproj \
     --runtime linux-x64 \
     /p:PublishReadyToRun=true
 
-RUN dotnet publish /build/main/Api/TaxiService.Api.csproj \
+# =====================================================
+# Etapa 2: Publicação
+# =====================================================
+FROM build AS publish
+
+RUN dotnet publish ./main/Api/TaxiService.Api.csproj \
     --configuration Release \
-    --output /build/out \
+    --output /publish \
     --no-restore \
     --self-contained \
     --runtime linux-x64 \
@@ -25,30 +34,15 @@ RUN dotnet publish /build/main/Api/TaxiService.Api.csproj \
     /p:PublishCrossgen2=true \
     /p:PublishContainer
 
-FROM jacksonveroneze/aspnet:9.0-debian-latest
+# =====================================================
+# Etapa Final: Imagem de Runtime
+# =====================================================
+FROM jacksonveroneze/aspnet:9.0-debian-latest AS runtime
 
 ENV CORECLR_ENABLE_PROFILING=0
-
-COPY --from=build-env /build/out /home/app
-
 ENV ASSEMBLY_NAME=TaxiService.Api.dll
 
-#
-#USER root
-#
-## Install the agent
-#RUN apt-get update && apt-get install -y wget ca-certificates gnupg \
-#&& echo 'deb http://apt.newrelic.com/debian/ newrelic non-free' | tee /etc/apt/sources.list.d/newrelic.list \
-#&& wget https://download.newrelic.com/548C16BF.gpg \
-#&& apt-key add 548C16BF.gpg \
-#&& apt-get update \
-#&& apt-get install -y 'newrelic-dotnet-agent' \
-#&& rm -rf /var/lib/apt/lists/*
-#
-## Enable the agent
-#ENV CORECLR_ENABLE_PROFILING=1 \
-#CORECLR_PROFILER={36032161-FFC0-4B61-B559-F6C5D41BAE5A} \
-#CORECLR_NEWRELIC_HOME=/usr/local/newrelic-dotnet-agent \
-#CORECLR_PROFILER_PATH=/usr/local/newrelic-dotnet-agent/libNewRelicProfiler.so \
-#NEW_RELIC_LICENSE_KEY=255ee02dabd7178f8c020548fc4dc930FFFFNRAL \
-#NEW_RELIC_APP_NAME="TaxiService"
+HEALTHCHECK --interval=10s --timeout=3s --start-period=3s --retries=3 \
+  CMD curl --silent --fail http://localhost:8080/health?source=docker || exit 1
+
+COPY --from=publish /publish .

@@ -8,12 +8,12 @@ services:
       dockerfile: ./Dockerfile
     env_file:
       - .env
-    healthcheck:
-      test: curl --silent --fail http://localhost:8080/health?source=docker || exit 1
-      interval: 30s
-      timeout: 3s
-      retries: 3
-      start_period: 3s
+#    healthcheck:
+#      test: curl --silent --fail http://localhost:8080/health?source=docker || exit 1
+#      interval: 30s
+#      timeout: 3s
+#      retries: 3
+#      start_period: 3s
     ports:
       - "8085:8080"
     networks:
@@ -34,7 +34,7 @@ services:
   
   bouncer:
     image: bitnami/pgbouncer:latest
-    restart: always
+    restart: unless-stopped
     tty: true
     env_file:
       - .env
