@@ -37,7 +37,7 @@ RUN dotnet publish ./main/Api/TaxiService.Api.csproj \
 # =====================================================
 # Etapa Final: Imagem de Runtime
 # =====================================================
-FROM jacksonveroneze/aspnet:9.0-debian-latest AS runtime
+FROM jacksonveroneze/aspnet:9.0-debian-1.4.1 AS runtime
 
 ENV CORECLR_ENABLE_PROFILING=0
 ENV ASSEMBLY_NAME=TaxiService.Api.dll
