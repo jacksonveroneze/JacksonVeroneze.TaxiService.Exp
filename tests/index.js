@@ -27,8 +27,8 @@ export const optionsOneIteration = {
 };
 
 export const optionsIterations = {
-    iterations: 2000,
-    vus: 100
+    iterations: 20000,
+    vus: 250
 };
 
 export const optionsDuration = {
@@ -38,9 +38,24 @@ export const optionsDuration = {
     ]
 };
 
-export const options = optionsIterations;
+//
+// export const options = {
+//     scenarios: {
+//         constant_request_rate: {
+//             executor: 'constant-arrival-rate',
+//             rate: 1000,               // 💡 9 requisições por segundo
+//             timeUnit: '1s',
+//             duration: '30s',
+//             preAllocatedVUs: 20,
+//             maxVUs: 250,
+//         },
+//     },
+// };
 
- const baseUrl = 'http://localhost:7000/api/v1';
+export const options = optionsRamp;
+
+ // const baseUrl = 'http://localhost:7000/api/v1';
+ const baseUrl = 'http://srv754980.hstgr.cloud:9098/v1';
 // const baseUrl = 'http://localhost:8080';
 // const baseUrl = 'http://localhost:8085/api/v1';
 //const baseUrl = 'http://0.0.0.0:9095';
