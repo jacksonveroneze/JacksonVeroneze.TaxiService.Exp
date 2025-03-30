@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Drivers.Application\Drivers.Application.csproj"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

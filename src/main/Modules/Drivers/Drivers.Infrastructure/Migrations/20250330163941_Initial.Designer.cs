@@ -13,7 +13,7 @@ using TaxiService.Modules.Drivers.Infrastructure.Contexts;
 namespace TaxiService.Modules.Drivers.Infrastructure.Migrations
 {
     [DbContext(typeof(DriversDbContext))]
-    [Migration("20250227160302_Initial")]
+    [Migration("20250330163941_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -22,7 +22,7 @@ namespace TaxiService.Modules.Drivers.Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("driver")
-                .HasAnnotation("ProductVersion", "9.0.2")
+                .HasAnnotation("ProductVersion", "9.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
