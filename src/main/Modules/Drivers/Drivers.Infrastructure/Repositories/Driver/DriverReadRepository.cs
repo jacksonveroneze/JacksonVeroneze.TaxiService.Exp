@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
-using TaxiService.Modules.Drivers.Application.v1.DTOs;
-using TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.Driver;
+using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
+using TaxiService.Modules.Drivers.Application.v1.Driver;
 using TaxiService.Modules.Drivers.Infrastructure.Contexts;
 
 namespace TaxiService.Modules.Drivers.Infrastructure.Repositories.Driver;

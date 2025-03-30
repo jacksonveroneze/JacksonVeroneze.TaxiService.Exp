@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using JacksonVeroneze.NET.Result;
-using TaxiService.Modules.Drivers.Application.v1.Commands.DriverAvailability;
+using TaxiService.Modules.Drivers.Application.v1.DriverAvailability;
 using TaxiService.Modules.Drivers.Domain.Enums;
 
 namespace TaxiService.Modules.Drivers.Api.Endpoints.v1.Drivers;

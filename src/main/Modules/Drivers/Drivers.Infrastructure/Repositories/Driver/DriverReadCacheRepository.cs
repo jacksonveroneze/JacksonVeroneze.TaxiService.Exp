@@ -1,6 +1,6 @@
 using JacksonVeroneze.NET.Cache.Interfaces;
-using TaxiService.Modules.Drivers.Application.v1.DTOs;
-using TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.Driver;
+using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
+using TaxiService.Modules.Drivers.Application.v1.Driver;
 
 namespace TaxiService.Modules.Drivers.Infrastructure.Repositories.Driver;
 
@@ -21,7 +21,7 @@ public class DriverReadCacheRepository : IDriverReadCacheRepository
     {
         _cacheService = cacheService;
         _repository = repository;
-        
+
         _cacheService.WithPrefixKey(PrefixKey);
     }
 
@@ -38,5 +38,12 @@ public class DriverReadCacheRepository : IDriverReadCacheRepository
 
                 return result;
             }, cancellationToken);
+    }
+
+    public Task RemoveAsync(
+        Guid id, CancellationToken cancellationToken)
+    {
+        return _cacheService.RemoveAsync(
+            id.ToString(), cancellationToken);
     }
 }

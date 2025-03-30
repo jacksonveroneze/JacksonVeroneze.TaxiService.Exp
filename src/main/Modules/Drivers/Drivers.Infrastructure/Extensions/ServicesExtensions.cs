@@ -1,10 +1,10 @@
 using Microsoft.Extensions.DependencyInjection;
-using TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.Driver;
-using TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.DriverAvailability;
-using TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.DriverLocation;
-using TaxiService.Modules.Drivers.Application.v1.Interfaces.Repositories.Vehicle;
-using TaxiService.Modules.Drivers.Application.v1.Interfaces.Services;
-using TaxiService.Modules.Drivers.Application.v1.Services;
+using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
+using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.DriverAvailability;
+using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.DriverLocation;
+using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Vehicle;
+using TaxiService.Modules.Drivers.Application.Common.Interfaces.Services;
+using TaxiService.Modules.Drivers.Application.Common.Services;
 using TaxiService.Modules.Drivers.Infrastructure.Repositories.Driver;
 using TaxiService.Modules.Drivers.Infrastructure.Repositories.DriverAvailability;
 using TaxiService.Modules.Drivers.Infrastructure.Repositories.DriverLocation;

@@ -1,4 +1,4 @@
-using TaxiService.Modules.Drivers.Application.v1.Interfaces;
+using TaxiService.Modules.Drivers.Application.Common.Interfaces;
 using TaxiService.Modules.Drivers.Infrastructure.Contexts;
 
 namespace TaxiService.Modules.Drivers.Infrastructure.UnitOfWork;

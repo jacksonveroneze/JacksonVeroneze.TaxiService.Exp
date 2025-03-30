@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using TaxiService.Modules.Drivers.Application.v1.DTOs;
+using TaxiService.Modules.Drivers.Application.v1.Driver;
 using TaxiService.Modules.Drivers.Infrastructure.Mappings;
 using TaxiService.Modules.Drivers.Infrastructure.Mappings.ReadModels;
 

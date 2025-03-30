@@ -1,5 +1,5 @@
 using JacksonVeroneze.NET.Result;
-using TaxiService.Modules.Drivers.Application.v1.Commands.Driver;
+using TaxiService.Modules.Drivers.Application.v1.Driver.Delete;
 
 namespace TaxiService.Modules.Drivers.Api.Endpoints.v1.Drivers;
 

@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using TaxiService.Common.BaseInfrastructure.Configurations;
 using TaxiService.Common.BaseInfrastructure.Extensions;
-using TaxiService.Modules.Drivers.Application.v1.Interfaces;
+using TaxiService.Modules.Drivers.Application.Common.Interfaces;
 using TaxiService.Modules.Drivers.Infrastructure.Configurations;
 using TaxiService.Modules.Drivers.Infrastructure.Contexts;
 

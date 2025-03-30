@@ -1,7 +1,6 @@
 using System.Diagnostics;
 using JacksonVeroneze.NET.Result;
-using TaxiService.Modules.Drivers.Application.v1.Commands.Vehicle;
-using TaxiService.Modules.Drivers.Application.v1.Models.Vehicle;
+using TaxiService.Modules.Drivers.Application.v1.Vehicle.Create;
 
 namespace TaxiService.Modules.Drivers.Api.Endpoints.v1.Vehicle;
 
