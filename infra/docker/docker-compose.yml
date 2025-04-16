@@ -7,21 +7,17 @@ services:
       dockerfile: ./Dockerfile
     env_file:
       - .env
-    healthcheck:
-      test: [ "CMD", "curl", "--silent", "--fail", "http://localhost:8080/health?source=docker-compose" ]
-      interval: 10s
-      timeout: 3s
-      retries: 3
-      start_period: 10s
+    depends_on:
+      - bouncer
     ports:
       - "8085:8080"
     networks:
       - taxi-service
     logging:
-      driver: gelf
+      driver: "json-file"
       options:
-        gelf-address: "udp://10.0.0.150:12202"
-        tag: "taxi-service.api"
+        max-file: "2"
+        max-size: "1m"
     deploy:
       resources:
         reservations:

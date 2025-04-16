@@ -12,6 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		nuget.config = nuget.config
 		AssemblyInfo.cs = AssemblyInfo.cs
 		Directory.Packages.props = Directory.Packages.props
+		.gitattributes = .gitattributes
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{781F0984-F5A6-4051-9B5F-525135392A5A}"
@@ -26,6 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{D169AF
 		Dockerfile = Dockerfile
 		.dockerignore = .dockerignore
 		..\infra\docker\.env = ..\infra\docker\.env
+		..\infra\docker\docker-compose.override.yml = ..\infra\docker\docker-compose.override.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C29D5355-B5A2-4621-86AE-57766C544BDB}"
