@@ -3,7 +3,7 @@ using TaxiService.Modules.Drivers.Infrastructure.Contexts;
 
 namespace TaxiService.Modules.Drivers.Infrastructure.UnitOfWork;
 
-public class UnitOfWork(
+public class EfUnitOfWork(
     DriversDbContext context) : IUnitOfWork
 {
     public async Task<bool> CommitAsync(

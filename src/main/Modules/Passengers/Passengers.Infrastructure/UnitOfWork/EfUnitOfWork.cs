@@ -3,7 +3,7 @@ using TaxiService.Modules.Passengers.Infrastructure.Contexts;
 
 namespace TaxiService.Modules.Passengers.Infrastructure.UnitOfWork;
 
-public class UnitOfWork(
+public class EfUnitOfWork(
     PassengersDbContext context) : IUnitOfWork
 {
     public async Task<bool> CommitAsync(

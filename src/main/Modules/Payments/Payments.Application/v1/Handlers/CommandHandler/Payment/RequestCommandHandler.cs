@@ -47,7 +47,7 @@ public sealed class RequestCommandHandler(
         var providers = await providerFactory
             .GetProvidersAsync(cancellationToken);
 
-        if (providers.Count == 0)
+        if (!providers.Any())
         {
             logger.LogNoProvidersAvailable();
 

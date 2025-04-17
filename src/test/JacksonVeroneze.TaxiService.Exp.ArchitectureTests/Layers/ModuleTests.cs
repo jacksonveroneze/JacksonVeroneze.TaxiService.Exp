@@ -8,23 +8,23 @@ using TaxiService.Modules.Passengers.PublicApi.Services;
 
 namespace JacksonVeroneze.TaxiService.Exp.ArchitectureTests.Layers;
 
-public class ModuleTests : BaseTest
+public class ModuleTests
 {
-    private readonly string _domainAssembly = $"{PassangersNamespace}.Passangers.Domain";
-    private readonly string _applicationAssembly = $"{PassangersNamespace}.Application";
-    private readonly string _infrastructureAssembly = $"{PassangersNamespace}.Infrastructure";
-    private readonly string _apiAssembly = $"{PassangersNamespace}.Api";
-    private readonly string _publicApiAssembly = $"{PassangersNamespace}.PublicApi";
+    private const string DomainAssembly = $"{UtilTests.PassangersNamespace}.Passangers.Domain";
+    private const string ApplicationAssembly = $"{UtilTests.PassangersNamespace}.Application";
+    private const string InfrastructureAssembly = $"{UtilTests.PassangersNamespace}.Infrastructure";
+    private const string ApiAssembly = $"{UtilTests.PassangersNamespace}.Api";
+    private const string PublicApiAssembly = $"{UtilTests.PassangersNamespace}.PublicApi";
 
     [Fact]
     public void Domain_Should_Not_HaveDependencyOnOtherLayers()
     {
         string[] otherProjects =
         [
-            _applicationAssembly,
-            _infrastructureAssembly,
-            _apiAssembly,
-            _publicApiAssembly
+            ApplicationAssembly,
+            InfrastructureAssembly,
+            ApiAssembly,
+            PublicApiAssembly
         ];
 
         Types.InAssembly(typeof(PassangerEntity).Assembly)
@@ -39,9 +39,9 @@ public class ModuleTests : BaseTest
     {
         string[] otherProjects =
         [
-            _infrastructureAssembly,
-            _apiAssembly,
-            _publicApiAssembly
+            InfrastructureAssembly,
+            ApiAssembly,
+            PublicApiAssembly
         ];
 
         Types.InAssembly(typeof(AssemblyReference).Assembly)
@@ -56,10 +56,10 @@ public class ModuleTests : BaseTest
     {
         string[] otherProjects =
         [
-            _applicationAssembly,
-            _domainAssembly,
-            _apiAssembly,
-            _publicApiAssembly
+            ApplicationAssembly,
+            DomainAssembly,
+            ApiAssembly,
+            PublicApiAssembly
         ];
 
         Types.InAssembly(typeof(PassangerReadRepository).Assembly)
@@ -74,9 +74,9 @@ public class ModuleTests : BaseTest
     {
         string[] otherProjects =
         [
-            _domainAssembly,
-            _infrastructureAssembly,
-            _publicApiAssembly
+            DomainAssembly,
+            InfrastructureAssembly,
+            PublicApiAssembly
         ];
 
         Types.InAssembly(typeof(PassangerEndpoints).Assembly)
@@ -91,8 +91,8 @@ public class ModuleTests : BaseTest
     {
         string[] otherProjects =
         [
-            _infrastructureAssembly,
-            _apiAssembly
+            InfrastructureAssembly,
+            ApiAssembly
         ];
 
         Types.InAssembly(typeof(PassangerService).Assembly)

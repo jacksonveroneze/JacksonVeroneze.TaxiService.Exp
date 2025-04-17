@@ -43,24 +43,28 @@ public sealed class BlockCommandHandler(
     {
         var result = request.Type switch
         {
-            BlockCommand.BlockEnum.TemporaryBlock =>
+            BlockCommand.BlockType.TemporaryBlock =>
                 entity.BlockTemporarily(),
 
-            BlockCommand.BlockEnum.PermanentBlock =>
+            BlockCommand.BlockType.PermanentBlock =>
                 entity.BlockPermanently(),
-            
-            _ => throw new ArgumentOutOfRangeException()
+
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(request), request.Type, "Tipo inválido."),
         };
 
         if (result.IsFailure)
         {
             logger.LogGenericValidationError(
                 nameof(BlockCommandHandler),
-                nameof(Block), entity.Id, result.Error!);
+                nameof(Block),
+                entity.Id,
+                result.Error!);
         }
 
         return result;
     }
+
 
     private async Task UpdateAsync(
         DriverEntity entity,

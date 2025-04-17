@@ -24,12 +24,6 @@ public static class HttpClientExtension
             {
                 HttpClientHandler handler = new();
 
-                if (config.IgnoreCertificateValidation)
-                {
-                    handler.ServerCertificateCustomValidationCallback =
-                        (_, _, _, _) => true;
-                }
-
                 return handler;
             })
             .UseHttpClientMetrics()
@@ -37,11 +31,6 @@ public static class HttpClientExtension
             .AddStandardResilienceHandler();
 
         return services;
-
-        //
-        // services.RefitClientBuilder<TClient>(config)
-        //     .UseHttpClientMetrics()
-        //     .AddHttpMessageHandler(() => new PrometheusHttpClientHandler());
     }
 
     private static RefitSettings GetDefaultRefitJsonSettings()

@@ -17,7 +17,8 @@ public static class ResultExtensions
             HttpStatusCode.NotFound => "Resource not found.",
             HttpStatusCode.Conflict => "There was a conflict.",
             HttpStatusCode.BadRequest => "Something went wrong.",
-            _ => throw new ArgumentOutOfRangeException(nameof(statusCode), statusCode, null)
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(result), result.Type, message: null),
         };
 
         if (result.Errors is null)
@@ -31,7 +32,8 @@ public static class ResultExtensions
         }
 
         Dictionary<string, string[]>? dict = result.Errors?
-            .ToDictionary(k => k.Code, v => new[] { v.Message });
+            .ToDictionary(k => k.Code, v => new[] { v.Message },
+                StringComparer.OrdinalIgnoreCase);
 
         return Results.ValidationProblem(
             errors: dict!,
@@ -54,7 +56,8 @@ public static class ResultExtensions
         {
             Result.ResultType.Success => result.ToOkEntity(),
             Result.ResultType.Error => result.ToBadRequestEntity(),
-            _ => throw new ArgumentException(nameof(result.Type))
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(result), result.Type, message: null),
         };
     }
 
@@ -67,7 +70,8 @@ public static class ResultExtensions
             Result.ResultType.Success => result.ToOkEntity(),
             Result.ResultType.Error => result.ToBadRequestEntity(),
             Result.ResultType.NotFound => result.ToNotFoundEntity(),
-            _ => throw new ArgumentException(nameof(result.Type))
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(result), result.Type, message: null),
         };
     }
 
@@ -86,7 +90,8 @@ public static class ResultExtensions
                 Results.BadRequest(result.ToValidationProblem(HttpStatusCode.BadRequest)),
             Result.ResultType.NotFound => Results.NotFound(
                 result.ToValidationProblem(HttpStatusCode.NotFound)),
-            _ => throw new ArgumentException(nameof(result.Type))
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(result), result.Type, message: null),
         };
     }
 
@@ -104,7 +109,8 @@ public static class ResultExtensions
             Result.ResultType.Invalid => result.ToConflictEntity(),
             Result.ResultType.Error => result.ToBadRequestEntity(),
             Result.ResultType.NotFound => result.ToNotFoundEntity(),
-            _ => throw new ArgumentException(nameof(result.Type))
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(result), result.Type, message: null),
         };
     }
 
@@ -121,7 +127,8 @@ public static class ResultExtensions
             Result.ResultType.Success => ToCreatedEntity(),
             Result.ResultType.Invalid => result.ToConflictEntity(),
             Result.ResultType.Error => result.ToBadRequestEntity(),
-            _ => throw new ArgumentException(nameof(result.Type))
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(result), result.Type, message: null),
         };
     }
 
@@ -134,7 +141,8 @@ public static class ResultExtensions
             Result.ResultType.Success => result.ToCreatedEntity(),
             Result.ResultType.Invalid => result.ToConflictEntity(),
             Result.ResultType.Error => result.ToBadRequestEntity(),
-            _ => throw new ArgumentException(nameof(result.Type))
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(result), result.Type, message: null),
         };
     }
 
@@ -172,12 +180,6 @@ public static class ResultExtensions
         return result.ToValidationProblem(
             HttpStatusCode.Conflict);
     }
-
-    // private static IResult ToUnprocessableEntity(this Result result)
-    // {
-    //     return result.ToValidationProblem(
-    //         HttpStatusCode.UnprocessableEntity);
-    // }
 
     private static IResult ToBadRequestEntity(this Result.Result result)
     {

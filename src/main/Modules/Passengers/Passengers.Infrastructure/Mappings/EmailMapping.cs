@@ -19,7 +19,6 @@ public class EmailMapping : IEntityTypeConfiguration<EmailEntity>
 
         // Indexes
         builder.HasIndex(c => c.PassangerId);
-        // builder.HasIndex(c => c.Email);
 
         // Properties
         builder.Property(c => c.Id)

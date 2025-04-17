@@ -33,5 +33,7 @@ internal static class SetLocationEndpoint
         return builder;
     }
 
-    private record Request(float Latitude, float Longitude);
+    private sealed record Request(
+        float Latitude,
+        float Longitude);
 }

@@ -1,10 +1,10 @@
-using TaxiService.Modules.Payments.Application.v1;
-using TaxiService.Modules.Payments.Infrastructure.Contexts;
+using TaxiService.Modules.Rides.Application.v1;
+using TaxiService.Modules.Rides.Infrastructure.Contexts;
 
-namespace TaxiService.Modules.Payments.Infrastructure.UnitOfWork;
+namespace TaxiService.Modules.Rides.Infrastructure.UnitOfWork;
 
-public class UnitOfWork(
-    PaymentsDbContext context) : IUnitOfWork
+public class EfUnitOfWork(
+    RidesDbContext context) : IUnitOfWork
 {
     public async Task<bool> CommitAsync(
         CancellationToken cancellationToken)

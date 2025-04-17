@@ -20,7 +20,6 @@ public class RideWriteRepository(
     public async Task UpdateAsync(RideEntity entity,
         CancellationToken cancellationToken)
     {
-        // entity.MarkAsUpdated();
         service.Update(entity);
 
         await service.DbContext.SaveChangesAsync(cancellationToken);

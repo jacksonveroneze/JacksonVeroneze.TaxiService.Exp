@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <Project>
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -8,11 +10,13 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
-    
+
     <AnalysisLevel>latest</AnalysisLevel>
     <AnalysisMode>All</AnalysisMode>
+    <AnalysisModeGlobalization>All</AnalysisModeGlobalization>
+    <AnalysisModeSecurity>All</AnalysisModeSecurity>
+    
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>

@@ -18,9 +18,8 @@ public class PassangerByNameSpecification(
         }
 
         return spec => matchExactly
-            ? spec.Name.Value!.ToUpper()
-                .Equals(name.ToUpperInvariant())
-            : spec.Name.Value!.ToUpper()
-                .Contains(name.ToUpperInvariant());
+            ? spec.Name.Value!.ToUpperInvariant()
+                .Equals(name.ToUpperInvariant(), StringComparison.OrdinalIgnoreCase)
+            : spec.Name.Value!.Contains(name, StringComparison.InvariantCultureIgnoreCase);
     }
 }

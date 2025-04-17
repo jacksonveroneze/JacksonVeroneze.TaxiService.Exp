@@ -23,12 +23,6 @@ public static class DistributedLockExtension
             (ConnectionMultiplexer)conn
         ];
 
-        // ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
-        // {
-        //     builder.AddConsole();
-        //     builder.AddDebug();
-        // });
-
         RedLockRetryConfiguration retryconf = new(5, 1000);
 
         using RedLockFactory? redlockFactory =

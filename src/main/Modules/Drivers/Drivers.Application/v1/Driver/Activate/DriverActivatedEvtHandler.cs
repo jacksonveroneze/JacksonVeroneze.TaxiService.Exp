@@ -3,7 +3,7 @@ using TaxiService.Modules.Drivers.Domain.Events.Driver;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.Activate;
 
-public class DriverActivatedEventHandler(
+public class DriverActivatedEvtHandler(
     IDriverReadCacheRepository cacheRepository)
     : INotificationHandler<DriverActivatedEvent>
 {

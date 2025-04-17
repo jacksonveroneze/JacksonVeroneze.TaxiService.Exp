@@ -20,9 +20,8 @@ public class DriverLocationEntity : BaseEntityAggregateRoot
     }
 
     public DriverLocationEntity(Guid driverId,
-        CoordinateValueObject? location)
+        CoordinateValueObject location)
     {
-        ArgumentNullException.ThrowIfNull(driverId);
         ArgumentNullException.ThrowIfNull(location);
 
         Id = GuidGenerator.Generate();
@@ -49,7 +48,7 @@ public class DriverLocationEntity : BaseEntityAggregateRoot
         }
 
         DriverLocationEntity entity = new(
-            driverId, coordinateVo.Value);
+            driverId, coordinateVo.Value!);
 
         return Result<DriverLocationEntity>.WithSuccess(entity);
     }

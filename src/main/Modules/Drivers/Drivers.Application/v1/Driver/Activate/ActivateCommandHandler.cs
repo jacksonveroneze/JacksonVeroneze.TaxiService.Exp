@@ -43,7 +43,7 @@ public sealed class ActivateCommandHandler(
             .Select(evt => publisher.Publish(evt, cancellationToken))
             .ToArray();
 
-        if (enumerable != null && enumerable.Any())
+        if (enumerable != null && enumerable.Length != 0)
             await Task.WhenAll(enumerable);
 
         return Result.WithSuccess();

@@ -17,7 +17,7 @@ internal sealed class PaymentProviderFactory(
     IProviderReadRepository providerRepository)
     : IPaymentProviderFactory
 {
-    public async Task<IReadOnlyCollection<Lazy<IPaymentProvider>>> GetProvidersAsync(
+    public async Task<ImmutableArray<Lazy<IPaymentProvider>>> GetProvidersAsync(
         CancellationToken cancellationToken)
     {
         var providersConfigs =
@@ -28,7 +28,7 @@ internal sealed class PaymentProviderFactory(
         return providers;
     }
 
-    private async Task<IReadOnlyCollection<ProviderEntity>> LoadProviderConfigsAsync(
+    private async Task<ImmutableArray<ProviderEntity>> LoadProviderConfigsAsync(
         CancellationToken cancellationToken)
     {
         logger.LogLoadProviders();
@@ -36,24 +36,24 @@ internal sealed class PaymentProviderFactory(
         var configs = await providerRepository
             .GetAllAsync(cancellationToken);
 
-        if (configs.Count == 0)
+        if (!configs.Any())
         {
             logger.LogNoProvidersFound();
 
-            return Array.Empty<ProviderEntity>();
+            return [];
         }
 
         var nameProviders = configs.Select(
             prov => prov.ProviderName);
 
         logger.LogProvidersFounded(
-            configs.Count, nameProviders.ToArray());
+            configs.Length, nameProviders.ToArray());
 
         return configs;
     }
 
-    private IReadOnlyCollection<Lazy<IPaymentProvider>> CreateProviders(
-        IReadOnlyCollection<ProviderEntity> providerConfigs)
+    private ImmutableArray<Lazy<IPaymentProvider>> CreateProviders(
+        ImmutableArray<ProviderEntity> providerConfigs)
     {
         var providers = providerConfigs
             .Select(config => CreateProvider(config.ProviderName))

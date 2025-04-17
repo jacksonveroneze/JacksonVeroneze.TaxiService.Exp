@@ -11,6 +11,6 @@ public class PaymentReadRepository()
         Guid rideId,
         CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException();
     }
 }

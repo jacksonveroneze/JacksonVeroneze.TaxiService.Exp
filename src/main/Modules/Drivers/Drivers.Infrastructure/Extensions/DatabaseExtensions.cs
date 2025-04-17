@@ -22,7 +22,7 @@ internal static class DatabaseExtensions
         services.AddReadDatabase<DriversReadDbContext>(
             moduleConfiguration.Database!);
 
-        services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
+        services.AddScoped<IUnitOfWork, UnitOfWork.EfUnitOfWork>();
         
         return services;
     }

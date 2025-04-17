@@ -397,6 +397,15 @@ dotnet_diagnostic.S2139.severity = none
 dotnet_diagnostic.S2094.severity = none
 dotnet_diagnostic.CA1812.severity = suggestion
 dotnet_diagnostic.CA1848.severity = none
+dotnet_diagnostic.CA1707.severity = none
 dotnet_diagnostic.VSTHRD200.severity = suggestion
 dotnet_diagnostic.MA0048.severity = suggestion
 dotnet_diagnostic.MA0004.severity = none
+dotnet_diagnostic.MA0016.severity = none
+dotnet_diagnostic.CA1305.severity = none
+dotnet_diagnostic.MA0011.severity = none
+dotnet_diagnostic.S4035.severity = none
+
+
+MA0051.maximum_lines_per_method = 80
+MA0051.maximum_statements_per_method = 40

@@ -10,7 +10,7 @@ internal sealed class ProviderReadRepository(
     IEfCoreRepository<ProviderEntity, PaymentsDbContext> service)
     : IProviderReadRepository
 {
-    public async Task<IReadOnlyCollection<ProviderEntity>> GetAllAsync(
+    public async Task<ImmutableArray<ProviderEntity>> GetAllAsync(
         CancellationToken cancellationToken)
     {
         var providers = await service.GetAllAsync(
@@ -19,6 +19,6 @@ internal sealed class ProviderReadRepository(
             10,
             cancellationToken);
 
-        return providers.ToImmutableArray();
+        return [..providers];
     }
 }

@@ -12,14 +12,17 @@ public class HasScopeHandler : AuthorizationHandler<HasScopeRequirement>
         ArgumentNullException.ThrowIfNull(requirement);
 
         if (!context.User.HasClaim(
-                claim => claim.Type == "scope"
-                         && claim.Issuer == requirement.Issuer))
+                claim => string.Equals(claim.Type, "scope"
+                    , StringComparison.OrdinalIgnoreCase) && string.Equals(claim.Issuer,
+                    requirement.Issuer, StringComparison.OrdinalIgnoreCase)))
         {
             return Task.CompletedTask;
         }
 
         string[] scopes = context.User.FindFirst(
-                c => c.Type == "scope" && c.Issuer == requirement.Issuer)
+                c => string.Equals(c.Type, "scope", StringComparison.OrdinalIgnoreCase) &&
+                     string.Equals(c.Issuer, requirement.Issuer,
+                         StringComparison.OrdinalIgnoreCase))
             ?.Value.Split(' ')!;
 
         if (scopes.Any(s => s.Equals(requirement.Scope,

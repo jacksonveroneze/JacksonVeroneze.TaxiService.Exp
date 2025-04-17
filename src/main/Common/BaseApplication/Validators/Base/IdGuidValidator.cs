@@ -14,6 +14,6 @@ public class IdGuidValidator : AbstractValidator<Guid>
             .Cascade(CascadeMode.Stop)
             .NotNull()
             .NotEmpty()
-            .WithError(CommonValidationErrors.Common.IdIsRequired);
+            .WithError(CommonValidationErrors.CommonErrors.IdIsRequired);
     }
 }

@@ -32,11 +32,8 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
     }
 
     protected DriverAvailabilityEntity(Guid driverId,
-        DriverAvailabilityStatus? status)
+        DriverAvailabilityStatus status)
     {
-        ArgumentNullException.ThrowIfNull(driverId);
-        ArgumentNullException.ThrowIfNull(status);
-
         Id = GuidGenerator.Generate();
         DriverId = driverId;
         Status = status;
@@ -95,7 +92,7 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
     // Factory Method
     public static Result<DriverAvailabilityEntity> Create(
         Guid driverId,
-        DriverAvailabilityStatus? availability)
+        DriverAvailabilityStatus availability)
     {
         DriverAvailabilityEntity entity1 = new(
             driverId, availability);

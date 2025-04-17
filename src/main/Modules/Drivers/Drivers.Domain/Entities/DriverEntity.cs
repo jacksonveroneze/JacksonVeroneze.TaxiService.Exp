@@ -43,11 +43,9 @@ public class DriverEntity : BaseEntityAggregateRoot
         Gender gender)
     {
         ArgumentNullException.ThrowIfNull(name);
-        ArgumentNullException.ThrowIfNull(birthday);
         ArgumentNullException.ThrowIfNull(email);
         ArgumentNullException.ThrowIfNull(phone);
         ArgumentNullException.ThrowIfNull(cpf);
-        ArgumentNullException.ThrowIfNull(gender);
 
         Id = GuidGenerator.Generate();
         Name = name;

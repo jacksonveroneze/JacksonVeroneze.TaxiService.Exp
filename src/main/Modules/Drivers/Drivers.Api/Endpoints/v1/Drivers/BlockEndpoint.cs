@@ -1,4 +1,3 @@
-using System.Text.Json;
 using JacksonVeroneze.NET.Result;
 using TaxiService.Modules.Drivers.Application.v1.Driver.Block;
 
@@ -28,8 +27,5 @@ internal static class BlockEndpoint
         return builder;
     }
 
-    private record Request
-    {
-        public BlockCommand.BlockEnum Type { get; set; }
-    }
+    private sealed record Request(BlockCommand.BlockType Type);
 }

@@ -1,4 +1,3 @@
-using System.Runtime.InteropServices;
 using TaxiService.Common.BaseApplication.Interfaces.System;
 
 namespace TaxiService.Common.BaseInfrastructure.System;
@@ -34,13 +33,13 @@ internal sealed class DateTimeProvider : IDateTimeProvider
 
     private static string GetTimeZoneId()
     {
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        if (OperatingSystem.IsWindows())
         {
             return WindowsBrTimeZone;
         }
 
-        return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
-               || RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
+        return OperatingSystem.IsLinux()
+               || OperatingSystem.IsMacOS()
             ? LinuxBrTimeZone
             : throw new InvalidOperationException("Invalid plataform");
     }

@@ -1,9 +1,10 @@
+using System.Collections.Immutable;
 using TaxiService.Modules.Payments.Application.v1.Interfaces.Providers;
 
 namespace TaxiService.Modules.Payments.Application.v1.Interfaces.Factories;
 
 public interface IPaymentProviderFactory
 {
-    Task<IReadOnlyCollection<Lazy<IPaymentProvider>>> GetProvidersAsync(
+    Task<ImmutableArray<Lazy<IPaymentProvider>>> GetProvidersAsync(
         CancellationToken cancellationToken);
 }

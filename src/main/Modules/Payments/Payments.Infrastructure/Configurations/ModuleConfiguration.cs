@@ -10,5 +10,5 @@ internal sealed record ModuleConfiguration
     
     public DatabaseConfiguration? Database { get; init; }
     
-    public IReadOnlyCollection<HttpClientConfiguration>? HttpClients { get; init; }
+    public IReadOnlyList<HttpClientConfiguration>? HttpClients { get; init; }
 }

@@ -21,6 +21,6 @@ public class PaymentWriteRepository(
     public Task UpdateAsync(PaymentEntity entity, 
         CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException();
     }
 }

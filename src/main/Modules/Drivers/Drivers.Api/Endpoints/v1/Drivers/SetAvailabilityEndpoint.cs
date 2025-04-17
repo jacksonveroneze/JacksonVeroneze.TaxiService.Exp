@@ -33,5 +33,6 @@ internal static class SetAvailabilityEndpoint
         return builder;
     }
 
-    private record Request(DriverAvailabilityStatus Status);
+    private sealed record Request(
+        DriverAvailabilityStatus Status);
 }

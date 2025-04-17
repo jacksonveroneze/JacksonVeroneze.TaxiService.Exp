@@ -16,7 +16,9 @@ public class EmailReadRepository(
         CancellationToken cancellationToken)
     {
         bool exists = await service.AnyAsync(conf =>
-                string.Equals(conf.Email.Value, email.ToLower()),
+                string.Equals(conf.Email.Value,
+                    email.ToLower(System.Globalization.CultureInfo.CurrentCulture),
+                    StringComparison.OrdinalIgnoreCase),
             cancellationToken);
 
         return exists;

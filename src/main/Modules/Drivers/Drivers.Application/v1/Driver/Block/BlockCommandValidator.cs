@@ -15,7 +15,7 @@ public class BlockCommandValidator : AbstractValidator<BlockCommand>
         RuleFor(request => request.Type)
             .Cascade(CascadeMode.Stop)
             .NotNull()
-            .NotEqual(BlockCommand.BlockEnum.None)
+            .NotEqual(BlockCommand.BlockType.None)
             .IsInEnum();
     }
 }

@@ -28,10 +28,10 @@ public sealed class ValidationBehavior<TRequest, TResponse>(
 
         if (!validators.Any())
         {
-            LogMessagesExtensions.LogNoContainValidators(logger, nameof(ValidationBehavior<TRequest, TResponse>),
+            logger.LogNoContainValidators(nameof(ValidationBehavior<TRequest, TResponse>),
                 typeof(TRequest).Name);
 
-            return await next();
+            return await next(cancellationToken);
         }
 
         ValidationContext<TRequest> context = new(request);
@@ -44,15 +44,12 @@ public sealed class ValidationBehavior<TRequest, TResponse>(
             .SelectMany(item => item.Errors)
             .ToArray();
 
-        LogMessagesExtensions.LogTotalViolations(logger, nameof(ValidationBehavior<TRequest, TResponse>),
+        logger.LogTotalViolations(nameof(ValidationBehavior<TRequest, TResponse>),
             typeof(TRequest).Name,
             res.Length);
 
-        if (res.Any())
-        {
-            throw new ValidationException(res);
-        }
-
-        return await next();
+        return res.Length != 0
+            ? throw new ValidationException(res)
+            : await next(cancellationToken);
     }
 }

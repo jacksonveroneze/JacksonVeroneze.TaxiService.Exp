@@ -19,7 +19,7 @@ internal static class DatabaseExtensions
         services.AddDatabase<PaymentsDbContext>(
             moduleConfiguration.Database!);
 
-        services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
+        services.AddScoped<IUnitOfWork, UnitOfWork.EfUnitOfWork>();
 
         return services;
     }

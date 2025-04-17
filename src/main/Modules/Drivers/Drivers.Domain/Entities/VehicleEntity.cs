@@ -37,12 +37,10 @@ public class VehicleEntity : BaseEntityAggregateRoot
         string? plate, string? color,
         int? year)
     {
-        ArgumentNullException.ThrowIfNull(driverId);
         ArgumentNullException.ThrowIfNull(model);
         ArgumentNullException.ThrowIfNull(brand);
         ArgumentNullException.ThrowIfNull(plate);
         ArgumentNullException.ThrowIfNull(color);
-        ArgumentNullException.ThrowIfNull(year);
 
         Id = GuidGenerator.Generate();
         DriverId = driverId;

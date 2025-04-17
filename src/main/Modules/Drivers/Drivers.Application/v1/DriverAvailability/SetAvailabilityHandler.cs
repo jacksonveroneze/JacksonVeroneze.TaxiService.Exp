@@ -80,7 +80,8 @@ public sealed class SetAvailabilityHandler(
             DriverAvailabilityStatus.Online => lastAvailability.SetOnline(),
             DriverAvailabilityStatus.Offline => lastAvailability.SetOffline(),
             DriverAvailabilityStatus.InRide => lastAvailability.SetInRide(),
-            _ => throw new ArgumentOutOfRangeException()
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(request), request.Status, "Status inválido."),
         };
 
         if (result.IsFailure)

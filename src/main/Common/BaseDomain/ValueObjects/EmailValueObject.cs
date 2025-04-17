@@ -5,7 +5,7 @@ using TaxiService.Common.BaseDomain.Core.Errors;
 
 namespace TaxiService.Common.BaseDomain.ValueObjects;
 
-public class EmailValueObject : ValueObject
+public partial class EmailValueObject : ValueObject
 {
     private const int MaxLength = 256;
 
@@ -13,8 +13,7 @@ public class EmailValueObject : ValueObject
         @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
 
     private static readonly Lazy<Regex> EmailFormatRegex =
-        new(() => new Regex(EmailRegexPattern,
-            RegexOptions.Compiled | RegexOptions.IgnoreCase));
+        new(MyRegex);
 
     public string? Value { get; }
 
@@ -44,12 +43,15 @@ public class EmailValueObject : ValueObject
 
     protected bool Equals(EmailValueObject other)
     {
-        return Value == other.Value;
+        return string.Equals(Value, other.Value,
+            StringComparison.OrdinalIgnoreCase);
     }
 
     public override int GetHashCode()
     {
-        return Value != null ? Value.GetHashCode() : 0;
+        return Value != null
+            ? StringComparer.OrdinalIgnoreCase.GetHashCode(Value)
+            : 0;
     }
 
     public override string ToString()
@@ -69,4 +71,12 @@ public class EmailValueObject : ValueObject
 
         return Result<EmailValueObject>.WithSuccess(valueObject);
     }
+
+    [GeneratedRegex(
+        pattern: EmailRegexPattern,
+        options: RegexOptions.Compiled |
+                 RegexOptions.IgnoreCase |
+                 RegexOptions.ExplicitCapture,
+        matchTimeoutMilliseconds: 500)]
+    private static partial Regex MyRegex();
 }
