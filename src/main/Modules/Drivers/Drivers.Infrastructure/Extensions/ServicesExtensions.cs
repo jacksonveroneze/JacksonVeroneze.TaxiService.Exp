@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.DriverAvailability;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.DriverLocation;
@@ -32,6 +33,9 @@ internal static class ServicesExtensions
         #endregion
 
         #region Vehicle
+
+        // Services
+        services.AddScoped<IVehicleService, VehicleService>();
 
         // Repositories
         services.AddScoped<IVehicleReadRepository, VehicleReadRepository>();

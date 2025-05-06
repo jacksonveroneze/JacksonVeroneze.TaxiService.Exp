@@ -39,7 +39,9 @@ public sealed class BlockDriverCommandHandler(
         return Result.WithSuccess();
     }
 
-    private Result Block(DriverEntity entity, BlockDriverCommand request)
+    private Result Block(
+        DriverEntity entity, 
+        BlockDriverCommand request)
     {
         Result result = request.Type switch
         {

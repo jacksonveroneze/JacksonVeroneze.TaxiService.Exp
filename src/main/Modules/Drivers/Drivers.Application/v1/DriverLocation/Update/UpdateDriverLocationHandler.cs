@@ -7,14 +7,14 @@ using TaxiService.Modules.Drivers.Domain.Entities;
 
 namespace TaxiService.Modules.Drivers.Application.v1.DriverLocation.Update;
 
-public sealed class UpdateHandler(
-    ILogger<UpdateHandler> logger,
+public sealed class UpdateDriverLocationHandler(
+    ILogger<UpdateDriverLocationHandler> logger,
     IDriverService driverService,
     IDriverLocationWriteRepository driverLocationWriteRepository)
-    : IRequestHandler<UpdateCommand, Result>
+    : IRequestHandler<UpdateDriverLocationCommand, Result>
 {
     public async Task<Result> Handle(
-        UpdateCommand request,
+        UpdateDriverLocationCommand request,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
@@ -33,7 +33,7 @@ public sealed class UpdateHandler(
 
         if (driverLocation.IsFailure)
         {
-            return Result<UpdateHandler>
+            return Result<UpdateDriverLocationHandler>
                 .FromInvalid(driverLocation.Errors!);
         }
 
@@ -43,7 +43,7 @@ public sealed class UpdateHandler(
     }
 
     private Result<DriverLocationEntity> FactoryEntity(
-        UpdateCommand request)
+        UpdateDriverLocationCommand request)
     {
         Result<DriverLocationEntity> entity =
             DriverLocationEntity.Create(
@@ -55,7 +55,7 @@ public sealed class UpdateHandler(
         }
 
         logger.LogGenericError(
-            nameof(UpdateHandler),
+            nameof(UpdateDriverLocationHandler),
             nameof(FactoryEntity), entity.Errors!.Count());
 
         return Result<DriverLocationEntity>
@@ -69,7 +69,7 @@ public sealed class UpdateHandler(
         await driverLocationWriteRepository.CreateAsync(
             entity, cancellationToken);
 
-        logger.LogCreated(nameof(UpdateHandler),
+        logger.LogCreated(nameof(UpdateDriverLocationHandler),
             nameof(CreateAsync), entity.Id);
     }
 }

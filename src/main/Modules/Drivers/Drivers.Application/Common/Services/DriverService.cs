@@ -3,8 +3,6 @@ using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Services;
-using TaxiService.Modules.Drivers.Application.v1.Driver.Activate;
-using TaxiService.Modules.Drivers.Application.v1.Driver.Inativate;
 using TaxiService.Modules.Drivers.Domain;
 using TaxiService.Modules.Drivers.Domain.Core.Errors;
 using TaxiService.Modules.Drivers.Domain.Entities;
@@ -12,7 +10,7 @@ using TaxiService.Modules.Drivers.Domain.Entities;
 namespace TaxiService.Modules.Drivers.Application.Common.Services;
 
 public class DriverService(
-    ILogger<InactivateDriverCommandHandler> logger,
+    ILogger<DriverService> logger,
     IDriverRepository driverRepository)
     : IDriverService
 {
@@ -79,7 +77,7 @@ public class DriverService(
         Error error = DomainErrors.DriverErrors.NotFound;
 
         logger.LogNotFound(
-            nameof(ActivateDriverCommandHandler),
+            nameof(DriverService),
             nameof(GetByIdAsync), id, error);
 
         return Result<DriverEntity>.FromNotFound(error);

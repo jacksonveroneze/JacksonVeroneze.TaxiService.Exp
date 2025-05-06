@@ -1,3 +1,6 @@
+using TaxiService.Modules.Drivers.Api.Endpoints.v1.Drivers.DriverAvailability;
+using TaxiService.Modules.Drivers.Api.Endpoints.v1.Drivers.DriverLocation;
+
 namespace TaxiService.Modules.Drivers.Api.Endpoints.v1.Drivers;
 
 public static class DriverEndpoints
@@ -13,15 +16,16 @@ public static class DriverEndpoints
                 .WithApiVersionSet(apiVersionSet)
                 .MapToApiVersion(1);
 
-        builder.AddCreate()
+        builder.AddGetById()
+            .AddGetPaged()
+            .AddCreate()
             .AddActivate()
             .AddInactivate()
             .AddReactivate()
             .AddBlock()
             .AddDelete()
-            .AddGetById()
-            .SetAvailability()
-            .SetLocationCommand();
+            .UpdateAvailability()
+            .UpdateLocationCommand();
 
         return app;
     }

@@ -9,15 +9,15 @@ using TaxiService.Modules.Drivers.Domain.Enums;
 
 namespace TaxiService.Modules.Drivers.Application.v1.DriverAvailability.Update;
 
-public sealed class UpdateHandler(
-    ILogger<UpdateHandler> logger,
+public sealed class UpdateDriverAvailabilityHandler(
+    ILogger<UpdateDriverAvailabilityHandler> logger,
     IDriverService driverService,
     IDriverAvailabilityReadRepository driverAvailabilityReadRepository,
     IDriverAvailabilityWriteRepository driverAvailabilityWriteRepository)
-    : IRequestHandler<UpdateCommand, Result>
+    : IRequestHandler<UpdateDriverAvailabilityCommand, Result>
 {
     public async Task<Result> Handle(
-        UpdateCommand request,
+        UpdateDriverAvailabilityCommand request,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
@@ -35,7 +35,7 @@ public sealed class UpdateHandler(
 
         if (driverAvailability.IsFailure)
         {
-            return Result<UpdateHandler>
+            return Result<UpdateDriverAvailabilityHandler>
                 .FromInvalid(driverAvailability.Errors!);
         }
 
@@ -45,7 +45,7 @@ public sealed class UpdateHandler(
     }
 
     private async Task<Result> ValidateBussinesRulesAsync(
-        UpdateCommand request,
+        UpdateDriverAvailabilityCommand request,
         CancellationToken cancellationToken)
     {
         Result<bool> resultValidateDriver = await driverService
@@ -76,7 +76,7 @@ public sealed class UpdateHandler(
                 .FromInvalid(error);
         }
 
-        var result = request.Status switch
+        Result result = request.Status switch
         {
             DriverAvailabilityStatus.Online => lastAvailability.SetOnline(),
             DriverAvailabilityStatus.Offline => lastAvailability.SetOffline(),
@@ -96,7 +96,7 @@ public sealed class UpdateHandler(
     }
 
     private Result<DriverAvailabilityEntity> FactoryEntity(
-        UpdateCommand request)
+        UpdateDriverAvailabilityCommand request)
     {
         Result<DriverAvailabilityEntity> entity =
             DriverAvailabilityEntity.Create(
@@ -108,7 +108,7 @@ public sealed class UpdateHandler(
         }
 
         logger.LogGenericError(
-            nameof(UpdateHandler),
+            nameof(UpdateDriverAvailabilityHandler),
             nameof(FactoryEntity), entity.Errors!.Count());
 
         return Result<DriverAvailabilityEntity>
@@ -122,7 +122,7 @@ public sealed class UpdateHandler(
         await driverAvailabilityWriteRepository.CreateAsync(
             entity, cancellationToken);
 
-        logger.LogCreated(nameof(UpdateHandler),
+        logger.LogCreated(nameof(UpdateDriverAvailabilityHandler),
             nameof(CreateAsync), entity.Id);
     }
 }

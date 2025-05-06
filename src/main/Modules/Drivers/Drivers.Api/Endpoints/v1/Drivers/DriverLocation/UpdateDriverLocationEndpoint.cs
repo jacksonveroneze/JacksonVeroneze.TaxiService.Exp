@@ -1,16 +1,17 @@
 using System.Diagnostics;
+
 using JacksonVeroneze.NET.Result;
 
 using TaxiService.Modules.Drivers.Application.v1.DriverLocation.Update;
 
-namespace TaxiService.Modules.Drivers.Api.Endpoints.v1.Drivers;
+namespace TaxiService.Modules.Drivers.Api.Endpoints.v1.Drivers.DriverLocation;
 
-internal static class UpdateLocationDriverEndpoint
+internal static class UpdateDriverLocationEndpoint
 {
     private static readonly ActivitySource ActivitySource =
         new("TaxiService");
 
-    public static RouteGroupBuilder SetLocationCommand(
+    public static RouteGroupBuilder UpdateLocationCommand(
         this RouteGroupBuilder builder)
     {
         builder.MapPost("{id:guid:required}/location", async (
@@ -21,7 +22,7 @@ internal static class UpdateLocationDriverEndpoint
             {
                 using Activity? activity = ActivitySource.StartActivity();
 
-                UpdateCommand command = new(
+                UpdateDriverLocationCommand command = new(
                     id, request.Latitude, request.Longitude);
 
                 Result response = await mediator

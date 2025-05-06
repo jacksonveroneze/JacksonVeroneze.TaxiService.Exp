@@ -3,10 +3,10 @@ using TaxiService.Modules.Drivers.Domain.Enums;
 
 namespace TaxiService.Modules.Drivers.Application.v1.DriverAvailability.Update;
 
-public class UpdateCommandValidator
-    : AbstractValidator<UpdateCommand>
+public class UpdateDriverAvailabilityCommandValidator
+    : AbstractValidator<UpdateDriverAvailabilityCommand>
 {
-    public UpdateCommandValidator()
+    public UpdateDriverAvailabilityCommandValidator()
     {
         RuleFor(request => request)
             .NotNull();

@@ -38,7 +38,7 @@ public static partial class LogMessagesExtensions
         Message = "{className} - {methodName} - Error: '{error}'")]
     public static partial void LogGenericValidationError(this ILogger logger,
         string className, string methodName, Error error);
-    
+
     [LoggerMessage(
         EventId = 1003,
         Level = LogLevel.Warning,
@@ -148,6 +148,14 @@ public static partial class LogMessagesExtensions
                   "Identifier: '{identifier}'")]
     public static partial void LogGetById(this ILogger logger,
         string contextName, string className, string methodName, Guid? identifier);
+
+    [LoggerMessage(
+        EventId = 1041,
+        Level = LogLevel.Information,
+        Message = "{className} - {methodName} - Found - " +
+                  "Identifier: '{identifier}'")]
+    public static partial void LogGetById(this ILogger logger,
+        string className, string methodName, Guid? identifier);
 
     #endregion
 

@@ -1,5 +1,7 @@
 using System.Diagnostics;
+
 using JacksonVeroneze.NET.Result;
+
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces;
@@ -21,15 +23,10 @@ public sealed class CreateVehicleCommandHandler(
     IUnitOfWork unitOfWork)
     : IRequestHandler<CreateVehicleCommand, Result<CreateVehicleCommandResponse>>
 {
-    private static readonly ActivitySource ActivitySource =
-        new("TaxiService");
-
     public async Task<Result<CreateVehicleCommandResponse>> Handle(
         CreateVehicleCommand request,
         CancellationToken cancellationToken)
     {
-        using Activity? activity = ActivitySource.StartActivity();
-
         ArgumentNullException.ThrowIfNull(request);
 
         Result validationResult = await ValidateBussinesRulesAsync(
@@ -62,8 +59,6 @@ public sealed class CreateVehicleCommandHandler(
         CreateVehicleCommand request,
         CancellationToken cancellationToken)
     {
-        using Activity? activity = ActivitySource.StartActivity();
-
         Result plateResult = await ValidateVehiclePlateAsync(
             request.Plate!, cancellationToken);
 
@@ -83,8 +78,6 @@ public sealed class CreateVehicleCommandHandler(
         string email,
         CancellationToken cancellationToken)
     {
-        using Activity? activity = ActivitySource.StartActivity();
-
         bool exists = await vehicleReadRepository
             .ExistsByPlateAsync(email, cancellationToken);
 
@@ -105,8 +98,6 @@ public sealed class CreateVehicleCommandHandler(
         Guid driverId,
         CancellationToken cancellationToken)
     {
-        using Activity? activity = ActivitySource.StartActivity();
-
         bool exists = await vehicleReadRepository
             .ExistVehicleByDriverAsync(driverId, cancellationToken);
 
@@ -127,8 +118,6 @@ public sealed class CreateVehicleCommandHandler(
         Guid driverId,
         CancellationToken cancellationToken)
     {
-        using Activity? activity = ActivitySource.StartActivity();
-
         DriverDto? driver = await driverReadRepository
             .GetByIdAsync(driverId, cancellationToken);
 
@@ -158,8 +147,6 @@ public sealed class CreateVehicleCommandHandler(
     private Result<VehicleEntity> FactoryEntity(
         CreateVehicleCommand request)
     {
-        using Activity? activity = ActivitySource.StartActivity();
-
         Result<VehicleEntity> entity = VehicleEntity.Create(
             request.DriverId, request.Model,
             request.Brand!, request.Plate!,
@@ -182,8 +169,6 @@ public sealed class CreateVehicleCommandHandler(
         VehicleEntity vehicleEntity,
         CancellationToken cancellationToken)
     {
-        using Activity? activity = ActivitySource.StartActivity();
-
         await vehicleWriteRepository.CreateAsync(
             vehicleEntity, cancellationToken);
 
