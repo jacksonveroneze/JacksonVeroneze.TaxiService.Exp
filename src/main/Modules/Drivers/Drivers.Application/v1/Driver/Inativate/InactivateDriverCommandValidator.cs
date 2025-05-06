@@ -2,9 +2,10 @@ using TaxiService.Common.BaseApplication.Validators.Base;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.Inativate;
 
-public class InactivateCommandValidator : AbstractValidator<InactivateCommand>
+public class InactivateDriverCommandValidator 
+    : AbstractValidator<InactivateDriverCommand>
 {
-    public InactivateCommandValidator()
+    public InactivateDriverCommandValidator()
     {
         RuleFor(request => request)
             .NotNull();

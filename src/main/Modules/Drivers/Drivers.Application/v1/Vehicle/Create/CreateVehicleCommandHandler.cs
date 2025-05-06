@@ -14,20 +14,20 @@ using TaxiService.Modules.Drivers.Domain.Enums;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Vehicle.Create;
 
-public sealed class CreateCommandHandler(
-    ILogger<CreateCommandHandler> logger,
+public sealed class CreateVehicleCommandHandler(
+    ILogger<CreateVehicleCommandHandler> logger,
     IDataMapper mapper,
     IDriverReadRepository driverReadRepository,
     IVehicleReadRepository vehicleReadRepository,
     IVehicleWriteRepository vehicleWriteRepository,
     IUnitOfWork unitOfWork)
-    : IRequestHandler<CreateCommand, Result<CreateCommandResponse>>
+    : IRequestHandler<CreateVehicleCommand, Result<CreateVehicleCommandResponse>>
 {
     private static readonly ActivitySource ActivitySource =
         new("TaxiService");
 
-    public async Task<Result<CreateCommandResponse>> Handle(
-        CreateCommand request,
+    public async Task<Result<CreateVehicleCommandResponse>> Handle(
+        CreateVehicleCommand request,
         CancellationToken cancellationToken)
     {
         using Activity? activity = ActivitySource.StartActivity();
@@ -39,7 +39,7 @@ public sealed class CreateCommandHandler(
 
         if (validationResult.IsFailure)
         {
-            return Result<CreateCommandResponse>
+            return Result<CreateVehicleCommandResponse>
                 .WithError(validationResult.Errors!);
         }
 
@@ -47,21 +47,21 @@ public sealed class CreateCommandHandler(
 
         if (vehicleEntity.IsFailure)
         {
-            return Result<CreateCommandResponse>
+            return Result<CreateVehicleCommandResponse>
                 .FromInvalid(vehicleEntity.Errors!);
         }
 
         await CreateAsync(vehicleEntity.Value!,
             cancellationToken);
 
-        CreateCommandResponse response =
-            mapper.Map<CreateCommandResponse>(vehicleEntity.Value);
+        CreateVehicleCommandResponse response =
+            mapper.Map<CreateVehicleCommandResponse>(vehicleEntity.Value);
 
-        return Result<CreateCommandResponse>.WithSuccess(response);
+        return Result<CreateVehicleCommandResponse>.WithSuccess(response);
     }
 
     private async Task<Result> ValidateBussinesRulesAsync(
-        CreateCommand request,
+        CreateVehicleCommand request,
         CancellationToken cancellationToken)
     {
         using Activity? activity = ActivitySource.StartActivity();
@@ -97,7 +97,7 @@ public sealed class CreateCommandHandler(
 
         Error error = DomainErrors.VehicleErrors.DuplicatePlate;
 
-        logger.LogAlreadyExists(nameof(CreateCommandHandler),
+        logger.LogAlreadyExists(nameof(CreateVehicleCommandHandler),
             nameof(ValidateVehiclePlateAsync), email, error);
 
         return Result.FromInvalid(error);
@@ -119,7 +119,7 @@ public sealed class CreateCommandHandler(
 
         Error error = DomainErrors.VehicleErrors.DuplicateDriverId;
 
-        logger.LogAlreadyExists(nameof(CreateCommandHandler),
+        logger.LogAlreadyExists(nameof(CreateVehicleCommandHandler),
             nameof(ValidateVehiclePlateAsync), driverId, error);
 
         return Result.FromInvalid(error);
@@ -138,7 +138,7 @@ public sealed class CreateCommandHandler(
         {
             Error errorNotFound = DomainErrors.DriverErrors.NotFound;
 
-            logger.LogNotFound(nameof(CreateCommandHandler),
+            logger.LogNotFound(nameof(CreateVehicleCommandHandler),
                 nameof(ValidateVehiclePlateAsync), driverId, errorNotFound);
 
             return Result.FromInvalid(errorNotFound);
@@ -151,14 +151,14 @@ public sealed class CreateCommandHandler(
 
         Error errorInvalidState = DomainErrors.DriverErrors.NotActivated;
 
-        logger.LogGenericValidationError(nameof(CreateCommandHandler),
+        logger.LogGenericValidationError(nameof(CreateVehicleCommandHandler),
             nameof(ValidateVehiclePlateAsync), errorInvalidState);
 
         return Result.FromInvalid(errorInvalidState);
     }
 
     private Result<VehicleEntity> FactoryEntity(
-        CreateCommand request)
+        CreateVehicleCommand request)
     {
         using Activity? activity = ActivitySource.StartActivity();
 
@@ -173,7 +173,7 @@ public sealed class CreateCommandHandler(
         }
 
         logger.LogGenericError(
-            nameof(CreateCommandHandler),
+            nameof(CreateVehicleCommandHandler),
             nameof(FactoryEntity), entity.Errors!.Count());
 
         return Result<VehicleEntity>
@@ -192,7 +192,7 @@ public sealed class CreateCommandHandler(
         await unitOfWork.CommitAsync(
             cancellationToken);
 
-        logger.LogCreated(nameof(CreateCommandHandler),
+        logger.LogCreated(nameof(CreateVehicleCommandHandler),
             nameof(CreateAsync), vehicleEntity.Id);
     }
 }

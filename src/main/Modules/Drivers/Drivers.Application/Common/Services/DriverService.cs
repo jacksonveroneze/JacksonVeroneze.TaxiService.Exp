@@ -12,7 +12,7 @@ using TaxiService.Modules.Drivers.Domain.Entities;
 namespace TaxiService.Modules.Drivers.Application.Common.Services;
 
 public class DriverService(
-    ILogger<InactivateCommandHandler> logger,
+    ILogger<InactivateDriverCommandHandler> logger,
     IDriverRepository driverRepository)
     : IDriverService
 {

@@ -4,5 +4,5 @@ using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Models;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.GetById;
 
-public sealed record GetByIdQueryResponse
+public sealed record GetDriverByIdQueryResponse
     : DataResponse<DriverResponse>;

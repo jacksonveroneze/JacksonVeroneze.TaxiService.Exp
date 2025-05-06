@@ -1,19 +1,21 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
+using TaxiService.Common.BaseApplication.Interfaces.System;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Services;
 using TaxiService.Modules.Drivers.Domain.Entities;
 
-namespace TaxiService.Modules.Drivers.Application.v1.Driver.Reactivate;
+namespace TaxiService.Modules.Drivers.Application.v1.Driver.Inativate;
 
-public sealed class ReactivateCommandHandler(
-    ILogger<ReactivateCommandHandler> logger,
+public sealed class InactivateDriverCommandHandler(
+    ILogger<InactivateDriverCommandHandler> logger,
     IDriverService driverService,
-    IDriverRepository driverRepository)
-    : IRequestHandler<ReactivateCommand, Result>
+    IDriverRepository driverRepository,
+    IDateTimeProvider dateTime)
+    : IRequestHandler<InactivateDriverCommand, Result>
 {
     public async Task<Result> Handle(
-        ReactivateCommand request,
+        InactivateDriverCommand request,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
@@ -27,7 +29,7 @@ public sealed class ReactivateCommandHandler(
             return resultEntity;
         }
 
-        Result resultAction = Reactivate(resultEntity.Value!);
+        Result resultAction = Inactivate(resultEntity.Value!);
 
         if (resultAction.IsFailure)
         {
@@ -39,15 +41,15 @@ public sealed class ReactivateCommandHandler(
         return Result.WithSuccess();
     }
 
-    private Result Reactivate(DriverEntity entity)
+    private Result Inactivate(DriverEntity entity)
     {
-        Result result = entity.Reactivate();
+        Result result = entity.Inactivate(dateTime.UtcNow);
 
         if (result.IsFailure)
         {
             logger.LogGenericValidationError(
-                nameof(ReactivateCommandHandler),
-                nameof(Reactivate), entity.Id, result.Error!);
+                nameof(InactivateDriverCommandHandler),
+                nameof(Inactivate), entity.Id, result.Error!);
         }
 
         return result;
@@ -61,7 +63,7 @@ public sealed class ReactivateCommandHandler(
             entity, cancellationToken);
 
         logger.LogProcessed(
-            nameof(ReactivateCommandHandler),
+            nameof(InactivateDriverCommandHandler),
             nameof(UpdateAsync), entity.Id);
     }
 }

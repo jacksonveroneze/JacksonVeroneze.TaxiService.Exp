@@ -14,13 +14,13 @@ internal static class CreateEndpoint
     {
         builder.MapPost(string.Empty, async (
                 [FromServices] ISender mediator,
-                [FromBody] CreateDriverCommand driverCommand,
+                [FromBody] CreateDriverCommand command,
                 CancellationToken cancellationToken) =>
             {
                 using Activity? activity = ActivitySource.StartActivity();
 
                 Result<CreateDriverCommandResponse> response =
-                    await mediator.Send(driverCommand, cancellationToken);
+                    await mediator.Send(command, cancellationToken);
 
                 return response.MatchPost();
             })

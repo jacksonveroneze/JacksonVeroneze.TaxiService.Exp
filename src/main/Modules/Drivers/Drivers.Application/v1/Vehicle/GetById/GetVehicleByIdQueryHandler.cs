@@ -8,14 +8,14 @@ using TaxiService.Modules.Drivers.Domain.Entities;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Vehicle.GetById;
 
-public sealed class GetByIdQueryHandler(
-    ILogger<GetByIdQueryHandler> logger,
+public sealed class GetVehicleByIdQueryHandler(
+    ILogger<GetVehicleByIdQueryHandler> logger,
     IDataMapper mapper,
     IVehicleReadRepository driverReadRepository)
-    : IRequestHandler<GetByIdQuery, Result<GetByIdQueryResponse>>
+    : IRequestHandler<GetVehicleByIdQuery, Result<GetVehicleByIdQueryResponse>>
 {
-    public async Task<Result<GetByIdQueryResponse>> Handle(
-        GetByIdQuery request,
+    public async Task<Result<GetVehicleByIdQueryResponse>> Handle(
+        GetVehicleByIdQuery request,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
@@ -25,17 +25,17 @@ public sealed class GetByIdQueryHandler(
 
         if (resultEntity.IsFailure)
         {
-            return Result<GetByIdQueryResponse>
+            return Result<GetVehicleByIdQueryResponse>
                 .FromNotFound(resultEntity.Error!);
         }
 
-        GetByIdQueryResponse response =
-            mapper.Map<GetByIdQueryResponse>(resultEntity.Value);
+        GetVehicleByIdQueryResponse response =
+            mapper.Map<GetVehicleByIdQueryResponse>(resultEntity.Value);
 
         logger.LogGetById(ContextInfo.ContextName,
-            nameof(GetByIdQueryHandler), nameof(Handle), request.Id);
+            nameof(GetVehicleByIdQueryHandler), nameof(Handle), request.Id);
 
-        return Result<GetByIdQueryResponse>
+        return Result<GetVehicleByIdQueryResponse>
             .WithSuccess(response);
     }
 
@@ -54,7 +54,7 @@ public sealed class GetByIdQueryHandler(
         Error error = DomainErrors.VehicleErrors.NotFound;
 
         logger.LogNotFound(
-            nameof(GetByIdQueryHandler),
+            nameof(GetVehicleByIdQueryHandler),
             nameof(GetByIdAsync), id, error);
 
         return Result<VehicleEntity>.FromNotFound(error);

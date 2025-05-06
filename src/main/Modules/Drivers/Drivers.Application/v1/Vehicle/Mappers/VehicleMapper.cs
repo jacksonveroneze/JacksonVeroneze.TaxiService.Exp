@@ -1,9 +1,7 @@
 using TaxiService.Modules.Drivers.Application.v1.Vehicle.Common;
 using TaxiService.Modules.Drivers.Application.v1.Vehicle.Common.Models;
+using TaxiService.Modules.Drivers.Application.v1.Vehicle.Create;
 using TaxiService.Modules.Drivers.Domain.Entities;
-
-using CreateCommandResponse =
-    TaxiService.Modules.Drivers.Application.v1.Vehicle.Create.CreateCommandResponse;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Vehicle.Mappers;
 
@@ -22,7 +20,7 @@ public class VehicleMapper : Profile
             .ForMember(dest => dest.Year, opts => opts.MapFrom(src => src.Year))
             .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status));
 
-        CreateMap<VehicleEntity, CreateCommandResponse>()
+        CreateMap<VehicleEntity, CreateVehicleCommandResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
     }
 }

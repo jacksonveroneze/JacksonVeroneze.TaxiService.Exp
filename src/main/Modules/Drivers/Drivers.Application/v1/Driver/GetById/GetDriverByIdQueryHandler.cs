@@ -10,14 +10,14 @@ using TaxiService.Modules.Drivers.Domain.Core.Errors;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.GetById;
 
-public sealed class GetByIdQueryHandler(
-    ILogger<GetByIdQueryHandler> logger,
+public sealed class GetDriverByIdQueryHandler(
+    ILogger<GetDriverByIdQueryHandler> logger,
     IDataMapper mapper,
     IDriverReadRepository driverReadRepository)
-    : IRequestHandler<GetByIdQuery, Result<GetByIdQueryResponse>>
+    : IRequestHandler<GetDriverByIdQuery, Result<GetDriverByIdQueryResponse>>
 {
-    public async Task<Result<GetByIdQueryResponse>> Handle(
-        GetByIdQuery request,
+    public async Task<Result<GetDriverByIdQueryResponse>> Handle(
+        GetDriverByIdQuery request,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
@@ -27,17 +27,17 @@ public sealed class GetByIdQueryHandler(
 
         if (resultEntity.IsFailure)
         {
-            return Result<GetByIdQueryResponse>
+            return Result<GetDriverByIdQueryResponse>
                 .FromNotFound(resultEntity.Error!);
         }
 
-        GetByIdQueryResponse response =
-            mapper.Map<GetByIdQueryResponse>(resultEntity.Value);
+        GetDriverByIdQueryResponse response =
+            mapper.Map<GetDriverByIdQueryResponse>(resultEntity.Value);
 
         logger.LogGetById(ContextInfo.ContextName,
-            nameof(GetByIdQueryHandler), nameof(Handle), request.Id);
+            nameof(GetDriverByIdQueryHandler), nameof(Handle), request.Id);
 
-        return Result<GetByIdQueryResponse>
+        return Result<GetDriverByIdQueryResponse>
             .WithSuccess(response);
     }
 
@@ -56,7 +56,7 @@ public sealed class GetByIdQueryHandler(
         Error error = DomainErrors.DriverErrors.NotFound;
 
         logger.LogNotFound(
-            nameof(GetByIdQueryHandler),
+            nameof(GetDriverByIdQueryHandler),
             nameof(GetByIdAsync), id, error);
 
         return Result<DriverDto>.FromNotFound(error);
