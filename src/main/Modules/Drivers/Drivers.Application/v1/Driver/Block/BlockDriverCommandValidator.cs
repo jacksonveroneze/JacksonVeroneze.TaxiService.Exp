@@ -2,9 +2,10 @@ using TaxiService.Common.BaseApplication.Validators.Base;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.Block;
 
-public class BlockCommandValidator : AbstractValidator<BlockCommand>
+public class BlockDriverCommandValidator
+    : AbstractValidator<BlockDriverCommand>
 {
-    public BlockCommandValidator()
+    public BlockDriverCommandValidator()
     {
         RuleFor(request => request)
             .NotNull();
@@ -15,7 +16,7 @@ public class BlockCommandValidator : AbstractValidator<BlockCommand>
         RuleFor(request => request.Type)
             .Cascade(CascadeMode.Stop)
             .NotNull()
-            .NotEqual(BlockCommand.BlockType.None)
+            .NotEqual(BlockDriverCommand.BlockType.None)
             .IsInEnum();
     }
 }

@@ -13,7 +13,7 @@ internal static class DeleteEndpoint
                 [FromRoute] Guid id,
                 CancellationToken cancellationToken) =>
             {
-                DeleteCommand command = new(id);
+                DeleteDriverCommand command = new(id);
 
                 Result response =
                     await mediator.Send(command, cancellationToken);

@@ -14,10 +14,10 @@ internal static class BlockEndpoint
                 [FromBody] Request body,
                 CancellationToken cancellationToken) =>
             {
-                BlockCommand command = new(id, body.Type);
+                BlockDriverCommand driverCommand = new(id, body.Type);
 
                 Result response =
-                    await mediator.Send(command, cancellationToken);
+                    await mediator.Send(driverCommand, cancellationToken);
 
                 return response.MatchPut();
             })
@@ -27,5 +27,5 @@ internal static class BlockEndpoint
         return builder;
     }
 
-    private sealed record Request(BlockCommand.BlockType Type);
+    private sealed record Request(BlockDriverCommand.BlockType Type);
 }

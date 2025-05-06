@@ -6,14 +6,14 @@ using TaxiService.Modules.Drivers.Domain.Entities;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.Block;
 
-public sealed class BlockCommandHandler(
-    ILogger<BlockCommandHandler> logger,
+public sealed class BlockDriverCommandHandler(
+    ILogger<BlockDriverCommandHandler> logger,
     IDriverService driverService,
     IDriverRepository driverRepository)
-    : IRequestHandler<BlockCommand, Result>
+    : IRequestHandler<BlockDriverCommand, Result>
 {
     public async Task<Result> Handle(
-        BlockCommand request,
+        BlockDriverCommand request,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
@@ -39,14 +39,14 @@ public sealed class BlockCommandHandler(
         return Result.WithSuccess();
     }
 
-    private Result Block(DriverEntity entity, BlockCommand request)
+    private Result Block(DriverEntity entity, BlockDriverCommand request)
     {
         Result result = request.Type switch
         {
-            BlockCommand.BlockType.TemporaryBlock =>
+            BlockDriverCommand.BlockType.TemporaryBlock =>
                 entity.BlockTemporarily(),
 
-            BlockCommand.BlockType.PermanentBlock =>
+            BlockDriverCommand.BlockType.PermanentBlock =>
                 entity.BlockPermanently(),
 
             _ => throw new ArgumentOutOfRangeException(
@@ -56,7 +56,7 @@ public sealed class BlockCommandHandler(
         if (result.IsFailure)
         {
             logger.LogGenericValidationError(
-                nameof(BlockCommandHandler),
+                nameof(BlockDriverCommandHandler),
                 nameof(Block),
                 entity.Id,
                 result.Error!);
@@ -74,7 +74,7 @@ public sealed class BlockCommandHandler(
             entity, cancellationToken);
 
         logger.LogProcessed(
-            nameof(BlockCommandHandler),
+            nameof(BlockDriverCommandHandler),
             nameof(UpdateAsync), entity.Id);
     }
 }

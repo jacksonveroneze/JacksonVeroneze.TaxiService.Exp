@@ -3,8 +3,8 @@ using TaxiService.Common.BaseDomain.Enums;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.Create;
 
-public sealed record CreateCommand
-    : IRequest<Result<CreateCommandResponse>>
+public sealed record CreateDriverCommand
+    : IRequest<Result<CreateDriverCommandResponse>>
 {
     public string? FullName { get; init; }
 

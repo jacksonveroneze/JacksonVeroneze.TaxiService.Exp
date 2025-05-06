@@ -27,7 +27,7 @@ public class DriverMapper : Profile
             .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender))
             .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status));
 
-        CreateMap<DriverEntity, CreateCommandResponse>()
+        CreateMap<DriverEntity, CreateDriverCommandResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
         
         CreateMap<DriverEntity, GetByIdQueryResponse>()

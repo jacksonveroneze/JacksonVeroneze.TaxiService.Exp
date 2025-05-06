@@ -79,7 +79,7 @@ public class DriverService(
         Error error = DomainErrors.DriverErrors.NotFound;
 
         logger.LogNotFound(
-            nameof(ActivateCommandHandler),
+            nameof(ActivateDriverCommandHandler),
             nameof(GetByIdAsync), id, error);
 
         return Result<DriverEntity>.FromNotFound(error);

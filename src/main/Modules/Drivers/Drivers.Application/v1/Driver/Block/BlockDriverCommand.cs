@@ -2,8 +2,8 @@ using JacksonVeroneze.NET.Result;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.Block;
 
-public sealed record BlockCommand(
-    Guid Id, BlockCommand.BlockType Type) : IRequest<Result>
+public sealed record BlockDriverCommand(
+    Guid Id, BlockDriverCommand.BlockType Type) : IRequest<Result>
 {
     public enum BlockType
     {

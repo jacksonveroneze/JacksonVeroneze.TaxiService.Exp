@@ -7,15 +7,15 @@ using TaxiService.Modules.Drivers.Domain.Entities;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.Activate;
 
-public sealed class ActivateCommandHandler(
-    ILogger<ActivateCommandHandler> logger,
+public sealed class ActivateDriverCommandHandler(
+    ILogger<ActivateDriverCommandHandler> logger,
     IDriverService driverService,
     IDriverRepository driverRepository,
     IDateTimeProvider dateTime)
-    : IRequestHandler<ActivateCommand, Result>
+    : IRequestHandler<ActivateDriverCommand, Result>
 {
     public async Task<Result> Handle(
-        ActivateCommand request,
+        ActivateDriverCommand request,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
@@ -48,7 +48,7 @@ public sealed class ActivateCommandHandler(
         if (result.IsFailure)
         {
             logger.LogGenericValidationError(
-                nameof(ActivateCommandHandler),
+                nameof(ActivateDriverCommandHandler),
                 nameof(Activate), entity.Id, result.Error!);
         }
 
@@ -63,7 +63,7 @@ public sealed class ActivateCommandHandler(
             entity, cancellationToken);
 
         logger.LogProcessed(
-            nameof(ActivateCommandHandler),
+            nameof(ActivateDriverCommandHandler),
             nameof(UpdateAsync), entity.Id);
     }
 }

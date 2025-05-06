@@ -10,15 +10,15 @@ using TaxiService.Modules.Drivers.Domain.Enums;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.Delete;
 
-public sealed class DeleteCommandHandler(
-    ILogger<DeleteCommandHandler> logger,
+public sealed class DeleteDriverCommandHandler(
+    ILogger<DeleteDriverCommandHandler> logger,
     IDriverAvailabilityReadRepository driverAvailabilityReadRepository,
     IDriverService driverService,
     IDriverRepository driverRepository)
-    : IRequestHandler<DeleteCommand, Result>
+    : IRequestHandler<DeleteDriverCommand, Result>
 {
     public async Task<Result> Handle(
-        DeleteCommand request,
+        DeleteDriverCommand request,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
@@ -53,7 +53,7 @@ public sealed class DeleteCommandHandler(
     }
     
     private async Task<Result> ValidateBussinesRulesAsync(
-        DeleteCommand request,
+        DeleteDriverCommand request,
         CancellationToken cancellationToken)
     {
         DriverAvailabilityEntity? result = await driverAvailabilityReadRepository
@@ -67,7 +67,7 @@ public sealed class DeleteCommandHandler(
         Error error = DomainErrors.DriverErrors.DriverHasActiveRide;
 
         logger.LogGenericValidationError(
-            nameof(DeleteCommandHandler),
+            nameof(DeleteDriverCommandHandler),
             nameof(Handle), error);
 
         return Result.WithError(error);
@@ -80,7 +80,7 @@ public sealed class DeleteCommandHandler(
         if (result.IsFailure)
         {
             logger.LogGenericValidationError(
-                nameof(ActivateCommandHandler),
+                nameof(ActivateDriverCommandHandler),
                 nameof(Remove), entity.Id, result.Error!);
         }
 
@@ -94,7 +94,7 @@ public sealed class DeleteCommandHandler(
         await driverRepository.DeleteAsync(
             driver, cancellationToken);
 
-        logger.LogDeleted(nameof(DeleteCommandHandler),
+        logger.LogDeleted(nameof(DeleteDriverCommandHandler),
             nameof(Handle), driver.Id);
     }
 }

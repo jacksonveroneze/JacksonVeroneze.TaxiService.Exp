@@ -4,7 +4,8 @@ using TaxiService.Common.BaseDomain.Validators;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.Create;
 
-public class CreateCommandValidator : AbstractValidator<CreateCommand>
+public class CreateDriverCommandValidator
+    : AbstractValidator<CreateDriverCommand>
 {
     private const int MinLengthName = 2;
     private const int MaxLengthName = 100;
@@ -12,7 +13,7 @@ public class CreateCommandValidator : AbstractValidator<CreateCommand>
     private const int LengthCpf = 11;
     private const int MinAge = 18;
 
-    public CreateCommandValidator(IDateTimeProvider dateTime)
+    public CreateDriverCommandValidator(IDateTimeProvider dateTime)
     {
         DateOnly minBirthday = dateTime.DateNow.AddYears(-MinAge);
 

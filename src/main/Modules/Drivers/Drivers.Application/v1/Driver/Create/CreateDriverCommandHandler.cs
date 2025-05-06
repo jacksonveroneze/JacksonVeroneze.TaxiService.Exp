@@ -9,19 +9,19 @@ using TaxiService.Modules.Drivers.Domain.Entities;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.Create;
 
-public sealed class CreateCommandHandler(
-    ILogger<CreateCommandHandler> logger,
+public sealed class CreateDriverCommandHandler(
+    ILogger<CreateDriverCommandHandler> logger,
     IDataMapper mapper,
     IDriverReadRepository driverReadRepository,
     IDriverRepository driverRepository,
     IUnitOfWork unitOfWork)
-    : IRequestHandler<CreateCommand, Result<CreateCommandResponse>>
+    : IRequestHandler<CreateDriverCommand, Result<CreateDriverCommandResponse>>
 {
     private static readonly ActivitySource ActivitySource =
         new("TaxiService");
 
-    public async Task<Result<CreateCommandResponse>> Handle(
-        CreateCommand request,
+    public async Task<Result<CreateDriverCommandResponse>> Handle(
+        CreateDriverCommand request,
         CancellationToken cancellationToken)
     {
         using Activity? activity = ActivitySource.StartActivity();
@@ -33,7 +33,7 @@ public sealed class CreateCommandHandler(
 
         if (resultVerifyEmailOrDocument.IsFailure)
         {
-            return Result<CreateCommandResponse>
+            return Result<CreateDriverCommandResponse>
                 .WithError(resultVerifyEmailOrDocument.Error!);
         }
 
@@ -41,17 +41,17 @@ public sealed class CreateCommandHandler(
 
         if (userEntity.IsFailure)
         {
-            return Result<CreateCommandResponse>
+            return Result<CreateDriverCommandResponse>
                 .FromInvalid(userEntity.Errors!);
         }
 
         await CreateAsync(userEntity.Value!,
             cancellationToken);
 
-        CreateCommandResponse response =
-            mapper.Map<CreateCommandResponse>(userEntity.Value);
+        CreateDriverCommandResponse response =
+            mapper.Map<CreateDriverCommandResponse>(userEntity.Value);
 
-        return Result<CreateCommandResponse>.WithSuccess(response);
+        return Result<CreateDriverCommandResponse>.WithSuccess(response);
     }
 
     private async Task<Result> ExistByEmailOrDocumentAsync(
@@ -70,14 +70,14 @@ public sealed class CreateCommandHandler(
 
         Error error = DomainErrors.DriverErrors.DuplicateEmailOrDocument;
 
-        logger.LogAlreadyExists(nameof(CreateCommandHandler),
+        logger.LogAlreadyExists(nameof(CreateDriverCommandHandler),
             nameof(ExistByEmailOrDocumentAsync), email, error);
 
         return Result.FromInvalid(error);
     }
 
     private Result<DriverEntity> FactoryEntity(
-        CreateCommand request)
+        CreateDriverCommand request)
     {
         using Activity? activity = ActivitySource.StartActivity();
 
@@ -92,7 +92,7 @@ public sealed class CreateCommandHandler(
         }
 
         logger.LogGenericError(
-            nameof(CreateCommandHandler),
+            nameof(CreateDriverCommandHandler),
             nameof(FactoryEntity), entity.Errors!.Count());
 
         return Result<DriverEntity>
@@ -113,13 +113,13 @@ public sealed class CreateCommandHandler(
             await unitOfWork.CommitAsync(
                 cancellationToken);
 
-            logger.LogCreated(nameof(CreateCommandHandler),
+            logger.LogCreated(nameof(CreateDriverCommandHandler),
                 nameof(CreateAsync), driverEntity.Id);
         }
         catch (Exception ex)
         {
             logger.LogGenericError(
-                nameof(CreateCommandHandler),
+                nameof(CreateDriverCommandHandler),
                 nameof(CreateAsync), ex.Message);
 
             throw;
