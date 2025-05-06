@@ -1,5 +1,7 @@
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
+
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Vehicle;
+using TaxiService.Modules.Drivers.Application.v1.Vehicle.Common.Models;
 using TaxiService.Modules.Drivers.Domain.Entities;
 using TaxiService.Modules.Drivers.Infrastructure.Contexts;
 
@@ -7,7 +9,7 @@ namespace TaxiService.Modules.Drivers.Infrastructure.Repositories.Vehicle;
 
 [ExcludeFromCodeCoverage]
 public class VehicleReadRepository(
-    IEfCoreRepository<VehicleEntity, DriversDbContext> service)
+    IEfCoreRepository<VehicleDto, DriversDbContext> service)
     : IVehicleReadRepository
 {
     public Task<bool> ExistsByPlateAsync(
@@ -26,7 +28,7 @@ public class VehicleReadRepository(
             cancellationToken);
     }
 
-    public Task<VehicleEntity?> GetByDriverIdAsync(
+    public Task<VehicleDto?> GetByDriverIdAsync(
         Guid driverId,
         CancellationToken cancellationToken)
     {
@@ -35,7 +37,7 @@ public class VehicleReadRepository(
             cancellationToken);
     }
 
-    public Task<VehicleEntity?> GetByIdAsync(
+    public Task<VehicleDto?> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken)
     {

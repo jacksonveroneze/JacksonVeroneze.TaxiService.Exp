@@ -39,7 +39,7 @@ internal static class ServicesExtensions
 
         // Repositories
         services.AddScoped<IVehicleReadRepository, VehicleReadRepository>();
-        services.AddScoped<IVehicleWriteRepository, VehicleWriteRepository>();
+        services.AddScoped<IVehicleRepository, VehicleRepository>();
 
         #endregion
 

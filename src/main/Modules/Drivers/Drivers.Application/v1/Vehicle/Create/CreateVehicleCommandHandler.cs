@@ -19,7 +19,7 @@ public sealed class CreateVehicleCommandHandler(
     IDataMapper mapper,
     IDriverReadRepository driverReadRepository,
     IVehicleReadRepository vehicleReadRepository,
-    IVehicleWriteRepository vehicleWriteRepository,
+    IVehicleRepository vehicleRepository,
     IUnitOfWork unitOfWork)
     : IRequestHandler<CreateVehicleCommand, Result<CreateVehicleCommandResponse>>
 {
@@ -169,7 +169,7 @@ public sealed class CreateVehicleCommandHandler(
         VehicleEntity vehicleEntity,
         CancellationToken cancellationToken)
     {
-        await vehicleWriteRepository.CreateAsync(
+        await vehicleRepository.CreateAsync(
             vehicleEntity, cancellationToken);
 
         await unitOfWork.CommitAsync(

@@ -1,4 +1,4 @@
-using TaxiService.Modules.Drivers.Domain.Entities;
+using TaxiService.Modules.Drivers.Application.v1.Vehicle.Common.Models;
 
 namespace TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Vehicle;
 
@@ -12,11 +12,11 @@ public interface IVehicleReadRepository
         Guid driverId,
         CancellationToken cancellationToken);
 
-    public Task<VehicleEntity?> GetByDriverIdAsync(
+    public Task<VehicleDto?> GetByDriverIdAsync(
         Guid driverId,
         CancellationToken cancellationToken);
-    
-    public Task<VehicleEntity?> GetByIdAsync(
+
+    public Task<VehicleDto?> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken);
 }

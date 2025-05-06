@@ -11,7 +11,7 @@ namespace TaxiService.Modules.Drivers.Application.Common.Services;
 
 public class VehicleService(
     ILogger<VehicleService> logger,
-    IVehicleReadRepository vehicleRepository)
+    IVehicleRepository vehicleRepository)
     : IVehicleService
 {
     public Task<Result<VehicleEntity>> GetByIdAsync(
