@@ -1,19 +1,19 @@
 using JacksonVeroneze.NET.Result;
-using TaxiService.Modules.Drivers.Application.v1.Driver.Inativate;
+using TaxiService.Modules.Drivers.Application.v1.Driver.Reactivate;
 
 namespace TaxiService.Modules.Drivers.Api.Endpoints.v1.Drivers;
 
-internal static class InactivateEndpoint
+internal static class ReactivateDriverEndpoint
 {
-    public static RouteGroupBuilder AddInactivate(
+    public static RouteGroupBuilder AddReactivate(
         this RouteGroupBuilder builder)
     {
-        builder.MapPut("{id:guid:required}/inactivate", async (
+        builder.MapPut("{id:guid:required}/reactivate", async (
                 [FromServices] ISender mediator,
                 [FromRoute] Guid id,
                 CancellationToken cancellationToken) =>
             {
-                InactivateDriverCommand command = new(id);
+                ReactivateDriverCommand command = new(id);
 
                 Result response =
                     await mediator.Send(command, cancellationToken);

@@ -1,20 +1,19 @@
 using JacksonVeroneze.NET.Result;
-using TaxiService.Modules.Drivers.Application.v1.Driver.Block;
+using TaxiService.Modules.Drivers.Application.v1.Driver.Inativate;
 
 namespace TaxiService.Modules.Drivers.Api.Endpoints.v1.Drivers;
 
-internal static class BlockEndpoint
+internal static class InactivateDriverEndpoint
 {
-    public static RouteGroupBuilder AddBlock(
+    public static RouteGroupBuilder AddInactivate(
         this RouteGroupBuilder builder)
     {
-        builder.MapPut("{id:guid:required}/block", async (
+        builder.MapPut("{id:guid:required}/inactivate", async (
                 [FromServices] ISender mediator,
                 [FromRoute] Guid id,
-                [FromBody] Request body,
                 CancellationToken cancellationToken) =>
             {
-                BlockDriverCommand command = new(id, body.Type);
+                InactivateDriverCommand command = new(id);
 
                 Result response =
                     await mediator.Send(command, cancellationToken);
@@ -26,6 +25,4 @@ internal static class BlockEndpoint
 
         return builder;
     }
-
-    private sealed record Request(BlockDriverCommand.BlockType Type);
 }

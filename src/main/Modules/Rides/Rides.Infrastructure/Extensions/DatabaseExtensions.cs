@@ -1,5 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
-using TaxiService.Common.BaseInfrastructure.Configurations;
+
 using TaxiService.Common.BaseInfrastructure.Extensions;
 using TaxiService.Modules.Rides.Application.v1;
 using TaxiService.Modules.Rides.Infrastructure.Configurations;

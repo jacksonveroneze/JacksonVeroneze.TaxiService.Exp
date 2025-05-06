@@ -1,4 +1,3 @@
-using TaxiService.Modules.Drivers.Application.v1.Driver.Common;
 using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Models;
 
 namespace TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;

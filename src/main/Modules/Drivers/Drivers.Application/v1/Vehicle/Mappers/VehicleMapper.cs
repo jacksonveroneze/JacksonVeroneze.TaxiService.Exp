@@ -1,4 +1,3 @@
-using TaxiService.Modules.Drivers.Application.v1.Vehicle.Common;
 using TaxiService.Modules.Drivers.Application.v1.Vehicle.Common.Models;
 using TaxiService.Modules.Drivers.Application.v1.Vehicle.Create;
 using TaxiService.Modules.Drivers.Domain.Entities;

@@ -4,7 +4,7 @@ using TaxiService.Modules.Drivers.Application.v1.Driver.Create;
 
 namespace TaxiService.Modules.Drivers.Api.Endpoints.v1.Drivers;
 
-internal static class CreateEndpoint
+internal static class CreateDriverEndpoint
 {
     private static readonly ActivitySource ActivitySource =
         new("TaxiService");

@@ -1,4 +1,3 @@
-using TaxiService.Modules.Drivers.Application.v1.Driver.Common;
 using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Models;
 using TaxiService.Modules.Drivers.Application.v1.Driver.Create;
 using TaxiService.Modules.Drivers.Application.v1.Driver.GetById;

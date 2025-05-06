@@ -4,7 +4,6 @@ using TaxiService.Common.BaseApplication.Interfaces.System;
 using TaxiService.Modules.Passengers.Application.v1.Commands.Passanger;
 using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Passanger;
 using TaxiService.Modules.Passengers.Application.v1.Interfaces.Validators;
-using TaxiService.Modules.Passengers.Domain.Core.Errors;
 using TaxiService.Modules.Passengers.Domain.Entities;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Handlers.CommandHandler.Passanger;

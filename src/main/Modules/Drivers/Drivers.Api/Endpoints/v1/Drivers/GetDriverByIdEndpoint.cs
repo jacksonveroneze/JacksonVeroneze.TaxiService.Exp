@@ -3,7 +3,7 @@ using TaxiService.Modules.Drivers.Application.v1.Driver.GetById;
 
 namespace TaxiService.Modules.Drivers.Api.Endpoints.v1.Drivers;
 
-internal static class GetByIdEndpoint
+internal static class GetDriverByIdEndpoint
 {
     public static RouteGroupBuilder AddGetById(
         this RouteGroupBuilder builder)

@@ -1,9 +1,7 @@
 using JacksonVeroneze.NET.Result;
 using Microsoft.Extensions.Logging;
 using TaxiService.Common.BaseApplication.Extensions;
-using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
 using TaxiService.Modules.Drivers.Domain.Core.Errors;
-using TaxiService.Modules.Drivers.Domain.Entities;
 using TaxiService.Modules.Drivers.PublicApi.Interfaces;
 
 namespace TaxiService.Modules.Drivers.PublicApi.Services;

@@ -1,5 +1,4 @@
 using Prometheus.DotNetRuntime;
-using TaxiService.Common.BaseInfrastructure.Configurations;
 
 namespace TaxiService.Common.BaseInfrastructure.Extensions;
 
