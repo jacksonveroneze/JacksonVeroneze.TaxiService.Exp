@@ -1,7 +1,11 @@
+using JacksonVeroneze.NET.Pagination.Cursor;
+
 using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Models;
 using TaxiService.Modules.Drivers.Application.v1.Driver.Create;
 using TaxiService.Modules.Drivers.Application.v1.Driver.GetById;
+using TaxiService.Modules.Drivers.Application.v1.Driver.GetPaged;
 using TaxiService.Modules.Drivers.Domain.Entities;
+using TaxiService.Modules.Drivers.Domain.Filters;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver;
 
@@ -17,7 +21,7 @@ public class DriverMapper : Profile
             .ForMember(dest => dest.Birthday, opts => opts.MapFrom(src => src.Birthday))
             .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender))
             .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status));
-        
+
         CreateMap<DriverDto, DriverResponse>()
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
             .ForMember(dest => dest.FullName, opts => opts.MapFrom(src => src.FullName))
@@ -28,11 +32,19 @@ public class DriverMapper : Profile
 
         CreateMap<DriverEntity, CreateDriverCommandResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
-        
+
         CreateMap<DriverEntity, GetDriverByIdQueryResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
-        
+
         CreateMap<DriverDto, GetDriverByIdQueryResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
+
+        CreateMap<Page<DriverDto>, GetDriverPagedQueryResponse>()
+            .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src.Data))
+            .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src.PageInfo));
+
+        // Query -> Filter
+        CreateMap<GetDriverPagedQuery, DriverPagedFilter>()
+            .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src));
     }
 }

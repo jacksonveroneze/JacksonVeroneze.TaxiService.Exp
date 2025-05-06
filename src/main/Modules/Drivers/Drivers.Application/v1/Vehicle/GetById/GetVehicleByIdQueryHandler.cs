@@ -2,6 +2,7 @@ using JacksonVeroneze.NET.Result;
 
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
+using TaxiService.Modules.Drivers.Application.Common;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Vehicle;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Services;
 using TaxiService.Modules.Drivers.Application.v1.Vehicle.Common.Models;
@@ -35,7 +36,7 @@ public sealed class GetVehicleByIdQueryHandler(
         GetVehicleByIdQueryResponse response =
             mapper.Map<GetVehicleByIdQueryResponse>(resultEntity.Value);
 
-        logger.LogGetById(ContextInfo.ContextName,
+        logger.LogGetById(ModuleContext.ContextName,
             nameof(GetVehicleByIdQueryHandler), 
             nameof(Handle), request.Id);
 

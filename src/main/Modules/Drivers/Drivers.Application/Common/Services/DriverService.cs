@@ -67,7 +67,7 @@ public class DriverService(
         if (entity is not null)
         {
             logger.LogGetById(
-                ContextInfo.ContextName,
+                ModuleContext.ContextName,
                 nameof(DriverService),
                 nameof(InternalGetByIdAsync), id);
 

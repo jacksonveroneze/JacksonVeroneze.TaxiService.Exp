@@ -11,7 +11,7 @@ internal static class GetDriverPagedEndpoint
     {
         builder.MapGet(string.Empty, async (
                 [FromServices] ISender mediator,
-                GetDriverPagedQuery query,
+                [AsParameters] GetDriverPagedQuery query,
                 CancellationToken cancellationToken) =>
             {
                 Result<GetDriverPagedQueryResponse> response =

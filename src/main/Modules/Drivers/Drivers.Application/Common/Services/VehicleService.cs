@@ -32,7 +32,7 @@ public class VehicleService(
         if (dto is not null)
         {
             logger.LogGetById(
-                ContextInfo.ContextName,
+                ModuleContext.ContextName,
                 nameof(VehicleService),
                 nameof(GetDtoByIdAsync), id);
 
@@ -58,7 +58,7 @@ public class VehicleService(
         if (entity is not null)
         {
             logger.LogGetById(
-                ContextInfo.ContextName,
+                ModuleContext.ContextName,
                 nameof(VehicleService),
                 nameof(InternalGetByIdAsync), id);
 

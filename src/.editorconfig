@@ -75,6 +75,7 @@ dotnet_diagnostic.S2325.severity = none
 dotnet_diagnostic.S2139.severity = none
 dotnet_diagnostic.MA0004.severity = none
 dotnet_diagnostic.MA0048.severity = none
+dotnet_diagnostic.MA0051.severity = none
 dotnet_diagnostic.CA1034.severity = none
 dotnet_diagnostic.CA1812.severity = none
 dotnet_diagnostic.CA1031.severity = none

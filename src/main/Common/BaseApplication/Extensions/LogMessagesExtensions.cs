@@ -82,11 +82,19 @@ public static partial class LogMessagesExtensions
     [LoggerMessage(
         EventId = 1020,
         Level = LogLevel.Warning,
+        Message = "{contextName} - {className} - {methodName} - NotFound - " +
+                  "Identifier: '{identifier}' - Message: '{message}'")]
+    public static partial void LogNotFound(this ILogger logger,
+        string contextName, string className, string methodName, Guid identifier, string message);
+
+    [LoggerMessage(
+        EventId = 1020,
+        Level = LogLevel.Warning,
         Message = "{className} - {methodName} - NotFound - " +
                   "Identifier: '{identifier}' - Message: '{message}'")]
     public static partial void LogNotFound(this ILogger logger,
         string className, string methodName, Guid identifier, string message);
-
+    
     #endregion
 
     #region CommonProcessed

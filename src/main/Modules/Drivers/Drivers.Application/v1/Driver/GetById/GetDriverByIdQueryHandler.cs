@@ -2,6 +2,7 @@ using JacksonVeroneze.NET.Result;
 
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
+using TaxiService.Modules.Drivers.Application.Common;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
 using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Models;
 using TaxiService.Modules.Drivers.Domain;
@@ -33,7 +34,7 @@ public sealed class GetDriverByIdQueryHandler(
         GetDriverByIdQueryResponse response =
             mapper.Map<GetDriverByIdQueryResponse>(resultEntity.Value);
 
-        logger.LogGetById(ContextInfo.ContextName,
+        logger.LogGetById(ModuleContext.ContextName,
             nameof(GetDriverByIdQueryHandler), nameof(Handle), request.Id);
 
         return Result<GetDriverByIdQueryResponse>
@@ -55,6 +56,7 @@ public sealed class GetDriverByIdQueryHandler(
         Error error = DomainErrors.DriverErrors.NotFound;
 
         logger.LogNotFound(
+            ModuleContext.ContextName,
             nameof(GetDriverByIdQueryHandler),
             nameof(GetByIdAsync), id, error);
 

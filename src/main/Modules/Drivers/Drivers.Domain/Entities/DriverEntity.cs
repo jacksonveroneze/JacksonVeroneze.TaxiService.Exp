@@ -101,22 +101,16 @@ public class DriverEntity : BaseEntityAggregateRoot
     
     public Result Reactivate()
     {
-        if (IsBlockedPermanent)
-        {
-            return Result.FromInvalid(
-                DomainErrors.DriverErrors.CannotBlockPermanently);
-        }
-        
         if (IsActive)
         {
             return Result.FromInvalid(
                 DomainErrors.DriverErrors.AlreadyActive);
         }
         
-        if (!IsBlockedTemporarily)
+        if (IsBlockedPermanent)
         {
             return Result.FromInvalid(
-                DomainErrors.DriverErrors.NotActivated);
+                DomainErrors.DriverErrors.CannotBlockPermanently);
         }
 
         Status = DriverStatus.Active;

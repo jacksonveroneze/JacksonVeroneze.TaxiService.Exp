@@ -51,12 +51,11 @@ public class DriverReadRepository(
     {
         ArgumentNullException.ThrowIfNull(filter);
 
-        Guid? id = !string.IsNullOrEmpty(filter.Pagination?.Cursor)
-            ? Guid.Parse(filter.Pagination!.Cursor)
-            : null;
+        bool parseWithSuccess =
+            Guid.TryParse(filter.Pagination!.Cursor, out Guid id);
 
         Expression<Func<DriverDto, bool>> spec =
-            spec => !id.HasValue || spec.Id > id;
+            spec => !parseWithSuccess || spec.Id > id;
 
         int paginationLimit = filter.Pagination!.Limit!.Value;
         int databaselimit = paginationLimit + 1;
@@ -67,11 +66,17 @@ public class DriverReadRepository(
             databaselimit,
             cancellationToken: cancellationToken);
 
-        IList<DriverDto> data = result.Take(paginationLimit).ToList();
-        bool hasMore = result.Count > paginationLimit;
-        string cursor = result.LastOrDefault()?.Id.ToString() ?? string.Empty;
+        DriverDto[] data = result
+            .Take(paginationLimit)
+            .ToArray();
 
-        PageInfo pageInfo = new(hasMore, cursor);
+        bool hasMore = result.Count > paginationLimit;
+
+        string? currentCursor = hasMore
+            ? data.LastOrDefault()?.Id.ToString()
+            : null;
+
+        PageInfo pageInfo = new(hasMore, currentCursor);
 
         return new Page<DriverDto>(data, pageInfo);
     }
