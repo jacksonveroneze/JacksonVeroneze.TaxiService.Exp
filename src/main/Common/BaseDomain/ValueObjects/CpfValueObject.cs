@@ -1,3 +1,5 @@
+using System.Globalization;
+
 using JacksonVeroneze.NET.DomainObjects.ValueObjects;
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseDomain.Core.Errors;
@@ -13,7 +15,7 @@ public class CpfValueObject : ValueObject
     public string? Value { get; }
 
     public string ValueFormatted =>
-        Convert.ToUInt64(Value).ToString(MaskFormat);
+        Convert.ToUInt64(Value, CultureInfo.InvariantCulture).ToString(MaskFormat);
 
     protected CpfValueObject()
     {

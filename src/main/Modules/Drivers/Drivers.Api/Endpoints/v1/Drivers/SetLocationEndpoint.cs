@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using JacksonVeroneze.NET.Result;
 using TaxiService.Modules.Drivers.Application.v1.DriverLocation;
+using TaxiService.Modules.Drivers.Application.v1.DriverLocation.Update;
 
 namespace TaxiService.Modules.Drivers.Api.Endpoints.v1.Drivers;
 
@@ -20,7 +21,7 @@ internal static class SetLocationEndpoint
             {
                 using Activity? activity = ActivitySource.StartActivity();
 
-                SetLocationCommand command = new(
+                UpdateCommand command = new(
                     id, request.Latitude, request.Longitude);
 
                 Result response = await mediator

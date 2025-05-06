@@ -1,19 +1,20 @@
 using JacksonVeroneze.NET.Result;
+
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.DriverLocation;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Services;
 using TaxiService.Modules.Drivers.Domain.Entities;
 
-namespace TaxiService.Modules.Drivers.Application.v1.DriverLocation;
+namespace TaxiService.Modules.Drivers.Application.v1.DriverLocation.Update;
 
-public sealed class SetLocationHandler(
-    ILogger<SetLocationHandler> logger,
+public sealed class UpdateHandler(
+    ILogger<UpdateHandler> logger,
     IDriverService driverService,
     IDriverLocationWriteRepository driverLocationWriteRepository)
-    : IRequestHandler<SetLocationCommand, Result>
+    : IRequestHandler<UpdateCommand, Result>
 {
     public async Task<Result> Handle(
-        SetLocationCommand request,
+        UpdateCommand request,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
@@ -32,7 +33,7 @@ public sealed class SetLocationHandler(
 
         if (driverLocation.IsFailure)
         {
-            return Result<SetLocationHandler>
+            return Result<UpdateHandler>
                 .FromInvalid(driverLocation.Errors!);
         }
 
@@ -42,7 +43,7 @@ public sealed class SetLocationHandler(
     }
 
     private Result<DriverLocationEntity> FactoryEntity(
-        SetLocationCommand request)
+        UpdateCommand request)
     {
         Result<DriverLocationEntity> entity =
             DriverLocationEntity.Create(
@@ -54,7 +55,7 @@ public sealed class SetLocationHandler(
         }
 
         logger.LogGenericError(
-            nameof(SetLocationHandler),
+            nameof(UpdateHandler),
             nameof(FactoryEntity), entity.Errors!.Count());
 
         return Result<DriverLocationEntity>
@@ -68,7 +69,7 @@ public sealed class SetLocationHandler(
         await driverLocationWriteRepository.CreateAsync(
             entity, cancellationToken);
 
-        logger.LogCreated(nameof(SetLocationHandler),
+        logger.LogCreated(nameof(UpdateHandler),
             nameof(CreateAsync), entity.Id);
     }
 }

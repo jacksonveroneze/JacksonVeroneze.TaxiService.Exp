@@ -41,7 +41,7 @@ public sealed class BlockCommandHandler(
 
     private Result Block(DriverEntity entity, BlockCommand request)
     {
-        var result = request.Type switch
+        Result result = request.Type switch
         {
             BlockCommand.BlockType.TemporaryBlock =>
                 entity.BlockTemporarily(),

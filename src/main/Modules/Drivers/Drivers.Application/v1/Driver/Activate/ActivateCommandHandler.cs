@@ -11,8 +11,7 @@ public sealed class ActivateCommandHandler(
     ILogger<ActivateCommandHandler> logger,
     IDriverService driverService,
     IDriverRepository driverRepository,
-    IDateTimeProvider dateTime,
-    IPublisher publisher)
+    IDateTimeProvider dateTime)
     : IRequestHandler<ActivateCommand, Result>
 {
     public async Task<Result> Handle(
@@ -38,13 +37,6 @@ public sealed class ActivateCommandHandler(
         }
 
         await UpdateAsync(resultEntity.Value!, cancellationToken);
-
-        var enumerable = resultEntity.Value?.Events?
-            .Select(evt => publisher.Publish(evt, cancellationToken))
-            .ToArray();
-
-        if (enumerable != null && enumerable.Length != 0)
-            await Task.WhenAll(enumerable);
 
         return Result.WithSuccess();
     }

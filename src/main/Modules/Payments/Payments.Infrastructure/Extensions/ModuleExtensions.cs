@@ -14,7 +14,7 @@ public static class ModuleExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        Assembly assembly = typeof(AssemblyReference).Assembly;
+        Assembly assembly = AssemblyReference.Assembly;
 
         services.AddConfiguration<ModuleConfiguration>(
             configuration, ModuleConfiguration.Name);

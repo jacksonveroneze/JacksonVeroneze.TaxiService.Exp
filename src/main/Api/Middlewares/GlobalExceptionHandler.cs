@@ -13,7 +13,7 @@ internal sealed class CustomExceptionHandler(
     {
         const int defaultStatus = StatusCodes.Status500InternalServerError;
 
-        var problemDetailsCtx = new ProblemDetailsContext
+        ProblemDetailsContext problemDetailsCtx = new()
         {
             Exception = exception,
             HttpContext = httpContext,

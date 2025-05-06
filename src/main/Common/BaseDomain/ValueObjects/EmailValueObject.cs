@@ -5,7 +5,7 @@ using TaxiService.Common.BaseDomain.Core.Errors;
 
 namespace TaxiService.Common.BaseDomain.ValueObjects;
 
-public partial class EmailValueObject : ValueObject
+public sealed partial class EmailValueObject : ValueObject
 {
     private const int MaxLength = 256;
 
@@ -17,7 +17,7 @@ public partial class EmailValueObject : ValueObject
 
     public string? Value { get; }
 
-    protected EmailValueObject()
+    internal EmailValueObject()
     {
     }
 
@@ -41,7 +41,7 @@ public partial class EmailValueObject : ValueObject
         return Value!.Equals(obj);
     }
 
-    protected bool Equals(EmailValueObject other)
+    internal bool Equals(EmailValueObject other)
     {
         return string.Equals(Value, other.Value,
             StringComparison.OrdinalIgnoreCase);

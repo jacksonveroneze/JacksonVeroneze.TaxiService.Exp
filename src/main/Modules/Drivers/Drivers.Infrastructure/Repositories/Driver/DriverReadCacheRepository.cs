@@ -1,6 +1,8 @@
 using JacksonVeroneze.NET.Cache.Interfaces;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
 using TaxiService.Modules.Drivers.Application.v1.Driver;
+using TaxiService.Modules.Drivers.Application.v1.Driver.Common;
+using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Models;
 
 namespace TaxiService.Modules.Drivers.Infrastructure.Repositories.Driver;
 

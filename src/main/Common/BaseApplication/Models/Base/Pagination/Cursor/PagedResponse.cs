@@ -1,6 +1,6 @@
 namespace TaxiService.Common.BaseApplication.Models.Base.Pagination.Cursor;
 
-public record PagedResponse<TType> : BaseResponse
+public record PagedResponse<TType>
 {
     public ICollection<TType>? Data { get; init; }
 

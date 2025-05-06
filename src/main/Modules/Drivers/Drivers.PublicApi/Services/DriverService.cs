@@ -10,16 +10,16 @@ namespace TaxiService.Modules.Drivers.PublicApi.Services;
 
 public class DriverService(
     ILogger<DriverService> logger,
-    IDriverReadRepository driverReadRepository) : IDriverService
+    Application.Common.Interfaces.Services.IDriverService driverReadRepository) : IDriverService
 {
     public async Task<Result<bool>> ExistsByIdAsync(
         Guid id,
         CancellationToken cancellationToken)
     {
-        bool entity = await driverReadRepository
-            .ExistsByIdAsync(id, cancellationToken);
+        Result<bool> entity = await driverReadRepository
+            .ExistsAsync(id, cancellationToken);
 
-        if (entity)
+        if (entity.IsSuccess)
         {
             return Result<bool>.WithSuccess(true);
         }

@@ -144,10 +144,10 @@ public static partial class LogMessagesExtensions
     [LoggerMessage(
         EventId = 1041,
         Level = LogLevel.Information,
-        Message = "{className} - {methodName} - Found - " +
+        Message = "{contextName} - {className} - {methodName} - Found - " +
                   "Identifier: '{identifier}'")]
     public static partial void LogGetById(this ILogger logger,
-        string className, string methodName, Guid? identifier);
+        string contextName, string className, string methodName, Guid? identifier);
 
     #endregion
 

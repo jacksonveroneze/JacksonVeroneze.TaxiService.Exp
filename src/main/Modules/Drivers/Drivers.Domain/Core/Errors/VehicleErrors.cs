@@ -5,7 +5,7 @@ namespace TaxiService.Modules.Drivers.Domain.Core.Errors;
 
 public static partial class DomainErrors
 {
-    public static partial class VehicleErrors
+    public static class VehicleErrors
     {
         public static Error NotFound =>
             new("Vehicle.NotFound",

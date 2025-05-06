@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using JacksonVeroneze.NET.Result;
 using TaxiService.Modules.Drivers.Application.v1.DriverAvailability;
+using TaxiService.Modules.Drivers.Application.v1.DriverAvailability.Update;
 using TaxiService.Modules.Drivers.Domain.Enums;
 
 namespace TaxiService.Modules.Drivers.Api.Endpoints.v1.Drivers;
@@ -21,7 +22,7 @@ internal static class SetAvailabilityEndpoint
             {
                 using Activity? activity = ActivitySource.StartActivity();
 
-                SetAvailabilityCommand command = new(id, request.Status);
+                UpdateCommand command = new(id, request.Status);
 
                 Result response = await mediator
                     .Send(command, cancellationToken);

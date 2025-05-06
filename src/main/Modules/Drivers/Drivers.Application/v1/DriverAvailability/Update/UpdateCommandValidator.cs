@@ -1,12 +1,12 @@
 using TaxiService.Common.BaseApplication.Validators.Base;
 using TaxiService.Modules.Drivers.Domain.Enums;
 
-namespace TaxiService.Modules.Drivers.Application.v1.DriverAvailability;
+namespace TaxiService.Modules.Drivers.Application.v1.DriverAvailability.Update;
 
-public class SetAvailabilityCommandValidator
-    : AbstractValidator<SetAvailabilityCommand>
+public class UpdateCommandValidator
+    : AbstractValidator<UpdateCommand>
 {
-    public SetAvailabilityCommandValidator()
+    public UpdateCommandValidator()
     {
         RuleFor(request => request)
             .NotNull();

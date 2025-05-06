@@ -1,6 +1,6 @@
 using TaxiService.Modules.Drivers.Domain.Enums;
 
-namespace TaxiService.Modules.Drivers.Application.v1.Vehicle;
+namespace TaxiService.Modules.Drivers.Application.v1.Vehicle.Common.Models;
 
 public sealed record VehicleResponse
 {

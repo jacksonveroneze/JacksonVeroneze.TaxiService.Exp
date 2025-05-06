@@ -1,11 +1,11 @@
 using TaxiService.Common.BaseApplication.Validators.Base;
 
-namespace TaxiService.Modules.Drivers.Application.v1.DriverLocation;
+namespace TaxiService.Modules.Drivers.Application.v1.DriverLocation.Update;
 
-public class SetLocationCommandValidator
-    : AbstractValidator<SetLocationCommand>
+public class UpdateCommandValidator
+    : AbstractValidator<UpdateCommand>
 {
-    public SetLocationCommandValidator()
+    public UpdateCommandValidator()
     {
         RuleFor(request => request)
             .NotNull();

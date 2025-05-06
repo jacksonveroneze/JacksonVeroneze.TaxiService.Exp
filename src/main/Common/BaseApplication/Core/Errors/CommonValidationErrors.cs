@@ -12,7 +12,7 @@ public static class CommonValidationErrors
 
     #region common
 
-    public static class CommonErrors
+    internal static class CommonErrors
     {
         internal static Error IdIsRequired =>
             new("Common.IdIsRequired",

@@ -1,9 +1,11 @@
 using JacksonVeroneze.NET.Result;
+
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Services;
 using TaxiService.Modules.Drivers.Application.v1.Driver.Activate;
 using TaxiService.Modules.Drivers.Application.v1.Driver.Inativate;
+using TaxiService.Modules.Drivers.Domain;
 using TaxiService.Modules.Drivers.Domain.Core.Errors;
 using TaxiService.Modules.Drivers.Domain.Entities;
 
@@ -18,17 +20,15 @@ public class DriverService(
         Guid id,
         CancellationToken cancellationToken)
     {
-        DriverEntity? entity = await InternalGetByIdAsync(
+        Result<DriverEntity> entity = await InternalGetByIdAsync(
             id, cancellationToken);
 
-        if (entity is null)
+        if (entity.IsFailure)
         {
-            Error error = DomainErrors.DriverErrors.NotFound;
-
-            return Result<bool>.FromNotFound(error);
+            return Result<bool>.FromNotFound(entity.Error!);
         }
 
-        if (entity.IsActive)
+        if (entity.Value!.IsActive)
         {
             return Result<bool>.WithSuccess();
         }
@@ -42,34 +42,24 @@ public class DriverService(
         return Result<bool>.WithError(errorNotActivated);
     }
 
-    public async Task<Result<DriverEntity>> GetByIdAsync(
+    public Task<Result<DriverEntity>> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken)
     {
-        DriverEntity? entity = await InternalGetByIdAsync(
-            id, cancellationToken);
-
-        if (entity is not null)
-        {
-            return Result<DriverEntity>.WithSuccess(entity);
-        }
-
-        Error error = DomainErrors.DriverErrors.NotFound;
-
-        return Result<DriverEntity>.FromNotFound(error);
+        return InternalGetByIdAsync(id, cancellationToken);
     }
 
     public async Task<Result<bool>> ExistsAsync(
         Guid id,
         CancellationToken cancellationToken)
     {
-        DriverEntity? entity = await InternalGetByIdAsync(
+        Result<DriverEntity> entity = await InternalGetByIdAsync(
             id, cancellationToken);
 
-        return Result<bool>.WithSuccess(entity is not null);
+        return Result<bool>.WithSuccess(entity.IsSuccess);
     }
 
-    private async Task<DriverEntity?> InternalGetByIdAsync(
+    private async Task<Result<DriverEntity>> InternalGetByIdAsync(
         Guid id,
         CancellationToken cancellationToken)
     {
@@ -79,10 +69,11 @@ public class DriverService(
         if (entity is not null)
         {
             logger.LogGetById(
+                ContextInfo.ContextName,
                 nameof(DriverService),
                 nameof(InternalGetByIdAsync), id);
-            
-            return entity;
+
+            return Result<DriverEntity>.WithSuccess(entity);
         }
 
         Error error = DomainErrors.DriverErrors.NotFound;
@@ -91,6 +82,6 @@ public class DriverService(
             nameof(ActivateCommandHandler),
             nameof(GetByIdAsync), id, error);
 
-        return null;
+        return Result<DriverEntity>.FromNotFound(error);
     }
 }

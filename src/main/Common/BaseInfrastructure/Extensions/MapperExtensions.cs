@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace TaxiService.Common.BaseInfrastructure.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class PassengersMapperExtensions
+public static class MapperExtensions
 {
     public static IServiceCollection AddCommonMapper(
         this IServiceCollection services)

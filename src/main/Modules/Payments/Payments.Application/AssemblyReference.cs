@@ -1,3 +1,9 @@
+using System.Reflection;
+
 namespace TaxiService.Modules.Payments.Application;
 
-public sealed record AssemblyReference;
+public static class AssemblyReference
+{
+    public static readonly Assembly Assembly = 
+        typeof(AssemblyReference).Assembly;
+}
