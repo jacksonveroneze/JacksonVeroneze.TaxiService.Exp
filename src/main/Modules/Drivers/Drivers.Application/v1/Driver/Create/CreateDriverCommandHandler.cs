@@ -61,7 +61,7 @@ public sealed class CreateDriverCommandHandler(
         using Activity? activity = ActivitySource.StartActivity();
 
         bool existsEmail = await driverReadRepository
-            .ExistsByEmailAndDocumentAsync(email, document, cancellationToken);
+            .ExistsByEmailOrDocumentAsync(email, document, cancellationToken);
 
         if (!existsEmail)
         {

@@ -10,8 +10,7 @@ public abstract record PagedOffsetQuery
 
     protected PagedOffsetQuery(string defaultOrderBy, SortDirection defaultOrder)
     {
-        ArgumentException.ThrowIfNullOrEmpty(nameof(defaultOrderBy));
-        ArgumentException.ThrowIfNullOrEmpty(nameof(defaultOrder));
+        ArgumentException.ThrowIfNullOrEmpty(defaultOrderBy);
 
         _orderBy = defaultOrderBy;
         _order = defaultOrder;

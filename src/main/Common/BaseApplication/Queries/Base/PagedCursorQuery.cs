@@ -8,8 +8,7 @@ public abstract record PagedCursorQuery
 
     protected PagedCursorQuery(string defaultOrderBy, SortDirection defaultOrder)
     {
-        ArgumentException.ThrowIfNullOrEmpty(nameof(defaultOrderBy));
-        ArgumentException.ThrowIfNullOrEmpty(nameof(defaultOrder));
+        ArgumentException.ThrowIfNullOrEmpty(defaultOrderBy);
 
         _orderBy = defaultOrderBy;
         _order = defaultOrder;

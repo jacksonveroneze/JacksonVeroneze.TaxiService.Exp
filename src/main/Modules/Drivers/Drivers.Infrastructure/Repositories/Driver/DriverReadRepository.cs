@@ -3,9 +3,14 @@ using System.Linq.Expressions;
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
 using JacksonVeroneze.NET.Pagination.Cursor;
 
+using Microsoft.EntityFrameworkCore;
+
+using TaxiService.Common.BaseInfrastructure;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
 using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Models;
+using TaxiService.Modules.Drivers.Domain.Enums;
 using TaxiService.Modules.Drivers.Domain.Filters;
+using TaxiService.Modules.Drivers.Infrastructure.Builders.Filters;
 using TaxiService.Modules.Drivers.Infrastructure.Contexts;
 
 namespace TaxiService.Modules.Drivers.Infrastructure.Repositories.Driver;
@@ -25,13 +30,14 @@ public class DriverReadRepository(
         return service.AnyAsync(spec, cancellationToken);
     }
 
-    public Task<bool> ExistsByEmailAndDocumentAsync(
+    public Task<bool> ExistsByEmailOrDocumentAsync(
         string email,
         string document,
         CancellationToken cancellationToken)
     {
         return service.AnyAsync(
-            conf => conf.Email == email || conf.Document == document,
+            conf => EF.Functions.ILike(conf.Email!, email)
+                    || conf.Document == document,
             cancellationToken);
     }
 
@@ -51,33 +57,20 @@ public class DriverReadRepository(
     {
         ArgumentNullException.ThrowIfNull(filter);
 
-        bool parseWithSuccess =
-            Guid.TryParse(filter.Pagination!.Cursor, out Guid id);
+        Expression<Func<DriverDto, bool>> expression =
+            DriverFilterBuilder.Create(filter).Build();
 
-        Expression<Func<DriverDto, bool>> spec =
-            spec => !parseWithSuccess || spec.Id > id;
+        int pageLimit = filter.Pagination!.Limit!.Value;
+        int databaselimit = pageLimit + 1;
 
-        int paginationLimit = filter.Pagination!.Limit!.Value;
-        int databaselimit = paginationLimit + 1;
+        ICollection<DriverDto> result =
+            await service.GetAllAsync(
+                expression,
+                order => order.Id,
+                databaselimit,
+                cancellationToken: cancellationToken);
 
-        ICollection<DriverDto> result = await service.GetAllAsync(
-            spec,
-            order => order.FullName,
-            databaselimit,
-            cancellationToken: cancellationToken);
-
-        DriverDto[] data = result
-            .Take(paginationLimit)
-            .ToArray();
-
-        bool hasMore = result.Count > paginationLimit;
-
-        string? currentCursor = hasMore
-            ? data.LastOrDefault()?.Id.ToString()
-            : null;
-
-        PageInfo pageInfo = new(hasMore, currentCursor);
-
-        return new Page<DriverDto>(data, pageInfo);
+        return CursorPaginator.Paginate(
+            result, pageLimit, d => d.Id.ToString());
     }
 }

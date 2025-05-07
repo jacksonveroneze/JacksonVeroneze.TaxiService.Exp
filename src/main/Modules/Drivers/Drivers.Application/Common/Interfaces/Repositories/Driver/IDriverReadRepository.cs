@@ -12,7 +12,7 @@ public interface IDriverReadRepository
         Guid id,
         CancellationToken cancellationToken);
 
-    public Task<bool> ExistsByEmailAndDocumentAsync(
+    public Task<bool> ExistsByEmailOrDocumentAsync(
         string email,
         string document,
         CancellationToken cancellationToken);

@@ -45,6 +45,7 @@ public class DriverMapper : Profile
 
         // Query -> Filter
         CreateMap<GetDriverPagedQuery, DriverPagedFilter>()
+            .ForMember(dest => dest.Cursor, opts => opts.MapFrom(src => src.Cursor))
             .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src));
     }
 }
