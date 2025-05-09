@@ -1,6 +1,6 @@
 services:
   api:
-    image: jacksonveroneze/taxi-service-exp:latest
+    image: 10.0.0.195:50000/taxi-service-exp:latest
     restart: unless-stopped
     build:
       context: ../../src

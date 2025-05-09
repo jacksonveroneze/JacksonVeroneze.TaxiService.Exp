@@ -45,5 +45,7 @@ public class DriverDtoMapping : IEntityTypeConfiguration<DriverDto>
         builder.Property(c => c.Status)
             .IsRequired()
             .HasColumnName("status");
+
+        builder.Property(c => c.DeletedAt);
     }
 }

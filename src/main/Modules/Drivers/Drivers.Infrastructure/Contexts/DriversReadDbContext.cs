@@ -11,13 +11,16 @@ public class DriversReadDbContext(
     : DbContext(options)
 {
     public DbSet<DriverDto> Drivers { get; set; }
-    
+
     protected override void OnModelCreating(
         ModelBuilder modelBuilder)
     {
         ArgumentNullException.ThrowIfNull(modelBuilder);
 
         modelBuilder.ApplyConfiguration(new DriverDtoMapping());
+
+        modelBuilder.Entity<DriverDto>()
+            .HasQueryFilter(field => field.DeletedAt == null);
 
         modelBuilder.HasDefaultSchema("driver");
     }

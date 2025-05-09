@@ -27,7 +27,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{D169AF
 		Dockerfile = Dockerfile
 		.dockerignore = .dockerignore
 		..\infra\docker\.env = ..\infra\docker\.env
-		..\infra\docker\docker-compose.override.yml = ..\infra\docker\docker-compose.override.yml
+		..\infra\docker\docker-compose.development.yml = ..\infra\docker\docker-compose.development.yml
+		Dockerfile.Development = Dockerfile.Development
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C29D5355-B5A2-4621-86AE-57766C544BDB}"

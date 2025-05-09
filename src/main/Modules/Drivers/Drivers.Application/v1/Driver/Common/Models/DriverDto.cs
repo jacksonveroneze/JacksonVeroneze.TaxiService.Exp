@@ -18,4 +18,7 @@ public sealed record DriverDto
     public Gender? Gender { get; init; }
 
     public DriverStatus? Status { get; init; }
+    
+    public DateTime? DeletedAt { get; init; }
+
 }
