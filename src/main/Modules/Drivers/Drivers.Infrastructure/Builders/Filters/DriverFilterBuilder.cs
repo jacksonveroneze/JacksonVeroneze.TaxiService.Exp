@@ -1,5 +1,7 @@
 using System.Linq.Expressions;
 
+using JacksonVeroneze.NET.Pagination.Enums;
+
 using Microsoft.EntityFrameworkCore;
 
 using TaxiService.Common.BaseInfrastructure;
@@ -25,7 +27,16 @@ public class DriverFilterBuilder(DriverPagedFilter filter)
         if (!string.IsNullOrWhiteSpace(_filter.Cursor)
             && Guid.TryParse(_filter.Cursor, out Guid cursor))
         {
-            builder.And(d => d.Id > cursor);
+            bool? isNext = _filter.Pagination?.PaginationNext;
+ 
+            if (isNext is true)
+            {
+                builder.And(d => d.Id > cursor);
+            }
+            else
+            {
+                builder.And(d => d.Id < cursor);
+            }
         }
 
         if (!string.IsNullOrWhiteSpace(_filter.Name))

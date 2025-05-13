@@ -34,7 +34,7 @@ public sealed class GetPagedQueryHandler(
         logger.LogGetPagedWithCursor(
             nameof(GetPagedQueryHandler),
             nameof(Handle), request.PageSize!.Value,
-            page.Data.Count, page.PageInfo.HasMore);
+            page.Data.Count, page.PageInfo.HasMore!.Value);
 
         return Result<GetPagedQueryResponse>
             .WithSuccess(response);

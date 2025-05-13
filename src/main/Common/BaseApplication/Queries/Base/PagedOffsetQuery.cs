@@ -1,4 +1,4 @@
-﻿using JacksonVeroneze.NET.Pagination.Common;
+﻿using JacksonVeroneze.NET.Pagination.Enums;
 
 namespace TaxiService.Common.BaseApplication.Queries.Base;
 

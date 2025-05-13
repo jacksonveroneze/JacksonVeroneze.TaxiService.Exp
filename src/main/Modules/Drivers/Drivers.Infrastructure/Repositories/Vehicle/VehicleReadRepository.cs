@@ -2,7 +2,6 @@ using JacksonVeroneze.NET.EntityFramework.Interfaces;
 
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Vehicle;
 using TaxiService.Modules.Drivers.Application.v1.Vehicle.Common.Models;
-using TaxiService.Modules.Drivers.Domain.Entities;
 using TaxiService.Modules.Drivers.Infrastructure.Contexts;
 
 namespace TaxiService.Modules.Drivers.Infrastructure.Repositories.Vehicle;

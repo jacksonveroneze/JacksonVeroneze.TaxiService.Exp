@@ -1,7 +1,6 @@
 using JacksonVeroneze.NET.Pagination.Cursor;
 
 using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Models;
-using TaxiService.Modules.Drivers.Domain.Entities;
 using TaxiService.Modules.Drivers.Domain.Filters;
 
 namespace TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
@@ -12,9 +11,8 @@ public interface IDriverReadRepository
         Guid id,
         CancellationToken cancellationToken);
 
-    public Task<bool> ExistsByEmailOrDocumentAsync(
+    public Task<bool> ExistsByEmailAsync(
         string email,
-        string document,
         CancellationToken cancellationToken);
 
     public Task<DriverDto?> GetByIdAsync(

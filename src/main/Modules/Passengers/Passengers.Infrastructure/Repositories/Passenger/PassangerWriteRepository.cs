@@ -1,9 +1,10 @@
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
+
 using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Passanger;
 using TaxiService.Modules.Passengers.Domain.Entities;
 using TaxiService.Modules.Passengers.Infrastructure.Contexts;
 
-namespace TaxiService.Modules.Passengers.Infrastructure.Repositories.Passanger;
+namespace TaxiService.Modules.Passengers.Infrastructure.Repositories.Passenger;
 
 [ExcludeFromCodeCoverage]
 public class PassangerWriteRepository(

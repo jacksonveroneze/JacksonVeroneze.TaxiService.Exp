@@ -1,5 +1,6 @@
 services:
   api:
+    image: 10.0.0.195:50000/taxi-service-exp:latest
     build:
       context: ../../src
       dockerfile: ./Dockerfile.Development

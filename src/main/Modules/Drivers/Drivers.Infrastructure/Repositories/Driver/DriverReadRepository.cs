@@ -2,13 +2,12 @@ using System.Linq.Expressions;
 
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
 using JacksonVeroneze.NET.Pagination.Cursor;
+using JacksonVeroneze.NET.Pagination.Cursor.Extensions;
 
 using Microsoft.EntityFrameworkCore;
 
-using TaxiService.Common.BaseInfrastructure;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
 using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Models;
-using TaxiService.Modules.Drivers.Domain.Enums;
 using TaxiService.Modules.Drivers.Domain.Filters;
 using TaxiService.Modules.Drivers.Infrastructure.Builders.Filters;
 using TaxiService.Modules.Drivers.Infrastructure.Contexts;
@@ -30,14 +29,12 @@ public class DriverReadRepository(
         return service.AnyAsync(spec, cancellationToken);
     }
 
-    public Task<bool> ExistsByEmailOrDocumentAsync(
+    public Task<bool> ExistsByEmailAsync(
         string email,
-        string document,
         CancellationToken cancellationToken)
     {
         return service.AnyAsync(
-            conf => EF.Functions.ILike(conf.Email!, email)
-                    || conf.Document == document,
+            conf => EF.Functions.ILike(conf.Email!, email),
             cancellationToken);
     }
 
@@ -70,7 +67,7 @@ public class DriverReadRepository(
                 databaselimit,
                 cancellationToken: cancellationToken);
 
-        return CursorPaginator.Paginate(
-            result, pageLimit, d => d.Id.ToString());
+        return result.ToPage(
+            filter.Pagination, d => d.Id.ToString());
     }
 }

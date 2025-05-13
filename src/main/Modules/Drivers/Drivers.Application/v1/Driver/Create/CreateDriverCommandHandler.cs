@@ -1,5 +1,7 @@
 using System.Diagnostics;
+
 using JacksonVeroneze.NET.Result;
+
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces;
@@ -28,8 +30,9 @@ public sealed class CreateDriverCommandHandler(
 
         ArgumentNullException.ThrowIfNull(request);
 
-        Result resultVerifyEmailOrDocument = await ExistByEmailOrDocumentAsync(
-            request.Email!, request.Document!, cancellationToken);
+        Result resultVerifyEmailOrDocument =
+            await ExistByEmailOrDocumentAsync(
+                request.Email!, cancellationToken);
 
         if (resultVerifyEmailOrDocument.IsFailure)
         {
@@ -55,13 +58,13 @@ public sealed class CreateDriverCommandHandler(
     }
 
     private async Task<Result> ExistByEmailOrDocumentAsync(
-        string email, string document,
+        string email,
         CancellationToken cancellationToken)
     {
         using Activity? activity = ActivitySource.StartActivity();
 
         bool existsEmail = await driverReadRepository
-            .ExistsByEmailOrDocumentAsync(email, document, cancellationToken);
+            .ExistsByEmailAsync(email, cancellationToken);
 
         if (!existsEmail)
         {

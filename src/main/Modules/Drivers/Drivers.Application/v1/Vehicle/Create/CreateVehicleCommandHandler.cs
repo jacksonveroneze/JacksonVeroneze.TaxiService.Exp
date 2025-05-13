@@ -1,5 +1,3 @@
-using System.Diagnostics;
-
 using JacksonVeroneze.NET.Result;
 
 using TaxiService.Common.BaseApplication.Extensions;

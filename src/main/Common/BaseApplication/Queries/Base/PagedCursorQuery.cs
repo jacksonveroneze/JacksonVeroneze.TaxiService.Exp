@@ -1,4 +1,4 @@
-﻿using JacksonVeroneze.NET.Pagination.Common;
+﻿using JacksonVeroneze.NET.Pagination.Enums;
 
 namespace TaxiService.Common.BaseApplication.Queries.Base;
 
@@ -6,21 +6,24 @@ public abstract record PagedCursorQuery
 {
     private const int DefaulPageSize = 20;
 
-    protected PagedCursorQuery(string defaultOrderBy, SortDirection defaultOrder)
+    protected PagedCursorQuery(string defaultOrderBy, SortDirection defaultOrderDirection)
     {
         ArgumentException.ThrowIfNullOrEmpty(defaultOrderBy);
 
         _orderBy = defaultOrderBy;
-        _order = defaultOrder;
+        _orderDirection = defaultOrderDirection;
 
         _pageSize = DefaulPageSize;
     }
 
     private readonly int _pageSize;
     private readonly string? _orderBy;
-    private readonly SortDirection? _order;
+    private readonly SortDirection? _orderDirection;
 
     public string? Cursor { get; init; }
+
+    public PaginationDirection? PageDirection { get; init; } =
+        PaginationDirection.Next;
 
     public int? PageSize
     {
@@ -34,9 +37,9 @@ public abstract record PagedCursorQuery
         init => _orderBy = value ?? _orderBy;
     }
 
-    public SortDirection? Order
+    public SortDirection? OrderDirection
     {
-        get => _order;
-        init => _order = value ?? _order;
+        get => _orderDirection;
+        init => _orderDirection = value ?? _orderDirection;
     }
 }

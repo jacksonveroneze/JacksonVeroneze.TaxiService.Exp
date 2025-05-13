@@ -70,6 +70,6 @@ public class RideReadRepository(
             ? result.Last?.Id.ToString()
             : null;
 
-        return result.Data.ToPage(result.HasMore, cursor);
+        return result.Data.ToPage(result.HasMore, cursor, null);
     }
 }

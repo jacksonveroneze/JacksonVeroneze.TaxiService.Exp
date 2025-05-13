@@ -5,7 +5,6 @@ using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
 using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Models;
-using TaxiService.Modules.Drivers.Domain.Entities;
 using TaxiService.Modules.Drivers.Domain.Filters;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.GetPaged;
@@ -34,7 +33,7 @@ public sealed class GetDriverPagedQueryHandler(
         logger.LogGetPagedWithCursor(
             nameof(GetDriverPagedQueryResponse),
             nameof(Handle), request.PageSize!.Value,
-            page.Data.Count, page.PageInfo.HasMore);
+            page.Data.Count, page.PageInfo.HasMore!.Value);
 
         return Result<GetDriverPagedQueryResponse>
             .WithSuccess(response);

@@ -115,9 +115,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseApi", "main\Common\BaseApi\BaseApi.csproj", "{7785CAC5-F2EA-4C8B-896E-029B8194F294}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{1136B1D3-2A61-48D6-BDFD-08CAE7192802}"
-	ProjectSection(SolutionItems) = preProject
-		FilterBuilder.cs = FilterBuilder.cs
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedKernel", "SharedKernel", "{0DA06DDE-8B3C-43A9-9751-32DBF00DADE0}"
 EndProject

@@ -6,7 +6,7 @@ using TaxiService.Modules.Passengers.Application.v1.Interfaces.Validators;
 using TaxiService.Modules.Passengers.Application.v1.Services;
 using TaxiService.Modules.Passengers.Infrastructure.Repositories.Email;
 using TaxiService.Modules.Passengers.Infrastructure.Repositories.Outbox;
-using TaxiService.Modules.Passengers.Infrastructure.Repositories.Passanger;
+using TaxiService.Modules.Passengers.Infrastructure.Repositories.Passenger;
 
 namespace TaxiService.Modules.Passengers.Infrastructure.Extensions;
 
