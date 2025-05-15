@@ -21,10 +21,10 @@ public static class ValidateHelper
             .ToArray();
 
         Error[] errors = failures
-            .Select(f => Error.Create(
-                f.ErrorCode, 
-                f.ErrorMessage, 
-                f.PropertyName.ToLowerInvariant()))
+            .Select(failure => Error.Create(
+                failure.ErrorCode, 
+                failure.ErrorMessage, 
+                failure.PropertyName.ToLowerInvariant()))
             .ToArray();
 
         return (errors.Length >= 1, errors);
