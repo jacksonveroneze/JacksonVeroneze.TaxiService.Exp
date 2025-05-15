@@ -1,4 +1,5 @@
 using JacksonVeroneze.NET.Result;
+
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.System;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
@@ -49,7 +50,7 @@ public sealed class ActivateDriverCommandHandler(
         {
             logger.LogGenericValidationError(
                 nameof(ActivateDriverCommandHandler),
-                nameof(Activate), entity.Id, result.Error!);
+                nameof(Activate), entity.Id, result.FirstError!);
         }
 
         return result;

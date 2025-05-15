@@ -47,7 +47,7 @@ public sealed class ReactivateDriverCommandHandler(
         {
             logger.LogGenericValidationError(
                 nameof(ReactivateDriverCommandHandler),
-                nameof(Reactivate), entity.Id, result.Error!);
+                nameof(Reactivate), entity.Id, result.FirstError!);
         }
 
         return result;

@@ -22,7 +22,7 @@ public class DriverService(
 
         if (entity.IsFailure)
         {
-            return Result<bool>.FromNotFound(entity.Error!);
+            return Result<bool>.FromNotFound(entity.FirstError!);
         }
 
         if (entity.Value!.IsActive)

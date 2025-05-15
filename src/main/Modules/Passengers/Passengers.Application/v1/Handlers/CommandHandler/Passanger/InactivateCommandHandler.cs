@@ -49,7 +49,7 @@ public sealed class InactivateCommandHandler(
         {
             logger.LogAlreadyProcessed(
                 nameof(InactivateCommandHandler),
-                nameof(Inactivate), entity.Id, result.Error!);
+                nameof(Inactivate), entity.Id, result.FirstError!);
         }
 
         return result;

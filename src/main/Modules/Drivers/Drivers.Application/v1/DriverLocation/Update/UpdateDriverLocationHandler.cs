@@ -56,7 +56,7 @@ public sealed class UpdateDriverLocationHandler(
 
         logger.LogGenericError(
             nameof(UpdateDriverLocationHandler),
-            nameof(FactoryEntity), entity.Errors!.Count());
+            nameof(FactoryEntity), entity.Errors!.Count);
 
         return Result<DriverLocationEntity>
             .FromInvalid(entity.Errors!);

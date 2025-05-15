@@ -88,7 +88,7 @@ public sealed class UpdateDriverAvailabilityHandler(
         if (result.IsFailure)
         {
             return Result<DriverAvailabilityEntity>
-                .FromInvalid(result.Error!);
+                .FromInvalid(result.FirstError!);
         }
 
         return Result<DriverAvailabilityEntity>
@@ -109,7 +109,7 @@ public sealed class UpdateDriverAvailabilityHandler(
 
         logger.LogGenericError(
             nameof(UpdateDriverAvailabilityHandler),
-            nameof(FactoryEntity), entity.Errors!.Count());
+            nameof(FactoryEntity), entity.Errors!.Count);
 
         return Result<DriverAvailabilityEntity>
             .FromInvalid(entity.Errors!);

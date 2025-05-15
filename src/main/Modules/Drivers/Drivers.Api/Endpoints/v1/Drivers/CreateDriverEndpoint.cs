@@ -22,7 +22,7 @@ internal static class CreateDriverEndpoint
                 Result<CreateDriverCommandResponse> response =
                     await mediator.Send(command, cancellationToken);
 
-                return response.MatchPost();
+                return response.ToIResult();
             })
             .Produces<CreateDriverCommandResponse>()
             .AddDefaultResponseEndpoints();

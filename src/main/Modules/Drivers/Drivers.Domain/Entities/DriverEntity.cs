@@ -67,7 +67,7 @@ public class DriverEntity : BaseEntityAggregateRoot
     {
         if (!IsPendingActivation)
         {
-            return Result.FromInvalid(
+            return Result.FromRuleViolation(
                 DomainErrors.DriverErrors.NotPendingApproval);
         }
 

@@ -44,7 +44,7 @@ public class DriverLocationEntity : BaseEntityAggregateRoot
         if (coordinateVo.IsFailure)
         {
             return Result<DriverLocationEntity>
-                .FromInvalid(coordinateVo.Error!);
+                .FromInvalid(coordinateVo.FirstError!);
         }
 
         DriverLocationEntity entity = new(

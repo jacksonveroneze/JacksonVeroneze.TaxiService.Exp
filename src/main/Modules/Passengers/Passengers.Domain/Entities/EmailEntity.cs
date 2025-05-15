@@ -42,7 +42,7 @@ public class EmailEntity : BaseEntityAggregateRoot
         if (emailVo.IsFailure)
         {
             return Result<EmailEntity>
-                .FromInvalid(emailVo.Error!);
+                .FromInvalid(emailVo.FirstError!);
         }
 
         EmailEntity entity = new(passangerId, emailVo.Value!);

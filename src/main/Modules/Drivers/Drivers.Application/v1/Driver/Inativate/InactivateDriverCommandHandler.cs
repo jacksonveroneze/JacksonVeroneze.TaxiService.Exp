@@ -49,7 +49,7 @@ public sealed class InactivateDriverCommandHandler(
         {
             logger.LogGenericValidationError(
                 nameof(InactivateDriverCommandHandler),
-                nameof(Inactivate), entity.Id, result.Error!);
+                nameof(Inactivate), entity.Id, result.FirstError!);
         }
 
         return result;

@@ -13,35 +13,35 @@ internal static class ValidationErrors
     internal static class Passanger
     {
         internal static Error IdIsRequired =>
-            new("Passanger.IdIsRequired",
+            Error.Create("Passanger.IdIsRequired",
                 string.Format(null, TemplateIsRequired, "id"));
 
         internal static Error NameIsRequired =>
-            new("Passanger.NameIsRequired",
+            Error.Create("Passanger.NameIsRequired",
                 string.Format(null, TemplateIsRequired, "name"));
 
         internal static Error BirthdayIsRequired =>
-            new("Passanger.BirthdayIsRequired",
+            Error.Create("Passanger.BirthdayIsRequired",
                 string.Format(null, TemplateIsRequired, "birthday"));
 
         internal static Error GenderIsRequired =>
-            new("Passanger.GenderIsRequired",
+            Error.Create("Passanger.GenderIsRequired",
                 string.Format(null, TemplateIsRequired, "gender"));
 
         internal static Error EmailIsRequired =>
-            new("Passanger.EmailIsRequired",
+            Error.Create("Passanger.EmailIsRequired",
                 string.Format(null, TemplateIsRequired, "e-mail"));
 
         internal static Error DocumentIsRequired =>
-            new("Passanger.DocumentIsRequired",
+            Error.Create("Passanger.DocumentIsRequired",
                 string.Format(null, TemplateIsRequired, "document"));
 
         internal static Error EmailIsInvalid =>
-            new("Passanger.EmailIsInvalid",
+            Error.Create("Passanger.EmailIsInvalid",
                 "The e-mail is invalid.");
 
         internal static Error DocumentIsInvalid =>
-            new("Passanger.DocumentIsInvalid",
+            Error.Create("Passanger.DocumentIsInvalid",
                 "The document is invalid.");
     }
 }

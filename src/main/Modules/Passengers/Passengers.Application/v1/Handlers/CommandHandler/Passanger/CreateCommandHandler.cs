@@ -41,7 +41,7 @@ public sealed class CreateCommandHandler(
         if (resultVerifyEmail.IsFailure)
         {
             return Result<CreateCommandResponse>
-                .WithError(resultVerifyEmail.Error!);
+                .WithError(resultVerifyEmail.FirstError!);
         }
 
         Result<PassangerEntity> passangerEntity = FactoryEntity(request);
@@ -108,7 +108,7 @@ public sealed class CreateCommandHandler(
 
         logger.LogGenericError(
             nameof(CreateCommandHandler),
-            nameof(FactoryEntity), entity.Errors!.Count());
+            nameof(FactoryEntity), entity.Errors!.Count);
 
         return Result<PassangerEntity>
             .FromInvalid(entity.Errors!);
@@ -129,7 +129,7 @@ public sealed class CreateCommandHandler(
 
         logger.LogGenericError(
             nameof(CreateCommandHandler),
-            nameof(Handle), entity.Errors!.Count());
+            nameof(Handle), entity.Errors!.Count);
 
         return Result<EmailEntity>
             .FromInvalid(entity.Errors!);

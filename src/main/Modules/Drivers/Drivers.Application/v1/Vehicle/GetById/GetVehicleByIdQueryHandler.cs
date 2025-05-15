@@ -26,7 +26,7 @@ public sealed class GetVehicleByIdQueryHandler(
         if (resultEntity.IsFailure)
         {
             return Result<GetVehicleByIdQueryResponse>
-                .FromNotFound(resultEntity.Error!);
+                .FromNotFound(resultEntity.FirstError!);
         }
 
         GetVehicleByIdQueryResponse response =

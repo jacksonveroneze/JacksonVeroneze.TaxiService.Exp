@@ -4,6 +4,7 @@ using JacksonVeroneze.NET.Result;
 
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
+using TaxiService.Common.BaseApplication.Validators;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
 using TaxiService.Modules.Drivers.Domain.Core.Errors;
@@ -13,6 +14,7 @@ namespace TaxiService.Modules.Drivers.Application.v1.Driver.Create;
 
 public sealed class CreateDriverCommandHandler(
     ILogger<CreateDriverCommandHandler> logger,
+    IEnumerable<IValidator<CreateDriverCommand>> validators,
     IDataMapper mapper,
     IDriverReadRepository driverReadRepository,
     IDriverRepository driverRepository,
@@ -30,6 +32,15 @@ public sealed class CreateDriverCommandHandler(
 
         ArgumentNullException.ThrowIfNull(request);
 
+        (bool hasErrors, Error[] errors) = ValidateHelper
+            .ValidateRequest(request, validators);
+
+        if (hasErrors)
+        {
+            return Result<CreateDriverCommandResponse>
+                .FromInvalid(errors);
+        }
+
         Result resultVerifyEmailOrDocument =
             await ExistByEmailOrDocumentAsync(
                 request.Email!, cancellationToken);
@@ -37,7 +48,7 @@ public sealed class CreateDriverCommandHandler(
         if (resultVerifyEmailOrDocument.IsFailure)
         {
             return Result<CreateDriverCommandResponse>
-                .WithError(resultVerifyEmailOrDocument.Error!);
+                .WithError(resultVerifyEmailOrDocument.FirstError!);
         }
 
         Result<DriverEntity> userEntity = FactoryEntity(request);
@@ -96,7 +107,7 @@ public sealed class CreateDriverCommandHandler(
 
         logger.LogGenericError(
             nameof(CreateDriverCommandHandler),
-            nameof(FactoryEntity), entity.Errors!.Count());
+            nameof(FactoryEntity), entity.Errors!.Count);
 
         return Result<DriverEntity>
             .FromInvalid(entity.Errors!);

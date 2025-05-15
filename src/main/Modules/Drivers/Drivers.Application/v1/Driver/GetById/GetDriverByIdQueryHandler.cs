@@ -27,7 +27,7 @@ public sealed class GetDriverByIdQueryHandler(
         if (resultEntity.IsFailure)
         {
             return Result<GetDriverByIdQueryResponse>
-                .FromNotFound(resultEntity.Error!);
+                .FromNotFound(resultEntity.FirstError!);
         }
 
         GetDriverByIdQueryResponse response =

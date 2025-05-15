@@ -68,7 +68,7 @@ public sealed class StartCommandHandler(
         {
             logger.LogGenericError(
                 nameof(StartCommandHandler),
-                nameof(Start), entity.Id, result.Error!);
+                nameof(Start), entity.Id, result.FirstError!);
         }
 
         return result;

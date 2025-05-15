@@ -36,7 +36,7 @@ public sealed class AcceptCommandHandler(
         if (distributedLock?.IsAcquired is not true)
         {
             return Result.WithError(
-                new Error("Lock", "Lock não adquirido"));
+                Error.Create("Lock", "Lock não adquirido"));
         }
 
         Task<Result<bool>> resultDriverTask = ExistsDriverByIdAsync(
@@ -115,7 +115,7 @@ public sealed class AcceptCommandHandler(
         {
             logger.LogGenericError(
                 nameof(AcceptCommandHandler),
-                nameof(Accept), entity.Id, result.Error!);
+                nameof(Accept), entity.Id, result.FirstError!);
         }
 
         return result;

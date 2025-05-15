@@ -8,27 +8,27 @@ public static partial class DomainErrors
     public static class PassangerError
     {
         public static Error NotFound =>
-            new("Passanger.NotFound",
+            Error.Create("Passanger.NotFound",
                 string.Format(null, CommonDomainErrors.TemplateNotFound, "passanger id"));
 
         public static Error InvalidName =>
-            new("Passanger.InvalidName",
+            Error.Create("Passanger.InvalidName",
                 string.Format(null, CommonDomainErrors.TemplateDataInvalid, "name"));
 
         public static Error InvalidCpf =>
-            new("Passanger.InvalidCpf",
+            Error.Create("Passanger.InvalidCpf",
                 string.Format(null, CommonDomainErrors.TemplateDataInvalid, "cpf"));
 
         public static Error DuplicateEmail =>
-            new("Passanger.DuplicateEmail",
+            Error.Create("Passanger.DuplicateEmail",
                 string.Format(null, CommonDomainErrors.TemplateDataInUse, "e-mail"));
 
         public static Error AlreadyActivated =>
-            new("Passanger.AlreadyActivated",
+            Error.Create("Passanger.AlreadyActivated",
                 "The passanger has already been activated.");
 
         public static Error AlreadyInactivated =>
-            new("Passanger.AlreadyInactivated",
+            Error.Create("Passanger.AlreadyInactivated",
                 "The passanger has already been inactivated.");
     }
 }

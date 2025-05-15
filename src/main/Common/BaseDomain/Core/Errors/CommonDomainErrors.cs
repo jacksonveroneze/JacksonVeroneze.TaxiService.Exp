@@ -14,41 +14,41 @@ public static class CommonDomainErrors
     internal static class CpfError
     {
         public static Error InvalidCpf =>
-            new("Cpf.InvalidCpf",
+            Error.Create("Cpf.InvalidCpf",
                 string.Format(TemplateDataInvalid, "cpf"));
     }
 
     internal static class NameError
     {
         public static Error InvalidName =>
-            new("Name.InvalidName",
+            Error.Create("Name.InvalidName",
                 string.Format(TemplateDataInvalid, "name"));
     }
 
     internal static class PhoneError
     {
         public static Error InvalidPhone =>
-            new("Phone.InvalidPhone",
+            Error.Create("Phone.InvalidPhone",
                 string.Format(TemplateDataInvalid, "phone"));
     }
 
     internal static class EmailError
     {
         public static Error InvalidEmail =>
-            new("Email.InvalidEmail",
+            Error.Create("Email.InvalidEmail",
                 string.Format(TemplateDataInvalid, "e-mail"));
     }
 
     internal static class CoordinateError
     {
         public static Error InvalidCoordinate =>
-            new("Coordinate.InvalidCoordinate",
+            Error.Create("Coordinate.InvalidCoordinate",
                 string.Format(TemplateDataInvalid, "coordinate"));
     }
 
     internal static class MoneyError
     {
         public static Error InvalidValue =>
-            new("Money.InvalidValue", "Valor inválido");
+            Error.Create("Money.InvalidValue", "Valor inválido");
     }
 }

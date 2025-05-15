@@ -68,7 +68,7 @@ public sealed class CancelCommandHandler(
         {
             logger.LogGenericError(
                 nameof(CancelCommandHandler),
-                nameof(Cancel), entity.Id, result.Error!);
+                nameof(Cancel), entity.Id, result.FirstError!);
         }
 
         return result;

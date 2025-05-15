@@ -42,7 +42,7 @@ public class PositionEntity : BaseEntityAggregateRoot
         if (coordinateVo.IsFailure)
         {
             return Result<PositionEntity>
-                .FromInvalid(coordinateVo.Error!);
+                .FromInvalid(coordinateVo.FirstError!);
         }
 
         PositionEntity entity = new(rideId, coordinateVo.Value!);

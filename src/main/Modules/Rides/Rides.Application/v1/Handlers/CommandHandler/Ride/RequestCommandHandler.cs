@@ -42,7 +42,7 @@ public sealed class RequestCommandHandler(
         if (resultPassanger.IsFailure)
         {
             return Result<RequestCommandResponse>
-                .WithError(resultPassanger.Error!);
+                .WithError(resultPassanger.FirstError!);
         }
 
         Result existsRideByPassanger = await existsRideByPassangerTask;
@@ -50,7 +50,7 @@ public sealed class RequestCommandHandler(
         if (existsRideByPassanger.IsFailure)
         {
             return Result<RequestCommandResponse>
-                .FromInvalid(existsRideByPassanger.Error!);
+                .FromInvalid(existsRideByPassanger.FirstError!);
         }
 
         Result<RideEntity> entity = FactoryEntity(
@@ -87,7 +87,7 @@ public sealed class RequestCommandHandler(
 
         logger.LogGenericError(
             nameof(RequestCommandHandler),
-            nameof(Handle), entity.Errors!.Count());
+            nameof(Handle), entity.Errors!.Count);
 
         return Result<RideEntity>
             .FromInvalid(entity.Errors!);
@@ -105,13 +105,13 @@ public sealed class RequestCommandHandler(
         if (!entity.IsSuccess)
         {
             return Result<bool>
-                .WithError(entity.Error!);
+                .WithError(entity.FirstError!);
         }
 
         if (entity.Value!.Status != PassangerStatus.Active)
         {
             return Result<bool>
-                .WithError(entity.Error!);
+                .WithError(entity.FirstError!);
         }
 
         return Result<bool>.WithSuccess();

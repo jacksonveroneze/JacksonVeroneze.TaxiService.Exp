@@ -49,7 +49,7 @@ public sealed class ActivateCommandHandler(
         {
             logger.LogAlreadyProcessed(
                 nameof(ActivateCommandHandler),
-                nameof(Activate), entity.Id, result.Error!);
+                nameof(Activate), entity.Id, result.FirstError!);
         }
 
         return result;

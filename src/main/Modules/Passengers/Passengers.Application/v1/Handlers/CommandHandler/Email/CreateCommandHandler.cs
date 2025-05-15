@@ -30,7 +30,7 @@ public sealed class CreateCommandHandler(
         if (resultPassanger.IsFailure)
         {
             return Result<CreateCommandResponse>.FromNotFound(
-                resultPassanger.Error!);
+                resultPassanger.FirstError!);
         }
 
         Result existsEmail = await ExistsEmailAsync(
@@ -39,7 +39,7 @@ public sealed class CreateCommandHandler(
         if (existsEmail.IsFailure)
         {
             return Result<CreateCommandResponse>
-                .FromInvalid(existsEmail.Error!);
+                .FromInvalid(existsEmail.FirstError!);
         }
 
         Result<EmailEntity> entity = FactoryEntity(
@@ -72,7 +72,7 @@ public sealed class CreateCommandHandler(
 
         logger.LogGenericError(
             nameof(CreateCommandHandler),
-            nameof(FactoryEntity), entity.Errors!.Count());
+            nameof(FactoryEntity), entity.Errors!.Count);
 
         return Result<EmailEntity>
             .FromInvalid(entity.Errors!);

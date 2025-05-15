@@ -61,7 +61,7 @@ public sealed class AddCommandHandler(
 
         logger.LogGenericError(
             nameof(AddCommandHandler),
-            nameof(FactoryEntity), entity.Errors!.Count());
+            nameof(FactoryEntity), entity.Errors!.Count);
 
         return Result<PositionEntity>
             .FromInvalid(entity.Errors!);

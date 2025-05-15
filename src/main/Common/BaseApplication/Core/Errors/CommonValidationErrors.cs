@@ -15,7 +15,7 @@ public static class CommonValidationErrors
     internal static class CommonErrors
     {
         internal static Error IdIsRequired =>
-            new("Common.IdIsRequired",
+            Error.Create("Common.IdIsRequired",
                 string.Format(null, TemplateIsRequired, "id"));
     }
 

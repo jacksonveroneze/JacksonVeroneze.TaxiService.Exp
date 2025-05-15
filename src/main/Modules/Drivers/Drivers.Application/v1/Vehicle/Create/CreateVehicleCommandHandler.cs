@@ -157,7 +157,7 @@ public sealed class CreateVehicleCommandHandler(
 
         logger.LogGenericError(
             nameof(CreateVehicleCommandHandler),
-            nameof(FactoryEntity), entity.Errors!.Count());
+            nameof(FactoryEntity), entity.Errors!.Count);
 
         return Result<VehicleEntity>
             .FromInvalid(entity.Errors!);

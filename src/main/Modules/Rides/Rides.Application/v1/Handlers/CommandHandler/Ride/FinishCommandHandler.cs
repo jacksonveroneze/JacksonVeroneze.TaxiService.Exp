@@ -87,7 +87,7 @@ public sealed class FinishCommandHandler(
         {
             logger.LogGenericError(
                 nameof(FinishCommandHandler),
-                nameof(Finish), entity.Id, result.Error!);
+                nameof(Finish), entity.Id, result.FirstError!);
         }
 
         return result;

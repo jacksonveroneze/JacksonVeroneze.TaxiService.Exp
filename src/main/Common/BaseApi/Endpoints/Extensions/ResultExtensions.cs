@@ -21,23 +21,23 @@ public static class ResultExtensions
                 nameof(result), result.Type, message: null),
         };
 
-        if (result.Errors is null)
+        if (result.Errors.Count == 0)
         {
             return Results.Problem(
-                detail: result.Error?.Message,
+                detail: result.FirstError?.Message,
                 instance: null,
                 statusCode: (int)statusCode,
                 title: message
             );
         }
 
-        Dictionary<string, string[]>? dict = result.Errors?
+        Dictionary<string, string[]>? dict = result.Errors
             .ToDictionary(k => k.Code, v => new[] { v.Message },
                 StringComparer.OrdinalIgnoreCase);
 
         return Results.ValidationProblem(
             errors: dict!,
-            detail: result.Error?.Message,
+            detail: result.FirstError?.Message,
             instance: null,
             statusCode: (int)statusCode,
             title: message

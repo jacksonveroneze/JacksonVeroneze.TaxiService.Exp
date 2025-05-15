@@ -27,7 +27,7 @@ public sealed class GetByIdQueryHandler(
         if (resultEntity.IsFailure)
         {
             return Result<GetByIdQueryResponse>
-                .FromNotFound(resultEntity.Error!);
+                .FromNotFound(resultEntity.FirstError!);
         }
 
         GetByIdQueryResponse response =

@@ -8,15 +8,15 @@ public static partial class DomainErrors
     public static class EmailError
     {
         public static Error NotFound =>
-            new("Email.NotFound",
+            Error.Create("Email.NotFound",
                 string.Format(null, CommonDomainErrors.TemplateNotFound, "e-mail"));
 
         public static Error DuplicateEmail =>
-            new("Email.DuplicateEmail",
+            Error.Create("Email.DuplicateEmail",
                 string.Format(null, CommonDomainErrors.TemplateDataInUse, "e-mail"));
 
         public static Error InvalidEmail =>
-            new("Email.InvalidEmail",
+            Error.Create("Email.InvalidEmail",
                 string.Format(null, CommonDomainErrors.TemplateDataInvalid, "e-mail"));
     }
 }

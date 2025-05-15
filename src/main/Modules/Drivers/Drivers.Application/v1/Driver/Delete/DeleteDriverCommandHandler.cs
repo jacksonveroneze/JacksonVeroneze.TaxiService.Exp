@@ -81,7 +81,7 @@ public sealed class DeleteDriverCommandHandler(
         {
             logger.LogGenericValidationError(
                 nameof(ActivateDriverCommandHandler),
-                nameof(Remove), entity.Id, result.Error!);
+                nameof(Remove), entity.Id, result.FirstError!);
         }
 
         return result;

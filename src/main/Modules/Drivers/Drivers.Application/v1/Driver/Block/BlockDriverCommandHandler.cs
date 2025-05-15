@@ -61,7 +61,7 @@ public sealed class BlockDriverCommandHandler(
                 nameof(BlockDriverCommandHandler),
                 nameof(Block),
                 entity.Id,
-                result.Error!);
+                result.FirstError!);
         }
 
         return result;
