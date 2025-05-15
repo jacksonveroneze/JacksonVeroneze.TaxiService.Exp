@@ -13,11 +13,11 @@ public static class ValidateHelper
         ValidationContext<TRequest> context = new(request);
 
         IEnumerable<ValidationResult> validationResults =
-            validators.Select(v => v.Validate(context));
+            validators.Select(validator => validator.Validate(context));
 
         ValidationFailure[] failures = validationResults
-            .SelectMany(r => r.Errors)
-            .Where(f => f != null)
+            .SelectMany(result => result.Errors)
+            .Where(failure => failure != null)
             .ToArray();
 
         Error[] errors = failures
