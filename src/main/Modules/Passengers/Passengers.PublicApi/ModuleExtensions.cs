@@ -8,10 +8,10 @@ namespace TaxiService.Modules.Passengers.PublicApi;
 [ExcludeFromCodeCoverage]
 public static class ModuleExtensions
 {
-    public static IServiceCollection AddPassangerPublicApi(
+    public static IServiceCollection AddPassengerPublicApi(
         this IServiceCollection services)
     {
-        services.AddTransient<IPassangerService, PassangerService>();
+        services.AddTransient<IPassengerService, PassengerService>();
 
         return services;
     }

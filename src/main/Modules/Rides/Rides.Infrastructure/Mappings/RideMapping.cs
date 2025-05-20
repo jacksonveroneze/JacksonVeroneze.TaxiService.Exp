@@ -18,7 +18,7 @@ public class RideMapping : IEntityTypeConfiguration<RideEntity>
         builder.HasKey(c => c.Id);
 
         // Indexes
-        builder.HasIndex(c => new { PassangerId = c.PassengerId, c.Status });
+        builder.HasIndex(c => new { PassengerId = c.PassengerId, c.Status });
 
         // Properties
         builder.Property(c => c.Id)

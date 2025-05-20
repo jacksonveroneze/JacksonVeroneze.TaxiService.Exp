@@ -7,7 +7,7 @@ using TaxiService.Modules.Drivers.Application.v1.Driver.GetPaged;
 using TaxiService.Modules.Drivers.Domain.Entities;
 using TaxiService.Modules.Drivers.Domain.Filters;
 
-namespace TaxiService.Modules.Drivers.Application.v1.Driver;
+namespace TaxiService.Modules.Drivers.Application.v1.Driver.Mappers;
 
 public class DriverMapper : Profile
 {

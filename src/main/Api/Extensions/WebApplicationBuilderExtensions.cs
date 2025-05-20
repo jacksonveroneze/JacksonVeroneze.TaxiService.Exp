@@ -96,7 +96,7 @@ internal static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder)
     {
         builder.Services
-            .AddPassangerPublicApi()
+            .AddPassengerPublicApi()
             .AddPassengerInfra(builder.Configuration);
 
         return builder;

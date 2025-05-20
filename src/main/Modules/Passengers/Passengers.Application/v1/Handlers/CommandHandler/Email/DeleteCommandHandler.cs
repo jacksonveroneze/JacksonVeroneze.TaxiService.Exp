@@ -1,9 +1,9 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Modules.Passengers.Application.v1.Commands.Email;
-using TaxiService.Modules.Passengers.Application.v1.Handlers.CommandHandler.Passanger;
+using TaxiService.Modules.Passengers.Application.v1.Handlers.CommandHandler.Passenger;
 using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Email;
-using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Passanger;
+using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Passenger;
 using TaxiService.Modules.Passengers.Domain.Core.Errors;
 using TaxiService.Modules.Passengers.Domain.Entities;
 
@@ -11,7 +11,7 @@ namespace TaxiService.Modules.Passengers.Application.v1.Handlers.CommandHandler.
 
 public sealed class DeleteCommandHandler(
     ILogger<DeleteCommandHandler> logger,
-    IPassangerReadRepository passangerReadRepository,
+    IPassengerReadRepository passengerReadRepository,
     IEmailReadRepository emailReadRepository,
     IEmailWriteRepository emailWriteRepository)
     : IRequestHandler<DeleteCommand, Result>
@@ -22,12 +22,12 @@ public sealed class DeleteCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<PassangerEntity> resultPassanger = await GetByIdAsync(
+        Result<PassengerEntity> resultPassenger = await GetByIdAsync(
             request.Id, cancellationToken);
 
-        if (resultPassanger.IsFailure)
+        if (resultPassenger.IsFailure)
         {
-            return resultPassanger;
+            return resultPassenger;
         }
 
         Result<EmailEntity> resultEmail = await GetEmailByIdAsync(
@@ -43,20 +43,20 @@ public sealed class DeleteCommandHandler(
         return Result.WithSuccess();
     }
 
-    private async Task<Result<PassangerEntity>> GetByIdAsync(
+    private async Task<Result<PassengerEntity>> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken)
     {
-        PassangerEntity? passanger = await passangerReadRepository
+        PassengerEntity? passenger = await passengerReadRepository
             .GetByIdAsync(id, cancellationToken);
 
-        if (passanger is null)
+        if (passenger is null)
         {
-            return Result<PassangerEntity>.FromNotFound(
-                DomainErrors.PassangerError.NotFound);
+            return Result<PassengerEntity>.FromNotFound(
+                DomainErrors.PassengerError.NotFound);
         }
 
-        return Result<PassangerEntity>.WithSuccess(passanger);
+        return Result<PassengerEntity>.WithSuccess(passenger);
     }
 
     private async Task<Result<EmailEntity>> GetEmailByIdAsync(

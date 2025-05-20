@@ -146,7 +146,7 @@ public class RideEntity : BaseEntityAggregateRoot
 
     #region Factory
 
-    public static Result<RideEntity> Create(Guid passangerId,
+    public static Result<RideEntity> Create(Guid passengerId,
         float latitudeFrom, float longitudeFrom,
         float latitudeTo, float longitudeTo)
     {
@@ -165,7 +165,7 @@ public class RideEntity : BaseEntityAggregateRoot
                 .FromInvalid(resultValidate.Errors!);
         }
 
-        RideEntity entity = new(passangerId,
+        RideEntity entity = new(passengerId,
             coordinatefrom.Value!, coordinateTo.Value!);
 
         return Result<RideEntity>.WithSuccess(entity);

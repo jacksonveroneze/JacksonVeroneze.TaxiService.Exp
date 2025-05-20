@@ -8,8 +8,8 @@ namespace TaxiService.Common.BaseInfrastructure.Extensions;
 [ExcludeFromCodeCoverage]
 public static class AuthorizationExtensions
 {
-    private const string PassangerRead = "passanger:read";
-    private const string PassangerWrite = "passanger:write";
+    private const string PassengerRead = "passenger:read";
+    private const string PassengerWrite = "passenger:write";
 
     public static IServiceCollection AddAuthorization(
         this IServiceCollection services,
@@ -19,13 +19,13 @@ public static class AuthorizationExtensions
 
         services.AddAuthorization(options =>
         {
-            options.AddPolicy(PassangerRead,
+            options.AddPolicy(PassengerRead,
                 policy => policy.Requirements.Add(
-                    new HasScopeRequirement(PassangerRead, appConfiguration.Auth!.Issuer!)));
+                    new HasScopeRequirement(PassengerRead, appConfiguration.Auth!.Issuer!)));
 
-            options.AddPolicy(PassangerWrite,
+            options.AddPolicy(PassengerWrite,
                 policy => policy.Requirements.Add(
-                    new HasScopeRequirement(PassangerWrite, appConfiguration.Auth!.Issuer!)));
+                    new HasScopeRequirement(PassengerWrite, appConfiguration.Auth!.Issuer!)));
         });
 
         services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();

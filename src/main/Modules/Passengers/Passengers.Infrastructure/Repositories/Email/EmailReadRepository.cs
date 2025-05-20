@@ -27,9 +27,9 @@ public class EmailReadRepository(
     public Task<EmailEntity?> GetByIdAsync(Guid id,
         CancellationToken cancellationToken)
     {
-        EmailByIdSpecification specByPassangerId = new(id);
+        EmailByIdSpecification specByPassengerId = new(id);
 
-        return service.GetByIdAsync(specByPassangerId.ToExpression(),
+        return service.GetByIdAsync(specByPassengerId.ToExpression(),
             cancellationToken);
     }
 
@@ -39,10 +39,10 @@ public class EmailReadRepository(
     {
         ArgumentNullException.ThrowIfNull(filter);
 
-        EmailByPassangerIdSpecification specByPassangerId = new(filter.PassangerId);
+        EmailByPassengerIdSpecification specByPassengerId = new(filter.PassengerId);
 
         return service.GetAllAsync(
-            specByPassangerId,
+            specByPassengerId,
             cancellationToken);
     }
 }

@@ -2,7 +2,7 @@ using System.Diagnostics;
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
-using TaxiService.Modules.Passengers.Application.v1.Models.Passanger;
+using TaxiService.Modules.Passengers.Application.v1.Models.Passenger;
 using TaxiService.Modules.Passengers.Domain.Enums;
 using TaxiService.Modules.Passengers.PublicApi.Interfaces;
 using TaxiService.Modules.Rides.Application.v1.Commands.Ride;
@@ -16,7 +16,7 @@ namespace TaxiService.Modules.Rides.Application.v1.Handlers.CommandHandler.Ride;
 public sealed class RequestCommandHandler(
     ILogger<RequestCommandHandler> logger,
     IDataMapper mapper,
-    IPassangerService passangerService,
+    IPassengerService passengerService,
     IRideReadRepository rideReadRepository,
     IRideWriteRepository rideWriteRepository)
     : IRequestHandler<RequestCommand, Result<RequestCommandResponse>>
@@ -32,29 +32,29 @@ public sealed class RequestCommandHandler(
 
         ArgumentNullException.ThrowIfNull(request);
 
-        Task<Result> existsRideByPassangerTask =
-            ExistsActiveRideByPassangerIdAsync(
-                request.PassangerId, cancellationToken);
+        Task<Result> existsRideByPassengerTask =
+            ExistsActiveRideByPassengerIdAsync(
+                request.PassengerId, cancellationToken);
 
-        Result<bool> resultPassanger = await ValidatePassangerByIdAsync(
-            request.PassangerId, cancellationToken);
+        Result<bool> resultPassenger = await ValidatePassengerByIdAsync(
+            request.PassengerId, cancellationToken);
 
-        if (resultPassanger.IsFailure)
+        if (resultPassenger.IsFailure)
         {
             return Result<RequestCommandResponse>
-                .WithError(resultPassanger.FirstError!);
+                .WithError(resultPassenger.FirstError!);
         }
 
-        Result existsRideByPassanger = await existsRideByPassangerTask;
+        Result existsRideByPassenger = await existsRideByPassengerTask;
 
-        if (existsRideByPassanger.IsFailure)
+        if (existsRideByPassenger.IsFailure)
         {
             return Result<RequestCommandResponse>
-                .FromInvalid(existsRideByPassanger.FirstError!);
+                .FromInvalid(existsRideByPassenger.FirstError!);
         }
 
         Result<RideEntity> entity = FactoryEntity(
-            request, request.PassangerId);
+            request, request.PassengerId);
 
         if (entity.IsFailure)
         {
@@ -71,12 +71,12 @@ public sealed class RequestCommandHandler(
     }
 
     private Result<RideEntity> FactoryEntity(
-        RequestCommand request, Guid passangerId)
+        RequestCommand request, Guid passengerId)
     {
         using Activity? activity = ActivitySource.StartActivity();
 
         Result<RideEntity> entity = RideEntity.Create(
-            passangerId,
+            passengerId,
             request.LatitudeFrom, request.LatitudeTo,
             request.LongitudeFrom, request.LongitudeTo);
 
@@ -93,13 +93,13 @@ public sealed class RequestCommandHandler(
             .FromInvalid(entity.Errors!);
     }
 
-    private async Task<Result<bool>> ValidatePassangerByIdAsync(
+    private async Task<Result<bool>> ValidatePassengerByIdAsync(
         Guid id,
         CancellationToken cancellationToken)
     {
         using Activity? activity = ActivitySource.StartActivity();
 
-        Result<PassangerResponse> entity = await passangerService
+        Result<PassengerResponse> entity = await passengerService
             .GetByIdAsync(id, cancellationToken);
 
         if (!entity.IsSuccess)
@@ -108,7 +108,7 @@ public sealed class RequestCommandHandler(
                 .WithError(entity.FirstError!);
         }
 
-        if (entity.Value!.Status != PassangerStatus.Active)
+        if (entity.Value!.Status != PassengerStatus.Active)
         {
             return Result<bool>
                 .WithError(entity.FirstError!);
@@ -117,21 +117,21 @@ public sealed class RequestCommandHandler(
         return Result<bool>.WithSuccess();
     }
 
-    private async Task<Result> ExistsActiveRideByPassangerIdAsync(
+    private async Task<Result> ExistsActiveRideByPassengerIdAsync(
         Guid id,
         CancellationToken cancellationToken)
     {
         using Activity? activity = ActivitySource.StartActivity();
 
-        bool existsRideByPassanger = await rideReadRepository
-            .ExistsActiveByPassangerIdAsync(id, cancellationToken);
+        bool existsRideByPassenger = await rideReadRepository
+            .ExistsActiveByPassengerIdAsync(id, cancellationToken);
 
-        if (!existsRideByPassanger)
+        if (!existsRideByPassenger)
         {
             return Result.WithSuccess();
         }
 
-        Error error = DomainErrors.RideError.AlreadyByPassanger;
+        Error error = DomainErrors.RideError.AlreadyByPassenger;
 
         logger.LogAlreadyExists(
             nameof(RequestCommandHandler),

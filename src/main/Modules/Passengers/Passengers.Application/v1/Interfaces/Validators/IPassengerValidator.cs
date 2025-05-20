@@ -9,7 +9,7 @@ public interface IPassengerValidator
         Guid id,
         CancellationToken cancellationToken);
 
-    Task<Result<PassangerEntity>> ValidateAndGetAsync(
+    Task<Result<PassengerEntity>> ValidateAndGetAsync(
         Guid id,
         CancellationToken cancellationToken);
 }

@@ -2,7 +2,7 @@
 
 internal static class UtilTests
 {
-    public const string PassangersNamespace = "TaxiService.Modules.Passengers";
+    public const string PassengersNamespace = "TaxiService.Modules.Passengers";
 
     public const string DriversNamespace = "TaxiService.Modules.Drivers";
 

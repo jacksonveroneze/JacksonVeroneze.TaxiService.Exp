@@ -1,5 +1,5 @@
 using TaxiService.Modules.Passengers.Application.v1.Models.Email;
-using TaxiService.Modules.Passengers.Application.v1.Queries.Passanger.Email;
+using TaxiService.Modules.Passengers.Application.v1.Queries.Passenger.Email;
 using TaxiService.Modules.Passengers.Domain.Entities;
 using TaxiService.Modules.Passengers.Domain.Filters;
 
@@ -22,7 +22,7 @@ public class EmailMapper : Profile
 
         // Query -> Filter
         CreateMap<GetPagedQuery, EmailPagedFilter>()
-            .ForMember(dest => dest.PassangerId, opts => opts.MapFrom(src => src.PassangerId))
+            .ForMember(dest => dest.PassengerId, opts => opts.MapFrom(src => src.PassengerId))
             .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src));
     }
 }

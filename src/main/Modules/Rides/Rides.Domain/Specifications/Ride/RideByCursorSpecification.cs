@@ -6,11 +6,11 @@ using TaxiService.Modules.Rides.Domain.Entities;
 namespace TaxiService.Modules.Rides.Domain.Specifications.Ride;
 
 [ExcludeFromCodeCoverage]
-public class RideByCursorSpecification(Guid? passangerId)
+public class RideByCursorSpecification(Guid? passengerId)
     : BaseSpecification<RideEntity>
 {
     public override Expression<Func<RideEntity, bool>> ToExpression()
     {
-        return passangerId.HasValue ? spec => spec.PassengerId > passangerId : DefaultExpression;
+        return passengerId.HasValue ? spec => spec.PassengerId > passengerId : DefaultExpression;
     }
 }

@@ -18,7 +18,7 @@ public class PassengersDbContext(
             typeof(PassengersDbContext).Assembly);
 
         modelBuilder.ApplySoftDeleteQueryFilter<EmailEntity>();
-        modelBuilder.ApplySoftDeleteQueryFilter<PassangerEntity>();
+        modelBuilder.ApplySoftDeleteQueryFilter<PassengerEntity>();
 
         modelBuilder.IgnoreClass();
 

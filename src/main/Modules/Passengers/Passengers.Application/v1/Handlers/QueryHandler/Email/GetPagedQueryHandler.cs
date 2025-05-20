@@ -3,7 +3,7 @@ using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Email;
 using TaxiService.Modules.Passengers.Application.v1.Models.Email;
-using TaxiService.Modules.Passengers.Application.v1.Queries.Passanger.Email;
+using TaxiService.Modules.Passengers.Application.v1.Queries.Passenger.Email;
 using TaxiService.Modules.Passengers.Domain.Entities;
 using TaxiService.Modules.Passengers.Domain.Filters;
 
