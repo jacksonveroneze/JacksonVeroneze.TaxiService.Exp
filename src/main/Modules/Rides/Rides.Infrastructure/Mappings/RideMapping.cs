@@ -18,7 +18,7 @@ public class RideMapping : IEntityTypeConfiguration<RideEntity>
         builder.HasKey(c => c.Id);
 
         // Indexes
-        builder.HasIndex(c => new { PassangerId = c.PassangerId, c.Status });
+        builder.HasIndex(c => new { PassangerId = c.PassengerId, c.Status });
 
         // Properties
         builder.Property(c => c.Id)
@@ -27,7 +27,7 @@ public class RideMapping : IEntityTypeConfiguration<RideEntity>
         builder.Property(c => c.Fare)
             .IsRequired(false);
 
-        builder.Property(c => c.PassangerId)
+        builder.Property(c => c.PassengerId)
             .IsRequired();
 
         builder.Property(c => c.DriverId);

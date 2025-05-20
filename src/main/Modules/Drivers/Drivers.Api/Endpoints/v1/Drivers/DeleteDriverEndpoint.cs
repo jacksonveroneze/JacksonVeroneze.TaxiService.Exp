@@ -18,7 +18,7 @@ internal static class DeleteDriverEndpoint
                 Result response =
                     await mediator.Send(command, cancellationToken);
 
-                return response.MatchDelete();
+                return response.ToIResult();
             })
             .Produces(StatusCodes.Status204NoContent)
             .AddDefaultResponseEndpoints();

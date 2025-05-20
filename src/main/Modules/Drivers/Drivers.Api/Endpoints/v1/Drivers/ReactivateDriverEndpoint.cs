@@ -18,7 +18,7 @@ internal static class ReactivateDriverEndpoint
                 Result response =
                     await mediator.Send(command, cancellationToken);
 
-                return response.MatchPut();
+                return response.ToIResult();
             })
             .Produces(StatusCodes.Status204NoContent)
             .AddDefaultResponseEndpoints();

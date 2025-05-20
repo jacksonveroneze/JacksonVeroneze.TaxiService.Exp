@@ -19,7 +19,7 @@ internal static class GetDriverByIdEndpoint
                 Result<GetDriverByIdQueryResponse> response =
                     await mediator.Send(query, cancellationToken);
 
-                return response.MatchGetById();
+                return response.ToIResult();
             })
             .Produces<GetDriverByIdQueryResponse>()
             .AddDefaultResponseEndpoints();

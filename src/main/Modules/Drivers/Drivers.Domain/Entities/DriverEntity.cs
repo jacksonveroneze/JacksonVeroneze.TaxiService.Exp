@@ -198,7 +198,8 @@ public class DriverEntity : BaseEntityAggregateRoot
         string? cpf, Gender gender)
     {
         Result<NameValueObject> nameVo = NameValueObject.Create(name);
-        Result<EmailValueObject> emailVo = EmailValueObject.Create(email);
+        Result<EmailValueObject> emailVo = EmailValueObject
+            .Create(email.ToLowerInvariant());
         Result<PhoneValueObject> phoneVo = PhoneValueObject.Create(phone);
         Result<CpfValueObject> cpfVo = CpfValueObject.Create(cpf);
 

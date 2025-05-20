@@ -2,15 +2,15 @@ using TaxiService.Modules.Passengers.Api.Endpoints.v1.Passangers.Emails;
 
 namespace TaxiService.Modules.Passengers.Api.Endpoints.v1.Passangers;
 
-public static class PassangerEndpoints
+public static class PassengerEndpoints
 {
-    public static WebApplication AddPassangerEndpoints(
+    public static WebApplication AddPassengerEndpoints(
         this WebApplication app)
     {
         ApiVersionSet apiVersionSet = app.AddVersion();
 
         RouteGroupBuilder builder =
-            app.MapGroup("/api/v{version:apiVersion}/passangers")
+            app.MapGroup("/api/v{version:apiVersion}/passengers")
                 .WithTags("passangers")
                 .WithApiVersionSet(apiVersionSet)
                 .MapToApiVersion(1);

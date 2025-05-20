@@ -11,6 +11,6 @@ public class RideByPassangerIdSpecification(Guid? passangerId)
 {
     public override Expression<Func<RideEntity, bool>> ToExpression()
     {
-        return passangerId.HasValue ? spec => spec.PassangerId == passangerId : DefaultExpression;
+        return passangerId.HasValue ? spec => spec.PassengerId == passangerId : DefaultExpression;
     }
 }

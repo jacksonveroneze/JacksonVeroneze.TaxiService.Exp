@@ -19,7 +19,7 @@ internal static class BlockDriverEndpoint
                 Result response =
                     await mediator.Send(command, cancellationToken);
 
-                return response.MatchPut();
+                return response.ToIResult();
             })
             .Produces(StatusCodes.Status204NoContent)
             .AddDefaultResponseEndpoints();

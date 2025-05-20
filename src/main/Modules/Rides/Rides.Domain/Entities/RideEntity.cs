@@ -11,7 +11,7 @@ public class RideEntity : BaseEntityAggregateRoot
 {
     public Guid Id { get; private set; }
 
-    public Guid? PassangerId { get; private set; }
+    public Guid? PassengerId { get; private set; }
 
     public Guid? DriverId { get; private set; }
 
@@ -31,7 +31,7 @@ public class RideEntity : BaseEntityAggregateRoot
     {
     }
 
-    private RideEntity(Guid passangerId,
+    private RideEntity(Guid passengerId,
         CoordinateValueObject coordinateFrom,
         CoordinateValueObject coordinateTo)
     {
@@ -39,7 +39,7 @@ public class RideEntity : BaseEntityAggregateRoot
         ArgumentNullException.ThrowIfNull(coordinateTo);
 
         Id = GuidGenerator.Generate();
-        PassangerId = passangerId;
+        PassengerId = passengerId;
         CoordinateFrom = coordinateFrom;
         CoordinateTo = coordinateTo;
 

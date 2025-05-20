@@ -29,12 +29,13 @@ public class DriverReadRepository(
         return service.AnyAsync(spec, cancellationToken);
     }
 
+    [SuppressMessage("Globalization", "CA1309:Use ordinal string comparison")]
     public Task<bool> ExistsByEmailAsync(
         string email,
         CancellationToken cancellationToken)
     {
         return service.AnyAsync(
-            conf => EF.Functions.ILike(conf.Email!, email),
+            conf => conf.Email!.Equals(email.ToUpperInvariant()),
             cancellationToken);
     }
 

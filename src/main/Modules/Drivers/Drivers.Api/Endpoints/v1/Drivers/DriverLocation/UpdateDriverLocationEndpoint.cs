@@ -28,7 +28,7 @@ internal static class UpdateDriverLocationEndpoint
                 Result response = await mediator
                     .Send(command, cancellationToken);
 
-                return response.MatchPost();
+                return response.ToIResult();
             })
             .AddDefaultResponseEndpoints();
 

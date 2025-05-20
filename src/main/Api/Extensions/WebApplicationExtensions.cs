@@ -40,7 +40,7 @@ internal static class WebApplicationExtensions
         app.AddVehicleEndpoints();
         app.AddPositionEndpoints();
         app.AddRideEndpoints();
-        app.AddPassangerEndpoints();
+        app.AddPassengerEndpoints();
 
         app.Lifetime.ApplicationStarted.Register(() =>
             Log.Information(nameof(IHostApplicationLifetime

@@ -79,7 +79,7 @@ public class ModuleTests
             PublicApiAssembly
         ];
 
-        Types.InAssembly(typeof(PassangerEndpoints).Assembly)
+        Types.InAssembly(typeof(PassengerEndpoints).Assembly)
             .ShouldNot()
             .HaveDependencyOnAny(otherProjects)
             .GetResult()
