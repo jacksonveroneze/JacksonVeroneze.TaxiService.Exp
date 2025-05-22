@@ -34,9 +34,6 @@ internal static class ServicesExtensions
 
         #region Vehicle
 
-        // Services
-        services.AddScoped<IVehicleService, VehicleService>();
-
         // Repositories
         services.AddScoped<IVehicleReadRepository, VehicleReadRepository>();
         services.AddScoped<IVehicleRepository, VehicleRepository>();

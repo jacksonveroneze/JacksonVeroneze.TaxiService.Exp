@@ -49,7 +49,7 @@ public sealed class CreateCommandHandler(
         if (passengerEntity.IsFailure)
         {
             return Result<CreateCommandResponse>
-                .FromInvalid(passengerEntity.Errors!);
+                .FromInvalid(passengerEntity.Errors);
         }
 
         Result<EmailEntity> emailEntity = FactoryEmailEntity(
@@ -58,7 +58,7 @@ public sealed class CreateCommandHandler(
         if (emailEntity.IsFailure)
         {
             return Result<CreateCommandResponse>
-                .FromInvalid(passengerEntity.Errors!);
+                .FromInvalid(passengerEntity.Errors);
         }
 
         await CreateAsync(passengerEntity.Value!,
@@ -108,10 +108,10 @@ public sealed class CreateCommandHandler(
 
         logger.LogGenericError(
             nameof(CreateCommandHandler),
-            nameof(FactoryEntity), entity.Errors!.Count);
+            nameof(FactoryEntity), entity.Errors.Count);
 
         return Result<PassengerEntity>
-            .FromInvalid(entity.Errors!);
+            .FromInvalid(entity.Errors);
     }
 
     private Result<EmailEntity> FactoryEmailEntity(
@@ -129,10 +129,10 @@ public sealed class CreateCommandHandler(
 
         logger.LogGenericError(
             nameof(CreateCommandHandler),
-            nameof(Handle), entity.Errors!.Count);
+            nameof(Handle), entity.Errors.Count);
 
         return Result<EmailEntity>
-            .FromInvalid(entity.Errors!);
+            .FromInvalid(entity.Errors);
     }
 
     private static OutboxMessageEntity FactoryOutboxMessageEntity(

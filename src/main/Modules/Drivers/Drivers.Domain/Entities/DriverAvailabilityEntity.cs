@@ -45,7 +45,7 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
     {
         if (IsInRide)
         {
-            return Result.FromInvalid(
+            return Result.FromRuleViolation(
                 DomainErrors.DriverAvailabilityError
                     .CannotGoOnlineDuringRide);
         }
@@ -59,7 +59,7 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
     {
         if (IsInRide)
         {
-            return Result.FromInvalid(
+            return Result.FromRuleViolation(
                 DomainErrors.DriverAvailabilityError
                     .CannotGoOfflineDuringRide);
         }
@@ -73,7 +73,7 @@ public class DriverAvailabilityEntity : BaseEntityAggregateRoot
     {
         if (IsOffline)
         {
-            return Result.FromInvalid(
+            return Result.FromRuleViolation(
                 DomainErrors.DriverAvailabilityError
                     .CannotStartRideWhileOffline);
         }

@@ -13,7 +13,7 @@ public class DriverService(
     IDriverRepository driverRepository)
     : IDriverService
 {
-    public async Task<Result<bool>> ExistsAndIsActiveAsync(
+    public async Task<Result> ExistsAndIsActiveAsync(
         Guid id,
         CancellationToken cancellationToken)
     {
@@ -22,12 +22,12 @@ public class DriverService(
 
         if (entity.IsFailure)
         {
-            return Result<bool>.FromNotFound(entity.FirstError!);
+            return Result.FromNotFound(entity.FirstError!);
         }
 
         if (entity.Value!.IsActive)
         {
-            return Result<bool>.WithSuccess();
+            return Result.WithSuccess();
         }
 
         Error errorNotActivated = DomainErrors.DriverErrors.NotActivated;
@@ -36,7 +36,7 @@ public class DriverService(
             nameof(DriverService),
             nameof(ExistsAndIsActiveAsync), errorNotActivated);
 
-        return Result<bool>.WithError(errorNotActivated);
+        return Result.FromRuleViolation(errorNotActivated);
     }
 
     public Task<Result<DriverEntity>> GetByIdAsync(
@@ -46,14 +46,15 @@ public class DriverService(
         return InternalGetByIdAsync(id, cancellationToken);
     }
 
-    public async Task<Result<bool>> ExistsAsync(
+
+    public async Task<bool> ExistsAsync(
         Guid id,
         CancellationToken cancellationToken)
     {
-        Result<DriverEntity> entity = await InternalGetByIdAsync(
-            id, cancellationToken);
+        Result<DriverEntity> resultEntity = 
+            await InternalGetByIdAsync( id, cancellationToken);
 
-        return Result<bool>.WithSuccess(entity.IsSuccess);
+        return resultEntity.IsSuccess;
     }
 
     private async Task<Result<DriverEntity>> InternalGetByIdAsync(
@@ -77,8 +78,35 @@ public class DriverService(
 
         logger.LogNotFound(
             nameof(DriverService),
-            nameof(GetByIdAsync), id, error);
+            nameof(InternalGetByIdAsync), id, error);
 
         return Result<DriverEntity>.FromNotFound(error);
     }
+    
+    public async Task<DriverEntity?> GetDriverByIdAsync(
+        Guid id, 
+        CancellationToken cancellationToken)
+    {
+        DriverEntity? entity = await driverRepository
+            .GetByIdAsync(id, cancellationToken);
+
+        if (entity is not null)
+        {
+            logger.LogGetById(
+                ModuleContext.ContextName,
+                nameof(DriverService),
+                nameof(InternalGetByIdAsync), id);
+
+            return entity;
+        }
+
+        Error error = DomainErrors.DriverErrors.NotFound;
+
+        logger.LogNotFound(
+            nameof(DriverService),
+            nameof(InternalGetByIdAsync), id, error);
+
+        return null;
+    }
+
 }

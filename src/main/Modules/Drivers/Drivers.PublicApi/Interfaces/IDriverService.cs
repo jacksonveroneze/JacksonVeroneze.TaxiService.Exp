@@ -1,10 +1,8 @@
-﻿using JacksonVeroneze.NET.Result;
-
-namespace TaxiService.Modules.Drivers.PublicApi.Interfaces;
+﻿namespace TaxiService.Modules.Drivers.PublicApi.Interfaces;
 
 public interface IDriverService
 {
-    Task<Result<bool>> ExistsByIdAsync(
+    Task<bool> ExistsByIdAsync(
         Guid id,
         CancellationToken cancellationToken);
 }

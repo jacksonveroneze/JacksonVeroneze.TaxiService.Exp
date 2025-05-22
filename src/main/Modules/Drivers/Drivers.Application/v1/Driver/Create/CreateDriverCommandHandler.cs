@@ -56,7 +56,7 @@ public sealed class CreateDriverCommandHandler(
         if (userEntity.IsFailure)
         {
             return Result<CreateDriverCommandResponse>
-                .FromInvalid(userEntity.Errors!);
+                .FromInvalid(userEntity.Errors);
         }
 
         await CreateAsync(userEntity.Value!,
@@ -87,7 +87,7 @@ public sealed class CreateDriverCommandHandler(
         logger.LogAlreadyExists(nameof(CreateDriverCommandHandler),
             nameof(ExistByEmailOrDocumentAsync), email, error);
 
-        return Result.FromInvalid(error);
+        return Result.FromRuleViolation(error);
     }
 
     private Result<DriverEntity> FactoryEntity(
@@ -107,10 +107,9 @@ public sealed class CreateDriverCommandHandler(
 
         logger.LogGenericError(
             nameof(CreateDriverCommandHandler),
-            nameof(FactoryEntity), entity.Errors!.Count);
+            nameof(FactoryEntity), entity.Errors.Count);
 
-        return Result<DriverEntity>
-            .FromInvalid(entity.Errors!);
+        return entity;
     }
 
     private async Task CreateAsync(

@@ -13,7 +13,6 @@ namespace TaxiService.Modules.Drivers.Application.v1.Driver.Delete;
 public sealed class DeleteDriverCommandHandler(
     ILogger<DeleteDriverCommandHandler> logger,
     IDriverAvailabilityReadRepository driverAvailabilityReadRepository,
-    IDriverService driverService,
     IDriverRepository driverRepository)
     : IRequestHandler<DeleteDriverCommand, Result>
 {
@@ -23,13 +22,13 @@ public sealed class DeleteDriverCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<DriverEntity> resultEntity =
-            await driverService.GetByIdAsync(
-                request.Id, cancellationToken);
+        DriverEntity? entity = await driverRepository
+            .GetByIdAsync(request.Id, cancellationToken);
 
-        if (resultEntity.IsFailure)
+        if (entity is null)
         {
-            return resultEntity;
+            return Result.FromNotFound(
+                DomainErrors.DriverErrors.NotFound);
         }
         
         Result validationResult = await ValidateBussinesRulesAsync(
@@ -40,14 +39,14 @@ public sealed class DeleteDriverCommandHandler(
             return validationResult;
         }
 
-        Result resultAction = Remove(resultEntity.Value!);
+        Result resultAction = Remove(entity);
 
         if (resultAction.IsFailure)
         {
             return resultAction;
         }
 
-        await DeleteAsync(resultEntity.Value!, cancellationToken);
+        await DeleteAsync(entity, cancellationToken);
 
         return Result.WithSuccess();
     }
@@ -70,7 +69,7 @@ public sealed class DeleteDriverCommandHandler(
             nameof(DeleteDriverCommandHandler),
             nameof(Handle), error);
 
-        return Result.WithError(error);
+        return Result.FromRuleViolation(error);
     }
 
     private Result Remove(DriverEntity entity)

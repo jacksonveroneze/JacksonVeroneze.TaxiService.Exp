@@ -40,7 +40,7 @@ public sealed class AddCommandHandler(
         if (entity.IsFailure)
         {
             return Result<AddCommandHandler>
-                .FromInvalid(entity.Errors!);
+                .FromInvalid(entity.Errors);
         }
 
         await CreateAsync(entity.Value!, cancellationToken);
@@ -61,10 +61,10 @@ public sealed class AddCommandHandler(
 
         logger.LogGenericError(
             nameof(AddCommandHandler),
-            nameof(FactoryEntity), entity.Errors!.Count);
+            nameof(FactoryEntity), entity.Errors.Count);
 
         return Result<PositionEntity>
-            .FromInvalid(entity.Errors!);
+            .FromInvalid(entity.Errors);
     }
 
     private Result ValidateStatusEntity(

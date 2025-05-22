@@ -109,7 +109,7 @@ public class PassengerEntity : BaseEntityAggregateRoot, IAggregateRoot
         if (resultValidate.IsFailure)
         {
             return Result<PassengerEntity>
-                .FromInvalid(resultValidate.Errors!);
+                .FromInvalid(resultValidate.Errors);
         }
 
         PassengerEntity entity = new(nameVo.Value!, birthday,

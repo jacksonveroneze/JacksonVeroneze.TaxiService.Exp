@@ -19,7 +19,7 @@ public sealed class UpdateDriverLocationHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<bool> result = await driverService
+        Result result = await driverService
             .ExistsAndIsActiveAsync(request.Id, 
                 cancellationToken);
 
@@ -33,11 +33,11 @@ public sealed class UpdateDriverLocationHandler(
 
         if (driverLocation.IsFailure)
         {
-            return Result<UpdateDriverLocationHandler>
-                .FromInvalid(driverLocation.Errors!);
+            return driverLocation;
         }
 
-        await CreateAsync(driverLocation.Value!, cancellationToken);
+        await CreateAsync(driverLocation.Value!, 
+            cancellationToken);
 
         return Result.WithSuccess();
     }
@@ -45,21 +45,18 @@ public sealed class UpdateDriverLocationHandler(
     private Result<DriverLocationEntity> FactoryEntity(
         UpdateDriverLocationCommand request)
     {
-        Result<DriverLocationEntity> entity =
-            DriverLocationEntity.Create(
-                request.Id, request.Latitude, request.Longitude);
+        Result<DriverLocationEntity> resultEntity =
+            DriverLocationEntity.Create(request.Id,
+                request.Latitude, request.Longitude);
 
-        if (entity.IsSuccess)
+        if (!resultEntity.IsSuccess)
         {
-            return entity;
+            logger.LogGenericError(
+                nameof(UpdateDriverLocationHandler),
+                nameof(FactoryEntity), resultEntity.Errors.Count);
         }
 
-        logger.LogGenericError(
-            nameof(UpdateDriverLocationHandler),
-            nameof(FactoryEntity), entity.Errors!.Count);
-
-        return Result<DriverLocationEntity>
-            .FromInvalid(entity.Errors!);
+        return resultEntity;
     }
 
     private async Task CreateAsync(

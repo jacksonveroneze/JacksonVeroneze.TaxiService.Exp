@@ -48,7 +48,7 @@ public sealed class CreateCommandHandler(
         if (entity.IsFailure)
         {
             return Result<CreateCommandResponse>
-                .FromInvalid(entity.Errors!);
+                .FromInvalid(entity.Errors);
         }
 
         await CreateAsync(entity.Value!, cancellationToken);
@@ -72,10 +72,10 @@ public sealed class CreateCommandHandler(
 
         logger.LogGenericError(
             nameof(CreateCommandHandler),
-            nameof(FactoryEntity), entity.Errors!.Count);
+            nameof(FactoryEntity), entity.Errors.Count);
 
         return Result<EmailEntity>
-            .FromInvalid(entity.Errors!);
+            .FromInvalid(entity.Errors);
     }
 
     private async Task<Result<PassengerEntity>> GetPassengerByIdAsync(

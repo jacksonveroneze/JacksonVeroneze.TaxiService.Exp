@@ -59,7 +59,7 @@ public class VehicleEntity : BaseEntityAggregateRoot
     {
         if (Status != VehicleStatus.PendingActivation)
         {
-            return Result.FromInvalid(
+            return Result.FromRuleViolation(
                 DomainErrors.VehicleErrors.NotPendingApproval);
         }
 
@@ -72,7 +72,7 @@ public class VehicleEntity : BaseEntityAggregateRoot
     {
         if (Status != VehicleStatus.Active)
         {
-            return Result.FromInvalid(
+            return Result.FromRuleViolation(
                 DomainErrors.VehicleErrors.NotActive);
         }
 
@@ -85,7 +85,7 @@ public class VehicleEntity : BaseEntityAggregateRoot
     {
         if (Status != VehicleStatus.PendingActivation)
         {
-            return Result.FromInvalid(
+            return Result.FromRuleViolation(
                 DomainErrors.VehicleErrors.NotPendingApproval);
         }
 

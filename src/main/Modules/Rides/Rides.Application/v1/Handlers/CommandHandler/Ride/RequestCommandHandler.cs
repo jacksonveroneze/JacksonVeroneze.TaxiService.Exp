@@ -59,7 +59,7 @@ public sealed class RequestCommandHandler(
         if (entity.IsFailure)
         {
             return Result<RequestCommandResponse>
-                .FromInvalid(entity.Errors!);
+                .FromInvalid(entity.Errors);
         }
 
         await CreateAsync(entity.Value!, cancellationToken);
@@ -87,10 +87,10 @@ public sealed class RequestCommandHandler(
 
         logger.LogGenericError(
             nameof(RequestCommandHandler),
-            nameof(Handle), entity.Errors!.Count);
+            nameof(Handle), entity.Errors.Count);
 
         return Result<RideEntity>
-            .FromInvalid(entity.Errors!);
+            .FromInvalid(entity.Errors);
     }
 
     private async Task<Result<bool>> ValidatePassengerByIdAsync(

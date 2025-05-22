@@ -35,8 +35,7 @@ public sealed class UpdateDriverAvailabilityHandler(
 
         if (driverAvailability.IsFailure)
         {
-            return Result<UpdateDriverAvailabilityHandler>
-                .FromInvalid(driverAvailability.Errors!);
+            return driverAvailability;
         }
 
         await CreateAsync(driverAvailability.Value!, cancellationToken);
@@ -48,9 +47,8 @@ public sealed class UpdateDriverAvailabilityHandler(
         UpdateDriverAvailabilityCommand request,
         CancellationToken cancellationToken)
     {
-        Result<bool> resultValidateDriver = await driverService
-            .ExistsAndIsActiveAsync(request.Id,
-                cancellationToken);
+        Result resultValidateDriver = await driverService
+            .ExistsAndIsActiveAsync(request.Id, cancellationToken);
 
         if (resultValidateDriver.IsFailure)
         {
@@ -65,15 +63,11 @@ public sealed class UpdateDriverAvailabilityHandler(
         {
             if (request.Status is DriverAvailabilityStatus.Online)
             {
-                return Result<DriverAvailabilityEntity>
-                    .WithSuccess();
+                return Result.WithSuccess();
             }
 
-            Error error = DomainErrors.DriverAvailabilityError
-                .InvalidStatus;
-
-            return Result<DriverAvailabilityEntity>
-                .FromInvalid(error);
+            return Result.FromRuleViolation(
+                DomainErrors.DriverAvailabilityError.InvalidStatus);
         }
 
         Result result = request.Status switch
@@ -85,14 +79,7 @@ public sealed class UpdateDriverAvailabilityHandler(
                 nameof(request), request.Status, "Status inválido."),
         };
 
-        if (result.IsFailure)
-        {
-            return Result<DriverAvailabilityEntity>
-                .FromInvalid(result.FirstError!);
-        }
-
-        return Result<DriverAvailabilityEntity>
-            .WithSuccess();
+        return result;
     }
 
     private Result<DriverAvailabilityEntity> FactoryEntity(
@@ -102,17 +89,14 @@ public sealed class UpdateDriverAvailabilityHandler(
             DriverAvailabilityEntity.Create(
                 request.Id, request.Status);
 
-        if (entity.IsSuccess)
+        if (!entity.IsSuccess)
         {
-            return entity;
+            logger.LogGenericError(
+                nameof(UpdateDriverAvailabilityHandler),
+                nameof(FactoryEntity), entity.Errors.Count);
         }
 
-        logger.LogGenericError(
-            nameof(UpdateDriverAvailabilityHandler),
-            nameof(FactoryEntity), entity.Errors!.Count);
-
-        return Result<DriverAvailabilityEntity>
-            .FromInvalid(entity.Errors!);
+        return entity;
     }
 
     private async Task CreateAsync(

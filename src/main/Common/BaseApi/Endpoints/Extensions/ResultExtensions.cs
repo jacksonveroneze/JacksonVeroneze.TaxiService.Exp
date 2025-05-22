@@ -36,7 +36,7 @@ public static class ResultExtensions
                 StringComparer.OrdinalIgnoreCase);
 
         return Results.ValidationProblem(
-            errors: dict!,
+            errors: dict,
             detail: result.FirstError?.Message,
             instance: null,
             statusCode: (int)statusCode,

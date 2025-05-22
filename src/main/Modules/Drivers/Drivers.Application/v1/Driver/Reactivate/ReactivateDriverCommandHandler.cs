@@ -2,13 +2,13 @@ using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Services;
+using TaxiService.Modules.Drivers.Domain.Core.Errors;
 using TaxiService.Modules.Drivers.Domain.Entities;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.Reactivate;
 
 public sealed class ReactivateDriverCommandHandler(
     ILogger<ReactivateDriverCommandHandler> logger,
-    IDriverService driverService,
     IDriverRepository driverRepository)
     : IRequestHandler<ReactivateDriverCommand, Result>
 {
@@ -18,23 +18,23 @@ public sealed class ReactivateDriverCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<DriverEntity> resultEntity =
-            await driverService.GetByIdAsync(
-                request.Id, cancellationToken);
+        DriverEntity? entity = await driverRepository
+            .GetByIdAsync(request.Id, cancellationToken);
 
-        if (resultEntity.IsFailure)
+        if (entity is null)
         {
-            return resultEntity;
+            return Result.FromNotFound(
+                DomainErrors.DriverErrors.NotFound);
         }
 
-        Result resultAction = Reactivate(resultEntity.Value!);
+        Result resultAction = Reactivate(entity);
 
         if (resultAction.IsFailure)
         {
             return resultAction;
         }
 
-        await UpdateAsync(resultEntity.Value!, cancellationToken);
+        await UpdateAsync(entity, cancellationToken);
 
         return Result.WithSuccess();
     }

@@ -19,4 +19,6 @@ public sealed record VehicleDto
     public int? Year { get; init; }
 
     public VehicleStatus? Status { get; init; }
+    
+    public DateTime? DeletedAt { get; init; }
 }

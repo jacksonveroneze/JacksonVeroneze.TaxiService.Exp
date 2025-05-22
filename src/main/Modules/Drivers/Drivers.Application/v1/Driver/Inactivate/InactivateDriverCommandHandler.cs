@@ -1,15 +1,16 @@
 using JacksonVeroneze.NET.Result;
+
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.System;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Services;
+using TaxiService.Modules.Drivers.Domain.Core.Errors;
 using TaxiService.Modules.Drivers.Domain.Entities;
 
-namespace TaxiService.Modules.Drivers.Application.v1.Driver.Inativate;
+namespace TaxiService.Modules.Drivers.Application.v1.Driver.Inactivate;
 
 public sealed class InactivateDriverCommandHandler(
     ILogger<InactivateDriverCommandHandler> logger,
-    IDriverService driverService,
     IDriverRepository driverRepository,
     IDateTimeProvider dateTime)
     : IRequestHandler<InactivateDriverCommand, Result>
@@ -20,23 +21,23 @@ public sealed class InactivateDriverCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<DriverEntity> resultEntity =
-            await driverService.GetByIdAsync(
-                request.Id, cancellationToken);
+        DriverEntity? entity = await driverRepository
+            .GetByIdAsync(request.Id, cancellationToken);
 
-        if (resultEntity.IsFailure)
+        if (entity is null)
         {
-            return resultEntity;
+            return Result.FromNotFound(
+                DomainErrors.DriverErrors.NotFound);
         }
 
-        Result resultAction = Inactivate(resultEntity.Value!);
+        Result resultAction = Inactivate(entity);
 
         if (resultAction.IsFailure)
         {
             return resultAction;
         }
 
-        await UpdateAsync(resultEntity.Value!, cancellationToken);
+        await UpdateAsync(entity, cancellationToken);
 
         return Result.WithSuccess();
     }

@@ -3,15 +3,17 @@ using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Drivers.Application.Common;
+using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Vehicle;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Services;
 using TaxiService.Modules.Drivers.Application.v1.Vehicle.Common.Models;
+using TaxiService.Modules.Drivers.Domain.Core.Errors;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Vehicle.GetById;
 
 public sealed class GetVehicleByIdQueryHandler(
     ILogger<GetVehicleByIdQueryHandler> logger,
     IDataMapper mapper,
-    IVehicleService vehicleService)
+    IVehicleReadRepository vehicleReadRepository)
     : IRequestHandler<GetVehicleByIdQuery, Result<GetVehicleByIdQueryResponse>>
 {
     public async Task<Result<GetVehicleByIdQueryResponse>> Handle(
@@ -20,17 +22,19 @@ public sealed class GetVehicleByIdQueryHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<VehicleDto> resultEntity = await vehicleService
-            .GetDtoByIdAsync(request.Id, cancellationToken);
+        VehicleDto? dto = await vehicleReadRepository
+            .GetByIdAsync(request.Id, cancellationToken);
 
-        if (resultEntity.IsFailure)
+        if (dto is null)
         {
+            Error error = DomainErrors.VehicleErrors.NotFound;
+            
             return Result<GetVehicleByIdQueryResponse>
-                .FromNotFound(resultEntity.FirstError!);
+                .FromNotFound(error);
         }
 
         GetVehicleByIdQueryResponse response =
-            mapper.Map<GetVehicleByIdQueryResponse>(resultEntity.Value);
+            mapper.Map<GetVehicleByIdQueryResponse>(dto);
 
         logger.LogGetById(ModuleContext.ContextName,
             nameof(GetVehicleByIdQueryHandler), 

@@ -4,13 +4,13 @@ using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.System;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Services;
+using TaxiService.Modules.Drivers.Domain.Core.Errors;
 using TaxiService.Modules.Drivers.Domain.Entities;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.Activate;
 
 public sealed class ActivateDriverCommandHandler(
     ILogger<ActivateDriverCommandHandler> logger,
-    IDriverService driverService,
     IDriverRepository driverRepository,
     IDateTimeProvider dateTime)
     : IRequestHandler<ActivateDriverCommand, Result>
@@ -21,23 +21,23 @@ public sealed class ActivateDriverCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<DriverEntity> resultEntity =
-            await driverService.GetByIdAsync(
-                request.Id, cancellationToken);
+        DriverEntity? entity = await driverRepository
+            .GetByIdAsync(request.Id, cancellationToken);
 
-        if (resultEntity.IsFailure)
+        if (entity is null)
         {
-            return resultEntity;
+            return Result.FromNotFound(
+                DomainErrors.DriverErrors.NotFound);
         }
 
-        Result resultAction = Activate(resultEntity.Value!);
+        Result resultAction = Activate(entity);
 
         if (resultAction.IsFailure)
         {
             return resultAction;
         }
 
-        await UpdateAsync(resultEntity.Value!, cancellationToken);
+        await UpdateAsync(entity, cancellationToken);
 
         return Result.WithSuccess();
     }

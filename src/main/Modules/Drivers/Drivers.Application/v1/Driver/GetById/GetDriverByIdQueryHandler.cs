@@ -21,44 +21,29 @@ public sealed class GetDriverByIdQueryHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<DriverDto> resultEntity = await GetByIdAsync(
-            request.Id, cancellationToken);
+        DriverDto? dto = await driverReadRepository
+            .GetByIdAsync(request.Id, cancellationToken);
 
-        if (resultEntity.IsFailure)
+        if (dto is null)
         {
+            Error error = DomainErrors.DriverErrors.NotFound;
+
+            logger.LogNotFound(
+                ModuleContext.ContextName,
+                nameof(GetDriverByIdQueryHandler),
+                nameof(Handle), request.Id, error);
+
             return Result<GetDriverByIdQueryResponse>
-                .FromNotFound(resultEntity.FirstError!);
+                .FromNotFound(error);
         }
 
         GetDriverByIdQueryResponse response =
-            mapper.Map<GetDriverByIdQueryResponse>(resultEntity.Value);
+            mapper.Map<GetDriverByIdQueryResponse>(dto);
 
         logger.LogGetById(ModuleContext.ContextName,
             nameof(GetDriverByIdQueryHandler), nameof(Handle), request.Id);
 
         return Result<GetDriverByIdQueryResponse>
             .WithSuccess(response);
-    }
-
-    private async Task<Result<DriverDto>> GetByIdAsync(
-        Guid id,
-        CancellationToken cancellationToken)
-    {
-        DriverDto? driver = await driverReadRepository
-            .GetByIdAsync(id, cancellationToken);
-
-        if (driver is not null)
-        {
-            return Result<DriverDto>.WithSuccess(driver);
-        }
-
-        Error error = DomainErrors.DriverErrors.NotFound;
-
-        logger.LogNotFound(
-            ModuleContext.ContextName,
-            nameof(GetDriverByIdQueryHandler),
-            nameof(GetByIdAsync), id, error);
-
-        return Result<DriverDto>.FromNotFound(error);
     }
 }

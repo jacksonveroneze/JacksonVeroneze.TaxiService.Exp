@@ -82,13 +82,13 @@ public class DriverEntity : BaseEntityAggregateRoot
     {
         if (IsBlockedPermanent)
         {
-            return Result.FromInvalid(
+            return Result.FromRuleViolation(
                 DomainErrors.DriverErrors.CannotBlockPermanently);
         }
         
         if (IsInactive)
         {
-            return Result.FromInvalid(
+            return Result.FromRuleViolation(
                 DomainErrors.DriverErrors.AlreadyInactivated);
         }
 
@@ -103,13 +103,13 @@ public class DriverEntity : BaseEntityAggregateRoot
     {
         if (IsActive)
         {
-            return Result.FromInvalid(
+            return Result.FromRuleViolation(
                 DomainErrors.DriverErrors.AlreadyActive);
         }
         
         if (IsBlockedPermanent)
         {
-            return Result.FromInvalid(
+            return Result.FromRuleViolation(
                 DomainErrors.DriverErrors.CannotBlockPermanently);
         }
 
@@ -123,13 +123,13 @@ public class DriverEntity : BaseEntityAggregateRoot
     {
         if (IsBlockedPermanent)
         {
-            return Result.FromInvalid(
+            return Result.FromRuleViolation(
                 DomainErrors.DriverErrors.CannotBlockPermanently);
         }
 
         if (IsBlockedTemporarily)
         {
-            return Result.FromInvalid(
+            return Result.FromRuleViolation(
                 DomainErrors.DriverErrors.AlreadyBlockedTemporarily);
         }
 
@@ -143,7 +143,7 @@ public class DriverEntity : BaseEntityAggregateRoot
     {
         if (IsBlockedPermanent)
         {
-            return Result.FromInvalid(
+            return Result.FromRuleViolation(
                 DomainErrors.DriverErrors.CannotBlockPermanently);
         }
 
@@ -157,13 +157,13 @@ public class DriverEntity : BaseEntityAggregateRoot
     {
         if (IsBlockedPermanent)
         {
-            return Result.FromInvalid(
+            return Result.FromRuleViolation(
                 DomainErrors.DriverErrors.CannotBlockPermanently);
         }
         
         if (IsBlockedTemporarily)
         {
-            return Result.FromInvalid(
+            return Result.FromRuleViolation(
                 DomainErrors.DriverErrors.AlreadyBlockedTemporarily);
         }
 
@@ -209,7 +209,7 @@ public class DriverEntity : BaseEntityAggregateRoot
         if (resultValidate.IsFailure)
         {
             return Result<DriverEntity>
-                .FromInvalid(resultValidate.Errors!);
+                .FromInvalid(resultValidate.Errors);
         }
 
         DriverEntity entity = new(nameVo.Value!,

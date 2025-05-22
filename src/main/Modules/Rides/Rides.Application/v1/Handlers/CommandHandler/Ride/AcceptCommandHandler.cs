@@ -39,7 +39,7 @@ public sealed class AcceptCommandHandler(
                 Error.Create("Lock", "Lock não adquirido"));
         }
 
-        Task<Result<bool>> resultDriverTask = ExistsDriverByIdAsync(
+        Task<bool> existsDriverTask = ExistsDriverByIdAsync(
             request.Body!.DriverId, cancellationToken);
 
         Result<RideEntity> resultEntity = await GetRideByIdAsync(
@@ -50,11 +50,11 @@ public sealed class AcceptCommandHandler(
             return resultEntity;
         }
 
-        Result<bool> resultDriver = await resultDriverTask;
+        bool existsDriver = await existsDriverTask;
 
-        if (resultDriver.IsFailure)
+        if (!existsDriver)
         {
-            return resultDriver;
+            return Result.FromConflict(Error.Create("Driver", "Driver não encontrado"));
         }
 
         Result resultAction = Accept(resultEntity.Value!,
@@ -93,16 +93,16 @@ public sealed class AcceptCommandHandler(
         return Result<RideEntity>.FromNotFound(error);
     }
 
-    private async Task<Result<bool>> ExistsDriverByIdAsync(
+    private async Task<bool> ExistsDriverByIdAsync(
         Guid id,
         CancellationToken cancellationToken)
     {
         using Activity? activity = ActivitySource.StartActivity();
 
-        Result<bool> entity = await driverService
+        bool exists = await driverService
             .ExistsByIdAsync(id, cancellationToken);
 
-        return entity;
+        return exists;
     }
 
     private Result Accept(RideEntity entity, Guid driverId)

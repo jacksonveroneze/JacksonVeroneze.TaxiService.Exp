@@ -8,14 +8,15 @@ namespace TaxiService.Modules.Drivers.Infrastructure.Repositories.Vehicle;
 
 [ExcludeFromCodeCoverage]
 public class VehicleReadRepository(
-    IEfCoreRepository<VehicleDto, DriversDbContext> service)
+    IEfCoreRepository<VehicleDto, DriversReadDbContext> service)
     : IVehicleReadRepository
 {
     public Task<bool> ExistsByPlateAsync(
         string plate,
         CancellationToken cancellationToken)
     {
-        return service.AnyAsync(conf => conf.Plate == plate,
+        return service.AnyAsync(
+            conf => conf.Plate == plate,
             cancellationToken);
     }
 
@@ -23,7 +24,8 @@ public class VehicleReadRepository(
         Guid driverId,
         CancellationToken cancellationToken)
     {
-        return service.AnyAsync(conf => conf.DriverId == driverId,
+        return service.AnyAsync(
+            conf => conf.DriverId == driverId,
             cancellationToken);
     }
 

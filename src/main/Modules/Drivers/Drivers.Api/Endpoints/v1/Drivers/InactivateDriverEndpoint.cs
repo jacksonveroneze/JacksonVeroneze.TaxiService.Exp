@@ -1,5 +1,6 @@
 using JacksonVeroneze.NET.Result;
-using TaxiService.Modules.Drivers.Application.v1.Driver.Inativate;
+
+using TaxiService.Modules.Drivers.Application.v1.Driver.Inactivate;
 
 namespace TaxiService.Modules.Drivers.Api.Endpoints.v1.Drivers;
 

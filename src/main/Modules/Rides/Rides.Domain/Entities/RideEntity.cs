@@ -162,7 +162,7 @@ public class RideEntity : BaseEntityAggregateRoot
         if (resultValidate.IsFailure)
         {
             return Result<RideEntity>
-                .FromInvalid(resultValidate.Errors!);
+                .FromInvalid(resultValidate.Errors);
         }
 
         RideEntity entity = new(passengerId,

@@ -15,7 +15,8 @@ public class VehicleRepository(
         Guid id,
         CancellationToken cancellationToken)
     {
-        return service.GetByIdAsync(conf => conf.Id == id,
+        return service.GetByIdAsync(
+            conf => conf.Id == id,
             cancellationToken);
     }
 
