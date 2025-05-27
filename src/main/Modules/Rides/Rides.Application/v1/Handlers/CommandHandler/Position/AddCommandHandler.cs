@@ -10,7 +10,7 @@ namespace TaxiService.Modules.Rides.Application.v1.Handlers.CommandHandler.Posit
 
 public sealed class AddCommandHandler(
     ILogger<AddCommandHandler> logger,
-    IRideReadRepository rideReadRepository,
+    IRideRepository rideRepository,
     IPositionWriteRepository positionWriteRepository)
     : IRequestHandler<AddCommand, Result>
 {
@@ -88,7 +88,7 @@ public sealed class AddCommandHandler(
         Guid id,
         CancellationToken cancellationToken)
     {
-        RideEntity? entity = await rideReadRepository
+        RideEntity? entity = await rideRepository
             .GetByIdAsync(id, cancellationToken);
 
         if (entity is not null)

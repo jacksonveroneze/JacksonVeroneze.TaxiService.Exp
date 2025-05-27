@@ -16,7 +16,7 @@ public static class ModuleExtensions
         IConfiguration configuration)
     {
         Assembly assembly = AssemblyReference.Assembly;
-        
+
         services.AddConfiguration<ModuleConfiguration>(
             configuration, ModuleConfiguration.Name);
         

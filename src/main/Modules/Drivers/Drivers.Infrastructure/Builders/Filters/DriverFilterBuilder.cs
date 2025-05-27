@@ -6,12 +6,11 @@ using TaxiService.Modules.Drivers.Domain.Filters;
 
 namespace TaxiService.Modules.Drivers.Infrastructure.Builders.Filters;
 
-public class DriverFilterBuilder(DriverFilter filter)
+public class DriverFilterBuilder(
+    DriverFilter filter)
 {
-    private readonly DriverFilter _filter =
-        filter ?? throw new ArgumentNullException(nameof(filter));
-
-    public static DriverFilterBuilder Create(DriverFilter filter)
+    public static DriverFilterBuilder Create(
+        DriverFilter filter)
     {
         return new DriverFilterBuilder(filter);
     }
@@ -20,9 +19,9 @@ public class DriverFilterBuilder(DriverFilter filter)
     {
         FilterBuilder<DriverDto> builder = new();
 
-        if (_filter.Ids?.Count != 0)
+        if (filter.Ids?.Count != 0)
         {
-            builder.And(d => _filter.Ids!.Contains(d.Id!.Value));
+            builder.And(d => filter.Ids!.Contains(d.Id!.Value));
         }
 
         return builder.Build();

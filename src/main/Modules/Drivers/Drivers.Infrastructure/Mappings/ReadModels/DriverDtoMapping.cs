@@ -18,34 +18,13 @@ public class DriverDtoMapping : IEntityTypeConfiguration<DriverDto>
         builder.HasKey(c => c.Id);
 
         // Properties
-        builder.Property(c => c.Id)
-            .ValueGeneratedNever()
-            .HasColumnName("id");
-
-        builder.Property(c => c.FullName)
-            .IsRequired()
-            .HasColumnName("name");
-        
-        builder.Property(c => c.Birthday)
-            .IsRequired()
-            .HasColumnName("birthday");
-        
-        builder.Property(c => c.Email)
-            .IsRequired()
-            .HasColumnName("email");
-        
-        builder.Property(c => c.Document)
-            .IsRequired()
-            .HasColumnName("cpf");
-
-        builder.Property(c => c.Gender)
-            .IsRequired()
-            .HasColumnName("gender");
-
-        builder.Property(c => c.Status)
-            .IsRequired()
-            .HasColumnName("status");
-
+        builder.Property(c => c.Id);
+        builder.Property(c => c.FullName);
+        builder.Property(c => c.Birthday);
+        builder.Property(c => c.Email);
+        builder.Property(c => c.Document);
+        builder.Property(c => c.Gender);
+        builder.Property(c => c.Status);
         builder.Property(c => c.DeletedAt);
     }
 }

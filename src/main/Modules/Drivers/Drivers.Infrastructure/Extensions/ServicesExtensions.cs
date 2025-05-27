@@ -26,8 +26,6 @@ internal static class ServicesExtensions
 
         // Repositories
         services.AddScoped<IDriverReadRepository, DriverReadRepository>();
-        services.AddScoped<IDriverReadCacheRepository, DriverReadCacheRepository>();
-
         services.AddScoped<IDriverRepository, DriverRepository>();
 
         #endregion

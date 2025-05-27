@@ -17,34 +17,15 @@ public class VehicleDtoMapping : IEntityTypeConfiguration<VehicleDto>
         // Keys
         builder.HasKey(c => c.Id);
 
-        // Indexes
-        builder.HasIndex(c => c.DriverId);
-
         // Properties
-        builder.Property(c => c.Id)
-            .ValueGeneratedNever();
-
-        builder.Property(c => c.DriverId)
-            .IsRequired();
-
-        builder.Property(c => c.Model)
-            .IsRequired();
-
-        builder.Property(c => c.Brand)
-            .IsRequired();
-
-        builder.Property(c => c.Plate)
-            .IsRequired();
-
-        builder.Property(c => c.Color)
-            .IsRequired();
-
-        builder.Property(c => c.Year)
-            .IsRequired();
-
-        builder.Property(c => c.Status)
-            .IsRequired();
-
+        builder.Property(c => c.Id);
+        builder.Property(c => c.DriverId);
+        builder.Property(c => c.Model);
+        builder.Property(c => c.Brand);
+        builder.Property(c => c.Plate);
+        builder.Property(c => c.Color);
+        builder.Property(c => c.Year);
+        builder.Property(c => c.Status);
         builder.Property(c => c.DeletedAt);
     }
 }

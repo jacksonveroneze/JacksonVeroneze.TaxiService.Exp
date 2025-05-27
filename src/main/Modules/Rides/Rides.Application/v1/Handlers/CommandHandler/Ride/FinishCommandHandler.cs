@@ -12,8 +12,7 @@ namespace TaxiService.Modules.Rides.Application.v1.Handlers.CommandHandler.Ride;
 
 public sealed class FinishCommandHandler(
     ILogger<FinishCommandHandler> logger,
-    IRideReadRepository rideReadRepository,
-    IRideWriteRepository rideWriteRepository,
+    IRideRepository rideRepository,
     IPositionReadRepository positionReadRepository,
     IDistanceCalculatorService distanceCalculatorService)
     : IRequestHandler<FinishCommand, Result>
@@ -51,7 +50,7 @@ public sealed class FinishCommandHandler(
         Guid id,
         CancellationToken cancellationToken)
     {
-        RideEntity? ride = await rideReadRepository
+        RideEntity? ride = await rideRepository
             .GetByIdAsync(id, cancellationToken);
 
         if (ride is null)
@@ -97,7 +96,7 @@ public sealed class FinishCommandHandler(
         RideEntity entity,
         CancellationToken cancellationToken)
     {
-        await rideWriteRepository.UpdateAsync(
+        await rideRepository.UpdateAsync(
             entity, cancellationToken);
 
         logger.LogProcessed(

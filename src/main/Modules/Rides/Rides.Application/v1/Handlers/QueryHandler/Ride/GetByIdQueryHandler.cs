@@ -23,10 +23,10 @@ public sealed class GetByIdQueryHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        RideEntity? entity = await rideReadRepository
+        RideDto? dto = await rideReadRepository
             .GetByIdAsync(request.Id, cancellationToken);
 
-        if (entity is null)
+        if (dto is null)
         {
             Error error = DomainErrors.RideError.NotFound;
 
@@ -39,7 +39,7 @@ public sealed class GetByIdQueryHandler(
         }
 
         GetByIdQueryResponse response =
-            mapper.Map<GetByIdQueryResponse>(entity);
+            mapper.Map<GetByIdQueryResponse>(dto);
 
         await rideExpandsService.ApplyAsync(
             response.Data!, request.Expand, cancellationToken);

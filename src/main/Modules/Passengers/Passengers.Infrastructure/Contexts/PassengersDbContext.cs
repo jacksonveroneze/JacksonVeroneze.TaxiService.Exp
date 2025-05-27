@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using TaxiService.Common.BaseInfrastructure.Extensions;
 using TaxiService.Modules.Passengers.Domain.Entities;
 using TaxiService.Modules.Passengers.Infrastructure.Mappings;
+using TaxiService.Modules.Passengers.Infrastructure.Mappings.Domain;
 
 namespace TaxiService.Modules.Passengers.Infrastructure.Contexts;
 
@@ -10,6 +11,8 @@ public class PassengersDbContext(
     DbContextOptions<PassengersDbContext> options)
     : DbContext(options)
 {
+    private const string Schema = "driver";
+    
     protected override void OnModelCreating(
         ModelBuilder modelBuilder)
     {
@@ -24,6 +27,6 @@ public class PassengersDbContext(
 
         modelBuilder.IgnoreClass();
 
-        modelBuilder.HasDefaultSchema("passenger");
+        modelBuilder.HasDefaultSchema(Schema);
     }
 }

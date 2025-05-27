@@ -17,7 +17,7 @@ public sealed class RequestCommandHandler(
     IDataMapper mapper,
     IPassengerPublicApi passengerPublicApi,
     IRideReadRepository rideReadRepository,
-    IRideWriteRepository rideWriteRepository)
+    IRideRepository rideRepository)
     : IRequestHandler<RequestCommand, Result<RequestCommandResponse>>
 {
     public async Task<Result<RequestCommandResponse>> Handle(
@@ -132,7 +132,7 @@ public sealed class RequestCommandHandler(
         RideEntity entity,
         CancellationToken cancellationToken)
     {
-        await rideWriteRepository.CreateAsync(
+        await rideRepository.CreateAsync(
             entity, cancellationToken);
 
         logger.LogCreated(

@@ -9,10 +9,10 @@ public class EfUnitOfWork(
     public async Task<bool> CommitAsync(
         CancellationToken cancellationToken)
     {
-        int total = await context
+        int totalChanges = await context
             .SaveChangesAsync(cancellationToken);
 
-        bool success = total > 0;
+        bool success = totalChanges > 0;
 
         return success;
     }

@@ -10,6 +10,8 @@ public class DriversDbContext(
     DbContextOptions<DriversDbContext> options)
     : DbContext(options)
 {
+    private const string Schema = "driver";
+    
     protected override void OnModelCreating(
         ModelBuilder modelBuilder)
     {
@@ -26,6 +28,6 @@ public class DriversDbContext(
 
         modelBuilder.IgnoreClass();
 
-        modelBuilder.HasDefaultSchema("driver");
+        modelBuilder.HasDefaultSchema(Schema);
     }
 }

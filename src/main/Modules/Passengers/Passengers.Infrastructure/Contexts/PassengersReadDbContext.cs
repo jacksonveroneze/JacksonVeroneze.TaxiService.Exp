@@ -10,6 +10,8 @@ public class PassengersReadDbContext(
     DbContextOptions<PassengersReadDbContext> options)
     : DbContext(options)
 {
+    private const string Schema = "passenger";
+    
     protected override void OnModelCreating(
         ModelBuilder modelBuilder)
     {
@@ -20,6 +22,6 @@ public class PassengersReadDbContext(
         modelBuilder.Entity<PassengerDto>()
             .HasQueryFilter(field => field.DeletedAt == null);
 
-        modelBuilder.HasDefaultSchema("passenger");
+        modelBuilder.HasDefaultSchema(Schema);
     }
 }

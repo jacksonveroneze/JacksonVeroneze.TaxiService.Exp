@@ -9,8 +9,7 @@ namespace TaxiService.Modules.Rides.Application.v1.Handlers.CommandHandler.Ride;
 
 public sealed class CancelCommandHandler(
     ILogger<CancelCommandHandler> logger,
-    IRideReadRepository rideReadRepository,
-    IRideWriteRepository rideWriteRepository)
+    IRideRepository rideRepository)
     : IRequestHandler<CancelCommand, Result>
 {
     public async Task<Result> Handle(
@@ -43,7 +42,7 @@ public sealed class CancelCommandHandler(
         Guid id,
         CancellationToken cancellationToken)
     {
-        RideEntity? entity = await rideReadRepository
+        RideEntity? entity = await rideRepository
             .GetByIdAsync(id, cancellationToken);
 
         if (entity is not null)
@@ -78,7 +77,7 @@ public sealed class CancelCommandHandler(
         RideEntity entity,
         CancellationToken cancellationToken)
     {
-        await rideWriteRepository.UpdateAsync(
+        await rideRepository.UpdateAsync(
             entity, cancellationToken);
 
         logger.LogProcessed(

@@ -6,24 +6,22 @@ using TaxiService.Modules.Passengers.Domain.Filters;
 
 namespace TaxiService.Modules.Passengers.Infrastructure.Builders.Filters;
 
-public class PassengerPagedFilterBuilder(PassengerPagedFilter filter)
+public class PassengerPagedFilterBuilder(
+    PassengerPagedFilter filter)
 {
-    private readonly PassengerPagedFilter _filter =
-        filter ?? throw new ArgumentNullException(nameof(filter));
-
-    public static PassengerFilterBuilder Create(
+    public static PassengerPagedFilterBuilder Create(
         PassengerPagedFilter filter)
     {
-        return new PassengerFilterBuilder(filter);
+        return new PassengerPagedFilterBuilder(filter);
     }
 
     public Expression<Func<PassengerDto, bool>> Build()
     {
         FilterBuilder<PassengerDto> builder = new();
 
-        if (_filter.Status.HasValue)
+        if (filter.Status.HasValue)
         {
-            builder.And(d => d.Status == _filter.Status);
+            builder.And(d => d.Status == filter.Status);
         }
 
         return builder.Build();

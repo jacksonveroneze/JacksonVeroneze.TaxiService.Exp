@@ -27,7 +27,7 @@ public sealed class GetPagedQueryHandler(
         RidePagedFilter filter = mapper
             .Map<RidePagedFilter>(request);
 
-        Page<RideEntity> page = await rideReadRepository
+        Page<RideDto> page = await rideReadRepository
             .GetPagedAsync(filter, cancellationToken);
 
         GetPagedQueryResponse response =

@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
 using TaxiService.Common.BaseInfrastructure;
 using TaxiService.Modules.Passengers.Domain.Entities;
 
-namespace TaxiService.Modules.Passengers.Infrastructure.Mappings;
+namespace TaxiService.Modules.Passengers.Infrastructure.Mappings.Domain;
 
 [ExcludeFromCodeCoverage]
 public class PassengerMapping : IEntityTypeConfiguration<PassengerEntity>

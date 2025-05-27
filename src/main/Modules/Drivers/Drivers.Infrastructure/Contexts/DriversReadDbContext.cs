@@ -11,6 +11,8 @@ public class DriversReadDbContext(
     DbContextOptions<DriversReadDbContext> options)
     : DbContext(options)
 {
+    private const string Schema = "driver";
+    
     protected override void OnModelCreating(
         ModelBuilder modelBuilder)
     {
@@ -25,6 +27,6 @@ public class DriversReadDbContext(
         modelBuilder.Entity<VehicleDto>()
             .HasQueryFilter(field => field.DeletedAt == null);
 
-        modelBuilder.HasDefaultSchema("driver");
+        modelBuilder.HasDefaultSchema(Schema);
     }
 }

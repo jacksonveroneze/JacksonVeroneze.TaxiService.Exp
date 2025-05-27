@@ -1,4 +1,6 @@
 using JacksonVeroneze.NET.Pagination.Cursor;
+
+using TaxiService.Modules.Rides.Application.v1.Models.Ride;
 using TaxiService.Modules.Rides.Domain.Entities;
 using TaxiService.Modules.Rides.Domain.Filters;
 
@@ -10,11 +12,11 @@ public interface IRideReadRepository
         Guid passengerId,
         CancellationToken cancellationToken);
 
-    public Task<RideEntity?> GetByIdAsync(
+    public Task<RideDto?> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken);
 
-    public Task<Page<RideEntity>> GetPagedAsync(
+    public Task<Page<RideDto>> GetPagedAsync(
         RidePagedFilter filter,
         CancellationToken cancellationToken);
 }

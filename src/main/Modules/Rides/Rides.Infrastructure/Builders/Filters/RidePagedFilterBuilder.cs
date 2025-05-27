@@ -1,0 +1,29 @@
+using System.Linq.Expressions;
+
+using TaxiService.Common.BaseInfrastructure;
+using TaxiService.Modules.Rides.Application.v1.Models.Ride;
+using TaxiService.Modules.Rides.Domain.Filters;
+
+namespace TaxiService.Modules.Rides.Infrastructure.Builders.Filters;
+
+public class RidePagedFilterBuilder(
+    RidePagedFilter filter)
+{
+    public static RidePagedFilterBuilder Create(
+        RidePagedFilter filter)
+    {
+        return new RidePagedFilterBuilder(filter);
+    }
+
+    public Expression<Func<RideDto, bool>> Build()
+    {
+        FilterBuilder<RideDto> builder = new();
+
+        if (filter.Status.HasValue)
+        {
+            builder.And(d => d.Status == filter.Status);
+        }
+
+        return builder.Build();
+    }
+}
