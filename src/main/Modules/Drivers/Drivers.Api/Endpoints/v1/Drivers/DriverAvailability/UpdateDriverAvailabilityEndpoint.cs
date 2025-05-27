@@ -1,5 +1,3 @@
-using System.Diagnostics;
-
 using JacksonVeroneze.NET.Result;
 
 using TaxiService.Modules.Drivers.Application.v1.DriverAvailability.Update;
@@ -9,9 +7,6 @@ namespace TaxiService.Modules.Drivers.Api.Endpoints.v1.Drivers.DriverAvailabilit
 
 internal static class UpdateDriverAvailabilityEndpoint
 {
-    private static readonly ActivitySource ActivitySource =
-        new("TaxiService");
-
     public static RouteGroupBuilder UpdateAvailability(
         this RouteGroupBuilder builder)
     {
@@ -21,9 +16,8 @@ internal static class UpdateDriverAvailabilityEndpoint
                 [FromBody] Request request,
                 CancellationToken cancellationToken) =>
             {
-                using Activity? activity = ActivitySource.StartActivity();
-
-                UpdateDriverAvailabilityCommand command = new(id, request.Status);
+                UpdateDriverAvailabilityCommand command = new(
+                    id, request.Status);
 
                 Result response = await mediator
                     .Send(command, cancellationToken);

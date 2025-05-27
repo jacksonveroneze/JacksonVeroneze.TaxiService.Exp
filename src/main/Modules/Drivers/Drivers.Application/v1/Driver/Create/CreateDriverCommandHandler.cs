@@ -1,5 +1,3 @@
-using System.Diagnostics;
-
 using JacksonVeroneze.NET.Result;
 
 using TaxiService.Common.BaseApplication.Extensions;
@@ -21,15 +19,10 @@ public sealed class CreateDriverCommandHandler(
     IUnitOfWork unitOfWork)
     : IRequestHandler<CreateDriverCommand, Result<CreateDriverCommandResponse>>
 {
-    private static readonly ActivitySource ActivitySource =
-        new("TaxiService");
-
     public async Task<Result<CreateDriverCommandResponse>> Handle(
         CreateDriverCommand request,
         CancellationToken cancellationToken)
     {
-        using Activity? activity = ActivitySource.StartActivity();
-
         ArgumentNullException.ThrowIfNull(request);
 
         (bool hasErrors, Error[] errors) = ValidateHelper
@@ -72,8 +65,6 @@ public sealed class CreateDriverCommandHandler(
         string email,
         CancellationToken cancellationToken)
     {
-        using Activity? activity = ActivitySource.StartActivity();
-
         bool existsEmail = await driverReadRepository
             .ExistsByEmailAsync(email, cancellationToken);
 
@@ -93,8 +84,6 @@ public sealed class CreateDriverCommandHandler(
     private Result<DriverEntity> FactoryEntity(
         CreateDriverCommand request)
     {
-        using Activity? activity = ActivitySource.StartActivity();
-
         Result<DriverEntity> entity = DriverEntity.Create(
             request.FullName, request.Birthday!.Value,
             request.Email!, request.Phone!,
@@ -116,8 +105,6 @@ public sealed class CreateDriverCommandHandler(
         DriverEntity driverEntity,
         CancellationToken cancellationToken)
     {
-        using Activity? activity = ActivitySource.StartActivity();
-
         try
         {
             await driverRepository.CreateAsync(

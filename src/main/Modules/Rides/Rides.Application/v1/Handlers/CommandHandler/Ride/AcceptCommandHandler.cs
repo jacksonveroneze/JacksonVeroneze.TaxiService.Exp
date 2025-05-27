@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using JacksonVeroneze.NET.Result;
 using RedLockNet;
 using TaxiService.Common.BaseApplication.Extensions;
@@ -12,21 +11,16 @@ namespace TaxiService.Modules.Rides.Application.v1.Handlers.CommandHandler.Ride;
 
 public sealed class AcceptCommandHandler(
     ILogger<AcceptCommandHandler> logger,
-    IDriverService driverService,
+    IDriverPublicApi driverPublicApi,
     IRideReadRepository rideReadRepository,
     IRideWriteRepository rideWriteRepository,
     IRideDistributedLockRepository distributedLockRepository)
     : IRequestHandler<AcceptCommand, Result>
 {
-    private static readonly ActivitySource ActivitySource =
-        new("TaxiService");
-
     public async Task<Result> Handle(
         AcceptCommand request,
         CancellationToken cancellationToken)
     {
-        using Activity? activity = ActivitySource.StartActivity();
-
         ArgumentNullException.ThrowIfNull(request);
 
         await using IRedLock? distributedLock =
@@ -74,8 +68,6 @@ public sealed class AcceptCommandHandler(
         Guid id,
         CancellationToken cancellationToken)
     {
-        using Activity? activity = ActivitySource.StartActivity();
-
         RideEntity? entity = await rideReadRepository
             .GetByIdAsync(id, cancellationToken);
 
@@ -97,9 +89,7 @@ public sealed class AcceptCommandHandler(
         Guid id,
         CancellationToken cancellationToken)
     {
-        using Activity? activity = ActivitySource.StartActivity();
-
-        bool exists = await driverService
+        bool exists = await driverPublicApi
             .ExistsByIdAsync(id, cancellationToken);
 
         return exists;
@@ -107,8 +97,6 @@ public sealed class AcceptCommandHandler(
 
     private Result Accept(RideEntity entity, Guid driverId)
     {
-        using Activity? activity = ActivitySource.StartActivity();
-
         Result result = entity.Accept(driverId);
 
         if (result.IsFailure)
@@ -125,8 +113,6 @@ public sealed class AcceptCommandHandler(
         RideEntity entity,
         CancellationToken cancellationToken)
     {
-        using Activity? activity = ActivitySource.StartActivity();
-
         await rideWriteRepository.UpdateAsync(
             entity, cancellationToken);
 

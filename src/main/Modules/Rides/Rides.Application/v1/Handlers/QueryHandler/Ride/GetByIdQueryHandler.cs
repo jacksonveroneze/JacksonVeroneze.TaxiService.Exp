@@ -2,6 +2,7 @@ using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Rides.Application.v1.Interfaces.Repositories.Ride;
+using TaxiService.Modules.Rides.Application.v1.Interfaces.Services;
 using TaxiService.Modules.Rides.Application.v1.Models.Ride;
 using TaxiService.Modules.Rides.Application.v1.Queries.Ride;
 using TaxiService.Modules.Rides.Domain.Core.Errors;
@@ -12,7 +13,8 @@ namespace TaxiService.Modules.Rides.Application.v1.Handlers.QueryHandler.Ride;
 public sealed class GetByIdQueryHandler(
     ILogger<GetByIdQueryHandler> logger,
     IDataMapper mapper,
-    IRideReadRepository rideReadRepository)
+    IRideReadRepository rideReadRepository,
+    IRideExpandsService rideExpandsService)
     : IRequestHandler<GetByIdQuery, Result<GetByIdQueryResponse>>
 {
     public async Task<Result<GetByIdQueryResponse>> Handle(
@@ -39,6 +41,9 @@ public sealed class GetByIdQueryHandler(
         GetByIdQueryResponse response =
             mapper.Map<GetByIdQueryResponse>(entity);
 
+        await rideExpandsService.ApplyAsync(
+            response.Data!, request.Expand, cancellationToken);
+        
         logger.LogGetById(nameof(GetByIdQueryHandler),
             nameof(Handle), request.Id);
 

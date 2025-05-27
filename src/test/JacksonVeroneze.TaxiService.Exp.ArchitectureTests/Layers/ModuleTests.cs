@@ -1,7 +1,7 @@
 ﻿using JacksonVeroneze.TaxiService.Exp.ArchitectureTests.Abstractions;
 using NetArchTest.Rules;
 
-using TaxiService.Modules.Passengers.Api.Endpoints.v1.Passenger;
+using TaxiService.Modules.Passengers.Api.Endpoints.v1.Passengers;
 using TaxiService.Modules.Passengers.Application;
 using TaxiService.Modules.Passengers.Domain.Entities;
 using TaxiService.Modules.Passengers.Infrastructure.Repositories.Passenger;
@@ -80,7 +80,7 @@ public class ModuleTests
             PublicApiAssembly
         ];
 
-        Types.InAssembly(typeof(PassengerEndpoints).Assembly)
+        Types.InAssembly(typeof(PassengersEndpoints).Assembly)
             .ShouldNot()
             .HaveDependencyOnAny(otherProjects)
             .GetResult()
@@ -96,7 +96,7 @@ public class ModuleTests
             ApiAssembly
         ];
 
-        Types.InAssembly(typeof(PassengerService).Assembly)
+        Types.InAssembly(typeof(PassengerPublicApi).Assembly)
             .ShouldNot()
             .HaveDependencyOnAny(otherProjects)
             .GetResult()

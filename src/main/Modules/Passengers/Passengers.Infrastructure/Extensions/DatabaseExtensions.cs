@@ -18,7 +18,10 @@ internal static class DatabaseExtensions
 
         services.AddDatabase<PassengersDbContext>(
             moduleConfiguration.Database!);
-
+        
+        services.AddReadDatabase<PassengersReadDbContext>(
+            moduleConfiguration.Database!);
+        
         services.AddScoped<IUnitOfWork, UnitOfWork.EfUnitOfWork>();
         
         return services;

@@ -9,8 +9,7 @@ namespace TaxiService.Modules.Passengers.Application.v1.Handlers.CommandHandler.
 
 public sealed class DeleteCommandHandler(
     ILogger<DeleteCommandHandler> logger,
-    IPassengerReadRepository passengerReadRepository,
-    IPassengerWriteRepository passengerWriteRepository)
+    IPassengerRepository passengerRepository)
     : IRequestHandler<DeleteCommand, Result>
 {
     public async Task<Result> Handle(
@@ -36,7 +35,7 @@ public sealed class DeleteCommandHandler(
         Guid id,
         CancellationToken cancellationToken)
     {
-        PassengerEntity? entity = await passengerReadRepository
+        PassengerEntity? entity = await passengerRepository
             .GetByIdAsync(id, cancellationToken);
 
         if (entity is not null)
@@ -57,7 +56,7 @@ public sealed class DeleteCommandHandler(
         PassengerEntity passenger,
         CancellationToken cancellationToken)
     {
-        await passengerWriteRepository.DeleteAsync(
+        await passengerRepository.DeleteAsync(
             passenger, cancellationToken);
 
         logger.LogDeleted(nameof(DeleteCommandHandler),

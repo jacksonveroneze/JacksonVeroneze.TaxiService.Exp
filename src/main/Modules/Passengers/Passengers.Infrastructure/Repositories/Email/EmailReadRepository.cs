@@ -12,13 +12,12 @@ public class EmailReadRepository(
     IEfCoreRepository<EmailEntity, PassengersDbContext> service)
     : IEmailReadRepository
 {
+    [SuppressMessage("Globalization", "CA1309:Use ordinal string comparison")]
     public async Task<bool> ExistsAsync(string email,
         CancellationToken cancellationToken)
     {
         bool exists = await service.AnyAsync(conf =>
-                string.Equals(conf.Email.Value,
-                    email.ToLower(System.Globalization.CultureInfo.CurrentCulture),
-                    StringComparison.OrdinalIgnoreCase),
+                conf.Email.Value!.Equals(email.ToLowerInvariant()),
             cancellationToken);
 
         return exists;

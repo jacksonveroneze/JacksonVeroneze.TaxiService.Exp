@@ -23,7 +23,7 @@ internal static class ServicesExtensions
         
         // Repositories
         services.AddScoped<IPassengerReadRepository, PassengerReadRepository>();
-        services.AddScoped<IPassengerWriteRepository, PassengerWriteRepository>();
+        services.AddScoped<IPassengerRepository, PassengerRepository>();
 
         #endregion
 

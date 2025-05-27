@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.Result;
-using TaxiService.Modules.Drivers.Domain.Entities;
 
 namespace TaxiService.Modules.Drivers.Application.Common.Interfaces.Services;
 

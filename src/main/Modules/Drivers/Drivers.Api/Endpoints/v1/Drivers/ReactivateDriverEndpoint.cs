@@ -15,8 +15,8 @@ internal static class ReactivateDriverEndpoint
             {
                 ReactivateDriverCommand command = new(id);
 
-                Result response =
-                    await mediator.Send(command, cancellationToken);
+                Result response = await mediator
+                    .Send(command, cancellationToken);
 
                 return response.ToIResult();
             })

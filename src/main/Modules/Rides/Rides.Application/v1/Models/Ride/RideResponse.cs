@@ -1,4 +1,6 @@
 using TaxiService.Common.BaseApplication.Models.Models.Common;
+using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Models;
+using TaxiService.Modules.Passengers.Application.v1.Models.Passenger;
 using TaxiService.Modules.Rides.Domain.Enums;
 
 namespace TaxiService.Modules.Rides.Application.v1.Models.Ride;
@@ -20,4 +22,8 @@ public sealed record RideResponse
     public CoordinateResponse? To { get; init; }
 
     public RideStatus? Status { get; init; }
+    
+    public PassengerDto? Passenger { get; set; }
+
+    public DriverDto? Driver { get; set; }
 }

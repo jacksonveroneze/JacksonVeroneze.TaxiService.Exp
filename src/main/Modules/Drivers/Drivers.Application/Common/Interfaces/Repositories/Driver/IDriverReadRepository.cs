@@ -19,6 +19,10 @@ public interface IDriverReadRepository
         Guid id,
         CancellationToken cancellationToken);
 
+    public Task<ICollection<DriverDto>> GetAsync(
+        DriverFilter filter,
+        CancellationToken cancellationToken);
+    
     public Task<Page<DriverDto>> GetPagedAsync(
         DriverPagedFilter filter,
         CancellationToken cancellationToken);

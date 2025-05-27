@@ -11,7 +11,7 @@ public static class ModuleExtensions
     public static IServiceCollection AddDriverPublicApi(
         this IServiceCollection services)
     {
-        services.AddTransient<IDriverService, DriverService>();
+        services.AddTransient<IDriverPublicApi, DriverPublicApi>();
 
         return services;
     }

@@ -11,7 +11,7 @@ namespace TaxiService.Modules.Passengers.Application.v1.Handlers.CommandHandler.
 
 public sealed class DeleteCommandHandler(
     ILogger<DeleteCommandHandler> logger,
-    IPassengerReadRepository passengerReadRepository,
+    IPassengerRepository passengerRepository,
     IEmailReadRepository emailReadRepository,
     IEmailWriteRepository emailWriteRepository)
     : IRequestHandler<DeleteCommand, Result>
@@ -47,7 +47,7 @@ public sealed class DeleteCommandHandler(
         Guid id,
         CancellationToken cancellationToken)
     {
-        PassengerEntity? passenger = await passengerReadRepository
+        PassengerEntity? passenger = await passengerRepository
             .GetByIdAsync(id, cancellationToken);
 
         if (passenger is null)

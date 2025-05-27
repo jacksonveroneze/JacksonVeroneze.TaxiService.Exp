@@ -26,17 +26,17 @@ internal static class WebApplicationBuilderExtensions
             .AddEnvironmentVariables("APP_CONFIG_");
 
         builder.Services.AddAppConfigs(builder.Configuration);
-        
+
         ServiceProvider serviceProvider = builder.Services
             .BuildServiceProvider();
-            
+
         AppConfiguration appConfiguration = serviceProvider
             .GetRequiredService<AppConfiguration>();
-        
+
         builder.AddLogger(appConfiguration);
 
         MetricsExtensions.AddMetrics();
-        
+
         builder.ConfigureDefaultServices(appConfiguration);
         builder.ConfigureInfraCommonModule();
 
@@ -52,6 +52,16 @@ internal static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder,
         AppConfiguration appConfiguration)
     {
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("all", policy =>
+            {
+                policy.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
+        });
+
         builder.Services
             .AddProblemDetails()
             .AddExceptionHandler<CustomExceptionHandler>()

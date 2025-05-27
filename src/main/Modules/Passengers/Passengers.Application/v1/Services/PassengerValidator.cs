@@ -8,7 +8,7 @@ using TaxiService.Modules.Passengers.Domain.Entities;
 namespace TaxiService.Modules.Passengers.Application.v1.Services;
 
 public class PassengerValidator(
-    IPassengerReadRepository readRepository,
+    IPassengerRepository repository,
     ILogger<PassengerValidator> logger)
     : IPassengerValidator
 {
@@ -40,7 +40,7 @@ public class PassengerValidator(
         Guid id,
         CancellationToken cancellationToken)
     {
-        PassengerEntity? entity = await readRepository
+        PassengerEntity? entity = await repository
             .GetByIdAsync(id, cancellationToken);
 
         if (entity is not null)

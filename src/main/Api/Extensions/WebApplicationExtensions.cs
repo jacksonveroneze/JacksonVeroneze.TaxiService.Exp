@@ -3,8 +3,8 @@ using Prometheus;
 using Scalar.AspNetCore;
 using Serilog;
 using TaxiService.Modules.Drivers.Api.Endpoints.v1.Drivers;
-using TaxiService.Modules.Drivers.Api.Endpoints.v1.Vehicle;
-using TaxiService.Modules.Passengers.Api.Endpoints.v1.Passenger;
+using TaxiService.Modules.Drivers.Api.Endpoints.v1.Vehicles;
+using TaxiService.Modules.Passengers.Api.Endpoints.v1.Passengers;
 using TaxiService.Modules.Rides.Api.Endpoints.v1.Positions;
 using TaxiService.Modules.Rides.Api.Endpoints.v1.Rides;
 
@@ -17,6 +17,8 @@ internal static class WebApplicationExtensions
     {
         ArgumentNullException.ThrowIfNull(app);
 
+        app.UseCors("all");
+        
         app.UseRequestLocalization();
 
         app.UseExceptionHandler();
@@ -35,6 +37,8 @@ internal static class WebApplicationExtensions
 
         app.UseHealthChecks("/health");
         app.UseMetricServer();
+        app.UseAuthentication();
+        app.UseAuthorization();
 
         app.AddDriverEndpoints();
         app.AddVehicleEndpoints();

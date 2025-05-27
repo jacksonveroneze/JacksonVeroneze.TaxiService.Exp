@@ -13,8 +13,8 @@ public class RideMapper : Profile
         // Entity -> Response
         CreateMap<RideEntity, RideResponse>()
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
-            .ForMember(dest => dest.PassengerId, opts => opts.Ignore())
-            .ForMember(dest => dest.DriverId, opts => opts.Ignore())
+            .ForMember(dest => dest.PassengerId, opts => opts.MapFrom(src => src.PassengerId))
+            .ForMember(dest => dest.DriverId, opts => opts.MapFrom(src => src.DriverId))
             .ForMember(dest => dest.Fare, opts => opts.MapFrom(src => src.Fare))
             .ForMember(dest => dest.Distance, opts => opts.MapFrom(src => src.Distance))
             .ForMember(dest => dest.From, opts => opts.MapFrom(src => src.CoordinateFrom))

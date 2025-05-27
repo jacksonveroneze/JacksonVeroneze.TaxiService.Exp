@@ -1,5 +1,9 @@
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
 
+using Microsoft.Extensions.Logging;
+
+using TaxiService.Common.BaseInfrastructure.Extensions;
+using TaxiService.Modules.Drivers.Application.Common;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
 using TaxiService.Modules.Drivers.Domain.Entities;
 using TaxiService.Modules.Drivers.Infrastructure.Contexts;
@@ -8,14 +12,23 @@ namespace TaxiService.Modules.Drivers.Infrastructure.Repositories.Driver;
 
 [ExcludeFromCodeCoverage]
 public class DriverRepository(
+    ILogger<DriverRepository> logger,
     IEfCoreRepository<DriverEntity, DriversDbContext> service)
     : IDriverRepository
 {
-    public Task<DriverEntity?> GetByIdAsync(
+    public async Task<DriverEntity?> GetByIdAsync(
         Guid id, CancellationToken cancellationToken)
     {
-        return service.GetByIdAsync(conf => conf.Id == id,
+        DriverEntity? result = await service.GetByIdAsync(
+            conf => conf.Id == id,
             cancellationToken);
+
+        logger.LogGetById(ModuleContext.ContextName,
+            nameof(DriverRepository),
+            nameof(GetByIdAsync), 
+            id, result is not null);
+
+        return result;
     }
 
     public async Task CreateAsync(DriverEntity entity,

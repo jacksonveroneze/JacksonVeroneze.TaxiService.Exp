@@ -13,7 +13,7 @@ namespace TaxiService.Modules.Passengers.Application.v1.Handlers.CommandHandler.
 public sealed class CreateCommandHandler(
     ILogger<CreateCommandHandler> logger,
     IDataMapper mapper,
-    IPassengerReadRepository passengerReadRepository,
+    IPassengerRepository passengerRepository,
     IEmailReadRepository emailReadRepository,
     IEmailWriteRepository emailWriteRepository)
     : IRequestHandler<CreateCommand, Result<CreateCommandResponse>>
@@ -82,7 +82,7 @@ public sealed class CreateCommandHandler(
         Guid id,
         CancellationToken cancellationToken)
     {
-        PassengerEntity? passenger = await passengerReadRepository
+        PassengerEntity? passenger = await passengerRepository
             .GetByIdAsync(id, cancellationToken);
 
         if (passenger is null)

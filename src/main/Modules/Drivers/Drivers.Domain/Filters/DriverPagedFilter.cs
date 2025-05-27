@@ -1,13 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
-
 using JacksonVeroneze.NET.Pagination.Cursor;
-
 using TaxiService.Modules.Drivers.Domain.Enums;
 
 namespace TaxiService.Modules.Drivers.Domain.Filters;
 
 [ExcludeFromCodeCoverage]
-public record DriverPagedFilter
+public record DriverPagedFilter : DriverFilter
 {
     public string? Cursor { get; init; }
 

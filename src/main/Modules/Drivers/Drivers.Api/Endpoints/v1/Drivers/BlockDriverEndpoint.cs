@@ -16,8 +16,8 @@ internal static class BlockDriverEndpoint
             {
                 BlockDriverCommand command = new(id, body.Type);
 
-                Result response =
-                    await mediator.Send(command, cancellationToken);
+                Result response = await mediator
+                    .Send(command, cancellationToken);
 
                 return response.ToIResult();
             })

@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Text.Json;
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
@@ -17,22 +16,17 @@ namespace TaxiService.Modules.Passengers.Application.v1.Handlers.CommandHandler.
 public sealed class CreateCommandHandler(
     ILogger<CreateCommandHandler> logger,
     IDataMapper mapper,
-    IPassengerWriteRepository passengerWriteRepository,
+    IPassengerRepository passengerWriteRepository,
     IEmailReadRepository emailReadRepository,
     IEmailWriteRepository emailWriteRepository,
     IOutboxWriteRepository outboxWriteRepository,
     IUnitOfWork unitOfWork)
     : IRequestHandler<CreateCommand, Result<CreateCommandResponse>>
 {
-    private static readonly ActivitySource ActivitySource =
-        new("TaxiService");
-
     public async Task<Result<CreateCommandResponse>> Handle(
         CreateCommand request,
         CancellationToken cancellationToken)
     {
-        using Activity? activity = ActivitySource.StartActivity();
-
         ArgumentNullException.ThrowIfNull(request);
 
         Result resultVerifyEmail = await ExistEmailAsync(
@@ -74,8 +68,6 @@ public sealed class CreateCommandHandler(
         string email,
         CancellationToken cancellationToken)
     {
-        using Activity? activity = ActivitySource.StartActivity();
-
         bool existsEmail = await emailReadRepository
             .ExistsAsync(email, cancellationToken);
 
@@ -95,8 +87,6 @@ public sealed class CreateCommandHandler(
     private Result<PassengerEntity> FactoryEntity(
         CreateCommand request)
     {
-        using Activity? activity = ActivitySource.StartActivity();
-
         Result<PassengerEntity> entity = PassengerEntity.Create(
             request.FullName, request.Birthday!.Value,
             request.Gender!.Value, request.Document);
@@ -117,8 +107,6 @@ public sealed class CreateCommandHandler(
     private Result<EmailEntity> FactoryEmailEntity(
         CreateCommand request, PassengerEntity passenger)
     {
-        using Activity? activity = ActivitySource.StartActivity();
-
         Result<EmailEntity> entity = EmailEntity
             .Create(passenger.Id, request.Email);
 
@@ -138,8 +126,6 @@ public sealed class CreateCommandHandler(
     private static OutboxMessageEntity FactoryOutboxMessageEntity(
         PassengerEntity passenger, EmailEntity email)
     {
-        using Activity? activity = ActivitySource.StartActivity();
-
         var content = new { PassengerId = passenger.Id, Email = email.Email.Value };
 
         string jsonContent = JsonSerializer.Serialize(content);
@@ -155,8 +141,6 @@ public sealed class CreateCommandHandler(
         EmailEntity emailEntity,
         CancellationToken cancellationToken)
     {
-        using Activity? activity = ActivitySource.StartActivity();
-
         OutboxMessageEntity message =
             FactoryOutboxMessageEntity(passengerEntity, emailEntity);
 

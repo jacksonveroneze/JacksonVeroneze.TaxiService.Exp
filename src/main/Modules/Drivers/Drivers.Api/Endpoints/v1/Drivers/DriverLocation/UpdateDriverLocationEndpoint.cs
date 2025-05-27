@@ -1,5 +1,3 @@
-using System.Diagnostics;
-
 using JacksonVeroneze.NET.Result;
 
 using TaxiService.Modules.Drivers.Application.v1.DriverLocation.Update;
@@ -8,9 +6,6 @@ namespace TaxiService.Modules.Drivers.Api.Endpoints.v1.Drivers.DriverLocation;
 
 internal static class UpdateDriverLocationEndpoint
 {
-    private static readonly ActivitySource ActivitySource =
-        new("TaxiService");
-
     public static RouteGroupBuilder UpdateLocationCommand(
         this RouteGroupBuilder builder)
     {
@@ -20,8 +15,6 @@ internal static class UpdateDriverLocationEndpoint
                 [FromBody] Request request,
                 CancellationToken cancellationToken) =>
             {
-                using Activity? activity = ActivitySource.StartActivity();
-
                 UpdateDriverLocationCommand command = new(
                     id, request.Latitude, request.Longitude);
 

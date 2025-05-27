@@ -16,7 +16,7 @@ internal static class AddPositionEndpoint
                 Result response = await mediator
                     .Send(command, cancellationToken);
 
-                return response.MatchPost();
+                return response.ToIResult();
             })
             .AddDefaultResponseEndpoints()
             .Produces(StatusCodes.Status204NoContent);

@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
@@ -16,20 +15,15 @@ namespace TaxiService.Modules.Rides.Application.v1.Handlers.CommandHandler.Ride;
 public sealed class RequestCommandHandler(
     ILogger<RequestCommandHandler> logger,
     IDataMapper mapper,
-    IPassengerService passengerService,
+    IPassengerPublicApi passengerPublicApi,
     IRideReadRepository rideReadRepository,
     IRideWriteRepository rideWriteRepository)
     : IRequestHandler<RequestCommand, Result<RequestCommandResponse>>
 {
-    private static readonly ActivitySource ActivitySource =
-        new("TaxiService");
-
     public async Task<Result<RequestCommandResponse>> Handle(
         RequestCommand request,
         CancellationToken cancellationToken)
     {
-        using Activity? activity = ActivitySource.StartActivity();
-
         ArgumentNullException.ThrowIfNull(request);
 
         Task<Result> existsRideByPassengerTask =
@@ -73,8 +67,6 @@ public sealed class RequestCommandHandler(
     private Result<RideEntity> FactoryEntity(
         RequestCommand request, Guid passengerId)
     {
-        using Activity? activity = ActivitySource.StartActivity();
-
         Result<RideEntity> entity = RideEntity.Create(
             passengerId,
             request.LatitudeFrom, request.LatitudeTo,
@@ -97,21 +89,19 @@ public sealed class RequestCommandHandler(
         Guid id,
         CancellationToken cancellationToken)
     {
-        using Activity? activity = ActivitySource.StartActivity();
-
-        Result<PassengerResponse> entity = await passengerService
+        PassengerDto? passenger = await passengerPublicApi
             .GetByIdAsync(id, cancellationToken);
 
-        if (!entity.IsSuccess)
+        if (passenger is null)
         {
             return Result<bool>
-                .WithError(entity.FirstError!);
+                .FromRuleViolation(DomainErrors.RideError.NotFound);
         }
 
-        if (entity.Value!.Status != PassengerStatus.Active)
+        if (passenger.Status != PassengerStatus.Active)
         {
             return Result<bool>
-                .WithError(entity.FirstError!);
+                .WithError(DomainErrors.RideError.NotFound);
         }
 
         return Result<bool>.WithSuccess();
@@ -121,8 +111,6 @@ public sealed class RequestCommandHandler(
         Guid id,
         CancellationToken cancellationToken)
     {
-        using Activity? activity = ActivitySource.StartActivity();
-
         bool existsRideByPassenger = await rideReadRepository
             .ExistsActiveByPassengerIdAsync(id, cancellationToken);
 
@@ -144,8 +132,6 @@ public sealed class RequestCommandHandler(
         RideEntity entity,
         CancellationToken cancellationToken)
     {
-        using Activity? activity = ActivitySource.StartActivity();
-
         await rideWriteRepository.CreateAsync(
             entity, cancellationToken);
 

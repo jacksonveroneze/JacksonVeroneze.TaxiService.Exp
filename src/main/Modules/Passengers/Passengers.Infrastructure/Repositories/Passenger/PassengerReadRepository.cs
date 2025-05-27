@@ -2,56 +2,81 @@ using System.Linq.Expressions;
 
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
 using JacksonVeroneze.NET.Pagination.Cursor;
+using JacksonVeroneze.NET.Pagination.Cursor.Extensions;
 
 using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Passenger;
-using TaxiService.Modules.Passengers.Domain.Entities;
+using TaxiService.Modules.Passengers.Application.v1.Models.Passenger;
 using TaxiService.Modules.Passengers.Domain.Filters;
-using TaxiService.Modules.Passengers.Domain.Specifications.Passenger;
+using TaxiService.Modules.Passengers.Infrastructure.Builders.Filters;
 using TaxiService.Modules.Passengers.Infrastructure.Contexts;
 
 namespace TaxiService.Modules.Passengers.Infrastructure.Repositories.Passenger;
 
 [ExcludeFromCodeCoverage]
 public class PassengerReadRepository(
-    IEfCoreRepository<PassengerEntity, PassengersDbContext> service) : IPassengerReadRepository
+    IEfCoreRepository<PassengerDto, PassengersReadDbContext> service) 
+    : IPassengerReadRepository
 {
-    public Task<PassengerEntity?> GetByIdAsync(
+    public async Task<bool> ExistsByIdAsync(
+        Guid id, 
+        CancellationToken cancellationToken)
+    {
+        Expression<Func<PassengerDto, bool>> spec
+            = entity => entity.Id == id;
+
+        bool exists = await service
+            .AnyAsync(spec, cancellationToken);
+
+        return exists;
+    }
+
+    public Task<PassengerDto?> GetByIdAsync(
         Guid id, CancellationToken cancellationToken)
     {
-        PassengerByIdSpecification specByPassengerId = new(id);
+        Expression<Func<PassengerDto, bool>> spec
+            = entity => entity.Id == id;
 
-        return service.GetByIdAsync(specByPassengerId.ToExpression(),
+        return service.GetByIdAsync(spec,
             cancellationToken);
     }
 
-    public async Task<Page<PassengerEntity>> GetPagedAsync(
-        PassengerPagedFilter filter,
+    public async Task<ICollection<PassengerDto>> GetAsync(
+        PassengerFilter filter, 
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(filter);
 
-        Guid? id = !string.IsNullOrEmpty(filter.Pagination?.Cursor)
-            ? Guid.Parse(filter.Pagination!.Cursor)
-            : null;
+        Expression<Func<PassengerDto, bool>> expression =
+            PassengerFilterBuilder.Create(filter).Build();
 
-        Expression<Func<PassengerEntity, bool>> spec =
-            spec => !id.HasValue || spec.Id > id;
+        ICollection<PassengerDto> result =
+            await service.GetAllAsync(
+                expression,
+                cancellationToken: cancellationToken);
 
-        int paginationLimit = filter.Pagination!.Limit!.Value;
-        int databaselimit = paginationLimit + 1;
+        return result;
+    }
 
-        ICollection<PassengerEntity> result = await service.GetAllAsync(
-            spec,
-            order => order.Name.Value,
-            databaselimit,
-            cancellationToken: cancellationToken);
+    public async Task<Page<PassengerDto>> GetPagedAsync(
+        PassengerPagedFilter filter, 
+        CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(filter);
 
-        IList<PassengerEntity> data = result.Take(paginationLimit).ToList();
-        bool hasMore = result.Count > paginationLimit;
-        string cursor = result.LastOrDefault()?.Id.ToString() ?? string.Empty;
+        Expression<Func<PassengerDto, bool>> expression =
+            PassengerPagedFilterBuilder.Create(filter).Build();
 
-        PageInfo pageInfo = new(hasMore, cursor, null);
+        int pageLimit = filter.Pagination!.Limit!.Value;
+        int databaselimit = pageLimit + 1;
 
-        return new Page<PassengerEntity>(data, pageInfo);
+        ICollection<PassengerDto> result =
+            await service.GetAllAsync(
+                expression,
+                order => order.Id,
+                databaselimit,
+                cancellationToken: cancellationToken);
+
+        return result.ToPage(
+            filter.Pagination, d => d.Id.ToString());
     }
 }

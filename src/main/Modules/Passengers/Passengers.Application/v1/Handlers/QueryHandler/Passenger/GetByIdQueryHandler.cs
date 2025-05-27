@@ -5,7 +5,6 @@ using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Pass
 using TaxiService.Modules.Passengers.Application.v1.Models.Passenger;
 using TaxiService.Modules.Passengers.Application.v1.Queries.Passenger;
 using TaxiService.Modules.Passengers.Domain.Core.Errors;
-using TaxiService.Modules.Passengers.Domain.Entities;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Handlers.QueryHandler.Passenger;
 
@@ -21,7 +20,7 @@ public sealed class GetByIdQueryHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<PassengerEntity> resultEntity = await GetByIdAsync(
+        Result<PassengerDto> resultEntity = await GetByIdAsync(
             request.Id, cancellationToken);
 
         if (resultEntity.IsFailure)
@@ -40,16 +39,16 @@ public sealed class GetByIdQueryHandler(
             .WithSuccess(response);
     }
 
-    private async Task<Result<PassengerEntity>> GetByIdAsync(
+    private async Task<Result<PassengerDto>> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken)
     {
-        PassengerEntity? entity = await passengerReadRepository
+        PassengerDto? entity = await passengerReadRepository
             .GetByIdAsync(id, cancellationToken);
 
         if (entity is not null)
         {
-            return Result<PassengerEntity>.WithSuccess(entity);
+            return Result<PassengerDto>.WithSuccess(entity);
         }
 
         Error error = DomainErrors.PassengerError.NotFound;
@@ -58,6 +57,6 @@ public sealed class GetByIdQueryHandler(
             nameof(GetByIdQueryHandler),
             nameof(GetByIdAsync), id, error);
 
-        return Result<PassengerEntity>.FromNotFound(error);
+        return Result<PassengerDto>.FromNotFound(error);
     }
 }

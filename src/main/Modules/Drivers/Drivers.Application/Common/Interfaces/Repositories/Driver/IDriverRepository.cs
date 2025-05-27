@@ -7,7 +7,7 @@ public interface IDriverRepository
     public Task<DriverEntity?> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken);
-    
+
     public Task CreateAsync(
         DriverEntity entity,
         CancellationToken cancellationToken);
@@ -15,7 +15,7 @@ public interface IDriverRepository
     public Task DeleteAsync(
         DriverEntity entity,
         CancellationToken cancellationToken);
-    
+
     public Task UpdateAsync(
         DriverEntity entity,
         CancellationToken cancellationToken);

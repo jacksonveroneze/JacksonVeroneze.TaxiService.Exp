@@ -11,7 +11,7 @@ namespace TaxiService.Modules.Passengers.Application.v1.Handlers.CommandHandler.
 public sealed class ActivateCommandHandler(
     ILogger<ActivateCommandHandler> logger,
     IPassengerValidator passengerValidator,
-    IPassengerWriteRepository passengerWriteRepository,
+    IPassengerRepository passengerWriteRepository,
     IDateTimeProvider dateTime)
     : IRequestHandler<ActivateCommand, Result>
 {

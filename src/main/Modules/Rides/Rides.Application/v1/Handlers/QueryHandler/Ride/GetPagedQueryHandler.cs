@@ -3,6 +3,7 @@ using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Rides.Application.v1.Interfaces.Repositories.Ride;
+using TaxiService.Modules.Rides.Application.v1.Interfaces.Services;
 using TaxiService.Modules.Rides.Application.v1.Models.Ride;
 using TaxiService.Modules.Rides.Application.v1.Queries.Ride;
 using TaxiService.Modules.Rides.Domain.Entities;
@@ -13,7 +14,8 @@ namespace TaxiService.Modules.Rides.Application.v1.Handlers.QueryHandler.Ride;
 public sealed class GetPagedQueryHandler(
     ILogger<GetPagedQueryHandler> logger,
     IDataMapper mapper,
-    IRideReadRepository rideReadRepository)
+    IRideReadRepository rideReadRepository,
+    IRideExpandsService rideExpandsService)
     : IRequestHandler<GetPagedQuery, Result<GetPagedQueryResponse>>
 {
     public async Task<Result<GetPagedQueryResponse>> Handle(
@@ -31,11 +33,14 @@ public sealed class GetPagedQueryHandler(
         GetPagedQueryResponse response =
             mapper.Map<GetPagedQueryResponse>(page);
 
+        await rideExpandsService.ApplyAsync(
+            response.Data!, request.Expand, cancellationToken);
+        
         logger.LogGetPagedWithCursor(
             nameof(GetPagedQueryHandler),
             nameof(Handle), request.PageSize!.Value,
             page.Data.Count, page.PageInfo.HasMore!.Value);
-
+        
         return Result<GetPagedQueryResponse>
             .WithSuccess(response);
     }

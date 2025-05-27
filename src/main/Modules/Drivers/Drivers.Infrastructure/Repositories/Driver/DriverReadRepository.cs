@@ -4,6 +4,10 @@ using JacksonVeroneze.NET.EntityFramework.Interfaces;
 using JacksonVeroneze.NET.Pagination.Cursor;
 using JacksonVeroneze.NET.Pagination.Cursor.Extensions;
 
+using Microsoft.Extensions.Logging;
+
+using TaxiService.Common.BaseInfrastructure.Extensions;
+using TaxiService.Modules.Drivers.Application.Common;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
 using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Models;
 using TaxiService.Modules.Drivers.Domain.Filters;
@@ -14,17 +18,26 @@ namespace TaxiService.Modules.Drivers.Infrastructure.Repositories.Driver;
 
 [ExcludeFromCodeCoverage]
 public class DriverReadRepository(
+    ILogger<DriverReadRepository> logger,
     IEfCoreRepository<DriverDto, DriversReadDbContext> service)
     : IDriverReadRepository
 {
-    public Task<bool> ExistsByIdAsync(
+    public async Task<bool> ExistsByIdAsync(
         Guid id,
         CancellationToken cancellationToken)
     {
         Expression<Func<DriverDto, bool>> spec
             = entity => entity.Id == id;
 
-        return service.AnyAsync(spec, cancellationToken);
+        bool exists = await service
+            .AnyAsync(spec, cancellationToken);
+
+        logger.LogGetById(ModuleContext.ContextName,
+            nameof(DriverReadRepository),
+            nameof(GetByIdAsync),
+            id, exists);
+
+        return exists;
     }
 
     [SuppressMessage("Globalization", "CA1309:Use ordinal string comparison")]
@@ -47,6 +60,23 @@ public class DriverReadRepository(
             cancellationToken);
     }
 
+    public async Task<ICollection<DriverDto>> GetAsync(
+        DriverFilter filter,
+        CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(filter);
+
+        Expression<Func<DriverDto, bool>> expression =
+            DriverFilterBuilder.Create(filter).Build();
+
+        ICollection<DriverDto> result =
+            await service.GetAllAsync(
+                expression,
+                cancellationToken: cancellationToken);
+
+        return result;
+    }
+
     public async Task<Page<DriverDto>> GetPagedAsync(
         DriverPagedFilter filter,
         CancellationToken cancellationToken)
@@ -54,7 +84,7 @@ public class DriverReadRepository(
         ArgumentNullException.ThrowIfNull(filter);
 
         Expression<Func<DriverDto, bool>> expression =
-            DriverFilterBuilder.Create(filter).Build();
+            DriverPagedFilterBuilder.Create(filter).Build();
 
         int pageLimit = filter.Pagination!.Limit!.Value;
         int databaselimit = pageLimit + 1;
