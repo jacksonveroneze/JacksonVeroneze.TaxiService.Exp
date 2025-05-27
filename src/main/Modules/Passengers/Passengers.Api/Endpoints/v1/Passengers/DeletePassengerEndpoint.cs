@@ -14,7 +14,7 @@ internal static class DeletePassengerEndpoint
                 [FromRoute] Guid id,
                 CancellationToken cancellationToken) =>
             {
-                DeleteCommand command = new(id);
+                DeletePassengerCommand command = new(id);
 
                 Result response = await mediator
                     .Send(command, cancellationToken);

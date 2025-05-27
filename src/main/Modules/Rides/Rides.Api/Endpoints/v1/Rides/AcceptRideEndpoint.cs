@@ -10,7 +10,7 @@ internal static class AcceptRideEndpoint
     {
         builder.MapPut("{id:guid:required}/accept", async (
                 [FromServices] ISender mediator,
-                [AsParameters] AcceptCommand command,
+                [AsParameters] AcceptRideCommand command,
                 CancellationToken cancellationToken) =>
             {
                 Result response = await mediator

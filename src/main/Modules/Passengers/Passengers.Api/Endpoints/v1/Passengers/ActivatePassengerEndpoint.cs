@@ -14,7 +14,7 @@ internal static class ActivatePassengerEndpoint
                 [FromRoute] Guid id,
                 CancellationToken cancellationToken) =>
             {
-                ActivateCommand command = new(id);
+                ActivatePassengerCommand command = new(id);
 
                 Result response = await mediator
                     .Send(command, cancellationToken);

@@ -19,18 +19,18 @@ public class PassengerMapper : Profile
             .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender))
             .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status));
 
-        CreateMap<PassengerEntity, GetByIdQueryResponse>()
+        CreateMap<PassengerEntity, GetPassengerByIdQueryResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
 
-        CreateMap<PassengerEntity, CreateCommandResponse>()
+        CreateMap<PassengerEntity, CreatePassengerCommandResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
 
-        CreateMap<Page<PassengerEntity>, GetPagedQueryResponse>()
+        CreateMap<Page<PassengerEntity>, GetPassengerPagedQueryResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src.Data))
             .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src.PageInfo));
 
         // Query -> Filter
-        CreateMap<GetPagedQuery, PassengerPagedFilter>()
+        CreateMap<GetPassengerPagedQuery, PassengerPagedFilter>()
             .ForMember(dest => dest.PassengerId, opts => opts.Ignore())
             .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src));
     }

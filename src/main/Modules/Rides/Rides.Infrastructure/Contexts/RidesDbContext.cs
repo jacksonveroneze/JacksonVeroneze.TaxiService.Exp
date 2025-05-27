@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TaxiService.Common.BaseInfrastructure.Extensions;
 using TaxiService.Modules.Rides.Domain.Entities;
-using TaxiService.Modules.Rides.Infrastructure.Mappings;
 using TaxiService.Modules.Rides.Infrastructure.Mappings.Domain;
 
 namespace TaxiService.Modules.Rides.Infrastructure.Contexts;

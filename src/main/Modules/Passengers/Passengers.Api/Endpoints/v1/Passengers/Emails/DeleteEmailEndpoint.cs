@@ -15,10 +15,10 @@ internal static class DeleteEmailEndpoint
                 [FromRoute] Guid emailId,
                 CancellationToken cancellationToken) =>
             {
-                DeleteCommand command = new(passengerId, emailId);
+                DeletePassengerCommand passengerCommand = new(passengerId, emailId);
 
                 Result response = await mediator
-                    .Send(command, cancellationToken);
+                    .Send(passengerCommand, cancellationToken);
 
                 return response.ToIResult();
             })

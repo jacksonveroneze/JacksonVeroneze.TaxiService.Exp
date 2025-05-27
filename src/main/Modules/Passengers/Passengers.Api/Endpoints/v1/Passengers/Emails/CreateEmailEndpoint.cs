@@ -12,15 +12,15 @@ internal static class CreateEmailEndpoint
     {
         builder.MapPost("{passengerId:guid:required}/emails", async (
                 [FromServices] ISender mediator,
-                [AsParameters] CreateCommand command,
+                [AsParameters] CreatePassengerCommand command,
                 CancellationToken cancellationToken) =>
             {
-                Result<CreateCommandResponse> response =
+                Result<CreateEmailCommandResponse> response =
                     await mediator.Send(command, cancellationToken);
 
                 return response.ToIResult();
             })
-            .Produces<CreateCommandResponse>()
+            .Produces<CreateEmailCommandResponse>()
             .AddDefaultResponseEndpoints();
 
         return builder;

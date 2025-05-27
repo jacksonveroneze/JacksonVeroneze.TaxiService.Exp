@@ -15,14 +15,14 @@ internal static class GetEmailsByPassengerIdEndpoint
                 [FromRoute] Guid passengerId,
                 CancellationToken cancellationToken) =>
             {
-                GetPagedQuery pagedQuery = new(passengerId);
+                GetEmailPagedQuery pagedQuery = new(passengerId);
 
-                Result<GetPagedQueryResponse> response = 
+                Result<GetEmailPagedQueryResponse> response = 
                     await mediator.Send(pagedQuery, cancellationToken);
 
                 return response.ToIResult();
             })
-            .Produces<GetPagedQueryResponse>()
+            .Produces<GetEmailPagedQueryResponse>()
             .AddDefaultResponseEndpoints();
 
         return builder;

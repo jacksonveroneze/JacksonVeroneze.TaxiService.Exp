@@ -11,15 +11,15 @@ internal static class GetPagedEndpoint
     {
         builder.MapGet(string.Empty, async (
                 [FromServices] ISender mediator,
-                [AsParameters] GetPagedQuery query,
+                [AsParameters] GetRidePagedQuery query,
                 CancellationToken cancellationToken) =>
             {
-                Result<GetPagedQueryResponse> response =
+                Result<GetRidePagedQueryResponse> response =
                     await mediator.Send(query, cancellationToken);
 
                 return response.ToIResult();
             })
-            .Produces<GetPagedQueryResponse>()
+            .Produces<GetRidePagedQueryResponse>()
             .AddDefaultResponseEndpoints();
 
         return builder;

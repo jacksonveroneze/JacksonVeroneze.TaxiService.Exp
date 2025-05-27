@@ -1,9 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
-using TaxiService.Modules.Passengers.Application.v1.Interfaces;
+
+using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories.Outbox;
 using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Email;
 using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Passenger;
-using TaxiService.Modules.Passengers.Application.v1.Interfaces.Validators;
-using TaxiService.Modules.Passengers.Application.v1.Services;
 using TaxiService.Modules.Passengers.Infrastructure.Repositories.Email;
 using TaxiService.Modules.Passengers.Infrastructure.Repositories.Outbox;
 using TaxiService.Modules.Passengers.Infrastructure.Repositories.Passenger;

@@ -1,8 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
+
+using TaxiService.Modules.Rides.Application.Common.Services;
 using TaxiService.Modules.Rides.Application.v1.Interfaces.Repositories.Position;
 using TaxiService.Modules.Rides.Application.v1.Interfaces.Repositories.Ride;
 using TaxiService.Modules.Rides.Application.v1.Interfaces.Services;
-using TaxiService.Modules.Rides.Application.v1.Services;
 using TaxiService.Modules.Rides.Domain.Services;
 using TaxiService.Modules.Rides.Infrastructure.Repositories.Position;
 using TaxiService.Modules.Rides.Infrastructure.Repositories.Ride;

@@ -12,15 +12,15 @@ internal static class CreatePassengerEndpoint
     {
         builder.MapPost(string.Empty, async (
                 [FromServices] ISender mediator,
-                [FromBody] CreateCommand command,
+                [FromBody] CreatePassengerCommand command,
                 CancellationToken cancellationToken) =>
             {
-                Result<CreateCommandResponse> response = 
+                Result<CreatePassengerCommandResponse> response = 
                     await mediator.Send(command, cancellationToken);
 
                 return response.ToIResult();
             })
-            .Produces<CreateCommandResponse>()
+            .Produces<CreatePassengerCommandResponse>()
             .AddDefaultResponseEndpoints();
 
         return builder;

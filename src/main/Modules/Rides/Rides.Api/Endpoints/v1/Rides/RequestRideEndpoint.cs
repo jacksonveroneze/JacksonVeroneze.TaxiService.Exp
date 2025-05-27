@@ -11,15 +11,15 @@ internal static class RequestRideEndpoint
     {
         builder.MapPost(string.Empty, async (
                 [FromServices] ISender mediator,
-                [FromBody] RequestCommand command,
+                [FromBody] RequestRideCommand command,
                 CancellationToken cancellationToken) =>
             {
-                Result<RequestCommandResponse> response =
+                Result<RequestRideCommandResponse> response =
                     await mediator.Send(command, cancellationToken);
 
                 return response.ToIResult();
             })
-            .Produces<RequestCommandResponse>()
+            .Produces<RequestRideCommandResponse>()
             .AddDefaultResponseEndpoints();
 
         return builder;

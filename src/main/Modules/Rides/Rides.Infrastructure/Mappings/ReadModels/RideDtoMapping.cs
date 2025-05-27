@@ -1,9 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-using TaxiService.Common.BaseInfrastructure;
 using TaxiService.Modules.Rides.Application.v1.Models.Ride;
-using TaxiService.Modules.Rides.Domain.Entities;
 
 namespace TaxiService.Modules.Rides.Infrastructure.Mappings.ReadModels;
 

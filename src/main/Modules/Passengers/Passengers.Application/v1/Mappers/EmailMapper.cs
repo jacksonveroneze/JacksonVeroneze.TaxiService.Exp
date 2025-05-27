@@ -14,14 +14,14 @@ public class EmailMapper : Profile
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
             .ForMember(dest => dest.Email, opts => opts.MapFrom(src => src.Email));
 
-        CreateMap<EmailEntity, CreateCommandResponse>()
+        CreateMap<EmailEntity, CreateEmailCommandResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
 
-        CreateMap<ICollection<EmailEntity>, GetPagedQueryResponse>()
+        CreateMap<ICollection<EmailEntity>, GetEmailPagedQueryResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
 
         // Query -> Filter
-        CreateMap<GetPagedQuery, EmailPagedFilter>()
+        CreateMap<GetEmailPagedQuery, EmailPagedFilter>()
             .ForMember(dest => dest.PassengerId, opts => opts.MapFrom(src => src.PassengerId))
             .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src));
     }
