@@ -2,7 +2,8 @@ using TaxiService.Common.BaseApplication.Validators.Base;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Email.Create;
 
-public class CreateEmailCommandValidator : AbstractValidator<CreateEmailCommand>
+public class CreateEmailCommandValidator 
+    : AbstractValidator<CreateEmailCommand>
 {
     public CreateEmailCommandValidator()
     {

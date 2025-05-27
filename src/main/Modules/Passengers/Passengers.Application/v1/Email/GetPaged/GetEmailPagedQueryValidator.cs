@@ -2,7 +2,8 @@ using TaxiService.Common.BaseApplication.Validators.Base;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Email.GetPaged;
 
-public class GetEmailPagedQueryValidator : AbstractValidator<GetEmailPagedQuery>
+public class GetEmailPagedQueryValidator 
+    : AbstractValidator<GetEmailPagedQuery>
 {
     public GetEmailPagedQueryValidator()
     {

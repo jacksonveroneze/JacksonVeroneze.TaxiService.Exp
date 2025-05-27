@@ -19,43 +19,22 @@ public sealed class GetPassengerByIdQueryHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<PassengerDto> resultEntity = await GetByIdAsync(
-            request.Id, cancellationToken);
+        PassengerDto? dto = await passengerReadRepository
+            .GetByIdAsync(request.Id, cancellationToken);
 
-        if (resultEntity.IsFailure)
+        if (dto is null)
         {
-            return Result<GetPassengerByIdQueryResponse>
-                .FromNotFound(resultEntity.FirstError!);
+            return Result<GetPassengerByIdQueryResponse>.FromNotFound(
+                DomainErrors.PassengerError.NotFound);
         }
 
         GetPassengerByIdQueryResponse response =
-            mapper.Map<GetPassengerByIdQueryResponse>(resultEntity.Value);
+            mapper.Map<GetPassengerByIdQueryResponse>(dto);
 
         logger.LogGetById(nameof(GetPassengerByIdQueryHandler),
             nameof(Handle), request.Id);
 
         return Result<GetPassengerByIdQueryResponse>
             .WithSuccess(response);
-    }
-
-    private async Task<Result<PassengerDto>> GetByIdAsync(
-        Guid id,
-        CancellationToken cancellationToken)
-    {
-        PassengerDto? entity = await passengerReadRepository
-            .GetByIdAsync(id, cancellationToken);
-
-        if (entity is not null)
-        {
-            return Result<PassengerDto>.WithSuccess(entity);
-        }
-
-        Error error = DomainErrors.PassengerError.NotFound;
-
-        logger.LogNotFound(
-            nameof(GetPassengerByIdQueryHandler),
-            nameof(GetByIdAsync), id, error);
-
-        return Result<PassengerDto>.FromNotFound(error);
     }
 }

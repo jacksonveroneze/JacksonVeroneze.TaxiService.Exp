@@ -17,9 +17,6 @@ internal static class ServicesExtensions
     {
         #region Passenger
 
-        // Services
-        services.AddScoped<IPassengerValidator, PassengerValidator>();
-        
         // Repositories
         services.AddScoped<IPassengerReadRepository, PassengerReadRepository>();
         services.AddScoped<IPassengerRepository, PassengerRepository>();

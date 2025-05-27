@@ -115,6 +115,14 @@ public static partial class LogMessagesExtensions
     public static partial void LogAlreadyProcessed(this ILogger logger,
         string className, string methodName, Guid identifier, string message);
 
+    [LoggerMessage(
+        EventId = 1031,
+        Level = LogLevel.Warning,
+        Message = "{className} - {methodName} - AlreadyProcessed - " +
+                  "Identifier: '{identifier}' - Message: '{message}'")]
+    public static partial void LogRuleViolation(this ILogger logger,
+        string className, string methodName, Guid identifier, string message);
+    
     #endregion
 
     #region CommonGetData

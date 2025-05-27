@@ -9,8 +9,8 @@ using TaxiService.Modules.Passengers.Domain.Entities;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Email.Delete;
 
-public sealed class DeletePassengerCommandHandler(
-    ILogger<DeletePassengerCommandHandler> logger,
+public sealed class DeleteEmailCommandHandler(
+    ILogger<DeleteEmailCommandHandler> logger,
     IPassengerRepository passengerRepository,
     IEmailReadRepository emailReadRepository,
     IEmailWriteRepository emailWriteRepository)
@@ -74,7 +74,7 @@ public sealed class DeletePassengerCommandHandler(
         Error error = DomainErrors.EmailError.NotFound;
 
         logger.LogNotFound(
-            nameof(DeletePassengerCommandHandler),
+            nameof(DeleteEmailCommandHandler),
             nameof(Handle), id, error);
 
         return Result<EmailEntity>.FromNotFound(error);

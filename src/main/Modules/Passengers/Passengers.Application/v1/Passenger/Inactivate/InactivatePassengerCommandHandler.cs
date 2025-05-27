@@ -3,6 +3,7 @@ using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.System;
 using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories.Passenger;
+using TaxiService.Modules.Passengers.Domain.Core.Errors;
 using TaxiService.Modules.Passengers.Domain.Entities;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Passenger.Inactivate;
@@ -19,22 +20,28 @@ public sealed class InactivatePassengerCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<PassengerEntity> entity = await passengerValidator
-            .ValidateAndGetAsync(request.Id, cancellationToken);
+        PassengerEntity? entity = await passengerRepository
+            .GetByIdAsync(request.Id, cancellationToken);
 
-        if (entity.IsFailure)
+        if (entity is null)
         {
-            return entity;
+            return Result.FromNotFound(
+                DomainErrors.PassengerError.NotFound);
         }
 
-        Result resultAction = Inactivate(entity.Value!);
+        Result resultAction = Inactivate(entity);
 
         if (resultAction.IsFailure)
         {
             return resultAction;
         }
 
-        await UpdateAsync(entity.Value!, cancellationToken);
+        await passengerRepository.UpdateAsync(
+            entity, cancellationToken);
+
+        logger.LogProcessed(
+            nameof(InactivatePassengerCommandHandler),
+            nameof(Handle), entity.Id);
 
         return Result.WithSuccess();
     }
@@ -45,23 +52,11 @@ public sealed class InactivatePassengerCommandHandler(
 
         if (result.IsFailure)
         {
-            logger.LogAlreadyProcessed(
+            logger.LogRuleViolation(
                 nameof(InactivatePassengerCommandHandler),
                 nameof(Inactivate), entity.Id, result.FirstError!);
         }
 
         return result;
-    }
-
-    private async Task UpdateAsync(
-        PassengerEntity entity,
-        CancellationToken cancellationToken)
-    {
-        await passengerRepository.UpdateAsync(
-            entity, cancellationToken);
-
-        logger.LogProcessed(
-            nameof(InactivatePassengerCommandHandler),
-            nameof(UpdateAsync), entity.Id);
     }
 }

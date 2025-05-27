@@ -9,8 +9,8 @@ using TaxiService.Modules.Passengers.Domain.Entities;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Email.Create;
 
-public sealed class CreatePassengerCommandHandler(
-    ILogger<CreatePassengerCommandHandler> logger,
+public sealed class CreateEmailCommandHandler(
+    ILogger<CreateEmailCommandHandler> logger,
     IDataMapper mapper,
     IPassengerRepository passengerRepository,
     IEmailReadRepository emailReadRepository,
@@ -70,7 +70,7 @@ public sealed class CreatePassengerCommandHandler(
         }
 
         logger.LogGenericError(
-            nameof(CreatePassengerCommandHandler),
+            nameof(CreateEmailCommandHandler),
             nameof(FactoryEntity), entity.Errors.Count);
 
         return Result<EmailEntity>
@@ -108,7 +108,7 @@ public sealed class CreatePassengerCommandHandler(
         Error error = DomainErrors.EmailError.DuplicateEmail;
 
         logger.LogGenericError(
-            nameof(CreatePassengerCommandHandler),
+            nameof(CreateEmailCommandHandler),
             nameof(Handle), request.PassengerId, error);
 
         return Result<CreateEmailCommandResponse>
@@ -123,7 +123,7 @@ public sealed class CreatePassengerCommandHandler(
             email, cancellationToken);
 
         logger.LogProcessed(
-            nameof(CreatePassengerCommandHandler),
+            nameof(CreateEmailCommandHandler),
             nameof(CreateAsync), email.Id);
     }
 }

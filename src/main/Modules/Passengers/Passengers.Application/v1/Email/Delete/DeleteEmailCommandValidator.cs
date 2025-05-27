@@ -2,7 +2,8 @@ using TaxiService.Common.BaseApplication.Validators.Base;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Email.Delete;
 
-public class DeleteEmailCommandValidator : AbstractValidator<DeleteEmailCommand>
+public class DeleteEmailCommandValidator 
+    : AbstractValidator<DeleteEmailCommand>
 {
     public DeleteEmailCommandValidator()
     {

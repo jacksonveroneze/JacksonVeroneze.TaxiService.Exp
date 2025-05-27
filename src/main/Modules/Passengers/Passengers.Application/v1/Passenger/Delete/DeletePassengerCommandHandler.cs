@@ -18,48 +18,21 @@ public sealed class DeletePassengerCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<PassengerEntity> resultEntity = await GetByIdAsync(
-            request.Id, cancellationToken);
-
-        if (resultEntity.IsFailure)
-        {
-            return resultEntity;
-        }
-
-        await DeleteAsync(resultEntity.Value!, cancellationToken);
-
-        return Result.WithSuccess();
-    }
-
-    private async Task<Result<PassengerEntity>> GetByIdAsync(
-        Guid id,
-        CancellationToken cancellationToken)
-    {
         PassengerEntity? entity = await passengerRepository
-            .GetByIdAsync(id, cancellationToken);
+            .GetByIdAsync(request.Id, cancellationToken);
 
-        if (entity is not null)
+        if (entity is null)
         {
-            return Result<PassengerEntity>.WithSuccess(entity);
+            return Result.FromNotFound(
+                DomainErrors.PassengerError.NotFound);
         }
 
-        Error error = DomainErrors.PassengerError.NotFound;
-
-        logger.LogNotFound(
-            nameof(DeletePassengerCommandHandler),
-            nameof(GetByIdAsync), id, error);
-
-        return Result<PassengerEntity>.FromNotFound(error);
-    }
-
-    private async Task DeleteAsync(
-        PassengerEntity passenger,
-        CancellationToken cancellationToken)
-    {
         await passengerRepository.DeleteAsync(
-            passenger, cancellationToken);
+            entity, cancellationToken);
 
         logger.LogDeleted(nameof(DeletePassengerCommandHandler),
-            nameof(Handle), passenger.Id);
+            nameof(Handle), entity.Id);
+
+        return Result.WithSuccess();
     }
 }

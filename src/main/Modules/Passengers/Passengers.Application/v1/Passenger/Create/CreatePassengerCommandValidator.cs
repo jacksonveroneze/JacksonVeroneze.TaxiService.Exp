@@ -4,7 +4,8 @@ using TaxiService.Modules.Passengers.Domain.Enums;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Passenger.Create;
 
-public class CreatePassengerCommandValidator : AbstractValidator<CreatePassengerCommand>
+public class CreatePassengerCommandValidator 
+    : AbstractValidator<CreatePassengerCommand>
 {
     private const int MinLengthName = 2;
     private const int MaxLengthName = 100;
