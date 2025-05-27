@@ -1,6 +1,6 @@
 using JacksonVeroneze.NET.Result;
 
-using TaxiService.Modules.Rides.Application.v1.Models.Ride;
+using TaxiService.Modules.Rides.Application.v1.Ride.GetById;
 
 namespace TaxiService.Modules.Rides.Application.v1.Queries.Ride;
 

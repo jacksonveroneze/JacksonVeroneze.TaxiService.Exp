@@ -1,6 +1,6 @@
 using JacksonVeroneze.NET.Result;
 
-using TaxiService.Modules.Passengers.Application.v1.Commands.Email;
+using TaxiService.Modules.Passengers.Application.v1.Email.Delete;
 
 namespace TaxiService.Modules.Passengers.Api.Endpoints.v1.Passengers.Emails;
 
@@ -15,7 +15,7 @@ internal static class DeleteEmailEndpoint
                 [FromRoute] Guid emailId,
                 CancellationToken cancellationToken) =>
             {
-                DeletePassengerCommand passengerCommand = new(passengerId, emailId);
+                DeleteEmailCommand passengerCommand = new(passengerId, emailId);
 
                 Result response = await mediator
                     .Send(passengerCommand, cancellationToken);

@@ -1,4 +1,4 @@
-namespace TaxiService.Modules.Passengers.Application.v1.Interfaces;
+namespace TaxiService.Modules.Passengers.Application.Common.Interfaces;
 
 public interface IUnitOfWork : TaxiService.Common.BaseApplication.Interfaces.UnitOfWork.IUnitOfWork
 {

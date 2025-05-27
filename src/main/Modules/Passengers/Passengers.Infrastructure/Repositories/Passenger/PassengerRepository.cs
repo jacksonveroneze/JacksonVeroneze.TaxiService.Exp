@@ -1,6 +1,6 @@
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
 
-using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Passenger;
+using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories.Passenger;
 using TaxiService.Modules.Passengers.Domain.Entities;
 using TaxiService.Modules.Passengers.Infrastructure.Contexts;
 

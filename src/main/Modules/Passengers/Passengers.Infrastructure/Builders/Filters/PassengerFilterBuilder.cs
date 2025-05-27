@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 
 using TaxiService.Common.BaseInfrastructure;
-using TaxiService.Modules.Passengers.Application.v1.Models.Passenger;
+using TaxiService.Modules.Passengers.Application.v1.Passenger;
 using TaxiService.Modules.Passengers.Domain.Filters;
 
 namespace TaxiService.Modules.Passengers.Infrastructure.Builders.Filters;

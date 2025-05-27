@@ -1,7 +1,6 @@
 using JacksonVeroneze.NET.Result;
 
-using TaxiService.Modules.Passengers.Application.v1.Commands.Passenger;
-using TaxiService.Modules.Passengers.Application.v1.Models.Passenger;
+using TaxiService.Modules.Passengers.Application.v1.Passenger.Create;
 
 namespace TaxiService.Modules.Passengers.Api.Endpoints.v1.Passengers;
 

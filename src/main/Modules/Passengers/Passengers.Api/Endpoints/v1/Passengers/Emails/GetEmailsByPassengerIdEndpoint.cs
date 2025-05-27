@@ -1,7 +1,6 @@
 using JacksonVeroneze.NET.Result;
 
-using TaxiService.Modules.Passengers.Application.v1.Models.Email;
-using TaxiService.Modules.Passengers.Application.v1.Queries.Passenger.Email;
+using TaxiService.Modules.Passengers.Application.v1.Email.GetPaged;
 
 namespace TaxiService.Modules.Passengers.Api.Endpoints.v1.Passengers.Emails;
 

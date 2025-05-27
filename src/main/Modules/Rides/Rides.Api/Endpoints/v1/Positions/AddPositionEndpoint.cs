@@ -1,5 +1,6 @@
 using JacksonVeroneze.NET.Result;
-using TaxiService.Modules.Rides.Application.v1.Commands.Position;
+
+using TaxiService.Modules.Rides.Application.v1.Position.Add;
 
 namespace TaxiService.Modules.Rides.Api.Endpoints.v1.Positions;
 

@@ -1,5 +1,6 @@
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
-using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Email;
+
+using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories.Email;
 using TaxiService.Modules.Passengers.Domain.Entities;
 using TaxiService.Modules.Passengers.Domain.Filters;
 using TaxiService.Modules.Passengers.Domain.Specifications.Email;

@@ -1,5 +1,5 @@
-using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Passenger;
-using TaxiService.Modules.Passengers.Application.v1.Models.Passenger;
+using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories.Passenger;
+using TaxiService.Modules.Passengers.Application.v1.Passenger;
 using TaxiService.Modules.Passengers.Domain.Filters;
 using TaxiService.Modules.Passengers.PublicApi.Interfaces;
 using TaxiService.Modules.Passengers.PublicApi.Queries;

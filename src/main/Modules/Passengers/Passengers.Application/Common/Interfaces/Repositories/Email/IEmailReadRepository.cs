@@ -1,7 +1,7 @@
 using TaxiService.Modules.Passengers.Domain.Entities;
 using TaxiService.Modules.Passengers.Domain.Filters;
 
-namespace TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Email;
+namespace TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories.Email;
 
 public interface IEmailReadRepository
 {

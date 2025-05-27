@@ -1,6 +1,6 @@
 using RedLockNet;
 
-namespace TaxiService.Modules.Rides.Application.v1.Interfaces.Repositories.Ride;
+namespace TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories.Ride;
 
 public interface IRideDistributedLockRepository
 {

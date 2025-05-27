@@ -1,9 +1,9 @@
 using JacksonVeroneze.NET.Pagination.Cursor;
 
-using TaxiService.Modules.Rides.Application.v1.Models.Ride;
+using TaxiService.Modules.Rides.Application.v1.Ride;
 using TaxiService.Modules.Rides.Domain.Filters;
 
-namespace TaxiService.Modules.Rides.Application.v1.Interfaces.Repositories.Ride;
+namespace TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories.Ride;
 
 public interface IRideReadRepository
 {

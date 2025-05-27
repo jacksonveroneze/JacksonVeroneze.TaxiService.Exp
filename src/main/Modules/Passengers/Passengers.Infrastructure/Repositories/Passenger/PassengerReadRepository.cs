@@ -4,8 +4,8 @@ using JacksonVeroneze.NET.EntityFramework.Interfaces;
 using JacksonVeroneze.NET.Pagination.Cursor;
 using JacksonVeroneze.NET.Pagination.Cursor.Extensions;
 
-using TaxiService.Modules.Passengers.Application.v1.Interfaces.Repositories.Passenger;
-using TaxiService.Modules.Passengers.Application.v1.Models.Passenger;
+using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories.Passenger;
+using TaxiService.Modules.Passengers.Application.v1.Passenger;
 using TaxiService.Modules.Passengers.Domain.Filters;
 using TaxiService.Modules.Passengers.Infrastructure.Builders.Filters;
 using TaxiService.Modules.Passengers.Infrastructure.Contexts;

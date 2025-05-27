@@ -1,7 +1,7 @@
-using TaxiService.Modules.Rides.Application.v1.Models.Ride;
 using TaxiService.Modules.Rides.Application.v1.Queries.Ride;
+using TaxiService.Modules.Rides.Application.v1.Ride;
 
-namespace TaxiService.Modules.Rides.Application.v1.Interfaces.Services;
+namespace TaxiService.Modules.Rides.Application.Common.Interfaces.Services;
 
 public interface IRideExpandsService
 {

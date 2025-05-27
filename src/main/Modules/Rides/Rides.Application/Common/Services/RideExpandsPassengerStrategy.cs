@@ -1,9 +1,9 @@
-using TaxiService.Modules.Passengers.Application.v1.Models.Passenger;
+using TaxiService.Modules.Passengers.Application.v1.Passenger;
 using TaxiService.Modules.Passengers.PublicApi.Interfaces;
 using TaxiService.Modules.Passengers.PublicApi.Queries;
-using TaxiService.Modules.Rides.Application.v1.Interfaces.Services;
-using TaxiService.Modules.Rides.Application.v1.Models.Ride;
+using TaxiService.Modules.Rides.Application.Common.Interfaces.Services;
 using TaxiService.Modules.Rides.Application.v1.Queries.Ride;
+using TaxiService.Modules.Rides.Application.v1.Ride;
 
 namespace TaxiService.Modules.Rides.Application.Common.Services;
 

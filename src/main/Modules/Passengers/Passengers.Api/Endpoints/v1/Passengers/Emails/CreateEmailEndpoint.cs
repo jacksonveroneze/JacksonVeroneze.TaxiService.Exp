@@ -1,7 +1,6 @@
 using JacksonVeroneze.NET.Result;
 
-using TaxiService.Modules.Passengers.Application.v1.Commands.Email;
-using TaxiService.Modules.Passengers.Application.v1.Models.Email;
+using TaxiService.Modules.Passengers.Application.v1.Email.Create;
 
 namespace TaxiService.Modules.Passengers.Api.Endpoints.v1.Passengers.Emails;
 
@@ -12,7 +11,7 @@ internal static class CreateEmailEndpoint
     {
         builder.MapPost("{passengerId:guid:required}/emails", async (
                 [FromServices] ISender mediator,
-                [AsParameters] CreatePassengerCommand command,
+                [AsParameters] CreateEmailCommand command,
                 CancellationToken cancellationToken) =>
             {
                 Result<CreateEmailCommandResponse> response =

@@ -1,6 +1,6 @@
 using JacksonVeroneze.NET.Result;
-using TaxiService.Modules.Rides.Application.v1.Commands.Ride;
-using TaxiService.Modules.Rides.Application.v1.Models.Ride;
+
+using TaxiService.Modules.Rides.Application.v1.Ride.Request;
 
 namespace TaxiService.Modules.Rides.Api.Endpoints.v1.Rides;
 
