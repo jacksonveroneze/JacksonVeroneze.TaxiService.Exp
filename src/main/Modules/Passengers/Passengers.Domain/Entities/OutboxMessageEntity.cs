@@ -37,7 +37,6 @@ public class OutboxMessageEntity : BaseEntityAggregateRoot
 
     #region Factory
 
-    // Factory Method
     public static OutboxMessageEntity Create(
         string? type,
         string? content)

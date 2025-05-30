@@ -1,4 +1,5 @@
 using JacksonVeroneze.NET.Result;
+
 using TaxiService.Common.BaseDomain;
 using TaxiService.Common.BaseDomain.Entities.Base;
 using TaxiService.Common.BaseDomain.ValueObjects;
@@ -33,8 +34,7 @@ public class PositionEntity : BaseEntityAggregateRoot
     #region Factory
 
     public static Result<PositionEntity> Create(
-        Guid rideId,
-        float latitude, float longitude)
+        Guid rideId, float latitude, float longitude)
     {
         Result<CoordinateValueObject> coordinateVo =
             CoordinateValueObject.Create(latitude, longitude);

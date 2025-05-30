@@ -1,4 +1,5 @@
 using JacksonVeroneze.NET.Result;
+
 using TaxiService.Common.BaseDomain;
 using TaxiService.Common.BaseDomain.Entities.Base;
 using TaxiService.Common.BaseDomain.ValueObjects;
@@ -11,7 +12,7 @@ public class RideEntity : BaseEntityAggregateRoot
 {
     public Guid Id { get; private set; }
 
-    public Guid? PassengerId { get; private set; }
+    public Guid PassengerId { get; private set; }
 
     public Guid? DriverId { get; private set; }
 
@@ -33,7 +34,7 @@ public class RideEntity : BaseEntityAggregateRoot
 
     private RideEntity(Guid passengerId,
         CoordinateValueObject coordinateFrom,
-        CoordinateValueObject coordinateTo)
+        CoordinateValueObject coordinateTo) : this()
     {
         ArgumentNullException.ThrowIfNull(coordinateFrom);
         ArgumentNullException.ThrowIfNull(coordinateTo);

@@ -1,5 +1,6 @@
 using JacksonVeroneze.NET.DomainObjects.Domain;
 using JacksonVeroneze.NET.Result;
+
 using TaxiService.Common.BaseDomain;
 using TaxiService.Common.BaseDomain.Entities.Base;
 using TaxiService.Common.BaseDomain.ValueObjects;
@@ -97,9 +98,9 @@ public class PassengerEntity : BaseEntityAggregateRoot, IAggregateRoot
 
     #region Factory
 
-    // Factory Method
-    public static Result<PassengerEntity> Create(string? name,
-        DateOnly birthday, Gender gender, string? cpf)
+    public static Result<PassengerEntity> Create(
+        string? name, DateOnly birthday,
+        Gender gender, string? cpf)
     {
         Result<NameValueObject> nameVo = NameValueObject.Create(name);
         Result<CpfValueObject> cpfVo = CpfValueObject.Create(cpf);

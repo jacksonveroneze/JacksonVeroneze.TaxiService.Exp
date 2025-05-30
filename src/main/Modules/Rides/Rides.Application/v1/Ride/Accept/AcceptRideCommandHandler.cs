@@ -4,7 +4,9 @@ using RedLockNet;
 
 using TaxiService.Common.BaseApplication.Core.Errors;
 using TaxiService.Common.BaseApplication.Extensions;
+using TaxiService.Modules.Drivers.Domain.Enums;
 using TaxiService.Modules.Drivers.PublicApi.v1.Interfaces;
+using TaxiService.Modules.Drivers.PublicApi.v1.Models;
 using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories.Ride;
 using TaxiService.Modules.Rides.Application.v1.Ride.Cancel;
 using TaxiService.Modules.Rides.Domain.Core.Errors;
@@ -35,8 +37,8 @@ public sealed class AcceptRideCommandHandler(
                 .DistributedLockErrors.NotAcquired);
         }
 
-        Task<bool> existsDriverTask = driverPublicApi
-            .ExistsByIdAsync(request.Body!.DriverId, cancellationToken);
+        Task<DriverPublicApiDto?> driverTask = driverPublicApi
+            .GetByIdAsync(request.Body!.DriverId, cancellationToken);
 
         RideEntity? entity = await rideRepository
             .GetByIdAsync(request.Id, cancellationToken);
@@ -47,12 +49,18 @@ public sealed class AcceptRideCommandHandler(
                 DomainErrors.RideError.NotFound);
         }
 
-        bool existsDriver = await existsDriverTask;
+        DriverPublicApiDto? driver = await driverTask;
 
-        if (!existsDriver)
+        if (driver is null)
         {
             return Result<RideEntity>.FromConflict(
                 DomainErrors.RideError.NotFound);
+        }
+        
+        if (driver.Status != DriverStatus.Active)
+        {
+            return Result<RideEntity>.FromRuleViolation(
+                DomainErrors.RideError.DriverNotActive);
         }
 
         Result resultAction = Accept(entity,
