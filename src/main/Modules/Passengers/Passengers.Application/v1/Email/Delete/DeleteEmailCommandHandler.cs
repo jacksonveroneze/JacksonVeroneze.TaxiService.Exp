@@ -11,7 +11,7 @@ namespace TaxiService.Modules.Passengers.Application.v1.Email.Delete;
 
 public sealed class DeleteEmailCommandHandler(
     ILogger<DeleteEmailCommandHandler> logger,
-    IPassengerRepository passengerRepository,
+    IPassengerReadRepository passengerRepository,
     IEmailReadRepository emailReadRepository,
     IEmailWriteRepository emailWriteRepository)
     : IRequestHandler<DeleteEmailCommand, Result>
@@ -22,73 +22,32 @@ public sealed class DeleteEmailCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<PassengerEntity> resultPassenger = await GetByIdAsync(
-            request.Id, cancellationToken);
+        bool existsPassenger = await passengerRepository
+            .ExistsByIdAsync(request.PassengerId, cancellationToken);
 
-        if (resultPassenger.IsFailure)
+        if (!existsPassenger)
         {
-            return resultPassenger;
-        }
-
-        Result<EmailEntity> resultEmail = await GetEmailByIdAsync(
-            request.EmailId, cancellationToken);
-
-        if (resultEmail.IsFailure)
-        {
-            return resultEmail;
-        }
-
-        await DeleteAsync(resultEmail.Value!, cancellationToken);
-
-        return Result.WithSuccess();
-    }
-
-    private async Task<Result<PassengerEntity>> GetByIdAsync(
-        Guid id,
-        CancellationToken cancellationToken)
-    {
-        PassengerEntity? passenger = await passengerRepository
-            .GetByIdAsync(id, cancellationToken);
-
-        if (passenger is null)
-        {
-            return Result<PassengerEntity>.FromNotFound(
+            return Result<DeleteEmailCommandHandler>.FromNotFound(
                 DomainErrors.PassengerError.NotFound);
         }
 
-        return Result<PassengerEntity>.WithSuccess(passenger);
-    }
-
-    private async Task<Result<EmailEntity>> GetEmailByIdAsync(
-        Guid id,
-        CancellationToken cancellationToken)
-    {
         EmailEntity? email = await emailReadRepository
-            .GetByIdAsync(id, cancellationToken);
+            .GetByIdAsync(request.EmailId, cancellationToken);
 
-        if (email is not null)
+        if (email is null)
         {
-            return Result<EmailEntity>.WithSuccess(email);
+            return Result<EmailEntity>.FromNotFound(
+                DomainErrors.EmailError.NotFound);
         }
 
-        Error error = DomainErrors.EmailError.NotFound;
-
-        logger.LogNotFound(
-            nameof(DeleteEmailCommandHandler),
-            nameof(Handle), id, error);
-
-        return Result<EmailEntity>.FromNotFound(error);
-    }
-
-    private async Task DeleteAsync(
-        EmailEntity email,
-        CancellationToken cancellationToken)
-    {
         await emailWriteRepository.DeleteAsync(
             email, cancellationToken);
 
         logger.LogProcessed(
             nameof(ActivatePassengerCommandHandler),
-            nameof(DeleteAsync), email.Id);
+            nameof(Handle), email.Id);
+
+        return Result.WithSuccess();
     }
 }
+

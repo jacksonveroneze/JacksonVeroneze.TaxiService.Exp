@@ -10,7 +10,7 @@ public class DeleteEmailCommandValidator
         RuleFor(request => request)
             .NotNull();
 
-        RuleFor(request => request.Id)
+        RuleFor(request => request.PassengerId)
             .SetValidator(new IdGuidValidator());
 
         RuleFor(request => request.EmailId)

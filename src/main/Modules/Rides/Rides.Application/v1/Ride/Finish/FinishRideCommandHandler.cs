@@ -23,59 +23,33 @@ public sealed class FinishRideCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<RideEntity> resultEntity = await GetRideByIdAsync(
-            request.Id, cancellationToken);
+        RideEntity? entity = await rideRepository
+            .GetByIdAsync(request.Id, cancellationToken);
 
-        if (resultEntity.IsFailure)
+        if (entity is null)
         {
-            return resultEntity;
+            return Result.FromNotFound(
+                DomainErrors.RideError.NotFound);
         }
 
         double distance = await CalculateDistanceAsync(
             request.Id, cancellationToken);
 
-        Result resultAction = Finish(resultEntity.Value!, distance);
+        Result resultAction = Finish(entity, distance);
 
         if (resultAction.IsFailure)
         {
             return resultAction;
         }
 
-        await UpdateAsync(resultEntity.Value!, cancellationToken);
+        await rideRepository.UpdateAsync(
+            entity, cancellationToken);
+
+        logger.LogProcessed(
+            nameof(FinishRideCommandHandler),
+            nameof(Handle), entity.Id);
 
         return Result.WithSuccess();
-    }
-
-    private async Task<Result<RideEntity>> GetRideByIdAsync(
-        Guid id,
-        CancellationToken cancellationToken)
-    {
-        RideEntity? ride = await rideRepository
-            .GetByIdAsync(id, cancellationToken);
-
-        if (ride is null)
-        {
-            return Result<RideEntity>.FromNotFound(
-                DomainErrors.RideError.NotFound);
-        }
-
-        return Result<RideEntity>.WithSuccess(ride);
-    }
-
-    private async Task<double> CalculateDistanceAsync(
-        Guid id,
-        CancellationToken cancellationToken)
-    {
-        ICollection<PositionEntity> positions = await positionReadRepository
-            .GetByRideIdAsync(id, cancellationToken);
-
-        CoordinateValueObject[] positionsCood = positions
-            .Select(pos => CoordinateValueObject.Create(
-                pos.Position.Latitude, pos.Position.Longitude).Value!)
-            .ToArray();
-
-        return distanceCalculatorService
-            .Calculate(positionsCood);
     }
 
     private Result Finish(RideEntity entity, double distance)
@@ -92,15 +66,19 @@ public sealed class FinishRideCommandHandler(
         return result;
     }
 
-    private async Task UpdateAsync(
-        RideEntity entity,
+    private async Task<double> CalculateDistanceAsync(
+        Guid id,
         CancellationToken cancellationToken)
     {
-        await rideRepository.UpdateAsync(
-            entity, cancellationToken);
+        ICollection<PositionEntity> positions = await positionReadRepository
+            .GetByRideIdAsync(id, cancellationToken);
 
-        logger.LogProcessed(
-            nameof(FinishRideCommandHandler),
-            nameof(UpdateAsync), entity.Id);
+        CoordinateValueObject[] positionsCood = positions
+            .Select(pos => CoordinateValueObject.Create(
+                pos.Position.Latitude, pos.Position.Longitude).Value!)
+            .ToArray();
+
+        return distanceCalculatorService
+            .Calculate(positionsCood);
     }
 }

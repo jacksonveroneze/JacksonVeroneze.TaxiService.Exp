@@ -2,8 +2,9 @@ using JacksonVeroneze.NET.Result;
 
 using RedLockNet;
 
+using TaxiService.Common.BaseApplication.Core.Errors;
 using TaxiService.Common.BaseApplication.Extensions;
-using TaxiService.Modules.Drivers.PublicApi.Interfaces;
+using TaxiService.Modules.Drivers.PublicApi.v1.Interfaces;
 using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories.Ride;
 using TaxiService.Modules.Rides.Application.v1.Ride.Cancel;
 using TaxiService.Modules.Rides.Domain.Core.Errors;
@@ -30,29 +31,31 @@ public sealed class AcceptRideCommandHandler(
 
         if (distributedLock?.IsAcquired is not true)
         {
-            return Result.WithError(
-                Error.Create("Lock", "Lock não adquirido"));
+            return Result.WithError(CommonApplicationErrors
+                .DistributedLockErrors.NotAcquired);
         }
 
-        Task<bool> existsDriverTask = ExistsDriverByIdAsync(
-            request.Body!.DriverId, cancellationToken);
+        Task<bool> existsDriverTask = driverPublicApi
+            .ExistsByIdAsync(request.Body!.DriverId, cancellationToken);
 
-        Result<RideEntity> resultEntity = await GetRideByIdAsync(
-            request.Id, cancellationToken);
+        RideEntity? entity = await rideRepository
+            .GetByIdAsync(request.Id, cancellationToken);
 
-        if (resultEntity.IsFailure)
+        if (entity is null)
         {
-            return resultEntity;
+            return Result<RideEntity>.FromNotFound(
+                DomainErrors.RideError.NotFound);
         }
 
         bool existsDriver = await existsDriverTask;
 
         if (!existsDriver)
         {
-            return Result.FromConflict(Error.Create("Driver", "Driver não encontrado"));
+            return Result<RideEntity>.FromConflict(
+                DomainErrors.RideError.NotFound);
         }
 
-        Result resultAction = Accept(resultEntity.Value!,
+        Result resultAction = Accept(entity,
             request.Body!.DriverId);
 
         if (resultAction.IsFailure)
@@ -60,40 +63,14 @@ public sealed class AcceptRideCommandHandler(
             return resultAction;
         }
 
-        await UpdateAsync(resultEntity.Value!, cancellationToken);
+        await rideRepository.UpdateAsync(
+            entity, cancellationToken);
+
+        logger.LogProcessed(
+            nameof(AcceptRideCommandHandler),
+            nameof(Handle), entity.Id);
 
         return Result.WithSuccess();
-    }
-
-    private async Task<Result<RideEntity>> GetRideByIdAsync(
-        Guid id,
-        CancellationToken cancellationToken)
-    {
-        RideEntity? entity = await rideRepository
-            .GetByIdAsync(id, cancellationToken);
-
-        if (entity is not null)
-        {
-            return Result<RideEntity>.WithSuccess(entity);
-        }
-
-        Error error = DomainErrors.RideError.NotFound;
-
-        logger.LogNotFound(
-            nameof(CancelRideCommandHandler),
-            nameof(GetRideByIdAsync), id, error);
-
-        return Result<RideEntity>.FromNotFound(error);
-    }
-
-    private async Task<bool> ExistsDriverByIdAsync(
-        Guid id,
-        CancellationToken cancellationToken)
-    {
-        bool exists = await driverPublicApi
-            .ExistsByIdAsync(id, cancellationToken);
-
-        return exists;
     }
 
     private Result Accept(RideEntity entity, Guid driverId)
@@ -108,17 +85,5 @@ public sealed class AcceptRideCommandHandler(
         }
 
         return result;
-    }
-
-    private async Task UpdateAsync(
-        RideEntity entity,
-        CancellationToken cancellationToken)
-    {
-        await rideRepository.UpdateAsync(
-            entity, cancellationToken);
-
-        logger.LogProcessed(
-            nameof(AcceptRideCommandHandler),
-            nameof(UpdateAsync), entity.Id);
     }
 }

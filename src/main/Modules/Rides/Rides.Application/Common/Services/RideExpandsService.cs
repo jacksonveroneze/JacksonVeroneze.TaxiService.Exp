@@ -1,5 +1,4 @@
 using TaxiService.Modules.Rides.Application.Common.Interfaces.Services;
-using TaxiService.Modules.Rides.Application.v1.Queries.Ride;
 using TaxiService.Modules.Rides.Application.v1.Ride;
 
 namespace TaxiService.Modules.Rides.Application.Common.Services;

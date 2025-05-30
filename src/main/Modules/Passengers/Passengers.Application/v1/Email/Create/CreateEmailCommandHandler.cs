@@ -23,26 +23,26 @@ public sealed class CreateEmailCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<PassengerEntity> resultPassenger = await GetPassengerByIdAsync(
-            request.PassengerId, cancellationToken);
+        PassengerEntity? passenger = await passengerRepository
+            .GetByIdAsync(request.PassengerId, cancellationToken);
 
-        if (resultPassenger.IsFailure)
+        if (passenger is null)
         {
             return Result<CreateEmailCommandResponse>.FromNotFound(
-                resultPassenger.FirstError!);
+                DomainErrors.PassengerError.NotFound);
         }
 
-        Result existsEmail = await ExistsEmailAsync(
-            request, cancellationToken);
+        bool existsEmail = await emailReadRepository
+            .ExistsAsync(request.Body!.Email!, cancellationToken);
 
-        if (existsEmail.IsFailure)
+        if (existsEmail)
         {
-            return Result<CreateEmailCommandResponse>
-                .FromInvalid(existsEmail.FirstError!);
+            return Result<CreateEmailCommandResponse>.FromConflict(
+                DomainErrors.PassengerError.DuplicateEmail);
         }
 
         Result<EmailEntity> entity = FactoryEntity(
-            request, resultPassenger.Value!);
+            request, passenger);
 
         if (entity.IsFailure)
         {
@@ -50,7 +50,12 @@ public sealed class CreateEmailCommandHandler(
                 .FromInvalid(entity.Errors);
         }
 
-        await CreateAsync(entity.Value!, cancellationToken);
+        await emailWriteRepository.CreateAsync(
+            entity.Value!, cancellationToken);
+
+        logger.LogProcessed(
+            nameof(CreateEmailCommandHandler),
+            nameof(Handle), entity.Value!.Id);
 
         CreateEmailCommandResponse response =
             mapper.Map<CreateEmailCommandResponse>(entity.Value);
@@ -64,66 +69,13 @@ public sealed class CreateEmailCommandHandler(
         Result<EmailEntity> entity = EmailEntity
             .Create(passenger.Id, request.Body!.Email);
 
-        if (!entity.IsFailure)
+        if (entity.IsFailure)
         {
-            return entity;
+            logger.LogGenericError(
+                nameof(CreateEmailCommandHandler),
+                nameof(FactoryEntity), entity.Errors.Count);
         }
 
-        logger.LogGenericError(
-            nameof(CreateEmailCommandHandler),
-            nameof(FactoryEntity), entity.Errors.Count);
-
-        return Result<EmailEntity>
-            .FromInvalid(entity.Errors);
-    }
-
-    private async Task<Result<PassengerEntity>> GetPassengerByIdAsync(
-        Guid id,
-        CancellationToken cancellationToken)
-    {
-        PassengerEntity? passenger = await passengerRepository
-            .GetByIdAsync(id, cancellationToken);
-
-        if (passenger is null)
-        {
-            return Result<PassengerEntity>.FromNotFound(
-                DomainErrors.PassengerError.NotFound);
-        }
-
-        return Result<PassengerEntity>.WithSuccess(passenger);
-    }
-
-    private async Task<Result> ExistsEmailAsync(
-        CreateEmailCommand request,
-        CancellationToken cancellationToken)
-    {
-        bool existsEmail = await emailReadRepository
-            .ExistsAsync(request.Body!.Email!, cancellationToken);
-
-        if (!existsEmail)
-        {
-            return Result.WithSuccess();
-        }
-
-        Error error = DomainErrors.EmailError.DuplicateEmail;
-
-        logger.LogGenericError(
-            nameof(CreateEmailCommandHandler),
-            nameof(Handle), request.PassengerId, error);
-
-        return Result<CreateEmailCommandResponse>
-            .FromInvalid(error);
-    }
-
-    private async Task CreateAsync(
-        EmailEntity email,
-        CancellationToken cancellationToken)
-    {
-        await emailWriteRepository.CreateAsync(
-            email, cancellationToken);
-
-        logger.LogProcessed(
-            nameof(CreateEmailCommandHandler),
-            nameof(CreateAsync), email.Id);
+        return entity;
     }
 }

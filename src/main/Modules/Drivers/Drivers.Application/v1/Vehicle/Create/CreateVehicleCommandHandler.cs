@@ -128,7 +128,7 @@ public sealed class CreateVehicleCommandHandler(
             request.Brand!, request.Plate!,
             request.Color, request.Year);
 
-        if (!entity.IsSuccess)
+        if (entity.IsFailure)
         {
             logger.LogGenericError(
                 nameof(CreateVehicleCommandHandler),

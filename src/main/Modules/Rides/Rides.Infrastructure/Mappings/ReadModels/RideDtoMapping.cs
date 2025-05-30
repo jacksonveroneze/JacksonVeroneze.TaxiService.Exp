@@ -24,5 +24,27 @@ public class RideDtoMapping : IEntityTypeConfiguration<RideDto>
         builder.Property(c => c.DriverId);
         builder.Property(c => c.Distance);
         builder.Property(c => c.Status);
+
+        builder.ComplexProperty(conf => conf.From, conf =>
+        {
+            conf.Property(prop => prop.Latitude)
+                .HasColumnName("from_latitude")
+                .IsRequired();
+
+            conf.Property(prop => prop.Longitude)
+                .HasColumnName("from_longitude")
+                .IsRequired();
+        });
+
+        builder.ComplexProperty(conf => conf.To, conf =>
+        {
+            conf.Property(prop => prop.Latitude)
+                .HasColumnName("from_latitude")
+                .IsRequired();
+
+            conf.Property(prop => prop.Longitude)
+                .HasColumnName("from_longitude")
+                .IsRequired();
+        });
     }
 }

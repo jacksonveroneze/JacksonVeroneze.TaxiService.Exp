@@ -10,7 +10,7 @@ public class PassengersDbContext(
     DbContextOptions<PassengersDbContext> options)
     : DbContext(options)
 {
-    private const string Schema = "driver";
+    private const string Schema = "passenger";
     
     protected override void OnModelCreating(
         ModelBuilder modelBuilder)

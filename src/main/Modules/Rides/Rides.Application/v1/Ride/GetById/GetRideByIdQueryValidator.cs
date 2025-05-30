@@ -1,5 +1,4 @@
 using TaxiService.Common.BaseApplication.Validators.Base;
-using TaxiService.Modules.Rides.Application.v1.Queries.Ride;
 
 namespace TaxiService.Modules.Rides.Application.v1.Ride.GetById;
 

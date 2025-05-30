@@ -5,7 +5,6 @@ using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories.Ride;
 using TaxiService.Modules.Rides.Application.Common.Interfaces.Services;
-using TaxiService.Modules.Rides.Application.v1.Queries.Ride;
 using TaxiService.Modules.Rides.Domain.Filters;
 
 namespace TaxiService.Modules.Rides.Application.v1.Ride.GetPaged;

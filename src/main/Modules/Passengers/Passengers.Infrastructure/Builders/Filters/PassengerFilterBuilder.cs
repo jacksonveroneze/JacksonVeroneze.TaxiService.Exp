@@ -21,7 +21,7 @@ public class PassengerFilterBuilder(
 
         if (filter.Ids?.Count != 0)
         {
-            builder.And(d => filter.Ids!.Contains(d.Id!.Value));
+            builder.And(d => filter.Ids!.ToArray()!.Contains(d.Id!.Value));
         }
 
         return builder.Build();

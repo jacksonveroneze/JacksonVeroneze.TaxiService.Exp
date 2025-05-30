@@ -1,4 +1,5 @@
 using JacksonVeroneze.NET.Result;
+
 using TaxiService.Common.BaseDomain.Core.Errors;
 
 namespace TaxiService.Modules.Rides.Domain.Core.Errors;
@@ -35,5 +36,13 @@ public static class DomainErrors
         public static Error InvalidStatusAddPosition =>
             Error.Create("Ride.InvalidStatusAddPosition",
                 "Para adicionar posições a corrida deve estar em progresso.");
+
+        public static Error PassengerNotFound =>
+            Error.Create("Ride.NotFound",
+                "Passenger not found.");
+
+        public static Error PassengerInactive =>
+            Error.Create("Ride.PassengerInactive",
+                "Passenger is inactive.");
     }
 }

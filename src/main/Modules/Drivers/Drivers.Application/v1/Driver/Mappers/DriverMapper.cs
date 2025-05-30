@@ -6,6 +6,7 @@ using TaxiService.Modules.Drivers.Application.v1.Driver.GetById;
 using TaxiService.Modules.Drivers.Application.v1.Driver.GetPaged;
 using TaxiService.Modules.Drivers.Domain.Entities;
 using TaxiService.Modules.Drivers.Domain.Filters;
+using TaxiService.Modules.Drivers.PublicApi.v1.Models;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.Mappers;
 
@@ -23,6 +24,14 @@ public class DriverMapper : Profile
             .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status));
 
         CreateMap<DriverDto, DriverResponse>()
+            .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
+            .ForMember(dest => dest.FullName, opts => opts.MapFrom(src => src.FullName))
+            .ForMember(dest => dest.Document, opts => opts.MapFrom(src => src.Document))
+            .ForMember(dest => dest.Birthday, opts => opts.MapFrom(src => src.Birthday))
+            .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender))
+            .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status));
+        
+        CreateMap<DriverDto, DriverPublicApiDto>()
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
             .ForMember(dest => dest.FullName, opts => opts.MapFrom(src => src.FullName))
             .ForMember(dest => dest.Document, opts => opts.MapFrom(src => src.Document))

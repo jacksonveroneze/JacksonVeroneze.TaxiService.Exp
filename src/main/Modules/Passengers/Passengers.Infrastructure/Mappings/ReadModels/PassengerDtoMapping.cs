@@ -19,9 +19,9 @@ public class PassengerDtoMapping : IEntityTypeConfiguration<PassengerDto>
 
         // Properties
         builder.Property(c => c.Id);
-        builder.Property(c => c.FullName);
+        builder.Property(c => c.FullName).HasColumnName("name");
         builder.Property(c => c.Birthday);
-        builder.Property(c => c.Document);
+        builder.Property(c => c.Document).HasColumnName("cpf");
         builder.Property(c => c.Gender);
         builder.Property(c => c.Status);
         builder.Property(c => c.DeletedAt);

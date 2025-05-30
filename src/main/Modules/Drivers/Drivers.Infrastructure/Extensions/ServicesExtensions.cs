@@ -6,10 +6,12 @@ using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Dri
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Vehicle;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Services;
 using TaxiService.Modules.Drivers.Application.Common.Services;
+using TaxiService.Modules.Drivers.Application.v1.Driver.PublicApi;
 using TaxiService.Modules.Drivers.Infrastructure.Repositories.Driver;
 using TaxiService.Modules.Drivers.Infrastructure.Repositories.DriverAvailability;
 using TaxiService.Modules.Drivers.Infrastructure.Repositories.DriverLocation;
 using TaxiService.Modules.Drivers.Infrastructure.Repositories.Vehicle;
+using TaxiService.Modules.Drivers.PublicApi.v1.Interfaces;
 
 namespace TaxiService.Modules.Drivers.Infrastructure.Extensions;
 
@@ -27,6 +29,9 @@ internal static class ServicesExtensions
         // Repositories
         services.AddScoped<IDriverReadRepository, DriverReadRepository>();
         services.AddScoped<IDriverRepository, DriverRepository>();
+        
+        // Services (Public API)
+        services.AddTransient<IDriverPublicApi, DriverPublicApi>();
 
         #endregion
 

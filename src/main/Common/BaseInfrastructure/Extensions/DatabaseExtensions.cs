@@ -68,8 +68,8 @@ public static class DatabaseExtensions
         this DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder
-            .EnableDetailedErrors(false)
-            .EnableSensitiveDataLogging(false)
+            .EnableDetailedErrors()
+            .EnableSensitiveDataLogging()
             .EnableThreadSafetyChecks()
             .UseSnakeCaseNamingConvention();
     }

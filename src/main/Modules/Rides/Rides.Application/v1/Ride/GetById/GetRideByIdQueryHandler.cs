@@ -4,7 +4,6 @@ using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories.Ride;
 using TaxiService.Modules.Rides.Application.Common.Interfaces.Services;
-using TaxiService.Modules.Rides.Application.v1.Queries.Ride;
 using TaxiService.Modules.Rides.Domain.Core.Errors;
 
 namespace TaxiService.Modules.Rides.Application.v1.Ride.GetById;
@@ -27,14 +26,8 @@ public sealed class GetRideByIdQueryHandler(
 
         if (dto is null)
         {
-            Error error = DomainErrors.RideError.NotFound;
-
-            logger.LogNotFound(
-                nameof(GetRideByIdQueryHandler),
-                nameof(Handle), request.Id, error);
-
             return Result<GetRideByIdQueryResponse>
-                .FromNotFound(error);
+                .FromNotFound(DomainErrors.RideError.NotFound);
         }
 
         GetRideByIdQueryResponse response =

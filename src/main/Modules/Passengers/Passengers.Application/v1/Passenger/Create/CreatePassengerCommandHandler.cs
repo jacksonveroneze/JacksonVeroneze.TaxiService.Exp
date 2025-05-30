@@ -31,59 +31,42 @@ public sealed class CreatePassengerCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result resultVerifyEmail = await ExistEmailAsync(
-            request.Email!, cancellationToken);
+        bool existsEmail = await emailReadRepository
+            .ExistsAsync(request.Email!, cancellationToken);
 
-        if (resultVerifyEmail.IsFailure)
+        if (existsEmail)
         {
-            return Result<CreatePassengerCommandResponse>
-                .WithError(resultVerifyEmail.FirstError!);
+            Error error = DomainErrors.PassengerError.DuplicateEmail;
+
+            logger.LogAlreadyExists(nameof(CreatePassengerCommandHandler),
+                nameof(Handle), request.Email!, error);
+
+            return Result<CreatePassengerCommandResponse>.FromConflict(error);
         }
 
-        Result<PassengerEntity> passengerEntity = FactoryEntity(request);
+        Result<PassengerEntity> passengerEntity = 
+            FactoryEntity(request);
 
-        if (passengerEntity.IsFailure)
+        Result<EmailEntity> emailEntity = 
+            FactoryEmailEntity(request, passengerEntity.Value!);
+
+        if (passengerEntity.IsFailure || emailEntity.IsFailure)
         {
-            return Result<CreatePassengerCommandResponse>
-                .FromInvalid(passengerEntity.Errors);
-        }
+            IEnumerable<Error> errors = passengerEntity.Errors
+                .Concat(emailEntity.Errors);
 
-        Result<EmailEntity> emailEntity = FactoryEmailEntity(
-            request, passengerEntity.Value!);
-
-        if (emailEntity.IsFailure)
-        {
             return Result<CreatePassengerCommandResponse>
-                .FromInvalid(passengerEntity.Errors);
+                .FromInvalid(errors);
         }
 
         await CreateAsync(passengerEntity.Value!,
             emailEntity.Value!, cancellationToken);
 
         CreatePassengerCommandResponse response =
-            mapper.Map<CreatePassengerCommandResponse>(passengerEntity.Value);
+            mapper.Map<CreatePassengerCommandResponse>(
+                passengerEntity.Value);
 
         return Result<CreatePassengerCommandResponse>.WithSuccess(response);
-    }
-
-    private async Task<Result> ExistEmailAsync(
-        string email,
-        CancellationToken cancellationToken)
-    {
-        bool existsEmail = await emailReadRepository
-            .ExistsAsync(email, cancellationToken);
-
-        if (!existsEmail)
-        {
-            return Result.WithSuccess();
-        }
-
-        Error error = DomainErrors.PassengerError.DuplicateEmail;
-
-        logger.LogAlreadyExists(nameof(CreatePassengerCommandHandler),
-            nameof(ExistEmailAsync), email, error);
-
-        return Result.FromInvalid(error);
     }
 
     private Result<PassengerEntity> FactoryEntity(
@@ -93,17 +76,14 @@ public sealed class CreatePassengerCommandHandler(
             request.FullName, request.Birthday!.Value,
             request.Gender!.Value, request.Document);
 
-        if (entity.IsSuccess)
+        if (entity.IsFailure)
         {
-            return entity;
+            logger.LogGenericError(
+                nameof(CreatePassengerCommandHandler),
+                nameof(FactoryEntity), entity.Errors.Count);
         }
 
-        logger.LogGenericError(
-            nameof(CreatePassengerCommandHandler),
-            nameof(FactoryEntity), entity.Errors.Count);
-
-        return Result<PassengerEntity>
-            .FromInvalid(entity.Errors);
+        return entity;
     }
 
     private Result<EmailEntity> FactoryEmailEntity(
@@ -112,23 +92,24 @@ public sealed class CreatePassengerCommandHandler(
         Result<EmailEntity> entity = EmailEntity
             .Create(passenger.Id, request.Email);
 
-        if (entity.IsSuccess)
+        if (entity.IsFailure)
         {
-            return entity;
+            logger.LogGenericError(
+                nameof(CreatePassengerCommandHandler),
+                nameof(Handle), entity.Errors.Count);
         }
 
-        logger.LogGenericError(
-            nameof(CreatePassengerCommandHandler),
-            nameof(Handle), entity.Errors.Count);
-
-        return Result<EmailEntity>
-            .FromInvalid(entity.Errors);
+        return entity;
     }
 
     private static OutboxMessageEntity FactoryOutboxMessageEntity(
         PassengerEntity passenger, EmailEntity email)
     {
-        var content = new { PassengerId = passenger.Id, Email = email.Email.Value };
+        var content = new
+        {
+            PassengerId = passenger.Id,
+            Email = email.Email.Value,
+        };
 
         string jsonContent = JsonSerializer.Serialize(content);
 
@@ -146,30 +127,19 @@ public sealed class CreatePassengerCommandHandler(
         OutboxMessageEntity message =
             FactoryOutboxMessageEntity(passengerEntity, emailEntity);
 
-        try
-        {
-            await passengerRepository.CreateAsync(
-                passengerEntity, cancellationToken);
+        await passengerRepository.CreateAsync(
+            passengerEntity, cancellationToken);
 
-            await emailWriteRepository.CreateAsync(
-                emailEntity, cancellationToken);
+        await emailWriteRepository.CreateAsync(
+            emailEntity, cancellationToken);
 
-            await outboxWriteRepository
-                .CreateAsync(message, cancellationToken);
+        await outboxWriteRepository
+            .CreateAsync(message, cancellationToken);
 
-            await unitOfWork.CommitAsync(
-                cancellationToken);
+        await unitOfWork.CommitAsync(
+            cancellationToken);
 
-            logger.LogCreated(nameof(CreatePassengerCommandHandler),
-                nameof(CreateAsync), passengerEntity.Id);
-        }
-        catch (Exception ex)
-        {
-            logger.LogGenericError(
-                nameof(CreatePassengerCommandHandler),
-                nameof(CreateAsync), ex.Message);
-
-            throw;
-        }
+        logger.LogCreated(nameof(CreatePassengerCommandHandler),
+            nameof(CreateAsync), passengerEntity.Id);
     }
 }

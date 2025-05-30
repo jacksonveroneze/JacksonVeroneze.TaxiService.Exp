@@ -14,13 +14,13 @@ public static class RouteGroupBuilderFactory
         ApiVersionSet apiVersionSet = app.AddVersion();
 
         RouteGroupBuilder builder =
-            app.MapGroup("/api/v{version:apiVersion}/{resource}")
+            app.MapGroup("/api/v{version:apiVersion}/" + resource)
                 .WithTags(resource)
                 .WithApiVersionSet(apiVersionSet)
                 .MapToApiVersion(version);
 
         builder.RequireAuthorization();
-        
+
         return builder;
     }
 }

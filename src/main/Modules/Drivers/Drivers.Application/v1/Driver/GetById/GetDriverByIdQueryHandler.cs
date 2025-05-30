@@ -26,15 +26,8 @@ public sealed class GetDriverByIdQueryHandler(
 
         if (dto is null)
         {
-            Error error = DomainErrors.DriverErrors.NotFound;
-
-            logger.LogNotFound(
-                ModuleContext.ContextName,
-                nameof(GetDriverByIdQueryHandler),
-                nameof(Handle), request.Id, error);
-
             return Result<GetDriverByIdQueryResponse>
-                .FromNotFound(error);
+                .FromNotFound(DomainErrors.DriverErrors.NotFound);
         }
 
         GetDriverByIdQueryResponse response =

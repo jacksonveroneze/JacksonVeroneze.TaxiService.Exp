@@ -5,5 +5,5 @@ namespace TaxiService.Modules.Passengers.Domain.Filters;
 [ExcludeFromCodeCoverage]
 public record PassengerFilter
 {
-    public ICollection<Guid?>? Ids { get; init; }
+    public ICollection<Guid>? Ids { get; init; }
 }

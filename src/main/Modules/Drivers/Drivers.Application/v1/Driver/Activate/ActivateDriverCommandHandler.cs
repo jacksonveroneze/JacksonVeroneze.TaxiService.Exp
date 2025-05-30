@@ -36,7 +36,12 @@ public sealed class ActivateDriverCommandHandler(
             return resultAction;
         }
 
-        await UpdateAsync(entity, cancellationToken);
+        await driverRepository.UpdateAsync(
+            entity, cancellationToken);
+
+        logger.LogProcessed(
+            nameof(ActivateDriverCommandHandler),
+            nameof(Handle), entity.Id);
 
         return Result.WithSuccess();
     }
@@ -53,17 +58,5 @@ public sealed class ActivateDriverCommandHandler(
         }
 
         return result;
-    }
-
-    private async Task UpdateAsync(
-        DriverEntity entity,
-        CancellationToken cancellationToken)
-    {
-        await driverRepository.UpdateAsync(
-            entity, cancellationToken);
-
-        logger.LogProcessed(
-            nameof(ActivateDriverCommandHandler),
-            nameof(UpdateAsync), entity.Id);
     }
 }

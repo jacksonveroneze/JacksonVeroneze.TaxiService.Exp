@@ -1,6 +1,6 @@
 using TaxiService.Common.BaseApplication.Models.Models.Common;
-using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Models;
-using TaxiService.Modules.Passengers.Application.v1.Passenger;
+using TaxiService.Modules.Drivers.PublicApi.v1.Models;
+using TaxiService.Modules.Passengers.PublicApi.v1.Models;
 using TaxiService.Modules.Rides.Domain.Enums;
 
 namespace TaxiService.Modules.Rides.Application.v1.Ride;
@@ -17,15 +17,15 @@ public sealed record RideDto
 
     public double? Distance { get; init; }
 
-    public CoordinateResponse? From { get; init; }
+    public required CoordinateResponse From { get; init; }
 
-    public CoordinateResponse? To { get; init; }
+    public required CoordinateResponse To { get; init; }
 
     public RideStatus? Status { get; init; }
     
-    public PassengerDto? Passenger { get; set; }
+    public PassengerPublicApiDto? Passenger { get; set; }
 
-    public DriverDto? Driver { get; set; }
+    public DriverPublicApiDto? Driver { get; set; }
     
     public DateTime? DeletedAt { get; init; }
 }

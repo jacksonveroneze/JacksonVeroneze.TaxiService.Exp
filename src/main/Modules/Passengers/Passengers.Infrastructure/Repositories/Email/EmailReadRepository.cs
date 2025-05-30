@@ -3,7 +3,6 @@ using JacksonVeroneze.NET.EntityFramework.Interfaces;
 using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories.Email;
 using TaxiService.Modules.Passengers.Domain.Entities;
 using TaxiService.Modules.Passengers.Domain.Filters;
-using TaxiService.Modules.Passengers.Domain.Specifications.Email;
 using TaxiService.Modules.Passengers.Infrastructure.Contexts;
 
 namespace TaxiService.Modules.Passengers.Infrastructure.Repositories.Email;
@@ -14,11 +13,14 @@ public class EmailReadRepository(
     : IEmailReadRepository
 {
     [SuppressMessage("Globalization", "CA1309:Use ordinal string comparison")]
+    [SuppressMessage("Usage", "MA0011:IFormatProvider is missing")]
+    [SuppressMessage("Globalization", "CA1304:Specify CultureInfo")]
+    [SuppressMessage("Globalization", "CA1311:Specify a culture or use an invariant version")]
     public async Task<bool> ExistsAsync(string email,
         CancellationToken cancellationToken)
     {
         bool exists = await service.AnyAsync(conf =>
-                conf.Email.Value!.Equals(email.ToLowerInvariant()),
+                conf.Email.Value!.ToLower().Equals(email.ToLowerInvariant()),
             cancellationToken);
 
         return exists;
@@ -27,9 +29,7 @@ public class EmailReadRepository(
     public Task<EmailEntity?> GetByIdAsync(Guid id,
         CancellationToken cancellationToken)
     {
-        EmailByIdSpecification specByPassengerId = new(id);
-
-        return service.GetByIdAsync(specByPassengerId.ToExpression(),
+        return service.GetByIdAsync(conf => conf.Id == id,
             cancellationToken);
     }
 
@@ -39,10 +39,8 @@ public class EmailReadRepository(
     {
         ArgumentNullException.ThrowIfNull(filter);
 
-        EmailByPassengerIdSpecification specByPassengerId = new(filter.PassengerId);
-
         return service.GetAllAsync(
-            specByPassengerId,
+            conf => conf.PassengerId == filter.PassengerId,
             cancellationToken);
     }
 }

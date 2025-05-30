@@ -3,9 +3,11 @@ using Microsoft.Extensions.DependencyInjection;
 using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories.Email;
 using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories.Outbox;
 using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories.Passenger;
+using TaxiService.Modules.Passengers.Application.v1.Passenger.PublicApi;
 using TaxiService.Modules.Passengers.Infrastructure.Repositories.Email;
 using TaxiService.Modules.Passengers.Infrastructure.Repositories.Outbox;
 using TaxiService.Modules.Passengers.Infrastructure.Repositories.Passenger;
+using TaxiService.Modules.Passengers.PublicApi.v1.Interfaces;
 
 namespace TaxiService.Modules.Passengers.Infrastructure.Extensions;
 
@@ -20,6 +22,9 @@ internal static class ServicesExtensions
         // Repositories
         services.AddScoped<IPassengerReadRepository, PassengerReadRepository>();
         services.AddScoped<IPassengerRepository, PassengerRepository>();
+        
+        // Services (Public API)
+        services.AddTransient<IPassengerPublicApi, PassengerPublicApi>();
 
         #endregion
 

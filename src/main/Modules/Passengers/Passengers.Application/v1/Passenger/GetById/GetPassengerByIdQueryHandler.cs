@@ -19,17 +19,17 @@ public sealed class GetPassengerByIdQueryHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        PassengerDto? dto = await passengerReadRepository
+        PassengerDto? item = await passengerReadRepository
             .GetByIdAsync(request.Id, cancellationToken);
 
-        if (dto is null)
+        if (item is null)
         {
             return Result<GetPassengerByIdQueryResponse>.FromNotFound(
                 DomainErrors.PassengerError.NotFound);
         }
 
         GetPassengerByIdQueryResponse response =
-            mapper.Map<GetPassengerByIdQueryResponse>(dto);
+            mapper.Map<GetPassengerByIdQueryResponse>(item);
 
         logger.LogGetById(nameof(GetPassengerByIdQueryHandler),
             nameof(Handle), request.Id);

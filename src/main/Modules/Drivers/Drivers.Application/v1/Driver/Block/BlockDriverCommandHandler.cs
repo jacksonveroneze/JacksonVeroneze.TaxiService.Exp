@@ -33,7 +33,12 @@ public sealed class BlockDriverCommandHandler(
             return resultAction;
         }
 
-        await UpdateAsync(entity, cancellationToken);
+        await driverRepository.UpdateAsync(
+            entity, cancellationToken);
+
+        logger.LogProcessed(
+            nameof(BlockDriverCommandHandler),
+            nameof(Handle), entity.Id);
 
         return Result.WithSuccess();
     }
@@ -64,18 +69,5 @@ public sealed class BlockDriverCommandHandler(
         }
 
         return result;
-    }
-
-
-    private async Task UpdateAsync(
-        DriverEntity entity,
-        CancellationToken cancellationToken)
-    {
-        await driverRepository.UpdateAsync(
-            entity, cancellationToken);
-
-        logger.LogProcessed(
-            nameof(BlockDriverCommandHandler),
-            nameof(UpdateAsync), entity.Id);
     }
 }

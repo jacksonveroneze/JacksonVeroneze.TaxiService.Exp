@@ -26,6 +26,7 @@ services:
         limits:
           cpus: '2'
           memory: '1024M'
+          pids: 1
   
   bouncer:
     image: bitnami/pgbouncer:latest

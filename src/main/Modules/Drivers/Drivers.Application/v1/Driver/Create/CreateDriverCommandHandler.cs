@@ -105,24 +105,13 @@ public sealed class CreateDriverCommandHandler(
         DriverEntity driverEntity,
         CancellationToken cancellationToken)
     {
-        try
-        {
-            await driverRepository.CreateAsync(
-                driverEntity, cancellationToken);
+        await driverRepository.CreateAsync(
+            driverEntity, cancellationToken);
 
-            await unitOfWork.CommitAsync(
-                cancellationToken);
+        await unitOfWork.CommitAsync(
+            cancellationToken);
 
-            logger.LogCreated(nameof(CreateDriverCommandHandler),
-                nameof(CreateAsync), driverEntity.Id);
-        }
-        catch (Exception ex)
-        {
-            logger.LogGenericError(
-                nameof(CreateDriverCommandHandler),
-                nameof(CreateAsync), ex.Message);
-
-            throw;
-        }
+        logger.LogCreated(nameof(CreateDriverCommandHandler),
+            nameof(CreateAsync), driverEntity.Id);
     }
 }

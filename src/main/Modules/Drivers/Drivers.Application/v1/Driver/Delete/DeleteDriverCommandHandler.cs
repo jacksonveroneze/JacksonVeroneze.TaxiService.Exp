@@ -45,7 +45,11 @@ public sealed class DeleteDriverCommandHandler(
             return resultAction;
         }
 
-        await DeleteAsync(entity, cancellationToken);
+        await driverRepository.DeleteAsync(
+            entity, cancellationToken);
+
+        logger.LogDeleted(nameof(DeleteDriverCommandHandler),
+            nameof(Handle), entity.Id);
 
         return Result.WithSuccess();
     }
@@ -83,16 +87,5 @@ public sealed class DeleteDriverCommandHandler(
         }
 
         return result;
-    }
-
-    private async Task DeleteAsync(
-        DriverEntity driver,
-        CancellationToken cancellationToken)
-    {
-        await driverRepository.DeleteAsync(
-            driver, cancellationToken);
-
-        logger.LogDeleted(nameof(DeleteDriverCommandHandler),
-            nameof(Handle), driver.Id);
     }
 }

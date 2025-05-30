@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Drivers.Application\Drivers.Application.csproj"/>
-    <ProjectReference Include="..\Drivers.Domain\Drivers.Domain.csproj"/>
+    <ProjectReference Include="..\Drivers.Domain\Drivers.Domain.csproj" />
   </ItemGroup>
 
 </Project>

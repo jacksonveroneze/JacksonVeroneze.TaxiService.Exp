@@ -15,7 +15,7 @@ namespace TaxiService.Modules.Rides.Infrastructure.Repositories.Ride;
 
 [ExcludeFromCodeCoverage]
 public class RideReadRepository(
-    IEfCoreRepository<RideDto, RidesDbContext> service)
+    IEfCoreRepository<RideDto, RidesReadDbContext> service)
     : IRideReadRepository
 {
     public async Task<bool> ExistsActiveByPassengerIdAsync(

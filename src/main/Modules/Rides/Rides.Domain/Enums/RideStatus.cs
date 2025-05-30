@@ -7,5 +7,5 @@ public enum RideStatus
     Accepted,
     InProgress,
     Completed,
-    Canceled
+    Canceled,
 }

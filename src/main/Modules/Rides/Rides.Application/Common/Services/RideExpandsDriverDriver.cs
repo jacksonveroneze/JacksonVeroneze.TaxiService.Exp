@@ -1,8 +1,7 @@
-using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Models;
-using TaxiService.Modules.Drivers.PublicApi.Interfaces;
-using TaxiService.Modules.Drivers.PublicApi.Queries;
+using TaxiService.Modules.Drivers.PublicApi.v1.Interfaces;
+using TaxiService.Modules.Drivers.PublicApi.v1.Models;
+using TaxiService.Modules.Drivers.PublicApi.v1.Queries;
 using TaxiService.Modules.Rides.Application.Common.Interfaces.Services;
-using TaxiService.Modules.Rides.Application.v1.Queries.Ride;
 using TaxiService.Modules.Rides.Application.v1.Ride;
 
 namespace TaxiService.Modules.Rides.Application.Common.Services;
@@ -18,9 +17,10 @@ public class RideExpandsDriverDriver(
     {
         ArgumentNullException.ThrowIfNull(rides);
 
-       Guid?[] ids = rides.Select(item => item.DriverId)
-            .Distinct()
+       Guid[] ids = rides.Select(item => item.DriverId)
             .Where(item => item != null)
+            .Select(item => item!.Value)
+            .Distinct()
             .ToArray();
 
        if (ids.Length == 0)
@@ -28,18 +28,19 @@ public class RideExpandsDriverDriver(
            return;
        }
        
-       PublicApiDriverFilter driverFilter = new(ids);
+       DriverPublicApiFilter filter = new(ids);
        
-        ICollection<DriverDto> drivers = await driverPublicApi
-            .GetAsync(driverFilter, cancellationToken);
+        ICollection<DriverPublicApiDto> drivers = await driverPublicApi
+            .GetAsync(filter, cancellationToken);
 
-        Dictionary<Guid, DriverDto> dict = drivers
-            .ToDictionary(key => key.Id!.Value, value => value);
+        Dictionary<Guid, DriverPublicApiDto> dict = drivers
+            .ToDictionary(key => key.Id, value => value);
 
         foreach (RideResponse ride in rides)
         {
-            if (dict.TryGetValue(ride.DriverId!.Value,
-                    out DriverDto? driver))
+            if (ride.DriverId is not null 
+                && dict.TryGetValue(ride.DriverId!.Value,
+                    out DriverPublicApiDto? driver))
             {
                 ride.Driver = driver;
             }

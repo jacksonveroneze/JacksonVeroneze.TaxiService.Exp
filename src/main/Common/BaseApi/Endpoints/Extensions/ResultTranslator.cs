@@ -12,7 +12,7 @@ public static class ResultTranslator
         ArgumentNullException.ThrowIfNull(result);
 
         return result.IsSuccess
-            ? Results.Ok()
+            ? Results.NoContent()
             : CreateProblemDetailsResult(result);
     }
 

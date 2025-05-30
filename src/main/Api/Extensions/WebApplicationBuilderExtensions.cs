@@ -106,7 +106,6 @@ internal static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder)
     {
         builder.Services
-            .AddPassengerPublicApi()
             .AddPassengerInfra(builder.Configuration);
 
         return builder;
@@ -134,7 +133,6 @@ internal static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder)
     {
         builder.Services
-            .AddDriverPublicApi()
             .AddDriverInfra(builder.Configuration);
 
         return builder;

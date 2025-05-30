@@ -18,45 +18,30 @@ public sealed class CancelRideCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result<RideEntity> resultEntity = await GetRideByIdAsync(
-            request.Id, cancellationToken);
+        RideEntity? entity = await rideRepository
+            .GetByIdAsync(request.Id, cancellationToken);
 
-        if (resultEntity.IsFailure)
+        if (entity is null)
         {
-            return resultEntity;
+            return Result.FromNotFound(
+                DomainErrors.RideError.NotFound);
         }
 
-        Result resultAction = Cancel(resultEntity.Value!);
+        Result resultAction = Cancel(entity);
 
         if (resultAction.IsFailure)
         {
             return resultAction;
         }
 
-        await UpdateAsync(resultEntity.Value!, cancellationToken);
+        await rideRepository.UpdateAsync(
+            entity, cancellationToken);
+
+        logger.LogProcessed(
+            nameof(CancelRideCommandHandler),
+            nameof(Handle), entity.Id);
 
         return Result.WithSuccess();
-    }
-
-    private async Task<Result<RideEntity>> GetRideByIdAsync(
-        Guid id,
-        CancellationToken cancellationToken)
-    {
-        RideEntity? entity = await rideRepository
-            .GetByIdAsync(id, cancellationToken);
-
-        if (entity is not null)
-        {
-            return Result<RideEntity>.WithSuccess(entity);
-        }
-
-        Error error = DomainErrors.RideError.NotFound;
-
-        logger.LogNotFound(
-            nameof(CancelRideCommandHandler),
-            nameof(GetRideByIdAsync), id, error);
-
-        return Result<RideEntity>.FromNotFound(error);
     }
 
     private Result Cancel(RideEntity entity)
@@ -71,17 +56,5 @@ public sealed class CancelRideCommandHandler(
         }
 
         return result;
-    }
-
-    private async Task UpdateAsync(
-        RideEntity entity,
-        CancellationToken cancellationToken)
-    {
-        await rideRepository.UpdateAsync(
-            entity, cancellationToken);
-
-        logger.LogProcessed(
-            nameof(CancelRideCommandHandler),
-            nameof(UpdateAsync), entity.Id);
     }
 }
