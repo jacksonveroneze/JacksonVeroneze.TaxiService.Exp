@@ -4,8 +4,9 @@ using Microsoft.Extensions.Logging;
 
 using TaxiService.Common.BaseInfrastructure.Extensions;
 using TaxiService.Modules.Drivers.Application.Common;
-using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
+using TaxiService.Modules.Drivers.Domain.Aggregates;
 using TaxiService.Modules.Drivers.Domain.Entities;
+using TaxiService.Modules.Drivers.Domain.Repositories;
 using TaxiService.Modules.Drivers.Infrastructure.Contexts;
 
 namespace TaxiService.Modules.Drivers.Infrastructure.Repositories.Driver;
@@ -13,31 +14,31 @@ namespace TaxiService.Modules.Drivers.Infrastructure.Repositories.Driver;
 [ExcludeFromCodeCoverage]
 public class DriverRepository(
     ILogger<DriverRepository> logger,
-    IEfCoreRepository<DriverEntity, DriversDbContext> service)
+    IEfCoreRepository<Domain.Aggregates.Driver, DriversDbContext> service)
     : IDriverRepository
 {
-    public async Task<DriverEntity?> GetByIdAsync(
+    public async Task<Domain.Aggregates.Driver?> GetByIdAsync(
         Guid id, CancellationToken cancellationToken)
     {
-        DriverEntity? result = await service.GetByIdAsync(
+        Domain.Aggregates.Driver? result = await service.GetByIdAsync(
             conf => conf.Id == id,
             cancellationToken);
 
         logger.LogGetById(ModuleContext.ContextName,
             nameof(DriverRepository),
-            nameof(GetByIdAsync), 
+            nameof(GetByIdAsync),
             id, result is not null);
 
         return result;
     }
 
-    public async Task CreateAsync(DriverEntity entity,
+    public async Task CreateAsync(Domain.Aggregates.Driver entity,
         CancellationToken cancellationToken)
     {
         await service.CreateAsync(entity, cancellationToken);
     }
 
-    public Task DeleteAsync(DriverEntity entity,
+    public Task DeleteAsync(Domain.Aggregates.Driver entity,
         CancellationToken cancellationToken)
     {
         entity.MarkAsDeleted();
@@ -47,7 +48,7 @@ public class DriverRepository(
         return service.DbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task UpdateAsync(DriverEntity entity,
+    public async Task UpdateAsync(Domain.Aggregates.Driver entity,
         CancellationToken cancellationToken)
     {
         service.Update(entity);

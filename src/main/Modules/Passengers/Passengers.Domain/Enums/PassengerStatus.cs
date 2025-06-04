@@ -5,5 +5,5 @@ public enum PassengerStatus
     None,
     Active,
     Inactive,
-    PendingActivation
+    PendingActivation,
 }

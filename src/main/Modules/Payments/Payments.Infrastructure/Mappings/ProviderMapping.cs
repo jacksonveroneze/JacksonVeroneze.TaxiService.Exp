@@ -27,6 +27,6 @@ public class ProviderMapping : IEntityTypeConfiguration<ProviderEntity>
         builder.Property(c => c.Priority)
             .IsRequired();
 
-        builder.ConfigureDefaultFieldsMapping();
+        builder.ConfigureEntityDefaultFieldsMapping();
     }
 }

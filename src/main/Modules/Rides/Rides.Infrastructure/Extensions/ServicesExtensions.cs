@@ -1,9 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
 
-using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories.Position;
-using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories.Ride;
+using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Rides.Application.Common.Interfaces.Services;
 using TaxiService.Modules.Rides.Application.Common.Services;
+using TaxiService.Modules.Rides.Domain.Repositories;
 using TaxiService.Modules.Rides.Domain.Services;
 using TaxiService.Modules.Rides.Infrastructure.Repositories.Position;
 using TaxiService.Modules.Rides.Infrastructure.Repositories.Ride;
@@ -33,7 +33,7 @@ internal static class ServicesExtensions
 
         // Repositories
         services.AddScoped<IPositionReadRepository, PositionReadRepository>();
-        services.AddScoped<IPositionWriteRepository, PositionWriteRepository>();
+        services.AddScoped<IPositionRepository, PositionRepository>();
 
         #endregion
 

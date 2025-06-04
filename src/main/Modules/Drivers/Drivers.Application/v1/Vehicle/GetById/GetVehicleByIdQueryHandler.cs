@@ -3,9 +3,10 @@ using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Drivers.Application.Common;
-using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Vehicle;
 using TaxiService.Modules.Drivers.Application.v1.Vehicle.Common.Models;
 using TaxiService.Modules.Drivers.Domain.Core.Errors;
+
+using IVehicleReadRepository = TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.IVehicleReadRepository;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Vehicle.GetById;
 
@@ -26,10 +27,8 @@ public sealed class GetVehicleByIdQueryHandler(
 
         if (dto is null)
         {
-            Error error = DomainErrors.VehicleErrors.NotFound;
-            
             return Result<GetVehicleByIdQueryResponse>
-                .FromNotFound(error);
+                .FromNotFound(DomainErrors.VehicleErrors.NotFound);
         }
 
         GetVehicleByIdQueryResponse response =

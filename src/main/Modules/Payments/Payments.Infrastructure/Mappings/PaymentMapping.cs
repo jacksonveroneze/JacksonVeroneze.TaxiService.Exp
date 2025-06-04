@@ -14,6 +14,6 @@ public class PaymentMapping : IEntityTypeConfiguration<PaymentEntity>
 
         builder.ToTable("payment");
 
-        builder.ConfigureDefaultFieldsMapping();
+        builder.ConfigureEntityDefaultFieldsMapping();
     }
 }

@@ -2,11 +2,15 @@ using JacksonVeroneze.NET.Result;
 
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
+using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Common.BaseApplication.Validators;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces;
-using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
+using TaxiService.Modules.Drivers.Domain.Aggregates;
 using TaxiService.Modules.Drivers.Domain.Core.Errors;
 using TaxiService.Modules.Drivers.Domain.Entities;
+using TaxiService.Modules.Drivers.Domain.Repositories;
+
+using IDriverReadRepository = TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.IDriverReadRepository;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.Create;
 
@@ -16,7 +20,8 @@ public sealed class CreateDriverCommandHandler(
     IDataMapper mapper,
     IDriverReadRepository driverReadRepository,
     IDriverRepository driverRepository,
-    IUnitOfWork unitOfWork)
+    IUnitOfWork unitOfWork,
+    IDomainEventDispatcher eventDispatcher)
     : IRequestHandler<CreateDriverCommand, Result<CreateDriverCommandResponse>>
 {
     public async Task<Result<CreateDriverCommandResponse>> Handle(
@@ -44,19 +49,21 @@ public sealed class CreateDriverCommandHandler(
                 .WithError(resultVerifyEmailOrDocument.FirstError!);
         }
 
-        Result<DriverEntity> userEntity = FactoryEntity(request);
+        Result<Domain.Aggregates.Driver> resultEntity = FactoryEntity(request);
 
-        if (userEntity.IsFailure)
+        if (resultEntity.IsFailure)
         {
             return Result<CreateDriverCommandResponse>
-                .FromInvalid(userEntity.Errors);
+                .FromInvalid(resultEntity.Errors);
         }
 
-        await CreateAsync(userEntity.Value!,
+        await CreateAsync(resultEntity.Value!,
             cancellationToken);
 
+        await eventDispatcher.DispatchAsync(resultEntity.Value!);
+        
         CreateDriverCommandResponse response =
-            mapper.Map<CreateDriverCommandResponse>(userEntity.Value);
+            mapper.Map<CreateDriverCommandResponse>(resultEntity.Value);
 
         return Result<CreateDriverCommandResponse>.WithSuccess(response);
     }
@@ -81,10 +88,10 @@ public sealed class CreateDriverCommandHandler(
         return Result.FromRuleViolation(error);
     }
 
-    private Result<DriverEntity> FactoryEntity(
+    private Result<Domain.Aggregates.Driver> FactoryEntity(
         CreateDriverCommand request)
     {
-        Result<DriverEntity> entity = DriverEntity.Create(
+        Result<Domain.Aggregates.Driver> entity = Domain.Aggregates.Driver.Create(
             request.FullName, request.Birthday!.Value,
             request.Email!, request.Phone!,
             request.Document, request.Gender!.Value);
@@ -102,16 +109,16 @@ public sealed class CreateDriverCommandHandler(
     }
 
     private async Task CreateAsync(
-        DriverEntity driverEntity,
+        Domain.Aggregates.Driver driver,
         CancellationToken cancellationToken)
     {
         await driverRepository.CreateAsync(
-            driverEntity, cancellationToken);
+            driver, cancellationToken);
 
         await unitOfWork.CommitAsync(
             cancellationToken);
 
         logger.LogCreated(nameof(CreateDriverCommandHandler),
-            nameof(CreateAsync), driverEntity.Id);
+            nameof(CreateAsync), driver.Id);
     }
 }

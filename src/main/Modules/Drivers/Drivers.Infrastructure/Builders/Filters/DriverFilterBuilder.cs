@@ -1,8 +1,9 @@
 using System.Linq.Expressions;
 
 using TaxiService.Common.BaseInfrastructure;
+using TaxiService.Modules.Drivers.Application.v1.Driver;
+using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Filters;
 using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Models;
-using TaxiService.Modules.Drivers.Domain.Filters;
 
 namespace TaxiService.Modules.Drivers.Infrastructure.Builders.Filters;
 

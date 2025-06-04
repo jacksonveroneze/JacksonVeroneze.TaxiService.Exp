@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TaxiService.Common.BaseInfrastructure.Extensions;
+using TaxiService.Modules.Passengers.Domain.Aggregates;
 using TaxiService.Modules.Passengers.Domain.Entities;
 using TaxiService.Modules.Passengers.Infrastructure.Mappings.Domain;
 
@@ -21,8 +22,8 @@ public class PassengersDbContext(
         modelBuilder.ApplyConfiguration(new PassengerMapping());
         modelBuilder.ApplyConfiguration(new OutboxMessageMapping());
 
-        modelBuilder.ApplySoftDeleteQueryFilter<EmailEntity>();
-        modelBuilder.ApplySoftDeleteQueryFilter<PassengerEntity>();
+        modelBuilder.ApplySoftDeleteQueryFilter<Email>();
+        modelBuilder.ApplySoftDeleteQueryFilter<Passenger>();
 
         modelBuilder.IgnoreClass();
 

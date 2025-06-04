@@ -1,16 +1,16 @@
 using JacksonVeroneze.NET.Result;
 
 using TaxiService.Common.BaseApplication.Extensions;
-using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.DriverLocation;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Services;
 using TaxiService.Modules.Drivers.Domain.Entities;
+using TaxiService.Modules.Drivers.Domain.Repositories;
 
 namespace TaxiService.Modules.Drivers.Application.v1.DriverLocation.Update;
 
 public sealed class UpdateDriverLocationCommandHandler(
     ILogger<UpdateDriverLocationCommandHandler> logger,
     IDriverService driverService,
-    IDriverLocationWriteRepository driverLocationWriteRepository)
+    IDriverLocationHistoryRepository driverLocationHistoryRepository)
     : IRequestHandler<UpdateDriverLocationCommand, Result>
 {
     public async Task<Result> Handle(
@@ -28,7 +28,7 @@ public sealed class UpdateDriverLocationCommandHandler(
             return result;
         }
 
-        Result<DriverLocationEntity> driverLocation =
+        Result<DriverLocationHistory> driverLocation =
             FactoryEntity(request);
 
         if (driverLocation.IsFailure)
@@ -42,11 +42,11 @@ public sealed class UpdateDriverLocationCommandHandler(
         return Result.WithSuccess();
     }
 
-    private Result<DriverLocationEntity> FactoryEntity(
+    private Result<DriverLocationHistory> FactoryEntity(
         UpdateDriverLocationCommand request)
     {
-        Result<DriverLocationEntity> resultEntity =
-            DriverLocationEntity.Create(request.Id,
+        Result<DriverLocationHistory> resultEntity =
+            DriverLocationHistory.Create(request.Id,
                 request.Latitude, request.Longitude);
 
         if (!resultEntity.IsSuccess)
@@ -60,10 +60,10 @@ public sealed class UpdateDriverLocationCommandHandler(
     }
 
     private async Task CreateAsync(
-        DriverLocationEntity entity,
+        DriverLocationHistory entity,
         CancellationToken cancellationToken)
     {
-        await driverLocationWriteRepository.CreateAsync(
+        await driverLocationHistoryRepository.CreateAsync(
             entity, cancellationToken);
 
         logger.LogCreated(nameof(UpdateDriverLocationCommandHandler),

@@ -1,17 +1,17 @@
 using JacksonVeroneze.NET.Result;
 
 using TaxiService.Common.BaseApplication.Extensions;
-using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories.Position;
-using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories.Ride;
+using TaxiService.Modules.Rides.Domain.Aggregates;
 using TaxiService.Modules.Rides.Domain.Core.Errors;
 using TaxiService.Modules.Rides.Domain.Entities;
+using TaxiService.Modules.Rides.Domain.Repositories;
 
 namespace TaxiService.Modules.Rides.Application.v1.Position.Add;
 
 public sealed class AddPositionCommandHandler(
     ILogger<AddPositionCommandHandler> logger,
     IRideRepository rideRepository,
-    IPositionWriteRepository positionWriteRepository)
+    IPositionRepository positionRepository)
     : IRequestHandler<AddPositionCommand, Result>
 {
     public async Task<Result> Handle(
@@ -20,7 +20,7 @@ public sealed class AddPositionCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        RideEntity? ride = await rideRepository
+        Domain.Aggregates.Ride? ride = await rideRepository
             .GetByIdAsync(request.RideId, cancellationToken);
 
         if (ride is null)
@@ -36,7 +36,7 @@ public sealed class AddPositionCommandHandler(
             return validateStatus;
         }
 
-        Result<PositionEntity> entity = FactoryEntity(request);
+        Result<Domain.Entities.Position> entity = FactoryEntity(request);
 
         if (entity.IsFailure)
         {
@@ -44,7 +44,7 @@ public sealed class AddPositionCommandHandler(
                 .FromInvalid(entity.Errors);
         }
 
-        await positionWriteRepository.CreateAsync(
+        await positionRepository.CreateAsync(
             entity.Value!, cancellationToken);
 
         logger.LogCreated(
@@ -54,10 +54,10 @@ public sealed class AddPositionCommandHandler(
         return Result.WithSuccess();
     }
 
-    private Result<PositionEntity> FactoryEntity(
+    private Result<Domain.Entities.Position> FactoryEntity(
         AddPositionCommand request)
     {
-        Result<PositionEntity> entity = PositionEntity.Create(
+        Result<Domain.Entities.Position> entity = Domain.Entities.Position.Create(
             request.RideId, request.Latitude, request.Longitude);
 
         if (entity.IsSuccess)
@@ -69,12 +69,12 @@ public sealed class AddPositionCommandHandler(
             nameof(AddPositionCommandHandler),
             nameof(FactoryEntity), entity.Errors.Count);
 
-        return Result<PositionEntity>
+        return Result<Domain.Entities.Position>
             .FromInvalid(entity.Errors);
     }
 
     private Result ValidateStatusRide(
-        RideEntity entity)
+        Domain.Aggregates.Ride entity)
     {
         if (entity.InProgress)
         {

@@ -1,17 +1,20 @@
 using JacksonVeroneze.NET.Result;
 
 using TaxiService.Common.BaseApplication.Extensions;
+using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Common.BaseApplication.Interfaces.System;
-using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
+using TaxiService.Modules.Drivers.Domain.Aggregates;
 using TaxiService.Modules.Drivers.Domain.Core.Errors;
 using TaxiService.Modules.Drivers.Domain.Entities;
+using TaxiService.Modules.Drivers.Domain.Repositories;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.Inactivate;
 
 public sealed class InactivateDriverCommandHandler(
     ILogger<InactivateDriverCommandHandler> logger,
     IDriverRepository driverRepository,
-    IDateTimeProvider dateTime)
+    IDateTimeProvider dateTime,
+    IDomainEventDispatcher eventDispatcher)
     : IRequestHandler<InactivateDriverCommand, Result>
 {
     public async Task<Result> Handle(
@@ -20,7 +23,7 @@ public sealed class InactivateDriverCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        DriverEntity? entity = await driverRepository
+        Domain.Aggregates.Driver? entity = await driverRepository
             .GetByIdAsync(request.Id, cancellationToken);
 
         if (entity is null)
@@ -38,6 +41,8 @@ public sealed class InactivateDriverCommandHandler(
 
         await driverRepository.UpdateAsync(
             entity, cancellationToken);
+        
+        await eventDispatcher.DispatchAsync(entity);
 
         logger.LogProcessed(
             nameof(InactivateDriverCommandHandler),
@@ -46,7 +51,7 @@ public sealed class InactivateDriverCommandHandler(
         return Result.WithSuccess();
     }
 
-    private Result Inactivate(DriverEntity entity)
+    private Result Inactivate(Domain.Aggregates.Driver entity)
     {
         Result result = entity.Inactivate(dateTime.UtcNow);
 

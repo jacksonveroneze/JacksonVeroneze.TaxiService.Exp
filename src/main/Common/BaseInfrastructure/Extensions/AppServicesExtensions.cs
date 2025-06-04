@@ -16,7 +16,7 @@ public static class AppServicesExtensions
     {
         services.AddScoped<IDataMapper, AutoMapperAdapter>();
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
-        services.AddScoped<IIntegrationEventPublisher, RabbitMqEventPublisher>();
+        services.AddScoped<IDomainEventDispatcher, RabbitMqDomainEventDispatcher>();
 
         return services;
     }

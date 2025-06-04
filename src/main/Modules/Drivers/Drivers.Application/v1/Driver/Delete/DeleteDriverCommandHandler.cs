@@ -1,18 +1,21 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
-using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
-using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.DriverAvailability;
+using TaxiService.Common.BaseApplication.Interfaces.Messaging;
+using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Drivers.Application.v1.Driver.Activate;
+using TaxiService.Modules.Drivers.Domain.Aggregates;
 using TaxiService.Modules.Drivers.Domain.Core.Errors;
 using TaxiService.Modules.Drivers.Domain.Entities;
 using TaxiService.Modules.Drivers.Domain.Enums;
+using TaxiService.Modules.Drivers.Domain.Repositories;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.Delete;
 
 public sealed class DeleteDriverCommandHandler(
     ILogger<DeleteDriverCommandHandler> logger,
-    IDriverAvailabilityReadRepository driverAvailabilityReadRepository,
-    IDriverRepository driverRepository)
+    IDriverAvailabilityHistoryReadRepository driverAvailabilityHistoryReadRepository,
+    IDriverRepository driverRepository,
+    IDomainEventDispatcher eventDispatcher)
     : IRequestHandler<DeleteDriverCommand, Result>
 {
     public async Task<Result> Handle(
@@ -21,7 +24,7 @@ public sealed class DeleteDriverCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        DriverEntity? entity = await driverRepository
+        Domain.Aggregates.Driver? entity = await driverRepository
             .GetByIdAsync(request.Id, cancellationToken);
 
         if (entity is null)
@@ -48,6 +51,8 @@ public sealed class DeleteDriverCommandHandler(
         await driverRepository.DeleteAsync(
             entity, cancellationToken);
 
+        await eventDispatcher.DispatchAsync(entity);
+        
         logger.LogDeleted(nameof(DeleteDriverCommandHandler),
             nameof(Handle), entity.Id);
 
@@ -58,7 +63,7 @@ public sealed class DeleteDriverCommandHandler(
         DeleteDriverCommand request,
         CancellationToken cancellationToken)
     {
-        DriverAvailabilityEntity? result = await driverAvailabilityReadRepository
+        DriverAvailabilityHistory? result = await driverAvailabilityHistoryReadRepository
             .GetLastByDriverIdAsync(request.Id, cancellationToken);
 
         if (result?.Status != DriverAvailabilityStatus.InRide)
@@ -75,7 +80,7 @@ public sealed class DeleteDriverCommandHandler(
         return Result.FromRuleViolation(error);
     }
 
-    private Result Remove(DriverEntity entity)
+    private Result Remove(Domain.Aggregates.Driver entity)
     {
         Result result = entity.Remove();
 

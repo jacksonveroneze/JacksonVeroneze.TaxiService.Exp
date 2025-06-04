@@ -2,8 +2,9 @@ using JacksonVeroneze.NET.Result;
 
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
-using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories.Ride;
+using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Rides.Application.Common.Interfaces.Services;
+using TaxiService.Modules.Rides.Application.v1.Ride.Common.Models;
 using TaxiService.Modules.Rides.Domain.Core.Errors;
 
 namespace TaxiService.Modules.Rides.Application.v1.Ride.GetById;

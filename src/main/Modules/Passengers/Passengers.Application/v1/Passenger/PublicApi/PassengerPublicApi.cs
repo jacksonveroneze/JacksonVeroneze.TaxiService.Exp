@@ -1,5 +1,7 @@
-using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories.Passenger;
-using TaxiService.Modules.Passengers.Domain.Filters;
+using TaxiService.Common.BaseApplication.Interfaces.Mapper;
+using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories;
+using TaxiService.Modules.Passengers.Application.v1.Passenger.Common.Filters;
+using TaxiService.Modules.Passengers.Application.v1.Passenger.Common.Models;
 using TaxiService.Modules.Passengers.PublicApi.v1.Interfaces;
 using TaxiService.Modules.Passengers.PublicApi.v1.Models;
 using TaxiService.Modules.Passengers.PublicApi.v1.Queries;
@@ -7,7 +9,7 @@ using TaxiService.Modules.Passengers.PublicApi.v1.Queries;
 namespace TaxiService.Modules.Passengers.Application.v1.Passenger.PublicApi;
 
 public class PassengerPublicApi(
-    IMapper mapper,
+    IDataMapper mapper,
     IPassengerReadRepository repository)
     : IPassengerPublicApi
 {

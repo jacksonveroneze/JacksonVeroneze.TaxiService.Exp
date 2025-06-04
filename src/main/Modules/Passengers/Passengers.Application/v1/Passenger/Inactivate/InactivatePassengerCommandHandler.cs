@@ -1,17 +1,20 @@
 using JacksonVeroneze.NET.Result;
 
 using TaxiService.Common.BaseApplication.Extensions;
+using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Common.BaseApplication.Interfaces.System;
-using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories.Passenger;
+using TaxiService.Modules.Passengers.Domain.Aggregates;
 using TaxiService.Modules.Passengers.Domain.Core.Errors;
 using TaxiService.Modules.Passengers.Domain.Entities;
+using TaxiService.Modules.Passengers.Domain.Repositories;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Passenger.Inactivate;
 
 public sealed class InactivatePassengerCommandHandler(
     ILogger<InactivatePassengerCommandHandler> logger,
     IPassengerRepository passengerRepository,
-    IDateTimeProvider dateTime)
+    IDateTimeProvider dateTime,
+    IDomainEventDispatcher eventDispatcher)
     : IRequestHandler<InactivatePassengerCommand, Result>
 {
     public async Task<Result> Handle(
@@ -20,7 +23,7 @@ public sealed class InactivatePassengerCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        PassengerEntity? entity = await passengerRepository
+        Domain.Aggregates.Passenger? entity = await passengerRepository
             .GetByIdAsync(request.Id, cancellationToken);
 
         if (entity is null)
@@ -39,6 +42,8 @@ public sealed class InactivatePassengerCommandHandler(
         await passengerRepository.UpdateAsync(
             entity, cancellationToken);
 
+        await eventDispatcher.DispatchAsync(entity);
+        
         logger.LogProcessed(
             nameof(InactivatePassengerCommandHandler),
             nameof(Handle), entity.Id);
@@ -46,7 +51,7 @@ public sealed class InactivatePassengerCommandHandler(
         return Result.WithSuccess();
     }
 
-    private Result Inactivate(PassengerEntity entity)
+    private Result Inactivate(Domain.Aggregates.Passenger entity)
     {
         Result result = entity.Inactivate(dateTime.UtcNow);
 

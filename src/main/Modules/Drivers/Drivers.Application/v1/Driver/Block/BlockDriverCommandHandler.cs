@@ -1,14 +1,17 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
-using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
+using TaxiService.Common.BaseApplication.Interfaces.Messaging;
+using TaxiService.Modules.Drivers.Domain.Aggregates;
 using TaxiService.Modules.Drivers.Domain.Core.Errors;
 using TaxiService.Modules.Drivers.Domain.Entities;
+using TaxiService.Modules.Drivers.Domain.Repositories;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.Block;
 
 public sealed class BlockDriverCommandHandler(
     ILogger<BlockDriverCommandHandler> logger,
-    IDriverRepository driverRepository)
+    IDriverRepository driverRepository,
+    IDomainEventDispatcher eventDispatcher)
     : IRequestHandler<BlockDriverCommand, Result>
 {
     public async Task<Result> Handle(
@@ -17,7 +20,7 @@ public sealed class BlockDriverCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        DriverEntity? entity = await driverRepository
+        Domain.Aggregates.Driver? entity = await driverRepository
             .GetByIdAsync(request.Id, cancellationToken);
 
         if (entity is null)
@@ -36,6 +39,8 @@ public sealed class BlockDriverCommandHandler(
         await driverRepository.UpdateAsync(
             entity, cancellationToken);
 
+        await eventDispatcher.DispatchAsync(entity);
+        
         logger.LogProcessed(
             nameof(BlockDriverCommandHandler),
             nameof(Handle), entity.Id);
@@ -44,7 +49,7 @@ public sealed class BlockDriverCommandHandler(
     }
 
     private Result Block(
-        DriverEntity entity, 
+        Domain.Aggregates.Driver entity, 
         BlockDriverCommand request)
     {
         Result result = request.Type switch

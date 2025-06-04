@@ -7,9 +7,9 @@ using TaxiService.Modules.Rides.Domain.Entities;
 namespace TaxiService.Modules.Rides.Infrastructure.Mappings.Domain;
 
 [ExcludeFromCodeCoverage]
-public class PositionMapping : IEntityTypeConfiguration<PositionEntity>
+public class PositionMapping : IEntityTypeConfiguration<Position>
 {
-    public void Configure(EntityTypeBuilder<PositionEntity> builder)
+    public void Configure(EntityTypeBuilder<Position> builder)
     {
         ArgumentNullException.ThrowIfNull(builder);
 
@@ -28,7 +28,7 @@ public class PositionMapping : IEntityTypeConfiguration<PositionEntity>
         builder.Property(c => c.RideId)
             .IsRequired();
 
-        builder.ComplexProperty(conf => conf.Position, conf =>
+        builder.ComplexProperty(conf => conf.Coordinate, conf =>
         {
             conf.Property(prop => prop.Latitude)
                 .HasColumnName("from_latitude")
@@ -39,6 +39,6 @@ public class PositionMapping : IEntityTypeConfiguration<PositionEntity>
                 .IsRequired();
         });
 
-        builder.ConfigureDefaultFieldsMapping();
+        builder.ConfigureEntityDefaultFieldsMapping();
     }
 }

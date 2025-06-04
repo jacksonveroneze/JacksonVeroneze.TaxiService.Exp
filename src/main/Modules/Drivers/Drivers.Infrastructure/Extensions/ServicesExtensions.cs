@@ -1,12 +1,10 @@
 using Microsoft.Extensions.DependencyInjection;
 
-using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
-using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.DriverAvailability;
-using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.DriverLocation;
-using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Vehicle;
+using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Services;
 using TaxiService.Modules.Drivers.Application.Common.Services;
 using TaxiService.Modules.Drivers.Application.v1.Driver.PublicApi;
+using TaxiService.Modules.Drivers.Domain.Repositories;
 using TaxiService.Modules.Drivers.Infrastructure.Repositories.Driver;
 using TaxiService.Modules.Drivers.Infrastructure.Repositories.DriverAvailability;
 using TaxiService.Modules.Drivers.Infrastructure.Repositories.DriverLocation;
@@ -46,16 +44,16 @@ internal static class ServicesExtensions
         #region DriverAvailability
 
         // Repositories
-        services.AddScoped<IDriverAvailabilityReadRepository, DriverAvailabilityReadRepository>();
-        services.AddScoped<IDriverAvailabilityWriteRepository, DriverAvailabilityWriteRepository>();
+        services.AddScoped<IDriverAvailabilityHistoryReadRepository, DriverAvailabilityHistoryReadRepository>();
+        services.AddScoped<IDriverAvailabilityHistoryRepository, DriverAvailabilityHistoryRepository>();
 
         #endregion
 
         #region DriverLocation
 
         // Repositories
-        services.AddScoped<IDriverLocationReadRepository, DriverLocationReadRepository>();
-        services.AddScoped<IDriverLocationWriteRepository, DriverLocationWriteRepository>();
+        services.AddScoped<IDriverLocationHistoryReadRepository, DriverLocationHistoryReadRepository>();
+        services.AddScoped<IDriverLocationHistoryRepository, DriverLocationHistoryRepository>();
 
         #endregion
 

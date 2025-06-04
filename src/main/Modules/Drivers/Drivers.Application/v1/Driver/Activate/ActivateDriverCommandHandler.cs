@@ -1,17 +1,20 @@
 using JacksonVeroneze.NET.Result;
 
 using TaxiService.Common.BaseApplication.Extensions;
+using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Common.BaseApplication.Interfaces.System;
-using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
+using TaxiService.Modules.Drivers.Domain.Aggregates;
 using TaxiService.Modules.Drivers.Domain.Core.Errors;
 using TaxiService.Modules.Drivers.Domain.Entities;
+using TaxiService.Modules.Drivers.Domain.Repositories;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.Activate;
 
 public sealed class ActivateDriverCommandHandler(
     ILogger<ActivateDriverCommandHandler> logger,
     IDriverRepository driverRepository,
-    IDateTimeProvider dateTime)
+    IDateTimeProvider dateTime,
+    IDomainEventDispatcher eventDispatcher)
     : IRequestHandler<ActivateDriverCommand, Result>
 {
     public async Task<Result> Handle(
@@ -20,7 +23,7 @@ public sealed class ActivateDriverCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        DriverEntity? entity = await driverRepository
+        Domain.Aggregates.Driver? entity = await driverRepository
             .GetByIdAsync(request.Id, cancellationToken);
 
         if (entity is null)
@@ -39,6 +42,8 @@ public sealed class ActivateDriverCommandHandler(
         await driverRepository.UpdateAsync(
             entity, cancellationToken);
 
+        await eventDispatcher.DispatchAsync(entity);
+
         logger.LogProcessed(
             nameof(ActivateDriverCommandHandler),
             nameof(Handle), entity.Id);
@@ -46,7 +51,7 @@ public sealed class ActivateDriverCommandHandler(
         return Result.WithSuccess();
     }
 
-    private Result Activate(DriverEntity entity)
+    private Result Activate(Domain.Aggregates.Driver entity)
     {
         Result result = entity.Activate(dateTime.UtcNow);
 

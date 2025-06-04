@@ -1,4 +1,5 @@
 using TaxiService.Common.BaseApplication.Interfaces.System;
+using TaxiService.Common.BaseDomain.Enums;
 using TaxiService.Common.BaseDomain.Validators;
 using TaxiService.Modules.Passengers.Domain.Enums;
 

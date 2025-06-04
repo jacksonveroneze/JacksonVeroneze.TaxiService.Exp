@@ -16,7 +16,7 @@ internal static class DatabaseExtensions
     {
         ArgumentNullException.ThrowIfNull(moduleConfiguration);
 
-        services.AddDatabase<RidesDbContext>(
+        services.AddWriteDatabase<RidesDbContext>(
             moduleConfiguration.Database!);
 
         services.AddReadDatabase<RidesReadDbContext>(

@@ -7,9 +7,9 @@ using TaxiService.Modules.Passengers.Domain.Entities;
 namespace TaxiService.Modules.Passengers.Infrastructure.Mappings.Domain;
 
 [ExcludeFromCodeCoverage]
-public class EmailMapping : IEntityTypeConfiguration<EmailEntity>
+public class EmailMapping : IEntityTypeConfiguration<Email>
 {
-    public void Configure(EntityTypeBuilder<EmailEntity> builder)
+    public void Configure(EntityTypeBuilder<Email> builder)
     {
         ArgumentNullException.ThrowIfNull(builder);
 
@@ -28,13 +28,13 @@ public class EmailMapping : IEntityTypeConfiguration<EmailEntity>
         builder.Property(c => c.PassengerId)
             .IsRequired();
 
-        builder.ComplexProperty(conf => conf.Email, conf =>
+        builder.ComplexProperty(conf => conf.Value, conf =>
         {
             conf.Property(prop => prop.Value)
                 .HasColumnName("value")
                 .HasMaxLength(100);
         });
 
-        builder.ConfigureDefaultFieldsMapping();
+        builder.ConfigureEntityDefaultFieldsMapping();
     }
 }

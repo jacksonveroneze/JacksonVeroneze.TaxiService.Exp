@@ -4,14 +4,13 @@ using JacksonVeroneze.NET.Result;
 
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
+using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Modules.Passengers.Application.Common.Interfaces;
-using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories.Email;
-using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories.Outbox;
-using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories.Passenger;
+using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories;
+using TaxiService.Modules.Passengers.Domain.Aggregates;
 using TaxiService.Modules.Passengers.Domain.Core.Errors;
 using TaxiService.Modules.Passengers.Domain.Entities;
-
-using EmailEntity = TaxiService.Modules.Passengers.Domain.Entities.EmailEntity;
+using TaxiService.Modules.Passengers.Domain.Repositories;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Passenger.Create;
 
@@ -20,9 +19,10 @@ public sealed class CreatePassengerCommandHandler(
     IDataMapper mapper,
     IPassengerRepository passengerRepository,
     IEmailReadRepository emailReadRepository,
-    IEmailWriteRepository emailWriteRepository,
+    IEmailRepository emailRepository,
     IOutboxWriteRepository outboxWriteRepository,
-    IUnitOfWork unitOfWork)
+    IUnitOfWork unitOfWork,
+    IDomainEventDispatcher eventDispatcher)
     : IRequestHandler<CreatePassengerCommand, Result<CreatePassengerCommandResponse>>
 {
     public async Task<Result<CreatePassengerCommandResponse>> Handle(
@@ -44,35 +44,37 @@ public sealed class CreatePassengerCommandHandler(
             return Result<CreatePassengerCommandResponse>.FromConflict(error);
         }
 
-        Result<PassengerEntity> passengerEntity = 
+        Result<Domain.Aggregates.Passenger> resultEntity = 
             FactoryEntity(request);
 
-        Result<EmailEntity> emailEntity = 
-            FactoryEmailEntity(request, passengerEntity.Value!);
+        Result<Domain.Entities.Email> emailEntity = 
+            FactoryEmailEntity(request, resultEntity.Value!);
 
-        if (passengerEntity.IsFailure || emailEntity.IsFailure)
+        if (resultEntity.IsFailure || emailEntity.IsFailure)
         {
-            IEnumerable<Error> errors = passengerEntity.Errors
+            IEnumerable<Error> errors = resultEntity.Errors
                 .Concat(emailEntity.Errors);
 
             return Result<CreatePassengerCommandResponse>
                 .FromInvalid(errors);
         }
 
-        await CreateAsync(passengerEntity.Value!,
+        await CreateAsync(resultEntity.Value!,
             emailEntity.Value!, cancellationToken);
 
+        await eventDispatcher.DispatchAsync(resultEntity.Value!);
+        
         CreatePassengerCommandResponse response =
             mapper.Map<CreatePassengerCommandResponse>(
-                passengerEntity.Value);
+                resultEntity.Value);
 
         return Result<CreatePassengerCommandResponse>.WithSuccess(response);
     }
 
-    private Result<PassengerEntity> FactoryEntity(
+    private Result<Domain.Aggregates.Passenger> FactoryEntity(
         CreatePassengerCommand request)
     {
-        Result<PassengerEntity> entity = PassengerEntity.Create(
+        Result<Domain.Aggregates.Passenger> entity = Domain.Aggregates.Passenger.Create(
             request.FullName, request.Birthday!.Value,
             request.Gender!.Value, request.Document);
 
@@ -86,10 +88,10 @@ public sealed class CreatePassengerCommandHandler(
         return entity;
     }
 
-    private Result<EmailEntity> FactoryEmailEntity(
-        CreatePassengerCommand request, PassengerEntity passenger)
+    private Result<Domain.Entities.Email> FactoryEmailEntity(
+        CreatePassengerCommand request, Domain.Aggregates.Passenger passenger)
     {
-        Result<EmailEntity> entity = EmailEntity
+        Result<Domain.Entities.Email> entity = Domain.Entities.Email
             .Create(passenger.Id, request.Email);
 
         if (entity.IsFailure)
@@ -102,36 +104,36 @@ public sealed class CreatePassengerCommandHandler(
         return entity;
     }
 
-    private static OutboxMessageEntity FactoryOutboxMessageEntity(
-        PassengerEntity passenger, EmailEntity email)
+    private static OutboxMessage FactoryOutboxMessageEntity(
+        Domain.Aggregates.Passenger passenger, Domain.Entities.Email email)
     {
         var content = new
         {
             PassengerId = passenger.Id,
-            Email = email.Email.Value,
+            Email = email.Value.Value,
         };
 
         string jsonContent = JsonSerializer.Serialize(content);
 
-        OutboxMessageEntity entity = OutboxMessageEntity
-            .Create(nameof(PassengerEntity), jsonContent);
+        OutboxMessage entity = OutboxMessage
+            .Create(nameof(Domain.Aggregates.Passenger), jsonContent);
 
         return entity;
     }
 
     private async Task CreateAsync(
-        PassengerEntity passengerEntity,
-        EmailEntity emailEntity,
+        Domain.Aggregates.Passenger passenger,
+        Domain.Entities.Email email,
         CancellationToken cancellationToken)
     {
-        OutboxMessageEntity message =
-            FactoryOutboxMessageEntity(passengerEntity, emailEntity);
+        OutboxMessage message =
+            FactoryOutboxMessageEntity(passenger, email);
 
         await passengerRepository.CreateAsync(
-            passengerEntity, cancellationToken);
+            passenger, cancellationToken);
 
-        await emailWriteRepository.CreateAsync(
-            emailEntity, cancellationToken);
+        await emailRepository.CreateAsync(
+            email, cancellationToken);
 
         await outboxWriteRepository
             .CreateAsync(message, cancellationToken);
@@ -140,6 +142,6 @@ public sealed class CreatePassengerCommandHandler(
             cancellationToken);
 
         logger.LogCreated(nameof(CreatePassengerCommandHandler),
-            nameof(CreateAsync), passengerEntity.Id);
+            nameof(CreateAsync), passenger.Id);
     }
 }

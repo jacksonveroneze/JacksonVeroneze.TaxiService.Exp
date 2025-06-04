@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TaxiService.Common.BaseInfrastructure.Extensions;
+using TaxiService.Modules.Drivers.Domain.Aggregates;
 using TaxiService.Modules.Drivers.Domain.Entities;
 using TaxiService.Modules.Drivers.Infrastructure.Mappings.Domain;
 
@@ -22,9 +23,9 @@ public class DriversDbContext(
         modelBuilder.ApplyConfiguration(new DriverMapping());
         modelBuilder.ApplyConfiguration(new VehicleEntityMapping());
         
-        modelBuilder.ApplySoftDeleteQueryFilter<DriverAvailabilityEntity>();
-        modelBuilder.ApplySoftDeleteQueryFilter<DriverEntity>();
-        modelBuilder.ApplySoftDeleteQueryFilter<VehicleEntity>();
+        modelBuilder.ApplySoftDeleteQueryFilter<DriverAvailabilityHistory>();
+        modelBuilder.ApplySoftDeleteQueryFilter<Driver>();
+        modelBuilder.ApplySoftDeleteQueryFilter<Vehicle>();
 
         modelBuilder.IgnoreClass();
 

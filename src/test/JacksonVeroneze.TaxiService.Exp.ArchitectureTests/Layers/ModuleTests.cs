@@ -4,6 +4,7 @@ using NetArchTest.Rules;
 using TaxiService.Modules.Passengers.Api.Endpoints.v1.Passengers;
 using TaxiService.Modules.Passengers.Application;
 using TaxiService.Modules.Passengers.Application.v1.Passenger.PublicApi;
+using TaxiService.Modules.Passengers.Domain.Aggregates;
 using TaxiService.Modules.Passengers.Domain.Entities;
 using TaxiService.Modules.Passengers.Infrastructure.Repositories.Passenger;
 
@@ -28,7 +29,7 @@ public class ModuleTests
             PublicApiAssembly
         ];
 
-        Types.InAssembly(typeof(PassengerEntity).Assembly)
+        Types.InAssembly(typeof(Passenger).Assembly)
             .ShouldNot()
             .HaveDependencyOnAny(otherProjects)
             .GetResult()

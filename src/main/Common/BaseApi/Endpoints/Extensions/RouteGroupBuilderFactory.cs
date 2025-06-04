@@ -9,7 +9,8 @@ namespace TaxiService.Common.BaseApi.Endpoints.Extensions;
 public static class RouteGroupBuilderFactory
 {
     public static RouteGroupBuilder Factory(
-        WebApplication app, string resource, int version)
+        WebApplication app, string resource,
+        int version, bool requireAuthorization = true)
     {
         ApiVersionSet apiVersionSet = app.AddVersion();
 
@@ -19,7 +20,10 @@ public static class RouteGroupBuilderFactory
                 .WithApiVersionSet(apiVersionSet)
                 .MapToApiVersion(version);
 
-        builder.RequireAuthorization();
+        if (requireAuthorization)
+        {
+            builder.RequireAuthorization();
+        }
 
         return builder;
     }

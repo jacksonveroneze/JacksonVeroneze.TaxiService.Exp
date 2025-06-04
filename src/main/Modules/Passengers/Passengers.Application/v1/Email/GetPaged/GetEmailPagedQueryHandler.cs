@@ -2,9 +2,10 @@ using JacksonVeroneze.NET.Result;
 
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
-using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories.Email;
+using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories;
+using TaxiService.Modules.Passengers.Application.v1.Email.Common.Filters;
+using TaxiService.Modules.Passengers.Application.v1.Passenger.Common.Filters;
 using TaxiService.Modules.Passengers.Domain.Entities;
-using TaxiService.Modules.Passengers.Domain.Filters;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Email.GetPaged;
 
@@ -23,7 +24,7 @@ public sealed class GetEmailPagedQueryHandler(
         EmailPagedFilter filter = mapper
             .Map<EmailPagedFilter>(request);
 
-        ICollection<EmailEntity> all = await emailReadRepository
+        ICollection<Domain.Entities.Email> all = await emailReadRepository
             .GetAllAsync(filter, cancellationToken);
 
         GetEmailPagedQueryResponse response =

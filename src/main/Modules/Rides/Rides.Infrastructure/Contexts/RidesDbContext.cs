@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TaxiService.Common.BaseInfrastructure.Extensions;
+using TaxiService.Modules.Rides.Domain.Aggregates;
 using TaxiService.Modules.Rides.Domain.Entities;
 using TaxiService.Modules.Rides.Infrastructure.Mappings.Domain;
 
@@ -20,8 +21,8 @@ public class RidesDbContext(
         modelBuilder.ApplyConfiguration(new PositionMapping());
         modelBuilder.ApplyConfiguration(new RideMapping());
         
-        modelBuilder.ApplySoftDeleteQueryFilter<PositionEntity>();
-        modelBuilder.ApplySoftDeleteQueryFilter<RideEntity>();
+        modelBuilder.ApplySoftDeleteQueryFilter<Position>();
+        modelBuilder.ApplySoftDeleteQueryFilter<Ride>();
 
         modelBuilder.IgnoreClass();
 

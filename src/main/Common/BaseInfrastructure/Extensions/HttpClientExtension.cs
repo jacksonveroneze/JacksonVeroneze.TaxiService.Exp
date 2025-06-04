@@ -27,7 +27,6 @@ public static class HttpClientExtension
                 return handler;
             })
             .UseHttpClientMetrics()
-            .AddHttpMessageHandler(() => new PrometheusHttpClientHandler())
             .AddStandardResilienceHandler();
 
         return services;
@@ -50,24 +49,5 @@ public static class HttpClientExtension
         };
 
         return settings;
-    }
-}
-
-public class PrometheusHttpClientHandler : DelegatingHandler
-{
-    private static readonly string[] labelNames = new[] { "method", "host", "route" };
-
-    protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
-        CancellationToken cancellationToken)
-    {
-        var route = request.RequestUri?.AbsolutePath ?? "unknown_route";
-
-        // Aqui, registre a métrica com uma etiqueta adicional
-        Metrics.CreateCounter("http_client_requests_total", "Contagem de chamadas HTTP",
-                labelNames)
-            .WithLabels(request.Method.Method, request.RequestUri?.Host ?? "unknown_host", route)
-            .Inc();
-
-        return await base.SendAsync(request, cancellationToken);
     }
 }

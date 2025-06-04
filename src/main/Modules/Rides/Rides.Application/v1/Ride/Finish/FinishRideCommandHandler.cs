@@ -1,11 +1,13 @@
 using JacksonVeroneze.NET.Result;
 
 using TaxiService.Common.BaseApplication.Extensions;
+using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Common.BaseDomain.ValueObjects;
-using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories.Position;
-using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories.Ride;
+using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories;
+using TaxiService.Modules.Rides.Domain.Aggregates;
 using TaxiService.Modules.Rides.Domain.Core.Errors;
 using TaxiService.Modules.Rides.Domain.Entities;
+using TaxiService.Modules.Rides.Domain.Repositories;
 using TaxiService.Modules.Rides.Domain.Services;
 
 namespace TaxiService.Modules.Rides.Application.v1.Ride.Finish;
@@ -14,7 +16,8 @@ public sealed class FinishRideCommandHandler(
     ILogger<FinishRideCommandHandler> logger,
     IRideRepository rideRepository,
     IPositionReadRepository positionReadRepository,
-    IDistanceCalculatorService distanceCalculatorService)
+    IDistanceCalculatorService distanceCalculatorService,
+    IDomainEventDispatcher eventDispatcher)
     : IRequestHandler<FinishRideCommand, Result>
 {
     public async Task<Result> Handle(
@@ -23,7 +26,7 @@ public sealed class FinishRideCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        RideEntity? entity = await rideRepository
+        Domain.Aggregates.Ride? entity = await rideRepository
             .GetByIdAsync(request.Id, cancellationToken);
 
         if (entity is null)
@@ -45,6 +48,8 @@ public sealed class FinishRideCommandHandler(
         await rideRepository.UpdateAsync(
             entity, cancellationToken);
 
+        await eventDispatcher.DispatchAsync(entity);
+        
         logger.LogProcessed(
             nameof(FinishRideCommandHandler),
             nameof(Handle), entity.Id);
@@ -52,7 +57,7 @@ public sealed class FinishRideCommandHandler(
         return Result.WithSuccess();
     }
 
-    private Result Finish(RideEntity entity, double distance)
+    private Result Finish(Domain.Aggregates.Ride entity, double distance)
     {
         Result result = entity.Finish(distance);
 
@@ -70,12 +75,12 @@ public sealed class FinishRideCommandHandler(
         Guid id,
         CancellationToken cancellationToken)
     {
-        ICollection<PositionEntity> positions = await positionReadRepository
+        ICollection<Domain.Entities.Position> positions = await positionReadRepository
             .GetByRideIdAsync(id, cancellationToken);
 
         CoordinateValueObject[] positionsCood = positions
             .Select(pos => CoordinateValueObject.Create(
-                pos.Position.Latitude, pos.Position.Longitude).Value!)
+                pos.Coordinate.Latitude, pos.Coordinate.Longitude).Value!)
             .ToArray();
 
         return distanceCalculatorService

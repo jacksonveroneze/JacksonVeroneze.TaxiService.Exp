@@ -2,7 +2,8 @@ using System.Linq.Expressions;
 
 using TaxiService.Common.BaseInfrastructure;
 using TaxiService.Modules.Passengers.Application.v1.Passenger;
-using TaxiService.Modules.Passengers.Domain.Filters;
+using TaxiService.Modules.Passengers.Application.v1.Passenger.Common.Filters;
+using TaxiService.Modules.Passengers.Application.v1.Passenger.Common.Models;
 
 namespace TaxiService.Modules.Passengers.Infrastructure.Builders.Filters;
 
@@ -21,7 +22,7 @@ public class PassengerFilterBuilder(
 
         if (filter.Ids?.Count != 0)
         {
-            builder.And(d => filter.Ids!.ToArray()!.Contains(d.Id!.Value));
+            builder.And(d => filter.Ids!.Contains(d.Id!.Value));
         }
 
         return builder.Build();

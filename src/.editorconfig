@@ -89,6 +89,7 @@ dotnet_diagnostic.CA1863.severity = none
 dotnet_diagnostic.CA1308.severity = none
 dotnet_diagnostic.CA1848.severity = suggestion
 dotnet_diagnostic.CA2254.severity = suggestion
+dotnet_diagnostic.CA1819.severity = suggestion
 
 ########################################
 # Meziantou.MA0051 (métodos longos)

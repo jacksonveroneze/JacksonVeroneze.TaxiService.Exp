@@ -20,7 +20,7 @@ public static class DistributedLockExtension
 
         List<RedLockMultiplexer> multiplexer =
         [
-            (ConnectionMultiplexer)conn
+            (ConnectionMultiplexer)conn,
         ];
 
         RedLockRetryConfiguration retryconf = new(5, 1000);

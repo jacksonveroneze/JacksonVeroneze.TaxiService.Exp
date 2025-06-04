@@ -3,10 +3,13 @@ using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces;
-using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Vehicle;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Services;
+using TaxiService.Modules.Drivers.Domain.Aggregates;
 using TaxiService.Modules.Drivers.Domain.Core.Errors;
 using TaxiService.Modules.Drivers.Domain.Entities;
+using TaxiService.Modules.Drivers.Domain.Repositories;
+
+using IVehicleReadRepository = TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.IVehicleReadRepository;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Vehicle.Create;
 
@@ -34,7 +37,7 @@ public sealed class CreateVehicleCommandHandler(
                 .FromInvalid(validationResult.Errors);
         }
 
-        Result<VehicleEntity> vehicleEntity = FactoryEntity(request);
+        Result<Domain.Aggregates.Vehicle> vehicleEntity = FactoryEntity(request);
 
         if (vehicleEntity.IsFailure)
         {
@@ -120,10 +123,10 @@ public sealed class CreateVehicleCommandHandler(
         return result;
     }
 
-    private Result<VehicleEntity> FactoryEntity(
+    private Result<Domain.Aggregates.Vehicle> FactoryEntity(
         CreateVehicleCommand request)
     {
-        Result<VehicleEntity> entity = VehicleEntity.Create(
+        Result<Domain.Aggregates.Vehicle> entity = Domain.Aggregates.Vehicle.Create(
             request.DriverId, request.Model,
             request.Brand!, request.Plate!,
             request.Color, request.Year);
@@ -139,16 +142,16 @@ public sealed class CreateVehicleCommandHandler(
     }
 
     private async Task CreateAsync(
-        VehicleEntity vehicleEntity,
+        Domain.Aggregates.Vehicle vehicle,
         CancellationToken cancellationToken)
     {
         await vehicleRepository.CreateAsync(
-            vehicleEntity, cancellationToken);
+            vehicle, cancellationToken);
 
         await unitOfWork.CommitAsync(
             cancellationToken);
 
         logger.LogCreated(nameof(CreateVehicleCommandHandler),
-            nameof(CreateAsync), vehicleEntity.Id);
+            nameof(CreateAsync), vehicle.Id);
     }
 }

@@ -1,14 +1,16 @@
-using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
+using TaxiService.Common.BaseApplication.Interfaces.Mapper;
+using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Filters;
 using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Models;
-using TaxiService.Modules.Drivers.Domain.Filters;
 using TaxiService.Modules.Drivers.PublicApi.v1.Interfaces;
 using TaxiService.Modules.Drivers.PublicApi.v1.Models;
 using TaxiService.Modules.Drivers.PublicApi.v1.Queries;
 
+using IDriverReadRepository = TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.IDriverReadRepository;
+
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.PublicApi;
 
 public class DriverPublicApi(
-    IMapper mapper,
+    IDataMapper mapper,
     IDriverReadRepository repository)
     : IDriverPublicApi
 {

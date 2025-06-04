@@ -1,19 +1,20 @@
 using JacksonVeroneze.NET.Result;
 
 using TaxiService.Common.BaseApplication.Extensions;
-using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.DriverAvailability;
+using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Services;
 using TaxiService.Modules.Drivers.Domain.Core.Errors;
 using TaxiService.Modules.Drivers.Domain.Entities;
 using TaxiService.Modules.Drivers.Domain.Enums;
+using TaxiService.Modules.Drivers.Domain.Repositories;
 
 namespace TaxiService.Modules.Drivers.Application.v1.DriverAvailability.Update;
 
 public sealed class UpdateDriverAvailabilityCommandHandler(
     ILogger<UpdateDriverAvailabilityCommandHandler> logger,
     IDriverService driverService,
-    IDriverAvailabilityReadRepository driverAvailabilityReadRepository,
-    IDriverAvailabilityWriteRepository driverAvailabilityWriteRepository)
+    IDriverAvailabilityHistoryReadRepository driverAvailabilityHistoryReadRepository,
+    IDriverAvailabilityHistoryRepository driverAvailabilityHistoryRepository)
     : IRequestHandler<UpdateDriverAvailabilityCommand, Result>
 {
     public async Task<Result> Handle(
@@ -30,7 +31,7 @@ public sealed class UpdateDriverAvailabilityCommandHandler(
             return validationResult;
         }
 
-        Result<DriverAvailabilityEntity> driverAvailability =
+        Result<DriverAvailabilityHistory> driverAvailability =
             FactoryEntity(request);
 
         if (driverAvailability.IsFailure)
@@ -55,8 +56,8 @@ public sealed class UpdateDriverAvailabilityCommandHandler(
             return resultValidateDriver;
         }
 
-        DriverAvailabilityEntity? lastAvailability =
-            await driverAvailabilityReadRepository
+        DriverAvailabilityHistory? lastAvailability =
+            await driverAvailabilityHistoryReadRepository
                 .GetLastByDriverIdAsync(request.Id, cancellationToken);
 
         if (lastAvailability is null)
@@ -82,11 +83,11 @@ public sealed class UpdateDriverAvailabilityCommandHandler(
         return result;
     }
 
-    private Result<DriverAvailabilityEntity> FactoryEntity(
+    private Result<DriverAvailabilityHistory> FactoryEntity(
         UpdateDriverAvailabilityCommand request)
     {
-        Result<DriverAvailabilityEntity> entity =
-            DriverAvailabilityEntity.Create(
+        Result<DriverAvailabilityHistory> entity =
+            DriverAvailabilityHistory.Create(
                 request.Id, request.Status);
 
         if (entity.IsFailure)
@@ -100,10 +101,10 @@ public sealed class UpdateDriverAvailabilityCommandHandler(
     }
 
     private async Task CreateAsync(
-        DriverAvailabilityEntity entity,
+        DriverAvailabilityHistory entity,
         CancellationToken cancellationToken)
     {
-        await driverAvailabilityWriteRepository.CreateAsync(
+        await driverAvailabilityHistoryRepository.CreateAsync(
             entity, cancellationToken);
 
         logger.LogCreated(nameof(UpdateDriverAvailabilityCommandHandler),

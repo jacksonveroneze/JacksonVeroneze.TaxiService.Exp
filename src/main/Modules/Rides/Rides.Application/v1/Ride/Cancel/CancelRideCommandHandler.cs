@@ -1,15 +1,18 @@
 using JacksonVeroneze.NET.Result;
 
 using TaxiService.Common.BaseApplication.Extensions;
-using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories.Ride;
+using TaxiService.Common.BaseApplication.Interfaces.Messaging;
+using TaxiService.Modules.Rides.Domain.Aggregates;
 using TaxiService.Modules.Rides.Domain.Core.Errors;
 using TaxiService.Modules.Rides.Domain.Entities;
+using TaxiService.Modules.Rides.Domain.Repositories;
 
 namespace TaxiService.Modules.Rides.Application.v1.Ride.Cancel;
 
 public sealed class CancelRideCommandHandler(
     ILogger<CancelRideCommandHandler> logger,
-    IRideRepository rideRepository)
+    IRideRepository rideRepository,
+    IDomainEventDispatcher eventDispatcher)
     : IRequestHandler<CancelRideCommand, Result>
 {
     public async Task<Result> Handle(
@@ -18,7 +21,7 @@ public sealed class CancelRideCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        RideEntity? entity = await rideRepository
+        Domain.Aggregates.Ride? entity = await rideRepository
             .GetByIdAsync(request.Id, cancellationToken);
 
         if (entity is null)
@@ -37,6 +40,8 @@ public sealed class CancelRideCommandHandler(
         await rideRepository.UpdateAsync(
             entity, cancellationToken);
 
+        await eventDispatcher.DispatchAsync(entity);
+        
         logger.LogProcessed(
             nameof(CancelRideCommandHandler),
             nameof(Handle), entity.Id);
@@ -44,7 +49,7 @@ public sealed class CancelRideCommandHandler(
         return Result.WithSuccess();
     }
 
-    private Result Cancel(RideEntity entity)
+    private Result Cancel(Domain.Aggregates.Ride entity)
     {
         Result result = entity.Cancel();
 

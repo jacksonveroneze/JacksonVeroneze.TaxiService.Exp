@@ -1,14 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TaxiService.Common.BaseInfrastructure;
+using TaxiService.Modules.Drivers.Domain.Aggregates;
 using TaxiService.Modules.Drivers.Domain.Entities;
 
 namespace TaxiService.Modules.Drivers.Infrastructure.Mappings.Domain;
 
 [ExcludeFromCodeCoverage]
-public class DriverMapping : IEntityTypeConfiguration<DriverEntity>
+public class DriverMapping : IEntityTypeConfiguration<Driver>
 {
-    public void Configure(EntityTypeBuilder<DriverEntity> builder)
+    public void Configure(EntityTypeBuilder<Driver> builder)
     {
         ArgumentNullException.ThrowIfNull(builder);
 
@@ -69,6 +70,6 @@ public class DriverMapping : IEntityTypeConfiguration<DriverEntity>
 
         builder.Property(c => c.InactivedOnUtc);
 
-        builder.ConfigureDefaultFieldsMapping();
+        builder.ConfigureEntityDefaultFieldsMapping();
     }
 }

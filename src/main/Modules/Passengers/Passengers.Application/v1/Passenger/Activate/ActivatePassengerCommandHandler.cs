@@ -1,17 +1,20 @@
 using JacksonVeroneze.NET.Result;
 
 using TaxiService.Common.BaseApplication.Extensions;
+using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Common.BaseApplication.Interfaces.System;
-using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories.Passenger;
+using TaxiService.Modules.Passengers.Domain.Aggregates;
 using TaxiService.Modules.Passengers.Domain.Core.Errors;
 using TaxiService.Modules.Passengers.Domain.Entities;
+using TaxiService.Modules.Passengers.Domain.Repositories;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Passenger.Activate;
 
 public sealed class ActivatePassengerCommandHandler(
     ILogger<ActivatePassengerCommandHandler> logger,
     IPassengerRepository passengerRepository,
-    IDateTimeProvider dateTime)
+    IDateTimeProvider dateTime,
+    IDomainEventDispatcher eventDispatcher)
     : IRequestHandler<ActivatePassengerCommand, Result>
 {
     public async Task<Result> Handle(
@@ -20,7 +23,7 @@ public sealed class ActivatePassengerCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        PassengerEntity? entity = await passengerRepository
+        Domain.Aggregates.Passenger? entity = await passengerRepository
             .GetByIdAsync(request.Id, cancellationToken);
 
         if (entity is null)
@@ -39,6 +42,8 @@ public sealed class ActivatePassengerCommandHandler(
         await passengerRepository.UpdateAsync(
             entity, cancellationToken);
 
+        await eventDispatcher.DispatchAsync(entity);
+        
         logger.LogProcessed(
             nameof(ActivatePassengerCommandHandler),
             nameof(Handle), entity.Id);
@@ -46,7 +51,7 @@ public sealed class ActivatePassengerCommandHandler(
         return Result.WithSuccess();
     }
 
-    private Result Activate(PassengerEntity entity)
+    private Result Activate(Domain.Aggregates.Passenger entity)
     {
         Result result = entity.Activate(dateTime.UtcNow);
 

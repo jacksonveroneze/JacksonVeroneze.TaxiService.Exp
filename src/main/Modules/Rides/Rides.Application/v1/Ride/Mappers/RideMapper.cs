@@ -1,10 +1,12 @@
 using JacksonVeroneze.NET.Pagination.Cursor;
 
+using TaxiService.Modules.Rides.Application.v1.Ride.Common.Filters;
+using TaxiService.Modules.Rides.Application.v1.Ride.Common.Models;
 using TaxiService.Modules.Rides.Application.v1.Ride.GetById;
 using TaxiService.Modules.Rides.Application.v1.Ride.GetPaged;
 using TaxiService.Modules.Rides.Application.v1.Ride.Request;
+using TaxiService.Modules.Rides.Domain.Aggregates;
 using TaxiService.Modules.Rides.Domain.Entities;
-using TaxiService.Modules.Rides.Domain.Filters;
 
 namespace TaxiService.Modules.Rides.Application.v1.Ride.Mappers;
 
@@ -13,7 +15,7 @@ public class RideMapper : Profile
     public RideMapper()
     {
         // Entity -> Response
-        CreateMap<RideEntity, RideResponse>()
+        CreateMap<Domain.Aggregates.Ride, RideResponse>()
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
             .ForMember(dest => dest.PassengerId, opts => opts.MapFrom(src => src.PassengerId))
             .ForMember(dest => dest.DriverId, opts => opts.MapFrom(src => src.DriverId))
@@ -26,7 +28,7 @@ public class RideMapper : Profile
         CreateMap<RideDto, GetRideByIdQueryResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
 
-        CreateMap<RideEntity, RequestRideCommandResponse>()
+        CreateMap<Domain.Aggregates.Ride, RequestRideCommandResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
 
         CreateMap<Page<RideDto>, GetRidePagedQueryResponse>()

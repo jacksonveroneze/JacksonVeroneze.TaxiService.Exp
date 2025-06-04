@@ -3,8 +3,9 @@ using JacksonVeroneze.NET.Result;
 
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
-using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories.Passenger;
-using TaxiService.Modules.Passengers.Domain.Filters;
+using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories;
+using TaxiService.Modules.Passengers.Application.v1.Passenger.Common.Filters;
+using TaxiService.Modules.Passengers.Application.v1.Passenger.Common.Models;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Passenger.GetPaged;
 

@@ -1,3 +1,4 @@
+using TaxiService.Common.BaseDomain.Enums;
 using TaxiService.Modules.Passengers.Domain.Enums;
 
 namespace TaxiService.Modules.Passengers.PublicApi.v1.Models;

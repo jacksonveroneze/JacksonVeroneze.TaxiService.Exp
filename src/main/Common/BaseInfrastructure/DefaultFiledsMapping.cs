@@ -1,15 +1,16 @@
+using JacksonVeroneze.NET.DomainObjects.Domain;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TaxiService.Common.BaseDomain.Entities.Base;
 
 namespace TaxiService.Common.BaseInfrastructure;
 
 [ExcludeFromCodeCoverage]
 public static class EntityTypeBuilderExtensions
 {
-    public static void ConfigureDefaultFieldsMapping<TEntity>(
+    public static void ConfigureEntityDefaultFieldsMapping<TEntity>(
         this EntityTypeBuilder<TEntity> builder)
-        where TEntity : BaseEntityAggregateRoot
+        where TEntity : Entity
     {
         ArgumentNullException.ThrowIfNull(builder);
 
@@ -21,16 +22,9 @@ public static class EntityTypeBuilderExtensions
 
         builder.Property(c => c.DeletedAt);
 
-        builder.Property(c => c.TenantId)
-            .IsRequired();
-
         builder.Property(c => c.Version)
             .HasDefaultValue(1)
             .IsConcurrencyToken()
             .IsRequired();
-
-        builder.HasIndex(c => c.TenantId);
-
-        builder.Ignore(x => x.Events);
     }
 }

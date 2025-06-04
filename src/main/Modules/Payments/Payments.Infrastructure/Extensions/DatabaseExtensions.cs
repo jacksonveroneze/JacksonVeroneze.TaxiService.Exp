@@ -16,7 +16,7 @@ internal static class DatabaseExtensions
     {
         ArgumentNullException.ThrowIfNull(moduleConfiguration);
 
-        services.AddDatabase<PaymentsDbContext>(
+        services.AddWriteDatabase<PaymentsDbContext>(
             moduleConfiguration.Database!);
 
         services.AddScoped<IUnitOfWork, UnitOfWork.EfUnitOfWork>();

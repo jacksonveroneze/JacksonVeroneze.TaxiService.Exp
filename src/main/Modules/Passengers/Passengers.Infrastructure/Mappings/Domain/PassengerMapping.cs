@@ -2,14 +2,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 using TaxiService.Common.BaseInfrastructure;
+using TaxiService.Modules.Passengers.Domain.Aggregates;
 using TaxiService.Modules.Passengers.Domain.Entities;
 
 namespace TaxiService.Modules.Passengers.Infrastructure.Mappings.Domain;
 
 [ExcludeFromCodeCoverage]
-public class PassengerMapping : IEntityTypeConfiguration<PassengerEntity>
+public class PassengerMapping : IEntityTypeConfiguration<Passenger>
 {
-    public void Configure(EntityTypeBuilder<PassengerEntity> builder)
+    public void Configure(EntityTypeBuilder<Passenger> builder)
     {
         ArgumentNullException.ThrowIfNull(builder);
 
@@ -54,6 +55,6 @@ public class PassengerMapping : IEntityTypeConfiguration<PassengerEntity>
 
         builder.Property(c => c.InactivedOnUtc);
 
-        builder.ConfigureDefaultFieldsMapping();
+        builder.ConfigureEntityDefaultFieldsMapping();
     }
 }

@@ -2,12 +2,15 @@ using JacksonVeroneze.NET.Result;
 
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
+using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Modules.Passengers.Domain.Enums;
 using TaxiService.Modules.Passengers.PublicApi.v1.Interfaces;
 using TaxiService.Modules.Passengers.PublicApi.v1.Models;
-using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories.Ride;
+using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories;
+using TaxiService.Modules.Rides.Domain.Aggregates;
 using TaxiService.Modules.Rides.Domain.Core.Errors;
 using TaxiService.Modules.Rides.Domain.Entities;
+using TaxiService.Modules.Rides.Domain.Repositories;
 
 namespace TaxiService.Modules.Rides.Application.v1.Ride.Request;
 
@@ -16,7 +19,8 @@ public sealed class RequestRideCommandHandler(
     IDataMapper mapper,
     IPassengerPublicApi passengerPublicApi,
     IRideReadRepository rideReadRepository,
-    IRideRepository rideRepository)
+    IRideRepository rideRepository,
+    IDomainEventDispatcher eventDispatcher)
     : IRequestHandler<RequestRideCommand, Result<RequestRideCommandResponse>>
 {
     public async Task<Result<RequestRideCommandResponse>> Handle(
@@ -46,7 +50,7 @@ public sealed class RequestRideCommandHandler(
                 .FromRuleViolation(existsRideByPassenger.Errors);
         }
 
-        Result<RideEntity> resultEntity = FactoryEntity(
+        Result<Domain.Aggregates.Ride> resultEntity = FactoryEntity(
             request, request.PassengerId);
 
         if (resultEntity.IsFailure)
@@ -57,16 +61,18 @@ public sealed class RequestRideCommandHandler(
 
         await CreateAsync(resultEntity.Value!, cancellationToken);
 
+        await eventDispatcher.DispatchAsync(resultEntity.Value!);
+        
         RequestRideCommandResponse response =
             mapper.Map<RequestRideCommandResponse>(resultEntity.Value);
 
         return Result<RequestRideCommandResponse>.WithSuccess(response);
     }
 
-    private Result<RideEntity> FactoryEntity(
+    private Result<Domain.Aggregates.Ride> FactoryEntity(
         RequestRideCommand request, Guid passengerId)
     {
-        Result<RideEntity> entity = RideEntity.Create(
+        Result<Domain.Aggregates.Ride> entity = Domain.Aggregates.Ride.Create(
             passengerId,
             request.LatitudeFrom, request.LatitudeTo,
             request.LongitudeFrom, request.LongitudeTo);
@@ -125,7 +131,7 @@ public sealed class RequestRideCommandHandler(
     }
 
     private async Task CreateAsync(
-        RideEntity entity,
+        Domain.Aggregates.Ride entity,
         CancellationToken cancellationToken)
     {
         await rideRepository.CreateAsync(

@@ -6,9 +6,9 @@ using TaxiService.Modules.Drivers.Domain.Entities;
 namespace TaxiService.Modules.Drivers.Infrastructure.Mappings.Domain;
 
 [ExcludeFromCodeCoverage]
-public class DriverAvailabilityMapping : IEntityTypeConfiguration<DriverAvailabilityEntity>
+public class DriverAvailabilityMapping : IEntityTypeConfiguration<DriverAvailabilityHistory>
 {
-    public void Configure(EntityTypeBuilder<DriverAvailabilityEntity> builder)
+    public void Configure(EntityTypeBuilder<DriverAvailabilityHistory> builder)
     {
         ArgumentNullException.ThrowIfNull(builder);
 
@@ -30,6 +30,6 @@ public class DriverAvailabilityMapping : IEntityTypeConfiguration<DriverAvailabi
         builder.Property(c => c.Status)
             .IsRequired();
 
-        builder.ConfigureDefaultFieldsMapping();
+        builder.ConfigureEntityDefaultFieldsMapping();
     }
 }

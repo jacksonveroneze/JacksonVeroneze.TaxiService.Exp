@@ -1,10 +1,11 @@
 using JacksonVeroneze.NET.Result;
 
 using TaxiService.Common.BaseApplication.Extensions;
-using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Services;
+using TaxiService.Modules.Drivers.Domain.Aggregates;
 using TaxiService.Modules.Drivers.Domain.Core.Errors;
 using TaxiService.Modules.Drivers.Domain.Entities;
+using TaxiService.Modules.Drivers.Domain.Repositories;
 
 namespace TaxiService.Modules.Drivers.Application.Common.Services;
 
@@ -17,12 +18,12 @@ public class DriverService(
         Guid id,
         CancellationToken cancellationToken)
     {
-        DriverEntity? entity = await driverRepository
+        Driver? entity = await driverRepository
             .GetByIdAsync(id, cancellationToken);
 
         if (entity is not null)
         {
-            return Result<DriverEntity>.WithSuccess(entity);
+            return Result<Driver>.WithSuccess(entity);
         }
 
         if (entity!.IsActive)

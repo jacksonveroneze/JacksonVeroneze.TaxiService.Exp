@@ -2,10 +2,11 @@ using JacksonVeroneze.NET.Result;
 
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
-using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories.Email;
-using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories.Passenger;
+using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories;
+using TaxiService.Modules.Passengers.Domain.Aggregates;
 using TaxiService.Modules.Passengers.Domain.Core.Errors;
 using TaxiService.Modules.Passengers.Domain.Entities;
+using TaxiService.Modules.Passengers.Domain.Repositories;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Email.Create;
 
@@ -14,7 +15,7 @@ public sealed class CreateEmailCommandHandler(
     IDataMapper mapper,
     IPassengerRepository passengerRepository,
     IEmailReadRepository emailReadRepository,
-    IEmailWriteRepository emailWriteRepository)
+    IEmailRepository emailRepository)
     : IRequestHandler<CreateEmailCommand, Result<CreateEmailCommandResponse>>
 {
     public async Task<Result<CreateEmailCommandResponse>> Handle(
@@ -23,7 +24,7 @@ public sealed class CreateEmailCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        PassengerEntity? passenger = await passengerRepository
+        Domain.Aggregates.Passenger? passenger = await passengerRepository
             .GetByIdAsync(request.PassengerId, cancellationToken);
 
         if (passenger is null)
@@ -41,7 +42,7 @@ public sealed class CreateEmailCommandHandler(
                 DomainErrors.PassengerError.DuplicateEmail);
         }
 
-        Result<EmailEntity> entity = FactoryEntity(
+        Result<Domain.Entities.Email> entity = FactoryEntity(
             request, passenger);
 
         if (entity.IsFailure)
@@ -50,7 +51,7 @@ public sealed class CreateEmailCommandHandler(
                 .FromInvalid(entity.Errors);
         }
 
-        await emailWriteRepository.CreateAsync(
+        await emailRepository.CreateAsync(
             entity.Value!, cancellationToken);
 
         logger.LogProcessed(
@@ -63,10 +64,10 @@ public sealed class CreateEmailCommandHandler(
         return Result<CreateEmailCommandResponse>.WithSuccess(response);
     }
 
-    private Result<EmailEntity> FactoryEntity(
-        CreateEmailCommand request, PassengerEntity passenger)
+    private Result<Domain.Entities.Email> FactoryEntity(
+        CreateEmailCommand request, Domain.Aggregates.Passenger passenger)
     {
-        Result<EmailEntity> entity = EmailEntity
+        Result<Domain.Entities.Email> entity = Domain.Entities.Email
             .Create(passenger.Id, request.Body!.Email);
 
         if (entity.IsFailure)

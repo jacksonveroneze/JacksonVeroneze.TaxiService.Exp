@@ -7,9 +7,9 @@ using TaxiService.Modules.Passengers.Domain.Entities;
 namespace TaxiService.Modules.Passengers.Infrastructure.Mappings.Domain;
 
 [ExcludeFromCodeCoverage]
-public class OutboxMessageMapping : IEntityTypeConfiguration<OutboxMessageEntity>
+public class OutboxMessageMapping : IEntityTypeConfiguration<OutboxMessage>
 {
-    public void Configure(EntityTypeBuilder<OutboxMessageEntity> builder)
+    public void Configure(EntityTypeBuilder<OutboxMessage> builder)
     {
         ArgumentNullException.ThrowIfNull(builder);
 
@@ -33,6 +33,6 @@ public class OutboxMessageMapping : IEntityTypeConfiguration<OutboxMessageEntity
 
         builder.Property(c => c.OccurredOnUtc);
 
-        builder.ConfigureDefaultFieldsMapping();
+        builder.ConfigureEntityDefaultFieldsMapping();
     }
 }

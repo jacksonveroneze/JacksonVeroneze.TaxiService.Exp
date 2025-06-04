@@ -1,14 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TaxiService.Common.BaseInfrastructure;
+using TaxiService.Modules.Drivers.Domain.Aggregates;
 using TaxiService.Modules.Drivers.Domain.Entities;
 
 namespace TaxiService.Modules.Drivers.Infrastructure.Mappings.Domain;
 
 [ExcludeFromCodeCoverage]
-public class VehicleEntityMapping : IEntityTypeConfiguration<VehicleEntity>
+public class VehicleEntityMapping : IEntityTypeConfiguration<Vehicle>
 {
-    public void Configure(EntityTypeBuilder<VehicleEntity> builder)
+    public void Configure(EntityTypeBuilder<Vehicle> builder)
     {
         ArgumentNullException.ThrowIfNull(builder);
 
@@ -45,6 +46,6 @@ public class VehicleEntityMapping : IEntityTypeConfiguration<VehicleEntity>
         builder.Property(c => c.Status)
             .IsRequired();
 
-        builder.ConfigureDefaultFieldsMapping();
+        builder.ConfigureEntityDefaultFieldsMapping();
     }
 }

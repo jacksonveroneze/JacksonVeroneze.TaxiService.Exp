@@ -8,9 +8,10 @@ using Microsoft.Extensions.Logging;
 
 using TaxiService.Common.BaseInfrastructure.Extensions;
 using TaxiService.Modules.Drivers.Application.Common;
-using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.Driver;
+using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories;
+using TaxiService.Modules.Drivers.Application.v1.Driver;
+using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Filters;
 using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Models;
-using TaxiService.Modules.Drivers.Domain.Filters;
 using TaxiService.Modules.Drivers.Infrastructure.Builders.Filters;
 using TaxiService.Modules.Drivers.Infrastructure.Contexts;
 
@@ -32,32 +33,46 @@ public class DriverReadRepository(
         bool exists = await service
             .AnyAsync(spec, cancellationToken);
 
-        logger.LogGetById(ModuleContext.ContextName,
+        logger.LogExistsByValue(ModuleContext.ContextName,
             nameof(DriverReadRepository),
-            nameof(GetByIdAsync),
-            id, exists);
+            nameof(ExistsByIdAsync),
+            id.ToString(), exists);
 
         return exists;
     }
 
     [SuppressMessage("Globalization", "CA1309:Use ordinal string comparison")]
-    public Task<bool> ExistsByEmailAsync(
+    public async Task<bool> ExistsByEmailAsync(
         string email,
         CancellationToken cancellationToken)
     {
-        return service.AnyAsync(
+        bool exists = await service.AnyAsync(
             conf => conf.Email!.Equals(email.ToUpperInvariant()),
             cancellationToken);
+
+        logger.LogExistsByValue(ModuleContext.ContextName,
+            nameof(DriverReadRepository),
+            nameof(ExistsByIdAsync),
+            email, exists);
+
+        return exists;
     }
 
-    public Task<DriverDto?> GetByIdAsync(
+    public async Task<DriverDto?> GetByIdAsync(
         Guid id, CancellationToken cancellationToken)
     {
         Expression<Func<DriverDto, bool>> spec
             = entity => entity.Id == id;
 
-        return service.GetByIdAsync(spec,
-            cancellationToken);
+        DriverDto? result = await service
+            .GetByIdAsync(spec, cancellationToken);
+
+        logger.LogGetById(ModuleContext.ContextName,
+            nameof(DriverReadRepository),
+            nameof(GetByIdAsync),
+            id, result != null);
+
+        return result;
     }
 
     public async Task<ICollection<DriverDto>> GetAsync(

@@ -1,6 +1,6 @@
 using RedLockNet;
 
-using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories.Ride;
+using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories;
 
 namespace TaxiService.Modules.Rides.Infrastructure.Repositories.Ride;
 

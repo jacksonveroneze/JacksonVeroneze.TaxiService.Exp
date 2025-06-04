@@ -4,13 +4,16 @@ using RedLockNet;
 
 using TaxiService.Common.BaseApplication.Core.Errors;
 using TaxiService.Common.BaseApplication.Extensions;
+using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Modules.Drivers.Domain.Enums;
 using TaxiService.Modules.Drivers.PublicApi.v1.Interfaces;
 using TaxiService.Modules.Drivers.PublicApi.v1.Models;
-using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories.Ride;
+using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Rides.Application.v1.Ride.Cancel;
+using TaxiService.Modules.Rides.Domain.Aggregates;
 using TaxiService.Modules.Rides.Domain.Core.Errors;
 using TaxiService.Modules.Rides.Domain.Entities;
+using TaxiService.Modules.Rides.Domain.Repositories;
 
 namespace TaxiService.Modules.Rides.Application.v1.Ride.Accept;
 
@@ -18,7 +21,8 @@ public sealed class AcceptRideCommandHandler(
     ILogger<AcceptRideCommandHandler> logger,
     IDriverPublicApi driverPublicApi,
     IRideRepository rideRepository,
-    IRideDistributedLockRepository distributedLockRepository)
+    IRideDistributedLockRepository distributedLockRepository,
+    IDomainEventDispatcher eventDispatcher)
     : IRequestHandler<AcceptRideCommand, Result>
 {
     public async Task<Result> Handle(
@@ -40,12 +44,12 @@ public sealed class AcceptRideCommandHandler(
         Task<DriverPublicApiDto?> driverTask = driverPublicApi
             .GetByIdAsync(request.Body!.DriverId, cancellationToken);
 
-        RideEntity? entity = await rideRepository
+        Domain.Aggregates.Ride? entity = await rideRepository
             .GetByIdAsync(request.Id, cancellationToken);
 
         if (entity is null)
         {
-            return Result<RideEntity>.FromNotFound(
+            return Result<Domain.Aggregates.Ride>.FromNotFound(
                 DomainErrors.RideError.NotFound);
         }
 
@@ -53,13 +57,13 @@ public sealed class AcceptRideCommandHandler(
 
         if (driver is null)
         {
-            return Result<RideEntity>.FromConflict(
+            return Result<Domain.Aggregates.Ride>.FromConflict(
                 DomainErrors.RideError.NotFound);
         }
         
         if (driver.Status != DriverStatus.Active)
         {
-            return Result<RideEntity>.FromRuleViolation(
+            return Result<Domain.Aggregates.Ride>.FromRuleViolation(
                 DomainErrors.RideError.DriverNotActive);
         }
 
@@ -74,6 +78,8 @@ public sealed class AcceptRideCommandHandler(
         await rideRepository.UpdateAsync(
             entity, cancellationToken);
 
+        await eventDispatcher.DispatchAsync(entity);
+        
         logger.LogProcessed(
             nameof(AcceptRideCommandHandler),
             nameof(Handle), entity.Id);
@@ -81,7 +87,7 @@ public sealed class AcceptRideCommandHandler(
         return Result.WithSuccess();
     }
 
-    private Result Accept(RideEntity entity, Guid driverId)
+    private Result Accept(Domain.Aggregates.Ride entity, Guid driverId)
     {
         Result result = entity.Accept(driverId);
 

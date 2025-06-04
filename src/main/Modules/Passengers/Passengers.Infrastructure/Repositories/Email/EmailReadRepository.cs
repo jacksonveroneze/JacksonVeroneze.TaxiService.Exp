@@ -1,15 +1,23 @@
+using System.Linq.Expressions;
+
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
 
-using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories.Email;
+using Microsoft.Extensions.Logging;
+
+using TaxiService.Common.BaseInfrastructure.Extensions;
+using TaxiService.Modules.Passengers.Application.Common;
+using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories;
+using TaxiService.Modules.Passengers.Application.v1.Email.Common.Filters;
+using TaxiService.Modules.Passengers.Application.v1.Passenger.Common.Filters;
 using TaxiService.Modules.Passengers.Domain.Entities;
-using TaxiService.Modules.Passengers.Domain.Filters;
 using TaxiService.Modules.Passengers.Infrastructure.Contexts;
 
 namespace TaxiService.Modules.Passengers.Infrastructure.Repositories.Email;
 
 [ExcludeFromCodeCoverage]
 public class EmailReadRepository(
-    IEfCoreRepository<EmailEntity, PassengersDbContext> service)
+    ILogger<EmailReadRepository> logger,
+    IEfCoreRepository<Domain.Entities.Email, PassengersDbContext> service)
     : IEmailReadRepository
 {
     [SuppressMessage("Globalization", "CA1309:Use ordinal string comparison")]
@@ -19,21 +27,39 @@ public class EmailReadRepository(
     public async Task<bool> ExistsAsync(string email,
         CancellationToken cancellationToken)
     {
-        bool exists = await service.AnyAsync(conf =>
-                conf.Email.Value!.ToLower().Equals(email.ToLowerInvariant()),
-            cancellationToken);
+        Expression<Func<Domain.Entities.Email, bool>> spec
+            = spec => spec.Value.Value!.ToLower()
+                .Equals(email.ToLowerInvariant());
+
+        bool exists = await service.AnyAsync(
+            spec, cancellationToken);
+
+        logger.LogExistsByValue(ModuleContext.ContextName,
+            nameof(EmailReadRepository),
+            nameof(ExistsAsync),
+            email, exists);
 
         return exists;
     }
 
-    public Task<EmailEntity?> GetByIdAsync(Guid id,
+    public async Task<Domain.Entities.Email?> GetByIdAsync(Guid id,
         CancellationToken cancellationToken)
     {
-        return service.GetByIdAsync(conf => conf.Id == id,
-            cancellationToken);
+        Expression<Func<Domain.Entities.Email, bool>> spec
+            = entity => entity.Id == id;
+
+        Domain.Entities.Email? result = await service.GetByIdAsync(
+            spec, cancellationToken);
+
+        logger.LogGetById(ModuleContext.ContextName,
+            nameof(EmailReadRepository),
+            nameof(GetByIdAsync),
+            id, result is not null);
+
+        return result;
     }
 
-    public Task<ICollection<EmailEntity>> GetAllAsync(
+    public Task<ICollection<Domain.Entities.Email>> GetAllAsync(
         EmailPagedFilter filter,
         CancellationToken cancellationToken)
     {

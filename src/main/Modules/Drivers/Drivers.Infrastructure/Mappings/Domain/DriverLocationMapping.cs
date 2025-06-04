@@ -6,9 +6,9 @@ using TaxiService.Modules.Drivers.Domain.Entities;
 namespace TaxiService.Modules.Drivers.Infrastructure.Mappings.Domain;
 
 [ExcludeFromCodeCoverage]
-public class DriverLocationMapping : IEntityTypeConfiguration<DriverLocationEntity>
+public class DriverLocationMapping : IEntityTypeConfiguration<DriverLocationHistory>
 {
-    public void Configure(EntityTypeBuilder<DriverLocationEntity> builder)
+    public void Configure(EntityTypeBuilder<DriverLocationHistory> builder)
     {
         ArgumentNullException.ThrowIfNull(builder);
 
@@ -38,6 +38,6 @@ public class DriverLocationMapping : IEntityTypeConfiguration<DriverLocationEnti
                 .IsRequired();
         });
 
-        builder.ConfigureDefaultFieldsMapping();
+        builder.ConfigureEntityDefaultFieldsMapping();
     }
 }

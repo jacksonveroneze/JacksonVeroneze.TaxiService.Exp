@@ -89,6 +89,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payments", "Payments", "{523A48F3-2AF2-45ED-AAFE-3BBEAC2534CF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Rides", "Rides", "{37806C3F-1A1A-4DA1-AD62-E23169FDAB9A}"
+	ProjectSection(SolutionItems) = preProject
+		Aggregates = Aggregates
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{4E701202-BA44-4AE8-90DC-2E1B201576D5}"
 EndProject

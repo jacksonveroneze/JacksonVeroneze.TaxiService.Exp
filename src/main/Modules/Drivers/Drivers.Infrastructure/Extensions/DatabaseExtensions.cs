@@ -16,7 +16,7 @@ internal static class DatabaseExtensions
     {
         ArgumentNullException.ThrowIfNull(moduleConfiguration);
 
-        services.AddDatabase<DriversDbContext>(
+        services.AddWriteDatabase<DriversDbContext>(
             moduleConfiguration.Database!);
         
         services.AddReadDatabase<DriversReadDbContext>(

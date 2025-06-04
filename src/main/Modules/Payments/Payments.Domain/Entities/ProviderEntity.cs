@@ -3,7 +3,7 @@ using TaxiService.Modules.Payments.Domain.Enums;
 
 namespace TaxiService.Modules.Payments.Domain.Entities;
 
-public class ProviderEntity : BaseEntityAggregateRoot
+public class ProviderEntity : BaseAggregateRoot
 {
     public PaymentProviderType ProviderName { get; init; }
     

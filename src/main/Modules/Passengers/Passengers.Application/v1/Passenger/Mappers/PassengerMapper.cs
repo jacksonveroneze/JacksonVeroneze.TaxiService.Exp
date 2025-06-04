@@ -1,10 +1,12 @@
 using JacksonVeroneze.NET.Pagination.Cursor;
 
+using TaxiService.Modules.Passengers.Application.v1.Passenger.Common.Filters;
+using TaxiService.Modules.Passengers.Application.v1.Passenger.Common.Models;
 using TaxiService.Modules.Passengers.Application.v1.Passenger.Create;
 using TaxiService.Modules.Passengers.Application.v1.Passenger.GetById;
 using TaxiService.Modules.Passengers.Application.v1.Passenger.GetPaged;
+using TaxiService.Modules.Passengers.Domain.Aggregates;
 using TaxiService.Modules.Passengers.Domain.Entities;
-using TaxiService.Modules.Passengers.Domain.Filters;
 using TaxiService.Modules.Passengers.PublicApi.v1.Models;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Passenger.Mappers;
@@ -14,7 +16,7 @@ public class PassengerMapper : Profile
     public PassengerMapper()
     {
         // Entity -> Response
-        CreateMap<PassengerEntity, PassengerResponse>()
+        CreateMap<Domain.Aggregates.Passenger, PassengerResponse>()
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
             .ForMember(dest => dest.FullName, opts => opts.MapFrom(src => src.Name.Value))
             .ForMember(dest => dest.Document, opts => opts.MapFrom(src => src.Cpf.Value))
@@ -25,7 +27,7 @@ public class PassengerMapper : Profile
         CreateMap<PassengerDto, GetPassengerByIdQueryResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
 
-        CreateMap<PassengerEntity, CreatePassengerCommandResponse>()
+        CreateMap<Domain.Aggregates.Passenger, CreatePassengerCommandResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
 
         CreateMap<Page<PassengerDto>, GetPassengerPagedQueryResponse>()
