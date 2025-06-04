@@ -2,7 +2,7 @@ using TaxiService.Common.BaseApplication.Validators.Base;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Vehicle.Create;
 
-public class CreateVehicleCommandValidator 
+public class CreateVehicleCommandValidator
     : AbstractValidator<CreateVehicleCommand>
 {
     private const int MinLengthName = 2;

@@ -22,7 +22,7 @@ public sealed record RideResponse
     public CoordinateResponse? To { get; init; }
 
     public RideStatus? Status { get; init; }
-    
+
     public PassengerPublicApiDto? Passenger { get; set; }
 
     public DriverPublicApiDto? Driver { get; set; }

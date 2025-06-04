@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.Pagination.Cursor;
-
 using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Filters;
 using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Models;
 
@@ -22,7 +21,7 @@ public interface IDriverReadRepository
     public Task<ICollection<DriverDto>> GetAsync(
         DriverFilter filter,
         CancellationToken cancellationToken);
-    
+
     public Task<Page<DriverDto>> GetPagedAsync(
         DriverPagedFilter filter,
         CancellationToken cancellationToken);

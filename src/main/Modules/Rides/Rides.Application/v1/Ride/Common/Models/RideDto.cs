@@ -22,10 +22,10 @@ public sealed record RideDto
     public required CoordinateResponse To { get; init; }
 
     public RideStatus? Status { get; init; }
-    
+
     public PassengerPublicApiDto? Passenger { get; set; }
 
     public DriverPublicApiDto? Driver { get; set; }
-    
+
     public DateTime? DeletedAt { get; init; }
 }

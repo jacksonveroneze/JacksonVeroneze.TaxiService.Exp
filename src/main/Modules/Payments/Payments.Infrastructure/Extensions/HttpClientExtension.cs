@@ -1,6 +1,5 @@
 using JacksonVeroneze.NET.HttpClient.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
 using TaxiService.Common.BaseInfrastructure.Extensions;
 using TaxiService.Modules.Payments.Domain.Enums;
 using TaxiService.Modules.Payments.Infrastructure.Configurations;
@@ -32,9 +31,8 @@ internal static class HttpClientExtension
         string name) where TClient : class
     {
         HttpClientConfiguration config =
-            moduleConfiguration.HttpClients!.Single(
-                client => client.Name!.Equals(name,
-                    StringComparison.OrdinalIgnoreCase));
+            moduleConfiguration.HttpClients!.Single(client => client.Name!.Equals(name,
+                StringComparison.OrdinalIgnoreCase));
 
         services.AddHttpClient<TClient>(config);
 

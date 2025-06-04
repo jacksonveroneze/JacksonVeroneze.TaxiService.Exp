@@ -18,7 +18,7 @@ internal static class WebApplicationExtensions
         ArgumentNullException.ThrowIfNull(app);
 
         app.UseCors("all");
-        
+
         app.UseRequestLocalization();
 
         app.UseExceptionHandler();

@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.Result;
-
 using TaxiService.Modules.Rides.Application.v1.Ride.Accept;
 
 namespace TaxiService.Modules.Rides.Api.Endpoints.v1.Rides;

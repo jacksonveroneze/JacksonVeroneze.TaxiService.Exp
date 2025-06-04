@@ -1,5 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-
 using TaxiService.Common.BaseInfrastructure.Extensions;
 using TaxiService.Modules.Rides.Application.Common.Interfaces;
 using TaxiService.Modules.Rides.Infrastructure.Configurations;
@@ -21,7 +20,7 @@ internal static class DatabaseExtensions
 
         services.AddReadDatabase<RidesReadDbContext>(
             moduleConfiguration.Database!);
-        
+
         services.AddScoped<IUnitOfWork, UnitOfWork.EfUnitOfWork>();
 
         return services;

@@ -18,11 +18,11 @@ public static class ModuleExtensions
 
         services.AddConfiguration<ModuleConfiguration>(
             configuration, ModuleConfiguration.Name);
-        
+
         ModuleConfiguration moduleConfiguration = services
             .BuildServiceProvider()
             .GetRequiredService<ModuleConfiguration>();
-        
+
         services.AddServices()
             .AddHandlers(assembly)
             .AddMapper(assembly)

@@ -4,12 +4,9 @@ namespace TaxiService.Modules.Payments.Infrastructure.Acl.Models.Stripe;
 
 public record PayRequest
 {
-    [JsonPropertyName("file_name")]
-    public string? FileName { get; init; }
+    [JsonPropertyName("file_name")] public string? FileName { get; init; }
 
-    [JsonPropertyName("file_content")]
-    public string? FileContent { get; init; }
+    [JsonPropertyName("file_content")] public string? FileContent { get; init; }
 
-    [JsonPropertyName("signature_level")]
-    public string? SignatureLevel { get; init; }
+    [JsonPropertyName("signature_level")] public string? SignatureLevel { get; init; }
 }

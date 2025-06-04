@@ -52,7 +52,7 @@ export function block(baseUrl, headers, id, type) {
     const body = JSON.stringify({
         type: type
     });
-    
+
     const response = http.put(`${baseUrl}/drivers/${id}/block`, body, headers);
     check(response, {'[Driver] - Blocked - status is 204': (r) => r.status === 204});
 
@@ -88,10 +88,10 @@ export function updateAvailability(baseUrl, headers, id) {
 
 export function updateLocation(baseUrl, headers, id) {
     const body = JSON.stringify({
-        "latitude":"3.6823",
+        "latitude": "3.6823",
         "longitude": "51.9175",
     });
-    
+
     const response = http.put(`${baseUrl}/drivers/${id}/location`, body, headers);
     check(response, {'[location] - Created - status is 204': (r) => r.status === 204});
 }

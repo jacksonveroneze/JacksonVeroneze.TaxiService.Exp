@@ -12,7 +12,7 @@ public class DriversDbContext(
     : DbContext(options)
 {
     private const string Schema = "driver";
-    
+
     protected override void OnModelCreating(
         ModelBuilder modelBuilder)
     {
@@ -22,7 +22,7 @@ public class DriversDbContext(
         modelBuilder.ApplyConfiguration(new DriverLocationMapping());
         modelBuilder.ApplyConfiguration(new DriverMapping());
         modelBuilder.ApplyConfiguration(new VehicleEntityMapping());
-        
+
         modelBuilder.ApplySoftDeleteQueryFilter<DriverAvailabilityHistory>();
         modelBuilder.ApplySoftDeleteQueryFilter<Driver>();
         modelBuilder.ApplySoftDeleteQueryFilter<Vehicle>();

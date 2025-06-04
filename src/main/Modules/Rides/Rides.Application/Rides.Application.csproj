@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="RedLock.net" />
+    <PackageReference Include="RedLock.net"/>
     <PackageReference Include="AutoMapper"/>
     <PackageReference Include="FluentValidation"/>
     <PackageReference Include="MediatR"/>
@@ -21,10 +21,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\BaseApplication\BaseApplication.csproj"/>
-    <ProjectReference Include="..\Rides.Domain\Rides.Domain.csproj" />
-    
-    <ProjectReference Include="..\..\Drivers\Drivers.PublicApi\Drivers.PublicApi.csproj" />
-    <ProjectReference Include="..\..\Passengers\Passengers.PublicApi\Passengers.PublicApi.csproj" />
+    <ProjectReference Include="..\Rides.Domain\Rides.Domain.csproj"/>
+
+    <ProjectReference Include="..\..\Drivers\Drivers.PublicApi\Drivers.PublicApi.csproj"/>
+    <ProjectReference Include="..\..\Passengers\Passengers.PublicApi\Passengers.PublicApi.csproj"/>
   </ItemGroup>
 
 </Project>

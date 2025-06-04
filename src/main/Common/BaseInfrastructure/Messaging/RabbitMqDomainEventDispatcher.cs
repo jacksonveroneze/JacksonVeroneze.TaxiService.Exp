@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.DomainObjects.Messaging;
-
 using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Common.BaseDomain.Entities.Base;
 

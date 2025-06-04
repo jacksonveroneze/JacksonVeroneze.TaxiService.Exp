@@ -43,8 +43,7 @@ internal sealed class PaymentProviderFactory(
             return [];
         }
 
-        var nameProviders = configs.Select(
-            prov => prov.ProviderName);
+        var nameProviders = configs.Select(prov => prov.ProviderName);
 
         logger.LogProvidersFounded(
             configs.Length, nameProviders.ToArray());

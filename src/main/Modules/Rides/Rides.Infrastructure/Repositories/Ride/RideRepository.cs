@@ -1,7 +1,5 @@
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
-
 using Microsoft.Extensions.Logging;
-
 using TaxiService.Common.BaseInfrastructure.Extensions;
 using TaxiService.Modules.Rides.Application.Common;
 using TaxiService.Modules.Rides.Domain.Repositories;
@@ -27,7 +25,7 @@ public class RideRepository(
             nameof(RideRepository),
             nameof(GetByIdAsync),
             id, result is not null);
-        
+
         return result;
     }
 

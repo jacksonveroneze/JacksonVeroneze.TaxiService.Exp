@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
-
 using TaxiService.Modules.Drivers.Domain.Entities;
 using TaxiService.Modules.Drivers.Domain.Repositories;
 using TaxiService.Modules.Drivers.Infrastructure.Contexts;
@@ -16,7 +15,7 @@ public class DriverAvailabilityHistoryRepository(
         CancellationToken cancellationToken)
     {
         await service.CreateAsync(entity, cancellationToken);
-        
+
         await service.DbContext.SaveChangesAsync(cancellationToken);
     }
 }

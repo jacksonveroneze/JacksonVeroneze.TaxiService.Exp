@@ -6,7 +6,7 @@ public static class PassengersEndpoints
 {
     private const string Resource = "passengers";
     private const int Version = 1;
-    
+
     public static WebApplication AddPassengerEndpoints(
         this WebApplication app)
     {

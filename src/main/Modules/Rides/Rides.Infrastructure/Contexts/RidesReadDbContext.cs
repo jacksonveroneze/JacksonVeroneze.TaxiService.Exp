@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-
 using TaxiService.Modules.Rides.Application.v1.Ride.Common.Models;
 using TaxiService.Modules.Rides.Infrastructure.Mappings.ReadModels;
 
@@ -11,7 +10,7 @@ public class RidesReadDbContext(
     : DbContext(options)
 {
     private const string Schema = "ride";
-    
+
     protected override void OnModelCreating(
         ModelBuilder modelBuilder)
     {
@@ -21,7 +20,7 @@ public class RidesReadDbContext(
 
         modelBuilder.Entity<RideDto>()
             .HasQueryFilter(field => field.DeletedAt == null);
-        
+
         modelBuilder.HasDefaultSchema(Schema);
     }
 }

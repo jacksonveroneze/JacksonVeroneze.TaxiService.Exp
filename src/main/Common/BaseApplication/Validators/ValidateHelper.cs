@@ -1,5 +1,4 @@
 using FluentValidation.Results;
-
 using JacksonVeroneze.NET.Result;
 
 namespace TaxiService.Common.BaseApplication.Validators;
@@ -22,8 +21,8 @@ public static class ValidateHelper
 
         Error[] errors = failures
             .Select(failure => Error.Create(
-                failure.ErrorCode, 
-                failure.ErrorMessage, 
+                failure.ErrorCode,
+                failure.ErrorMessage,
                 failure.PropertyName.ToLowerInvariant()))
             .ToArray();
 

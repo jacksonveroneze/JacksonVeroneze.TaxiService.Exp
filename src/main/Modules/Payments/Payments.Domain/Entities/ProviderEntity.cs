@@ -6,8 +6,8 @@ namespace TaxiService.Modules.Payments.Domain.Entities;
 public class ProviderEntity : BaseAggregateRoot
 {
     public PaymentProviderType ProviderName { get; init; }
-    
+
     public bool IsActive { get; init; }
-    
+
     public int Priority { get; init; }
 }

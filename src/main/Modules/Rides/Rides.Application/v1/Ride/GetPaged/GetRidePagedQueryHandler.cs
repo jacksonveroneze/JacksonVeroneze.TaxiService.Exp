@@ -1,6 +1,5 @@
 using JacksonVeroneze.NET.Pagination.Cursor;
 using JacksonVeroneze.NET.Result;
-
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories;
@@ -34,12 +33,12 @@ public sealed class GetRidePagedQueryHandler(
 
         await rideExpandsService.ApplyAsync(
             response.Data!, request.Expand, cancellationToken);
-        
+
         logger.LogGetPagedWithCursor(
             nameof(GetRidePagedQueryHandler),
             nameof(Handle), request.PageSize!.Value,
             page.Data.Count, page.PageInfo.HasMore!.Value);
-        
+
         return Result<GetRidePagedQueryResponse>
             .WithSuccess(response);
     }

@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
-
 using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Rides.Infrastructure.Contexts;
 

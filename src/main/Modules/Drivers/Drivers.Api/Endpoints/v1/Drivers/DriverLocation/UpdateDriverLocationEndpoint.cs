@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.Result;
-
 using TaxiService.Modules.Drivers.Application.v1.DriverLocation.Update;
 
 namespace TaxiService.Modules.Drivers.Api.Endpoints.v1.Drivers.DriverLocation;

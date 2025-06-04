@@ -12,7 +12,7 @@ public class RidesDbContext(
     : DbContext(options)
 {
     private const string Schema = "ride";
-    
+
     protected override void OnModelCreating(
         ModelBuilder modelBuilder)
     {
@@ -20,7 +20,7 @@ public class RidesDbContext(
 
         modelBuilder.ApplyConfiguration(new PositionMapping());
         modelBuilder.ApplyConfiguration(new RideMapping());
-        
+
         modelBuilder.ApplySoftDeleteQueryFilter<Position>();
         modelBuilder.ApplySoftDeleteQueryFilter<Ride>();
 

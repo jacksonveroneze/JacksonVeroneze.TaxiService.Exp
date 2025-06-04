@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.Result;
-
 using TaxiService.Common.BaseDomain.Enums;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Passenger.Create;

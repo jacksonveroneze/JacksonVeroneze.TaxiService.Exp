@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-
 using TaxiService.Common.BaseInfrastructure.Configurations;
 
 namespace TaxiService.Common.BaseInfrastructure.Extensions;

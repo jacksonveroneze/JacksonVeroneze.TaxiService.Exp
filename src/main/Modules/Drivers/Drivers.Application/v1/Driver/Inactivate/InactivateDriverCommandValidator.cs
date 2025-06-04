@@ -2,7 +2,7 @@ using TaxiService.Common.BaseApplication.Validators.Base;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.Inactivate;
 
-public class InactivateDriverCommandValidator 
+public class InactivateDriverCommandValidator
     : AbstractValidator<InactivateDriverCommand>
 {
     public InactivateDriverCommandValidator()

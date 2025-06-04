@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.Result;
-
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Modules.Rides.Domain.Core.Errors;
 using TaxiService.Modules.Rides.Domain.Repositories;

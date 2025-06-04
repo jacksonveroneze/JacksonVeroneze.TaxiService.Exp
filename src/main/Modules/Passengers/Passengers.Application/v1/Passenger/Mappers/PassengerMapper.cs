@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.Pagination.Cursor;
-
 using TaxiService.Modules.Passengers.Application.v1.Passenger.Common.Filters;
 using TaxiService.Modules.Passengers.Application.v1.Passenger.Common.Models;
 using TaxiService.Modules.Passengers.Application.v1.Passenger.Create;
@@ -35,7 +34,7 @@ public class PassengerMapper : Profile
         // Query -> Filter
         CreateMap<GetPassengerPagedQuery, PassengerPagedFilter>()
             .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src));
-        
+
         CreateMap<PassengerDto, PassengerResponse>()
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
             .ForMember(dest => dest.FullName, opts => opts.MapFrom(src => src.FullName))
@@ -43,7 +42,7 @@ public class PassengerMapper : Profile
             .ForMember(dest => dest.Birthday, opts => opts.MapFrom(src => src.Birthday))
             .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender))
             .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status));
-        
+
         CreateMap<PassengerDto, PassengerPublicApiDto>()
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
             .ForMember(dest => dest.FullName, opts => opts.MapFrom(src => src.FullName))

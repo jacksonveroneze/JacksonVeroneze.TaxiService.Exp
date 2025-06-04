@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.Result;
-
 using TaxiService.Common.BaseDomain;
 using TaxiService.Common.BaseDomain.Entities.Base;
 using TaxiService.Common.BaseDomain.Enums;
@@ -56,7 +55,7 @@ public class Driver : BaseAggregateRoot
         Cpf = cpf;
         Gender = gender;
         Status = DriverStatus.PendingActivation;
-        
+
         AddEvent(new DriverCreatedEvent(Id));
     }
 
@@ -75,7 +74,7 @@ public class Driver : BaseAggregateRoot
         Status = DriverStatus.Active;
         ActivedOnUtc = utcNow;
         AddEvent(new DriverActivatedEvent(Id));
-        
+
         return Result.WithSuccess();
     }
 
@@ -86,7 +85,7 @@ public class Driver : BaseAggregateRoot
             return Result.FromRuleViolation(
                 DomainErrors.DriverErrors.CannotBlockPermanently);
         }
-        
+
         if (IsInactive)
         {
             return Result.FromRuleViolation(
@@ -99,7 +98,7 @@ public class Driver : BaseAggregateRoot
 
         return Result.WithSuccess();
     }
-    
+
     public Result Reactivate()
     {
         if (IsActive)
@@ -107,7 +106,7 @@ public class Driver : BaseAggregateRoot
             return Result.FromRuleViolation(
                 DomainErrors.DriverErrors.AlreadyActive);
         }
-        
+
         if (IsBlockedPermanent)
         {
             return Result.FromRuleViolation(
@@ -153,7 +152,7 @@ public class Driver : BaseAggregateRoot
 
         return Result.WithSuccess();
     }
-    
+
     public Result Remove()
     {
         if (IsBlockedPermanent)
@@ -161,7 +160,7 @@ public class Driver : BaseAggregateRoot
             return Result.FromRuleViolation(
                 DomainErrors.DriverErrors.CannotBlockPermanently);
         }
-        
+
         if (IsBlockedTemporarily)
         {
             return Result.FromRuleViolation(
@@ -173,19 +172,19 @@ public class Driver : BaseAggregateRoot
         return Result.WithSuccess();
     }
 
-    public bool IsPendingActivation => 
+    public bool IsPendingActivation =>
         Status is DriverStatus.PendingActivation;
-    
-    public bool IsActive => 
+
+    public bool IsActive =>
         Status is DriverStatus.Active;
-    
-    public bool IsInactive => 
+
+    public bool IsInactive =>
         Status is DriverStatus.Inactive;
-    
-    public bool IsBlockedTemporarily => 
+
+    public bool IsBlockedTemporarily =>
         Status is DriverStatus.BlockedTemporarily;
-    
-    public bool IsBlockedPermanent => 
+
+    public bool IsBlockedPermanent =>
         Status is DriverStatus.BlockedPermanent;
 
     #endregion

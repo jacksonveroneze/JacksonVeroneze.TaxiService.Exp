@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.Pagination.Cursor;
-
 using TaxiService.Modules.Rides.Application.v1.Ride.Common.Filters;
 using TaxiService.Modules.Rides.Application.v1.Ride.Common.Models;
 using TaxiService.Modules.Rides.Application.v1.Ride.GetById;
@@ -38,7 +37,7 @@ public class RideMapper : Profile
             .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status))
             .ForMember(dest => dest.PassengerId, opts => opts.MapFrom(src => src.PassengerId))
             .ForMember(dest => dest.Pagination, opts => opts.MapFrom(src => src));
-        
+
         CreateMap<RideDto, RideResponse>()
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
             .ForMember(dest => dest.PassengerId, opts => opts.MapFrom(src => src.PassengerId))

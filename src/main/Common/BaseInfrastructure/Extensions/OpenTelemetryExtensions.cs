@@ -70,10 +70,7 @@ public static class OpenTelemetryExtensions
 
         builder.WithTracing(conf =>
         {
-            conf.AddAspNetCoreInstrumentation(options =>
-                {
-                    options.RecordException = true;
-                })
+            conf.AddAspNetCoreInstrumentation(options => { options.RecordException = true; })
                 .AddEntityFrameworkCoreInstrumentation(options =>
                 {
                     options.SetDbStatementForText = true;

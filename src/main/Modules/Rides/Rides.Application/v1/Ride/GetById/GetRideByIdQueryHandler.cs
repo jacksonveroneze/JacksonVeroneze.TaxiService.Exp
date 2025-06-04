@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.Result;
-
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories;
@@ -36,7 +35,7 @@ public sealed class GetRideByIdQueryHandler(
 
         await rideExpandsService.ApplyAsync(
             response.Data!, request.Expand, cancellationToken);
-        
+
         logger.LogGetById(nameof(GetRideByIdQueryHandler),
             nameof(Handle), request.Id);
 

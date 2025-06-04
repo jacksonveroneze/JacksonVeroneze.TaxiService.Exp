@@ -16,10 +16,7 @@ public static class HttpClientExtension
     {
         services
             .AddRefitClient<TClient>(GetDefaultRefitJsonSettings())
-            .ConfigureHttpClient(client =>
-            {
-                client.BaseAddress = new Uri(config.Address!);
-            })
+            .ConfigureHttpClient(client => { client.BaseAddress = new Uri(config.Address!); })
             .ConfigurePrimaryHttpMessageHandler(() =>
             {
                 HttpClientHandler handler = new();

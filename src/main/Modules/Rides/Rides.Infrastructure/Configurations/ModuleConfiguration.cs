@@ -6,6 +6,6 @@ namespace TaxiService.Modules.Rides.Infrastructure.Configurations;
 internal sealed record ModuleConfiguration
 {
     internal const string Name = "Rides";
-    
+
     public DatabaseConfiguration? Database { get; init; }
 }

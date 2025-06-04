@@ -4,7 +4,7 @@ public static class RidesEndpoints
 {
     private const string Resource = "rides";
     private const int Version = 1;
-    
+
     public static WebApplication AddRideEndpoints(
         this WebApplication app)
     {

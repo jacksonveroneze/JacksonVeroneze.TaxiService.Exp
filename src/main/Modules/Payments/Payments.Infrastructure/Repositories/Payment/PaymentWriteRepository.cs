@@ -18,7 +18,7 @@ public class PaymentWriteRepository(
         await service.DbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public Task UpdateAsync(PaymentEntity entity, 
+    public Task UpdateAsync(PaymentEntity entity,
         CancellationToken cancellationToken)
     {
         throw new NotSupportedException();

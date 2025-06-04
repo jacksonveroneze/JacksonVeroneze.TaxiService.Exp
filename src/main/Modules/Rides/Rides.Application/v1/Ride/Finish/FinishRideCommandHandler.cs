@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.Result;
-
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Common.BaseDomain.ValueObjects;
@@ -47,7 +46,7 @@ public sealed class FinishRideCommandHandler(
             entity, cancellationToken);
 
         await eventDispatcher.DispatchAsync(entity);
-        
+
         logger.LogProcessed(
             nameof(FinishRideCommandHandler),
             nameof(Handle), entity.Id);

@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.Pagination.Cursor;
-
 using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Filters;
 using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Models;
 using TaxiService.Modules.Drivers.Application.v1.Driver.Create;
@@ -29,7 +28,7 @@ public class DriverMapper : Profile
             .ForMember(dest => dest.Birthday, opts => opts.MapFrom(src => src.Birthday))
             .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender))
             .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status));
-        
+
         CreateMap<DriverDto, DriverPublicApiDto>()
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
             .ForMember(dest => dest.FullName, opts => opts.MapFrom(src => src.FullName))

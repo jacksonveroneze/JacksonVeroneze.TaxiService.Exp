@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.Result;
-
 using TaxiService.Common.BaseDomain.Core.Errors;
 
 namespace TaxiService.Modules.Rides.Domain.Core.Errors;
@@ -44,7 +43,7 @@ public static class DomainErrors
         public static Error PassengerInactive =>
             Error.Create("Ride.PassengerInactive",
                 "Passenger is inactive.");
-        
+
         public static Error DriverNotActive =>
             Error.Create("Ride.DriverNotActive",
                 "Driver isn't active.");

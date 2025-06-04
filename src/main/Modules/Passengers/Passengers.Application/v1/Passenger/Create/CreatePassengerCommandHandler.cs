@@ -1,7 +1,5 @@
 using System.Text.Json;
-
 using JacksonVeroneze.NET.Result;
-
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Common.BaseApplication.Interfaces.Messaging;
@@ -43,10 +41,10 @@ public sealed class CreatePassengerCommandHandler(
             return Result<CreatePassengerCommandResponse>.FromConflict(error);
         }
 
-        Result<Domain.Aggregates.Passenger> resultEntity = 
+        Result<Domain.Aggregates.Passenger> resultEntity =
             FactoryEntity(request);
 
-        Result<Domain.Entities.Email> emailEntity = 
+        Result<Domain.Entities.Email> emailEntity =
             FactoryEmailEntity(request, resultEntity.Value!);
 
         if (resultEntity.IsFailure || emailEntity.IsFailure)
@@ -62,7 +60,7 @@ public sealed class CreatePassengerCommandHandler(
             emailEntity.Value!, cancellationToken);
 
         await eventDispatcher.DispatchAsync(resultEntity.Value!);
-        
+
         CreatePassengerCommandResponse response =
             mapper.Map<CreatePassengerCommandResponse>(
                 resultEntity.Value);

@@ -4,7 +4,6 @@ namespace TaxiService.Modules.Payments.Domain.Entities;
 
 public class PaymentEntity : BaseAggregateRoot
 {
-
     public void SetCompleted()
     {
         throw new NotSupportedException();

@@ -17,7 +17,7 @@ public record PaymentResult
     }
 
     public static PaymentResult Build(
-        bool isSuccess, string? signatureId, 
+        bool isSuccess, string? signatureId,
         string? errorMessage) =>
         new(isSuccess, signatureId, errorMessage);
 

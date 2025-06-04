@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.Result;
-
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Common.BaseApplication.Interfaces.Messaging;
@@ -7,8 +6,8 @@ using TaxiService.Common.BaseApplication.Validators;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces;
 using TaxiService.Modules.Drivers.Domain.Core.Errors;
 using TaxiService.Modules.Drivers.Domain.Repositories;
-
-using IDriverReadRepository = TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.IDriverReadRepository;
+using IDriverReadRepository =
+    TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.IDriverReadRepository;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.Create;
 
@@ -59,7 +58,7 @@ public sealed class CreateDriverCommandHandler(
             cancellationToken);
 
         await eventDispatcher.DispatchAsync(resultEntity.Value!);
-        
+
         CreateDriverCommandResponse response =
             mapper.Map<CreateDriverCommandResponse>(resultEntity.Value);
 

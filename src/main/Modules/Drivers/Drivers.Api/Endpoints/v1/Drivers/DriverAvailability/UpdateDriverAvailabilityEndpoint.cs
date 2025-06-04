@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.Result;
-
 using TaxiService.Modules.Drivers.Application.v1.DriverAvailability.Update;
 using TaxiService.Modules.Drivers.Domain.Enums;
 

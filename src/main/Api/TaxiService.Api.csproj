@@ -7,7 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design"/>
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\Common\BaseInfrastructure\BaseInfrastructure.csproj"/>
 

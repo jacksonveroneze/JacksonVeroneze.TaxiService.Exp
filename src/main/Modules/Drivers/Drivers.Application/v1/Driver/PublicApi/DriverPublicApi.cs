@@ -4,8 +4,8 @@ using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Models;
 using TaxiService.Modules.Drivers.PublicApi.v1.Interfaces;
 using TaxiService.Modules.Drivers.PublicApi.v1.Models;
 using TaxiService.Modules.Drivers.PublicApi.v1.Queries;
-
-using IDriverReadRepository = TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.IDriverReadRepository;
+using IDriverReadRepository =
+    TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.IDriverReadRepository;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.PublicApi;
 

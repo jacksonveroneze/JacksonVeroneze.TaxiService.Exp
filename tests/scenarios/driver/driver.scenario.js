@@ -15,9 +15,9 @@ export default (baseUrl, headers) => {
 
     group('Complete Flow', () => {
         driver.getById(baseUrl, factoryHeaders(), '0195ac20-1f74-7155-b431-9be98b134ed8/');
-        
+
         return;
-        
+
         const idDriver = driver.create(baseUrl, factoryHeaders());
         driver.getById(baseUrl, factoryHeaders(), idDriver);
         driver.activate(baseUrl, factoryHeaders(), idDriver);
@@ -39,7 +39,7 @@ export default (baseUrl, headers) => {
         driver.activate(baseUrl, factoryHeaders(), idDriver3);
         driver.updateAvailability(baseUrl, factoryHeaders(), idDriver3);
         driver.updateLocation(baseUrl, factoryHeaders(), idDriver3);
-        
+
         const vehicleId = driver.createVehicle(baseUrl, factoryHeaders(), idDriver3);
         driver.getVehicleById(baseUrl, factoryHeaders(), vehicleId);
     });

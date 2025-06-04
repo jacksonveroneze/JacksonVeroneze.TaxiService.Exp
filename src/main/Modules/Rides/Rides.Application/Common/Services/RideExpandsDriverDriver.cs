@@ -18,19 +18,19 @@ public class RideExpandsDriverDriver(
     {
         ArgumentNullException.ThrowIfNull(rides);
 
-       Guid[] ids = rides.Select(item => item.DriverId)
+        Guid[] ids = rides.Select(item => item.DriverId)
             .Where(item => item != null)
             .Select(item => item!.Value)
             .Distinct()
             .ToArray();
 
-       if (ids.Length == 0)
-       {
-           return;
-       }
-       
-       DriverPublicApiFilter filter = new(ids);
-       
+        if (ids.Length == 0)
+        {
+            return;
+        }
+
+        DriverPublicApiFilter filter = new(ids);
+
         ICollection<DriverPublicApiDto> drivers = await driverPublicApi
             .GetAsync(filter, cancellationToken);
 
@@ -39,7 +39,7 @@ public class RideExpandsDriverDriver(
 
         foreach (RideResponse ride in rides)
         {
-            if (ride.DriverId is not null 
+            if (ride.DriverId is not null
                 && dict.TryGetValue(ride.DriverId!.Value,
                     out DriverPublicApiDto? driver))
             {

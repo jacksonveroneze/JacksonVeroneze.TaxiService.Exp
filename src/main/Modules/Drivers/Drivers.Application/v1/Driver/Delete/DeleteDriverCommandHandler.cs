@@ -31,7 +31,7 @@ public sealed class DeleteDriverCommandHandler(
             return Result.FromNotFound(
                 DomainErrors.DriverErrors.NotFound);
         }
-        
+
         Result validationResult = await ValidateBussinesRulesAsync(
             request, cancellationToken);
 
@@ -51,13 +51,13 @@ public sealed class DeleteDriverCommandHandler(
             entity, cancellationToken);
 
         await eventDispatcher.DispatchAsync(entity);
-        
+
         logger.LogDeleted(nameof(DeleteDriverCommandHandler),
             nameof(Handle), entity.Id);
 
         return Result.WithSuccess();
     }
-    
+
     private async Task<Result> ValidateBussinesRulesAsync(
         DeleteDriverCommand request,
         CancellationToken cancellationToken)

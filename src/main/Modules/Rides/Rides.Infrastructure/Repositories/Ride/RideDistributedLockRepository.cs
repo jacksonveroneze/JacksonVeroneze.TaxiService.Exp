@@ -1,5 +1,4 @@
 using RedLockNet;
-
 using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories;
 
 namespace TaxiService.Modules.Rides.Infrastructure.Repositories.Ride;

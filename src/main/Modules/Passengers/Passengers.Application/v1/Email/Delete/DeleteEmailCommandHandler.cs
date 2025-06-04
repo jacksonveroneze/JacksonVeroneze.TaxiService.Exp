@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.Result;
-
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Passengers.Application.v1.Passenger.Activate;
@@ -49,4 +48,3 @@ public sealed class DeleteEmailCommandHandler(
         return Result.WithSuccess();
     }
 }
-

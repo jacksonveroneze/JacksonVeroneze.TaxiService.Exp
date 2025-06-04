@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
 using TaxiService.Common.BaseInfrastructure;
 using TaxiService.Modules.Rides.Domain.Entities;
 

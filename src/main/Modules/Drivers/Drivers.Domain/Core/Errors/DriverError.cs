@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.Result;
-
 using TaxiService.Common.BaseDomain.Core.Errors;
 
 namespace TaxiService.Modules.Drivers.Domain.Core.Errors;
@@ -47,6 +46,7 @@ static partial class DomainErrors
             Error.Create("Driver.NotActivated", "The Driver is not activated.");
 
         public static Error DriverHasActiveRide =>
-            Error.Create("Driver.HasActiveRide", "The driver cannot perform this action because he has an active race.");
+            Error.Create("Driver.HasActiveRide",
+                "The driver cannot perform this action because he has an active race.");
     }
 }

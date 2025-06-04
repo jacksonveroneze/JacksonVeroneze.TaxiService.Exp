@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.Result;
-
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Common.BaseApplication.Interfaces.System;
@@ -39,7 +38,7 @@ public sealed class InactivateDriverCommandHandler(
 
         await driverRepository.UpdateAsync(
             entity, cancellationToken);
-        
+
         await eventDispatcher.DispatchAsync(entity);
 
         logger.LogProcessed(

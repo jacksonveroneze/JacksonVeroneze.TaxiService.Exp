@@ -18,7 +18,7 @@ public class VehicleMapper : Profile
             .ForMember(dest => dest.Color, opts => opts.MapFrom(src => src.Color))
             .ForMember(dest => dest.Year, opts => opts.MapFrom(src => src.Year))
             .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status));
-        
+
         CreateMap<VehicleDto, VehicleResponse>()
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
             .ForMember(dest => dest.DriverId, opts => opts.MapFrom(src => src.DriverId))
@@ -31,7 +31,7 @@ public class VehicleMapper : Profile
 
         CreateMap<Domain.Aggregates.Vehicle, CreateVehicleCommandResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
-        
+
         CreateMap<VehicleDto, GetVehicleByIdQueryResponse>()
             .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
     }

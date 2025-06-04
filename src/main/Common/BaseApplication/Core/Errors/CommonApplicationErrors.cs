@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-
 using JacksonVeroneze.NET.Result;
 
 namespace TaxiService.Common.BaseApplication.Core.Errors;

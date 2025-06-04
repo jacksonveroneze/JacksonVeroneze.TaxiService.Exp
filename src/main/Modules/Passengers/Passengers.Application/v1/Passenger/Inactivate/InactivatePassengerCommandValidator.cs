@@ -2,7 +2,7 @@ using TaxiService.Common.BaseApplication.Validators.Base;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Passenger.Inactivate;
 
-public class InactivatePassengerCommandValidator 
+public class InactivatePassengerCommandValidator
     : AbstractValidator<InactivatePassengerCommand>
 {
     public InactivatePassengerCommandValidator()

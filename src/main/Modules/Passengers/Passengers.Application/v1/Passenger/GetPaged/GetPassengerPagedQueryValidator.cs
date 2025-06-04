@@ -3,7 +3,7 @@ using TaxiService.Modules.Passengers.Domain.Enums;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Passenger.GetPaged;
 
-public class GetPassengerPagedQueryValidator 
+public class GetPassengerPagedQueryValidator
     : AbstractValidator<GetPassengerPagedQuery>
 {
     private const int MinLengthName = 2;

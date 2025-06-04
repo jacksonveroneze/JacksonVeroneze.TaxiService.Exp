@@ -38,7 +38,7 @@ public sealed class BlockDriverCommandHandler(
             entity, cancellationToken);
 
         await eventDispatcher.DispatchAsync(entity);
-        
+
         logger.LogProcessed(
             nameof(BlockDriverCommandHandler),
             nameof(Handle), entity.Id);
@@ -47,7 +47,7 @@ public sealed class BlockDriverCommandHandler(
     }
 
     private Result Block(
-        Domain.Aggregates.Driver entity, 
+        Domain.Aggregates.Driver entity,
         BlockDriverCommand request)
     {
         Result result = request.Type switch

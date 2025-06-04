@@ -54,8 +54,8 @@ export const optionsDuration = {
 
 export const options = optionsRamp;
 
- // const baseUrl = 'http://localhost:7000/api/v1';
- const baseUrl = 'http://srv754980.hstgr.cloud:9098/v1';
+// const baseUrl = 'http://localhost:7000/api/v1';
+const baseUrl = 'http://srv754980.hstgr.cloud:9098/v1';
 // const baseUrl = 'http://localhost:8080';
 // const baseUrl = 'http://localhost:8085/api/v1';
 //const baseUrl = 'http://0.0.0.0:9095';
@@ -71,7 +71,7 @@ export default () => {
     group('Endpoint Driver', () => {
         driver(baseUrl, headers);
     });
-    
+
     // group('Endpoint User', () => {
     //     user(baseUrl, headers);
     // });
@@ -83,6 +83,6 @@ export default () => {
     // group('Endpoint Ride', () => {
     //     ride(baseUrl, headers);
     // });
-    
+
     // sleep(1);
 }

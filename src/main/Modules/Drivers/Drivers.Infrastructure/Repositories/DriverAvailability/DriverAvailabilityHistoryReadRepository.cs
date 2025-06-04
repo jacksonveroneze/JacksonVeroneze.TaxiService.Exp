@@ -1,6 +1,5 @@
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
 using Microsoft.EntityFrameworkCore;
-
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Drivers.Domain.Entities;
 using TaxiService.Modules.Drivers.Infrastructure.Contexts;

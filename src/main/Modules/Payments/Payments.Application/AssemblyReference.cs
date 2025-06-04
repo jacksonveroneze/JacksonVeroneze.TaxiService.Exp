@@ -4,6 +4,6 @@ namespace TaxiService.Modules.Payments.Application;
 
 public static class AssemblyReference
 {
-    public static readonly Assembly Assembly = 
+    public static readonly Assembly Assembly =
         typeof(AssemblyReference).Assembly;
 }

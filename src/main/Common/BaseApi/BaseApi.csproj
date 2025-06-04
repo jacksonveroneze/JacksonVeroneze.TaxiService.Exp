@@ -5,10 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JacksonVeroneze.NET.Result" />
-    <PackageReference Include="Asp.Versioning.Http" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
-    <PackageReference Include="Scalar.AspNetCore" />
+    <PackageReference Include="JacksonVeroneze.NET.Result"/>
+    <PackageReference Include="Asp.Versioning.Http"/>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
+    <PackageReference Include="Scalar.AspNetCore"/>
 
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
       <PrivateAssets>all</PrivateAssets>

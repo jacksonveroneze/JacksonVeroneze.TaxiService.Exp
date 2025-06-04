@@ -4,7 +4,7 @@ using TaxiService.Common.BaseDomain.Validators;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Passenger.Create;
 
-public class CreatePassengerCommandValidator 
+public class CreatePassengerCommandValidator
     : AbstractValidator<CreatePassengerCommand>
 {
     private const int MinLengthName = 2;

@@ -2,7 +2,7 @@ using TaxiService.Common.BaseApplication.Validators.Base;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.Delete;
 
-public class DeleteDriverCommandValidator 
+public class DeleteDriverCommandValidator
     : AbstractValidator<DeleteDriverCommand>
 {
     public DeleteDriverCommandValidator()

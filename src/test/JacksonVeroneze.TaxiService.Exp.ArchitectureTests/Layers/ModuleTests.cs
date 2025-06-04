@@ -1,6 +1,5 @@
 ﻿using JacksonVeroneze.TaxiService.Exp.ArchitectureTests.Abstractions;
 using NetArchTest.Rules;
-
 using TaxiService.Modules.Passengers.Api.Endpoints.v1.Passengers;
 using TaxiService.Modules.Passengers.Application;
 using TaxiService.Modules.Passengers.Application.v1.Passenger.PublicApi;

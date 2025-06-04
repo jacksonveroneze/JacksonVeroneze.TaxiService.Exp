@@ -2,7 +2,7 @@ using TaxiService.Common.BaseApplication.Validators.Base;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Passenger.Activate;
 
-public class ActivatePassengerCommandValidator 
+public class ActivatePassengerCommandValidator
     : AbstractValidator<ActivatePassengerCommand>
 {
     public ActivatePassengerCommandValidator()

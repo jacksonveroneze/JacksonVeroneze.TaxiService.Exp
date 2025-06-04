@@ -1,7 +1,6 @@
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
 using TaxiService.Common.BaseInfrastructure.Extensions;
 using TaxiService.Modules.Rides.Application;
 using TaxiService.Modules.Rides.Infrastructure.Configurations;
@@ -19,11 +18,11 @@ public static class ModuleExtensions
 
         services.AddConfiguration<ModuleConfiguration>(
             configuration, ModuleConfiguration.Name);
-        
+
         ModuleConfiguration moduleConfiguration = services
             .BuildServiceProvider()
             .GetRequiredService<ModuleConfiguration>();
-        
+
         services.AddServices()
             .AddHandlers(assembly)
             .AddMapper(assembly)

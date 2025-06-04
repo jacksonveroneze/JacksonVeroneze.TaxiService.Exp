@@ -1,9 +1,6 @@
 using System.Linq.Expressions;
-
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
-
 using Microsoft.Extensions.Logging;
-
 using TaxiService.Common.BaseInfrastructure.Extensions;
 using TaxiService.Modules.Passengers.Application.Common;
 using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories;

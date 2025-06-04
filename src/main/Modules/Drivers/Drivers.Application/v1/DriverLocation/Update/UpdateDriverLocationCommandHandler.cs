@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.Result;
-
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Services;
 using TaxiService.Modules.Drivers.Domain.Entities;
@@ -20,7 +19,7 @@ public sealed class UpdateDriverLocationCommandHandler(
         ArgumentNullException.ThrowIfNull(request);
 
         Result result = await driverService
-            .ExistsAndIsActiveAsync(request.Id, 
+            .ExistsAndIsActiveAsync(request.Id,
                 cancellationToken);
 
         if (result.IsFailure)
@@ -36,7 +35,7 @@ public sealed class UpdateDriverLocationCommandHandler(
             return driverLocation;
         }
 
-        await CreateAsync(driverLocation.Value!, 
+        await CreateAsync(driverLocation.Value!,
             cancellationToken);
 
         return Result.WithSuccess();

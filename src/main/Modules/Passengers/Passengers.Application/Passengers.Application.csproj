@@ -20,8 +20,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\BaseApplication\BaseApplication.csproj"/>
-    <ProjectReference Include="..\Passengers.Domain\Passengers.Domain.csproj" />
-    <ProjectReference Include="..\Passengers.PublicApi\Passengers.PublicApi.csproj" />
+    <ProjectReference Include="..\Passengers.Domain\Passengers.Domain.csproj"/>
+    <ProjectReference Include="..\Passengers.PublicApi\Passengers.PublicApi.csproj"/>
   </ItemGroup>
 
 </Project>

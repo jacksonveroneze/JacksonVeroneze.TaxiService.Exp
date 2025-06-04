@@ -1,5 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Services;
 using TaxiService.Modules.Drivers.Application.Common.Services;
@@ -27,7 +26,7 @@ internal static class ServicesExtensions
         // Repositories
         services.AddScoped<IDriverReadRepository, DriverReadRepository>();
         services.AddScoped<IDriverRepository, DriverRepository>();
-        
+
         // Services (Public API)
         services.AddTransient<IDriverPublicApi, DriverPublicApi>();
 

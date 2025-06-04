@@ -26,7 +26,7 @@ public static class ConfigurationExtensions
 
         return services;
     }
-    
+
     public static IServiceCollection AddConfigurationReloaded<TParameterType>(
         this IServiceCollection services,
         IConfiguration configuration,

@@ -1,11 +1,8 @@
 using System.Linq.Expressions;
-
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
 using JacksonVeroneze.NET.Pagination.Cursor;
 using JacksonVeroneze.NET.Pagination.Cursor.Extensions;
-
 using Microsoft.Extensions.Logging;
-
 using TaxiService.Common.BaseInfrastructure.Extensions;
 using TaxiService.Modules.Rides.Application.Common;
 using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories;

@@ -19,7 +19,7 @@ public static class CultureExtensions
         CultureInfo.DefaultThreadCurrentUICulture = defaultCulture;
 
         CultureInfo[] supportedCultures = [new(DefaultCulture)];
-        
+
         services.Configure<RequestLocalizationOptions>(options =>
         {
             options.DefaultRequestCulture = new RequestCulture(DefaultCulture);

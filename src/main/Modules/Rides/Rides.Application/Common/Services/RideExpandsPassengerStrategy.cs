@@ -17,7 +17,7 @@ public class RideExpandsPassengerStrategy(
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(rides);
-        
+
         Guid[] ids = rides.Select(item => item.PassengerId)
             .Where(item => item != null)
             .Select(item => item!.Value)
@@ -28,18 +28,18 @@ public class RideExpandsPassengerStrategy(
         {
             return;
         }
-        
+
         PassengerPublicApiFilter filter = new(ids);
-        
+
         ICollection<PassengerPublicApiDto> passengers = await passengerPublicApi
             .GetAsync(filter, cancellationToken);
 
         Dictionary<Guid, PassengerPublicApiDto> dict = passengers
             .ToDictionary(key => key.Id, value => value);
-        
+
         foreach (RideResponse ride in rides)
         {
-            if (ride.PassengerId is not null 
+            if (ride.PassengerId is not null
                 && dict.TryGetValue(ride.PassengerId!.Value,
                     out PassengerPublicApiDto? passenger))
             {

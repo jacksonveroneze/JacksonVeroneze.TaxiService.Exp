@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-
 using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Models;
 using TaxiService.Modules.Drivers.Application.v1.Vehicle.Common.Models;
 using TaxiService.Modules.Drivers.Infrastructure.Mappings.ReadModels;
@@ -12,7 +11,7 @@ public class DriversReadDbContext(
     : DbContext(options)
 {
     private const string Schema = "driver";
-    
+
     protected override void OnModelCreating(
         ModelBuilder modelBuilder)
     {
@@ -23,7 +22,7 @@ public class DriversReadDbContext(
 
         modelBuilder.Entity<DriverDto>()
             .HasQueryFilter(field => field.DeletedAt == null);
-        
+
         modelBuilder.Entity<VehicleDto>()
             .HasQueryFilter(field => field.DeletedAt == null);
 

@@ -7,8 +7,7 @@ export function checker(response, tag, desc, statusCode) {
     check(response, {[des]: (r) => r.status === statusCode});
 }
 
-export function factoryHeaders()
-{
+export function factoryHeaders() {
     return {
         headers: {
             'Content-Type': 'application/json',

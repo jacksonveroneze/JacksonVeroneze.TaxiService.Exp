@@ -24,8 +24,8 @@ internal static partial class LogMessagesExtensions
                   "Identifier: '{identifier}' - IsSuccess: '{isSuccess}'")]
     internal static partial void LogEndSignature(this ILogger logger,
         string identifier, bool isSuccess);
-    
-    
+
+
     [LoggerMessage(
         EventId = 1033,
         Level = LogLevel.Information,
@@ -33,8 +33,8 @@ internal static partial class LogMessagesExtensions
                   $"{nameof(RequestCommandHandler.Handle)} - " +
                   $"Fetching signature providers.")]
     internal static partial void LogFetchingProviders(this ILogger logger);
-    
-    
+
+
     [LoggerMessage(
         EventId = 1034,
         Level = LogLevel.Error,
@@ -42,7 +42,7 @@ internal static partial class LogMessagesExtensions
                   $"{nameof(RequestCommandHandler.Handle)} - " +
                   $"No signature providers available.")]
     internal static partial void LogNoProvidersAvailable(this ILogger logger);
-    
+
     [LoggerMessage(
         EventId = 1035,
         Level = LogLevel.Error,
@@ -50,8 +50,8 @@ internal static partial class LogMessagesExtensions
                   $"{nameof(RequestCommandHandler.Handle)} - " +
                   $"All providers failed to sign the document.")]
     internal static partial void LogFailSignatureAllProviders(this ILogger logger);
-    
-    
+
+
     [LoggerMessage(
         EventId = 1036,
         Level = LogLevel.Information,
@@ -61,7 +61,7 @@ internal static partial class LogMessagesExtensions
                   "Provider: '{provider}'")]
     internal static partial void LogStartSignatureProvider(this ILogger logger,
         PaymentProviderType provider);
-    
+
     [LoggerMessage(
         EventId = 1037,
         Level = LogLevel.Information,
@@ -71,8 +71,8 @@ internal static partial class LogMessagesExtensions
                   "Provider: '{provider}'")]
     internal static partial void LogSuccessSignatureProvider(this ILogger logger,
         PaymentProviderType provider);
-    
-    
+
+
     [LoggerMessage(
         EventId = 1038,
         Level = LogLevel.Warning,
@@ -82,7 +82,6 @@ internal static partial class LogMessagesExtensions
                   "Provider: '{provider}'")]
     internal static partial void LogFailedSignatureProvider(this ILogger logger,
         PaymentProviderType provider);
-    
-    
+
     #endregion
 }

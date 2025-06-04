@@ -1,5 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-
 using TaxiService.Common.BaseInfrastructure.Extensions;
 using TaxiService.Modules.Passengers.Application.Common.Interfaces;
 using TaxiService.Modules.Passengers.Infrastructure.Configurations;
@@ -18,12 +17,12 @@ internal static class DatabaseExtensions
 
         services.AddWriteDatabase<PassengersDbContext>(
             moduleConfiguration.Database!);
-        
+
         services.AddReadDatabase<PassengersReadDbContext>(
             moduleConfiguration.Database!);
-        
+
         services.AddScoped<IUnitOfWork, UnitOfWork.EfUnitOfWork>();
-        
+
         return services;
     }
 }

@@ -2,7 +2,7 @@ using TaxiService.Common.BaseApplication.Validators.Base;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Passenger.Delete;
 
-public class DeletePassengerCommandValidator 
+public class DeletePassengerCommandValidator
     : AbstractValidator<DeletePassengerCommand>
 {
     public DeletePassengerCommandValidator()

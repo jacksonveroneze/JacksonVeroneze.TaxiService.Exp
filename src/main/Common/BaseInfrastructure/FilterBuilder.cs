@@ -1,5 +1,4 @@
 using System.Linq.Expressions;
-
 using TaxiService.Common.BaseDomain.Specifications.Base.Predicate;
 
 namespace TaxiService.Common.BaseInfrastructure;

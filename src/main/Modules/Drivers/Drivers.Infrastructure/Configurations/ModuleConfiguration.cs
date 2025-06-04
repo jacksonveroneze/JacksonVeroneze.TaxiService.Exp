@@ -6,6 +6,6 @@ namespace TaxiService.Modules.Drivers.Infrastructure.Configurations;
 internal sealed record ModuleConfiguration
 {
     internal const string Name = "Drivers";
-    
+
     public DatabaseConfiguration? Database { get; init; }
 }

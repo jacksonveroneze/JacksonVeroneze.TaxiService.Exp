@@ -94,7 +94,7 @@ public static partial class LogMessagesExtensions
                   "Identifier: '{identifier}' - Message: '{message}'")]
     public static partial void LogNotFound(this ILogger logger,
         string className, string methodName, Guid identifier, string message);
-    
+
     #endregion
 
     #region CommonProcessed
@@ -122,7 +122,7 @@ public static partial class LogMessagesExtensions
                   "Identifier: '{identifier}' - Message: '{message}'")]
     public static partial void LogRuleViolation(this ILogger logger,
         string className, string methodName, Guid identifier, string message);
-    
+
     #endregion
 
     #region CommonGetData

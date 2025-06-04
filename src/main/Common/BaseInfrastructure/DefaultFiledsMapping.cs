@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.DomainObjects.Domain;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

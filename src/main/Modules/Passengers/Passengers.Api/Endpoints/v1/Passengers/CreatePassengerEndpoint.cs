@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.Result;
-
 using TaxiService.Modules.Passengers.Application.v1.Passenger.Create;
 
 namespace TaxiService.Modules.Passengers.Api.Endpoints.v1.Passengers;
@@ -14,7 +13,7 @@ internal static class CreatePassengerEndpoint
                 [FromBody] CreatePassengerCommand command,
                 CancellationToken cancellationToken) =>
             {
-                Result<CreatePassengerCommandResponse> response = 
+                Result<CreatePassengerCommandResponse> response =
                     await mediator.Send(command, cancellationToken);
 
                 return response.ToIResult();

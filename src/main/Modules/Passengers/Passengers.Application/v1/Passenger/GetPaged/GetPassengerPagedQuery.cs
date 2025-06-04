@@ -1,6 +1,5 @@
 using JacksonVeroneze.NET.Pagination.Enums;
 using JacksonVeroneze.NET.Result;
-
 using TaxiService.Common.BaseApplication.Queries.Base;
 using TaxiService.Modules.Passengers.Application.v1.Passenger.Common.Models;
 using TaxiService.Modules.Passengers.Domain.Enums;

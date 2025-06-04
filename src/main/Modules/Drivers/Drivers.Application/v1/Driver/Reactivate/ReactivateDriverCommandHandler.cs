@@ -38,7 +38,7 @@ public sealed class ReactivateDriverCommandHandler(
             entity, cancellationToken);
 
         await eventDispatcher.DispatchAsync(entity);
-        
+
         logger.LogProcessed(
             nameof(ReactivateDriverCommandHandler),
             nameof(Handle), entity.Id);

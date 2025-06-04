@@ -7,7 +7,7 @@ public static class DriversEndpoints
 {
     private const string Resource = "drivers";
     private const int Version = 1;
-    
+
     public static WebApplication AddDriverEndpoints(
         this WebApplication app)
     {

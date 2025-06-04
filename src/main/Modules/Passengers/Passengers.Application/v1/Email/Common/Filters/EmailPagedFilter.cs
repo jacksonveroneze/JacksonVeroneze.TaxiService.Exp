@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-
 using JacksonVeroneze.NET.Pagination.Offset;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Email.Common.Filters;

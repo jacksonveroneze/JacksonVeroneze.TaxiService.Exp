@@ -12,7 +12,7 @@ public class PassengersDbContext(
     : DbContext(options)
 {
     private const string Schema = "passenger";
-    
+
     protected override void OnModelCreating(
         ModelBuilder modelBuilder)
     {

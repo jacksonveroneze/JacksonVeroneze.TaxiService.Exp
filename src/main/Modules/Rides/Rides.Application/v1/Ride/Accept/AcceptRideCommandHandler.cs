@@ -1,7 +1,5 @@
 using JacksonVeroneze.NET.Result;
-
 using RedLockNet;
-
 using TaxiService.Common.BaseApplication.Core.Errors;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Messaging;
@@ -57,7 +55,7 @@ public sealed class AcceptRideCommandHandler(
             return Result<Domain.Aggregates.Ride>.FromConflict(
                 DomainErrors.RideError.NotFound);
         }
-        
+
         if (driver.Status != DriverStatus.Active)
         {
             return Result<Domain.Aggregates.Ride>.FromRuleViolation(
@@ -76,7 +74,7 @@ public sealed class AcceptRideCommandHandler(
             entity, cancellationToken);
 
         await eventDispatcher.DispatchAsync(entity);
-        
+
         logger.LogProcessed(
             nameof(AcceptRideCommandHandler),
             nameof(Handle), entity.Id);

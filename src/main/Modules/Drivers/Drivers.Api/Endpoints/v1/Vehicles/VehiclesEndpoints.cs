@@ -4,7 +4,7 @@ public static class VehiclesEndpoints
 {
     private const string Resource = "vehicles";
     private const int Version = 1;
-    
+
     public static WebApplication AddVehicleEndpoints(
         this WebApplication app)
     {

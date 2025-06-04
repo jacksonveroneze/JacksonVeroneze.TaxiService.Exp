@@ -12,10 +12,7 @@ public static class AuthorizationExtensions
     {
         ArgumentNullException.ThrowIfNull(appConfiguration);
 
-        services.AddAuthorization(options =>
-        {
-          
-        });
+        services.AddAuthorization(options => { });
 
         return services;
     }

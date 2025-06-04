@@ -8,7 +8,7 @@ public interface IPassengerPublicApi
     Task<bool> ExistsByIdAsync(
         Guid id,
         CancellationToken cancellationToken);
-    
+
     Task<PassengerPublicApiDto?> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken);

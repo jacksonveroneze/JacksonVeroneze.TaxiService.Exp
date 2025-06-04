@@ -1,12 +1,11 @@
 using JacksonVeroneze.NET.Pagination.Cursor;
 using JacksonVeroneze.NET.Result;
-
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Filters;
 using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Models;
-
-using IDriverReadRepository = TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.IDriverReadRepository;
+using IDriverReadRepository =
+    TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.IDriverReadRepository;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.GetPaged;
 

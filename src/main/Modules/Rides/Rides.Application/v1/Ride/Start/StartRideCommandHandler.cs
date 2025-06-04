@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.Result;
-
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Modules.Rides.Domain.Core.Errors;
@@ -39,7 +38,7 @@ public sealed class StartRideCommandHandler(
             entity, cancellationToken);
 
         await eventDispatcher.DispatchAsync(entity);
-        
+
         logger.LogProcessed(
             nameof(StartRideCommandHandler),
             nameof(Handle), entity.Id);

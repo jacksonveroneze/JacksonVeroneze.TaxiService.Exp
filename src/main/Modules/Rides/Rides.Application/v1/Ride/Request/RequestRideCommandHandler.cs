@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.Result;
-
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Common.BaseApplication.Interfaces.Messaging;
@@ -60,7 +59,7 @@ public sealed class RequestRideCommandHandler(
         await CreateAsync(resultEntity.Value!, cancellationToken);
 
         await eventDispatcher.DispatchAsync(resultEntity.Value!);
-        
+
         RequestRideCommandResponse response =
             mapper.Map<RequestRideCommandResponse>(resultEntity.Value);
 

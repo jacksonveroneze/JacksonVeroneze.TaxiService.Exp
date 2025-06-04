@@ -7,8 +7,8 @@ namespace TaxiService.Modules.Payments.Infrastructure.Configurations;
 internal sealed record ModuleConfiguration
 {
     internal const string Name = "Payments";
-    
+
     public DatabaseConfiguration? Database { get; init; }
-    
+
     public IReadOnlyList<HttpClientConfiguration>? HttpClients { get; init; }
 }

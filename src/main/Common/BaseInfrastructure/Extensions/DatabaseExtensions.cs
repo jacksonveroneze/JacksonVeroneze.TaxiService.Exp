@@ -1,8 +1,6 @@
 using JacksonVeroneze.NET.EntityFramework.Extensions;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-
 using TaxiService.Common.BaseInfrastructure.Configurations;
 
 namespace TaxiService.Common.BaseInfrastructure.Extensions;

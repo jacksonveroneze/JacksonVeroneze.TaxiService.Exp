@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.Result;
-
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Modules.Passengers.Domain.Core.Errors;
@@ -32,7 +31,7 @@ public sealed class DeletePassengerCommandHandler(
             entity, cancellationToken);
 
         await eventDispatcher.DispatchAsync(entity);
-        
+
         logger.LogDeleted(nameof(DeletePassengerCommandHandler),
             nameof(Handle), entity.Id);
 

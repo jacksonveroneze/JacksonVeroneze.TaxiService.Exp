@@ -1,5 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-
 using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Passengers.Application.v1.Passenger.PublicApi;
 using TaxiService.Modules.Passengers.Domain.Repositories;
@@ -21,7 +20,7 @@ internal static class ServicesExtensions
         // Repositories
         services.AddScoped<IPassengerReadRepository, PassengerReadRepository>();
         services.AddScoped<IPassengerRepository, PassengerRepository>();
-        
+
         // Services (Public API)
         services.AddTransient<IPassengerPublicApi, PassengerPublicApi>();
 

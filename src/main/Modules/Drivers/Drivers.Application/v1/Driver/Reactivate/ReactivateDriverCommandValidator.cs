@@ -2,7 +2,7 @@ using TaxiService.Common.BaseApplication.Validators.Base;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.Reactivate;
 
-public class ReactivateDriverCommandValidator 
+public class ReactivateDriverCommandValidator
     : AbstractValidator<ReactivateDriverCommand>
 {
     public ReactivateDriverCommandValidator()

@@ -1,5 +1,4 @@
 using JacksonVeroneze.NET.Result;
-
 using TaxiService.Common.BaseDomain;
 using TaxiService.Common.BaseDomain.Entities.Base;
 using TaxiService.Common.BaseDomain.ValueObjects;
@@ -45,7 +44,7 @@ public class Ride : BaseAggregateRoot
         CoordinateFrom = coordinateFrom;
         CoordinateTo = coordinateTo;
         Status = RideStatus.Requested;
-        
+
         AddEvent(new RideRequestedDomainEvent(Id));
     }
 

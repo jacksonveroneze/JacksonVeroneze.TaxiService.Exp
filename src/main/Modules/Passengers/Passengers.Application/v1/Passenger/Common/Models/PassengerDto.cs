@@ -16,6 +16,6 @@ public sealed record PassengerDto
     public Gender? Gender { get; init; }
 
     public PassengerStatus? Status { get; init; }
-    
+
     public DateTime? DeletedAt { get; init; }
 }
