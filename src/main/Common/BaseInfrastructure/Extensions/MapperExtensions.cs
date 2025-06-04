@@ -1,5 +1,6 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
+using TaxiService.Common.BaseApplication;
 
 namespace TaxiService.Common.BaseInfrastructure.Extensions;
 
@@ -9,7 +10,7 @@ public static class MapperExtensions
     public static IServiceCollection AddCommonMapper(
         this IServiceCollection services)
     {
-        services.AddAutoMapper(typeof(BaseApplication.AssemblyReference));
+        services.AddAutoMapper(typeof(AssemblyReference));
 
         return services;
     }

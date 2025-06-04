@@ -3,6 +3,7 @@ using TaxiService.Common.BaseInfrastructure.Extensions;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces;
 using TaxiService.Modules.Drivers.Infrastructure.Configurations;
 using TaxiService.Modules.Drivers.Infrastructure.Contexts;
+using TaxiService.Modules.Drivers.Infrastructure.UnitOfWork;
 
 namespace TaxiService.Modules.Drivers.Infrastructure.Extensions;
 
@@ -21,7 +22,7 @@ internal static class DatabaseExtensions
         services.AddReadDatabase<DriversReadDbContext>(
             moduleConfiguration.Database!);
 
-        services.AddScoped<IUnitOfWork, UnitOfWork.EfUnitOfWork>();
+        services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 
         return services;
     }

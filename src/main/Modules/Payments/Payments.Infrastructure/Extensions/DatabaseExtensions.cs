@@ -3,6 +3,7 @@ using TaxiService.Common.BaseInfrastructure.Extensions;
 using TaxiService.Modules.Payments.Application.v1;
 using TaxiService.Modules.Payments.Infrastructure.Configurations;
 using TaxiService.Modules.Payments.Infrastructure.Contexts;
+using TaxiService.Modules.Payments.Infrastructure.UnitOfWork;
 
 namespace TaxiService.Modules.Payments.Infrastructure.Extensions;
 
@@ -18,7 +19,7 @@ internal static class DatabaseExtensions
         services.AddWriteDatabase<PaymentsDbContext>(
             moduleConfiguration.Database!);
 
-        services.AddScoped<IUnitOfWork, UnitOfWork.EfUnitOfWork>();
+        services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 
         return services;
     }
