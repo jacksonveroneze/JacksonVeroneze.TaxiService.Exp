@@ -4,9 +4,7 @@ using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Services;
-using TaxiService.Modules.Drivers.Domain.Aggregates;
 using TaxiService.Modules.Drivers.Domain.Core.Errors;
-using TaxiService.Modules.Drivers.Domain.Entities;
 using TaxiService.Modules.Drivers.Domain.Repositories;
 
 using IVehicleReadRepository = TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories.IVehicleReadRepository;

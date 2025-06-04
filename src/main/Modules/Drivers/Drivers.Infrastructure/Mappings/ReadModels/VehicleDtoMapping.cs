@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-using TaxiService.Modules.Drivers.Application.v1.Vehicle;
 using TaxiService.Modules.Drivers.Application.v1.Vehicle.Common.Models;
 
 namespace TaxiService.Modules.Drivers.Infrastructure.Mappings.ReadModels;

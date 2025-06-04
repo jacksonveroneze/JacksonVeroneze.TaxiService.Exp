@@ -1,5 +1,4 @@
 using TaxiService.Modules.Rides.Domain.Aggregates;
-using TaxiService.Modules.Rides.Domain.Entities;
 
 namespace TaxiService.Modules.Rides.Domain.Repositories;
 

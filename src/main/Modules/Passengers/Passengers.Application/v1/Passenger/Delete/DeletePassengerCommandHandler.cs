@@ -2,9 +2,7 @@ using JacksonVeroneze.NET.Result;
 
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Messaging;
-using TaxiService.Modules.Passengers.Domain.Aggregates;
 using TaxiService.Modules.Passengers.Domain.Core.Errors;
-using TaxiService.Modules.Passengers.Domain.Entities;
 using TaxiService.Modules.Passengers.Domain.Repositories;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Passenger.Delete;

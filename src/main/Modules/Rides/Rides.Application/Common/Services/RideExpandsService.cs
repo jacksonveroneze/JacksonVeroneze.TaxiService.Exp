@@ -1,6 +1,4 @@
 using TaxiService.Modules.Rides.Application.Common.Interfaces.Services;
-using TaxiService.Modules.Rides.Application.v1.Ride;
-using TaxiService.Modules.Rides.Application.v1.Ride.Common;
 using TaxiService.Modules.Rides.Application.v1.Ride.Common.Enums;
 using TaxiService.Modules.Rides.Application.v1.Ride.Common.Models;
 

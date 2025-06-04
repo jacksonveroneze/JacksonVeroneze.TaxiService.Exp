@@ -4,8 +4,6 @@ using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Passengers.Application.v1.Email.Common.Filters;
-using TaxiService.Modules.Passengers.Application.v1.Passenger.Common.Filters;
-using TaxiService.Modules.Passengers.Domain.Entities;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Email.GetPaged;
 

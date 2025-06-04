@@ -4,8 +4,6 @@ using Microsoft.Extensions.Logging;
 
 using TaxiService.Common.BaseInfrastructure.Extensions;
 using TaxiService.Modules.Rides.Application.Common;
-using TaxiService.Modules.Rides.Domain.Aggregates;
-using TaxiService.Modules.Rides.Domain.Entities;
 using TaxiService.Modules.Rides.Domain.Repositories;
 using TaxiService.Modules.Rides.Infrastructure.Contexts;
 

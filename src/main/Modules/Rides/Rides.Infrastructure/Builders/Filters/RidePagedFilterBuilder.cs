@@ -1,7 +1,6 @@
 using System.Linq.Expressions;
 
 using TaxiService.Common.BaseInfrastructure;
-using TaxiService.Modules.Rides.Application.v1.Ride;
 using TaxiService.Modules.Rides.Application.v1.Ride.Common.Filters;
 using TaxiService.Modules.Rides.Application.v1.Ride.Common.Models;
 

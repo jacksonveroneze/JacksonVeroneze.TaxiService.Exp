@@ -1,7 +1,6 @@
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
 
 using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories;
-using TaxiService.Modules.Rides.Domain.Entities;
 using TaxiService.Modules.Rides.Infrastructure.Contexts;
 
 namespace TaxiService.Modules.Rides.Infrastructure.Repositories.Position;

@@ -5,8 +5,6 @@ using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Models;
 using TaxiService.Modules.Drivers.Application.v1.Driver.Create;
 using TaxiService.Modules.Drivers.Application.v1.Driver.GetById;
 using TaxiService.Modules.Drivers.Application.v1.Driver.GetPaged;
-using TaxiService.Modules.Drivers.Domain.Aggregates;
-using TaxiService.Modules.Drivers.Domain.Entities;
 using TaxiService.Modules.Drivers.PublicApi.v1.Models;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Driver.Mappers;

@@ -4,9 +4,7 @@ using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Common.BaseDomain.ValueObjects;
 using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories;
-using TaxiService.Modules.Rides.Domain.Aggregates;
 using TaxiService.Modules.Rides.Domain.Core.Errors;
-using TaxiService.Modules.Rides.Domain.Entities;
 using TaxiService.Modules.Rides.Domain.Repositories;
 using TaxiService.Modules.Rides.Domain.Services;
 

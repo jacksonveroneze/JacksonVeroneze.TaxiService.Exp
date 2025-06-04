@@ -2,10 +2,7 @@ using JacksonVeroneze.NET.Result;
 
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Messaging;
-using TaxiService.Modules.Rides.Application.v1.Ride.Cancel;
-using TaxiService.Modules.Rides.Domain.Aggregates;
 using TaxiService.Modules.Rides.Domain.Core.Errors;
-using TaxiService.Modules.Rides.Domain.Entities;
 using TaxiService.Modules.Rides.Domain.Repositories;
 
 namespace TaxiService.Modules.Rides.Application.v1.Ride.Start;

@@ -4,7 +4,6 @@ using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Passengers.Application.v1.Passenger.Activate;
 using TaxiService.Modules.Passengers.Domain.Core.Errors;
-using TaxiService.Modules.Passengers.Domain.Entities;
 using TaxiService.Modules.Passengers.Domain.Repositories;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Email.Delete;

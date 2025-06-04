@@ -7,7 +7,6 @@ using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Modules.Passengers.Application.Common.Interfaces;
 using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories;
-using TaxiService.Modules.Passengers.Domain.Aggregates;
 using TaxiService.Modules.Passengers.Domain.Core.Errors;
 using TaxiService.Modules.Passengers.Domain.Entities;
 using TaxiService.Modules.Passengers.Domain.Repositories;

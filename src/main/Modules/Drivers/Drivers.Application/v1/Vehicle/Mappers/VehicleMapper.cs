@@ -1,8 +1,6 @@
 using TaxiService.Modules.Drivers.Application.v1.Vehicle.Common.Models;
 using TaxiService.Modules.Drivers.Application.v1.Vehicle.Create;
 using TaxiService.Modules.Drivers.Application.v1.Vehicle.GetById;
-using TaxiService.Modules.Drivers.Domain.Aggregates;
-using TaxiService.Modules.Drivers.Domain.Entities;
 
 namespace TaxiService.Modules.Drivers.Application.v1.Vehicle.Mappers;
 

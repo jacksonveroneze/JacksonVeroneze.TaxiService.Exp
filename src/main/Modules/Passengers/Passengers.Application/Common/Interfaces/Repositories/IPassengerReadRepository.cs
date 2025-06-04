@@ -1,6 +1,5 @@
 using JacksonVeroneze.NET.Pagination.Cursor;
 
-using TaxiService.Modules.Passengers.Application.v1.Passenger;
 using TaxiService.Modules.Passengers.Application.v1.Passenger.Common.Filters;
 using TaxiService.Modules.Passengers.Application.v1.Passenger.Common.Models;
 

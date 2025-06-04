@@ -2,9 +2,7 @@ using TaxiService.Api.Middlewares;
 using TaxiService.Common.BaseInfrastructure.Configurations;
 using TaxiService.Common.BaseInfrastructure.Extensions;
 using TaxiService.Modules.Drivers.Infrastructure.Extensions;
-using TaxiService.Modules.Drivers.PublicApi;
 using TaxiService.Modules.Passengers.Infrastructure.Extensions;
-using TaxiService.Modules.Passengers.PublicApi;
 using TaxiService.Modules.Payments.Infrastructure.Extensions;
 using TaxiService.Modules.Rides.Infrastructure.Extensions;
 

@@ -5,7 +5,6 @@ using TaxiService.Modules.Passengers.Api.Endpoints.v1.Passengers;
 using TaxiService.Modules.Passengers.Application;
 using TaxiService.Modules.Passengers.Application.v1.Passenger.PublicApi;
 using TaxiService.Modules.Passengers.Domain.Aggregates;
-using TaxiService.Modules.Passengers.Domain.Entities;
 using TaxiService.Modules.Passengers.Infrastructure.Repositories.Passenger;
 
 namespace JacksonVeroneze.TaxiService.Exp.ArchitectureTests.Layers;

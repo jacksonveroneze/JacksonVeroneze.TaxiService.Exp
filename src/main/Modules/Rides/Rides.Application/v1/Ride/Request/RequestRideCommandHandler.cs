@@ -7,9 +7,7 @@ using TaxiService.Modules.Passengers.Domain.Enums;
 using TaxiService.Modules.Passengers.PublicApi.v1.Interfaces;
 using TaxiService.Modules.Passengers.PublicApi.v1.Models;
 using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories;
-using TaxiService.Modules.Rides.Domain.Aggregates;
 using TaxiService.Modules.Rides.Domain.Core.Errors;
-using TaxiService.Modules.Rides.Domain.Entities;
 using TaxiService.Modules.Rides.Domain.Repositories;
 
 namespace TaxiService.Modules.Rides.Application.v1.Ride.Request;

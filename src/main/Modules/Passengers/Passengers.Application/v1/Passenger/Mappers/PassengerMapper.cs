@@ -5,8 +5,6 @@ using TaxiService.Modules.Passengers.Application.v1.Passenger.Common.Models;
 using TaxiService.Modules.Passengers.Application.v1.Passenger.Create;
 using TaxiService.Modules.Passengers.Application.v1.Passenger.GetById;
 using TaxiService.Modules.Passengers.Application.v1.Passenger.GetPaged;
-using TaxiService.Modules.Passengers.Domain.Aggregates;
-using TaxiService.Modules.Passengers.Domain.Entities;
 using TaxiService.Modules.Passengers.PublicApi.v1.Models;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Passenger.Mappers;

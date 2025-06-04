@@ -5,8 +5,6 @@ using TaxiService.Modules.Rides.Application.v1.Ride.Common.Models;
 using TaxiService.Modules.Rides.Application.v1.Ride.GetById;
 using TaxiService.Modules.Rides.Application.v1.Ride.GetPaged;
 using TaxiService.Modules.Rides.Application.v1.Ride.Request;
-using TaxiService.Modules.Rides.Domain.Aggregates;
-using TaxiService.Modules.Rides.Domain.Entities;
 
 namespace TaxiService.Modules.Rides.Application.v1.Ride.Mappers;
 

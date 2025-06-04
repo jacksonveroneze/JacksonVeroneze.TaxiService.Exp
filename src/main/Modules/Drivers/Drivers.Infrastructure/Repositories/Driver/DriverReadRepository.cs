@@ -9,7 +9,6 @@ using Microsoft.Extensions.Logging;
 using TaxiService.Common.BaseInfrastructure.Extensions;
 using TaxiService.Modules.Drivers.Application.Common;
 using TaxiService.Modules.Drivers.Application.Common.Interfaces.Repositories;
-using TaxiService.Modules.Drivers.Application.v1.Driver;
 using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Filters;
 using TaxiService.Modules.Drivers.Application.v1.Driver.Common.Models;
 using TaxiService.Modules.Drivers.Infrastructure.Builders.Filters;

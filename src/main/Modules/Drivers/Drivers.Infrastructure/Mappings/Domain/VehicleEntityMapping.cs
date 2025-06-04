@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TaxiService.Common.BaseInfrastructure;
 using TaxiService.Modules.Drivers.Domain.Aggregates;
-using TaxiService.Modules.Drivers.Domain.Entities;
 
 namespace TaxiService.Modules.Drivers.Infrastructure.Mappings.Domain;
 

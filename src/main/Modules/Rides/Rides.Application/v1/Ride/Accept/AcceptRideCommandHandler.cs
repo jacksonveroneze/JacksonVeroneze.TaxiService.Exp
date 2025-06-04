@@ -9,10 +9,7 @@ using TaxiService.Modules.Drivers.Domain.Enums;
 using TaxiService.Modules.Drivers.PublicApi.v1.Interfaces;
 using TaxiService.Modules.Drivers.PublicApi.v1.Models;
 using TaxiService.Modules.Rides.Application.Common.Interfaces.Repositories;
-using TaxiService.Modules.Rides.Application.v1.Ride.Cancel;
-using TaxiService.Modules.Rides.Domain.Aggregates;
 using TaxiService.Modules.Rides.Domain.Core.Errors;
-using TaxiService.Modules.Rides.Domain.Entities;
 using TaxiService.Modules.Rides.Domain.Repositories;
 
 namespace TaxiService.Modules.Rides.Application.v1.Ride.Accept;

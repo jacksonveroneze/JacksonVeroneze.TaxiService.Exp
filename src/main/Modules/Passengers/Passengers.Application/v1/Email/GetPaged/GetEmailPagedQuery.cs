@@ -2,7 +2,6 @@ using JacksonVeroneze.NET.Pagination.Enums;
 using JacksonVeroneze.NET.Result;
 
 using TaxiService.Common.BaseApplication.Queries.Base;
-using TaxiService.Modules.Passengers.Application.v1.Passenger;
 using TaxiService.Modules.Passengers.Application.v1.Passenger.Common.Models;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Email.GetPaged;

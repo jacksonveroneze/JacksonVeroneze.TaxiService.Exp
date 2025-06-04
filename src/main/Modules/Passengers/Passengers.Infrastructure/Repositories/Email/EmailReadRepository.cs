@@ -8,8 +8,6 @@ using TaxiService.Common.BaseInfrastructure.Extensions;
 using TaxiService.Modules.Passengers.Application.Common;
 using TaxiService.Modules.Passengers.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Passengers.Application.v1.Email.Common.Filters;
-using TaxiService.Modules.Passengers.Application.v1.Passenger.Common.Filters;
-using TaxiService.Modules.Passengers.Domain.Entities;
 using TaxiService.Modules.Passengers.Infrastructure.Contexts;
 
 namespace TaxiService.Modules.Passengers.Infrastructure.Repositories.Email;

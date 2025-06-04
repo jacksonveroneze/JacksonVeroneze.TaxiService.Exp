@@ -2,8 +2,6 @@ using TaxiService.Modules.Passengers.Application.v1.Email.Common.Filters;
 using TaxiService.Modules.Passengers.Application.v1.Email.Common.Models;
 using TaxiService.Modules.Passengers.Application.v1.Email.Create;
 using TaxiService.Modules.Passengers.Application.v1.Email.GetPaged;
-using TaxiService.Modules.Passengers.Application.v1.Passenger.Common.Filters;
-using TaxiService.Modules.Passengers.Domain.Entities;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Email.Mappers;
 

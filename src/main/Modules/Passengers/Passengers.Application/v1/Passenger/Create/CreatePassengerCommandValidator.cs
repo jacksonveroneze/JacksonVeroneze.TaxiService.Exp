@@ -1,7 +1,6 @@
 using TaxiService.Common.BaseApplication.Interfaces.System;
 using TaxiService.Common.BaseDomain.Enums;
 using TaxiService.Common.BaseDomain.Validators;
-using TaxiService.Modules.Passengers.Domain.Enums;
 
 namespace TaxiService.Modules.Passengers.Application.v1.Passenger.Create;
 
