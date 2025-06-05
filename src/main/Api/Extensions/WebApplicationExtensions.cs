@@ -2,11 +2,11 @@ using CorrelationId;
 using Prometheus;
 using Scalar.AspNetCore;
 using Serilog;
-using TaxiService.Modules.Drivers.Api.Endpoints.v1.Drivers;
-using TaxiService.Modules.Drivers.Api.Endpoints.v1.Vehicles;
-using TaxiService.Modules.Passengers.Api.Endpoints.v1.Passengers;
-using TaxiService.Modules.Rides.Api.Endpoints.v1.Positions;
-using TaxiService.Modules.Rides.Api.Endpoints.v1.Rides;
+using TaxiService.Modules.Driver.Api.Endpoints.v1.Drivers;
+using TaxiService.Modules.Driver.Api.Endpoints.v1.Vehicles;
+using TaxiService.Modules.Passenger.Api.Endpoints.v1.Passengers;
+using TaxiService.Modules.Ride.Api.Endpoints.v1.Positions;
+using TaxiService.Modules.Ride.Api.Endpoints.v1.Rides;
 
 namespace TaxiService.Api.Extensions;
 

@@ -82,38 +82,35 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseInfrastructure", "main\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{B43AE3CE-8269-4986-8C63-A0349E3A3686}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Drivers", "Drivers", "{C4B531AA-1008-4178-A276-376D44C177BE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Driver", "Driver", "{C4B531AA-1008-4178-A276-376D44C177BE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Passengers", "Passengers", "{DE57CCC7-E6AC-468A-A5BE-EC8AF0A7871D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Passenger", "Passenger", "{DE57CCC7-E6AC-468A-A5BE-EC8AF0A7871D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payments", "Payments", "{523A48F3-2AF2-45ED-AAFE-3BBEAC2534CF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payment", "Payment", "{523A48F3-2AF2-45ED-AAFE-3BBEAC2534CF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Rides", "Rides", "{37806C3F-1A1A-4DA1-AD62-E23169FDAB9A}"
-	ProjectSection(SolutionItems) = preProject
-		Aggregates = Aggregates
-	EndProjectSection
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ride", "Ride", "{37806C3F-1A1A-4DA1-AD62-E23169FDAB9A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{4E701202-BA44-4AE8-90DC-2E1B201576D5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxiService.Api", "main\Api\TaxiService.Api.csproj", "{0D4C5248-3B8A-4A6B-890F-8EAF35D007F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Passengers.Application", "main\Modules\Passengers\Passengers.Application\Passengers.Application.csproj", "{E505461B-E142-4932-A2BA-C655F48C326A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Passenger.Application", "main\Modules\Passengers\Passenger.Application\Passenger.Application.csproj", "{E505461B-E142-4932-A2BA-C655F48C326A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Passengers.Infrastructure", "main\Modules\Passengers\Passengers.Infrastructure\Passengers.Infrastructure.csproj", "{5F0B7063-8EED-4B30-A9AB-0DA992936352}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Passenger.Infrastructure", "main\Modules\Passengers\Passenger.Infrastructure\Passenger.Infrastructure.csproj", "{5F0B7063-8EED-4B30-A9AB-0DA992936352}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Passengers.Domain", "main\Modules\Passengers\Passengers.Domain\Passengers.Domain.csproj", "{964BB934-8FD2-4D05-B4B2-D8CC1C0BAECB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Passenger.Domain", "main\Modules\Passengers\Passenger.Domain\Passenger.Domain.csproj", "{964BB934-8FD2-4D05-B4B2-D8CC1C0BAECB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Passengers.Api", "main\Modules\Passengers\Passengers.Api\Passengers.Api.csproj", "{320A8A60-FA6A-4B92-B92E-9F04017C283D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Passenger.Api", "main\Modules\Passengers\Passenger.Api\Passenger.Api.csproj", "{320A8A60-FA6A-4B92-B92E-9F04017C283D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Passengers.PublicApi", "main\Modules\Passengers\Passengers.PublicApi\Passengers.PublicApi.csproj", "{49962519-8FA6-44B3-BF7A-3AE350A8ED58}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Passenger.PublicApi", "main\Modules\Passengers\Passenger.PublicApi\Passenger.PublicApi.csproj", "{49962519-8FA6-44B3-BF7A-3AE350A8ED58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rides.Domain", "main\Modules\Rides\Rides.Domain\Rides.Domain.csproj", "{94E2E84C-A53B-44DC-B904-BFCA1CF0E444}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ride.Domain", "main\Modules\Rides\Ride.Domain\Ride.Domain.csproj", "{94E2E84C-A53B-44DC-B904-BFCA1CF0E444}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rides.Application", "main\Modules\Rides\Rides.Application\Rides.Application.csproj", "{66B2F21B-EA28-4486-BBA7-3A1D6C29F1AD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ride.Application", "main\Modules\Rides\Ride.Application\Ride.Application.csproj", "{66B2F21B-EA28-4486-BBA7-3A1D6C29F1AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rides.Infrastructure", "main\Modules\Rides\Rides.Infrastructure\Rides.Infrastructure.csproj", "{52C4F591-5F19-433E-B0B2-088D9E44A72F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ride.Infrastructure", "main\Modules\Rides\Ride.Infrastructure\Ride.Infrastructure.csproj", "{52C4F591-5F19-433E-B0B2-088D9E44A72F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rides.Api", "main\Modules\Rides\Rides.Api\Rides.Api.csproj", "{D121614A-D67C-4551-AB7B-CDF21E159FE5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ride.Api", "main\Modules\Rides\Ride.Api\Ride.Api.csproj", "{D121614A-D67C-4551-AB7B-CDF21E159FE5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseApi", "main\Common\BaseApi\BaseApi.csproj", "{7785CAC5-F2EA-4C8B-896E-029B8194F294}"
 EndProject
@@ -121,21 +118,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedKernel", "SharedKernel", "{0DA06DDE-8B3C-43A9-9751-32DBF00DADE0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payments.Application", "main\Modules\Payments\Payments.Application\Payments.Application.csproj", "{11453E9F-3257-4876-82E1-DBC6F34F0F6C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment.Application", "main\Modules\Payments\Payment.Application\Payment.Application.csproj", "{11453E9F-3257-4876-82E1-DBC6F34F0F6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payments.Domain", "main\Modules\Payments\Payments.Domain\Payments.Domain.csproj", "{F4C4B867-6F18-4315-B7D3-4AE2714BAB5D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment.Domain", "main\Modules\Payments\Payment.Domain\Payment.Domain.csproj", "{F4C4B867-6F18-4315-B7D3-4AE2714BAB5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payments.Infrastructure", "main\Modules\Payments\Payments.Infrastructure\Payments.Infrastructure.csproj", "{A713F8A9-5282-470C-A40E-41B54FFAC704}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment.Infrastructure", "main\Modules\Payments\Payment.Infrastructure\Payment.Infrastructure.csproj", "{A713F8A9-5282-470C-A40E-41B54FFAC704}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drivers.Api", "main\Modules\Drivers\Drivers.Api\Drivers.Api.csproj", "{8778E020-547E-4A14-B1B6-F448F2EF0C23}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Driver.Api", "main\Modules\Drivers\Driver.Api\Driver.Api.csproj", "{8778E020-547E-4A14-B1B6-F448F2EF0C23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drivers.Application", "main\Modules\Drivers\Drivers.Application\Drivers.Application.csproj", "{085EC13B-7502-4012-AAD0-81957501A855}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Driver.Application", "main\Modules\Drivers\Driver.Application\Driver.Application.csproj", "{085EC13B-7502-4012-AAD0-81957501A855}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drivers.Domain", "main\Modules\Drivers\Drivers.Domain\Drivers.Domain.csproj", "{57CC6642-BA45-40EF-9FBC-E570F7E86B1F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Driver.Domain", "main\Modules\Drivers\Driver.Domain\Driver.Domain.csproj", "{57CC6642-BA45-40EF-9FBC-E570F7E86B1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drivers.Infrastructure", "main\Modules\Drivers\Drivers.Infrastructure\Drivers.Infrastructure.csproj", "{5D990AA7-8716-4ADE-A67D-D85FABAEF5D9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Driver.Infrastructure", "main\Modules\Drivers\Driver.Infrastructure\Driver.Infrastructure.csproj", "{5D990AA7-8716-4ADE-A67D-D85FABAEF5D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drivers.PublicApi", "main\Modules\Drivers\Drivers.PublicApi\Drivers.PublicApi.csproj", "{490944E0-915C-4BEF-97C1-F2D58F86B6B4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Driver.PublicApi", "main\Modules\Drivers\Driver.PublicApi\Driver.PublicApi.csproj", "{490944E0-915C-4BEF-97C1-F2D58F86B6B4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacksonVeroneze.TaxiService.Exp.ArchitectureTests", "test\JacksonVeroneze.TaxiService.Exp.ArchitectureTests\JacksonVeroneze.TaxiService.Exp.ArchitectureTests.csproj", "{D528FE94-A8A5-4427-985A-ACE8968DC64C}"
 EndProject

@@ -1,0 +1,15 @@
+using TaxiService.Common.BaseApplication.Models.Models.Common;
+using TaxiService.Common.BaseDomain.ValueObjects;
+
+namespace TaxiService.Modules.Ride.Application.v1.Common;
+
+public class CoordinateMapper : Profile
+{
+    public CoordinateMapper()
+    {
+        // ValueObject -> Response
+        CreateMap<CoordinateValueObject, CoordinateResponse>()
+            .ForMember(dest => dest.Latitude, opts => opts.MapFrom(src => src.Latitude))
+            .ForMember(dest => dest.Longitude, opts => opts.MapFrom(src => src.Longitude));
+    }
+}

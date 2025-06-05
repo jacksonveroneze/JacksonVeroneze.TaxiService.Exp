@@ -1,16 +1,16 @@
 ﻿using JacksonVeroneze.TaxiService.Exp.ArchitectureTests.Abstractions;
 using NetArchTest.Rules;
-using TaxiService.Modules.Passengers.Api.Endpoints.v1.Passengers;
-using TaxiService.Modules.Passengers.Application;
-using TaxiService.Modules.Passengers.Application.v1.Passenger.PublicApi;
-using TaxiService.Modules.Passengers.Domain.Aggregates;
-using TaxiService.Modules.Passengers.Infrastructure.Repositories.Passenger;
+using TaxiService.Modules.Passenger.Api.Endpoints.v1.Passengers;
+using TaxiService.Modules.Passenger.Application;
+using TaxiService.Modules.Passenger.Application.v1.Passenger.PublicApi;
+using TaxiService.Modules.Passenger.Domain.Aggregates;
+using TaxiService.Modules.Passenger.Infrastructure.Repositories.Passenger;
 
 namespace JacksonVeroneze.TaxiService.Exp.ArchitectureTests.Layers;
 
 public class ModuleTests
 {
-    private const string DomainAssembly = $"{UtilTests.PassengersNamespace}.Passengers.Domain";
+    private const string DomainAssembly = $"{UtilTests.PassengersNamespace}.Passenger.Domain";
     private const string ApplicationAssembly = $"{UtilTests.PassengersNamespace}.Application";
     private const string InfrastructureAssembly = $"{UtilTests.PassengersNamespace}.Infrastructure";
     private const string ApiAssembly = $"{UtilTests.PassengersNamespace}.Api";

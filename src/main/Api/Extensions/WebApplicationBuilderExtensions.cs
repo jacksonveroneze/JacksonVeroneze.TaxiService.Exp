@@ -1,10 +1,10 @@
 using TaxiService.Api.Middlewares;
 using TaxiService.Common.BaseInfrastructure.Configurations;
 using TaxiService.Common.BaseInfrastructure.Extensions;
-using TaxiService.Modules.Drivers.Infrastructure.Extensions;
-using TaxiService.Modules.Passengers.Infrastructure.Extensions;
-using TaxiService.Modules.Payments.Infrastructure.Extensions;
-using TaxiService.Modules.Rides.Infrastructure.Extensions;
+using TaxiService.Modules.Driver.Infrastructure.Extensions;
+using TaxiService.Modules.Passenger.Infrastructure.Extensions;
+using TaxiService.Modules.Payment.Infrastructure.Extensions;
+using TaxiService.Modules.Ride.Infrastructure.Extensions;
 
 namespace TaxiService.Api.Extensions;
 

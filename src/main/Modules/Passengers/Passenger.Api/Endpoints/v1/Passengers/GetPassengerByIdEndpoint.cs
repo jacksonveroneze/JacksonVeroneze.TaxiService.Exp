@@ -1,0 +1,29 @@
+using JacksonVeroneze.NET.Result;
+using TaxiService.Modules.Passenger.Application.v1.Passenger.GetById;
+
+namespace TaxiService.Modules.Passenger.Api.Endpoints.v1.Passengers;
+
+internal static class GetPassengerByIdEndpoint
+{
+    public static RouteGroupBuilder AddGetById(
+        this RouteGroupBuilder builder)
+    {
+        builder.MapGet("{id:guid:required}", async (
+                [FromServices] ISender mediator,
+                [FromRoute] Guid id,
+                CancellationToken cancellationToken) =>
+            {
+                GetPassengerByIdQuery query = new(id);
+
+                Result<GetPassengerByIdQueryResponse> response =
+                    await mediator.Send(query, cancellationToken);
+
+                return response.ToIResult();
+            })
+            .WithName(RouteNames.GetPassengerById)
+            .Produces<GetPassengerByIdQueryResponse>()
+            .AddDefaultResponseEndpoints();
+
+        return builder;
+    }
+}

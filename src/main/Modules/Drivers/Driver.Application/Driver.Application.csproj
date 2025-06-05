@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>TaxiService.Modules.Driver.Application</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="AutoMapper"/>
+    <Using Include="FluentValidation"/>
+    <Using Include="MediatR"/>
+    <Using Include="Microsoft.Extensions.Logging"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\BaseApplication\BaseApplication.csproj"/>
+    <ProjectReference Include="..\..\Passengers\Passenger.PublicApi\Passenger.PublicApi.csproj" />
+    <ProjectReference Include="..\Driver.Domain\Driver.Domain.csproj" />
+    <ProjectReference Include="..\Driver.PublicApi\Driver.PublicApi.csproj" />
+  </ItemGroup>
+
+</Project>

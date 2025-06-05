@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>TaxiService.Modules.Ride.Application</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RedLock.net"/>
+    <PackageReference Include="AutoMapper"/>
+    <PackageReference Include="FluentValidation"/>
+    <PackageReference Include="MediatR"/>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="AutoMapper"/>
+    <Using Include="FluentValidation"/>
+    <Using Include="MediatR"/>
+    <Using Include="Microsoft.Extensions.Logging"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\BaseApplication\BaseApplication.csproj"/>
+    <ProjectReference Include="..\Ride.Domain\Ride.Domain.csproj" />
+
+    <ProjectReference Include="..\..\Drivers\Driver.PublicApi\Driver.PublicApi.csproj" />
+    <ProjectReference Include="..\..\Passengers\Passenger.PublicApi\Passenger.PublicApi.csproj" />
+  </ItemGroup>
+
+</Project>

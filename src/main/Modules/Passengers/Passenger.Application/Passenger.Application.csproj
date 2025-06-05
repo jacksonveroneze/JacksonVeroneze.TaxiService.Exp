@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>TaxiService.Modules.Passenger.Application</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper"/>
+    <PackageReference Include="FluentValidation"/>
+    <PackageReference Include="MediatR"/>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="AutoMapper"/>
+    <Using Include="FluentValidation"/>
+    <Using Include="MediatR"/>
+    <Using Include="Microsoft.Extensions.Logging"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\BaseApplication\BaseApplication.csproj"/>
+    <ProjectReference Include="..\Passenger.Domain\Passenger.Domain.csproj" />
+    <ProjectReference Include="..\Passenger.PublicApi\Passenger.PublicApi.csproj" />
+  </ItemGroup>
+
+</Project>

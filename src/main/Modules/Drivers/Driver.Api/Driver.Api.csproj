@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>TaxiService.Modules.Driver.Api</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="MediatR"/>
+    <Using Include="Asp.Versioning.Builder"/>
+    <Using Include="Microsoft.AspNetCore.Builder"/>
+    <Using Include="Microsoft.AspNetCore.Http"/>
+    <Using Include="Microsoft.AspNetCore.Mvc"/>
+    <Using Include="Microsoft.AspNetCore.Routing"/>
+    <Using Include="TaxiService.Common.BaseApi.Endpoints.Extensions"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\BaseApi\BaseApi.csproj"/>
+    <ProjectReference Include="..\Driver.Application\Driver.Application.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,15 @@
+using System.Text.Json.Serialization;
+
+namespace TaxiService.Modules.Payment.Infrastructure.Acl.Models.Stripe;
+
+public record PayResponse
+{
+    [JsonPropertyName("status")] 
+    public string? Status { get; init; }
+
+    [JsonPropertyName("sign_id")] 
+    public string? SignId { get; init; }
+
+    [JsonPropertyName("error_description")]
+    public string? ErrorDescription { get; init; }
+}

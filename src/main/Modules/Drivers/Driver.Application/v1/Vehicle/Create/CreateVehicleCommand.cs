@@ -1,0 +1,19 @@
+using JacksonVeroneze.NET.Result;
+
+namespace TaxiService.Modules.Driver.Application.v1.Vehicle.Create;
+
+public sealed record CreateVehicleCommand
+    : IRequest<Result<CreateVehicleCommandResponse>>
+{
+    public Guid DriverId { get; init; }
+
+    public string? Model { get; init; }
+
+    public string? Brand { get; init; }
+
+    public string? Plate { get; init; }
+
+    public string? Color { get; init; }
+
+    public int? Year { get; init; }
+}

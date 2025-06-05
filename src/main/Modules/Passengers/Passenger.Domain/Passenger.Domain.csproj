@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>TaxiService.Modules.Passenger.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JacksonVeroneze.NET.DomainObjects"/>
+    <!--    <PackageReference Include="JacksonVeroneze.NET.Pagination"/>-->
+    <PackageReference Include="JacksonVeroneze.NET.Result"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\BaseDomain\BaseDomain.csproj"/>
+  </ItemGroup>
+</Project>
