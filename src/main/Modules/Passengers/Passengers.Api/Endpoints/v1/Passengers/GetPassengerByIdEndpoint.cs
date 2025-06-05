@@ -20,6 +20,7 @@ internal static class GetPassengerByIdEndpoint
 
                 return response.ToIResult();
             })
+            .WithName(RouteNames.GetPassengerById)
             .Produces<GetPassengerByIdQueryResponse>()
             .AddDefaultResponseEndpoints();
 

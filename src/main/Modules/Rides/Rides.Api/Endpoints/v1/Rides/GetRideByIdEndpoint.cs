@@ -20,6 +20,7 @@ internal static class GetRideByIdEndpoint
 
                 return response.ToIResult();
             })
+            .WithName(RouteNames.GetRideById)
             .Produces<GetRideByIdQueryResponse>()
             .AddDefaultResponseEndpoints();
 

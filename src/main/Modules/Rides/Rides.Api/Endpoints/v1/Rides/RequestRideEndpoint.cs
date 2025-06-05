@@ -11,12 +11,19 @@ internal static class RequestRideEndpoint
         builder.MapPost(string.Empty, async (
                 [FromServices] ISender mediator,
                 [FromBody] RequestRideCommand command,
+                [FromServices] LinkGenerator linkGenerator,
+                HttpContext httpContext,
                 CancellationToken cancellationToken) =>
             {
                 Result<RequestRideCommandResponse> response =
                     await mediator.Send(command, cancellationToken);
 
-                return response.ToIResult();
+                return response.ToCreatedResultFromRoute(
+                    linkGenerator,
+                    httpContext,
+                    RouteNames.GetRideById,
+                    response.Value?.Data?.Id!
+                );
             })
             .Produces<RequestRideCommandResponse>()
             .AddDefaultResponseEndpoints();

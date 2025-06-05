@@ -11,12 +11,19 @@ internal static class CreatePassengerEndpoint
         builder.MapPost(string.Empty, async (
                 [FromServices] ISender mediator,
                 [FromBody] CreatePassengerCommand command,
+                [FromServices] LinkGenerator linkGenerator,
+                HttpContext httpContext,
                 CancellationToken cancellationToken) =>
             {
                 Result<CreatePassengerCommandResponse> response =
                     await mediator.Send(command, cancellationToken);
 
-                return response.ToIResult();
+                return response.ToCreatedResultFromRoute(
+                    linkGenerator,
+                    httpContext,
+                    RouteNames.GetPassengerById,
+                    response.Value?.Data?.Id!
+                );
             })
             .Produces<CreatePassengerCommandResponse>()
             .AddDefaultResponseEndpoints();

@@ -1,6 +1,7 @@
 using JacksonVeroneze.NET.Result;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 
 namespace TaxiService.Common.BaseApi.Endpoints.Extensions;
 
@@ -28,6 +29,43 @@ public static class ResultTranslator
             ? Results.NoContent()
             : Results.Ok(result.Value);
     }
+
+    public static IResult ToCreatedResult<T>(
+        this Result<T> result,
+        Uri? locationUri = null)
+    {
+        ArgumentNullException.ThrowIfNull(result);
+
+        if (result.IsFailure)
+        {
+            return CreateProblemDetailsResult(result);
+        }
+
+        return locationUri is not null
+            ? Results.Created(locationUri, result.Value)
+            : Results.StatusCode(StatusCodes.Status201Created);
+    }
+
+    public static IResult ToCreatedResultFromRoute<T>(
+        this Result<T> result,
+        LinkGenerator linkGenerator,
+        HttpContext context,
+        string routeName,
+        object id)
+    {
+        ArgumentNullException.ThrowIfNull(result);
+        
+        if (!result.IsSuccess)
+        {
+            return result.ToCreatedResult();
+        }
+
+        Uri uri = LocationBuilder.ForNamedRoute(
+            linkGenerator, context, routeName, id);
+
+        return result.ToCreatedResult(uri);
+    }
+
 
     private static IResult CreateProblemDetailsResult(Result result)
     {

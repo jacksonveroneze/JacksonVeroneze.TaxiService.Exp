@@ -20,6 +20,7 @@ internal static class GetDriverByIdEndpoint
 
                 return response.ToIResult();
             })
+            .WithName(RouteNames.GetDriverById)
             .Produces<GetDriverByIdQueryResponse>()
             .AddDefaultResponseEndpoints();
 

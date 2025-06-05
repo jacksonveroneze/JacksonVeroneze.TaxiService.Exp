@@ -11,12 +11,19 @@ internal static class CreateDriverEndpoint
         builder.MapPost(string.Empty, async (
                 [FromServices] ISender mediator,
                 [FromBody] CreateDriverCommand command,
+                [FromServices] LinkGenerator linkGenerator,
+                HttpContext httpContext,
                 CancellationToken cancellationToken) =>
             {
                 Result<CreateDriverCommandResponse> response =
                     await mediator.Send(command, cancellationToken);
 
-                return response.ToIResult();
+                return response.ToCreatedResultFromRoute(
+                    linkGenerator,
+                    httpContext,
+                    RouteNames.GetDriverById,
+                    response.Value?.Data?.Id!
+                );
             })
             .Produces<CreateDriverCommandResponse>()
             .AddDefaultResponseEndpoints();
