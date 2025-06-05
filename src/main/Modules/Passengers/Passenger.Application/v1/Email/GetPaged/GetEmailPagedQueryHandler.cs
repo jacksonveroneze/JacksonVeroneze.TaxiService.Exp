@@ -3,6 +3,7 @@ using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Passenger.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Passenger.Application.v1.Email.Common.Filters;
+using TaxiService.Modules.Passenger.Domain;
 
 namespace TaxiService.Modules.Passenger.Application.v1.Email.GetPaged;
 
@@ -28,6 +29,7 @@ public sealed class GetEmailPagedQueryHandler(
             mapper.Map<GetEmailPagedQueryResponse>(all);
 
         logger.LogGetAll(
+            ModuleConstants.ContextName,
             nameof(GetEmailPagedQueryHandler),
             nameof(Handle), all.Count);
 

@@ -4,10 +4,10 @@ using JacksonVeroneze.NET.Pagination.Cursor;
 using JacksonVeroneze.NET.Pagination.Cursor.Extensions;
 using Microsoft.Extensions.Logging;
 using TaxiService.Common.BaseInfrastructure.Extensions;
-using TaxiService.Modules.Passenger.Application.Common;
 using TaxiService.Modules.Passenger.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Passenger.Application.v1.Passenger.Common.Filters;
 using TaxiService.Modules.Passenger.Application.v1.Passenger.Common.Models;
+using TaxiService.Modules.Passenger.Domain;
 using TaxiService.Modules.Passenger.Infrastructure.Builders.Filters;
 using TaxiService.Modules.Passenger.Infrastructure.Contexts;
 
@@ -29,7 +29,8 @@ public class PassengerReadRepository(
         bool exists = await service
             .AnyAsync(spec, cancellationToken);
 
-        logger.LogExistsByValue(ModuleContext.ContextName,
+        logger.LogExistsByValue(
+            ModuleConstants.ContextName,
             nameof(PassengerReadRepository),
             nameof(ExistsByIdAsync),
             id.ToString(), exists);
@@ -46,7 +47,8 @@ public class PassengerReadRepository(
         PassengerDto? result = await service
             .GetByIdAsync(spec, cancellationToken);
 
-        logger.LogGetById(ModuleContext.ContextName,
+        logger.LogGetById(
+            ModuleConstants.ContextName,
             nameof(PassengerReadRepository),
             nameof(GetByIdAsync),
             id, result != null);

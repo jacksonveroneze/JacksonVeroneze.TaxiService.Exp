@@ -4,10 +4,10 @@ using JacksonVeroneze.NET.Pagination.Cursor;
 using JacksonVeroneze.NET.Pagination.Cursor.Extensions;
 using Microsoft.Extensions.Logging;
 using TaxiService.Common.BaseInfrastructure.Extensions;
-using TaxiService.Modules.Driver.Application.Common;
 using TaxiService.Modules.Driver.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Driver.Application.v1.Driver.Common.Filters;
 using TaxiService.Modules.Driver.Application.v1.Driver.Common.Models;
+using TaxiService.Modules.Driver.Domain;
 using TaxiService.Modules.Driver.Infrastructure.Builders.Filters;
 using TaxiService.Modules.Driver.Infrastructure.Contexts;
 
@@ -29,7 +29,8 @@ public class DriverReadRepository(
         bool exists = await service
             .AnyAsync(spec, cancellationToken);
 
-        logger.LogExistsByValue(ModuleContext.ContextName,
+        logger.LogExistsByValue(
+            ModuleConstants.ContextName,
             nameof(DriverReadRepository),
             nameof(ExistsByIdAsync),
             id.ToString(), exists);
@@ -46,7 +47,8 @@ public class DriverReadRepository(
             conf => conf.Email!.Equals(email.ToUpperInvariant()),
             cancellationToken);
 
-        logger.LogExistsByValue(ModuleContext.ContextName,
+        logger.LogExistsByValue(
+            ModuleConstants.ContextName,
             nameof(DriverReadRepository),
             nameof(ExistsByIdAsync),
             email, exists);
@@ -63,7 +65,8 @@ public class DriverReadRepository(
         DriverDto? result = await service
             .GetByIdAsync(spec, cancellationToken);
 
-        logger.LogGetById(ModuleContext.ContextName,
+        logger.LogGetById(
+            ModuleConstants.ContextName,
             nameof(DriverReadRepository),
             nameof(GetByIdAsync),
             id, result != null);

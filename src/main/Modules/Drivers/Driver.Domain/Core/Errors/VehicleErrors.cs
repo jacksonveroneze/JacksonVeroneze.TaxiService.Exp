@@ -9,7 +9,7 @@ public static partial class DomainErrors
     {
         public static Error NotFound =>
             Error.Create("Vehicle.NotFound",
-                string.Format(null, CommonDomainErrors.TemplateNotFound, "vehicle id"));
+                string.Format(CommonDomainErrors.TemplateNotFound, "vehicle id"));
 
         public static Error DuplicatePlate =>
             Error.Create("Vehicle.DuplicatePlate",
@@ -26,9 +26,5 @@ public static partial class DomainErrors
         public static Error NotPendingApproval =>
             Error.Create("Vehicle.NotPendingApproval",
                 "Somente veículos pendentes podem ser aprovados ou rejeitados.");
-
-        public static Error CannotUpdateRejectedVehicle =>
-            Error.Create("Vehicle.CannotUpdateRejectedVehicle",
-                "Não é possível atualizar um veículo rejeitado.");
     }
 }

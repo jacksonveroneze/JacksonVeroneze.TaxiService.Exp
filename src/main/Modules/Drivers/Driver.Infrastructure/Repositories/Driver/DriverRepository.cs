@@ -1,7 +1,7 @@
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
 using Microsoft.Extensions.Logging;
 using TaxiService.Common.BaseInfrastructure.Extensions;
-using TaxiService.Modules.Driver.Application.Common;
+using TaxiService.Modules.Driver.Domain;
 using TaxiService.Modules.Driver.Domain.Repositories;
 using TaxiService.Modules.Driver.Infrastructure.Contexts;
 
@@ -20,7 +20,8 @@ public class DriverRepository(
             conf => conf.Id == id,
             cancellationToken);
 
-        logger.LogGetById(ModuleContext.ContextName,
+        logger.LogGetById(
+            ModuleConstants.ContextName,
             nameof(DriverRepository),
             nameof(GetByIdAsync),
             id, result is not null);

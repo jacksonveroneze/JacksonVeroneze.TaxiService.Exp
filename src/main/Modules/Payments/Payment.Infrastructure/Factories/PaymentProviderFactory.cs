@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using TaxiService.Modules.Payment.Application.Common.Interfaces.Factories;
 using TaxiService.Modules.Payment.Application.Common.Interfaces.Providers;
 using TaxiService.Modules.Payment.Application.Common.Interfaces.Repositories;
+using TaxiService.Modules.Payment.Domain;
 using TaxiService.Modules.Payment.Domain.Aggregates;
 using TaxiService.Modules.Payment.Domain.Enums;
 using TaxiService.Modules.Payment.Infrastructure.Extensions;
@@ -32,14 +33,14 @@ internal sealed class PaymentProviderFactory(
     private async Task<ImmutableArray<Provider>> LoadProviderConfigsAsync(
         CancellationToken cancellationToken)
     {
-        logger.LogLoadProviders();
+        logger.LogLoadProviders(ModuleConstants.ContextName);
 
         ImmutableArray<Provider> configs = await providerRepository
             .GetAllAsync(cancellationToken);
 
         if (!configs.Any())
         {
-            logger.LogNoProvidersFound();
+            logger.LogNoProvidersFound(ModuleConstants.ContextName);
 
             return [];
         }
@@ -48,6 +49,7 @@ internal sealed class PaymentProviderFactory(
             configs.Select(prov => prov.ProviderName);
 
         logger.LogProvidersFounded(
+            ModuleConstants.ContextName,
             configs.Length, nameProviders.ToArray());
 
         return configs;
@@ -66,7 +68,7 @@ internal sealed class PaymentProviderFactory(
     private Lazy<IPaymentProvider> CreateProvider(
         PaymentProviderType providerType)
     {
-        logger.LogStartCreateProvider(providerType);
+        logger.LogStartCreateProvider(ModuleConstants.ContextName, providerType);
 
         return providerType switch
         {

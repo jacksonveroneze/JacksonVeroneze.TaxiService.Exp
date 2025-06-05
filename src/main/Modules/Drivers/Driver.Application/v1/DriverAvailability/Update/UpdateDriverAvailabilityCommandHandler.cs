@@ -2,6 +2,7 @@ using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Modules.Driver.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Driver.Application.Common.Interfaces.Services;
+using TaxiService.Modules.Driver.Domain;
 using TaxiService.Modules.Driver.Domain.Core.Errors;
 using TaxiService.Modules.Driver.Domain.Entities;
 using TaxiService.Modules.Driver.Domain.Enums;
@@ -92,6 +93,7 @@ public sealed class UpdateDriverAvailabilityCommandHandler(
         if (entity.IsFailure)
         {
             logger.LogGenericError(
+                ModuleConstants.ContextName,
                 nameof(UpdateDriverAvailabilityCommandHandler),
                 nameof(FactoryEntity), entity.Errors.Count);
         }
@@ -106,7 +108,9 @@ public sealed class UpdateDriverAvailabilityCommandHandler(
         await driverAvailabilityHistoryRepository.CreateAsync(
             entity, cancellationToken);
 
-        logger.LogCreated(nameof(UpdateDriverAvailabilityCommandHandler),
+        logger.LogCreated(
+            ModuleConstants.ContextName,
+            nameof(UpdateDriverAvailabilityCommandHandler),
             nameof(CreateAsync), entity.Id);
     }
 }

@@ -2,9 +2,9 @@ using System.Linq.Expressions;
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
 using Microsoft.Extensions.Logging;
 using TaxiService.Common.BaseInfrastructure.Extensions;
-using TaxiService.Modules.Passenger.Application.Common;
 using TaxiService.Modules.Passenger.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Passenger.Application.v1.Email.Common.Filters;
+using TaxiService.Modules.Passenger.Domain;
 using TaxiService.Modules.Passenger.Infrastructure.Contexts;
 
 namespace TaxiService.Modules.Passenger.Infrastructure.Repositories.Email;
@@ -29,7 +29,8 @@ public class EmailReadRepository(
         bool exists = await service.AnyAsync(
             spec, cancellationToken);
 
-        logger.LogExistsByValue(ModuleContext.ContextName,
+        logger.LogExistsByValue(
+            ModuleConstants.ContextName,
             nameof(EmailReadRepository),
             nameof(ExistsAsync),
             email, exists);
@@ -46,7 +47,8 @@ public class EmailReadRepository(
         Domain.Entities.Email? result = await service.GetByIdAsync(
             spec, cancellationToken);
 
-        logger.LogGetById(ModuleContext.ContextName,
+        logger.LogGetById(
+            ModuleConstants.ContextName,
             nameof(EmailReadRepository),
             nameof(GetByIdAsync),
             id, result is not null);

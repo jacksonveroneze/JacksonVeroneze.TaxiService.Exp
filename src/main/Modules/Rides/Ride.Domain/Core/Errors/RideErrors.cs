@@ -12,40 +12,51 @@ public static class DomainErrors
                 string.Format(null, CommonDomainErrors.TemplateNotFound, "ride id"));
 
         public static Error StatusAlreadyDefined =>
-            Error.Create("Ride.StatusAlreadyDefined", "Corrida já está no status informado");
+            Error.Create("Ride.StatusAlreadyDefined",
+                "Corrida já está no status informado");
 
         public static Error InvalidStatusSetAccept =>
-            Error.Create("Ride.InvalidStatusSetAccept", "Corrida não está no status requested");
+            Error.Create("Ride.InvalidStatusSetAccept",
+                "Corrida não está no status requested");
 
         public static Error InvalidStatusSetStart =>
-            Error.Create("Ride.InvalidStatusSetStart", "Corrida não está no status accepted");
+            Error.Create("Ride.InvalidStatusSetStart",
+                "Corrida não está no status accepted");
 
         public static Error InvalidStatusSetFinish =>
-            Error.Create("Ride.InvalidStatusSetFinish", "Corrida não está no status in progress");
+            Error.Create("Ride.InvalidStatusSetFinish",
+                "Corrida não está no status in progress");
 
         public static Error InvalidStatusSetCancel =>
-            Error.Create("Ride.InvalidStatusSetCancel", "Corrida já foi finalizada ou cancelada");
+            Error.Create("Ride.InvalidStatusSetCancel",
+                "Corrida já foi finalizada ou cancelada");
 
         public static Error DriverAlready =>
-            Error.Create("Ride.DriverAlready", "Motorista já informado");
+            Error.Create("Ride.DriverAlready",
+                "Motorista já informado");
 
         public static Error AlreadyByPassenger =>
-            Error.Create("Ride.AlreadyByPassenger", "Passageiro já tem corrida ativa");
+            Error.Create("Ride.AlreadyByPassenger",
+                "Passageiro já tem corrida ativa");
 
         public static Error InvalidStatusAddPosition =>
             Error.Create("Ride.InvalidStatusAddPosition",
                 "Para adicionar posições a corrida deve estar em progresso.");
 
         public static Error PassengerNotFound =>
-            Error.Create("Ride.NotFound",
+            Error.Create("Ride.PassengerNotFound",
                 "Passenger not found.");
+
+        public static Error DriverNotFound =>
+            Error.Create("Ride.DriverNotFound",
+                "Driver not found.");
 
         public static Error PassengerInactive =>
             Error.Create("Ride.PassengerInactive",
                 "Passenger is inactive.");
 
-        public static Error DriverNotActive =>
-            Error.Create("Ride.DriverNotActive",
-                "Driver isn't active.");
+        public static Error DriverInactive =>
+            Error.Create("Ride.DriverInactive",
+                "Driver is inactive.");
     }
 }

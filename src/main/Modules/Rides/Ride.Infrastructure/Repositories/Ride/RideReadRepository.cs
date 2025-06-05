@@ -4,10 +4,10 @@ using JacksonVeroneze.NET.Pagination.Cursor;
 using JacksonVeroneze.NET.Pagination.Cursor.Extensions;
 using Microsoft.Extensions.Logging;
 using TaxiService.Common.BaseInfrastructure.Extensions;
-using TaxiService.Modules.Ride.Application.Common;
 using TaxiService.Modules.Ride.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Ride.Application.v1.Ride.Common.Filters;
 using TaxiService.Modules.Ride.Application.v1.Ride.Common.Models;
+using TaxiService.Modules.Ride.Domain;
 using TaxiService.Modules.Ride.Domain.Enums;
 using TaxiService.Modules.Ride.Infrastructure.Builders.Filters;
 using TaxiService.Modules.Ride.Infrastructure.Contexts;
@@ -38,7 +38,8 @@ public class RideReadRepository(
         bool exists = await service
             .AnyAsync(spec, cancellationToken);
 
-        logger.LogExistsByValue(ModuleContext.ContextName,
+        logger.LogExistsByValue(
+            ModuleConstants.ContextName,
             nameof(RideReadRepository),
             nameof(ExistsActiveByPassengerIdAsync),
             passengerId.ToString(), exists);
@@ -56,7 +57,8 @@ public class RideReadRepository(
         RideDto? result = await service
             .GetByIdAsync(spec, cancellationToken);
 
-        logger.LogGetById(ModuleContext.ContextName,
+        logger.LogGetById(
+            ModuleConstants.ContextName,
             nameof(RideReadRepository),
             nameof(GetByIdAsync),
             id, result != null);

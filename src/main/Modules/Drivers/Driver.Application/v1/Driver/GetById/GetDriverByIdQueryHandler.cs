@@ -1,8 +1,8 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
-using TaxiService.Modules.Driver.Application.Common;
 using TaxiService.Modules.Driver.Application.v1.Driver.Common.Models;
+using TaxiService.Modules.Driver.Domain;
 using TaxiService.Modules.Driver.Domain.Core.Errors;
 using IDriverReadRepository =
     TaxiService.Modules.Driver.Application.Common.Interfaces.Repositories.IDriverReadRepository;
@@ -10,7 +10,6 @@ using IDriverReadRepository =
 namespace TaxiService.Modules.Driver.Application.v1.Driver.GetById;
 
 public sealed class GetDriverByIdQueryHandler(
-    ILogger<GetDriverByIdQueryHandler> logger,
     IDataMapper mapper,
     IDriverReadRepository driverReadRepository)
     : IRequestHandler<GetDriverByIdQuery, Result<GetDriverByIdQueryResponse>>
@@ -32,9 +31,6 @@ public sealed class GetDriverByIdQueryHandler(
 
         GetDriverByIdQueryResponse response =
             mapper.Map<GetDriverByIdQueryResponse>(dto);
-
-        logger.LogGetById(ModuleContext.ContextName,
-            nameof(GetDriverByIdQueryHandler), nameof(Handle), request.Id);
 
         return Result<GetDriverByIdQueryResponse>
             .WithSuccess(response);

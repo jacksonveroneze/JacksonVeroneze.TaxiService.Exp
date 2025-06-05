@@ -3,6 +3,7 @@ using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Driver.Application.Common.Interfaces;
 using TaxiService.Modules.Driver.Application.Common.Interfaces.Services;
+using TaxiService.Modules.Driver.Domain;
 using TaxiService.Modules.Driver.Domain.Core.Errors;
 using TaxiService.Modules.Driver.Domain.Repositories;
 using IVehicleReadRepository =
@@ -84,7 +85,9 @@ public sealed class CreateVehicleCommandHandler(
 
         Error error = DomainErrors.VehicleErrors.DuplicatePlate;
 
-        logger.LogAlreadyExists(nameof(CreateVehicleCommandHandler),
+        logger.LogAlreadyExists(
+            ModuleConstants.ContextName,
+            nameof(CreateVehicleCommandHandler),
             nameof(ValidateVehiclePlateAsync), plate, error);
 
         return Result.FromInvalid(error);
@@ -104,7 +107,9 @@ public sealed class CreateVehicleCommandHandler(
 
         Error error = DomainErrors.VehicleErrors.DuplicateDriverId;
 
-        logger.LogAlreadyExists(nameof(CreateVehicleCommandHandler),
+        logger.LogAlreadyExists(
+            ModuleConstants.ContextName,
+            nameof(CreateVehicleCommandHandler),
             nameof(ValidateVehiclePlateAsync), driverId, error);
 
         return Result.FromInvalid(error);
@@ -131,6 +136,7 @@ public sealed class CreateVehicleCommandHandler(
         if (entity.IsFailure)
         {
             logger.LogGenericError(
+                ModuleConstants.ContextName,
                 nameof(CreateVehicleCommandHandler),
                 nameof(FactoryEntity), entity.Errors.Count);
         }
@@ -148,7 +154,9 @@ public sealed class CreateVehicleCommandHandler(
         await unitOfWork.CommitAsync(
             cancellationToken);
 
-        logger.LogCreated(nameof(CreateVehicleCommandHandler),
+        logger.LogCreated(
+            ModuleConstants.ContextName,
+            nameof(CreateVehicleCommandHandler),
             nameof(CreateAsync), vehicle.Id);
     }
 }

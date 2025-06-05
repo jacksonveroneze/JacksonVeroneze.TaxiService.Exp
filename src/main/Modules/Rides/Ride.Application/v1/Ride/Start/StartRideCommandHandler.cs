@@ -1,6 +1,7 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Messaging;
+using TaxiService.Modules.Ride.Domain;
 using TaxiService.Modules.Ride.Domain.Core.Errors;
 using TaxiService.Modules.Ride.Domain.Repositories;
 
@@ -40,6 +41,7 @@ public sealed class StartRideCommandHandler(
         await eventDispatcher.DispatchAsync(entity);
 
         logger.LogProcessed(
+            ModuleConstants.ContextName,
             nameof(StartRideCommandHandler),
             nameof(Handle), entity.Id);
 
@@ -53,6 +55,7 @@ public sealed class StartRideCommandHandler(
         if (result.IsFailure)
         {
             logger.LogGenericError(
+                ModuleConstants.ContextName,
                 nameof(StartRideCommandHandler),
                 nameof(Start), entity.Id, result.FirstError!);
         }

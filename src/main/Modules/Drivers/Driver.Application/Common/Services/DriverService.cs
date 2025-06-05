@@ -1,6 +1,7 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Modules.Driver.Application.Common.Interfaces.Services;
+using TaxiService.Modules.Driver.Domain;
 using TaxiService.Modules.Driver.Domain.Core.Errors;
 using TaxiService.Modules.Driver.Domain.Repositories;
 
@@ -31,6 +32,7 @@ public class DriverService(
         Error errorNotActivated = DomainErrors.DriverErrors.NotActivated;
 
         logger.LogGenericValidationError(
+            ModuleConstants.ContextName,
             nameof(DriverService),
             nameof(ExistsAndIsActiveAsync), errorNotActivated);
 

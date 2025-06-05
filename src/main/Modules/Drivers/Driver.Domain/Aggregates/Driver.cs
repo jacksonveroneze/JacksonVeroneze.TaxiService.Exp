@@ -83,7 +83,7 @@ public class Driver : BaseAggregateRoot
         if (IsBlockedPermanent)
         {
             return Result.FromRuleViolation(
-                DomainErrors.DriverErrors.CannotBlockPermanently);
+                DomainErrors.DriverErrors.AlreadyBlockPermanently);
         }
 
         if (IsInactive)
@@ -110,7 +110,7 @@ public class Driver : BaseAggregateRoot
         if (IsBlockedPermanent)
         {
             return Result.FromRuleViolation(
-                DomainErrors.DriverErrors.CannotBlockPermanently);
+                DomainErrors.DriverErrors.AlreadyBlockPermanently);
         }
 
         Status = DriverStatus.Active;
@@ -124,7 +124,7 @@ public class Driver : BaseAggregateRoot
         if (IsBlockedPermanent)
         {
             return Result.FromRuleViolation(
-                DomainErrors.DriverErrors.CannotBlockPermanently);
+                DomainErrors.DriverErrors.AlreadyBlockPermanently);
         }
 
         if (IsBlockedTemporarily)
@@ -144,7 +144,7 @@ public class Driver : BaseAggregateRoot
         if (IsBlockedPermanent)
         {
             return Result.FromRuleViolation(
-                DomainErrors.DriverErrors.CannotBlockPermanently);
+                DomainErrors.DriverErrors.AlreadyBlockPermanently);
         }
 
         Status = DriverStatus.BlockedPermanent;
@@ -158,7 +158,7 @@ public class Driver : BaseAggregateRoot
         if (IsBlockedPermanent)
         {
             return Result.FromRuleViolation(
-                DomainErrors.DriverErrors.CannotBlockPermanently);
+                DomainErrors.DriverErrors.AlreadyBlockPermanently);
         }
 
         if (IsBlockedTemporarily)

@@ -4,12 +4,12 @@ using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Ride.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Ride.Application.Common.Interfaces.Services;
 using TaxiService.Modules.Ride.Application.v1.Ride.Common.Models;
+using TaxiService.Modules.Ride.Domain;
 using TaxiService.Modules.Ride.Domain.Core.Errors;
 
 namespace TaxiService.Modules.Ride.Application.v1.Ride.GetById;
 
 public sealed class GetRideByIdQueryHandler(
-    ILogger<GetRideByIdQueryHandler> logger,
     IDataMapper mapper,
     IRideReadRepository rideReadRepository,
     IRideExpandsService rideExpandsService)
@@ -35,9 +35,6 @@ public sealed class GetRideByIdQueryHandler(
 
         await rideExpandsService.ApplyAsync(
             response.Data!, request.Expand, cancellationToken);
-
-        logger.LogGetById(nameof(GetRideByIdQueryHandler),
-            nameof(Handle), request.Id);
 
         return Result<GetRideByIdQueryResponse>
             .WithSuccess(response);

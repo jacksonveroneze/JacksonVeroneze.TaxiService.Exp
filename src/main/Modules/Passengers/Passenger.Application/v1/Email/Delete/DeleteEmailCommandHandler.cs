@@ -2,6 +2,7 @@ using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Modules.Passenger.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Passenger.Application.v1.Passenger.Activate;
+using TaxiService.Modules.Passenger.Domain;
 using TaxiService.Modules.Passenger.Domain.Core.Errors;
 using TaxiService.Modules.Passenger.Domain.Repositories;
 
@@ -42,6 +43,7 @@ public sealed class DeleteEmailCommandHandler(
             email, cancellationToken);
 
         logger.LogProcessed(
+            ModuleConstants.ContextName,
             nameof(ActivatePassengerCommandHandler),
             nameof(Handle), email.Id);
 

@@ -41,7 +41,7 @@ public class CoordinateValueObject : ValueObject
         if (!IsValid(latitude, longitude))
         {
             return Result<CoordinateValueObject>.FromInvalid(
-                CommonDomainErrors.CoordinateError.InvalidCoordinate);
+                CommonDomainErrors.CoordinateErrors.InvalidCoordinate);
         }
 
         CoordinateValueObject valueObject = new(latitude, longitude);

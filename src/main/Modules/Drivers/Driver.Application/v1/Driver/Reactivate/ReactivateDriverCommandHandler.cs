@@ -1,6 +1,7 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Messaging;
+using TaxiService.Modules.Driver.Domain;
 using TaxiService.Modules.Driver.Domain.Core.Errors;
 using TaxiService.Modules.Driver.Domain.Repositories;
 
@@ -40,6 +41,7 @@ public sealed class ReactivateDriverCommandHandler(
         await eventDispatcher.DispatchAsync(entity);
 
         logger.LogProcessed(
+            ModuleConstants.ContextName,
             nameof(ReactivateDriverCommandHandler),
             nameof(Handle), entity.Id);
 
@@ -53,6 +55,7 @@ public sealed class ReactivateDriverCommandHandler(
         if (result.IsFailure)
         {
             logger.LogGenericValidationError(
+                ModuleConstants.ContextName,
                 nameof(ReactivateDriverCommandHandler),
                 nameof(Reactivate), entity.Id, result.FirstError!);
         }

@@ -1,8 +1,8 @@
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
 using Microsoft.Extensions.Logging;
 using TaxiService.Common.BaseInfrastructure.Extensions;
-using TaxiService.Modules.Driver.Application.Common;
 using TaxiService.Modules.Driver.Application.Common.Interfaces.Repositories;
+using TaxiService.Modules.Driver.Domain;
 using TaxiService.Modules.Driver.Domain.Entities;
 using TaxiService.Modules.Driver.Infrastructure.Contexts;
 
@@ -23,7 +23,8 @@ public class DriverLocationHistoryReadRepository(
                 conf => conf.DriverId == driverId,
                 cancellationToken);
 
-        logger.LogExistsByValue(ModuleContext.ContextName,
+        logger.LogExistsByValue(
+            ModuleConstants.ContextName,
             nameof(DriverLocationHistoryReadRepository),
             nameof(GetByDriverIdAsync),
             driverId.ToString(), result is not null);

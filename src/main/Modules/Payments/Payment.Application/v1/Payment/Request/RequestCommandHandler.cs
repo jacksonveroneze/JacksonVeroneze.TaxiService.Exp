@@ -3,6 +3,7 @@ using JacksonVeroneze.NET.Result;
 using TaxiService.Modules.Payment.Application.Common.Extensions;
 using TaxiService.Modules.Payment.Application.Common.Interfaces.Factories;
 using TaxiService.Modules.Payment.Application.Common.Interfaces.Providers;
+using TaxiService.Modules.Payment.Domain;
 using TaxiService.Modules.Payment.Domain.Core.Errors;
 using TaxiService.Modules.Payment.Domain.Models;
 using TaxiService.Modules.Payment.Domain.Repositories;
@@ -21,7 +22,9 @@ public sealed class RequestCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        logger.LogStartSignature(request.RideId.ToString());
+        logger.LogStartSignature(
+            ModuleConstants.ContextName,
+            request.RideId.ToString());
 
         Domain.Aggregates.Payment document = new();
 
@@ -31,7 +34,9 @@ public sealed class RequestCommandHandler(
         Result result = await TryPayAsync(
             document, cancellationToken);
 
-        logger.LogEndSignature(request.RideId.ToString(), result.IsSuccess);
+        logger.LogEndSignature(
+            ModuleConstants.ContextName,
+            request.RideId.ToString(), result.IsSuccess);
 
         return result;
     }
@@ -40,14 +45,16 @@ public sealed class RequestCommandHandler(
         Domain.Aggregates.Payment payment,
         CancellationToken cancellationToken)
     {
-        logger.LogFetchingProviders();
+        logger.LogFetchingProviders(
+            ModuleConstants.ContextName);
 
         ImmutableArray<Lazy<IPaymentProvider>> providers =
             await providerFactory.GetProvidersAsync(cancellationToken);
 
         if (!providers.Any())
         {
-            logger.LogNoProvidersAvailable();
+            logger.LogNoProvidersAvailable(
+                ModuleConstants.ContextName);
 
             return Result.WithError(
                 DomainErrors.ProviderError.Unavailable);
@@ -71,10 +78,11 @@ public sealed class RequestCommandHandler(
             return result;
         }
 
-        logger.LogFailSignatureAllProviders();
+        logger.LogFailSignatureAllProviders(
+            ModuleConstants.ContextName);
 
         return Result.WithError(
-            DomainErrors.PaymentError.SigningError);
+            DomainErrors.PaymentError.PayError);
     }
 
     private async Task<Result<PaymentResult>> AttemptSignatureWithProviderAsync(
@@ -82,21 +90,27 @@ public sealed class RequestCommandHandler(
         Domain.Aggregates.Payment document,
         CancellationToken cancellationToken)
     {
-        logger.LogStartSignatureProvider(provider.Identifier);
+        logger.LogStartSignatureProvider(
+            ModuleConstants.ContextName,
+            provider.Identifier);
 
         PaymentResult result = await provider.PayAsync(
             document, cancellationToken);
 
         if (result.Success)
         {
-            logger.LogSuccessSignatureProvider(provider.Identifier);
+            logger.LogSuccessSignatureProvider(
+                ModuleConstants.ContextName,
+                provider.Identifier);
 
             return Result<PaymentResult>.WithSuccess(result);
         }
 
-        logger.LogFailedSignatureProvider(provider.Identifier);
+        logger.LogFailedSignatureProvider(
+            ModuleConstants.ContextName,
+            provider.Identifier);
 
         return Result<PaymentResult>.WithError(
-            DomainErrors.PaymentError.SigningErrorProvider);
+            DomainErrors.PaymentError.PayErrorProvider);
     }
 }

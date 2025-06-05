@@ -3,6 +3,7 @@ using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Common.BaseDomain.ValueObjects;
 using TaxiService.Modules.Ride.Application.Common.Interfaces.Repositories;
+using TaxiService.Modules.Ride.Domain;
 using TaxiService.Modules.Ride.Domain.Core.Errors;
 using TaxiService.Modules.Ride.Domain.Repositories;
 using TaxiService.Modules.Ride.Domain.Services;
@@ -48,6 +49,7 @@ public sealed class FinishRideCommandHandler(
         await eventDispatcher.DispatchAsync(entity);
 
         logger.LogProcessed(
+            ModuleConstants.ContextName,
             nameof(FinishRideCommandHandler),
             nameof(Handle), entity.Id);
 
@@ -61,6 +63,7 @@ public sealed class FinishRideCommandHandler(
         if (result.IsFailure)
         {
             logger.LogGenericError(
+                ModuleConstants.ContextName,
                 nameof(FinishRideCommandHandler),
                 nameof(Finish), entity.Id, result.FirstError!);
         }

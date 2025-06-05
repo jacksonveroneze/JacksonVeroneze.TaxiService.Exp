@@ -2,9 +2,9 @@ using System.Linq.Expressions;
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
 using Microsoft.Extensions.Logging;
 using TaxiService.Common.BaseInfrastructure.Extensions;
-using TaxiService.Modules.Driver.Application.Common;
 using TaxiService.Modules.Driver.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Driver.Application.v1.Vehicle.Common.Models;
+using TaxiService.Modules.Driver.Domain;
 using TaxiService.Modules.Driver.Infrastructure.Contexts;
 
 namespace TaxiService.Modules.Driver.Infrastructure.Repositories.Vehicle;
@@ -23,7 +23,8 @@ public class VehicleReadRepository(
             conf => conf.Plate == plate,
             cancellationToken);
 
-        logger.LogExistsByValue(ModuleContext.ContextName,
+        logger.LogExistsByValue(
+            ModuleConstants.ContextName,
             nameof(VehicleReadRepository),
             nameof(ExistsByPlateAsync),
             plate, exists);
@@ -39,7 +40,8 @@ public class VehicleReadRepository(
             conf => conf.DriverId == driverId,
             cancellationToken);
 
-        logger.LogExistsByValue(ModuleContext.ContextName,
+        logger.LogExistsByValue(
+            ModuleConstants.ContextName,
             nameof(VehicleReadRepository),
             nameof(ExistVehicleByDriverAsync),
             driverId.ToString(), exists);
@@ -57,7 +59,8 @@ public class VehicleReadRepository(
         VehicleDto? result = await service
             .GetByIdAsync(spec, cancellationToken);
 
-        logger.LogGetById(ModuleContext.ContextName,
+        logger.LogGetById(
+            ModuleConstants.ContextName,
             nameof(VehicleReadRepository),
             nameof(GetByIdAsync),
             id, result != null);

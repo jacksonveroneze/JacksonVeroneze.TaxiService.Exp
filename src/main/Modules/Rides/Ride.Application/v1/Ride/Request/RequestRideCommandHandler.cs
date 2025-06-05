@@ -6,6 +6,7 @@ using TaxiService.Modules.Passenger.Domain.Enums;
 using TaxiService.Modules.Passenger.PublicApi.v1.Interfaces;
 using TaxiService.Modules.Passenger.PublicApi.v1.Models;
 using TaxiService.Modules.Ride.Application.Common.Interfaces.Repositories;
+using TaxiService.Modules.Ride.Domain;
 using TaxiService.Modules.Ride.Domain.Core.Errors;
 using TaxiService.Modules.Ride.Domain.Repositories;
 
@@ -77,6 +78,7 @@ public sealed class RequestRideCommandHandler(
         if (entity.IsFailure)
         {
             logger.LogGenericError(
+                ModuleConstants.ContextName,
                 nameof(RequestRideCommandHandler),
                 nameof(Handle), entity.Errors.Count);
         }
@@ -121,6 +123,7 @@ public sealed class RequestRideCommandHandler(
         Error error = DomainErrors.RideError.AlreadyByPassenger;
 
         logger.LogAlreadyExists(
+            ModuleConstants.ContextName,
             nameof(RequestRideCommandHandler),
             nameof(Handle), id, error);
 
@@ -135,6 +138,7 @@ public sealed class RequestRideCommandHandler(
             entity, cancellationToken);
 
         logger.LogCreated(
+            ModuleConstants.ContextName,
             nameof(RequestRideCommandHandler),
             nameof(CreateAsync), entity.Id);
     }

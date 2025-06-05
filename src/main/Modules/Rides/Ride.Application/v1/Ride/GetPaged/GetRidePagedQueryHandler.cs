@@ -6,6 +6,7 @@ using TaxiService.Modules.Ride.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Ride.Application.Common.Interfaces.Services;
 using TaxiService.Modules.Ride.Application.v1.Ride.Common.Filters;
 using TaxiService.Modules.Ride.Application.v1.Ride.Common.Models;
+using TaxiService.Modules.Ride.Domain;
 
 namespace TaxiService.Modules.Ride.Application.v1.Ride.GetPaged;
 
@@ -35,6 +36,7 @@ public sealed class GetRidePagedQueryHandler(
             response.Data!, request.Expand, cancellationToken);
 
         logger.LogGetPagedWithCursor(
+            ModuleConstants.ContextName,
             nameof(GetRidePagedQueryHandler),
             nameof(Handle), request.PageSize!.Value,
             page.Data.Count, page.PageInfo.HasMore!.Value);

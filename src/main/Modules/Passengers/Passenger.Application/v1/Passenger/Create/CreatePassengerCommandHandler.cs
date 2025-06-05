@@ -5,6 +5,7 @@ using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Modules.Passenger.Application.Common.Interfaces;
 using TaxiService.Modules.Passenger.Application.Common.Interfaces.Repositories;
+using TaxiService.Modules.Passenger.Domain;
 using TaxiService.Modules.Passenger.Domain.Core.Errors;
 using TaxiService.Modules.Passenger.Domain.Entities;
 using TaxiService.Modules.Passenger.Domain.Repositories;
@@ -35,7 +36,9 @@ public sealed class CreatePassengerCommandHandler(
         {
             Error error = DomainErrors.PassengerError.DuplicateEmail;
 
-            logger.LogAlreadyExists(nameof(CreatePassengerCommandHandler),
+            logger.LogAlreadyExists(
+                ModuleConstants.ContextName,
+                nameof(CreatePassengerCommandHandler),
                 nameof(Handle), request.Email!, error);
 
             return Result<CreatePassengerCommandResponse>.FromConflict(error);
@@ -78,6 +81,7 @@ public sealed class CreatePassengerCommandHandler(
         if (entity.IsFailure)
         {
             logger.LogGenericError(
+                ModuleConstants.ContextName,
                 nameof(CreatePassengerCommandHandler),
                 nameof(FactoryEntity), entity.Errors.Count);
         }
@@ -94,6 +98,7 @@ public sealed class CreatePassengerCommandHandler(
         if (entity.IsFailure)
         {
             logger.LogGenericError(
+                ModuleConstants.ContextName,
                 nameof(CreatePassengerCommandHandler),
                 nameof(Handle), entity.Errors.Count);
         }
@@ -138,7 +143,9 @@ public sealed class CreatePassengerCommandHandler(
         await unitOfWork.CommitAsync(
             cancellationToken);
 
-        logger.LogCreated(nameof(CreatePassengerCommandHandler),
+        logger.LogCreated(
+            ModuleConstants.ContextName,
+            nameof(CreatePassengerCommandHandler),
             nameof(CreateAsync), passenger.Id);
     }
 }

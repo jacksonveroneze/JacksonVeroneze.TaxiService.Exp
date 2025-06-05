@@ -3,6 +3,7 @@ using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Modules.Driver.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Driver.Application.v1.Driver.Activate;
+using TaxiService.Modules.Driver.Domain;
 using TaxiService.Modules.Driver.Domain.Core.Errors;
 using TaxiService.Modules.Driver.Domain.Entities;
 using TaxiService.Modules.Driver.Domain.Enums;
@@ -52,7 +53,9 @@ public sealed class DeleteDriverCommandHandler(
 
         await eventDispatcher.DispatchAsync(entity);
 
-        logger.LogDeleted(nameof(DeleteDriverCommandHandler),
+        logger.LogDeleted(
+            ModuleConstants.ContextName,
+            nameof(DeleteDriverCommandHandler),
             nameof(Handle), entity.Id);
 
         return Result.WithSuccess();
@@ -70,9 +73,10 @@ public sealed class DeleteDriverCommandHandler(
             return Result.WithSuccess();
         }
 
-        Error error = DomainErrors.DriverErrors.DriverHasActiveRide;
+        Error error = DomainErrors.DriverErrors.HasActiveRide;
 
         logger.LogGenericValidationError(
+            ModuleConstants.ContextName,
             nameof(DeleteDriverCommandHandler),
             nameof(Handle), error);
 
@@ -86,6 +90,7 @@ public sealed class DeleteDriverCommandHandler(
         if (result.IsFailure)
         {
             logger.LogGenericValidationError(
+                ModuleConstants.ContextName,
                 nameof(ActivateDriverCommandHandler),
                 nameof(Remove), entity.Id, result.FirstError!);
         }

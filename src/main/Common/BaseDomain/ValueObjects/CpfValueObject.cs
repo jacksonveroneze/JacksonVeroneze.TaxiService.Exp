@@ -45,7 +45,7 @@ public class CpfValueObject : ValueObject
         if (!IsValid(value))
         {
             return Result<CpfValueObject>.FromInvalid(
-                CommonDomainErrors.CpfError.InvalidCpf);
+                CommonDomainErrors.CpfErrors.InvalidCpf);
         }
 
         CpfValueObject valueObject = new(value!);

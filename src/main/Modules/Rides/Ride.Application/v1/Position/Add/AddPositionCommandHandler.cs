@@ -1,5 +1,6 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
+using TaxiService.Modules.Ride.Domain;
 using TaxiService.Modules.Ride.Domain.Core.Errors;
 using TaxiService.Modules.Ride.Domain.Repositories;
 
@@ -45,6 +46,7 @@ public sealed class AddPositionCommandHandler(
             entity.Value!, cancellationToken);
 
         logger.LogCreated(
+            ModuleConstants.ContextName,
             nameof(AddPositionCommandHandler),
             nameof(Handle), entity.Value!.Id);
 
@@ -63,6 +65,7 @@ public sealed class AddPositionCommandHandler(
         }
 
         logger.LogGenericError(
+            ModuleConstants.ContextName,
             nameof(AddPositionCommandHandler),
             nameof(FactoryEntity), entity.Errors.Count);
 
@@ -81,6 +84,7 @@ public sealed class AddPositionCommandHandler(
         Error error = DomainErrors.RideError.InvalidStatusAddPosition;
 
         logger.LogGenericError(
+            ModuleConstants.ContextName,
             nameof(AddPositionCommandHandler),
             nameof(ValidateStatusRide), error.Message);
 

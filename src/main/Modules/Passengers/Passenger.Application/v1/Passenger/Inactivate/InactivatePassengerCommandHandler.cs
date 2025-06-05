@@ -2,6 +2,7 @@ using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Common.BaseApplication.Interfaces.System;
+using TaxiService.Modules.Passenger.Domain;
 using TaxiService.Modules.Passenger.Domain.Core.Errors;
 using TaxiService.Modules.Passenger.Domain.Repositories;
 
@@ -42,6 +43,7 @@ public sealed class InactivatePassengerCommandHandler(
         await eventDispatcher.DispatchAsync(entity);
 
         logger.LogProcessed(
+            ModuleConstants.ContextName,
             nameof(InactivatePassengerCommandHandler),
             nameof(Handle), entity.Id);
 
@@ -55,6 +57,7 @@ public sealed class InactivatePassengerCommandHandler(
         if (result.IsFailure)
         {
             logger.LogRuleViolation(
+                ModuleConstants.ContextName,
                 nameof(InactivatePassengerCommandHandler),
                 nameof(Inactivate), entity.Id, result.FirstError!);
         }

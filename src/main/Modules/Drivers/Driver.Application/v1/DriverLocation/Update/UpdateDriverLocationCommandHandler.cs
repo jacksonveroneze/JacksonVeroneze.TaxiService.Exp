@@ -1,6 +1,7 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Modules.Driver.Application.Common.Interfaces.Services;
+using TaxiService.Modules.Driver.Domain;
 using TaxiService.Modules.Driver.Domain.Entities;
 using TaxiService.Modules.Driver.Domain.Repositories;
 
@@ -51,6 +52,7 @@ public sealed class UpdateDriverLocationCommandHandler(
         if (!resultEntity.IsSuccess)
         {
             logger.LogGenericError(
+                ModuleConstants.ContextName,
                 nameof(UpdateDriverLocationCommandHandler),
                 nameof(FactoryEntity), resultEntity.Errors.Count);
         }
@@ -65,7 +67,9 @@ public sealed class UpdateDriverLocationCommandHandler(
         await driverLocationHistoryRepository.CreateAsync(
             entity, cancellationToken);
 
-        logger.LogCreated(nameof(UpdateDriverLocationCommandHandler),
+        logger.LogCreated(
+            ModuleConstants.ContextName,
+            nameof(UpdateDriverLocationCommandHandler),
             nameof(CreateAsync), entity.Id);
     }
 }

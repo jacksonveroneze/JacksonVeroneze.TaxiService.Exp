@@ -2,6 +2,7 @@ using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Passenger.Application.Common.Interfaces.Repositories;
+using TaxiService.Modules.Passenger.Domain;
 using TaxiService.Modules.Passenger.Domain.Core.Errors;
 using TaxiService.Modules.Passenger.Domain.Repositories;
 
@@ -52,6 +53,7 @@ public sealed class CreateEmailCommandHandler(
             entity.Value!, cancellationToken);
 
         logger.LogProcessed(
+            ModuleConstants.ContextName,
             nameof(CreateEmailCommandHandler),
             nameof(Handle), entity.Value!.Id);
 
@@ -70,6 +72,7 @@ public sealed class CreateEmailCommandHandler(
         if (entity.IsFailure)
         {
             logger.LogGenericError(
+                ModuleConstants.ContextName,
                 nameof(CreateEmailCommandHandler),
                 nameof(FactoryEntity), entity.Errors.Count);
         }

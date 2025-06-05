@@ -5,6 +5,7 @@ using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Modules.Passenger.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Passenger.Application.v1.Passenger.Common.Filters;
 using TaxiService.Modules.Passenger.Application.v1.Passenger.Common.Models;
+using TaxiService.Modules.Passenger.Domain;
 
 namespace TaxiService.Modules.Passenger.Application.v1.Passenger.GetPaged;
 
@@ -30,6 +31,7 @@ public sealed class GetPassengerPagedQueryHandler(
             mapper.Map<GetPassengerPagedQueryResponse>(page);
 
         logger.LogGetPagedWithCursor(
+            ModuleConstants.ContextName,
             nameof(GetPassengerPagedQueryHandler),
             nameof(Handle), request.PageSize!.Value,
             page.Data.Count, page.PageInfo.HasMore!.Value);

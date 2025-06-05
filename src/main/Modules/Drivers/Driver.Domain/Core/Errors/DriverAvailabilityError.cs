@@ -18,9 +18,6 @@ public static partial class DomainErrors
             Error.Create("DriverAvailability.CannotStartRideWhileOffline",
                 "O motorista não pode iniciar uma corrida enquanto estiver offline.");
 
-        public static Error DriverOffline =>
-            Error.Create("Driver.Offline", "O motorista está OFFLINE e não pode realizar esta ação.");
-
         public static Error InvalidStatus =>
             Error.Create("Driver.InvalidStatus", "Status inválido");
     }

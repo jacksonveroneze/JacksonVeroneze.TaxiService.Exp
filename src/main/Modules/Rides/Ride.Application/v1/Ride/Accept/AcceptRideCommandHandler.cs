@@ -7,6 +7,7 @@ using TaxiService.Modules.Driver.Domain.Enums;
 using TaxiService.Modules.Driver.PublicApi.v1.Interfaces;
 using TaxiService.Modules.Driver.PublicApi.v1.Models;
 using TaxiService.Modules.Ride.Application.Common.Interfaces.Repositories;
+using TaxiService.Modules.Ride.Domain;
 using TaxiService.Modules.Ride.Domain.Core.Errors;
 using TaxiService.Modules.Ride.Domain.Repositories;
 
@@ -59,7 +60,7 @@ public sealed class AcceptRideCommandHandler(
         if (driver.Status != DriverStatus.Active)
         {
             return Result<Domain.Aggregates.Ride>.FromRuleViolation(
-                DomainErrors.RideError.DriverNotActive);
+                DomainErrors.RideError.DriverInactive);
         }
 
         Result resultAction = Accept(entity,
@@ -76,6 +77,7 @@ public sealed class AcceptRideCommandHandler(
         await eventDispatcher.DispatchAsync(entity);
 
         logger.LogProcessed(
+            ModuleConstants.ContextName,
             nameof(AcceptRideCommandHandler),
             nameof(Handle), entity.Id);
 
@@ -89,6 +91,7 @@ public sealed class AcceptRideCommandHandler(
         if (result.IsFailure)
         {
             logger.LogGenericError(
+                ModuleConstants.ContextName,
                 nameof(AcceptRideCommandHandler),
                 nameof(Accept), entity.Id, result.FirstError!);
         }

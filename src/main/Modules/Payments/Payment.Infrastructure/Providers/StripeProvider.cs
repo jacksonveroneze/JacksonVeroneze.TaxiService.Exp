@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using Refit;
 using TaxiService.Modules.Payment.Application.Common.Interfaces.Providers;
+using TaxiService.Modules.Payment.Domain;
 using TaxiService.Modules.Payment.Domain.Enums;
 using TaxiService.Modules.Payment.Domain.Models;
 using TaxiService.Modules.Payment.Infrastructure.Acl.Models.Stripe;
@@ -35,14 +36,18 @@ internal sealed class StripeProvider(
         }
         catch (ApiException ex)
         {
-            logger.LogGenericHttpError(nameof(StripeProvider),
+            logger.LogGenericHttpError(
+                ModuleConstants.ContextName,
+                nameof(StripeProvider),
                 nameof(PayAsync), ex.StatusCode, ex);
 
             return PaymentResult.WithError(ex.Message);
         }
         catch (Exception ex)
         {
-            logger.LogGenericError(nameof(StripeProvider),
+            logger.LogGenericError(
+                ModuleConstants.ContextName,
+                nameof(StripeProvider),
                 nameof(PayAsync), ex);
 
             return PaymentResult.WithError(ex.Message);

@@ -2,6 +2,7 @@ using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Common.BaseApplication.Interfaces.System;
+using TaxiService.Modules.Driver.Domain;
 using TaxiService.Modules.Driver.Domain.Core.Errors;
 using TaxiService.Modules.Driver.Domain.Repositories;
 
@@ -42,6 +43,7 @@ public sealed class ActivateDriverCommandHandler(
         await eventDispatcher.DispatchAsync(entity);
 
         logger.LogProcessed(
+            ModuleConstants.ContextName,
             nameof(ActivateDriverCommandHandler),
             nameof(Handle), entity.Id);
 
@@ -55,6 +57,7 @@ public sealed class ActivateDriverCommandHandler(
         if (result.IsFailure)
         {
             logger.LogGenericValidationError(
+                ModuleConstants.ContextName,
                 nameof(ActivateDriverCommandHandler),
                 nameof(Activate), entity.Id, result.FirstError!);
         }

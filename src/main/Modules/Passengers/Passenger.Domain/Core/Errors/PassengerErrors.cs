@@ -9,19 +9,11 @@ public static partial class DomainErrors
     {
         public static Error NotFound =>
             Error.Create("Passenger.NotFound",
-                string.Format(null, CommonDomainErrors.TemplateNotFound, "passenger id"));
-
-        public static Error InvalidName =>
-            Error.Create("Passenger.InvalidName",
-                string.Format(null, CommonDomainErrors.TemplateDataInvalid, "name"));
-
-        public static Error InvalidCpf =>
-            Error.Create("Passenger.InvalidCpf",
-                string.Format(null, CommonDomainErrors.TemplateDataInvalid, "cpf"));
+                string.Format(CommonDomainErrors.TemplateNotFound, "passenger id"));
 
         public static Error DuplicateEmail =>
             Error.Create("Passenger.DuplicateEmail",
-                string.Format(null, CommonDomainErrors.TemplateDataInUse, "e-mail"));
+                string.Format(CommonDomainErrors.TemplateDataInUse, "e-mail"));
 
         public static Error AlreadyActivated =>
             Error.Create("Passenger.AlreadyActivated",

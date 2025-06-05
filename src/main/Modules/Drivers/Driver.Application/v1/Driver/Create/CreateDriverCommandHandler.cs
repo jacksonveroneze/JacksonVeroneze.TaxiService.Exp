@@ -4,6 +4,7 @@ using TaxiService.Common.BaseApplication.Interfaces.Mapper;
 using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Common.BaseApplication.Validators;
 using TaxiService.Modules.Driver.Application.Common.Interfaces;
+using TaxiService.Modules.Driver.Domain;
 using TaxiService.Modules.Driver.Domain.Core.Errors;
 using TaxiService.Modules.Driver.Domain.Repositories;
 using IDriverReadRepository =
@@ -79,7 +80,9 @@ public sealed class CreateDriverCommandHandler(
 
         Error error = DomainErrors.DriverErrors.DuplicateEmailOrDocument;
 
-        logger.LogAlreadyExists(nameof(CreateDriverCommandHandler),
+        logger.LogAlreadyExists(
+            ModuleConstants.ContextName,
+            nameof(CreateDriverCommandHandler),
             nameof(ExistByEmailOrDocumentAsync), email, error);
 
         return Result.FromRuleViolation(error);
@@ -99,6 +102,7 @@ public sealed class CreateDriverCommandHandler(
         }
 
         logger.LogGenericError(
+            ModuleConstants.ContextName,
             nameof(CreateDriverCommandHandler),
             nameof(FactoryEntity), entity.Errors.Count);
 
@@ -115,7 +119,9 @@ public sealed class CreateDriverCommandHandler(
         await unitOfWork.CommitAsync(
             cancellationToken);
 
-        logger.LogCreated(nameof(CreateDriverCommandHandler),
+        logger.LogCreated(
+            ModuleConstants.ContextName,
+            nameof(CreateDriverCommandHandler),
             nameof(CreateAsync), driver.Id);
     }
 }
