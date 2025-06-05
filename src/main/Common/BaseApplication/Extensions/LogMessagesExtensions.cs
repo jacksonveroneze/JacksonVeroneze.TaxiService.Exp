@@ -43,8 +43,7 @@ public static partial class LogMessagesExtensions
         EventId = 1003,
         Level = LogLevel.Warning,
         Message = "{contextName} - {className} - {methodName} - " +
-                  "Identifier: '{identifier}' - " +
-                  "Error: '{error}'")]
+                  "Identifier: '{identifier}' - Error: '{error}'")]
     public static partial void LogGenericValidationError(this ILogger logger,
         string contextName, string className, string methodName, Guid identifier, Error error);
 
@@ -55,16 +54,16 @@ public static partial class LogMessagesExtensions
     [LoggerMessage(
         EventId = 1011,
         Level = LogLevel.Warning,
-        Message = "{contextName} - {className} - {methodName} - Exists - " +
-                  "Identifier: '{identifier}' - Message: '{message}'")]
+        Message = "{contextName} - {className} - {methodName} - " +
+                  "Identifier: '{identifier}' - AlreadyExists - Message: '{message}'")]
     public static partial void LogAlreadyExists(this ILogger logger,
         string contextName, string className, string methodName, Guid identifier, string message);
 
     [LoggerMessage(
         EventId = 1012,
         Level = LogLevel.Warning,
-        Message = "{contextName} - {className} - {methodName} - Exists - " +
-                  "Identifier: '{identifier}' - Message: '{message}'")]
+        Message = "{contextName} - {className} - {methodName} - " +
+                  "Identifier: '{identifier}' - AlreadyExists - Message: '{message}'")]
     public static partial void LogAlreadyExists(this ILogger logger,
         string contextName, string className, string methodName, string identifier, string message);
 
@@ -75,15 +74,16 @@ public static partial class LogMessagesExtensions
     [LoggerMessage(
         EventId = 1030,
         Level = LogLevel.Information,
-        Message = "{contextName} - {className} - {methodName} - Identifier: '{identifier}' - Processed Success")]
+        Message = "{contextName} - {className} - {methodName} - " +
+                  "Identifier: '{identifier}' - Processed Success")]
     public static partial void LogProcessed(this ILogger logger,
         string contextName, string className, string methodName, Guid identifier);
 
     [LoggerMessage(
         EventId = 1031,
         Level = LogLevel.Warning,
-        Message = "{contextName} - {className} - {methodName} - RuleViolation - " +
-                  "Identifier: '{identifier}' - Message: '{message}'")]
+        Message = "{contextName} - {className} - {methodName} - " +
+                  "Identifier: '{identifier}' - RuleViolation - Message: '{message}'")]
     public static partial void LogRuleViolation(this ILogger logger,
         string contextName, string className, string methodName, Guid identifier, string message);
 
@@ -94,7 +94,7 @@ public static partial class LogMessagesExtensions
     [LoggerMessage(
         EventId = 1040,
         Level = LogLevel.Information,
-        Message = "{contextName} - {className} - {methodName} - Info - " +
+        Message = "{contextName} - {className} - {methodName} - " +
                   "TotalElements: '{totalElements}'")]
     public static partial void LogGetAll(this ILogger logger,
         string contextName, string className, string methodName, int totalElements);
@@ -102,7 +102,7 @@ public static partial class LogMessagesExtensions
     [LoggerMessage(
         EventId = 1040,
         Level = LogLevel.Information,
-        Message = "{contextName} - {className} - {methodName} - Info - " +
+        Message = "{contextName} - {className} - {methodName} - " +
                   "PageSize: '{pageSize}' - " +
                   "TotalElements: '{totalElements}' - " +
                   "HasMore: '{hasMore}'")]
@@ -111,14 +111,6 @@ public static partial class LogMessagesExtensions
         int pageSize, int totalElements,
         bool hasMore);
 
-    [LoggerMessage(
-        EventId = 1041,
-        Level = LogLevel.Information,
-        Message = "{contextName} - {className} - {methodName} - Found - " +
-                  "Identifier: '{identifier}'")]
-    public static partial void LogGetById(this ILogger logger,
-        string contextName, string className, string methodName, Guid? identifier);
-
     #endregion
 
     #region CommonCreated
@@ -126,8 +118,8 @@ public static partial class LogMessagesExtensions
     [LoggerMessage(
         EventId = 1050,
         Level = LogLevel.Information,
-        Message = "{contextName} - {className} - {methodName} - Created - " +
-                  "Identifier: '{identifier}'")]
+        Message = "{contextName} - {className} - {methodName} - " +
+                  "Identifier: '{identifier}' - Created")]
     public static partial void LogCreated(this ILogger logger,
         string contextName, string className, string methodName, Guid identifier);
 
@@ -138,8 +130,8 @@ public static partial class LogMessagesExtensions
     [LoggerMessage(
         EventId = 1060,
         Level = LogLevel.Information,
-        Message = "{contextName} - {className} - {methodName} - Updated - " +
-                  "Identifier: '{identifier}'")]
+        Message = "{contextName} - {className} - {methodName} - " +
+                  "Identifier: '{identifier}' - Updated")]
     public static partial void LogUpdated(this ILogger logger,
         string contextName, string className, string methodName, Guid identifier);
 
@@ -150,8 +142,8 @@ public static partial class LogMessagesExtensions
     [LoggerMessage(
         EventId = 1070,
         Level = LogLevel.Information,
-        Message = "{contextName} - {className} - {methodName} - Deleted - " +
-                  "Identifier: '{identifier}'")]
+        Message = "{contextName} - {className} - {methodName} - " +
+                  "Identifier: '{identifier}' - Deleted")]
     public static partial void LogDeleted(this ILogger logger,
         string contextName, string className, string methodName, Guid identifier);
 

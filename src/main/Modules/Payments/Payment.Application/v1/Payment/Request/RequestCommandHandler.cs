@@ -22,7 +22,7 @@ public sealed class RequestCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        logger.LogStartSignature(
+        logger.LogStartPay(
             ModuleConstants.ContextName,
             request.RideId.ToString());
 
@@ -34,7 +34,7 @@ public sealed class RequestCommandHandler(
         Result result = await TryPayAsync(
             document, cancellationToken);
 
-        logger.LogEndSignature(
+        logger.LogEndPay(
             ModuleConstants.ContextName,
             request.RideId.ToString(), result.IsSuccess);
 
@@ -78,7 +78,7 @@ public sealed class RequestCommandHandler(
             return result;
         }
 
-        logger.LogFailSignatureAllProviders(
+        logger.LogFailPayAllProviders(
             ModuleConstants.ContextName);
 
         return Result.WithError(
@@ -90,7 +90,7 @@ public sealed class RequestCommandHandler(
         Domain.Aggregates.Payment document,
         CancellationToken cancellationToken)
     {
-        logger.LogStartSignatureProvider(
+        logger.LogStartPayProvider(
             ModuleConstants.ContextName,
             provider.Identifier);
 
@@ -99,14 +99,14 @@ public sealed class RequestCommandHandler(
 
         if (result.Success)
         {
-            logger.LogSuccessSignatureProvider(
+            logger.LogSuccessPayProvider(
                 ModuleConstants.ContextName,
                 provider.Identifier);
 
             return Result<PaymentResult>.WithSuccess(result);
         }
 
-        logger.LogFailedSignatureProvider(
+        logger.LogFailedPayProvider(
             ModuleConstants.ContextName,
             provider.Identifier);
 

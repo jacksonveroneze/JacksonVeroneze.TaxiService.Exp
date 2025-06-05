@@ -12,9 +12,9 @@ internal static partial class LogMessagesExtensions
         Level = LogLevel.Information,
         Message = "{contextName} - " +
                   $"{nameof(RequestCommandHandler)} - " +
-                  $"{nameof(RequestCommandHandler.Handle)} - Start signing - " +
-                  "Identifier: '{identifier}'")]
-    internal static partial void LogStartSignature(this ILogger logger,
+                  $"{nameof(RequestCommandHandler.Handle)} - " +
+                  "Identifier: '{identifier}' - Start Pay")]
+    internal static partial void LogStartPay(this ILogger logger,
         string contextName, string identifier);
 
     [LoggerMessage(
@@ -22,9 +22,9 @@ internal static partial class LogMessagesExtensions
         Level = LogLevel.Information,
         Message = "{contextName} - " +
                   $"{nameof(RequestCommandHandler)} - " +
-                  $"{nameof(RequestCommandHandler.Handle)} - End document signing - " +
-                  "Identifier: '{identifier}' - IsSuccess: '{isSuccess}'")]
-    internal static partial void LogEndSignature(this ILogger logger,
+                  $"{nameof(RequestCommandHandler.Handle)}  - " +
+                  "Identifier: '{identifier}' - IsSuccess: '{isSuccess}'- End document signing")]
+    internal static partial void LogEndPay(this ILogger logger,
         string contextName, string identifier, bool isSuccess);
 
 
@@ -56,7 +56,7 @@ internal static partial class LogMessagesExtensions
                   $"{nameof(RequestCommandHandler)} - " +
                   $"{nameof(RequestCommandHandler.Handle)} - " +
                   "All providers failed to sign the document.")]
-    internal static partial void LogFailSignatureAllProviders(this ILogger logger, 
+    internal static partial void LogFailPayAllProviders(this ILogger logger, 
         string contextName);
 
 
@@ -66,9 +66,8 @@ internal static partial class LogMessagesExtensions
         Message = "{contextName} - " +
                   $"{nameof(RequestCommandHandler)} - " +
                   $"{nameof(RequestCommandHandler.Handle)} - " +
-                  "Attempting to sign document with provider - " +
-                  "Provider: '{provider}'")]
-    internal static partial void LogStartSignatureProvider(this ILogger logger,
+                  "Provider: '{provider}'-  Attempting to sign document with provider")]
+    internal static partial void LogStartPayProvider(this ILogger logger,
         string contextName, PaymentProviderType provider);
 
     [LoggerMessage(
@@ -77,9 +76,8 @@ internal static partial class LogMessagesExtensions
         Message = "{contextName} - " +
                   $"{nameof(RequestCommandHandler)} - " +
                   $"{nameof(RequestCommandHandler.Handle)} - " +
-                  "Document signed successfully - " +
-                  "Provider: '{provider}'")]
-    internal static partial void LogSuccessSignatureProvider(this ILogger logger,
+                  "Provider: '{provider}'- Document signed successfully")]
+    internal static partial void LogSuccessPayProvider(this ILogger logger,
         string contextName, PaymentProviderType provider);
 
 
@@ -89,9 +87,8 @@ internal static partial class LogMessagesExtensions
         Message = "{contextName} - " +
                   $"{nameof(RequestCommandHandler)} - " +
                   $"{nameof(RequestCommandHandler.Handle)} - " +
-                  "Failed to sign the document - " +
-                  "Provider: '{provider}'")]
-    internal static partial void LogFailedSignatureProvider(this ILogger logger,
+                  "Provider: '{provider}' - Failed to sign the document")]
+    internal static partial void LogFailedPayProvider(this ILogger logger,
         string contextName, PaymentProviderType provider);
 
     #endregion
