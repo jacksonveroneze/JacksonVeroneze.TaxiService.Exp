@@ -10,7 +10,8 @@ internal static class ModuleConfigurationsExtensions
         foreach (string module in modules)
         {
             configurationBuilder.AddJsonFile(
-                $"appsettings.{module}.{environment.EnvironmentName}.json", true, true);
+                $"appsettings.{module}.{environment.EnvironmentName}.json",
+                optional: true, reloadOnChange: true);
         }
 
         return configurationBuilder;

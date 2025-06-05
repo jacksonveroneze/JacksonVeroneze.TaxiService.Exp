@@ -75,8 +75,7 @@ public static partial class LogMessagesExtensions
     [LoggerMessage(
         EventId = 1030,
         Level = LogLevel.Information,
-        Message = "{contextName} - {className} - {methodName} - Processed Success - " +
-                  "Identifier: '{identifier}'")]
+        Message = "{contextName} - {className} - {methodName} - Identifier: '{identifier}' - Processed Success")]
     public static partial void LogProcessed(this ILogger logger,
         string contextName, string className, string methodName, Guid identifier);
 

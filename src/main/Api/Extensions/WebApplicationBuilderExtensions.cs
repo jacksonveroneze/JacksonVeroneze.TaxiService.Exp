@@ -50,15 +50,18 @@ internal static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder,
         AppConfiguration appConfiguration)
     {
-        builder.Services.AddCors(options =>
+        if (builder.Environment.IsDevelopment())
         {
-            options.AddPolicy("all", policy =>
+            builder.Services.AddCors(options =>
             {
-                policy.AllowAnyOrigin()
-                    .AllowAnyHeader()
-                    .AllowAnyMethod();
+                options.AddPolicy("all", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
             });
-        });
+        }
 
         builder.Services
             .AddProblemDetails()
