@@ -1,8 +1,11 @@
 using JacksonVeroneze.NET.Pagination.Cursor;
+using TaxiService.Modules.Driver.PublicApi.v1.Models;
+using TaxiService.Modules.Ride.Application.Common.Interfaces.Services.Models;
 using TaxiService.Modules.Ride.Application.v1.Ride.Common.Filters;
 using TaxiService.Modules.Ride.Application.v1.Ride.Common.Models;
 using TaxiService.Modules.Ride.Application.v1.Ride.GetById;
 using TaxiService.Modules.Ride.Application.v1.Ride.GetPaged;
+using TaxiService.Modules.Ride.Application.v1.Ride.MatchDrivers;
 using TaxiService.Modules.Ride.Application.v1.Ride.Request;
 
 namespace TaxiService.Modules.Ride.Application.v1.Ride.Mappers;
@@ -47,5 +50,29 @@ public class RideMapper : Profile
             .ForMember(dest => dest.From, opts => opts.MapFrom(src => src.From))
             .ForMember(dest => dest.To, opts => opts.MapFrom(src => src.To))
             .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status));
+
+        CreateMap<ICollection<DriverMatchCandidate>, GetMatchDriversQueryResponse>()
+            .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src));
+
+        CreateMap<DriverMatchCandidate, MatchDriversResponse>()
+            .ForMember(dest => dest.Driver, opts => opts.MapFrom(src => src.Driver))
+            .ForMember(dest => dest.Vehicle, opts => opts.MapFrom(src => src.Vehicle))
+            .ForMember(dest => dest.Score, opts => opts.MapFrom(src => src.Score))
+            .ForMember(dest => dest.DistanceInKm, opts => opts.MapFrom(src => src.DistanceInKm))
+            .ForMember(dest => dest.EstimatedArrivalTime, opts => opts.MapFrom(src => src.EstimatedArrivalTime));
+
+        CreateMap<DriverPublicApiDto, MatchDriversDriverResponse>()
+            .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
+            .ForMember(dest => dest.FullName, opts => opts.MapFrom(src => src.FullName))
+            .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender));
+
+        CreateMap<VehiclePublicApiDto, MatchDriversVehicleResponse>()
+            .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Model, opts => opts.MapFrom(src => src.Model))
+            .ForMember(dest => dest.Brand, opts => opts.MapFrom(src => src.Brand))
+            .ForMember(dest => dest.Plate, opts => opts.MapFrom(src => src.Plate))
+            .ForMember(dest => dest.Color, opts => opts.MapFrom(src => src.Color))
+            .ForMember(dest => dest.Color, opts => opts.MapFrom(src => src.Color))
+            .ForMember(dest => dest.Year, opts => opts.MapFrom(src => src.Year));
     }
 }

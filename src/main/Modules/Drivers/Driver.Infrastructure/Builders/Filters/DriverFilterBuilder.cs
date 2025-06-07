@@ -18,9 +18,14 @@ public class DriverFilterBuilder(
     {
         FilterBuilder<DriverDto> builder = new();
 
-        if (filter.Ids?.Count != 0)
+        if (filter.Ids?.Count > 0)
         {
             builder.And(d => filter.Ids!.Contains(d.Id!.Value));
+        }
+
+        if (filter.Status.HasValue)
+        {
+            builder.And(d => filter.Status!.Value == filter.Status.Value);
         }
 
         return builder.Build();

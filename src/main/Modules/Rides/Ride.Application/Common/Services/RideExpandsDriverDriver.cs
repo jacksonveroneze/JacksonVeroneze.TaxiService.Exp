@@ -29,7 +29,10 @@ public class RideExpandsDriverDriver(
             return;
         }
 
-        DriverPublicApiFilter filter = new(ids);
+        DriverPublicApiFilter filter = new()
+        {
+            Ids = ids
+        };
 
         ICollection<DriverPublicApiDto> drivers = await driverPublicApi
             .GetAsync(filter, cancellationToken);

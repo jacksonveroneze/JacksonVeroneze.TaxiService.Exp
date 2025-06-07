@@ -85,8 +85,7 @@ public class DriverReadRepository(
 
         ICollection<DriverDto> result =
             await service.GetAllAsync(
-                expression,
-                cancellationToken: cancellationToken);
+                expression, cancellationToken);
 
         return result;
     }

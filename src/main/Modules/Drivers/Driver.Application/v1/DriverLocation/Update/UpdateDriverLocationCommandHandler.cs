@@ -1,6 +1,8 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
+using TaxiService.Modules.Driver.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Driver.Application.Common.Interfaces.Services;
+using TaxiService.Modules.Driver.Application.v1.DriverLocation.Common.Filters;
 using TaxiService.Modules.Driver.Domain;
 using TaxiService.Modules.Driver.Domain.Entities;
 using TaxiService.Modules.Driver.Domain.Repositories;

@@ -21,8 +21,12 @@ public static class DatabaseExtensions
 
         services.AddDbContext<TContext>((_, options) =>
             options.UseNpgsql(databaseConfiguration.WriteConnectionString, conf =>
+                {
+                    conf.UseNetTopologySuite();
+                    
                     conf.EnableRetryOnFailure()
-                        .CommandTimeout(DefaultCommandTimeout))
+                        .CommandTimeout(DefaultCommandTimeout);
+                })
                 .ConfigureOptionsDatabase());
 
         return services;
@@ -37,8 +41,12 @@ public static class DatabaseExtensions
 
         services.AddDbContext<TContext>((_, options) =>
             options.UseNpgsql(databaseConfiguration.ReadConnectionString, conf =>
+                {
+                    conf.UseNetTopologySuite();
+                    
                     conf.EnableRetryOnFailure()
-                        .CommandTimeout(DefaultCommandTimeout))
+                        .CommandTimeout(DefaultCommandTimeout);
+                })
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
                 .ConfigureOptionsDatabase());
 

@@ -72,8 +72,8 @@ public sealed class RequestRideCommandHandler(
     {
         Result<Domain.Aggregates.Ride> entity = Domain.Aggregates.Ride.Create(
             passengerId,
-            request.LatitudeFrom, request.LatitudeTo,
-            request.LongitudeFrom, request.LongitudeTo);
+            request.LatitudeFrom, request.LongitudeFrom,
+            request.LatitudeTo, request.LongitudeTo);
 
         if (entity.IsFailure)
         {

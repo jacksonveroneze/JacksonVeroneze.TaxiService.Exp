@@ -17,7 +17,8 @@ public static class RidesEndpoints
             .AddAccept()
             .AddStart()
             .AddFinish()
-            .AddCancel();
+            .AddCancel()
+            .AddGetMatchDrivers();
 
         return app;
     }

@@ -39,6 +39,8 @@ public class DriverPublicApi(
         DriverFilter queryFilter = new()
         {
             Ids = filter.Ids,
+            Status = filter.Status,
+            
         };
 
         ICollection<DriverDto> data = await repository

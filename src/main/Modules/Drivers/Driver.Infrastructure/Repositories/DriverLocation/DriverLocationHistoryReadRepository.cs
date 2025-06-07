@@ -1,8 +1,10 @@
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
-using Microsoft.Extensions.Logging;
-using TaxiService.Common.BaseInfrastructure.Extensions;
+using Microsoft.EntityFrameworkCore;
+using NetTopologySuite;
+using NetTopologySuite.Geometries;
 using TaxiService.Modules.Driver.Application.Common.Interfaces.Repositories;
-using TaxiService.Modules.Driver.Domain;
+using TaxiService.Modules.Driver.Application.v1.DriverLocation.Common.Filters;
+using TaxiService.Modules.Driver.Application.v1.DriverLocation.Common.Models;
 using TaxiService.Modules.Driver.Domain.Entities;
 using TaxiService.Modules.Driver.Infrastructure.Contexts;
 
@@ -10,24 +12,35 @@ namespace TaxiService.Modules.Driver.Infrastructure.Repositories.DriverLocation;
 
 [ExcludeFromCodeCoverage]
 public class DriverLocationHistoryReadRepository(
-    ILogger<DriverLocationHistoryReadRepository> logger,
     IEfCoreRepository<DriverLocationHistory, DriversDbContext> service)
     : IDriverLocationHistoryReadRepository
 {
-    public async Task<DriverLocationHistory?> GetByDriverIdAsync(
-        Guid driverId,
+    public async Task<ICollection<DriverLocationMatchDto>> GetDriverNeabyLocationAsync(
+        DriverLocationMatchFilter filter,
         CancellationToken cancellationToken)
     {
-        DriverLocationHistory? result = await service
-            .GetSingleOrDefaultAsync(
-                conf => conf.DriverId == driverId,
-                cancellationToken);
+        ArgumentNullException.ThrowIfNull(filter);
 
-        logger.LogExistsByValue(
-            ModuleConstants.ContextName,
-            nameof(DriverLocationHistoryReadRepository),
-            nameof(GetByDriverIdAsync),
-            driverId.ToString(), result is not null);
+        GeometryFactory? geometryFactory = NtsGeometryServices
+            .Instance.CreateGeometryFactory(srid: 4326);
+
+        Point? referencePoint = geometryFactory
+            .CreatePoint(new Coordinate(filter.Longitude, filter.Latitude));
+
+        DriverLocationMatchDto[] result = await service.DbSet
+            .Select(item => new DriverLocationMatchDto
+            {
+                Id = item.Id,
+                DriverId = item.DriverId,
+                Latitude = item.Location.Latitude,
+                Longitude = item.Location.Longitude,
+                DistanceInMeters = EF.Property<Point>(
+                    item, "geoLocation").Distance(referencePoint),
+            })
+            .Where(item => item.DistanceInMeters < filter.DistanceInMeters)
+            .OrderBy(item => item.DistanceInMeters)
+            .Take(filter.MaxResults)
+            .ToArrayAsync(cancellationToken);
 
         return result;
     }

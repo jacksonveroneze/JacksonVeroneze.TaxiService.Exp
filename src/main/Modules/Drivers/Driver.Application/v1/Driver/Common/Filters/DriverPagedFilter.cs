@@ -11,7 +11,5 @@ public record DriverPagedFilter : DriverFilter
 
     public string? Name { get; init; }
 
-    public DriverStatus? Status { get; init; }
-
     public PaginationParameters? Pagination { get; init; }
 }

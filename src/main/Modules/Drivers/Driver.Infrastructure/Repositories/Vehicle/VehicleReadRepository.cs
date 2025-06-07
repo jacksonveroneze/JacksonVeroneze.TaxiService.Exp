@@ -3,8 +3,10 @@ using JacksonVeroneze.NET.EntityFramework.Interfaces;
 using Microsoft.Extensions.Logging;
 using TaxiService.Common.BaseInfrastructure.Extensions;
 using TaxiService.Modules.Driver.Application.Common.Interfaces.Repositories;
+using TaxiService.Modules.Driver.Application.v1.Vehicle.Common.Filters;
 using TaxiService.Modules.Driver.Application.v1.Vehicle.Common.Models;
 using TaxiService.Modules.Driver.Domain;
+using TaxiService.Modules.Driver.Infrastructure.Builders.Filters;
 using TaxiService.Modules.Driver.Infrastructure.Contexts;
 
 namespace TaxiService.Modules.Driver.Infrastructure.Repositories.Vehicle;
@@ -64,6 +66,22 @@ public class VehicleReadRepository(
             nameof(VehicleReadRepository),
             nameof(GetByIdAsync),
             id, result != null);
+
+        return result;
+    }
+
+    public async Task<ICollection<VehicleDto>> GetAsync(
+        VehicleFilter filter,
+        CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(filter);
+
+        Expression<Func<VehicleDto, bool>> expression =
+            VehicleFilterBuilder.Create(filter).Build();
+
+        ICollection<VehicleDto> result =
+            await service.GetAllAsync(
+                expression, cancellationToken);
 
         return result;
     }

@@ -26,6 +26,8 @@ internal static class ServicesExtensions
         services.AddScoped<IRideExpandsStrategy, RideExpandsDriverDriver>();
         services.AddScoped<IRideExpandsStrategy, RideExpandsPassengerStrategy>();
 
+        services.AddScoped<IRideMatchDriversService, RideMatchDriversService>();
+
         #endregion
 
         #region Position

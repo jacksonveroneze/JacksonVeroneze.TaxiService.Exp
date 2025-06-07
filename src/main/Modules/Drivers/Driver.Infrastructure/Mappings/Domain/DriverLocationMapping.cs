@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using NetTopologySuite.Geometries;
 using TaxiService.Common.BaseInfrastructure;
 using TaxiService.Modules.Driver.Domain.Entities;
 
@@ -37,6 +38,13 @@ public class DriverLocationMapping : IEntityTypeConfiguration<DriverLocationHist
                 .HasColumnName("longitude")
                 .IsRequired();
         });
+
+        builder
+            .Property<Point>("geoLocation")
+            .HasColumnType("geography (point, 4326)")
+            .HasComputedColumnSql(
+                "ST_SetSRID(ST_MakePoint(\"longitude\", \"latitude\"), 4326)",
+                stored: true);
 
         builder.ConfigureEntityDefaultFieldsMapping();
     }
