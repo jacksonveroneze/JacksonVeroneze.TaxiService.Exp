@@ -23,13 +23,13 @@ public sealed class GetMatchDriversQueryHandler(
         ArgumentNullException.ThrowIfNull(request);
 
         RideDto? rideDto = await rideReadRepository
-            .GetByIdAsync(request.DriverId, cancellationToken);
+            .GetByIdAsync(request.RideId, cancellationToken);
 
         RideMatchFilter filterMatches = new()
         {
             Latitude = rideDto!.From.Latitude,
-            Longitude = rideDto!.From.Longitude,
-            PassengerId = request.DriverId,
+            Longitude = rideDto.From.Longitude,
+            PassengerId = request.RideId,
         };
 
         ICollection<DriverMatchCandidate> matches =

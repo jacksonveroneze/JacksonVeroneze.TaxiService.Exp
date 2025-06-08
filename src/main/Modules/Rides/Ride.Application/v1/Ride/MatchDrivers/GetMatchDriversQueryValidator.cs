@@ -10,7 +10,7 @@ public class GetMatchDriversQueryValidator
         RuleFor(request => request)
             .NotNull();
 
-        RuleFor(request => request.DriverId)
+        RuleFor(request => request.RideId)
             .SetValidator(new IdGuidValidator());
     }
 }
