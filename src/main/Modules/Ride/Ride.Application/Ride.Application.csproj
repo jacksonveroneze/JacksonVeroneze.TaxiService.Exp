@@ -1,10 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>TaxiService.Modules.Payment.Application</RootNamespace>
+    <RootNamespace>TaxiService.Modules.Ride.Application</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="RedLock.net"/>
     <PackageReference Include="AutoMapper"/>
     <PackageReference Include="FluentValidation"/>
     <PackageReference Include="MediatR"/>
@@ -20,14 +21,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\BaseApplication\BaseApplication.csproj"/>
-    <ProjectReference Include="..\Payment.Domain\Payment.Domain.csproj" />
+    <ProjectReference Include="..\Ride.Domain\Ride.Domain.csproj" />
 
-    <ProjectReference Include="..\..\Passengers\Passenger.PublicApi\Passenger.PublicApi.csproj" />
+    <ProjectReference Include="..\..\Driver\Driver.PublicApi\Driver.PublicApi.csproj" />
+    <ProjectReference Include="..\..\Passenger\Passenger.PublicApi\Passenger.PublicApi.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Common\" />
-  </ItemGroup>
-
 
 </Project>

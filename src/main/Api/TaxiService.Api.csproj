@@ -11,18 +11,18 @@
   <ItemGroup>
     <ProjectReference Include="..\Common\BaseInfrastructure\BaseInfrastructure.csproj"/>
 
-    <ProjectReference Include="..\Modules\Drivers\Driver.Api\Driver.Api.csproj" />
-    <ProjectReference Include="..\Modules\Drivers\Driver.Infrastructure\Driver.Infrastructure.csproj" />
-    <ProjectReference Include="..\Modules\Drivers\Driver.PublicApi\Driver.PublicApi.csproj" />
+    <ProjectReference Include="..\Modules\Driver\Driver.Api\Driver.Api.csproj" />
+    <ProjectReference Include="..\Modules\Driver\Driver.Infrastructure\Driver.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\Driver\Driver.PublicApi\Driver.PublicApi.csproj" />
 
-    <ProjectReference Include="..\Modules\Passengers\Passenger.Api\Passenger.Api.csproj" />
-    <ProjectReference Include="..\Modules\Passengers\Passenger.Infrastructure\Passenger.Infrastructure.csproj" />
-    <ProjectReference Include="..\Modules\Passengers\Passenger.PublicApi\Passenger.PublicApi.csproj" />
+    <ProjectReference Include="..\Modules\Passenger\Passenger.Api\Passenger.Api.csproj" />
+    <ProjectReference Include="..\Modules\Passenger\Passenger.Infrastructure\Passenger.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\Passenger\Passenger.PublicApi\Passenger.PublicApi.csproj" />
 
-    <ProjectReference Include="..\Modules\Payments\Payment.Infrastructure\Payment.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\Payment\Payment.Infrastructure\Payment.Infrastructure.csproj" />
 
-    <ProjectReference Include="..\Modules\Rides\Ride.Api\Ride.Api.csproj" />
-    <ProjectReference Include="..\Modules\Rides\Ride.Infrastructure\Ride.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\Ride\Ride.Api\Ride.Api.csproj" />
+    <ProjectReference Include="..\Modules\Ride\Ride.Infrastructure\Ride.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
