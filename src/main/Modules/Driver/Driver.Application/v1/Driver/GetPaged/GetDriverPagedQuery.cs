@@ -1,6 +1,7 @@
 using JacksonVeroneze.NET.Pagination.Enums;
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Queries.Base;
+using TaxiService.Modules.Driver.Application.v1.Driver.Common.Enums;
 using TaxiService.Modules.Driver.Application.v1.Driver.Common.Models;
 using TaxiService.Modules.Driver.Domain.Enums;
 
@@ -17,4 +18,6 @@ public sealed record GetDriverPagedQuery() :
     public string? Name { get; init; }
 
     public DriverStatus? Status { get; init; }
+    
+    public DriverExpands[]? Expand { get; init; }
 }

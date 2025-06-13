@@ -16,4 +16,11 @@ public sealed record DriverResponse
     public Gender Gender { get; init; }
 
     public DriverStatus Status { get; init; }
+
+    public DriverAvailabilityResponse? Availability { get; set; }
+}
+
+public sealed record DriverAvailabilityResponse
+{
+    public DriverAvailabilityStatus Status { get; init; }
 }

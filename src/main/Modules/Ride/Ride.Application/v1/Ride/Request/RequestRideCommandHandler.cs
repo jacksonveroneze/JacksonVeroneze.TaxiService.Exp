@@ -31,16 +31,19 @@ public sealed class RequestRideCommandHandler(
             ExistsActiveRideByPassengerIdAsync(
                 request.PassengerId, cancellationToken);
 
-        Result resultPassenger = await ValidatePassengerByIdAsync(
+        Task<Result> resultPassengerTask = ValidatePassengerByIdAsync(
             request.PassengerId, cancellationToken);
 
+        await Task.WhenAll(existsRideByPassengerTask, resultPassengerTask);
+
+        Result existsRideByPassenger = await existsRideByPassengerTask;
+        Result resultPassenger = await resultPassengerTask;
+        
         if (resultPassenger.IsFailure)
         {
             return Result<RequestRideCommandResponse>
                 .FromInvalid(resultPassenger.Errors);
         }
-
-        Result existsRideByPassenger = await existsRideByPassengerTask;
 
         if (existsRideByPassenger.IsFailure)
         {
@@ -59,7 +62,7 @@ public sealed class RequestRideCommandHandler(
 
         await CreateAsync(resultEntity.Value!, cancellationToken);
 
-        await eventDispatcher.DispatchAsync(resultEntity.Value!);
+        await eventDispatcher.DispatchAsync(resultEntity.Value!, cancellationToken);
 
         RequestRideCommandResponse response =
             mapper.Map<RequestRideCommandResponse>(resultEntity.Value);

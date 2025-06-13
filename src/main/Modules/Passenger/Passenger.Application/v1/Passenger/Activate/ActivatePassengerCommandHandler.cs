@@ -40,7 +40,7 @@ public sealed class ActivatePassengerCommandHandler(
         await passengerRepository.UpdateAsync(
             entity, cancellationToken);
 
-        await eventDispatcher.DispatchAsync(entity);
+        await eventDispatcher.DispatchAsync(entity, cancellationToken);
 
         logger.LogProcessed(
             ModuleConstants.ContextName,

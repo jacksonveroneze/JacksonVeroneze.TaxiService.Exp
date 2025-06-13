@@ -19,4 +19,18 @@ public class DriverAvailabilityHistoryReadRepository(
             .OrderByDescending(order => order.CreatedAt)
             .FirstOrDefaultAsync(conf => conf.DriverId == driverId, cancellationToken);
     }
+
+    public async Task<ICollection<DriverAvailabilityHistory>> GetLastByDriverIdsAsync(
+        Guid[] driverIds,
+        CancellationToken cancellationToken)
+    {
+        DriverAvailabilityHistory?[] result = await service.DbSet
+            .Where(conf => driverIds.Contains(conf.DriverId))
+            .GroupBy(group => group.DriverId)
+            .Select(item => item.OrderByDescending(order => order.CreatedAt)
+                .FirstOrDefault())
+            .ToArrayAsync(cancellationToken);
+
+        return result!;
+    }
 }

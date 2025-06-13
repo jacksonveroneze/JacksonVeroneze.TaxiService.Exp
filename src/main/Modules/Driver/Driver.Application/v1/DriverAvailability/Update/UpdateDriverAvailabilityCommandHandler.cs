@@ -7,12 +7,14 @@ using TaxiService.Modules.Driver.Domain.Core.Errors;
 using TaxiService.Modules.Driver.Domain.Entities;
 using TaxiService.Modules.Driver.Domain.Enums;
 using TaxiService.Modules.Driver.Domain.Repositories;
+using TaxiService.Modules.Driver.Domain.Services;
 
 namespace TaxiService.Modules.Driver.Application.v1.DriverAvailability.Update;
 
 public sealed class UpdateDriverAvailabilityCommandHandler(
     ILogger<UpdateDriverAvailabilityCommandHandler> logger,
     IDriverService driverService,
+    IDriverAvailabilityDomainService driverAvailabilityDomainService,
     IDriverAvailabilityHistoryReadRepository driverAvailabilityHistoryReadRepository,
     IDriverAvailabilityHistoryRepository driverAvailabilityHistoryRepository)
     : IRequestHandler<UpdateDriverAvailabilityCommand, Result>
@@ -23,16 +25,16 @@ public sealed class UpdateDriverAvailabilityCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        Result validationResult = await ValidateBussinesRulesAsync(
-            request, cancellationToken);
+        Result resultValidateDriver = await driverService
+            .ExistsAndIsActiveAsync(request.Id, cancellationToken);
 
-        if (validationResult.IsFailure)
+        if (resultValidateDriver.IsFailure)
         {
-            return validationResult;
+            return resultValidateDriver;
         }
 
         Result<DriverAvailabilityHistory> driverAvailability =
-            FactoryEntity(request);
+            await FactoryEntityAsync(request, cancellationToken);
 
         if (driverAvailability.IsFailure)
         {
@@ -44,58 +46,24 @@ public sealed class UpdateDriverAvailabilityCommandHandler(
         return Result.WithSuccess();
     }
 
-    private async Task<Result> ValidateBussinesRulesAsync(
-        UpdateDriverAvailabilityCommand request,
-        CancellationToken cancellationToken)
+
+    private async Task<Result<DriverAvailabilityHistory>> FactoryEntityAsync(
+        UpdateDriverAvailabilityCommand request, CancellationToken cancellationToken)
     {
-        Result resultValidateDriver = await driverService
-            .ExistsAndIsActiveAsync(request.Id, cancellationToken);
-
-        if (resultValidateDriver.IsFailure)
-        {
-            return resultValidateDriver;
-        }
-
         DriverAvailabilityHistory? lastAvailability =
             await driverAvailabilityHistoryReadRepository
                 .GetLastByDriverIdAsync(request.Id, cancellationToken);
 
-        if (lastAvailability is null)
-        {
-            if (request.Status is DriverAvailabilityStatus.Online)
-            {
-                return Result.WithSuccess();
-            }
-
-            return Result.FromRuleViolation(
-                DomainErrors.DriverAvailabilityError.InvalidStatus);
-        }
-
-        Result result = request.Status switch
-        {
-            DriverAvailabilityStatus.Online => lastAvailability.SetOnline(),
-            DriverAvailabilityStatus.Offline => lastAvailability.SetOffline(),
-            DriverAvailabilityStatus.InRide => lastAvailability.SetInRide(),
-            _ => throw new ArgumentOutOfRangeException(
-                nameof(request), request.Status, "Status inválido."),
-        };
-
-        return result;
-    }
-
-    private Result<DriverAvailabilityHistory> FactoryEntity(
-        UpdateDriverAvailabilityCommand request)
-    {
-        Result<DriverAvailabilityHistory> entity =
-            DriverAvailabilityHistory.Create(
-                request.Id, request.Status);
+        Result<DriverAvailabilityHistory> entity = driverAvailabilityDomainService
+            .TryUpdateAvailabilityStatus(
+                request.Id, lastAvailability?.Status, request.Status);
 
         if (entity.IsFailure)
         {
             logger.LogGenericError(
                 ModuleConstants.ContextName,
                 nameof(UpdateDriverAvailabilityCommandHandler),
-                nameof(FactoryEntity), entity.Errors.Count);
+                nameof(FactoryEntityAsync), entity.Errors.Count);
         }
 
         return entity;

@@ -26,11 +26,11 @@ public class Vehicle : BaseAggregateRoot
 
     #region ctor
 
-    public Vehicle()
+    protected Vehicle()
     {
     }
 
-    public Vehicle(Guid driverId,
+    private Vehicle(Guid driverId,
         string? model, string? brand,
         string? plate, string? color,
         int? year)

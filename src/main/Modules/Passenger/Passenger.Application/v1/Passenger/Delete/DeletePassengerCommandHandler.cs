@@ -31,7 +31,7 @@ public sealed class DeletePassengerCommandHandler(
         await passengerRepository.DeleteAsync(
             entity, cancellationToken);
 
-        await eventDispatcher.DispatchAsync(entity);
+        await eventDispatcher.DispatchAsync(entity, cancellationToken);
 
         logger.LogDeleted(
             ModuleConstants.ContextName,

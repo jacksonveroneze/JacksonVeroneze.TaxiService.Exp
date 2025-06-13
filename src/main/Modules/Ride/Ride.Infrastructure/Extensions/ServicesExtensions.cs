@@ -41,6 +41,7 @@ internal static class ServicesExtensions
         #region Services
 
         services.AddScoped<IDistanceCalculatorService, DistanceCalculatorService>();
+        services.AddScoped<IRideStatusTransitionValidator, RideStatusTransitionValidator>();
 
         #endregion
 

@@ -9,7 +9,9 @@ using TaxiService.Modules.Driver.PublicApi.v1.Models;
 using TaxiService.Modules.Ride.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Ride.Domain;
 using TaxiService.Modules.Ride.Domain.Core.Errors;
+using TaxiService.Modules.Ride.Domain.Enums;
 using TaxiService.Modules.Ride.Domain.Repositories;
+using TaxiService.Modules.Ride.Domain.Services;
 
 namespace TaxiService.Modules.Ride.Application.v1.Ride.Accept;
 
@@ -18,6 +20,7 @@ public sealed class AcceptRideCommandHandler(
     IDriverPublicApi driverPublicApi,
     IRideRepository rideRepository,
     IRideDistributedLockRepository distributedLockRepository,
+    IRideStatusTransitionValidator rideStatusTransitionValidator,
     IDomainEventDispatcher eventDispatcher)
     : IRequestHandler<AcceptRideCommand, Result>
 {
@@ -63,6 +66,14 @@ public sealed class AcceptRideCommandHandler(
                 DomainErrors.RideError.DriverInactive);
         }
 
+        Result resultstatusTransition = rideStatusTransitionValidator
+            .Validate(entity.Status, RideStatus.Accepted);
+
+        if (resultstatusTransition.IsFailure)
+        {
+            return resultstatusTransition;
+        }
+        
         Result resultAction = Accept(entity,
             request.Body!.DriverId);
 
@@ -74,7 +85,7 @@ public sealed class AcceptRideCommandHandler(
         await rideRepository.UpdateAsync(
             entity, cancellationToken);
 
-        await eventDispatcher.DispatchAsync(entity);
+        await eventDispatcher.DispatchAsync(entity, cancellationToken);
 
         logger.LogProcessed(
             ModuleConstants.ContextName,

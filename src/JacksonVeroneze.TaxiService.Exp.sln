@@ -142,6 +142,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "driver", "driver", "{61955D
 		..\tests\scenarios\driver\driver.scenario.js = ..\tests\scenarios\driver\driver.scenario.js
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ride.Contracts", "main\Modules\Ride\Ride.Contracts\Ride.Contracts.csproj", "{25059D77-2ADA-40F2-8075-91C0E7B18E27}"
+EndProject
 
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -244,6 +246,10 @@ Global
 		{D528FE94-A8A5-4427-985A-ACE8968DC64C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D528FE94-A8A5-4427-985A-ACE8968DC64C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D528FE94-A8A5-4427-985A-ACE8968DC64C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25059D77-2ADA-40F2-8075-91C0E7B18E27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25059D77-2ADA-40F2-8075-91C0E7B18E27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25059D77-2ADA-40F2-8075-91C0E7B18E27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25059D77-2ADA-40F2-8075-91C0E7B18E27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2E06D1F1-951E-43B4-9706-4A931EB38244} = {2FB36637-D019-47A7-8E00-B11FB572D0D8}
@@ -288,5 +294,6 @@ Global
 		{490944E0-915C-4BEF-97C1-F2D58F86B6B4} = {C4B531AA-1008-4178-A276-376D44C177BE}
 		{D528FE94-A8A5-4427-985A-ACE8968DC64C} = {911C6EDB-84B3-4A91-B837-74EB587665CF}
 		{61955D56-C868-4646-8319-97ABC46FD35A} = {C29D5355-B5A2-4621-86AE-57766C544BDB}
+		{25059D77-2ADA-40F2-8075-91C0E7B18E27} = {37806C3F-1A1A-4DA1-AD62-E23169FDAB9A}
 	EndGlobalSection
 EndGlobal

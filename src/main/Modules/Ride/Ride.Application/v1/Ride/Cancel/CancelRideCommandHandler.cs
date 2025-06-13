@@ -38,7 +38,7 @@ public sealed class CancelRideCommandHandler(
         await rideRepository.UpdateAsync(
             entity, cancellationToken);
 
-        await eventDispatcher.DispatchAsync(entity);
+        await eventDispatcher.DispatchAsync(entity, cancellationToken);
 
         logger.LogProcessed(
             ModuleConstants.ContextName,

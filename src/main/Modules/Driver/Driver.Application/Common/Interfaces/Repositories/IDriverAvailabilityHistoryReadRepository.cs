@@ -7,4 +7,8 @@ public interface IDriverAvailabilityHistoryReadRepository
     public Task<DriverAvailabilityHistory?> GetLastByDriverIdAsync(
         Guid driverId,
         CancellationToken cancellationToken);
+    
+    public Task<ICollection<DriverAvailabilityHistory>> GetLastByDriverIdsAsync(
+        Guid[] driverIds,
+        CancellationToken cancellationToken);
 }

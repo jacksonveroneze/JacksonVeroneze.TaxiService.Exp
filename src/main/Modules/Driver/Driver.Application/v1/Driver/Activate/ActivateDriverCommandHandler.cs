@@ -40,7 +40,7 @@ public sealed class ActivateDriverCommandHandler(
         await driverRepository.UpdateAsync(
             entity, cancellationToken);
 
-        await eventDispatcher.DispatchAsync(entity);
+        await eventDispatcher.DispatchAsync(entity, cancellationToken);
 
         logger.LogProcessed(
             ModuleConstants.ContextName,

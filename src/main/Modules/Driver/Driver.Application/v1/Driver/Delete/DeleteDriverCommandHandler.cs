@@ -51,7 +51,7 @@ public sealed class DeleteDriverCommandHandler(
         await driverRepository.DeleteAsync(
             entity, cancellationToken);
 
-        await eventDispatcher.DispatchAsync(entity);
+        await eventDispatcher.DispatchAsync(entity, cancellationToken);
 
         logger.LogDeleted(
             ModuleConstants.ContextName,

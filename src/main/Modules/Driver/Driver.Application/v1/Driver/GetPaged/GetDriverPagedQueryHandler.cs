@@ -2,6 +2,7 @@ using JacksonVeroneze.NET.Pagination.Cursor;
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Mapper;
+using TaxiService.Modules.Driver.Application.Common.Interfaces.Services;
 using TaxiService.Modules.Driver.Application.v1.Driver.Common.Filters;
 using TaxiService.Modules.Driver.Application.v1.Driver.Common.Models;
 using TaxiService.Modules.Driver.Domain;
@@ -13,7 +14,8 @@ namespace TaxiService.Modules.Driver.Application.v1.Driver.GetPaged;
 public sealed class GetDriverPagedQueryHandler(
     ILogger<GetDriverPagedQueryHandler> logger,
     IDataMapper mapper,
-    IDriverReadRepository driverReadRepository)
+    IDriverReadRepository driverReadRepository,
+    IDriverExpandsService driverExpandsService)
     : IRequestHandler<GetDriverPagedQuery, Result<GetDriverPagedQueryResponse>>
 {
     public async Task<Result<GetDriverPagedQueryResponse>> Handle(
@@ -31,6 +33,9 @@ public sealed class GetDriverPagedQueryHandler(
         GetDriverPagedQueryResponse response =
             mapper.Map<GetDriverPagedQueryResponse>(page);
 
+        await driverExpandsService.ApplyAsync(
+            response.Data!, request.Expand, cancellationToken);
+        
         logger.LogGetPagedWithCursor(
             ModuleConstants.ContextName,
             nameof(GetDriverPagedQueryResponse),

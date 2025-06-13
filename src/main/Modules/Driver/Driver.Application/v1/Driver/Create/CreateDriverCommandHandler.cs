@@ -58,7 +58,7 @@ public sealed class CreateDriverCommandHandler(
         await CreateAsync(resultEntity.Value!,
             cancellationToken);
 
-        await eventDispatcher.DispatchAsync(resultEntity.Value!);
+        await eventDispatcher.DispatchAsync(resultEntity.Value!, cancellation: cancellationToken);
 
         CreateDriverCommandResponse response =
             mapper.Map<CreateDriverCommandResponse>(resultEntity.Value);

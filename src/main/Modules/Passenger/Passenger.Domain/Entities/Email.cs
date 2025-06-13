@@ -15,7 +15,7 @@ public class Email : BaseEntity
 
     #region ctor
 
-    public Email()
+    protected Email()
     {
     }
 

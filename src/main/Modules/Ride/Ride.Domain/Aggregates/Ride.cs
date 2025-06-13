@@ -2,9 +2,9 @@ using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseDomain;
 using TaxiService.Common.BaseDomain.Entities.Base;
 using TaxiService.Common.BaseDomain.ValueObjects;
+using TaxiService.Modules.Ride.Contracts.Events;
 using TaxiService.Modules.Ride.Domain.Core.Errors;
 using TaxiService.Modules.Ride.Domain.Enums;
-using TaxiService.Modules.Ride.Domain.Events;
 
 namespace TaxiService.Modules.Ride.Domain.Aggregates;
 
@@ -45,7 +45,10 @@ public class Ride : BaseAggregateRoot
         CoordinateTo = coordinateTo;
         Status = RideStatus.Requested;
 
-        AddEvent(new RideRequestedDomainEvent(Id));
+        AddEvent(new RideRequestedDomainEvent(Id, passengerId,
+            coordinateFrom.Latitude, coordinateFrom.Longitude,
+            coordinateTo.Latitude, coordinateTo.Longitude,
+            DateTime.UtcNow));
     }
 
     #endregion
@@ -74,7 +77,8 @@ public class Ride : BaseAggregateRoot
 
         DriverId = driverId;
         Status = RideStatus.Accepted;
-        AddEvent(new RideAcceptedDomainEvent(Id));
+        AddEvent(new RideAcceptedDomainEvent(
+            Id, DriverId!.Value, DateTime.UtcNow));
 
         return Result.WithSuccess();
     }
@@ -94,7 +98,8 @@ public class Ride : BaseAggregateRoot
         }
 
         Status = RideStatus.InProgress;
-        AddEvent(new RideStartedDomainEvent(Id));
+        AddEvent(new RideStartedDomainEvent(
+            Id, DriverId!.Value, PassengerId, DateTime.UtcNow));
 
         return Result.WithSuccess();
     }
@@ -116,7 +121,9 @@ public class Ride : BaseAggregateRoot
         Distance = distance;
         Fare = Convert.ToDecimal(distance) * 2.1M;
         Status = RideStatus.Completed;
-        AddEvent(new RideFinishedDomainEvent(Id));
+        AddEvent(new RideFinishedDomainEvent(
+            Id, DriverId!.Value, DateTime.UtcNow, TimeSpan.Zero,
+            Distance!.Value, Fare!.Value));
 
         return Result.WithSuccess();
     }
@@ -136,7 +143,7 @@ public class Ride : BaseAggregateRoot
         }
 
         Status = RideStatus.Canceled;
-        AddEvent(new RideCanceledDomainEvent(Id));
+        AddEvent(new RideCanceledDomainEvent(Id, DriverId, DateTime.UtcNow));
 
         return Result.WithSuccess();
     }

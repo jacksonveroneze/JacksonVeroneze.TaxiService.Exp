@@ -1,18 +1,21 @@
-using JacksonVeroneze.NET.DomainObjects.Messaging;
+using MediatR;
 using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Common.BaseDomain.Entities.Base;
 
 namespace TaxiService.Common.BaseInfrastructure.Messaging;
 
 [ExcludeFromCodeCoverage]
-public class RabbitMqDomainEventDispatcher : IDomainEventDispatcher
+public class RabbitMqDomainEventDispatcher(
+    IPublisher publisher) : IDomainEventDispatcher
 {
-    public async Task DispatchAsync(BaseAggregateRoot aggregate)
+    public async Task DispatchAsync(
+        BaseAggregateRoot aggregate,
+        CancellationToken cancellation = default)
     {
-        foreach (DomainEvent domainEvent in aggregate.Events ?? [])
-        {
-            await Task.Delay(100);
-        }
+        IEnumerable<Task> taks = aggregate.Events?
+            .Select(evt => publisher.Publish(evt, cancellation)) ?? [];
+
+        await Task.WhenAll(taks);
 
         aggregate.ClearEvents();
     }

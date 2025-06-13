@@ -29,7 +29,7 @@ public class Passenger : BaseAggregateRoot
 
     #region ctor
 
-    public Passenger()
+    protected Passenger()
     {
     }
 

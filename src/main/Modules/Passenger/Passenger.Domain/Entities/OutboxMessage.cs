@@ -15,11 +15,11 @@ public class OutboxMessage : BaseEntity
 
     #region ctor
 
-    public OutboxMessage()
+    protected OutboxMessage()
     {
     }
 
-    public OutboxMessage(
+    private OutboxMessage(
         string? type,
         string? content,
         DateTime? occurredOnUtc)

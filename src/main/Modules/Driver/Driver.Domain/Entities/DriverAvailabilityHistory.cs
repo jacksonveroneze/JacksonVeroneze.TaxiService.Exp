@@ -12,7 +12,7 @@ public class DriverAvailabilityHistory : BaseEntity
 
     public Guid DriverId { get; private set; }
 
-    public DriverAvailabilityStatus? Status { get; private set; }
+    public DriverAvailabilityStatus Status { get; private set; }
 
     public bool IsInRide =>
         Status is DriverAvailabilityStatus.InRide;
@@ -25,11 +25,11 @@ public class DriverAvailabilityHistory : BaseEntity
 
     #region ctor
 
-    public DriverAvailabilityHistory()
+    protected DriverAvailabilityHistory()
     {
     }
 
-    protected DriverAvailabilityHistory(Guid driverId,
+    private DriverAvailabilityHistory(Guid driverId,
         DriverAvailabilityStatus status)
     {
         Id = GuidGenerator.Generate();
@@ -91,10 +91,10 @@ public class DriverAvailabilityHistory : BaseEntity
         Guid driverId,
         DriverAvailabilityStatus availability)
     {
-        DriverAvailabilityHistory entity1 = new(
+        DriverAvailabilityHistory entity = new(
             driverId, availability);
 
-        return Result<DriverAvailabilityHistory>.WithSuccess(entity1);
+        return Result<DriverAvailabilityHistory>.WithSuccess(entity);
     }
 
     #endregion

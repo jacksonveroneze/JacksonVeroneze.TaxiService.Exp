@@ -6,6 +6,7 @@ using TaxiService.Modules.Driver.Application.v1.Driver.PublicApi;
 using TaxiService.Modules.Driver.Application.v1.DriverLocation.PublicApi;
 using TaxiService.Modules.Driver.Application.v1.Vehicle.PublicApi;
 using TaxiService.Modules.Driver.Domain.Repositories;
+using TaxiService.Modules.Driver.Domain.Services;
 using TaxiService.Modules.Driver.Infrastructure.Repositories.Driver;
 using TaxiService.Modules.Driver.Infrastructure.Repositories.DriverAvailability;
 using TaxiService.Modules.Driver.Infrastructure.Repositories.DriverLocation;
@@ -29,8 +30,15 @@ internal static class ServicesExtensions
         services.AddScoped<IDriverReadRepository, DriverReadRepository>();
         services.AddScoped<IDriverRepository, DriverRepository>();
 
+        // Application Services
+        services.AddScoped<IDriverExpandsService, DriverExpandsService>();
+        services.AddScoped<IDriverExpandsStrategy, DriverExpandsDriverAvailability>();
+
+        // Domain Services
+        services.AddScoped<IDriverAvailabilityDomainService, DriverAvailabilityDomainService>();
+
         // Services (Public API)
-        services.AddTransient<IDriverPublicApi, DriverPublicApi>();
+        services.AddScoped<IDriverPublicApi, DriverPublicApi>();
 
         #endregion
 
@@ -43,7 +51,7 @@ internal static class ServicesExtensions
         // Services (Public API)
         services.AddScoped<IVehiclePublicApi, VehiclePublicApi>();
 
-        #endregion
+        #endregion.
 
         #region DriverAvailability
 

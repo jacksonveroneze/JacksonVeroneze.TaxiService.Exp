@@ -33,7 +33,7 @@ public class Driver : BaseAggregateRoot
 
     #region ctor
 
-    public Driver()
+    protected Driver()
     {
     }
 
@@ -56,7 +56,8 @@ public class Driver : BaseAggregateRoot
         Gender = gender;
         Status = DriverStatus.PendingActivation;
 
-        AddEvent(new DriverCreatedEvent(Id));
+        AddEvent(new DriverCreatedEvent(
+            Id, Name.Value!, Email.Value!, Cpf.Value!));
     }
 
     #endregion
@@ -73,7 +74,7 @@ public class Driver : BaseAggregateRoot
 
         Status = DriverStatus.Active;
         ActivedOnUtc = utcNow;
-        AddEvent(new DriverActivatedEvent(Id));
+        AddEvent(new DriverActivatedEvent(Id, utcNow));
 
         return Result.WithSuccess();
     }
@@ -94,7 +95,7 @@ public class Driver : BaseAggregateRoot
 
         Status = DriverStatus.Inactive;
         InactivedOnUtc = utcNow;
-        AddEvent(new DriverInactivedEvent(Id));
+        AddEvent(new DriverInactivedEvent(Id, utcNow));
 
         return Result.WithSuccess();
     }
@@ -114,7 +115,7 @@ public class Driver : BaseAggregateRoot
         }
 
         Status = DriverStatus.Active;
-        AddEvent(new DriverReactivatedEvent(Id));
+        AddEvent(new DriverReactivatedEvent(Id, DateTime.UtcNow));
 
         return Result.WithSuccess();
     }
@@ -134,7 +135,7 @@ public class Driver : BaseAggregateRoot
         }
 
         Status = DriverStatus.BlockedTemporarily;
-        AddEvent(new DriverBlockedTemporarilyEvent(Id));
+        AddEvent(new DriverBlockedTemporarilyEvent(Id, DateTime.UtcNow));
 
         return Result.WithSuccess();
     }
@@ -148,7 +149,7 @@ public class Driver : BaseAggregateRoot
         }
 
         Status = DriverStatus.BlockedPermanent;
-        AddEvent(new DriverBlockedPermanentEvent(Id));
+        AddEvent(new DriverBlockedPermanentEvent(Id, DateTime.UtcNow));
 
         return Result.WithSuccess();
     }
@@ -167,7 +168,7 @@ public class Driver : BaseAggregateRoot
                 DomainErrors.DriverErrors.AlreadyBlockedTemporarily);
         }
 
-        AddEvent(new DriverRemovedEvent(Id));
+        AddEvent(new DriverRemovedEvent(Id, DateTime.UtcNow));
 
         return Result.WithSuccess();
     }

@@ -4,5 +4,7 @@ namespace TaxiService.Common.BaseApplication.Interfaces.Messaging;
 
 public interface IDomainEventDispatcher
 {
-    public Task DispatchAsync(BaseAggregateRoot aggregate);
+    public Task DispatchAsync(
+        BaseAggregateRoot aggregate,
+        CancellationToken cancellation = default);
 }

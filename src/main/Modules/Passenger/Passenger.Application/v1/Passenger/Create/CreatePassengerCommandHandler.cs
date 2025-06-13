@@ -62,7 +62,7 @@ public sealed class CreatePassengerCommandHandler(
         await CreateAsync(resultEntity.Value!,
             emailEntity.Value!, cancellationToken);
 
-        await eventDispatcher.DispatchAsync(resultEntity.Value!);
+        await eventDispatcher.DispatchAsync(resultEntity.Value!, cancellationToken);
 
         CreatePassengerCommandResponse response =
             mapper.Map<CreatePassengerCommandResponse>(

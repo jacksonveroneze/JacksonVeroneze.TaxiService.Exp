@@ -19,7 +19,7 @@ public class DriverLocationHistory : BaseEntity
     {
     }
 
-    public DriverLocationHistory(Guid driverId,
+    private DriverLocationHistory(Guid driverId,
         CoordinateValueObject location)
     {
         ArgumentNullException.ThrowIfNull(location);

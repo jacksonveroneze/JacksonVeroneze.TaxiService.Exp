@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\BaseApplication\BaseApplication.csproj"/>
     <ProjectReference Include="..\..\Passenger\Passenger.PublicApi\Passenger.PublicApi.csproj" />
+    <ProjectReference Include="..\..\Ride\Ride.Contracts\Ride.Contracts.csproj" />
     <ProjectReference Include="..\Driver.Domain\Driver.Domain.csproj" />
     <ProjectReference Include="..\Driver.PublicApi\Driver.PublicApi.csproj" />
   </ItemGroup>
