@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using TaxiService.Modules.Ride.Application.Common.Interfaces;
 using TaxiService.Modules.Ride.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Ride.Application.Common.Interfaces.Services;
 using TaxiService.Modules.Ride.Application.Common.Services;
@@ -6,6 +7,7 @@ using TaxiService.Modules.Ride.Domain.Repositories;
 using TaxiService.Modules.Ride.Domain.Services;
 using TaxiService.Modules.Ride.Infrastructure.Repositories.Position;
 using TaxiService.Modules.Ride.Infrastructure.Repositories.Ride;
+using TaxiService.Modules.Ride.Infrastructure.UnitOfWork;
 
 namespace TaxiService.Modules.Ride.Infrastructure.Extensions;
 
@@ -27,6 +29,8 @@ internal static class ServicesExtensions
         services.AddScoped<IRideExpandsStrategy, RideExpandsPassengerStrategy>();
 
         services.AddScoped<IRideMatchDriversService, RideMatchDriversService>();
+        
+        services.AddScoped<IMetricsPublisher, PrometheusMetricsPublisher>();
 
         #endregion
 

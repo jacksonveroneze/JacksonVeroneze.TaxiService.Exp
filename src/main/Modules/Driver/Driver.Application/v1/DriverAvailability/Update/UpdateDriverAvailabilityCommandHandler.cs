@@ -2,6 +2,7 @@ using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Modules.Driver.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Driver.Application.Common.Interfaces.Services;
+using TaxiService.Modules.Driver.Application.v1.DriverAvailability.Models;
 using TaxiService.Modules.Driver.Domain;
 using TaxiService.Modules.Driver.Domain.Core.Errors;
 using TaxiService.Modules.Driver.Domain.Entities;
@@ -50,7 +51,7 @@ public sealed class UpdateDriverAvailabilityCommandHandler(
     private async Task<Result<DriverAvailabilityHistory>> FactoryEntityAsync(
         UpdateDriverAvailabilityCommand request, CancellationToken cancellationToken)
     {
-        DriverAvailabilityHistory? lastAvailability =
+        DriverAvailabilityDto? lastAvailability =
             await driverAvailabilityHistoryReadRepository
                 .GetLastByDriverIdAsync(request.Id, cancellationToken);
 

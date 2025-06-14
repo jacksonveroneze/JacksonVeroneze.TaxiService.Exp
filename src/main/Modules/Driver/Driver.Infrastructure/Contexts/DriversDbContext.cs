@@ -11,8 +11,6 @@ public class DriversDbContext(
     DbContextOptions<DriversDbContext> options)
     : DbContext(options)
 {
-    private const string Schema = "driver";
-
     protected override void OnModelCreating(
         ModelBuilder modelBuilder)
     {
@@ -24,11 +22,12 @@ public class DriversDbContext(
         modelBuilder.ApplyConfiguration(new VehicleEntityMapping());
 
         modelBuilder.ApplySoftDeleteQueryFilter<DriverAvailabilityHistory>();
+        modelBuilder.ApplySoftDeleteQueryFilter<DriverLocationHistory>();
         modelBuilder.ApplySoftDeleteQueryFilter<Domain.Aggregates.Driver>();
         modelBuilder.ApplySoftDeleteQueryFilter<Vehicle>();
 
         modelBuilder.IgnoreClass();
 
-        modelBuilder.HasDefaultSchema(Schema);
+        modelBuilder.HasDefaultSchema(Constants.SchemaName);
     }
 }

@@ -6,6 +6,7 @@ using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Modules.Driver.Domain.Enums;
 using TaxiService.Modules.Driver.PublicApi.v1.Interfaces;
 using TaxiService.Modules.Driver.PublicApi.v1.Models;
+using TaxiService.Modules.Ride.Application.Common.Interfaces;
 using TaxiService.Modules.Ride.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Ride.Domain;
 using TaxiService.Modules.Ride.Domain.Core.Errors;
@@ -21,7 +22,8 @@ public sealed class AcceptRideCommandHandler(
     IRideRepository rideRepository,
     IRideDistributedLockRepository distributedLockRepository,
     IRideStatusTransitionValidator rideStatusTransitionValidator,
-    IDomainEventDispatcher eventDispatcher)
+    IDomainEventDispatcher eventDispatcher,
+    IMetricsPublisher metricsPublisher)
     : IRequestHandler<AcceptRideCommand, Result>
 {
     public async Task<Result> Handle(
@@ -86,6 +88,8 @@ public sealed class AcceptRideCommandHandler(
             entity, cancellationToken);
 
         await eventDispatcher.DispatchAsync(entity, cancellationToken);
+        
+        metricsPublisher.IncrementAccepted();
 
         logger.LogProcessed(
             ModuleConstants.ContextName,

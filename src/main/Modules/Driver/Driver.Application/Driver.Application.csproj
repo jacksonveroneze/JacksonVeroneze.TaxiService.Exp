@@ -19,4 +19,8 @@
     <ProjectReference Include="..\Driver.PublicApi\Driver.PublicApi.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="v1\DriverAvailability\Common\" />
+  </ItemGroup>
+
 </Project>

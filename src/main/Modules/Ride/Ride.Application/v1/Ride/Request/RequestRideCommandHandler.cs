@@ -5,6 +5,7 @@ using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Modules.Passenger.Domain.Enums;
 using TaxiService.Modules.Passenger.PublicApi.v1.Interfaces;
 using TaxiService.Modules.Passenger.PublicApi.v1.Models;
+using TaxiService.Modules.Ride.Application.Common.Interfaces;
 using TaxiService.Modules.Ride.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Ride.Domain;
 using TaxiService.Modules.Ride.Domain.Core.Errors;
@@ -18,7 +19,8 @@ public sealed class RequestRideCommandHandler(
     IPassengerPublicApi passengerPublicApi,
     IRideReadRepository rideReadRepository,
     IRideRepository rideRepository,
-    IDomainEventDispatcher eventDispatcher)
+    IDomainEventDispatcher eventDispatcher,
+    IMetricsPublisher metricsPublisher)
     : IRequestHandler<RequestRideCommand, Result<RequestRideCommandResponse>>
 {
     public async Task<Result<RequestRideCommandResponse>> Handle(
@@ -64,6 +66,8 @@ public sealed class RequestRideCommandHandler(
 
         await eventDispatcher.DispatchAsync(resultEntity.Value!, cancellationToken);
 
+        metricsPublisher.IncrementRequested();
+        
         RequestRideCommandResponse response =
             mapper.Map<RequestRideCommandResponse>(resultEntity.Value);
 

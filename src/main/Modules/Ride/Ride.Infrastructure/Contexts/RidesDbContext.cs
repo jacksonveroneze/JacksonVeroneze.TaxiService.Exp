@@ -10,8 +10,6 @@ public class RidesDbContext(
     DbContextOptions<RidesDbContext> options)
     : DbContext(options)
 {
-    private const string Schema = "ride";
-
     protected override void OnModelCreating(
         ModelBuilder modelBuilder)
     {
@@ -25,6 +23,6 @@ public class RidesDbContext(
 
         modelBuilder.IgnoreClass();
 
-        modelBuilder.HasDefaultSchema(Schema);
+        modelBuilder.HasDefaultSchema(Constants.SchemaName);
     }
 }

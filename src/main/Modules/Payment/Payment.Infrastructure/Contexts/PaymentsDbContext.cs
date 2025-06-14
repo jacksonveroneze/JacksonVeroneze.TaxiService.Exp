@@ -22,6 +22,6 @@ public class PaymentsDbContext(
 
         modelBuilder.IgnoreClass();
 
-        modelBuilder.HasDefaultSchema("payment");
+        modelBuilder.HasDefaultSchema(Constants.SchemaName);
     }
 }

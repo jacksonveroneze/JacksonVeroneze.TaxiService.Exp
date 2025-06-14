@@ -2,6 +2,7 @@ using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Common.BaseDomain.ValueObjects;
+using TaxiService.Modules.Ride.Application.Common.Interfaces;
 using TaxiService.Modules.Ride.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Ride.Domain;
 using TaxiService.Modules.Ride.Domain.Core.Errors;
@@ -15,7 +16,8 @@ public sealed class FinishRideCommandHandler(
     IRideRepository rideRepository,
     IPositionReadRepository positionReadRepository,
     IDistanceCalculatorService distanceCalculatorService,
-    IDomainEventDispatcher eventDispatcher)
+    IDomainEventDispatcher eventDispatcher,
+    IMetricsPublisher metricsPublisher)
     : IRequestHandler<FinishRideCommand, Result>
 {
     public async Task<Result> Handle(
@@ -48,6 +50,8 @@ public sealed class FinishRideCommandHandler(
 
         await eventDispatcher.DispatchAsync(entity, cancellationToken);
 
+        metricsPublisher.IncrementFinished();
+        
         logger.LogProcessed(
             ModuleConstants.ContextName,
             nameof(FinishRideCommandHandler),

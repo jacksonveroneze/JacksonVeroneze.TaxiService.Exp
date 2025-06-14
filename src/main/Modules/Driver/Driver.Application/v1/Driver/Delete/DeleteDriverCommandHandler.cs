@@ -3,6 +3,7 @@ using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Modules.Driver.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Driver.Application.v1.Driver.Activate;
+using TaxiService.Modules.Driver.Application.v1.DriverAvailability.Models;
 using TaxiService.Modules.Driver.Domain;
 using TaxiService.Modules.Driver.Domain.Core.Errors;
 using TaxiService.Modules.Driver.Domain.Entities;
@@ -65,7 +66,7 @@ public sealed class DeleteDriverCommandHandler(
         DeleteDriverCommand request,
         CancellationToken cancellationToken)
     {
-        DriverAvailabilityHistory? result = await driverAvailabilityHistoryReadRepository
+        DriverAvailabilityDto? result = await driverAvailabilityHistoryReadRepository
             .GetLastByDriverIdAsync(request.Id, cancellationToken);
 
         if (result?.Status != DriverAvailabilityStatus.InRide)

@@ -1,6 +1,7 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.BaseApplication.Interfaces.Messaging;
+using TaxiService.Modules.Ride.Application.Common.Interfaces;
 using TaxiService.Modules.Ride.Domain;
 using TaxiService.Modules.Ride.Domain.Core.Errors;
 using TaxiService.Modules.Ride.Domain.Repositories;
@@ -10,7 +11,8 @@ namespace TaxiService.Modules.Ride.Application.v1.Ride.Cancel;
 public sealed class CancelRideCommandHandler(
     ILogger<CancelRideCommandHandler> logger,
     IRideRepository rideRepository,
-    IDomainEventDispatcher eventDispatcher)
+    IDomainEventDispatcher eventDispatcher,
+    IMetricsPublisher metricsPublisher)
     : IRequestHandler<CancelRideCommand, Result>
 {
     public async Task<Result> Handle(
@@ -40,6 +42,8 @@ public sealed class CancelRideCommandHandler(
 
         await eventDispatcher.DispatchAsync(entity, cancellationToken);
 
+        metricsPublisher.IncrementCanceled();
+        
         logger.LogProcessed(
             ModuleConstants.ContextName,
             nameof(CancelRideCommandHandler),

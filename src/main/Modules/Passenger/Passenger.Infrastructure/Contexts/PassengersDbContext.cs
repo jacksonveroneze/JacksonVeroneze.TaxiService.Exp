@@ -10,8 +10,6 @@ public class PassengersDbContext(
     DbContextOptions<PassengersDbContext> options)
     : DbContext(options)
 {
-    private const string Schema = "passenger";
-
     protected override void OnModelCreating(
         ModelBuilder modelBuilder)
     {
@@ -26,6 +24,6 @@ public class PassengersDbContext(
 
         modelBuilder.IgnoreClass();
 
-        modelBuilder.HasDefaultSchema(Schema);
+        modelBuilder.HasDefaultSchema(Constants.SchemaName);
     }
 }

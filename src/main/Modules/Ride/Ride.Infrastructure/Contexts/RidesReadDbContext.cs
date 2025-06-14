@@ -9,8 +9,6 @@ public class RidesReadDbContext(
     DbContextOptions<RidesReadDbContext> options)
     : DbContext(options)
 {
-    private const string Schema = "ride";
-
     protected override void OnModelCreating(
         ModelBuilder modelBuilder)
     {
@@ -21,6 +19,6 @@ public class RidesReadDbContext(
         modelBuilder.Entity<RideDto>()
             .HasQueryFilter(field => field.DeletedAt == null);
 
-        modelBuilder.HasDefaultSchema(Schema);
+        modelBuilder.HasDefaultSchema(Constants.SchemaName);
     }
 }

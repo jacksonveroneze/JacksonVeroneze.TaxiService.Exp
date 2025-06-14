@@ -1,5 +1,6 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Modules.Driver.Application.Common.Interfaces.Repositories;
+using TaxiService.Modules.Driver.Application.v1.DriverAvailability.Models;
 using TaxiService.Modules.Driver.Domain.Entities;
 using TaxiService.Modules.Driver.Domain.Enums;
 using TaxiService.Modules.Driver.Domain.Repositories;
@@ -23,7 +24,7 @@ public class RideCanceledDomainEvtHandler(
             return;
         }
         
-        DriverAvailabilityHistory? currentAvailability =
+        DriverAvailabilityDto? currentAvailability =
             await driverAvailabilityHistoryReadRepository
                 .GetLastByDriverIdAsync(notification.DriverId!.Value, cancellationToken);
 

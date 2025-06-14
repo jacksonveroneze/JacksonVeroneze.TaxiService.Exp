@@ -1,17 +1,20 @@
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using TaxiService.Modules.Driver.Application.Common.Interfaces.Repositories;
+using TaxiService.Modules.Driver.Application.v1.Driver.Common.Models;
+using TaxiService.Modules.Driver.Application.v1.DriverAvailability.Models;
 using TaxiService.Modules.Driver.Domain.Entities;
+using TaxiService.Modules.Driver.Domain.Enums;
 using TaxiService.Modules.Driver.Infrastructure.Contexts;
 
 namespace TaxiService.Modules.Driver.Infrastructure.Repositories.DriverAvailability;
 
 [ExcludeFromCodeCoverage]
 public class DriverAvailabilityHistoryReadRepository(
-    IEfCoreRepository<DriverAvailabilityHistory, DriversDbContext> service)
+    IEfCoreRepository<DriverAvailabilityDto, DriversReadDbContext> service)
     : IDriverAvailabilityHistoryReadRepository
 {
-    public Task<DriverAvailabilityHistory?> GetLastByDriverIdAsync(
+    public Task<DriverAvailabilityDto?> GetLastByDriverIdAsync(
         Guid driverId,
         CancellationToken cancellationToken)
     {
@@ -20,12 +23,14 @@ public class DriverAvailabilityHistoryReadRepository(
             .FirstOrDefaultAsync(conf => conf.DriverId == driverId, cancellationToken);
     }
 
-    public async Task<ICollection<DriverAvailabilityHistory>> GetLastByDriverIdsAsync(
+    public async Task<ICollection<DriverAvailabilityDto>> GetLastByDriverIdsAsync(
         Guid[] driverIds,
         CancellationToken cancellationToken)
     {
-        DriverAvailabilityHistory?[] result = await service.DbSet
+        DriverAvailabilityDto?[] result = await service.DbSet
             .Where(conf => driverIds.Contains(conf.DriverId))
+            .Where(conf => service.DbContext.Set<DriverDto>()
+                .Any(drv => drv.Id == conf.DriverId && drv.Status == DriverStatus.Active))
             .GroupBy(group => group.DriverId)
             .Select(item => item.OrderByDescending(order => order.CreatedAt)
                 .FirstOrDefault())

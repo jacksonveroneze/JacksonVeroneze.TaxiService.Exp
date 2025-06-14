@@ -15,18 +15,16 @@ public class RideMatchDriversService(
     private const int MaxDistanceInMeters = 30_000;
     private const int MaxCandidates = 10;
 
-    public async Task<ICollection<DriverMatchCandidate>> GetMatchDriversAsync(RideMatchFilter filter,
+    public async Task<ICollection<DriverMatchCandidate>> GetMatchDriversAsync(
+        RideMatchFilter filter,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(filter);
 
         IReadOnlyList<NearbyDriverDto> nearbyDrivers =
             await driverLocationPublicApi.GetNearbyAvailableDriversAsync(
-                filter.Latitude,
-                filter.Longitude,
-                MaxDistanceInMeters,
-                MaxCandidates,
-                cancellationToken);
+                filter.Latitude, filter.Longitude, MaxDistanceInMeters,
+                MaxCandidates, cancellationToken);
 
         if (!nearbyDrivers.Any())
         {
