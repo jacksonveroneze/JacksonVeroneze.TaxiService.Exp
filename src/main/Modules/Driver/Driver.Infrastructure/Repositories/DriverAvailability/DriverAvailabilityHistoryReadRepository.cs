@@ -29,8 +29,6 @@ public class DriverAvailabilityHistoryReadRepository(
     {
         DriverAvailabilityDto?[] result = await service.DbSet
             .Where(conf => driverIds.Contains(conf.DriverId))
-            .Where(conf => service.DbContext.Set<DriverDto>()
-                .Any(drv => drv.Id == conf.DriverId && drv.Status == DriverStatus.Active))
             .GroupBy(group => group.DriverId)
             .Select(item => item.OrderByDescending(order => order.CreatedAt)
                 .FirstOrDefault())

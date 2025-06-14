@@ -4,6 +4,7 @@ using NetTopologySuite;
 using NetTopologySuite.Geometries;
 using TaxiService.Modules.Driver.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Driver.Application.v1.Driver.Common.Models;
+using TaxiService.Modules.Driver.Application.v1.DriverAvailability.Models;
 using TaxiService.Modules.Driver.Application.v1.DriverLocation.Common.Filters;
 using TaxiService.Modules.Driver.Application.v1.DriverLocation.Common.Models;
 using TaxiService.Modules.Driver.Application.v1.Vehicle.Common.Models;
@@ -43,6 +44,11 @@ public class DriverLocationHistoryReadRepository(
             .Where(item => service.DbContext.Set<DriverDto>()
                                .Any(drv => drv.Id == item.DriverId
                                            && drv.Status == DriverStatus.Active)
+                           && service.DbContext.Set<DriverAvailabilityDto>()
+                               .Where(ava => ava.DriverId == item.DriverId)
+                               .OrderByDescending(ord => ord.CreatedAt)
+                               .Select(it => it.Status)
+                               .FirstOrDefault() == DriverAvailabilityStatus.Online
                            && service.DbContext.Set<VehicleDto>()
                                .Any(vei => vei.DriverId == item.DriverId)
                            && item.DistanceInMeters < filter.DistanceInMeters)
