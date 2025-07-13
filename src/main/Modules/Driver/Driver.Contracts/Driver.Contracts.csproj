@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>TaxiService.Modules.Driver.Contracts</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JacksonVeroneze.NET.DomainObjects"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\BaseDomain\BaseDomain.csproj" />
+    <ProjectReference Include="..\..\..\Common\Messaging\Messaging.csproj" />
+  </ItemGroup>
+</Project>

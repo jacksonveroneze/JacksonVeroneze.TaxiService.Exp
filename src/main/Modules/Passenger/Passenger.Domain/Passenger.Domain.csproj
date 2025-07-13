@@ -12,5 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\BaseDomain\BaseDomain.csproj"/>
+    <ProjectReference Include="..\Passenger.Contracts\Passenger.Contracts.csproj" />
   </ItemGroup>
 </Project>

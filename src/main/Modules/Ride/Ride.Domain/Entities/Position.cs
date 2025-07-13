@@ -1,7 +1,7 @@
 using JacksonVeroneze.NET.Result;
-using TaxiService.Common.BaseDomain;
-using TaxiService.Common.BaseDomain.Entities.Base;
+using TaxiService.Common.BaseDomain.Entities;
 using TaxiService.Common.BaseDomain.ValueObjects;
+using TaxiService.Common.SharedKernel.Utils;
 
 namespace TaxiService.Modules.Ride.Domain.Entities;
 

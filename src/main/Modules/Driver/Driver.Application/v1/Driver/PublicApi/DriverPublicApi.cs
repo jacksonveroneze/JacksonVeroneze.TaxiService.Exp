@@ -1,4 +1,4 @@
-using TaxiService.Common.BaseApplication.Interfaces.Mapper;
+using TaxiService.Common.SharedKernel.Interfaces;
 using TaxiService.Modules.Driver.Application.v1.Driver.Common.Filters;
 using TaxiService.Modules.Driver.Application.v1.Driver.Common.Models;
 using TaxiService.Modules.Driver.PublicApi.v1.Interfaces;

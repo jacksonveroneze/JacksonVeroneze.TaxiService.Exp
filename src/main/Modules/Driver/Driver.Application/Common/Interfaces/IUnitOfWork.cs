@@ -1,3 +1,5 @@
 namespace TaxiService.Modules.Driver.Application.Common.Interfaces;
 
-public interface IUnitOfWork : TaxiService.Common.BaseApplication.Interfaces.UnitOfWork.IUnitOfWork;
+using UnitOfWork = TaxiService.Common.SharedKernel.Interfaces.IUnitOfWork;
+
+public interface IUnitOfWork : UnitOfWork;

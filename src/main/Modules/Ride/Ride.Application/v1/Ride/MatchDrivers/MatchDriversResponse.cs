@@ -1,4 +1,4 @@
-using TaxiService.Common.BaseDomain.Enums;
+using TaxiService.Common.SharedKernel.Enums;
 
 namespace TaxiService.Modules.Ride.Application.v1.Ride.MatchDrivers;
 

@@ -1,4 +1,4 @@
-using TaxiService.Common.BaseDomain.Entities.Base;
+using TaxiService.Common.SharedKernel;
 
 namespace TaxiService.Modules.Payment.Domain.Aggregates;
 

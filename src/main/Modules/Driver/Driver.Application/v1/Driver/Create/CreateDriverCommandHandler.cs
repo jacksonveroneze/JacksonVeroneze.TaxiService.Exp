@@ -1,14 +1,14 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
-using TaxiService.Common.BaseApplication.Interfaces.Mapper;
-using TaxiService.Common.BaseApplication.Interfaces.Messaging;
 using TaxiService.Common.BaseApplication.Validators;
-using TaxiService.Modules.Driver.Application.Common.Interfaces;
+using TaxiService.Common.SharedKernel.Interfaces;
+using TaxiService.Common.SharedKernel.Validators;
 using TaxiService.Modules.Driver.Domain;
 using TaxiService.Modules.Driver.Domain.Core.Errors;
 using TaxiService.Modules.Driver.Domain.Repositories;
 using IDriverReadRepository =
     TaxiService.Modules.Driver.Application.Common.Interfaces.Repositories.IDriverReadRepository;
+using IUnitOfWork = TaxiService.Modules.Driver.Application.Common.Interfaces.IUnitOfWork;
 
 namespace TaxiService.Modules.Driver.Application.v1.Driver.Create;
 
@@ -19,7 +19,7 @@ public sealed class CreateDriverCommandHandler(
     IDriverReadRepository driverReadRepository,
     IDriverRepository driverRepository,
     IUnitOfWork unitOfWork,
-    IDomainEventDispatcher eventDispatcher)
+    IDomainEventPublisher eventPublisher)
     : IRequestHandler<CreateDriverCommand, Result<CreateDriverCommandResponse>>
 {
     public async Task<Result<CreateDriverCommandResponse>> Handle(
@@ -28,7 +28,7 @@ public sealed class CreateDriverCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        (bool hasErrors, Error[] errors) = ValidateHelper
+        (bool hasErrors, Error[] errors) = FluentValidationHelper
             .ValidateRequest(request, validators);
 
         if (hasErrors)
@@ -58,7 +58,7 @@ public sealed class CreateDriverCommandHandler(
         await CreateAsync(resultEntity.Value!,
             cancellationToken);
 
-        await eventDispatcher.DispatchAsync(resultEntity.Value!, cancellation: cancellationToken);
+        await eventPublisher.PublishAsync(resultEntity.Value!, cancellation: cancellationToken);
 
         CreateDriverCommandResponse response =
             mapper.Map<CreateDriverCommandResponse>(resultEntity.Value);

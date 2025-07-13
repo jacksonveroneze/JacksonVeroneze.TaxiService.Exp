@@ -1,12 +1,11 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
-using TaxiService.Common.BaseApplication.Interfaces.Messaging;
+using TaxiService.Common.SharedKernel.Interfaces;
 using TaxiService.Modules.Driver.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Driver.Application.v1.Driver.Activate;
-using TaxiService.Modules.Driver.Application.v1.DriverAvailability.Models;
+using TaxiService.Modules.Driver.Application.v1.DriverAvailability.Common.Models;
 using TaxiService.Modules.Driver.Domain;
 using TaxiService.Modules.Driver.Domain.Core.Errors;
-using TaxiService.Modules.Driver.Domain.Entities;
 using TaxiService.Modules.Driver.Domain.Enums;
 using TaxiService.Modules.Driver.Domain.Repositories;
 
@@ -16,7 +15,7 @@ public sealed class DeleteDriverCommandHandler(
     ILogger<DeleteDriverCommandHandler> logger,
     IDriverAvailabilityHistoryReadRepository driverAvailabilityHistoryReadRepository,
     IDriverRepository driverRepository,
-    IDomainEventDispatcher eventDispatcher)
+    IDomainEventPublisher eventPublisher)
     : IRequestHandler<DeleteDriverCommand, Result>
 {
     public async Task<Result> Handle(
@@ -52,7 +51,7 @@ public sealed class DeleteDriverCommandHandler(
         await driverRepository.DeleteAsync(
             entity, cancellationToken);
 
-        await eventDispatcher.DispatchAsync(entity, cancellationToken);
+        await eventPublisher.PublishAsync(entity, cancellationToken);
 
         logger.LogDeleted(
             ModuleConstants.ContextName,

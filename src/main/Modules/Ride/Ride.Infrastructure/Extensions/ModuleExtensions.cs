@@ -2,6 +2,7 @@ using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TaxiService.Common.BaseInfrastructure.Extensions;
+using TaxiService.Common.SharedKernel.Extensions;
 using TaxiService.Modules.Ride.Application;
 using TaxiService.Modules.Ride.Infrastructure.Configurations;
 
@@ -14,7 +15,8 @@ public static class ModuleExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        Assembly assembly = AssemblyReference.Assembly;
+        Assembly applicationAssembly = AssemblyReference.Assembly;
+        Assembly infraAssembly = typeof(ModuleExtensions).Assembly;
 
         services.AddConfiguration<ModuleConfiguration>(
             configuration, ModuleConfiguration.Name);
@@ -24,9 +26,10 @@ public static class ModuleExtensions
             .GetRequiredService<ModuleConfiguration>();
 
         services.AddServices()
-            .AddHandlers(assembly)
-            .AddMapper(assembly)
-            .AddFluentValidation(assembly)
+            .AddHandlers(applicationAssembly)
+            .AddHandlers(infraAssembly)
+            .AddMapper(applicationAssembly)
+            .AddFluentValidation(applicationAssembly)
             .AddDatabase(moduleConfiguration);
 
         return services;

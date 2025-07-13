@@ -1,4 +1,3 @@
-using Prometheus;
 using TaxiService.Modules.Ride.Application.Common.Interfaces;
 using TaxiService.Modules.Ride.Infrastructure.Contexts;
 

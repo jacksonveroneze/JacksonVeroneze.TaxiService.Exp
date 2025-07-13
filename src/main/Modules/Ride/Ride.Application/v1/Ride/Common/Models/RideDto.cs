@@ -1,4 +1,4 @@
-using TaxiService.Common.BaseApplication.Models.Models.Common;
+using TaxiService.Common.BaseApplication.Models.Common;
 using TaxiService.Modules.Driver.PublicApi.v1.Models;
 using TaxiService.Modules.Passenger.PublicApi.v1.Models;
 using TaxiService.Modules.Ride.Domain.Enums;

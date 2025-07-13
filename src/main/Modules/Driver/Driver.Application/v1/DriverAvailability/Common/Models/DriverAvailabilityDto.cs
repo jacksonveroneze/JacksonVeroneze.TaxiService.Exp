@@ -1,6 +1,6 @@
 using TaxiService.Modules.Driver.Domain.Enums;
 
-namespace TaxiService.Modules.Driver.Application.v1.DriverAvailability.Models;
+namespace TaxiService.Modules.Driver.Application.v1.DriverAvailability.Common.Models;
 
 public sealed record DriverAvailabilityDto
 {

@@ -1,4 +1,4 @@
-using TaxiService.Common.BaseApplication.Models.Models.Common;
+using TaxiService.Common.BaseApplication.Models.Common;
 
 namespace TaxiService.Modules.Driver.Application.v1.DriverLocation.Common.Models;
 

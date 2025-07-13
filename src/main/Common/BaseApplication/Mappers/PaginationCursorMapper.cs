@@ -1,6 +1,6 @@
 using JacksonVeroneze.NET.Pagination.Cursor;
-using TaxiService.Common.BaseApplication.Models.Base.Pagination.Cursor;
-using TaxiService.Common.BaseApplication.Queries.Base;
+using TaxiService.Common.BaseApplication.Models.Pagination.Cursor;
+using TaxiService.Common.BaseApplication.Queries;
 
 namespace TaxiService.Common.BaseApplication.Mappers;
 

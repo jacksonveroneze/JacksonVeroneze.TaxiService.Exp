@@ -1,8 +1,9 @@
 using JacksonVeroneze.NET.Result;
-using TaxiService.Common.BaseDomain;
-using TaxiService.Common.BaseDomain.Entities.Base;
 using TaxiService.Common.BaseDomain.ValueObjects;
+using TaxiService.Common.SharedKernel;
+using TaxiService.Common.SharedKernel.Utils;
 using TaxiService.Modules.Ride.Contracts.Events;
+using TaxiService.Modules.Ride.Contracts.Events.DomainEvents;
 using TaxiService.Modules.Ride.Domain.Core.Errors;
 using TaxiService.Modules.Ride.Domain.Enums;
 
@@ -78,7 +79,7 @@ public class Ride : BaseAggregateRoot
         DriverId = driverId;
         Status = RideStatus.Accepted;
         AddEvent(new RideAcceptedDomainEvent(
-            Id, DriverId!.Value, DateTime.UtcNow));
+            Id, PassengerId, DriverId!.Value, DateTime.UtcNow));
 
         return Result.WithSuccess();
     }
@@ -122,7 +123,8 @@ public class Ride : BaseAggregateRoot
         Fare = Convert.ToDecimal(distance) * 2.1M;
         Status = RideStatus.Completed;
         AddEvent(new RideFinishedDomainEvent(
-            Id, DriverId!.Value, DateTime.UtcNow, TimeSpan.Zero,
+            Id, PassengerId, DriverId!.Value,
+            DateTime.UtcNow, TimeSpan.Zero,
             Distance!.Value, Fare!.Value));
 
         return Result.WithSuccess();
@@ -143,7 +145,8 @@ public class Ride : BaseAggregateRoot
         }
 
         Status = RideStatus.Canceled;
-        AddEvent(new RideCanceledDomainEvent(Id, DriverId, DateTime.UtcNow));
+        AddEvent(new RideCanceledDomainEvent(
+            Id, DriverId, PassengerId, DateTime.UtcNow));
 
         return Result.WithSuccess();
     }

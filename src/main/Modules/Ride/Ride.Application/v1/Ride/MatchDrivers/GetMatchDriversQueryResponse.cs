@@ -1,4 +1,4 @@
-using TaxiService.Common.BaseApplication.Models.Base;
+using TaxiService.Common.BaseApplication.Models.Common;
 
 namespace TaxiService.Modules.Ride.Application.v1.Ride.MatchDrivers;
 

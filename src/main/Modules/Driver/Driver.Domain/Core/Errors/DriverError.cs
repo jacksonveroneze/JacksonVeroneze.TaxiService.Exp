@@ -1,5 +1,5 @@
 using JacksonVeroneze.NET.Result;
-using TaxiService.Common.BaseDomain.Core.Errors;
+using TaxiService.Common.BaseDomain.Errors;
 
 namespace TaxiService.Modules.Driver.Domain.Core.Errors;
 

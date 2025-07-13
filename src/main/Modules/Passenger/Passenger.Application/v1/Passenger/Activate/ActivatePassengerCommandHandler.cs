@@ -1,7 +1,6 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
-using TaxiService.Common.BaseApplication.Interfaces.Messaging;
-using TaxiService.Common.BaseApplication.Interfaces.System;
+using TaxiService.Common.SharedKernel.Interfaces;
 using TaxiService.Modules.Passenger.Domain;
 using TaxiService.Modules.Passenger.Domain.Core.Errors;
 using TaxiService.Modules.Passenger.Domain.Repositories;
@@ -12,7 +11,7 @@ public sealed class ActivatePassengerCommandHandler(
     ILogger<ActivatePassengerCommandHandler> logger,
     IPassengerRepository passengerRepository,
     IDateTimeProvider dateTime,
-    IDomainEventDispatcher eventDispatcher)
+    IDomainEventPublisher eventPublisher)
     : IRequestHandler<ActivatePassengerCommand, Result>
 {
     public async Task<Result> Handle(
@@ -40,7 +39,7 @@ public sealed class ActivatePassengerCommandHandler(
         await passengerRepository.UpdateAsync(
             entity, cancellationToken);
 
-        await eventDispatcher.DispatchAsync(entity, cancellationToken);
+        await eventPublisher.PublishAsync(entity, cancellationToken);
 
         logger.LogProcessed(
             ModuleConstants.ContextName,

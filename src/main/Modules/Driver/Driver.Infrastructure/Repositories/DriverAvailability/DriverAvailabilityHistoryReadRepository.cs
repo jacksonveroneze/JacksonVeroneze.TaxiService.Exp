@@ -1,10 +1,7 @@
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using TaxiService.Modules.Driver.Application.Common.Interfaces.Repositories;
-using TaxiService.Modules.Driver.Application.v1.Driver.Common.Models;
-using TaxiService.Modules.Driver.Application.v1.DriverAvailability.Models;
-using TaxiService.Modules.Driver.Domain.Entities;
-using TaxiService.Modules.Driver.Domain.Enums;
+using TaxiService.Modules.Driver.Application.v1.DriverAvailability.Common.Models;
 using TaxiService.Modules.Driver.Infrastructure.Contexts;
 
 namespace TaxiService.Modules.Driver.Infrastructure.Repositories.DriverAvailability;

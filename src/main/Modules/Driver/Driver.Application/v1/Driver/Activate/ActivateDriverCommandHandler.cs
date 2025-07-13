@@ -1,7 +1,6 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
-using TaxiService.Common.BaseApplication.Interfaces.Messaging;
-using TaxiService.Common.BaseApplication.Interfaces.System;
+using TaxiService.Common.SharedKernel.Interfaces;
 using TaxiService.Modules.Driver.Domain;
 using TaxiService.Modules.Driver.Domain.Core.Errors;
 using TaxiService.Modules.Driver.Domain.Repositories;
@@ -12,7 +11,7 @@ public sealed class ActivateDriverCommandHandler(
     ILogger<ActivateDriverCommandHandler> logger,
     IDriverRepository driverRepository,
     IDateTimeProvider dateTime,
-    IDomainEventDispatcher eventDispatcher)
+    IDomainEventPublisher eventPublisher)
     : IRequestHandler<ActivateDriverCommand, Result>
 {
     public async Task<Result> Handle(
@@ -40,7 +39,7 @@ public sealed class ActivateDriverCommandHandler(
         await driverRepository.UpdateAsync(
             entity, cancellationToken);
 
-        await eventDispatcher.DispatchAsync(entity, cancellationToken);
+        await eventPublisher.PublishAsync(entity, cancellationToken);
 
         logger.LogProcessed(
             ModuleConstants.ContextName,

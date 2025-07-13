@@ -1,4 +1,4 @@
-using TaxiService.Common.BaseApplication.Validators.Base;
+using TaxiService.Common.BaseApplication.Validators;
 using TaxiService.Modules.Ride.Domain.Enums;
 
 namespace TaxiService.Modules.Ride.Application.v1.Ride.GetPaged;

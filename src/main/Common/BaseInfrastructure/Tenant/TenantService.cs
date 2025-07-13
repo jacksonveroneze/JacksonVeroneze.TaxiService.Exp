@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Http;
-using TaxiService.Common.BaseApplication.Interfaces.Tenant;
+using TaxiService.Common.SharedKernel.Interfaces;
 
 namespace TaxiService.Common.BaseInfrastructure.Tenant;
 

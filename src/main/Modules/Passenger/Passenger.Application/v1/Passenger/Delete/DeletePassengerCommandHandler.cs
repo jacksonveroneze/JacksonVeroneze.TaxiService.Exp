@@ -1,6 +1,6 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
-using TaxiService.Common.BaseApplication.Interfaces.Messaging;
+using TaxiService.Common.SharedKernel.Interfaces;
 using TaxiService.Modules.Passenger.Domain;
 using TaxiService.Modules.Passenger.Domain.Core.Errors;
 using TaxiService.Modules.Passenger.Domain.Repositories;
@@ -10,7 +10,7 @@ namespace TaxiService.Modules.Passenger.Application.v1.Passenger.Delete;
 public sealed class DeletePassengerCommandHandler(
     ILogger<DeletePassengerCommandHandler> logger,
     IPassengerRepository passengerRepository,
-    IDomainEventDispatcher eventDispatcher)
+    IDomainEventPublisher eventPublisher)
     : IRequestHandler<DeletePassengerCommand, Result>
 {
     public async Task<Result> Handle(
@@ -31,7 +31,7 @@ public sealed class DeletePassengerCommandHandler(
         await passengerRepository.DeleteAsync(
             entity, cancellationToken);
 
-        await eventDispatcher.DispatchAsync(entity, cancellationToken);
+        await eventPublisher.PublishAsync(entity, cancellationToken);
 
         logger.LogDeleted(
             ModuleConstants.ContextName,

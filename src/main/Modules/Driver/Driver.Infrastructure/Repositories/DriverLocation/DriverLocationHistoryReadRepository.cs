@@ -4,11 +4,10 @@ using NetTopologySuite;
 using NetTopologySuite.Geometries;
 using TaxiService.Modules.Driver.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Driver.Application.v1.Driver.Common.Models;
-using TaxiService.Modules.Driver.Application.v1.DriverAvailability.Models;
+using TaxiService.Modules.Driver.Application.v1.DriverAvailability.Common.Models;
 using TaxiService.Modules.Driver.Application.v1.DriverLocation.Common.Filters;
 using TaxiService.Modules.Driver.Application.v1.DriverLocation.Common.Models;
 using TaxiService.Modules.Driver.Application.v1.Vehicle.Common.Models;
-using TaxiService.Modules.Driver.Domain.Entities;
 using TaxiService.Modules.Driver.Domain.Enums;
 using TaxiService.Modules.Driver.Infrastructure.Contexts;
 

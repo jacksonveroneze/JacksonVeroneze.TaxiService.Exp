@@ -1,4 +1,4 @@
-using TaxiService.Common.BaseDomain.Enums;
+using TaxiService.Common.SharedKernel.Enums;
 using TaxiService.Modules.Driver.Domain.Enums;
 
 namespace TaxiService.Modules.Driver.PublicApi.v1.Models;

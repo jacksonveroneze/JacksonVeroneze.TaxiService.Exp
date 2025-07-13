@@ -1,5 +1,5 @@
 using JacksonVeroneze.NET.Result;
-using TaxiService.Common.BaseDomain.Enums;
+using TaxiService.Common.SharedKernel.Enums;
 
 namespace TaxiService.Modules.Passenger.Application.v1.Passenger.Create;
 

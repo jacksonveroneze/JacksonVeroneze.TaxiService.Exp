@@ -1,4 +1,4 @@
-using TaxiService.Common.BaseApplication.Validators.Base;
+using TaxiService.Common.BaseApplication.Validators;
 
 namespace TaxiService.Modules.Driver.Application.v1.Driver.Inactivate;
 

@@ -7,7 +7,6 @@ using TaxiService.Modules.Ride.Domain.Repositories;
 using TaxiService.Modules.Ride.Domain.Services;
 using TaxiService.Modules.Ride.Infrastructure.Repositories.Position;
 using TaxiService.Modules.Ride.Infrastructure.Repositories.Ride;
-using TaxiService.Modules.Ride.Infrastructure.UnitOfWork;
 
 namespace TaxiService.Modules.Ride.Infrastructure.Extensions;
 

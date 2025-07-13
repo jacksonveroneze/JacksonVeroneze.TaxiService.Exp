@@ -1,4 +1,4 @@
-using TaxiService.Common.BaseApplication.Interfaces.Mapper;
+using TaxiService.Common.SharedKernel.Interfaces;
 using TaxiService.Modules.Passenger.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Passenger.Application.v1.Passenger.Common.Filters;
 using TaxiService.Modules.Passenger.Application.v1.Passenger.Common.Models;

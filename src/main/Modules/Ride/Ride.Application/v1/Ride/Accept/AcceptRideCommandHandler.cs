@@ -1,14 +1,14 @@
 using JacksonVeroneze.NET.Result;
 using RedLockNet;
-using TaxiService.Common.BaseApplication.Core.Errors;
+using Ride.Common;
+using TaxiService.Common.BaseApplication.Errors;
 using TaxiService.Common.BaseApplication.Extensions;
-using TaxiService.Common.BaseApplication.Interfaces.Messaging;
+using TaxiService.Common.SharedKernel.Interfaces;
 using TaxiService.Modules.Driver.Domain.Enums;
 using TaxiService.Modules.Driver.PublicApi.v1.Interfaces;
 using TaxiService.Modules.Driver.PublicApi.v1.Models;
 using TaxiService.Modules.Ride.Application.Common.Interfaces;
 using TaxiService.Modules.Ride.Application.Common.Interfaces.Repositories;
-using TaxiService.Modules.Ride.Domain;
 using TaxiService.Modules.Ride.Domain.Core.Errors;
 using TaxiService.Modules.Ride.Domain.Enums;
 using TaxiService.Modules.Ride.Domain.Repositories;
@@ -22,7 +22,7 @@ public sealed class AcceptRideCommandHandler(
     IRideRepository rideRepository,
     IRideDistributedLockRepository distributedLockRepository,
     IRideStatusTransitionValidator rideStatusTransitionValidator,
-    IDomainEventDispatcher eventDispatcher,
+    IDomainEventPublisher eventPublisher,
     IMetricsPublisher metricsPublisher)
     : IRequestHandler<AcceptRideCommand, Result>
 {
@@ -38,8 +38,7 @@ public sealed class AcceptRideCommandHandler(
 
         if (distributedLock?.IsAcquired is not true)
         {
-            return Result.WithError(CommonApplicationErrors
-                .DistributedLockErrors.NotAcquired);
+            return Result.WithError(CommonApplicationErrors.DistributedLockErrors.NotAcquired);
         }
 
         Task<DriverPublicApiDto?> driverTask = driverPublicApi
@@ -68,12 +67,12 @@ public sealed class AcceptRideCommandHandler(
                 DomainErrors.RideError.DriverInactive);
         }
 
-        Result resultstatusTransition = rideStatusTransitionValidator
+        Result resultStatusTransition = rideStatusTransitionValidator
             .Validate(entity.Status, RideStatus.Accepted);
 
-        if (resultstatusTransition.IsFailure)
+        if (resultStatusTransition.IsFailure)
         {
-            return resultstatusTransition;
+            return resultStatusTransition;
         }
         
         Result resultAction = Accept(entity,
@@ -87,7 +86,7 @@ public sealed class AcceptRideCommandHandler(
         await rideRepository.UpdateAsync(
             entity, cancellationToken);
 
-        await eventDispatcher.DispatchAsync(entity, cancellationToken);
+        await eventPublisher.PublishAsync(entity, cancellationToken);
         
         metricsPublisher.IncrementAccepted();
 

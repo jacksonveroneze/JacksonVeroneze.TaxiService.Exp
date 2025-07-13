@@ -1,5 +1,5 @@
-using TaxiService.Common.BaseDomain;
-using TaxiService.Common.BaseDomain.Entities.Base;
+using TaxiService.Common.BaseDomain.Entities;
+using TaxiService.Common.SharedKernel.Utils;
 
 namespace TaxiService.Modules.Passenger.Domain.Entities;
 

@@ -9,6 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\BaseDomain\BaseDomain.csproj"/>
+    <ProjectReference Include="..\..\..\Common\BaseDomain\BaseDomain.csproj" />
+    <ProjectReference Include="..\..\..\Common\Messaging\Messaging.csproj" />
+    <ProjectReference Include="..\Ride.Common\Ride.Common.csproj" />
   </ItemGroup>
 </Project>

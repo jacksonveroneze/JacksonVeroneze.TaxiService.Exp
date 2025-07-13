@@ -1,11 +1,11 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
-using TaxiService.Common.BaseApplication.Interfaces.Mapper;
-using TaxiService.Modules.Driver.Application.Common.Interfaces;
+using TaxiService.Common.SharedKernel.Interfaces;
 using TaxiService.Modules.Driver.Application.Common.Interfaces.Services;
 using TaxiService.Modules.Driver.Domain;
 using TaxiService.Modules.Driver.Domain.Core.Errors;
 using TaxiService.Modules.Driver.Domain.Repositories;
+using IUnitOfWork = TaxiService.Modules.Driver.Application.Common.Interfaces.IUnitOfWork;
 using IVehicleReadRepository =
     TaxiService.Modules.Driver.Application.Common.Interfaces.Repositories.IVehicleReadRepository;
 

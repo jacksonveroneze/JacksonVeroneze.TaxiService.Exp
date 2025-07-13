@@ -1,4 +1,4 @@
-using TaxiService.Common.BaseApplication.Validators.Base;
+using TaxiService.Common.BaseApplication.Validators;
 using TaxiService.Modules.Driver.Domain.Enums;
 
 namespace TaxiService.Modules.Driver.Application.v1.DriverAvailability.Update;

@@ -6,5 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\BaseDomain\BaseDomain.csproj"/>
+    <ProjectReference Include="..\Driver.Contracts\Driver.Contracts.csproj" />
   </ItemGroup>
 </Project>

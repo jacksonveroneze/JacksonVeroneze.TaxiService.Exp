@@ -1,8 +1,8 @@
 using JacksonVeroneze.NET.Result;
+using Ride.Common;
 using TaxiService.Common.BaseApplication.Extensions;
-using TaxiService.Common.BaseApplication.Interfaces.Messaging;
+using TaxiService.Common.SharedKernel.Interfaces;
 using TaxiService.Modules.Ride.Application.Common.Interfaces;
-using TaxiService.Modules.Ride.Domain;
 using TaxiService.Modules.Ride.Domain.Core.Errors;
 using TaxiService.Modules.Ride.Domain.Enums;
 using TaxiService.Modules.Ride.Domain.Repositories;
@@ -14,7 +14,7 @@ public sealed class StartRideCommandHandler(
     ILogger<StartRideCommandHandler> logger,
     IRideRepository rideRepository,
     IRideStatusTransitionValidator rideStatusTransitionValidator,
-    IDomainEventDispatcher eventDispatcher,
+    IDomainEventPublisher eventPublisher,
     IMetricsPublisher metricsPublisher)
     : IRequestHandler<StartRideCommand, Result>
 {
@@ -51,7 +51,7 @@ public sealed class StartRideCommandHandler(
         await rideRepository.UpdateAsync(
             entity, cancellationToken);
 
-        await eventDispatcher.DispatchAsync(entity, cancellationToken);
+        await eventPublisher.PublishAsync(entity, cancellationToken);
 
         metricsPublisher.IncrementStarted();
         

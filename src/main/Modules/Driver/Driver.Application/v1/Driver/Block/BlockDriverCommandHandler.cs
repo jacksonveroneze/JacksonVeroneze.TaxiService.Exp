@@ -1,6 +1,6 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
-using TaxiService.Common.BaseApplication.Interfaces.Messaging;
+using TaxiService.Common.SharedKernel.Interfaces;
 using TaxiService.Modules.Driver.Domain;
 using TaxiService.Modules.Driver.Domain.Core.Errors;
 using TaxiService.Modules.Driver.Domain.Repositories;
@@ -10,7 +10,7 @@ namespace TaxiService.Modules.Driver.Application.v1.Driver.Block;
 public sealed class BlockDriverCommandHandler(
     ILogger<BlockDriverCommandHandler> logger,
     IDriverRepository driverRepository,
-    IDomainEventDispatcher eventDispatcher)
+    IDomainEventPublisher eventPublisher)
     : IRequestHandler<BlockDriverCommand, Result>
 {
     public async Task<Result> Handle(
@@ -38,7 +38,7 @@ public sealed class BlockDriverCommandHandler(
         await driverRepository.UpdateAsync(
             entity, cancellationToken);
 
-        await eventDispatcher.DispatchAsync(entity, cancellationToken);
+        await eventPublisher.PublishAsync(entity, cancellationToken);
 
         logger.LogProcessed(
             ModuleConstants.ContextName,

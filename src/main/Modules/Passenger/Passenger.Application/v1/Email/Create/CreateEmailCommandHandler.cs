@@ -1,6 +1,6 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
-using TaxiService.Common.BaseApplication.Interfaces.Mapper;
+using TaxiService.Common.SharedKernel.Interfaces;
 using TaxiService.Modules.Passenger.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Passenger.Domain;
 using TaxiService.Modules.Passenger.Domain.Core.Errors;

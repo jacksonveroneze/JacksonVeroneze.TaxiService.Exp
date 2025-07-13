@@ -1,11 +1,12 @@
 using JacksonVeroneze.NET.Result;
 using TaxiService.Modules.Driver.Application.Common.Interfaces.Repositories;
-using TaxiService.Modules.Driver.Application.v1.DriverAvailability.Models;
+using TaxiService.Modules.Driver.Application.v1.DriverAvailability.Common.Models;
 using TaxiService.Modules.Driver.Domain.Entities;
 using TaxiService.Modules.Driver.Domain.Enums;
 using TaxiService.Modules.Driver.Domain.Repositories;
 using TaxiService.Modules.Driver.Domain.Services;
 using TaxiService.Modules.Ride.Contracts.Events;
+using TaxiService.Modules.Ride.Contracts.Events.DomainEvents;
 
 namespace TaxiService.Modules.Driver.Application.IntegrationEvents;
 

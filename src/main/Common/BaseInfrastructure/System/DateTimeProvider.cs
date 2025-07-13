@@ -1,4 +1,4 @@
-using TaxiService.Common.BaseApplication.Interfaces.System;
+using TaxiService.Common.SharedKernel.Interfaces;
 
 namespace TaxiService.Common.BaseInfrastructure.System;
 

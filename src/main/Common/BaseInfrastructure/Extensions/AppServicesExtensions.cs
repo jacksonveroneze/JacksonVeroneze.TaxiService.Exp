@@ -1,10 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
-using TaxiService.Common.BaseApplication.Interfaces.Mapper;
-using TaxiService.Common.BaseApplication.Interfaces.Messaging;
-using TaxiService.Common.BaseApplication.Interfaces.System;
 using TaxiService.Common.BaseInfrastructure.Mapper;
 using TaxiService.Common.BaseInfrastructure.Messaging;
 using TaxiService.Common.BaseInfrastructure.System;
+using TaxiService.Common.SharedKernel.Interfaces;
 
 namespace TaxiService.Common.BaseInfrastructure.Extensions;
 
@@ -16,7 +14,7 @@ public static class AppServicesExtensions
     {
         services.AddScoped<IDataMapper, AutoMapperAdapter>();
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
-        services.AddScoped<IDomainEventDispatcher, RabbitMqDomainEventDispatcher>();
+        services.AddScoped<IDomainEventPublisher, DomainEventPublisher>();
 
         return services;
     }

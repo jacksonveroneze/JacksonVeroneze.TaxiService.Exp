@@ -1,4 +1,4 @@
-using TaxiService.Common.BaseApplication.Models.Models.Common;
+using TaxiService.Common.BaseApplication.Models.Common;
 using TaxiService.Common.BaseDomain.ValueObjects;
 
 namespace TaxiService.Modules.Ride.Application.v1.Common;

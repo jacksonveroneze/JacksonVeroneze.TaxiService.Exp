@@ -1,14 +1,13 @@
 using System.Text.Json;
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
-using TaxiService.Common.BaseApplication.Interfaces.Mapper;
-using TaxiService.Common.BaseApplication.Interfaces.Messaging;
-using TaxiService.Modules.Passenger.Application.Common.Interfaces;
+using TaxiService.Common.SharedKernel.Interfaces;
 using TaxiService.Modules.Passenger.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Passenger.Domain;
 using TaxiService.Modules.Passenger.Domain.Core.Errors;
 using TaxiService.Modules.Passenger.Domain.Entities;
 using TaxiService.Modules.Passenger.Domain.Repositories;
+using IUnitOfWork = TaxiService.Modules.Passenger.Application.Common.Interfaces.IUnitOfWork;
 
 namespace TaxiService.Modules.Passenger.Application.v1.Passenger.Create;
 
@@ -20,7 +19,7 @@ public sealed class CreatePassengerCommandHandler(
     IEmailRepository emailRepository,
     IOutboxWriteRepository outboxWriteRepository,
     IUnitOfWork unitOfWork,
-    IDomainEventDispatcher eventDispatcher)
+    IDomainEventPublisher eventPublisher)
     : IRequestHandler<CreatePassengerCommand, Result<CreatePassengerCommandResponse>>
 {
     public async Task<Result<CreatePassengerCommandResponse>> Handle(
@@ -62,7 +61,7 @@ public sealed class CreatePassengerCommandHandler(
         await CreateAsync(resultEntity.Value!,
             emailEntity.Value!, cancellationToken);
 
-        await eventDispatcher.DispatchAsync(resultEntity.Value!, cancellationToken);
+        await eventPublisher.PublishAsync(resultEntity.Value!, cancellationToken);
 
         CreatePassengerCommandResponse response =
             mapper.Map<CreatePassengerCommandResponse>(

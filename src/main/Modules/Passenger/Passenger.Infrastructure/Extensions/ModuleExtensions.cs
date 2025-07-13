@@ -2,6 +2,7 @@ using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TaxiService.Common.BaseInfrastructure.Extensions;
+using TaxiService.Common.SharedKernel.Extensions;
 using TaxiService.Modules.Passenger.Application;
 using TaxiService.Modules.Passenger.Infrastructure.Configurations;
 

@@ -1,6 +1,7 @@
 using TaxiService.Api.Middlewares;
 using TaxiService.Common.BaseInfrastructure.Configurations;
 using TaxiService.Common.BaseInfrastructure.Extensions;
+using TaxiService.Common.Messaging.Extensions;
 using TaxiService.Modules.Driver.Infrastructure.Extensions;
 using TaxiService.Modules.Passenger.Infrastructure.Extensions;
 using TaxiService.Modules.Payment.Infrastructure.Extensions;
@@ -73,6 +74,7 @@ internal static class WebApplicationBuilderExtensions
             .AddAuthentication(appConfiguration)
             .AddAuthorization(appConfiguration)
             .AddOpenTelemetry(appConfiguration)
+            .AddRabbitMq(builder.Configuration)
             .AddHttpContextAccessor()
             .AddCultureConfiguration()
             .AddAppVersioning()

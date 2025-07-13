@@ -1,7 +1,7 @@
 using JacksonVeroneze.NET.Pagination.Cursor;
 using JacksonVeroneze.NET.Result;
 using TaxiService.Common.BaseApplication.Extensions;
-using TaxiService.Common.BaseApplication.Interfaces.Mapper;
+using TaxiService.Common.SharedKernel.Interfaces;
 using TaxiService.Modules.Driver.Application.Common.Interfaces.Services;
 using TaxiService.Modules.Driver.Application.v1.Driver.Common.Filters;
 using TaxiService.Modules.Driver.Application.v1.Driver.Common.Models;

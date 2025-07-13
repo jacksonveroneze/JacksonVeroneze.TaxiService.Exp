@@ -1,11 +1,11 @@
 using JacksonVeroneze.NET.Result;
+using Ride.Common;
 using TaxiService.Common.BaseApplication.Extensions;
-using TaxiService.Common.BaseApplication.Interfaces.Mapper;
+using TaxiService.Common.SharedKernel.Interfaces;
 using TaxiService.Modules.Ride.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Ride.Application.Common.Interfaces.Services;
 using TaxiService.Modules.Ride.Application.Common.Interfaces.Services.Models;
 using TaxiService.Modules.Ride.Application.v1.Ride.Common.Models;
-using TaxiService.Modules.Ride.Domain;
 
 namespace TaxiService.Modules.Ride.Application.v1.Ride.MatchDrivers;
 

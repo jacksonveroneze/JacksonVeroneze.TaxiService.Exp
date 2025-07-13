@@ -1,6 +1,6 @@
-using TaxiService.Common.BaseApplication.Interfaces.System;
-using TaxiService.Common.BaseDomain.Enums;
-using TaxiService.Common.BaseDomain.Validators;
+using TaxiService.Common.SharedKernel.Enums;
+using TaxiService.Common.SharedKernel.Interfaces;
+using TaxiService.Common.SharedKernel.Validators;
 
 namespace TaxiService.Modules.Driver.Application.v1.Driver.Create;
 

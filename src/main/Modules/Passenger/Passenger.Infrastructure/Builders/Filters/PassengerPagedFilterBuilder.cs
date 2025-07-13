@@ -1,5 +1,5 @@
 using System.Linq.Expressions;
-using TaxiService.Common.BaseInfrastructure;
+using TaxiService.Common.SharedKernel.Builders;
 using TaxiService.Modules.Passenger.Application.v1.Passenger.Common.Filters;
 using TaxiService.Modules.Passenger.Application.v1.Passenger.Common.Models;
 

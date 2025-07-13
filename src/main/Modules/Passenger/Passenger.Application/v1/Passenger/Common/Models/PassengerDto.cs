@@ -1,4 +1,4 @@
-using TaxiService.Common.BaseDomain.Enums;
+using TaxiService.Common.SharedKernel.Enums;
 using TaxiService.Modules.Passenger.Domain.Enums;
 
 namespace TaxiService.Modules.Passenger.Application.v1.Passenger.Common.Models;

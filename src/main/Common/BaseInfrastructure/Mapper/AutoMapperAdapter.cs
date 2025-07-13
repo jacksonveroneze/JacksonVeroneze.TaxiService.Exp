@@ -1,5 +1,5 @@
 using AutoMapper;
-using TaxiService.Common.BaseApplication.Interfaces.Mapper;
+using TaxiService.Common.SharedKernel.Interfaces;
 
 namespace TaxiService.Common.BaseInfrastructure.Mapper;
 

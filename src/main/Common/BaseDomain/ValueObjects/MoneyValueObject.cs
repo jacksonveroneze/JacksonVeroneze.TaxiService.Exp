@@ -1,7 +1,7 @@
 using System.Globalization;
 using JacksonVeroneze.NET.DomainObjects.ValueObjects;
 using JacksonVeroneze.NET.Result;
-using TaxiService.Common.BaseDomain.Core.Errors;
+using TaxiService.Common.BaseDomain.Errors;
 
 namespace TaxiService.Common.BaseDomain.ValueObjects;
 

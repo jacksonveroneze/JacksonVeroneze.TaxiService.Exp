@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using JacksonVeroneze.NET.Pagination.Cursor;
-using TaxiService.Modules.Driver.Domain.Enums;
 
 namespace TaxiService.Modules.Driver.Application.v1.Driver.Common.Filters;
 

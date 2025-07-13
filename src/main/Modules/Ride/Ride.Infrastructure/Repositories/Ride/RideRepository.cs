@@ -1,7 +1,7 @@
 using JacksonVeroneze.NET.EntityFramework.Interfaces;
 using Microsoft.Extensions.Logging;
+using Ride.Common;
 using TaxiService.Common.BaseInfrastructure.Extensions;
-using TaxiService.Modules.Ride.Domain;
 using TaxiService.Modules.Ride.Domain.Repositories;
 using TaxiService.Modules.Ride.Infrastructure.Contexts;
 

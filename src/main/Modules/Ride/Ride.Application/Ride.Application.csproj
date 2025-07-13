@@ -27,8 +27,4 @@
     <ProjectReference Include="..\..\Passenger\Passenger.PublicApi\Passenger.PublicApi.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Common\Util\" />
-  </ItemGroup>
-
 </Project>

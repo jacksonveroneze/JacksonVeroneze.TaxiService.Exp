@@ -1,11 +1,11 @@
 using JacksonVeroneze.NET.Result;
-using TaxiService.Common.BaseDomain;
-using TaxiService.Common.BaseDomain.Entities.Base;
-using TaxiService.Common.BaseDomain.Enums;
 using TaxiService.Common.BaseDomain.ValueObjects;
+using TaxiService.Common.SharedKernel;
+using TaxiService.Common.SharedKernel.Enums;
+using TaxiService.Common.SharedKernel.Utils;
+using TaxiService.Modules.Passenger.Contracts.Events.DomainEvents;
 using TaxiService.Modules.Passenger.Domain.Core.Errors;
 using TaxiService.Modules.Passenger.Domain.Enums;
-using TaxiService.Modules.Passenger.Domain.Events;
 
 namespace TaxiService.Modules.Passenger.Domain.Aggregates;
 
