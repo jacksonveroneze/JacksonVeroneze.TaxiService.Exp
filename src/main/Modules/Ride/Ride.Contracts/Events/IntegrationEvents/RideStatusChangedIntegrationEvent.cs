@@ -12,4 +12,5 @@ public record RideStatusChangedIntegrationEvent(
     Guid? DriverId = null)
     : BaseIntegrationEvent(
         ModuleConstants.ContextName,
-        nameof(RideStatusChangedIntegrationEvent));
+        nameof(RideStatusChangedIntegrationEvent),
+        Guid.NewGuid().ToString());
