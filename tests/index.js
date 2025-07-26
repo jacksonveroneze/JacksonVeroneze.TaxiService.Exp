@@ -1,5 +1,4 @@
 import {group, sleep} from 'k6';
-import {crypto} from "k6/experimental/webcrypto";
 import driver from "./scenarios/driver/driver.scenario.js";
 import user from "./scenarios/user/user.scenario.js";
 import mail from "./scenarios/mail/mail.scenario.js";
@@ -52,10 +51,10 @@ export const optionsDuration = {
 //     },
 // };
 
-export const options = optionsRamp;
+export const options = optionsOneIteration;
 
-// const baseUrl = 'http://localhost:7000/api/v1';
-const baseUrl = 'http://srv754980.hstgr.cloud:9098/v1';
+const baseUrl = 'http://localhost:7000/api/v1';
+// const baseUrl = 'http://srv754980.hstgr.cloud:9098/v1';
 // const baseUrl = 'http://localhost:8080';
 // const baseUrl = 'http://localhost:8085/api/v1';
 //const baseUrl = 'http://0.0.0.0:9095';
@@ -64,17 +63,17 @@ export default () => {
     let headers = {
         headers: {
             'Content-Type': 'application/json',
-            'X-TenantId': crypto.randomUUID()
+            'X-TenantId': crypto.randomUUID(),
         }
     };
 
-    group('Endpoint Driver', () => {
-        driver(baseUrl, headers);
-    });
-
-    // group('Endpoint User', () => {
-    //     user(baseUrl, headers);
+    // group('Endpoint Driver', () => {
+    //     driver(baseUrl, headers);
     // });
+
+    group('Endpoint User', () => {
+        user(baseUrl, headers);
+    });
     //
     // group('Endpoint Mail', () => {
     //     mail(baseUrl, headers);

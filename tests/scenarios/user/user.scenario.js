@@ -1,5 +1,4 @@
 import {group} from 'k6';
-import {crypto} from "k6/experimental/webcrypto";
 import {checker, factoryHeaders} from "../util.js";
 import * as user from "./user.js";
 
@@ -28,7 +27,7 @@ export default (baseUrl, headers) => {
         checker(responseCallOne, 'User', 'Activated', 204)
 
         const responseCallTwo = user.activate(baseUrl, factoryHeaders(), idUser);
-        checker(responseCallTwo, 'User', 'Already activated - BadRequest', 409);
+        checker(responseCallTwo, 'User', 'Already activated - BadRequest', 400);
     });
 
     group('Inactivate Flow', () => {
@@ -38,7 +37,7 @@ export default (baseUrl, headers) => {
         checker(responseCallOne, 'User', 'Inactivate', 204)
 
         const responseCallTwo = user.inactivate(baseUrl, factoryHeaders(), idUser);
-        checker(responseCallTwo, 'User', 'Already inactivated - BadRequest', 409)
+        checker(responseCallTwo, 'User', 'Already inactivated - BadRequest', 400)
     });
 
     group('Delete Flow', () => {

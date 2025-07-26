@@ -50,7 +50,7 @@ public sealed class FinishRideCommandHandler(
 
         await eventPublisher.PublishAsync(entity, cancellationToken);
 
-        metricsPublisher.IncrementFinished();
+        metricsPublisher.Counter("ride_finished_total");
         
         logger.LogProcessed(
             ModuleConstants.ContextName,

@@ -88,7 +88,7 @@ public sealed class AcceptRideCommandHandler(
 
         await eventPublisher.PublishAsync(entity, cancellationToken);
         
-        metricsPublisher.IncrementAccepted();
+        metricsPublisher.Counter("ride_accepted_total");
 
         logger.LogProcessed(
             ModuleConstants.ContextName,

@@ -2,6 +2,7 @@ using JacksonVeroneze.NET.Result;
 using Ride.Common;
 using TaxiService.Common.BaseApplication.Extensions;
 using TaxiService.Common.SharedKernel.Interfaces;
+using TaxiService.Common.SharedKernel.Utils;
 using TaxiService.Modules.Ride.Application.Common.Interfaces;
 using TaxiService.Modules.Ride.Domain.Core.Errors;
 using TaxiService.Modules.Ride.Domain.Repositories;
@@ -42,8 +43,8 @@ public sealed class CancelRideCommandHandler(
 
         await eventPublisher.PublishAsync(entity, cancellationToken);
 
-        metricsPublisher.IncrementCanceled();
-        
+        metricsPublisher.Counter("ride_canceled_total");
+
         logger.LogProcessed(
             ModuleConstants.ContextName,
             nameof(CancelRideCommandHandler),

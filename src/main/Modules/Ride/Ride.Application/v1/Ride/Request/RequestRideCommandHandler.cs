@@ -65,7 +65,7 @@ public sealed class RequestRideCommandHandler(
 
         await eventPublisher.PublishAsync(resultEntity.Value!, cancellationToken);
 
-        metricsPublisher.IncrementRequested();
+        metricsPublisher.Counter("ride_requested_total");
         
         RequestRideCommandResponse response =
             mapper.Map<RequestRideCommandResponse>(resultEntity.Value);

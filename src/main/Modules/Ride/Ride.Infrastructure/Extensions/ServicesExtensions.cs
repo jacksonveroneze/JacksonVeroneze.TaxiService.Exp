@@ -1,4 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
+using TaxiService.Common.BaseInfrastructure.Metrics;
+using TaxiService.Common.SharedKernel.Interfaces;
 using TaxiService.Modules.Ride.Application.Common.Interfaces;
 using TaxiService.Modules.Ride.Application.Common.Interfaces.Repositories;
 using TaxiService.Modules.Ride.Application.Common.Interfaces.Services;

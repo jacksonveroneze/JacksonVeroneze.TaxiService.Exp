@@ -53,7 +53,7 @@ public sealed class StartRideCommandHandler(
 
         await eventPublisher.PublishAsync(entity, cancellationToken);
 
-        metricsPublisher.IncrementStarted();
+        metricsPublisher.Counter("ride_started_total");
         
         logger.LogProcessed(
             ModuleConstants.ContextName,

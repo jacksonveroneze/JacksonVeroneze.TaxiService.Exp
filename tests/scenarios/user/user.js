@@ -9,13 +9,13 @@ export function create(baseUrl, headers) {
 
     const bodyUser = JSON.stringify({
         fullName: `${randomString(8)} ${randomString(8)}`,
-        birthday: `2023-${randomIntBetween(10, 12)}-${randomIntBetween(10, 25)}`,
+        birthday: `2025-${randomIntBetween(10, 12)}-${randomIntBetween(10, 25)}`,
         gender: `${randomItem(genders)}`,
         document: "06399214939",
         email: `${randomString(10)}@mail.com`
     });
 
-    const responsePostUser = http.post(`${baseUrl}/users`, bodyUser, headers);
+    const responsePostUser = http.post(`${baseUrl}/passengers`, bodyUser, headers);
     check(responsePostUser, {'[User] - Created - status is 201': (r) => r.status === 201});
 
     const userContent = JSON.parse(responsePostUser.body);
@@ -24,12 +24,12 @@ export function create(baseUrl, headers) {
 }
 
 export function getPaged(baseUrl, headers) {
-    const response = http.get(`${baseUrl}/users`, headers);
+    const response = http.get(`${baseUrl}/passengers`, headers);
     checker(response, 'User', 'GetPaged', 200)
 }
 
 export function getById(baseUrl, headers, idUser, statusCodeDefault = null) {
-    const response = http.get(`${baseUrl}/users/${idUser}`, headers);
+    const response = http.get(`${baseUrl}/passengers/${idUser}`, headers);
 
     if (statusCodeDefault) {
         checker(response, 'User', 'GetById', statusCodeDefault)
@@ -39,13 +39,13 @@ export function getById(baseUrl, headers, idUser, statusCodeDefault = null) {
 }
 
 export function activate(baseUrl, headers, idUser) {
-    return http.put(`${baseUrl}/users/${idUser}/activate`, {}, headers);
+    return http.put(`${baseUrl}/passengers/${idUser}/activate`, {}, headers);
 }
 
 export function inactivate(baseUrl, headers, idUser) {
-    return http.put(`${baseUrl}/users/${idUser}/inactivate`, {}, headers);
+    return http.put(`${baseUrl}/passengers/${idUser}/inactivate`, {}, headers);
 }
 
 export function remove(baseUrl, headers, idUser) {
-    return http.del(`${baseUrl}/users/${idUser}`, null, headers);
+    return http.del(`${baseUrl}/passengers/${idUser}`, null, headers);
 }

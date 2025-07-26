@@ -1,5 +1,4 @@
 import {group} from 'k6';
-import {crypto} from "k6/experimental/webcrypto";
 import * as user from "../user/user.js";
 import * as ride from "./ride.js";
 import * as position from "../position/position.js";
