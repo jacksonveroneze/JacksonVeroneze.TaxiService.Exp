@@ -38,7 +38,8 @@ public sealed class AcceptRideCommandHandler(
 
         if (distributedLock?.IsAcquired is not true)
         {
-            return Result.WithError(CommonApplicationErrors.DistributedLockErrors.NotAcquired);
+            return Result.WithError(CommonApplicationErrors
+                .DistributedLockErrors.NotAcquired);
         }
 
         Task<DriverPublicApiDto?> driverTask = driverPublicApi
