@@ -17,6 +17,7 @@ internal static class GetPagedEndpoint
                     await mediator.Send(query, cancellationToken);
 
                 return response.ToIResult();
+                
             })
             .Produces<GetRidePagedQueryResponse>()
             .AddDefaultResponseEndpoints();
